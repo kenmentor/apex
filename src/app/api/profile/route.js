@@ -7,10 +7,12 @@ export async function PUT(request) {
     const user = await getUserFromToken(request)
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { name, school, avatar } = await request.json()
+    const { name, school, avatar, department, level } = await request.json()
     const update = {}
     if (name !== undefined) update.name = name.trim()
     if (school !== undefined) update.school = school.trim()
+    if (department !== undefined) update.department = department.trim()
+    if (level !== undefined) update.level = level.trim()
     if (avatar !== undefined) {
       if (avatar && !avatar.startsWith('https://res.cloudinary.com/')) {
         return NextResponse.json({ error: 'Invalid avatar URL' }, { status: 400 })
@@ -26,6 +28,8 @@ export async function PUT(request) {
       id: updated._id.toString(),
       email: updated.email,
       school: updated.school || '',
+      department: updated.department || '',
+      level: updated.level || '',
       admin: !!updated.admin,
       verified: !!updated.verified,
       name: updated.name || '',

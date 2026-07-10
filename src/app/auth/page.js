@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { setUser } from '@/lib/auth';
 import NIGERIAN_UNIVERSITIES from '@/lib/universities';
+import { DEPARTMENTS, LEVELS } from '@/lib/departments';
 
 export default function AuthPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [school, setSchool] = useState('');
+  const [department, setDepartment] = useState('');
+  const [level, setLevel] = useState('');
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -57,10 +60,12 @@ export default function AuthPage() {
       const data = await res.json();
       if (data.id) {
         localStorage.setItem('apex_last_email', trimmed);
-        setUser({ id: data.id, email: data.email, school: data.school || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', token: data.token || '' });
+        setUser({ id: data.id, email: data.email, school: data.school || '', department: data.department || '', level: data.level || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', token: data.token || '' });
         if (data.needsSchool) {
           setStep(2);
           setTimeout(() => setSearch(''), 300);
+        } else if (data.needsDeptOrLevel) {
+          setStep(3);
         } else {
           router.push('/');
         }
@@ -89,8 +94,43 @@ export default function AuthPage() {
       });
       const data = await res.json();
       if (data.id) {
-        setUser({ id: data.id, email: data.email, school: data.school || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', token: data.token || '' });
-        router.push('/leaderboard');
+        setUser({ id: data.id, email: data.email, school: data.school || '', department: data.department || '', level: data.level || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', token: data.token || '' });
+        if (data.needsDeptOrLevel) {
+          setStep(3);
+        } else {
+          router.push('/');
+        }
+      } else {
+        setError(data.error || 'Something went wrong.');
+      }
+    } catch {
+      setError('Could not connect to server.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function handleDeptLevelComplete() {
+    if (!department) {
+      setError('Please select your department.');
+      return;
+    }
+    if (!level) {
+      setError('Please select your level.');
+      return;
+    }
+    setError('');
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), school, department, level }),
+      });
+      const data = await res.json();
+      if (data.id) {
+        setUser({ id: data.id, email: data.email, school: data.school || '', department: data.department || '', level: data.level || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', token: data.token || '' });
+        router.push('/');
       } else {
         setError(data.error || 'Something went wrong.');
       }
@@ -261,7 +301,7 @@ export default function AuthPage() {
                   >
                     {filtered.length === 0 ? (
                       <div style={{ padding: '20px 12px', textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
-                        No universities match "{search}"
+                        No universities match &quot;{search}&quot;
                       </div>
                     ) : (
                       filtered.map(u => (
@@ -274,8 +314,6 @@ export default function AuthPage() {
                             color: 'var(--text-dark)', fontSize: 13, cursor: 'pointer', fontFamily: 'Poppins, sans-serif',
                             display: 'flex', alignItems: 'center', gap: 10, transition: 'background 0.15s',
                           }}
-                          onMouseEnter={e => { if (school !== u) e.target.style.background = '#f8f9fa'; }}
-                          onMouseLeave={e => { if (school !== u) e.target.style.background = 'transparent'; }}
                         >
                           <div style={{
                             width: 20, height: 20, borderRadius: 6,
@@ -309,6 +347,92 @@ export default function AuthPage() {
                   color: submitting || !school ? '#a0aec0' : 'white',
                   fontSize: 15, fontWeight: 600, fontFamily: 'Poppins, sans-serif',
                   cursor: submitting || !school ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  marginTop: 'auto',
+                }}
+              >
+                {submitting ? 'Please wait...' : 'Continue'}
+                {!submitting && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                )}
+              </button>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 20 }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: 24, margin: '0 auto 16px',
+                  background: 'var(--space-purple)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                  </svg>
+                </div>
+                <h2 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-dark)' }}>Almost done</h2>
+                <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 6 }}>
+                  Select your department and level.
+                </p>
+              </div>
+
+              <div>
+                <label style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-dark)', display: 'block', marginBottom: 8 }}>Department</label>
+                <select
+                  value={department}
+                  onChange={e => { setDepartment(e.target.value); setError(''); }}
+                  style={{
+                    width: '100%', padding: '14px 16px', borderRadius: 14, border: '2px solid #e2e8f0',
+                    fontSize: 14, fontFamily: 'Poppins, sans-serif', color: 'var(--text-dark)',
+                    background: '#f8f9fa', outline: 'none', appearance: 'none',
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <option value="">Select department</option>
+                  {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-dark)', display: 'block', marginBottom: 8 }}>Level</label>
+                <select
+                  value={level}
+                  onChange={e => { setLevel(e.target.value); setError(''); }}
+                  style={{
+                    width: '100%', padding: '14px 16px', borderRadius: 14, border: '2px solid #e2e8f0',
+                    fontSize: 14, fontFamily: 'Poppins, sans-serif', color: 'var(--text-dark)',
+                    background: '#f8f9fa', outline: 'none', appearance: 'none',
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <option value="">Select level</option>
+                  {LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
+                </select>
+              </div>
+
+              {error && (
+                <div style={{ fontSize: 12, color: 'var(--error-red)', paddingLeft: 4 }}>{error}</div>
+              )}
+
+              <button
+                onClick={handleDeptLevelComplete}
+                disabled={submitting || !department || !level}
+                style={{
+                  width: '100%', padding: '16px', borderRadius: 16, border: 'none',
+                  background: submitting || !department || !level ? '#e2e8f0' : 'var(--space-purple)',
+                  color: submitting || !department || !level ? '#a0aec0' : 'white',
+                  fontSize: 15, fontWeight: 600, fontFamily: 'Poppins, sans-serif',
+                  cursor: submitting || !department || !level ? 'not-allowed' : 'pointer',
                   transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   marginTop: 'auto',
                 }}

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { playClick, playCorrect, playWrong } from '@/lib/sound';
 import { getUser, getToken } from '@/lib/auth';
 import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
+import { trackQuizEvent } from '@/components/AnalyticsTracker';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
 
@@ -240,6 +241,7 @@ export default function QuizPage() {
     setQuizStarted(true);
     setTimeLeft(settings.timePerQuestion);
     startTime.current = Date.now();
+    trackQuizEvent('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: settings.timePerQuestion });
   }
 
   useEffect(() => {
@@ -558,7 +560,7 @@ export default function QuizPage() {
   const totalAnswered = answers.length;
   const correctCount = answers.reduce((count, a) => {
     const q = questions[a.questionIndex];
-    return count + (a.selected === q?.correct_answer ? 1 : 0);
+    return count + (a.selected?.toLowerCase() === q?.correct_answer?.toLowerCase() ? 1 : 0);
   }, 0);
   const elapsedSeconds = Math.floor((Date.now() - startTime.current) / 1000);
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
@@ -585,6 +587,7 @@ export default function QuizPage() {
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
+      trackQuizEvent('quiz_completed', { course: code, score: correctCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
       const user = getUser();
       if (user) {
         setTimeout(() => handleAutoSave(), 100);
@@ -613,6 +616,7 @@ export default function QuizPage() {
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
+      trackQuizEvent('quiz_completed', { course: code, score: correctCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
       const user = getUser();
       if (user) {
         setTimeout(() => handleAutoSave(), 100);
@@ -753,7 +757,7 @@ export default function QuizPage() {
             <button className="btn-next" onClick={() => {
               const reviewAnswers = answers.map((a) => {
                 const q = questions[a.questionIndex];
-                const isCorrect = a.selected === q?.correct_answer;
+                const isCorrect = a.selected?.toLowerCase() === q?.correct_answer?.toLowerCase();
                 return { ...a, correctKey: q?.correct_answer, isCorrect };
               });
               sessionStorage.setItem('apex_review', JSON.stringify({ answers: reviewAnswers, questions, code }))

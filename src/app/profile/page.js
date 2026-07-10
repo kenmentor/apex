@@ -200,6 +200,11 @@ function ProfileContent() {
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-dark)' }}>{user.name || user.email}</div>
                     {user.school && <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{user.school}</div>}
+                    {(user.department || user.level) && (
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
+                        {user.department}{user.department && user.level ? ' · ' : ''}{user.level}
+                      </div>
+                    )}
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 8 }}>
                       <button onClick={() => setEditing(true)} style={{ padding: '6px 16px', borderRadius: 8, border: '1px solid #ddd', background: 'white', fontSize: 12, cursor: 'pointer' }}>Edit Profile</button>
                       {isAdmin() && <Link href="/admin" style={{ padding: '6px 16px', borderRadius: 8, border: '1px solid #ddd', background: 'white', fontSize: 12, textDecoration: 'none', color: 'var(--text-dark)' }}>Admin</Link>}

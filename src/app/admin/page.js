@@ -139,6 +139,7 @@ export default function AdminPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
           <h1 style={{ fontSize: 24, fontWeight: 700 }}>Admin Dashboard</h1>
           <div style={{ display: 'flex', gap: 8 }}>
+            <Link href="/admin/analytics" style={{ fontSize: 13, color: '#ff9f43' }}>Analytics</Link>
             <Link href="/" style={{ fontSize: 13, color: '#666' }}>Home</Link>
             <button onClick={() => { clearUser(); router.push('/auth') }} style={{ fontSize: 13, color: '#e74c3c', background: 'none', border: 'none', cursor: 'pointer' }}>Sign Out</button>
           </div>

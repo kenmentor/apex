@@ -58,7 +58,7 @@ export default function ReviewPage() {
 
         <div style={{ padding: '0 4px' }}>
           {answers.map((a, i) => {
-            const q = questions[i];
+            const q = questions[a.questionIndex] || questions[i];
             if (!q) return null;
             const optKeys = Object.keys(q.options);
             return (

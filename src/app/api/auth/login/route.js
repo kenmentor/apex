@@ -4,7 +4,7 @@ import { signToken } from '@/lib/auth-server'
 
 export async function POST(request) {
   try {
-    const { email, school } = await request.json()
+    const { email, school, department, level } = await request.json()
     if (!email || !email.includes('@')) {
       return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
     }
@@ -15,29 +15,43 @@ export async function POST(request) {
 
     if (existing) {
       const hasSchool = !!(existing.school && existing.school.trim())
+      const hasDept = !!(existing.department && existing.department.trim())
+      const hasLevel = !!(existing.level && existing.level.trim())
       const token = signToken({ email: existing.email, admin: !!existing.admin })
 
-      if (school !== undefined && school !== existing.school) {
-        await users.updateOne({ _id: existing._id }, { $set: { school: school.trim() } })
+      const updates = {}
+      if (school !== undefined && school !== existing.school) updates.school = school.trim()
+      if (department !== undefined && department !== existing.department) updates.department = department.trim()
+      if (level !== undefined && level !== existing.level) updates.level = level.trim()
+      if (Object.keys(updates).length > 0) {
+        await users.updateOne({ _id: existing._id }, { $set: updates })
       }
+
+      const needsSchool = !hasSchool && !school
+      const needsDeptOrLevel = (!hasDept && !department) || (!hasLevel && !level)
 
       return NextResponse.json({
         id: existing._id.toString(),
         email: existing.email,
         school: school?.trim() || existing.school || '',
+        department: department?.trim() || existing.department || '',
+        level: level?.trim() || existing.level || '',
         admin: !!existing.admin,
         verified: !!existing.verified,
         name: existing.name || '',
         avatar: existing.avatar || '',
         token,
         isNewUser: false,
-        needsSchool: !hasSchool && !school,
+        needsSchool,
+        needsDeptOrLevel: needsSchool ? false : needsDeptOrLevel,
       })
     }
 
     const result = await users.insertOne({
       email: normalizedEmail,
       school: school?.trim() || '',
+      department: department?.trim() || '',
+      level: level?.trim() || '',
       createdAt: new Date(),
       admin: false,
       verified: false,
@@ -50,6 +64,8 @@ export async function POST(request) {
       id: result.insertedId.toString(),
       email: normalizedEmail,
       school: school?.trim() || '',
+      department: department?.trim() || '',
+      level: level?.trim() || '',
       admin: false,
       verified: false,
       name: '',
@@ -57,6 +73,7 @@ export async function POST(request) {
       token,
       isNewUser: true,
       needsSchool: !school,
+      needsDeptOrLevel: false,
     })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

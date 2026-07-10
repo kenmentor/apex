@@ -3,6 +3,8 @@ import NavWrapper from '@/components/NavWrapper';
 import VisitorTracker from '@/components/VisitorTracker';
 import InstallPrompt from '@/components/InstallPrompt';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
+import ProfileCompletePrompt from '@/components/ProfileCompletePrompt';
 
 export const metadata = {
   title: 'Apex',
@@ -36,6 +38,8 @@ export default function RootLayout({ children }) {
         <VisitorTracker />
         <InstallPrompt />
         <ServiceWorkerRegister />
+        <AnalyticsTracker />
+        <ProfileCompletePrompt />
       </body>
     </html>
   );
