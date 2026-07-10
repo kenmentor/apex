@@ -6,6 +6,27 @@ function normalizeCourse(code) {
   return (code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2')
 }
 
+export async function GET(request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const email = searchParams.get('email')
+    if (!email) {
+      return NextResponse.json({ error: 'email required' }, { status: 400 })
+    }
+
+    const scoresCol = await getCollection('scores')
+    const docs = await scoresCol
+      .find({ email: email.toLowerCase().trim() })
+      .sort({ createdAt: -1 })
+      .limit(50)
+      .toArray()
+
+    return NextResponse.json(docs.map(d => ({ ...d, _id: d._id.toString() })))
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch scores' }, { status: 500 })
+  }
+}
+
 export async function POST(request) {
   try {
     const body = await request.json()

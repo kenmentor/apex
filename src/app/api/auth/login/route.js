@@ -14,10 +14,13 @@ export async function POST(request) {
     const existing = await users.findOne({ email: normalizedEmail })
 
     if (existing) {
-      if (school !== undefined) {
+      const hasSchool = !!(existing.school && existing.school.trim())
+      const token = signToken({ email: existing.email, admin: !!existing.admin })
+
+      if (school !== undefined && school !== existing.school) {
         await users.updateOne({ _id: existing._id }, { $set: { school: school.trim() } })
       }
-      const token = signToken({ email: existing.email, admin: !!existing.admin })
+
       return NextResponse.json({
         id: existing._id.toString(),
         email: existing.email,
@@ -27,6 +30,8 @@ export async function POST(request) {
         name: existing.name || '',
         avatar: existing.avatar || '',
         token,
+        isNewUser: false,
+        needsSchool: !hasSchool && !school,
       })
     }
 
@@ -50,6 +55,8 @@ export async function POST(request) {
       name: '',
       avatar: '',
       token,
+      isNewUser: true,
+      needsSchool: !school,
     })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

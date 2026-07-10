@@ -3,7 +3,6 @@
 import { Suspense, useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import NavBar from '@/components/NavBar'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
 
 function formatTime(secs) {
@@ -35,16 +34,18 @@ function ProfileContent() {
     setSchool(u?.school || '')
     if (u?.email) {
       Promise.all([
+        fetch(`/api/scores?email=${encodeURIComponent(u.email)}`).then(r => r.json()),
         fetch(`/api/leaderboard?email=${encodeURIComponent(u.email)}`).then(r => r.json()),
         fetch('/api/leaderboard').then(r => r.json()),
       ])
-        .then(([myScores, allScores]) => {
+        .then(([myScores, myLeaderboard, allScores]) => {
           const my = Array.isArray(myScores) ? myScores : []
+          const myAgg = Array.isArray(myLeaderboard) ? myLeaderboard : []
           const all = Array.isArray(allScores) ? allScores : []
           setScores(my)
-          if (my.length > 0 && all.length > 0) {
-            const myBest = Math.max(...my.map(s => s.percentage))
-            const topRank = all.findIndex(s => s.email?.toLowerCase() === u.email?.toLowerCase() && s.percentage === myBest)
+          if (myAgg.length > 0 && all.length > 0) {
+            const myBestPct = myAgg[0].avgPct || 0
+            const topRank = all.findIndex(s => s.email?.toLowerCase() === u.email?.toLowerCase())
             setGlobalRank(topRank >= 0 ? topRank + 1 : null)
           }
           setLoading(false)
@@ -128,6 +129,8 @@ function ProfileContent() {
   }
 
   function handleLogout() {
+    const u = getUser()
+    if (u?.email) localStorage.setItem('apex_last_email', u.email)
     clearUser()
     router.push('/auth')
   }
@@ -259,7 +262,7 @@ function ProfileContent() {
                       </div>
                     ) : (
                       scores.map((s, i) => (
-                        <div key={s._id || i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8f9fa', borderRadius: 12, padding: '12px 16px' }}>
+                        <div key={`${i}-${s.course || 'unknown'}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8f9fa', borderRadius: 12, padding: '12px 16px' }}>
                           <div>
                             <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-dark)' }}>{s.course}</div>
                             <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{formatTime(s.timeSpent)} · {new Date(s.createdAt).toLocaleDateString()}</div>
@@ -281,8 +284,6 @@ function ProfileContent() {
             </>
           )}
         </div>
-
-        <NavBar active="/profile" />
       </div>
     </div>
   )

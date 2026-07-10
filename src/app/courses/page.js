@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import NavBar from '@/components/NavBar';
 import { BookOpen, Construction, SearchX, Monitor, Ruler, Zap, Book } from 'lucide-react';
 
 const CATEGORY_ICONS = {
@@ -142,8 +141,6 @@ export default function CoursesPage() {
             ))}
           </div>
         )}
-
-        <NavBar active="/courses" />
       </div>
     </div>
   );

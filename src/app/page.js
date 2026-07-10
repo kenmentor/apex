@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import NavBar from '@/components/NavBar';
 import { Book, Monitor, Ruler } from 'lucide-react';
 
 export default function HomePage() {
@@ -135,8 +134,6 @@ export default function HomePage() {
             </Link>
           </>
         )}
-
-        <NavBar active="/" />
       </div>
     </div>
   );

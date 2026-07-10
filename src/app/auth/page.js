@@ -24,6 +24,8 @@ export default function AuthPage() {
     : NIGERIAN_UNIVERSITIES;
 
   useEffect(() => {
+    const saved = localStorage.getItem('apex_last_email');
+    if (saved) setEmail(saved);
     if (step === 1 && emailRef.current) emailRef.current.focus();
     if (step === 2 && searchRef.current) searchRef.current.focus();
   }, [step]);
@@ -54,9 +56,14 @@ export default function AuthPage() {
       });
       const data = await res.json();
       if (data.id) {
+        localStorage.setItem('apex_last_email', trimmed);
         setUser({ id: data.id, email: data.email, school: data.school || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', token: data.token || '' });
-        setStep(2);
-        setTimeout(() => setSearch(''), 300);
+        if (data.needsSchool) {
+          setStep(2);
+          setTimeout(() => setSearch(''), 300);
+        } else {
+          router.push('/');
+        }
       } else {
         setError(data.error || 'Something went wrong.');
       }

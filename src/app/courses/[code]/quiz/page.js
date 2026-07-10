@@ -126,6 +126,7 @@ export default function QuizPage() {
   const [cheatWarning, setCheatWarning] = useState('')
   const [shareCardUrl, setShareCardUrl] = useState('')
   const [showShareOptions, setShowShareOptions] = useState(false)
+  const [revealAnswer, setRevealAnswer] = useState(false)
   const shareCommentRef = useRef('')
   const startTime = useRef(Date.now());
   const timerRef = useRef(null);
@@ -253,7 +254,7 @@ export default function QuizPage() {
   }, [loading, quizStarted, finished, currentIndex]);
 
   useEffect(() => {
-    if (timeLeft === 0 && !finished && quizStarted) {
+    if (timeLeft === 0 && !finished && quizStarted && !revealAnswer) {
       handleNext();
     }
   }, [timeLeft]);
@@ -560,8 +561,48 @@ export default function QuizPage() {
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
 
   function handleSelect(key) {
+    if (revealAnswer) return;
     playClick();
     setSelected(key === selected ? null : key);
+  }
+
+  function handleShowAnswer() {
+    clearInterval(timerRef.current);
+    setRevealAnswer(true);
+  }
+
+  function handleNextAfterReveal() {
+    setRevealAnswer(false);
+    if (currentIndex + 1 < total) {
+      setCurrentIndex(currentIndex + 1);
+      setSelected(null);
+      setTimeLeft(settings.timePerQuestion);
+    } else {
+      setFinished(true);
+      clearInterval(timerRef.current);
+      clearProgress();
+      markSeenIds(code, selectedIndicesRef.current);
+      const user = getUser();
+      if (user) {
+        setTimeout(() => handleAutoSave(), 100);
+      } else {
+        setShowSaveModal(true);
+      }
+    }
+  }
+
+  function handlePrev() {
+    if (currentIndex === 0) return;
+    clearInterval(timerRef.current);
+    setRevealAnswer(false);
+    // Remove any answer recorded for current question
+    const newAnswers = answers.slice(0, currentIndex);
+    setAnswers(newAnswers);
+    const prevIndex = currentIndex - 1;
+    setCurrentIndex(prevIndex);
+    // Restore previous selection if it was answered
+    setSelected(newAnswers[prevIndex]?.selected || null);
+    setTimeLeft(settings.timePerQuestion);
   }
 
   function handleNext() {
@@ -830,21 +871,62 @@ export default function QuizPage() {
         <div className="question-card">{question.question}</div>
 
         <div className="options-list">
-          {optionKeys.map((key, idx) => (
-            <div
-              key={key}
-              className={`option-item ${selected === key ? 'selected' : ''}`}
-              onClick={() => handleSelect(key)}
-            >
-              <span className="option-letter">{OPTION_LABELS[idx] || key.toUpperCase()}</span>
-              {question.options[key]}
-            </div>
-          ))}
+          {optionKeys.map((key, idx) => {
+            const isCorrect = key === correctKey;
+            const isRevealedCorrect = revealAnswer && isCorrect;
+            let optionClass = `option-item ${selected === key ? 'selected' : ''}`;
+            if (isRevealedCorrect) optionClass += ' reveal-correct';
+
+            return (
+              <div
+                key={key}
+                className={optionClass}
+                onClick={() => handleSelect(key)}
+              >
+                <span className="option-letter">{OPTION_LABELS[idx] || key.toUpperCase()}</span>
+                {question.options[key]}
+                {isRevealedCorrect && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#27ae60" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto', flexShrink: 0 }}>
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        <button className="btn-next" onClick={handleNext} disabled={selected === null} style={{ opacity: selected === null ? 0.5 : 1 }}>
-          {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
-        </button>
+        {revealAnswer && question.explanation && (
+          <div className="explanation-box">
+            <strong>Explanation</strong>
+            {question.explanation}
+          </div>
+        )}
+
+        {revealAnswer ? (
+          <div>
+            <button className="btn-next" onClick={handleNextAfterReveal}>
+              {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div className="quiz-bottom-row">
+              <button className="btn-prev" onClick={handlePrev} disabled={currentIndex === 0} style={{ opacity: currentIndex === 0 ? 0.3 : 1 }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Prev
+              </button>
+             
+              <button className="btn-next" onClick={handleNext} disabled={selected === null} >
+                {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
+              </button>
+            </div>
+            {!selected && !revealAnswer && (
+              <button className="show-answer-link" onClick={handleShowAnswer}>
+                Show Answer
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

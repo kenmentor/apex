@@ -129,9 +129,97 @@ body {
   color: white;
 }
 
+.option-item.reveal-correct {
+  background: #e6f7ee;
+  border-color: #27ae60;
+  color: var(--text-dark);
+}
+.option-item.reveal-correct .option-letter {
+  background: #27ae60;
+  color: white;
+}
+
 .option-letter {
   color: var(--text-muted); margin-right: 16px; font-weight: 700;
   min-width: 24px; font-size: 14px;
+}
+
+/* ────────────── EXPLANATION BOX ────────────── */
+.explanation-box {
+  background: var(--subtle-gray);
+  border-left: 4px solid var(--space-purple);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 18px;
+  font-size: 13px;
+  color: var(--text-dark);
+  line-height: 1.7;
+}
+.explanation-box strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--space-purple);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+/* ────────────── SHOW ANSWER LINK ────────────── */
+.show-answer-link {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-orange);
+  cursor: pointer;
+  padding: 8px 0 2px;
+  background: none;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+.show-answer-link:hover { opacity: 1; }
+
+/* ────────────── BOTTOM BUTTON ROW ────────────── */
+.quiz-bottom-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.quiz-bottom-row .btn-prev,
+.quiz-bottom-row .btn-next {
+  flex: 1;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  border-radius: 18px;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.15s, opacity 0.2s;
+}
+.quiz-bottom-row .btn-prev {
+  background: var(--subtle-gray);
+  color: var(--text-dark);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.quiz-bottom-row .btn-prev:hover { background: #e9ecef; }
+.quiz-bottom-row .btn-next {
+  background: var(--btn-dark);
+  color: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  letter-spacing: 0.5px;
+}
+.quiz-bottom-row .btn-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ────────────── BUTTONS ────────────── */
@@ -264,13 +352,14 @@ body {
   color: var(--text-muted);
   background: white;
 }
-.home-nav a { color: var(--text-muted); text-decoration: none; padding: 8px; display: flex; }
+.home-nav a { color: var(--text-muted); text-decoration: none; padding: 8px; display: flex; border-radius: 12px; transition: color 0.1s, transform 0.1s, background 0.1s; }
 .home-nav a.active { color: #ff4757; }
+.home-nav a:active { color: #ff4757; transform: scale(0.85); background: rgba(255, 71, 87, 0.1); }
 
 /* ────────────── READING CONTENT ────────────── */
 .reading-content {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  line-height: 1.7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.8;
   color: #1a1a1a;
   font-size: 15px;
   overflow-x: auto;
@@ -278,10 +367,10 @@ body {
   word-wrap: break-word;
 }
 .reading-content > *:first-child { margin-top: 0; }
-.reading-content h1 { font-size: 1.8em; margin-top: 1.2em; margin-bottom: 0.4em; border-bottom: 2px solid #333; padding-bottom: 0.3em; color: var(--text-dark); }
-.reading-content h2 { font-size: 1.5em; margin-top: 1.2em; margin-bottom: 0.4em; color: #2c3e50; }
-.reading-content h3 { font-size: 1.2em; margin-top: 1em; margin-bottom: 0.3em; color: #34495e; }
-.reading-content p { margin: 0.6em 0; }
+.reading-content h1 { font-size: 1.8em; margin-top: 1.2em; margin-bottom: 0.4em; border-bottom: 2px solid #333; padding-bottom: 0.3em; color: var(--text-dark); font-weight: 700; }
+.reading-content h2 { font-size: 1.5em; margin-top: 1.2em; margin-bottom: 0.4em; color: #2c3e50; font-weight: 600; }
+.reading-content h3 { font-size: 1.2em; margin-top: 1em; margin-bottom: 0.3em; color: #34495e; font-weight: 600; }
+.reading-content p { margin: 0.8em 0; }
 .reading-content blockquote {
   margin: 1em 0; padding: 0.6em 1em;
   background: #f0f0f0; border-left: 4px solid #8e44ad;
@@ -423,11 +512,13 @@ body {
   gap: 4px;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  transition: background 0.15s, border-color 0.15s;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
 }
 .stat-card:active {
-  background: var(--subtle-gray);
-  border-color: var(--primary-orange);
+  background: #fff0f0;
+  border-color: #ff4757;
+  transform: scale(0.97);
 }
 
 .stat-icon {

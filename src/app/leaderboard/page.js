@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import NavBar from '@/components/NavBar';
 import { getUser } from '@/lib/auth';
 import { Trophy } from 'lucide-react';
 
@@ -226,8 +225,6 @@ export default function LeaderboardPage() {
             </div>
           </>
         )}
-
-        <NavBar active="/leaderboard" />
       </div>
     </div>
   );

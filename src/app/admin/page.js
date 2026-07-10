@@ -26,6 +26,7 @@ export default function AdminPage() {
   const [editDoc, setEditDoc] = useState(null)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
+  const [visitorStats, setVisitorStats] = useState(null)
 
   useEffect(() => {
     if (!isAdmin()) {
@@ -33,6 +34,7 @@ export default function AdminPage() {
       return
     }
     loadDocs()
+    fetch('/api/visitors').then(r => r.json()).then(setVisitorStats).catch(() => {})
   }, [tab])
 
   async function loadDocs() {
@@ -141,6 +143,19 @@ export default function AdminPage() {
             <button onClick={() => { clearUser(); router.push('/auth') }} style={{ fontSize: 13, color: '#e74c3c', background: 'none', border: 'none', cursor: 'pointer' }}>Sign Out</button>
           </div>
         </div>
+
+        {visitorStats && (
+          <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+            <div style={{ flex: 1, background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', textAlign: 'center' }}>
+              <div style={{ fontSize: 24, fontWeight: 700, color: '#130f40' }}>{visitorStats.uniqueVisitors}</div>
+              <div style={{ fontSize: 12, color: '#999' }}>Unique Visitors</div>
+            </div>
+            <div style={{ flex: 1, background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', textAlign: 'center' }}>
+              <div style={{ fontSize: 24, fontWeight: 700, color: '#ff9f43' }}>{visitorStats.totalVisits}</div>
+              <div style={{ fontSize: 12, color: '#999' }}>Total Visits</div>
+            </div>
+          </div>
+        )}
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 0, marginBottom: 24, background: '#fff', borderRadius: 12, padding: 4, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>

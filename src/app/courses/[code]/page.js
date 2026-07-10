@@ -217,65 +217,8 @@ export default function CourseDetailPage() {
           {renderFeed()}
         </div>
 
-        <button className="feedback-trigger" onClick={() => setShowFeedback(true)}>
-          <MessageSquare size={16} /> Rate & Feedback
-        </button>
-
         <NavBar active="/courses" />
       </div>
-
-      {showFeedback && (
-        <div className="feedback-overlay" onClick={() => !feedbackSubmitting && setShowFeedback(false)}>
-          <div className="feedback-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="feedback-close" onClick={() => !feedbackSubmitting && setShowFeedback(false)}>
-              <X size={18} />
-            </button>
-
-            {feedbackSent ? (
-              <div className="feedback-success">
-                <div className="feedback-success-icon">✓</div>
-                <h3>Thanks for your feedback!</h3>
-              </div>
-            ) : (
-              <>
-                <h3 className="feedback-title">Rate {code}</h3>
-                <p className="feedback-subtitle">How was this course?</p>
-
-                <div className="feedback-stars">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <button
-                      key={s}
-                      className={`feedback-star ${s <= (feedbackHover || feedbackRating) ? 'active' : ''}`}
-                      onClick={() => setFeedbackRating(s)}
-                      onMouseEnter={() => setFeedbackHover(s)}
-                      onMouseLeave={() => setFeedbackHover(0)}
-                    >
-                      <Star size={28} fill={s <= (feedbackHover || feedbackRating) ? '#ff9f43' : 'none'} />
-                    </button>
-                  ))}
-                </div>
-
-                <textarea
-                  className="feedback-input"
-                  placeholder="Leave a comment (optional)..."
-                  rows={3}
-                  value={feedbackComment}
-                  onChange={(e) => setFeedbackComment(e.target.value)}
-                />
-
-                <button
-                  className="btn-submit"
-                  disabled={feedbackRating === 0 || feedbackSubmitting}
-                  onClick={submitFeedback}
-                  style={{ width: '100%', marginTop: 8 }}
-                >
-                  {feedbackSubmitting ? 'Submitting...' : 'Submit'}
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
