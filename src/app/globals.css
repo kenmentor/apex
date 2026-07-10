@@ -423,6 +423,11 @@ body {
   gap: 4px;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.stat-card:active {
+  background: var(--subtle-gray);
+  border-color: var(--primary-orange);
 }
 
 .stat-icon {
