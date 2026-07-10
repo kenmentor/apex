@@ -155,7 +155,7 @@ export default function LeaderboardPage() {
                 const rankNum = pos + 1;
                 return (
                   <div key={pos} className={`podium-user rank-${rankNum}`}>
-                    <div className="podium-avatar" style={{ background: entry?.avatar ? 'transparent' : avatars[getAvatarIndex(entry._id, pos)], overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="podium-avatar" style={{ background: entry?.avatar ? 'transparent' : avatars[getAvatarIndex(entry?._id, pos)], overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {entry?.avatar ? (
                         <img src={entry.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
                       ) : (
