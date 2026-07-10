@@ -11,7 +11,12 @@ export async function PUT(request) {
     const update = {}
     if (name !== undefined) update.name = name.trim()
     if (school !== undefined) update.school = school.trim()
-    if (avatar !== undefined) update.avatar = avatar
+    if (avatar !== undefined) {
+      if (avatar && !avatar.startsWith('https://res.cloudinary.com/')) {
+        return NextResponse.json({ error: 'Invalid avatar URL' }, { status: 400 })
+      }
+      update.avatar = avatar
+    }
 
     const users = await getCollection('users')
     await users.updateOne({ _id: user._id }, { $set: update })

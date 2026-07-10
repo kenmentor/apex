@@ -11,7 +11,10 @@ const links = [
 ]
 
 export default function NavBar({ active }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    if (typeof window !== 'undefined') return getUser();
+    return null;
+  });
 
   useEffect(() => {
     setUser(getUser());
