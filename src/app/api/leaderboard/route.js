@@ -51,6 +51,16 @@ export async function GET(request) {
       rank: i + 1,
     }))
 
+    const emails = ranked.map(e => e.email).filter(Boolean)
+    if (emails.length > 0) {
+      const usersCol = await getCollection('users')
+      const users = await usersCol.find({ email: { $in: emails } }, { projection: { email: 1, avatar: 1 } }).toArray()
+      const avatarMap = Object.fromEntries(users.filter(u => u.avatar).map(u => [u.email.toLowerCase(), u.avatar]))
+      for (const entry of ranked) {
+        entry.avatar = avatarMap[entry.email.toLowerCase()] || ''
+      }
+    }
+
     if (statsOnly) {
       const total = ranked.length
       const avgPct = total > 0 ? Math.round(ranked.reduce((sum, s) => sum + s.avgPct, 0) / total) : 0

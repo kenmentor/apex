@@ -155,13 +155,19 @@ export default function LeaderboardPage() {
                 const rankNum = pos + 1;
                 return (
                   <div key={pos} className={`podium-user rank-${rankNum}`}>
-                    <div className="podium-avatar" style={{ background: entry ? avatars[getAvatarIndex(entry._id, pos)] : '#ccc' }}>
-                      {rankNum === 1 && (
-                        <svg className="crown-icon" width="18" height="18" viewBox="0 0 24 24" fill="#f1c40f" stroke="none">
-                          <path d="M2 19l2-14 4 4 4-8 4 8 4-4 2 14H2z"/>
-                        </svg>
+                    <div className="podium-avatar" style={{ background: entry?.avatar ? 'transparent' : avatars[getAvatarIndex(entry._id, pos)], overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {entry?.avatar ? (
+                        <img src={entry.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                      ) : (
+                        <>
+                          {rankNum === 1 && (
+                            <svg className="crown-icon" width="18" height="18" viewBox="0 0 24 24" fill="#f1c40f" stroke="none">
+                              <path d="M2 19l2-14 4 4 4-8 4 8 4-4 2 14H2z"/>
+                            </svg>
+                          )}
+                          <span>{entry ? getInitials(entry.name) : '??'}</span>
+                        </>
                       )}
-                      <span>{entry ? getInitials(entry.name) : '??'}</span>
                       <span className="rank-badge">{rankNum}</span>
                     </div>
                     <div className="podium-name">{entry?.name || '---'}</div>
@@ -188,8 +194,12 @@ export default function LeaderboardPage() {
                     )}
                     <div className={`leader-item${isUser ? ' mine' : ''}`}>
                       <span className="leader-rank">{actualRank}</span>
-                      <div className="leader-avatar-img" style={{ background: avatars[getAvatarIndex(entry._id, i)], display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span style={{ color: 'white', fontWeight: 700, fontSize: 14 }}>{getInitials(entry.name)}</span>
+                      <div className="leader-avatar-img" style={{ background: entry.avatar ? 'transparent' : avatars[getAvatarIndex(entry._id, i)], display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                        {entry.avatar ? (
+                          <img src={entry.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        ) : (
+                          <span style={{ color: 'white', fontWeight: 700, fontSize: 14 }}>{getInitials(entry.name)}</span>
+                        )}
                       </div>
                       <div className="leader-info">
                         <div className="leader-name">{entry.name}</div>
