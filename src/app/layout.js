@@ -1,6 +1,8 @@
 import './globals.css';
 import NavWrapper from '@/components/NavWrapper';
 import VisitorTracker from '@/components/VisitorTracker';
+import InstallPrompt from '@/components/InstallPrompt';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 
 export const metadata = {
   title: 'Apex',
@@ -32,15 +34,8 @@ export default function RootLayout({ children }) {
         {children}
         <NavWrapper />
         <VisitorTracker />
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            if ('serviceWorker' in navigator) {
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(() => {});
-              });
-            }
-          `,
-        }} />
+        <InstallPrompt />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

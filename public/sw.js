@@ -1,5 +1,5 @@
-const CACHE = 'apex-cache-v1'
-const ASSETS = ['/', '/courses', '/leaderboard', '/profile', '/auth', '/manifest.json']
+const CACHE = 'apex-cache-v2'
+const ASSETS = ['/', '/courses', '/leaderboard', '/profile', '/auth', '/manifest.json', '/just-logo.png']
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
@@ -12,6 +12,7 @@ self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
   )
+  self.clients.claim()
 })
 
 self.addEventListener('fetch', (e) => {
@@ -26,14 +27,26 @@ self.addEventListener('fetch', (e) => {
 
 async function cacheFirst(req) {
   const hit = await caches.match(req)
-  return hit || fetch(req)
+  if (hit) return hit
+  try {
+    const res = await fetch(req)
+    if (res.ok) {
+      const cache = await caches.open(CACHE)
+      cache.put(req, res.clone())
+    }
+    return res
+  } catch {
+    return new Response('Offline', { status: 503 })
+  }
 }
 
 async function networkFirst(req) {
   try {
     const res = await fetch(req)
-    const cache = await caches.open(CACHE)
-    cache.put(req, res.clone())
+    if (res.ok) {
+      const cache = await caches.open(CACHE)
+      cache.put(req, res.clone())
+    }
     return res
   } catch {
     return caches.match(req)

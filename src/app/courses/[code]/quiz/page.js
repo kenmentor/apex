@@ -556,7 +556,10 @@ export default function QuizPage() {
   const optionKeys = Object.keys(question?.options || {});
   const correctKey = question?.correct_answer;
   const totalAnswered = answers.length;
-  const correctCount = answers.filter((a) => a.isCorrect).length;
+  const correctCount = answers.reduce((count, a) => {
+    const q = questions[a.questionIndex];
+    return count + (a.selected === q?.correct_answer ? 1 : 0);
+  }, 0);
   const elapsedSeconds = Math.floor((Date.now() - startTime.current) / 1000);
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
 
@@ -591,27 +594,13 @@ export default function QuizPage() {
     }
   }
 
-  function handlePrev() {
-    if (currentIndex === 0) return;
-    clearInterval(timerRef.current);
-    setRevealAnswer(false);
-    // Remove any answer recorded for current question
-    const newAnswers = answers.slice(0, currentIndex);
-    setAnswers(newAnswers);
-    const prevIndex = currentIndex - 1;
-    setCurrentIndex(prevIndex);
-    // Restore previous selection if it was answered
-    setSelected(newAnswers[prevIndex]?.selected || null);
-    setTimeLeft(settings.timePerQuestion);
-  }
-
   function handleNext() {
     if (selected === null) return;
     clearInterval(timerRef.current);
-    const isCorrect = selected === correctKey;
-    if (isCorrect) playCorrect(); else playWrong();
+    playClick();
 
-    const newAnswers = [...answers, { selected, correctKey, isCorrect, question: question.question, options: question.options }];
+    const isCorrect = selected === correctKey;
+    const newAnswers = [...answers, { selected, questionIndex: currentIndex, question: question.question, options: question.options }];
     setAnswers(newAnswers);
 
     if (currentIndex + 1 < total) {
@@ -762,7 +751,12 @@ export default function QuizPage() {
             </table>
 
             <button className="btn-next" onClick={() => {
-              sessionStorage.setItem('apex_review', JSON.stringify({ answers, questions, code }))
+              const reviewAnswers = answers.map((a) => {
+                const q = questions[a.questionIndex];
+                const isCorrect = a.selected === q?.correct_answer;
+                return { ...a, correctKey: q?.correct_answer, isCorrect };
+              });
+              sessionStorage.setItem('apex_review', JSON.stringify({ answers: reviewAnswers, questions, code }))
               router.push(`/courses/${code.toLowerCase()}/quiz/review`)
             }} style={{ marginTop: 16 }}>
               REVIEW ANSWERS
@@ -910,16 +904,9 @@ export default function QuizPage() {
           </div>
         ) : (
           <div>
-            <div className="quiz-bottom-row">
-              <button className="btn-prev" onClick={handlePrev} disabled={currentIndex === 0} style={{ opacity: currentIndex === 0 ? 0.3 : 1 }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                Prev
-              </button>
-             
-              <button className="btn-next" onClick={handleNext} disabled={selected === null} >
-                {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
-              </button>
-            </div>
+            <button className="btn-next" onClick={handleNext} disabled={selected === null} style={{ opacity: selected === null ? 0.5 : 1 }}>
+              {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
+            </button>
             {!selected && !revealAnswer && (
               <button className="show-answer-link" onClick={handleShowAnswer}>
                 Show Answer
