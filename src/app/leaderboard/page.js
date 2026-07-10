@@ -186,7 +186,7 @@ export default function LeaderboardPage() {
                 const isInsertionPoint = userEntry && i === 10 && !otherEntries.slice(0, 10).some(e => e.email?.toLowerCase() === userEmail);
 
                 return (
-                  <div key={entry._id + (entry.email || i)}>
+                  <div key={`${i}-${entry.email || entry.name || 'unknown'}`}>
                     {isInsertionPoint && (
                       <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', padding: '16px 0 8px', textTransform: 'uppercase', letterSpacing: 0.5 }}>
                         ─ Your Rank ─
