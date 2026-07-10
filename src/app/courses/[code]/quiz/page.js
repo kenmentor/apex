@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { playClick, playCorrect, playWrong } from '@/lib/sound';
@@ -392,24 +392,6 @@ export default function QuizPage() {
       }
     };
   }, []);
-
-  // ─── Anti-cheat: tab visibility → auto-submit ───
-  const handleVisibility = useCallback(() => {
-    if (document.hidden && quizStarted && !finished) {
-      setCheatWarning('Tab switch detected! Quiz will be submitted.')
-      setTimeout(() => {
-        if (!finished && quizStarted) {
-          setFinished(true)
-          clearProgress()
-        }
-      }, 500)
-    }
-  }, [quizStarted, finished])
-
-  useEffect(() => {
-    document.addEventListener('visibilitychange', handleVisibility)
-    return () => document.removeEventListener('visibilitychange', handleVisibility)
-  }, [handleVisibility])
 
   // ─── Anti-cheat: disable right-click, copy, paste ───
   useEffect(() => {
