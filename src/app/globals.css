@@ -18,6 +18,7 @@ body {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-canvas);
   min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app-wrapper {
@@ -420,6 +421,8 @@ body {
   align-items: center;
   text-align: center;
   gap: 4px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .stat-icon {
