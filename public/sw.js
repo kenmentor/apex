@@ -1,28 +1,53 @@
-const CACHE = 'apex-cache-v2'
-const ASSETS = ['/', '/courses', '/leaderboard', '/profile', '/auth', '/manifest.json', '/just-logo.png']
+const CACHE = 'apex-cache-v3'
+const PRECACHE = [
+  '/',
+  '/courses',
+  '/leaderboard',
+  '/profile',
+  '/auth',
+  '/spaces',
+  '/notifications',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/just-logo.png',
+]
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(ASSETS))
+    caches.open(CACHE).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting())
   )
-  self.skipWaiting()
 })
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+    ).then(() => self.clients.claim())
   )
-  self.clients.claim()
 })
 
 self.addEventListener('fetch', (e) => {
   const { request } = e
   if (request.method !== 'GET') return
+
+  // Skip chrome-extension and non-http
+  if (!request.url.startsWith('http')) return
+
+  // API: network first, fallback to cache
   if (request.url.includes('/api/')) {
     e.respondWith(networkFirst(request))
-  } else {
-    e.respondWith(cacheFirst(request))
+    return
   }
+
+  // Navigation: network first, fallback to cached page, then offline fallback
+  if (request.mode === 'navigate') {
+    e.respondWith(navigationFirst(request))
+    return
+  }
+
+  // Everything else: cache first
+  e.respondWith(cacheFirst(request))
 })
 
 async function cacheFirst(req) {
@@ -50,5 +75,23 @@ async function networkFirst(req) {
     return res
   } catch {
     return caches.match(req)
+  }
+}
+
+async function navigationFirst(req) {
+  try {
+    const res = await fetch(req)
+    if (res.ok) {
+      const cache = await caches.open(CACHE)
+      cache.put(req, res.clone())
+    }
+    return res
+  } catch {
+    const cached = await caches.match(req)
+    if (cached) return cached
+    // Offline fallback: return cached shell
+    const shell = await caches.match('/')
+    if (shell) return shell
+    return new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/html' } })
   }
 }
