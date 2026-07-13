@@ -218,9 +218,11 @@ export default function QuizPage() {
     startTime.current = Date.now();
     setShowResumePrompt(false);
     setRestoredProgress(null);
+    setRevealAnswer(false);
   }
 
   function handleStartQuiz() {
+    setRevealAnswer(false);
     let available = allQuestions;
     const seen = getSeenIds(code);
     let unseen = available.filter((q, idx) => !seen.includes(idx));
@@ -282,17 +284,12 @@ export default function QuizPage() {
         ctx.fillStyle = '#ff9f43'
         ctx.fillRect(0, 0, 600, 8)
 
-        const memes = pct >= 90 ? ['🏆', '🧠', '🔥'] : pct >= 70 ? ['💪', '🎯', '⚡'] : pct >= 50 ? ['👍', '😅', '📚'] : ['💀', '😭', '🫠']
-        const meme = memes[Math.floor(Math.random() * memes.length)]
-        ctx.font = '80px sans-serif'
-        ctx.textAlign = 'center'
-        ctx.fillText(meme, 300, 110)
-
         const comment = getFunnyComment(pct)
         shareCommentRef.current = comment
-        ctx.font = 'bold 20px sans-serif'
+        ctx.font = 'bold 24px sans-serif'
         ctx.fillStyle = '#ff9f43'
-        ctx.fillText(comment, 300, 155)
+        ctx.textAlign = 'center'
+        ctx.fillText(comment, 300, 120)
 
         ctx.font = 'bold 28px sans-serif'
         ctx.fillStyle = '#ffffff'
@@ -448,8 +445,8 @@ export default function QuizPage() {
 
   // ─────────── SETTINGS SCREEN ───────────
   if (!quizStarted) {
-    const limitOptions = [5, 10, 20, 30, allQuestions.length];
-    const timeOptions = [10, 15, 30, 45, 60];
+    const limitOptions = [5, 10, 15, 20, 25, 30, 50, allQuestions.length];
+    const timeOptions = [5, 10, 15, 20, 30, 45, 60, 90, 120];
     return (
       <div className="flex min-h-dvh flex-col bg-background px-5 pb-24 pt-6">
         <div className="mx-auto w-full max-w-lg">
@@ -568,6 +565,11 @@ export default function QuizPage() {
 
   function handleNextAfterReveal() {
     setRevealAnswer(false);
+    const finalCorrectCount = answers.reduce((count, a) => {
+      const q = questions[a.questionIndex];
+      return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
+    }, 0);
+
     if (currentIndex + 1 < total) {
       setCurrentIndex(currentIndex + 1);
       setSelected(null);
@@ -577,10 +579,10 @@ export default function QuizPage() {
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
-      trackQuizEvent('quiz_completed', { course: code, score: correctCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
+      trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
       const user = getUser();
       if (user) {
-        setTimeout(() => handleAutoSave(), 100);
+        setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);
       } else {
         setShowSaveModal(true);
       }
@@ -592,9 +594,14 @@ export default function QuizPage() {
     clearInterval(timerRef.current);
     playClick();
 
-    const answered = timedOut ? null : selected;
+    const answered = selected ?? null;
     const newAnswers = [...answers, { selected: answered, questionIndex: currentIndex, question: question.question, options: question.options }];
     setAnswers(newAnswers);
+
+    const finalCorrectCount = newAnswers.reduce((count, a) => {
+      const q = questions[a.questionIndex];
+      return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
+    }, 0);
 
     if (currentIndex + 1 < total) {
       const nextIndex = currentIndex + 1;
@@ -606,17 +613,17 @@ export default function QuizPage() {
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
-      trackQuizEvent('quiz_completed', { course: code, score: correctCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
+      trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
       const user = getUser();
       if (user) {
-        setTimeout(() => handleAutoSave(), 100);
+        setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);
       } else {
         setShowSaveModal(true);
       }
     }
   }
 
-  async function handleAutoSave() {
+  async function handleAutoSave(scoreOverride, totalOverride) {
     const elapsedSecs = Math.floor((Date.now() - startTime.current) / 1000);
     const user = getUser();
     try {
@@ -626,8 +633,8 @@ export default function QuizPage() {
         body: JSON.stringify({
           email: user.email,
           course: code,
-          score: correctCount,
-          total,
+          score: scoreOverride ?? correctCount,
+          total: totalOverride ?? total,
           timeSpent: elapsedSecs,
           questionLimit: settings.questionLimit,
           timePerQuestion: settings.timePerQuestion,
@@ -677,6 +684,7 @@ export default function QuizPage() {
     setSelected(null);
     setAnswers([]);
     setFinished(false);
+    setRevealAnswer(false);
     setSaved(false);
     setPlayerName('');
     setPlayerSchool('');
