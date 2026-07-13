@@ -1,4 +1,4 @@
-const CACHE = 'apex-cache-v3'
+const CACHE = 'apex-cache-v4'
 const PRECACHE = [
   '/',
   '/courses',
@@ -17,6 +17,12 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting())
   )
+})
+
+self.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'SKIP_WAITING') {
+    self.skipWaiting()
+  }
 })
 
 self.addEventListener('activate', (e) => {
