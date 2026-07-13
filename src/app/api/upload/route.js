@@ -15,20 +15,36 @@ export async function POST(request) {
 
     const form = await request.formData()
     const file = form.get('file')
+    const folder = form.get('folder') || 'gss-quiz/uploads'
     if (!file) return NextResponse.json({ error: 'No file' }, { status: 400 })
 
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
+    const mime = file.type || ''
+
+    let resourceType = 'image'
+    let options = { folder, width: 800, height: 800, crop: 'limit' }
+
+    if (mime.startsWith('video/')) {
+      resourceType = 'video'
+      options = { folder, resource_type: 'video', transformation: [{ width: 1280, height: 720, crop: 'limit' }] }
+    } else if (mime.startsWith('audio/')) {
+      resourceType = 'video'
+      options = { folder, resource_type: 'video' }
+    } else if (mime === 'application/pdf' || file.name?.endsWith('.pdf')) {
+      resourceType = 'raw'
+      options = { folder, resource_type: 'raw' }
+    }
 
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.v2.uploader.upload_stream(
-        { folder: 'gss-quiz/avatars', resource_type: 'image', width: 200, height: 200, crop: 'fill' },
+        options,
         (err, res) => err ? reject(err) : resolve(res)
       )
       stream.end(buffer)
     })
 
-    return NextResponse.json({ url: result.secure_url, publicId: result.public_id })
+    return NextResponse.json({ url: result.secure_url, publicId: result.public_id, type: resourceType })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }

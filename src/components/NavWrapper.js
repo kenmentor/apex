@@ -7,7 +7,9 @@ const HIDDEN_ROUTES = ['/auth'];
 const routeMap = {
   '/': '/',
   '/courses': '/courses',
+  '/spaces': '/spaces',
   '/leaderboard': '/leaderboard',
+  '/notifications': '/notifications',
   '/profile': '/profile',
   '/admin': '/admin',
 };

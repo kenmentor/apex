@@ -3,7 +3,16 @@
 import { Suspense, useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useTheme } from 'next-themes'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
+import { ArrowLeft, User, Camera, LogOut, Shield, CheckCircle, Send, FileText, TrendingUp, Clock, Medal, Sun, Moon, Monitor } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function formatTime(secs) {
   if (!secs) return '—'
@@ -12,9 +21,26 @@ function formatTime(secs) {
   return `${m}m ${s}s`
 }
 
+function StatCard({ icon: Icon, label, value, color, bg }) {
+  return (
+    <Card>
+      <CardContent className="flex items-center gap-3 p-3">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl" style={{ background: bg, color }}>
+          <Icon className="size-5" />
+        </div>
+        <div className="min-w-0">
+          <div className="text-xs text-muted-foreground">{label}</div>
+          <div className="text-lg font-bold">{value}</div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 function ProfileContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { theme, setTheme } = useTheme()
   const [user, setUserState] = useState(null)
   const [scores, setScores] = useState([])
   const [globalRank, setGlobalRank] = useState(null)
@@ -140,155 +166,175 @@ function ProfileContent() {
   const totalTime = scores.reduce((s, e) => s + (e.timeSpent || 0), 0)
 
   return (
-    <div className="app-wrapper">
-      <div className="quiz-container">
-        <div className="top-bar">
-          <Link href="/leaderboard" className="back-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </Link>
-          <div className="screen-title-center">Profile</div>
-          <div className="back-btn" style={{ background: 'none' }}></div>
-        </div>
+    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+      <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <Link href="/leaderboard" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+          <ArrowLeft className="size-4" />
+        </Link>
+        <h1 className="flex-1 text-base font-bold">Profile</h1>
+        <button
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className="flex size-9 items-center justify-center rounded-lg hover:bg-muted"
+        >
+          {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+        </button>
+      </header>
 
-        <div style={{ flex: 1, overflowY: 'auto', padding: '20px 0', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {!user ? (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f1f2f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
+      <div className="mx-auto w-full max-w-2xl space-y-6 px-4 pt-4">
+        {!user ? (
+          <div className="flex flex-col items-center gap-4 py-16">
+            <Avatar className="size-16">
+              <AvatarFallback className="bg-muted">
+                <User className="size-8 text-muted-foreground" />
+              </AvatarFallback>
+            </Avatar>
+            <p className="text-muted-foreground">Not signed in</p>
+            <Button asChild>
+              <Link href="/auth">Sign In</Link>
+            </Button>
+          </div>
+        ) : (
+          <>
+            {/* Avatar + Info */}
+            <div className="flex flex-col items-center gap-4">
+              <div className="relative">
+                <Avatar className="size-20 border-3 border-primary">
+                  <AvatarImage src={user.avatar} />
+                  <AvatarFallback className="bg-primary text-xl font-bold text-primary-foreground">
+                    {user.email[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <label className="absolute bottom-0 right-0 flex size-8 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90">
+                  <Camera className="size-4" />
+                  <input type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" disabled={uploading} />
+                </label>
               </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>Not signed in</p>
-              <Link href="/auth" className="btn-next" style={{ textDecoration: 'none', display: 'inline-block', padding: '12px 32px' }}>Sign In</Link>
-            </div>
-          ) : (
-            <>
-              {/* Avatar + Info */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-                <div style={{ position: 'relative' }}>
-                  {user.avatar ? (
-                    <img src={user.avatar} alt="" style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--space-purple)' }} />
-                  ) : (
-                    <div style={{ width: 72, height: 72, borderRadius: '50%', background: '#130f40', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 700 }}>
-                      {user.email[0].toUpperCase()}
-                    </div>
+              {uploading && <span className="text-xs text-muted-foreground">Uploading...</span>}
+
+              {editing ? (
+                <form onSubmit={handleSave} className="w-full max-w-xs space-y-3">
+                  <Input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Your name"
+                  />
+                  <Input
+                    value={school}
+                    onChange={e => setSchool(e.target.value)}
+                    placeholder="University"
+                  />
+                  <div className="flex gap-2">
+                    <Button type="submit" disabled={saving} className="flex-1">
+                      {saving ? 'Saving...' : 'Save'}
+                    </Button>
+                    <Button type="button" variant="outline" onClick={() => setEditing(false)}>
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <div className="text-center">
+                  <h2 className="text-lg font-semibold">{user.name || user.email}</h2>
+                  {user.school && <p className="text-sm text-muted-foreground">{user.school}</p>}
+                  {(user.department || user.level) && (
+                    <p className="text-xs text-muted-foreground">
+                      {user.department}{user.department && user.level ? ' · ' : ''}{user.level}
+                    </p>
                   )}
-                  <label style={{ position: 'absolute', bottom: -2, right: -2, width: 28, height: 28, borderRadius: '50%', background: 'var(--space-purple)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 14 }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                    <input type="file" accept="image/*" onChange={handleAvatarUpload} style={{ display: 'none' }} disabled={uploading} />
-                  </label>
-                </div>
-                {uploading && <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Uploading...</span>}
-
-                {editing ? (
-                  <form onSubmit={handleSave} style={{ width: '100%', maxWidth: 320, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <input value={name} onChange={e => setName(e.target.value)} placeholder="Your name" style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 14, fontFamily: 'Poppins, sans-serif' }} />
-                    <input value={school} onChange={e => setSchool(e.target.value)} placeholder="University" style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 14, fontFamily: 'Poppins, sans-serif' }} />
-                    <div style={{ display: 'flex', gap: 8 }}>
-                      <button type="submit" disabled={saving} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: 'var(--space-purple)', color: 'white', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                        {saving ? 'Saving...' : 'Save'}
-                      </button>
-                      <button type="button" onClick={() => setEditing(false)} style={{ padding: '10px 20px', borderRadius: 10, border: '1px solid #ddd', background: 'white', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                ) : (
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-dark)' }}>{user.name || user.email}</div>
-                    {user.school && <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{user.school}</div>}
-                    {(user.department || user.level) && (
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
-                        {user.department}{user.department && user.level ? ' · ' : ''}{user.level}
-                      </div>
+                  <div className="mt-3 flex justify-center gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setEditing(true)}>
+                      Edit Profile
+                    </Button>
+                    {isAdmin() && (
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href="/admin">
+                          <Shield className="mr-1 size-3" />
+                          Admin
+                        </Link>
+                      </Button>
                     )}
-                    <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 8 }}>
-                      <button onClick={() => setEditing(true)} style={{ padding: '6px 16px', borderRadius: 8, border: '1px solid #ddd', background: 'white', fontSize: 12, cursor: 'pointer' }}>Edit Profile</button>
-                      {isAdmin() && <Link href="/admin" style={{ padding: '6px 16px', borderRadius: 8, border: '1px solid #ddd', background: 'white', fontSize: 12, textDecoration: 'none', color: 'var(--text-dark)' }}>Admin</Link>}
-                    </div>
-                    <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 6, fontSize: 12, alignItems: 'center' }}>
-                      {user.verified ? (
-                        <span style={{ color: '#27ae60' }}>✓ Verified</span>
-                      ) : (
-                        <button onClick={handleSendVerification} disabled={sendingVerify} style={{ border: 'none', background: 'none', color: '#3498db', cursor: 'pointer', fontSize: 12, textDecoration: 'underline' }}>
-                          {sendingVerify ? 'Sending...' : 'Verify email'}
-                        </button>
-                      )}
-                      {isAdmin() && <span style={{ color: 'var(--primary-orange)' }}>● Admin</span>}
-                    </div>
                   </div>
-                )}
-              </div>
-
-              {message && <div style={{ textAlign: 'center', fontSize: 13, color: message.includes('fail') || message.includes('error') ? '#e74c3c' : '#27ae60' }}>{message}</div>}
-
-              {/* Stats */}
-              {!loading && (
-                <>
-                  <div className="stats-cards-row">
-                    <div className="stat-card">
-                      <div className="stat-icon" style={{ background: '#fef3e2', color: '#f39c12' }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                      </div>
-                      <div className="stat-label">Attempts</div>
-                      <div className="stat-number">{totalAttempts}</div>
-                    </div>
-                    <div className="stat-card">
-                      <div className="stat-icon" style={{ background: '#e6f7ee', color: '#27ae60' }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                      </div>
-                      <div className="stat-label">Best %</div>
-                      <div className="stat-number">{bestPct}%</div>
-                    </div>
-                    <div className="stat-card">
-                      <div className="stat-icon" style={{ background: '#f4e6fd', color: '#9b59b6' }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                      </div>
-                      <div className="stat-label">Total Time</div>
-                      <div className="stat-number" style={{ fontSize: 16 }}>{formatTime(totalTime)}</div>
-                    </div>
-                    <div className="stat-card">
-                      <div className="stat-icon" style={{ background: '#e8f4fd', color: '#3498db' }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 6 9 6 9z"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 18 9 18 9z"/><path d="M4 22h16"/><path d="M10 22V2h4v20"/></svg>
-                      </div>
-                      <div className="stat-label">Best Rank</div>
-                      <div className="stat-number">{globalRank ? `#${globalRank}` : '—'}</div>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-dark)' }}>Score History</h3>
-                    {scores.length === 0 ? (
-                      <div style={{ color: 'var(--text-muted)', fontSize: 13, textAlign: 'center', padding: 20 }}>
-                        No scores yet. Take a quiz to see your results here.
-                      </div>
+                  <div className="mt-2 flex items-center justify-center gap-2 text-xs">
+                    {user.verified ? (
+                      <span className="flex items-center gap-1 text-green-600">
+                        <CheckCircle className="size-3" />
+                        Verified
+                      </span>
                     ) : (
-                      scores.map((s, i) => (
-                        <div key={`${i}-${s.course || 'unknown'}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8f9fa', borderRadius: 12, padding: '12px 16px' }}>
-                          <div>
-                            <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-dark)' }}>{s.course}</div>
-                            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{formatTime(s.timeSpent)} · {new Date(s.createdAt).toLocaleDateString()}</div>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{s.score}/{s.total}</span>
-                            <span style={{ fontSize: 16, fontWeight: 700, color: s.percentage >= 50 ? '#27ae60' : '#e74c3c' }}>
-                              {s.percentage}%
-                            </span>
-                          </div>
-                        </div>
-                      ))
+                      <button
+                        onClick={handleSendVerification}
+                        disabled={sendingVerify}
+                        className="text-blue-500 underline hover:text-blue-600"
+                      >
+                        {sendingVerify ? 'Sending...' : 'Verify email'}
+                      </button>
+                    )}
+                    {isAdmin() && (
+                      <Badge variant="secondary" className="bg-orange-100 text-orange-600">
+                        Admin
+                      </Badge>
                     )}
                   </div>
-                </>
+                </div>
               )}
+            </div>
 
-              <button className="btn-next" onClick={handleLogout} style={{ background: '#e74c3c', marginTop: 'auto' }}>Sign Out</button>
-            </>
-          )}
-        </div>
+            {message && (
+              <div className={`text-center text-sm ${message.includes('fail') || message.includes('error') ? 'text-red-500' : 'text-green-600'}`}>
+                {message}
+              </div>
+            )}
+
+            {/* Stats */}
+            {!loading && (
+              <>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  <StatCard icon={FileText} label="Attempts" value={totalAttempts} bg="#fef3e2" color="#f39c12" />
+                  <StatCard icon={TrendingUp} label="Best %" value={`${bestPct}%`} bg="#e6f7ee" color="#27ae60" />
+                  <StatCard icon={Clock} label="Total Time" value={formatTime(totalTime)} bg="#f4e6fd" color="#9b59b6" />
+                  <StatCard icon={Medal} label="Best Rank" value={globalRank ? `#${globalRank}` : '—'} bg="#e8f4fd" color="#3498db" />
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="text-sm font-semibold">Score History</h3>
+                  {scores.length === 0 ? (
+                    <div className="py-8 text-center text-sm text-muted-foreground">
+                      No scores yet. Take a quiz to see your results here.
+                    </div>
+                  ) : (
+                    <ScrollArea className="max-h-[300px]">
+                      <div className="space-y-2">
+                        {scores.map((s, i) => (
+                          <Card key={`${i}-${s.course || 'unknown'}`}>
+                            <CardContent className="flex items-center justify-between p-3">
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate text-sm font-semibold">{s.course}</div>
+                                <div className="text-xs text-muted-foreground">
+                                  {formatTime(s.timeSpent)} · {new Date(s.createdAt).toLocaleDateString()}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs text-muted-foreground">{s.score}/{s.total}</span>
+                                <span className={`text-base font-bold ${s.percentage >= 50 ? 'text-green-600' : 'text-red-500'}`}>
+                                  {s.percentage}%
+                                </span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  )}
+                </div>
+
+                <Button variant="destructive" className="w-full" onClick={handleLogout}>
+                  <LogOut className="mr-2 size-4" />
+                  Sign Out
+                </Button>
+              </>
+            )}
+          </>
+        )}
       </div>
     </div>
   )

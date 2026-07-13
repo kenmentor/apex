@@ -257,7 +257,7 @@ export default function QuizPage() {
 
   useEffect(() => {
     if (timeLeft === 0 && !finished && quizStarted && !revealAnswer) {
-      handleNext();
+      handleNext(true);
     }
   }, [timeLeft]);
 
@@ -597,13 +597,14 @@ export default function QuizPage() {
     }
   }
 
-  function handleNext() {
-    if (selected === null) return;
+  function handleNext(timedOut = false) {
+    if (selected === null && !timedOut) return;
     clearInterval(timerRef.current);
     playClick();
 
-    const isCorrect = selected === correctKey;
-    const newAnswers = [...answers, { selected, questionIndex: currentIndex, question: question.question, options: question.options }];
+    const answered = timedOut ? -1 : selected;
+    const isCorrect = answered === correctKey;
+    const newAnswers = [...answers, { selected: answered, questionIndex: currentIndex, question: question.question, options: question.options }];
     setAnswers(newAnswers);
 
     if (currentIndex + 1 < total) {

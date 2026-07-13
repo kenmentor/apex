@@ -82,6 +82,36 @@ export async function POST(request) {
     }
 
     const result = await scoresCol.insertOne(doc)
+
+    if (email) {
+      try {
+        const notifCol = await getCollection('notifications')
+        const emoji = percentage >= 90 ? '🏆' : percentage >= 70 ? '💪' : percentage >= 50 ? '👍' : '📚'
+        await notifCol.insertOne({
+          userEmail: email.toLowerCase().trim(),
+          type: 'quiz_complete',
+          title: `${emoji} Quiz Complete!`,
+          message: `You scored ${score}/${total} (${percentage}%) on ${normalizeCourse(courseCode)}`,
+          link: `/courses/${normalizeCourse(courseCode).toLowerCase().replace(/\s+/g, '')}`,
+          read: false,
+          createdAt: new Date().toISOString(),
+        })
+
+        const scoresAll = await scoresCol.find({ email: email.toLowerCase().trim() }).sort({ percentage: -1 }).toArray()
+        if (scoresAll.length > 0 && scoresAll[0]._id.toString() === result.insertedId.toString() && percentage >= 80) {
+          await notifCol.insertOne({
+            userEmail: email.toLowerCase().trim(),
+            type: 'achievement',
+            title: '🎯 New Best Score!',
+            message: `Your ${percentage}% on ${normalizeCourse(courseCode)} is your best yet!`,
+            link: `/courses/${normalizeCourse(courseCode).toLowerCase().replace(/\s+/g, '')}`,
+            read: false,
+            createdAt: new Date().toISOString(),
+          })
+        }
+      } catch {}
+    }
+
     return NextResponse.json({ success: true, id: result.insertedId.toString(), percentage }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to save score: ' + error.message }, { status: 500 })
