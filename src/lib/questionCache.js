@@ -1,11 +1,17 @@
 const DB_NAME = 'gss-quiz-cache'
 const STORE = 'questions'
-const DB_VERSION = 1
+const DB_VERSION = 2
 
 function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION)
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE, { key: 'courseCode' })
+    req.onupgradeneeded = () => {
+      const db = req.result
+      if (db.objectStoreNames.contains(STORE)) {
+        db.deleteObjectStore(STORE)
+      }
+      db.createObjectStore(STORE, { keyPath: 'courseCode' })
+    }
     req.onsuccess = () => resolve(req.result)
     req.onerror = () => reject(req.error)
   })

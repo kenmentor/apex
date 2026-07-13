@@ -22,7 +22,12 @@ export async function GET(request) {
       return NextResponse.json(space)
     }
 
-    const docs = await col.find({}).sort({ createdAt: -1 }).limit(50).toArray()
+    const sort = searchParams.get('sort')
+    const limit = parseInt(searchParams.get('limit') || '50')
+    let sortObj = { createdAt: -1 }
+    if (sort === 'popular') sortObj = { memberCount: -1 }
+
+    const docs = await col.find({}).sort(sortObj).limit(limit).toArray()
     return NextResponse.json(docs)
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

@@ -2,8 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { getToken, isAdmin, getUser, clearUser } from '@/lib/auth'
+import { getToken, isAdmin, clearUser } from '@/lib/auth'
 import Link from 'next/link'
+import { ArrowLeft, BarChart3, Home, LogOut, Pencil, Trash2, Plus } from 'lucide-react'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const TABS = [
   { key: 'categories', label: 'Categories' },
@@ -93,7 +102,7 @@ export default function AdminPage() {
         { name: 'courseCode', label: 'Course Code', required: true },
         { name: 'section', label: 'Section' },
         { name: 'question', label: 'Question', required: true },
-        { name: 'options', label: 'Options (JSON object, e.g. {"a":"...","b":"..."})', required: true },
+        { name: 'options', label: 'Options (JSON object)' , required: true },
         { name: 'correctAnswer', label: 'Correct Answer', required: true },
         { name: 'explanation', label: 'Explanation' },
       ],
@@ -102,31 +111,33 @@ export default function AdminPage() {
         { name: 'title', label: 'Title', required: true },
         { name: 'url', label: 'YouTube URL', required: true },
         { name: 'description', label: 'Description' },
-        { name: 'order', label: 'Order (number)' },
+        { name: 'order', label: 'Order' },
       ],
       readings: [
         { name: 'courseCode', label: 'Course Code', required: true },
         { name: 'title', label: 'Title', required: true },
-        { name: 'order', label: 'Order (number)' },
+        { name: 'order', label: 'Order' },
         { name: 'content', label: 'Content (HTML)', required: true },
       ],
     }
     return (fields[tab] || []).map(f => (
-      <div key={f.name} style={{ marginBottom: 12 }}>
-        <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 4, color: 'var(--text-dark)' }}>{f.label}</label>
-        {f.name === 'content' ? (
-          <textarea name={f.name} defaultValue={editDoc?.[f.name] || ''} required={f.required} rows={8}
-            style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace' }}
-          />
-        ) : f.name === 'options' ? (
-          <textarea name={f.name}
-            defaultValue={editDoc?.[f.name] ? JSON.stringify(editDoc[f.name], null, 2) : ''}
-            required={f.required} rows={6}
-            style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace' }}
+      <div key={f.name} className="space-y-1.5">
+        <Label htmlFor={f.name} className="text-xs">{f.label}</Label>
+        {f.name === 'content' || f.name === 'options' ? (
+          <Textarea
+            id={f.name}
+            name={f.name}
+            defaultValue={f.name === 'options' && editDoc?.[f.name] ? JSON.stringify(editDoc[f.name], null, 2) : (editDoc?.[f.name] || '')}
+            required={f.required}
+            rows={f.name === 'content' ? 8 : 6}
+            className="font-mono text-xs"
           />
         ) : (
-          <input name={f.name} defaultValue={editDoc?.[f.name] || ''} required={f.required}
-            style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13 }}
+          <Input
+            id={f.name}
+            name={f.name}
+            defaultValue={editDoc?.[f.name] || ''}
+            required={f.required}
           />
         )}
       </div>
@@ -134,90 +145,108 @@ export default function AdminPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f5f5f5', padding: 24, fontFamily: 'system-ui, sans-serif' }}>
-      <div style={{ maxWidth: 960, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 700 }}>Admin Dashboard</h1>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <Link href="/admin/analytics" style={{ fontSize: 13, color: '#ff9f43' }}>Analytics</Link>
-            <Link href="/" style={{ fontSize: 13, color: '#666' }}>Home</Link>
-            <button onClick={() => { clearUser(); router.push('/auth') }} style={{ fontSize: 13, color: '#e74c3c', background: 'none', border: 'none', cursor: 'pointer' }}>Sign Out</button>
-          </div>
-        </div>
+    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+      <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <Link href="/" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+          <ArrowLeft className="size-4" />
+        </Link>
+        <h1 className="flex-1 text-base font-bold">Admin Dashboard</h1>
+        <Link href="/admin/analytics" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+          <BarChart3 className="size-4" />
+        </Link>
+      </header>
 
+      <div className="mx-auto w-full max-w-2xl space-y-4 px-4 pt-4">
+        {/* Stats */}
         {visitorStats && (
-          <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
-            <div style={{ flex: 1, background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', textAlign: 'center' }}>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#130f40' }}>{visitorStats.uniqueVisitors}</div>
-              <div style={{ fontSize: 12, color: '#999' }}>Unique Visitors</div>
-            </div>
-            <div style={{ flex: 1, background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', textAlign: 'center' }}>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#ff9f43' }}>{visitorStats.totalVisits}</div>
-              <div style={{ fontSize: 12, color: '#999' }}>Total Visits</div>
-            </div>
+          <div className="grid grid-cols-2 gap-3">
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-primary">{visitorStats.uniqueVisitors}</div>
+                <div className="text-xs text-muted-foreground">Unique Visitors</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-orange-500">{visitorStats.totalVisits}</div>
+                <div className="text-xs text-muted-foreground">Total Visits</div>
+              </CardContent>
+            </Card>
           </div>
         )}
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 24, background: '#fff', borderRadius: 12, padding: 4, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-          {TABS.map(t => (
-            <button key={t.key} onClick={() => { setTab(t.key); setEditDoc(null) }}
-              style={{ flex: 1, padding: '10px 16px', border: 'none', borderRadius: 8, cursor: 'pointer',
-                background: tab === t.key ? '#130f40' : 'transparent', color: tab === t.key ? '#fff' : '#666',
-                fontWeight: 600, fontSize: 13, transition: 'all 0.2s' }}
-            >{t.label}</button>
-          ))}
-        </div>
+        <Tabs value={tab} onValueChange={(v) => { setTab(v); setEditDoc(null) }}>
+          <TabsList className="w-full">
+            {TABS.map(t => (
+              <TabsTrigger key={t.key} value={t.key} className="flex-1 text-xs">
+                {t.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-        {/* Form */}
-        <div style={{ background: '#fff', borderRadius: 12, padding: 20, marginBottom: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>{editDoc ? 'Edit' : 'Add'} {tab.slice(0, -1)}</h2>
-          <form onSubmit={handleSave}>
-            {renderForm()}
-            <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-              <button type="submit" disabled={saving}
-                style={{ padding: '10px 24px', border: 'none', borderRadius: 8, background: '#130f40', color: '#fff',
-                  fontWeight: 600, fontSize: 13, cursor: 'pointer' }}
-              >{saving ? 'Saving...' : editDoc ? 'Update' : 'Create'}</button>
-              {editDoc && (
-                <button type="button" onClick={() => setEditDoc(null)}
-                  style={{ padding: '10px 24px', border: '1px solid #ddd', borderRadius: 8, background: '#fff',
-                    fontWeight: 600, fontSize: 13, cursor: 'pointer' }}
-                >Cancel</button>
-              )}
-            </div>
-          </form>
-          {message && <p style={{ marginTop: 12, fontSize: 13, color: message === 'Saved!' ? '#27ae60' : '#e74c3c' }}>{message}</p>}
-        </div>
+          <TabsContent value={tab} className="mt-4 space-y-4">
+            {/* Form */}
+            <Card>
+              <CardContent className="p-5">
+                <h2 className="mb-4 text-sm font-bold">{editDoc ? 'Edit' : 'Add'} {tab.slice(0, -1)}</h2>
+                <form onSubmit={handleSave} className="space-y-3">
+                  {renderForm()}
+                  <div className="flex gap-2 pt-2">
+                    <Button type="submit" disabled={saving} size="sm">
+                      {saving ? 'Saving...' : editDoc ? 'Update' : 'Create'}
+                    </Button>
+                    {editDoc && (
+                      <Button type="button" variant="outline" size="sm" onClick={() => setEditDoc(null)}>
+                        Cancel
+                      </Button>
+                    )}
+                  </div>
+                </form>
+                {message && (
+                  <p className={`mt-3 text-xs font-medium ${message === 'Saved!' ? 'text-green-500' : 'text-red-500'}`}>
+                    {message}
+                  </p>
+                )}
+              </CardContent>
+            </Card>
 
-        {/* List */}
-        <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
-          <div style={{ padding: 16, borderBottom: '1px solid #f1f2f6', fontSize: 14, fontWeight: 600, color: '#666' }}>
-            {docs.length} {tab}
-          </div>
-          {loading ? (
-            <div style={{ padding: 40, textAlign: 'center', color: '#999' }}>Loading...</div>
-          ) : docs.length === 0 ? (
-            <div style={{ padding: 40, textAlign: 'center', color: '#999' }}>No {tab} yet</div>
-          ) : (
-            docs.map(doc => (
-              <div key={doc._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #f8f9fa' }}>
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 600 }}>{doc.title || doc.question || doc.code || doc.name || doc._id}</div>
-                  {doc.code && <div style={{ fontSize: 12, color: '#999' }}>{doc.code}</div>}
+            {/* List */}
+            <Card>
+              <CardContent className="p-0">
+                <div className="border-b px-4 py-3">
+                  <span className="text-xs font-semibold text-muted-foreground">{docs.length} {tab}</span>
                 </div>
-                <div style={{ display: 'flex', gap: 6 }}>
-                  <button onClick={() => setEditDoc(doc)}
-                    style={{ padding: '6px 14px', border: '1px solid #ddd', borderRadius: 6, background: '#fff', cursor: 'pointer', fontSize: 12 }}
-                  >Edit</button>
-                  <button onClick={() => handleDelete(doc._id)}
-                    style={{ padding: '6px 14px', border: '1px solid #e74c3c', borderRadius: 6, background: '#fff', color: '#e74c3c', cursor: 'pointer', fontSize: 12 }}
-                  >Delete</button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+                {loading ? (
+                  <div className="space-y-3 p-4">
+                    {[1, 2, 3].map(i => <Skeleton key={i} className="h-12 w-full rounded-lg" />)}
+                  </div>
+                ) : docs.length === 0 ? (
+                  <div className="py-12 text-center text-sm text-muted-foreground">No {tab} yet</div>
+                ) : (
+                  <div className="divide-y divide-border">
+                    {docs.map(doc => (
+                      <div key={doc._id} className="flex items-center justify-between px-4 py-3">
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-sm font-medium">{doc.title || doc.question || doc.code || doc.name || doc._id}</div>
+                          {doc.code && <div className="text-[11px] text-muted-foreground">{doc.code}</div>}
+                        </div>
+                        <div className="flex gap-1.5 shrink-0 ml-3">
+                          <Button variant="outline" size="sm" onClick={() => setEditDoc(doc)}>
+                            <Pencil className="size-3" />
+                          </Button>
+                          <Button variant="outline" size="sm" onClick={() => handleDelete(doc._id)} className="text-red-500 hover:text-red-600 hover:bg-red-500/10">
+                            <Trash2 className="size-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )

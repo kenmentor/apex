@@ -28,6 +28,7 @@ export default function HomePage() {
   const [recentScores, setRecentScores] = useState([]);
   const [userRank, setUserRank] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
+  const [topSpaces, setTopSpaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -38,6 +39,7 @@ export default function HomePage() {
     const fetches = [
       fetch('/api/categories?limit=20').then((r) => r.json()),
       fetch('/api/leaderboard').then((r) => r.json()).catch(() => []),
+      fetch('/api/spaces?sort=popular&limit=5').then((r) => r.json()).catch(() => []),
     ];
 
     if (u?.email) {
@@ -54,10 +56,11 @@ export default function HomePage() {
     }
 
     Promise.all(fetches)
-      .then(([catsData, leaderData, notifData, scoresData]) => {
+      .then(([catsData, leaderData, spacesData, notifData, scoresData]) => {
         setCategories(catsData.docs || []);
         const board = Array.isArray(leaderData) ? leaderData : [];
         setLeaderboard(board.slice(0, 5));
+        setTopSpaces(Array.isArray(spacesData) ? spacesData.slice(0, 5) : []);
         if (notifData) setUnreadCount(notifData.unreadCount || 0);
         if (scoresData && Array.isArray(scoresData)) {
           setRecentScores(scoresData.slice(0, 3));
@@ -218,6 +221,42 @@ export default function HomePage() {
                     <div className="text-xs text-muted-foreground">
                       {s.score}/{s.total} correct · {getTimeAgo(s.createdAt)}
                     </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Top Spaces */}
+        {topSpaces.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-bold">Popular Spaces</h2>
+              <Link href="/spaces" className="text-sm font-medium text-primary">See All</Link>
+            </div>
+            <div className="space-y-3">
+              {topSpaces.map((space) => (
+                <Link
+                  key={space._id}
+                  href={`/spaces/${space._id}`}
+                  className="flex items-center gap-4 rounded-xl border p-4 transition-colors hover:bg-muted active:scale-[0.99]"
+                >
+                  <div
+                    className="flex size-12 shrink-0 items-center justify-center rounded-xl text-lg font-bold text-white"
+                    style={{ backgroundColor: space.color || '#130f40' }}
+                  >
+                    {space.name?.charAt(0) || 'S'}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold truncate">{space.name}</div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {space.description || 'No description'}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground shrink-0">
+                    <Users className="size-3.5" />
+                    {space.memberCount || 0}
                   </div>
                 </Link>
               ))}

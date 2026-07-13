@@ -7,6 +7,9 @@ import { playClick, playCorrect, playWrong } from '@/lib/sound';
 import { getUser, getToken } from '@/lib/auth';
 import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
 import { trackQuizEvent } from '@/components/AnalyticsTracker';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { ChevronLeft, Clock, Check, AlertTriangle } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
 
@@ -34,7 +37,6 @@ const FUNNY_COMMENTS = {
     "The questions were asking me for answers. 😭😂",
     "Legend status unlocked. 🏅"
   ],
-
   good: [
     "We're cooking... just not Michelin star yet. 🍳😂",
     "Steady progress. GPA dey smile already. 📈",
@@ -47,7 +49,6 @@ const FUNNY_COMMENTS = {
     "No panic. Semester still dey. 💪",
     "The comeback has started. 🚀"
   ],
-
   mid: [
     "I understand the assignment... small. 😂",
     "The exam understood me more than I understood it. 😭",
@@ -60,7 +61,6 @@ const FUNNY_COMMENTS = {
     "Hope is still alive. 😂",
     "Revision and I need to become friends. 📖"
   ],
-
   low: [
     "The questions and I met for the first time today. 😭",
     "Even Google would need time for this one. 😂",
@@ -166,7 +166,6 @@ export default function QuizPage() {
           startTime.current = Date.now()
         }
       }
-      // Skip API fetch if offline mode is on and we have cached data
       if (settings.offline && cached?.length > 0) return
       try {
         const res = await fetch(`/api/questions?course=${encodeURIComponent(code)}`)
@@ -265,7 +264,6 @@ export default function QuizPage() {
     stateRef.current = { currentIndex, answers, timeLeft, playerName, playerSchool, finished, questionCount: questions.length, settings };
   });
 
-  // ─── Generate share card when finished ───
   useEffect(() => {
     if (!finished) return
     const generateCard = async () => {
@@ -275,32 +273,27 @@ export default function QuizPage() {
         canvas.height = 500
         const ctx = canvas.getContext('2d')
 
-        // Background
         const grad = ctx.createLinearGradient(0, 0, 0, 500)
         grad.addColorStop(0, '#130f40')
         grad.addColorStop(1, '#2c2c54')
         ctx.fillStyle = grad
         ctx.fillRect(0, 0, 600, 500)
 
-        // Orange top accent
         ctx.fillStyle = '#ff9f43'
         ctx.fillRect(0, 0, 600, 8)
 
-        // Meme emoji
         const memes = pct >= 90 ? ['🏆', '🧠', '🔥'] : pct >= 70 ? ['💪', '🎯', '⚡'] : pct >= 50 ? ['👍', '😅', '📚'] : ['💀', '😭', '🫠']
         const meme = memes[Math.floor(Math.random() * memes.length)]
         ctx.font = '80px sans-serif'
         ctx.textAlign = 'center'
         ctx.fillText(meme, 300, 110)
 
-        // Funny comment
         const comment = getFunnyComment(pct)
         shareCommentRef.current = comment
         ctx.font = 'bold 20px sans-serif'
         ctx.fillStyle = '#ff9f43'
         ctx.fillText(comment, 300, 155)
 
-        // Brand
         ctx.font = 'bold 28px sans-serif'
         ctx.fillStyle = '#ffffff'
         ctx.fillText('APEX', 300, 200)
@@ -308,10 +301,8 @@ export default function QuizPage() {
         ctx.fillStyle = 'rgba(255,255,255,0.5)'
         ctx.fillText('quiz.apex.app', 300, 218)
 
-        // Score card
         const cardY = 255, cardH = 170
         ctx.beginPath()
-        // manual rounded rect for compatibility
         const cr = 20
         ctx.moveTo(40 + cr, cardY)
         ctx.lineTo(40 + 520 - cr, cardY)
@@ -326,18 +317,15 @@ export default function QuizPage() {
         ctx.fillStyle = 'rgba(255,255,255,0.08)'
         ctx.fill()
 
-        // Score big
         ctx.textAlign = 'center'
         ctx.font = 'bold 64px sans-serif'
         ctx.fillStyle = '#ff9f43'
         ctx.fillText(`${correctCount}/${total}`, 300, cardY + 90)
 
-        // Percentage + time + course
         ctx.font = '18px sans-serif'
         ctx.fillStyle = 'rgba(255,255,255,0.7)'
         ctx.fillText(`${pct}% · ${formatTime(elapsedSeconds)} · ${code}`, 300, cardY + 135)
 
-        // Bottom link
         ctx.font = '12px sans-serif'
         ctx.fillStyle = 'rgba(255,255,255,0.3)'
         ctx.textAlign = 'center'
@@ -350,7 +338,6 @@ export default function QuizPage() {
     generateCard()
   }, [finished])
 
-  // ─── Anti-cheat: tab visibility → auto-submit ───
   useEffect(() => {
     if (quizStarted && !finished && answers.length > 0 && answers.length !== prevAnswerCount.current) {
       prevAnswerCount.current = answers.length;
@@ -396,7 +383,6 @@ export default function QuizPage() {
     };
   }, []);
 
-  // ─── Anti-cheat: disable right-click, copy, paste ───
   useEffect(() => {
     if (!quizStarted || finished) return
     const block = (e) => { e.preventDefault(); return false }
@@ -408,26 +394,26 @@ export default function QuizPage() {
 
   if (loading) {
     return (
-      <div className="app-wrapper">
-        <div className="quiz-container" style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ color: 'var(--text-muted)', fontSize: 16 }}>Loading questions...</div>
-        </div>
+      <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+        <Card className="w-full max-w-lg flex items-center justify-center py-20">
+          <p className="text-sm text-muted-foreground">Loading questions...</p>
+        </Card>
       </div>
     );
   }
 
   if (allQuestions.length === 0) {
     return (
-      <div className="app-wrapper">
-        <div className="quiz-container" style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
-            <div style={{ color: 'var(--text-muted)', fontSize: 16 }}>No questions for {code}</div>
-            <Link href="/courses" className="btn-restart" style={{ marginTop: 20, padding: '12px 32px', fontSize: 14, textDecoration: 'none' }}>
-              Back to Courses
+      <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+        <Card className="w-full max-w-lg flex items-center justify-center py-20 text-center">
+          <div>
+            <div className="mb-4 text-5xl">📚</div>
+            <p className="text-muted-foreground">No questions for {code}</p>
+            <Link href="/courses" className="mt-5 inline-block">
+              <Button className="mt-5 px-6">Back to Courses</Button>
             </Link>
           </div>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -436,20 +422,26 @@ export default function QuizPage() {
   if (showResumePrompt && restoredProgress) {
     const answered = restoredProgress.answers.length;
     return (
-      <div className="app-wrapper">
-        <div className="quiz-container" style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ textAlign: 'center', padding: '0 20px' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>▶️</div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Resume Quiz?</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20 }}>
+      <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+        <Card className="w-full max-w-lg flex items-center justify-center py-16 px-8 text-center">
+          <div className="space-y-4">
+            <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-primary/10">
+              <span className="text-3xl">▶️</span>
+            </div>
+            <h2 className="text-xl font-bold">Resume Quiz?</h2>
+            <p className="text-sm text-muted-foreground">
               You've answered {answered} question{answered !== 1 ? 's' : ''} so far.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-              <button className="btn-next" onClick={() => handleResume(restoredProgress)}>Resume</button>
-              <button className="btn-restart" onClick={handleStartFresh}>Start Fresh</button>
+            <div className="flex gap-3 pt-2">
+              <Button onClick={() => handleResume(restoredProgress)} className="flex-1 py-5 text-base font-semibold">
+                Resume
+              </Button>
+              <Button variant="outline" onClick={handleStartFresh} className="flex-1 py-5 text-base font-semibold">
+                Start Fresh
+              </Button>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -459,53 +451,52 @@ export default function QuizPage() {
     const limitOptions = [5, 10, 20, 30, allQuestions.length];
     const timeOptions = [10, 15, 30, 45, 60];
     return (
-      <div className="app-wrapper">
-        <div className="quiz-container" style={{ justifyContent: 'center' }}>
-          <div className="top-bar">
-            <Link href={`/courses/${code.toLowerCase()}`} className="back-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
+      <div className="flex min-h-dvh flex-col bg-background px-5 pb-24 pt-6">
+        <div className="mx-auto w-full max-w-lg">
+          {/* Top bar */}
+          <div className="mb-8 flex items-center justify-between">
+            <Link href={`/courses/${code.toLowerCase()}`} className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80">
+              <ChevronLeft className="size-4" />
             </Link>
-            <div className="screen-title-center">Quiz Settings</div>
-            <div className="back-btn" style={{ background: 'none' }}></div>
+            <h1 className="text-lg font-bold">Quiz Settings</h1>
+            <div className="size-10" />
           </div>
 
-          <div style={{ padding: '20px 0', display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <div>
-              <label style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-dark)' }}>Number of Questions</label>
-              <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <label className="text-sm font-semibold">Number of Questions</label>
+              <div className="flex flex-wrap gap-2">
                 {limitOptions.map((n) => (
-                  <button
+                  <Button
                     key={n}
+                    variant={settings.questionLimit === n ? 'default' : 'outline'}
+                    className="min-w-[60px] flex-1 text-sm"
                     onClick={() => setSettings(s => ({ ...s, questionLimit: n }))}
-                    className={`option-item ${settings.questionLimit === n ? 'selected' : ''}`}
-                    style={{ flex: 1, minWidth: 60, textAlign: 'center', border: '2px solid', borderColor: settings.questionLimit === n ? 'var(--primary-orange)' : '#e2e8f0', padding: '10px 8px' }}
                   >
                     {n === allQuestions.length ? 'All' : n}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
 
-            <div>
-              <label style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-dark)' }}>Time per Question (seconds)</label>
-              <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
+            <div className="space-y-3">
+              <label className="text-sm font-semibold">Time per Question</label>
+              <div className="flex flex-wrap gap-2">
                 {timeOptions.map((t) => (
-                  <button
+                  <Button
                     key={t}
+                    variant={settings.timePerQuestion === t ? 'default' : 'outline'}
+                    className="min-w-[60px] flex-1 text-sm"
                     onClick={() => setSettings(s => ({ ...s, timePerQuestion: t }))}
-                    className={`option-item ${settings.timePerQuestion === t ? 'selected' : ''}`}
-                    style={{ flex: 1, minWidth: 60, textAlign: 'center', border: '2px solid', borderColor: settings.timePerQuestion === t ? 'var(--primary-orange)' : '#e2e8f0', padding: '10px 8px' }}
                   >
                     {t}s
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
 
             {allQuestions.length > 0 && (
-              <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
+              <p className="text-center text-xs text-muted-foreground">
                 {(() => {
                   const unseenCount = allQuestions.length - getSeenIds(code).length
                   return (
@@ -523,30 +514,29 @@ export default function QuizPage() {
                     </>
                   )
                 })()}
-              </div>
+              </p>
             )}
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8f9fa', borderRadius: 14, padding: '14px 18px' }}>
+            <div className="flex items-center justify-between rounded-xl border p-4">
               <div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-dark)' }}>Offline Mode</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Use cached questions (no internet)</div>
+                <div className="text-sm font-semibold">Offline Mode</div>
+                <div className="text-xs text-muted-foreground">Use cached questions (no internet)</div>
               </div>
-              <label style={{ position: 'relative', display: 'inline-block', width: 46, height: 24, cursor: 'pointer' }}>
-                <input type="checkbox" checked={settings.offline} onChange={() => setSettings(s => ({ ...s, offline: !s.offline }))} style={{ opacity: 0, width: 0, height: 0 }} />
-                <span style={{
-                  position: 'absolute', inset: 0, borderRadius: 24, transition: '0.3s',
-                  background: settings.offline ? 'var(--space-purple)' : '#ccc',
-                }}></span>
-                <span style={{
-                  position: 'absolute', top: 2, left: settings.offline ? 24 : 2,
-                  width: 20, height: 20, borderRadius: '50%', background: 'white', transition: '0.3s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
-                }}></span>
-              </label>
+              <button
+                onClick={() => setSettings(s => ({ ...s, offline: !s.offline }))}
+                className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors"
+                style={{ backgroundColor: settings.offline ? 'var(--color-primary)' : '#ccc' }}
+              >
+                <span
+                  className="pointer-events-none inline-block size-5 rounded-full bg-white shadow-lg transition-transform"
+                  style={{ transform: settings.offline ? 'translateX(20px)' : 'translateX(0)' }}
+                />
+              </button>
             </div>
 
-            <button className="btn-next" onClick={handleStartQuiz} style={{ marginTop: 8 }}>
+            <Button onClick={handleStartQuiz} className="w-full py-6 text-base font-bold tracking-wide">
               START QUIZ
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -560,7 +550,7 @@ export default function QuizPage() {
   const totalAnswered = answers.length;
   const correctCount = answers.reduce((count, a) => {
     const q = questions[a.questionIndex];
-    return count + (a.selected?.toLowerCase() === q?.correct_answer?.toLowerCase() ? 1 : 0);
+    return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
   }, 0);
   const elapsedSeconds = Math.floor((Date.now() - startTime.current) / 1000);
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
@@ -602,8 +592,7 @@ export default function QuizPage() {
     clearInterval(timerRef.current);
     playClick();
 
-    const answered = timedOut ? -1 : selected;
-    const isCorrect = answered === correctKey;
+    const answered = timedOut ? null : selected;
     const newAnswers = [...answers, { selected: answered, questionIndex: currentIndex, question: question.question, options: question.options }];
     setAnswers(newAnswers);
 
@@ -676,7 +665,6 @@ export default function QuizPage() {
       }
     } catch {}
 
-    // Fallback: open WhatsApp with text
     const wa = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`
     window.open(wa, '_blank')
   }
@@ -707,130 +695,147 @@ export default function QuizPage() {
     const msg = pct >= 80 ? 'Excellent!' : pct >= 50 ? 'Good effort!' : 'Keep studying!';
 
     return (
-      <div className="app-wrapper">
-        <div className="quiz-container" style={{ minHeight: 'auto' }}>
-          <div className="result-container">
-            {cheatWarning && (
-              <div style={{ background: '#fff3cd', color: '#856404', padding: '8px 16px', borderRadius: 10, fontSize: 13, marginBottom: 12, width: '100%', textAlign: 'center' }}>
-                ⚠ {cheatWarning}
-              </div>
-            )}
-            <div className="result-emoji">{emoji}</div>
-            <div className="result-score-label">Your Score</div>
-            <div className="result-score">
-              {correctCount}<span>/{total}</span>
+      <div className="flex min-h-dvh flex-col bg-background px-5 pb-24 pt-6">
+        <div className="mx-auto w-full max-w-lg space-y-6">
+          {cheatWarning && (
+            <div className="flex items-center justify-center gap-2 rounded-xl bg-yellow-100 p-3 text-sm text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+              <AlertTriangle className="size-4 shrink-0" />
+              {cheatWarning}
             </div>
-            <div className="result-label">{msg}</div>
+          )}
 
-            <table className="stats-table">
-              <tbody>
-                <tr>
-                  <td className="stats-label">Time Spent</td>
-                  <td className="stats-value orange">{formatTime(elapsedSeconds)}</td>
-                </tr>
-                <tr>
-                  <td className="stats-label">Questions Answered</td>
-                  <td className="stats-value">{totalAnswered}/{total}</td>
-                </tr>
-                <tr>
-                  <td className="stats-label">Correct Answers</td>
-                  <td className="stats-value green">{correctCount}</td>
-                </tr>
-                <tr>
-                  <td className="stats-label">Wrong Answers</td>
-                  <td className="stats-value red">{totalAnswered - correctCount}</td>
-                </tr>
-                <tr>
-                  <td className="stats-label">Percentage</td>
-                  <td className="stats-value" style={{ color: pct >= 80 ? 'var(--success-green)' : pct >= 50 ? 'var(--primary-orange)' : 'var(--error-red)' }}>{pct}%</td>
-                </tr>
-                <tr>
-                  <td className="stats-label">Course</td>
-                  <td className="stats-value" style={{ fontWeight: 500 }}>{code}</td>
-                </tr>
-                <tr>
-                  <td className="stats-label">Time/Question</td>
-                  <td className="stats-value">{settings.timePerQuestion}s</td>
-                </tr>
-              </tbody>
-            </table>
+          <Card className="py-10 text-center">
+            <div className="space-y-4">
+              <div className="text-7xl">{emoji}</div>
+              <p className="text-sm text-muted-foreground">Your Score</p>
+              <p className="text-6xl font-bold tracking-tight">
+                {correctCount}<span className="text-2xl font-medium text-muted-foreground">/{total}</span>
+              </p>
+              <p className="text-lg font-semibold">{msg}</p>
+            </div>
+          </Card>
 
-            <button className="btn-next" onClick={() => {
+          <Card className="divide-y p-0">
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Time Spent</span>
+              <span className="text-sm font-bold text-orange-500">{formatTime(elapsedSeconds)}</span>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Questions Answered</span>
+              <span className="text-sm font-bold">{totalAnswered}/{total}</span>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Correct Answers</span>
+              <span className="text-sm font-bold text-green-500">{correctCount}</span>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Wrong Answers</span>
+              <span className="text-sm font-bold text-red-500">{totalAnswered - correctCount}</span>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Percentage</span>
+              <span className={`text-sm font-bold ${pct >= 80 ? 'text-green-500' : pct >= 50 ? 'text-orange-500' : 'text-red-500'}`}>{pct}%</span>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Course</span>
+              <span className="text-sm font-medium">{code}</span>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <span className="text-sm text-muted-foreground">Time/Question</span>
+              <span className="text-sm font-bold">{settings.timePerQuestion}s</span>
+            </div>
+          </Card>
+
+          <Button
+            className="w-full py-6 text-base font-bold"
+            onClick={() => {
               const reviewAnswers = answers.map((a) => {
                 const q = questions[a.questionIndex];
-                const isCorrect = a.selected?.toLowerCase() === q?.correct_answer?.toLowerCase();
+                const isCorrect = a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase();
                 return { ...a, correctKey: q?.correct_answer, isCorrect };
               });
               sessionStorage.setItem('apex_review', JSON.stringify({ answers: reviewAnswers, questions, code }))
               router.push(`/courses/${code.toLowerCase()}/quiz/review`)
-            }} style={{ marginTop: 16 }}>
-              REVIEW ANSWERS
-            </button>
+            }}
+          >
+            REVIEW ANSWERS
+          </Button>
 
-            {!saved && showSaveModal && (
-              <div className="modal-overlay" onClick={() => setShowSaveModal(false)}>
-                <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 40, marginBottom: 12 }}>🏆</div>
-                  <h3>Save Your Score</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20 }}>
-                    Sign in to save your result to the leaderboard.
-                  </p>
-                  <Link href="/auth" className="btn-next" style={{ textDecoration: 'none', display: 'inline-block', padding: '12px 32px', marginBottom: 8 }}>
-                    Sign In
+          {!saved && showSaveModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-5 backdrop-blur-sm">
+              <Card className="w-full max-w-sm space-y-4 py-8 text-center">
+                <div className="text-5xl">🏆</div>
+                <h3 className="text-xl font-bold">Save Your Score</h3>
+                <p className="px-4 text-sm text-muted-foreground">
+                  Sign in to save your result to the leaderboard.
+                </p>
+                <div className="space-y-2 px-6 pt-2">
+                  <Link href="/auth" className="block">
+                    <Button className="w-full py-5 text-sm font-semibold">Sign In</Button>
                   </Link>
-                  <button className="btn-skip" onClick={() => setShowSaveModal(false)} style={{ display: 'block', width: '100%', textAlign: 'center' }}>Skip</button>
+                  <Button variant="ghost" className="w-full" onClick={() => setShowSaveModal(false)}>
+                    Skip
+                  </Button>
                 </div>
-              </div>
-            )}
-
-            {saved && (
-              <p style={{ color: 'var(--success-green)', fontWeight: 600, fontSize: 14, marginTop: 8 }}>
-                ✓ Saved! Check the leaderboard.
-              </p>
-            )}
-
-            {shareCardUrl && (
-              <div style={{ marginTop: 20, textAlign: 'center' }}>
-                <img src={shareCardUrl} alt="Score card" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.15)' }} />
-              </div>
-            )}
-
-            <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <div style={{ position: 'relative' }}>
-                <button
-                  className="btn-restart"
-                  onClick={() => setShowShareOptions(!showShareOptions)}
-                  style={{ marginTop: 0, background: 'var(--primary-orange)', color: '#130f40', padding: '14px 36px' }}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: 6 }}>
-                    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                  </svg>
-                  Share
-                </button>
-
-                {showShareOptions && (
-                  <div className="share-options-popup">
-                    <button className="share-option" onClick={() => { handleDownload(); setShowShareOptions(false) }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
-                      </svg>
-                      Download Image
-                    </button>
-                    <button className="share-option" onClick={() => { handleShare(); setShowShareOptions(false) }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                      </svg>
-                      Share
-                    </button>
-                  </div>
-                )}
-              </div>
-              <button className="btn-restart" onClick={handleRestart} style={{ marginTop: 0 }}>Try Again</button>
+              </Card>
             </div>
+          )}
+
+          {saved && (
+            <p className="text-center text-sm font-semibold text-green-500">
+              ✓ Saved! Check the leaderboard.
+            </p>
+          )}
+
+          {shareCardUrl && (
+            <div className="text-center">
+              <img src={shareCardUrl} alt="Score card" className="mx-auto max-w-full rounded-2xl shadow-lg" />
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <div className="relative flex-1">
+              <Button
+                variant="outline"
+                className="w-full py-5 text-sm font-semibold"
+                onClick={() => setShowShareOptions(!showShareOptions)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                Share
+              </Button>
+
+              {showShareOptions && (
+                <div className="absolute bottom-full left-1/2 z-10 mb-2 flex w-48 -translate-x-1/2 flex-col gap-0.5 rounded-2xl border bg-card p-1.5 shadow-lg animate-in fade-in slide-in-from-bottom-2">
+                  <button
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-muted"
+                    onClick={() => { handleDownload(); setShowShareOptions(false) }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download Image
+                  </button>
+                  <button
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-muted"
+                    onClick={() => { handleShare(); setShowShareOptions(false) }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                    Share
+                  </button>
+                </div>
+              )}
+            </div>
+            <Button variant="outline" className="flex-1 py-5 text-sm font-semibold" onClick={handleRestart}>
+              Try Again
+            </Button>
           </div>
         </div>
       </div>
@@ -839,81 +844,102 @@ export default function QuizPage() {
 
   // ─────────── QUIZ SCREEN ───────────
   return (
-    <div className="app-wrapper">
-      <div className="quiz-container">
+    <div className="flex min-h-dvh flex-col bg-background px-5 pb-24 pt-6">
+      <div className="mx-auto w-full max-w-lg">
         {cheatWarning && (
-          <div style={{ background: '#fff3cd', color: '#856404', padding: '6px 14px', borderRadius: 10, fontSize: 12, marginBottom: 10, textAlign: 'center' }}>
-            ⚠ {cheatWarning}
+          <div className="mb-3 flex items-center justify-center gap-2 rounded-xl bg-yellow-100 p-2 text-xs text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+            <AlertTriangle className="size-3.5 shrink-0" />
+            {cheatWarning}
           </div>
         )}
-        <div className="top-bar">
-          <Link href={`/courses/${code.toLowerCase()}`} className="back-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+
+        {/* Top bar */}
+        <div className="mb-5 flex items-center justify-between">
+          <Link href={`/courses/${code.toLowerCase()}`} className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80">
+            <ChevronLeft className="size-4" />
           </Link>
-          <div className="screen-title-center">{code}</div>
-          <div className="timer-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-            </svg>
+          <h1 className="text-lg font-bold">{code}</h1>
+          <div className="flex items-center gap-2 rounded-full bg-red-50 px-3 py-1.5 font-semibold text-red-500">
+            <Clock className="size-4" />
             <span>{timeLeft}s</span>
           </div>
         </div>
 
-        <div className="question-counter">Question {currentIndex + 1}/{total}</div>
-
-        <div className="progress-bar-track">
-          <div className="progress-bar-fill" style={{ width: `${(currentIndex / total) * 100}%` }} />
+        {/* Progress */}
+        <p className="mb-2 text-sm text-muted-foreground">Question {currentIndex + 1}/{total}</p>
+        <div className="mb-6 h-2 w-full overflow-hidden rounded-full bg-muted">
+          <div
+            className="h-full rounded-full transition-all duration-400 ease-out"
+            style={{
+              width: `${(currentIndex / total) * 100}%`,
+              background: 'linear-gradient(90deg, #ff9f43, #ff4757)',
+            }}
+          />
         </div>
 
-        <div className="question-card">{question.question}</div>
+        {/* Question */}
+        <Card className="mb-6 flex min-h-[120px] items-center justify-center px-7 py-9 text-center">
+          <p className="text-base font-medium leading-relaxed">{question.question}</p>
+        </Card>
 
-        <div className="options-list">
+        {/* Options */}
+        <div className="mb-6 space-y-3">
           {optionKeys.map((key, idx) => {
             const isCorrect = key === correctKey;
             const isRevealedCorrect = revealAnswer && isCorrect;
-            let optionClass = `option-item ${selected === key ? 'selected' : ''}`;
-            if (isRevealedCorrect) optionClass += ' reveal-correct';
+            const isSelected = selected === key;
+
+            let styles = 'border bg-muted/50 hover:bg-muted';
+            if (isSelected) styles = 'border-2 border-primary bg-primary text-primary-foreground';
+            if (isRevealedCorrect) styles = 'border-2 border-green-500 bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-300';
 
             return (
-              <div
+              <button
                 key={key}
-                className={optionClass}
                 onClick={() => handleSelect(key)}
+                className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all active:scale-[0.98] ${styles}`}
               >
-                <span className="option-letter">{OPTION_LABELS[idx] || key.toUpperCase()}</span>
-                {question.options[key]}
+                <span className={`flex size-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold ${
+                  isSelected ? 'bg-white/20 text-white' : isRevealedCorrect ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
+                }`}>
+                  {OPTION_LABELS[idx] || key.toUpperCase()}
+                </span>
+                <span className="flex-1 text-sm">{question.options[key]}</span>
                 {isRevealedCorrect && (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#27ae60" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto', flexShrink: 0 }}>
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
+                  <Check className="size-5 shrink-0 text-green-500" />
                 )}
-              </div>
+              </button>
             );
           })}
         </div>
 
+        {/* Explanation */}
         {revealAnswer && question.explanation && (
-          <div className="explanation-box">
-            <strong>Explanation</strong>
-            {question.explanation}
+          <div className="mb-6 rounded-2xl border-l-4 border-primary bg-muted/50 p-4">
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">Explanation</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{question.explanation}</p>
           </div>
         )}
 
+        {/* Action */}
         {revealAnswer ? (
-          <div>
-            <button className="btn-next" onClick={handleNextAfterReveal}>
-              {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
-            </button>
-          </div>
+          <Button className="w-full py-6 text-base font-bold" onClick={handleNextAfterReveal}>
+            {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
+          </Button>
         ) : (
-          <div>
-            <button className="btn-next" onClick={handleNext} disabled={selected === null} style={{ opacity: selected === null ? 0.5 : 1 }}>
+          <div className="space-y-3">
+            <Button
+              className="w-full py-6 text-base font-bold"
+              disabled={selected === null}
+              onClick={handleNext}
+            >
               {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
-            </button>
+            </Button>
             {!selected && !revealAnswer && (
-              <button className="show-answer-link" onClick={handleShowAnswer}>
+              <button
+                onClick={handleShowAnswer}
+                className="block w-full text-center text-sm font-semibold text-orange-500 underline underline-offset-3 opacity-80 transition-opacity hover:opacity-100"
+              >
                 Show Answer
               </button>
             )}
