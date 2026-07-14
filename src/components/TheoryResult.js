@@ -45,64 +45,68 @@ export default function TheoryResult({ result, onNext, isLast }) {
 
   const { keywordScore, llmScore, totalPoints, percentage, feedback, keywordMatched } = result
 
+  const grade = percentage >= 90 ? 'A' : percentage >= 80 ? 'B' : percentage >= 70 ? 'C' : percentage >= 60 ? 'D' : percentage >= 50 ? 'E' : 'F'
+  const gradeColor = percentage >= 70 ? 'text-green-600' : percentage >= 50 ? 'text-amber-600' : 'text-red-500'
+
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex justify-center">
-        <ScoreRing score={totalPoints} />
-      </div>
+      {/* Score Header */}
+      <Card className="py-6 text-center">
+        <div className="space-y-3">
+          <ScoreRing score={totalPoints} />
+          <div>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">Score</p>
+            <p className={`text-2xl font-bold ${gradeColor}`}>{grade}</p>
+          </div>
+        </div>
+      </Card>
 
-      <div className="grid grid-cols-2 gap-3">
-        <Card>
-          <CardContent className="flex items-center gap-2 p-3">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-              <Sparkles className="size-4" />
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground">Keywords</div>
-              <div className="text-sm font-bold">{keywordScore} / 4</div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex items-center gap-2 p-3">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-purple-100 text-purple-600">
-              <Sparkles className="size-4" />
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground">Examiner</div>
-              <div className="text-sm font-bold">{llmScore} / 6</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Breakdown */}
+      <Card className="divide-y p-0">
+        <div className="flex items-center justify-between p-4">
+          <span className="text-sm text-muted-foreground">Keyword Relevance</span>
+          <span className="text-sm font-bold">{keywordScore.toFixed(1)} / 4.0</span>
+        </div>
+        <div className="flex items-center justify-between p-4">
+          <span className="text-sm text-muted-foreground">Examiner Evaluation</span>
+          <span className="text-sm font-bold">{llmScore.toFixed(1)} / 6.0</span>
+        </div>
+        <div className="flex items-center justify-between p-4">
+          <span className="text-sm text-muted-foreground">Total Marks</span>
+          <span className={`text-sm font-bold ${gradeColor}`}>{totalPoints.toFixed(1)} / 10.0</span>
+        </div>
+        <div className="flex items-center justify-between p-4">
+          <span className="text-sm text-muted-foreground">Percentage</span>
+          <span className={`text-sm font-bold ${gradeColor}`}>{percentage}%</span>
+        </div>
+      </Card>
 
+      {/* Examiner Remarks */}
       {feedback?.breakdown && (
         <Card>
           <CardContent className="p-4">
-            <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
-              <Sparkles className="size-4 text-purple-500" />
-              Examiner Feedback
-            </div>
-            <p className="text-sm text-muted-foreground">{feedback.breakdown}</p>
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Examiner Remarks</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{feedback.breakdown}</p>
           </CardContent>
         </Card>
       )}
 
+      {/* Concept Assessment */}
       {(feedback?.matchedConcepts?.length > 0 || keywordMatched?.length > 0) && (
         <Card>
           <CardContent className="p-4">
-            <div className="mb-2 text-sm font-semibold text-green-600">What you got right</div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-green-600">Concepts Demonstrated</p>
             <div className="flex flex-wrap gap-1.5">
               {keywordMatched?.map((kw) => (
-                <Badge key={`kw-${kw}`} variant="secondary" className="bg-green-100 text-green-700">
+                <Badge key={`kw-${kw}`} variant="secondary" className="bg-green-100 text-green-700 text-xs">
                   <Check className="mr-1 size-3" />
                   {kw}
                 </Badge>
               ))}
               {feedback?.matchedConcepts?.map((c) => (
-                <Badge key={`lc-${c}`} variant="secondary" className="bg-green-100 text-green-700">
+                <Badge key={`lc-${c}`} variant="secondary" className="bg-green-100 text-green-700 text-xs">
                   <Check className="mr-1 size-3" />
-                  {c.length > 40 ? c.slice(0, 40) + '...' : c}
+                  {c.length > 45 ? c.slice(0, 45) + '...' : c}
                 </Badge>
               ))}
             </div>
@@ -113,12 +117,12 @@ export default function TheoryResult({ result, onNext, isLast }) {
       {feedback?.missingConcepts?.length > 0 && (
         <Card>
           <CardContent className="p-4">
-            <div className="mb-2 text-sm font-semibold text-red-500">What you missed</div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-red-500">Concepts Not Demonstrated</p>
             <div className="flex flex-wrap gap-1.5">
               {feedback.missingConcepts.map((c) => (
-                <Badge key={c} variant="secondary" className="bg-red-50 text-red-600">
+                <Badge key={c} variant="secondary" className="bg-red-50 text-red-600 text-xs">
                   <X className="mr-1 size-3" />
-                  {c.length > 40 ? c.slice(0, 40) + '...' : c}
+                  {c.length > 45 ? c.slice(0, 45) + '...' : c}
                 </Badge>
               ))}
             </div>
@@ -129,12 +133,12 @@ export default function TheoryResult({ result, onNext, isLast }) {
       {feedback?.illegible?.length > 0 && (
         <Card>
           <CardContent className="p-4">
-            <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-amber-600">
-              <AlertCircle className="size-4" />
-              Illegible parts detected
+            <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-amber-600">
+              <AlertCircle className="size-3.5" />
+              Illegible Content Detected
             </div>
             <p className="text-sm text-muted-foreground">
-              Some parts of your handwriting couldn&apos;t be read clearly. Try writing more clearly next time.
+              Portions of your response could not be read clearly. Write more clearly to ensure full evaluation.
             </p>
           </CardContent>
         </Card>
@@ -143,35 +147,30 @@ export default function TheoryResult({ result, onNext, isLast }) {
       {feedback?.suggestions && (
         <Card>
           <CardContent className="p-4">
-            <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
-              <Lightbulb className="size-4 text-amber-500" />
-              Suggestion
-            </div>
+            <p className="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide">
+              <Lightbulb className="size-3.5 text-amber-500" />
+              Recommendation
+            </p>
             <p className="text-sm text-muted-foreground">{feedback.suggestions}</p>
           </CardContent>
         </Card>
       )}
 
-      <div className="flex justify-center pt-2">
-        <div
-          className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-            percentage >= 80 ? 'bg-green-100 text-green-700' :
-            percentage >= 60 ? 'bg-yellow-100 text-yellow-700' :
-            percentage >= 40 ? 'bg-orange-100 text-orange-700' :
-            'bg-red-100 text-red-600'
-          }`}
-        >
-          +{totalPoints} points added
-        </div>
+      {/* Points earned */}
+      <div className="flex justify-center pt-1">
+        <Badge variant="outline" className={`${percentage >= 50 ? 'border-green-300 text-green-600' : 'border-red-300 text-red-500'} text-xs`}>
+          +{totalPoints.toFixed(1)} marks awarded
+        </Badge>
       </div>
 
+      {/* Next button */}
       {onNext && (
-        <button
+        <Button
           onClick={onNext}
-          className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          className="w-full py-6 text-base font-bold"
         >
-          {isLast ? 'View Results' : 'Next Question'}
-        </button>
+          {isLast ? 'VIEW RESULTS' : 'NEXT QUESTION'}
+        </Button>
       )}
     </div>
   )
