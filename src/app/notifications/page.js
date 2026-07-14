@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Bell, BellOff, CheckCheck, Trophy, BookOpen, TrendingUp, Star, Clock, Trash2 } from 'lucide-react';
+import { ArrowLeft, Bell, BellOff, CheckCheck, Trophy, BookOpen, TrendingUp, Star, Clock, Trash2, UserPlus } from 'lucide-react';
 import { getUser, getToken } from '@/lib/auth';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +15,7 @@ const TYPE_CONFIG = {
   achievement: { icon: Trophy, color: '#ffc048', bg: '#ffc04815' },
   new_course: { icon: BookOpen, color: '#130f40', bg: '#130f4015' },
   streak: { icon: Star, color: '#e056a0', bg: '#e056a015' },
+  follow: { icon: UserPlus, color: '#4bc0c0', bg: '#4bc0c015' },
   system: { icon: Bell, color: '#636e72', bg: '#636e7215' },
 };
 

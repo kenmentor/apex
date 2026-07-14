@@ -28,6 +28,16 @@ export async function POST(request) {
         { $setOnInsert: { follower: user.email, following: target.email, createdAt: new Date() } },
         { upsert: true },
       )
+      const notifCol = await getCollection('notifications')
+      await notifCol.insertOne({
+        userEmail: target.email,
+        type: 'follow',
+        title: 'New Follower',
+        message: `${user.name || user.email.split('@')[0]} followed you`,
+        link: `/profile/${encodeURIComponent(user.email)}`,
+        read: false,
+        createdAt: new Date().toISOString(),
+      })
     } else {
       await col.deleteOne({ follower: user.email, following: target.email })
     }
