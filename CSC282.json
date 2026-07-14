@@ -1,0 +1,1646 @@
+{
+  "course_code": "CSC 282",
+  "course_title": "Computer Lab 2B: Java OOP",
+  "study_guide_title": "Comprehensive Solved Past Questions Study Guide (Corrected & Grounded)",
+  "sections": [
+    {
+      "section_title": "PART 1: JAVA FOUNDATIONS & OBJECTS (Q1-Q20)",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "In Java, a class is defined using which keyword?",
+          "options": {
+            "a": "define",
+            "b": "object",
+            "c": "class",
+            "d": "new",
+            "e": "struct"
+          },
+          "correct_answer": "c",
+          "explanation": "The 'class' keyword is the fundamental reserved word used to declare a blueprint for objects in Java.",
+          "code": "// Defining a class in Java\npublic class MyClass {\n    // fields and methods go here\n}"
+        },
+        {
+          "id": "Q2",
+          "question": "Which keyword is used to instantiate a new object in Java?",
+          "options": {
+            "a": "create",
+            "b": "instance",
+            "c": "new",
+            "d": "allocate",
+            "e": "make"
+          },
+          "correct_answer": "c",
+          "explanation": "The 'new' operator allocates memory on the heap and returns a reference to the newly created object.",
+          "code": "// Instantiating an object with the \"new\" keyword\nMyClass obj = new MyClass();"
+        },
+        {
+          "id": "Q3",
+          "question": "What is the primary role of a constructor?",
+          "options": {
+            "a": "To destroy objects",
+            "b": "To initialize object state",
+            "c": "To define the class",
+            "d": "To run the main method",
+            "e": "To compile code"
+          },
+          "correct_answer": "b",
+          "explanation": "Constructors are special methods invoked during object creation to set initial values for fields.",
+          "code": "public class Car {\n    String color;\n    int year;\n\n    // Constructor - initializes object state\n    public Car(String color, int year) {\n        this.color = color;\n        this.year = year;\n    }\n}"
+        },
+        {
+          "id": "Q4",
+          "question": "Which of these is NOT one of the four main pillars of OOP?",
+          "options": {
+            "a": "Encapsulation",
+            "b": "Inheritance",
+            "c": "Polymorphism",
+            "d": "Abstraction",
+            "e": "Compilation"
+          },
+          "correct_answer": "e",
+          "explanation": "Compilation is a language processing step; the pillars are Encapsulation, Inheritance, Polymorphism, and Abstraction."
+        },
+        {
+          "id": "Q5",
+          "question": "What does a constructor return?",
+          "options": {
+            "a": "void",
+            "b": "The object instance",
+            "c": "Nothing, it has no return type",
+            "d": "An integer status code",
+            "e": "A boolean"
+          },
+          "correct_answer": "c",
+          "explanation": "Constructors have no return type, not even void. They implicitly return the instance of the class being created.",
+          "code": "public class Example {\n    // Constructor - NO return type, not even void\n    public Example() {\n        System.out.println(\"Constructor called\");\n    }\n}"
+        },
+        {
+          "id": "Q6",
+          "question": "A variable that belongs to the class rather than an instance is declared as:",
+          "options": {
+            "a": "final",
+            "b": "static",
+            "c": "abstract",
+            "d": "public",
+            "e": "void"
+          },
+          "correct_answer": "b",
+          "explanation": "The 'static' keyword indicates that the member belongs to the class, shared by all instances.",
+          "code": "public class Counter {\n    // static variable - belongs to class, not instances\n    static int count = 0;\n\n    // instance variable\n    int instanceId;\n\n    public Counter() {\n        count++;\n        instanceId = count;\n    }\n}"
+        },
+        {
+          "id": "Q7",
+          "question": "Which keyword prevents a class from being inherited?",
+          "options": {
+            "a": "static",
+            "b": "abstract",
+            "c": "final",
+            "d": "private",
+            "e": "const"
+          },
+          "correct_answer": "c",
+          "explanation": "Declaring a class as 'final' seals it, preventing any subclassing. This is a common security practice.",
+          "code": "// \"final\" class cannot be inherited\nfinal class Base { }\n\n// This would cause a compile error:\n// class Derived extends Base { }"
+        },
+        {
+          "id": "Q8",
+          "question": "What is the result of 'this' keyword inside a constructor?",
+          "options": {
+            "a": "Refers to the superclass",
+            "b": "Refers to the current object instance",
+            "c": "Refers to the main class",
+            "d": "Allocates memory",
+            "e": "Nothing"
+          },
+          "correct_answer": "b",
+          "explanation": "'this' is a reference to the current object being constructed or manipulated.",
+          "code": "public class Person {\n    String name;\n\n    public Person(String name) {\n        this.name = name;\n    }\n\n    public void printName() {\n        System.out.println(this.name);\n    }\n}"
+        },
+        {
+          "id": "Q9",
+          "question": "Which of these is a valid way to overload a constructor?",
+          "options": {
+            "a": "Change return type",
+            "b": "Change method name",
+            "c": "Change parameter list",
+            "d": "Change access modifier only",
+            "e": "It cannot be overloaded"
+          },
+          "correct_answer": "c",
+          "explanation": "Overloading allows multiple constructors with different parameter signatures.",
+          "code": "public class Calculator {\n    // Overloaded constructors - same name, different params\n    public Calculator() { }\n    public Calculator(int a) { }\n    public Calculator(int a, int b) { }\n}"
+        },
+        {
+          "id": "Q10",
+          "question": "What happens if you do not define a constructor in your class?",
+          "options": {
+            "a": "Compiler error",
+            "b": "The class cannot be instantiated",
+            "c": "Java provides a default no-argument constructor",
+            "d": "The object is created as null",
+            "e": "Only static members are available"
+          },
+          "correct_answer": "c",
+          "explanation": "If no constructor is provided, Java automatically inserts a default public no-arg constructor.",
+          "code": "public class MyClass {\n    int x;\n    // No explicit constructor defined\n    // Java provides a default no-arg constructor automatically\n}"
+        },
+        {
+          "id": "Q11",
+          "question": "Which of these is a primitive type in Java?",
+          "options": {
+            "a": "String",
+            "b": "int",
+            "c": "ArrayList",
+            "d": "Scanner",
+            "e": "System"
+          },
+          "correct_answer": "b",
+          "explanation": "int is a primitive type; String and others are objects/classes."
+        },
+        {
+          "id": "Q12",
+          "question": "What is the purpose of the 'main' method?",
+          "options": {
+            "a": "It is the only method allowed",
+            "b": "It is the entry point for program execution",
+            "c": "It defines a class",
+            "d": "It manages memory",
+            "e": "It is a constructor"
+          },
+          "correct_answer": "b",
+          "explanation": "The JVM looks for the signature `public static void main(String[] args)` to start execution."
+        },
+        {
+          "id": "Q13",
+          "question": "Java is often described as:",
+          "options": {
+            "a": "Purely procedural",
+            "b": "Object-Oriented",
+            "c": "Assembly language",
+            "d": "Hardware-dependent",
+            "e": "A scripting language"
+          },
+          "correct_answer": "b",
+          "explanation": "Java is fundamentally an Object-Oriented Programming language."
+        },
+        {
+          "id": "Q14",
+          "question": "What does the JVM (Java Virtual Machine) do?",
+          "options": {
+            "a": "It deletes objects",
+            "b": "It executes bytecode",
+            "c": "It defines variables",
+            "d": "It writes source code",
+            "e": "It replaces the compiler"
+          },
+          "correct_answer": "b",
+          "explanation": "The JVM interprets and executes compiled Java bytecode on various platforms."
+        },
+        {
+          "id": "Q15",
+          "question": "Which operator is used to check for reference equality?",
+          "options": {
+            "a": "equals()",
+            "b": "==",
+            "c": "===",
+            "d": "is",
+            "e": "match"
+          },
+          "correct_answer": "b",
+          "explanation": "The '==' operator checks if two references point to the same memory location.",
+          "code": "String s1 = new String(\"Hello\");\nString s2 = new String(\"Hello\");\n\nSystem.out.println(s1 == s2);        // false (reference equality)\nSystem.out.println(s1.equals(s2));   // true (value equality)"
+        },
+        {
+          "id": "Q16",
+          "question": "What is the default value of an uninitialized int field in a class?",
+          "options": {
+            "a": "null",
+            "b": "1",
+            "c": "0",
+            "d": "-1",
+            "e": "undefined"
+          },
+          "correct_answer": "c",
+          "explanation": "Instance variables (fields) are initialized to default values (0 for int, false for boolean, null for objects)."
+        },
+        {
+          "id": "Q17",
+          "question": "What is the root class of all classes in Java?",
+          "options": {
+            "a": "Base",
+            "b": "Root",
+            "c": "Object",
+            "d": "Main",
+            "e": "Parent"
+          },
+          "correct_answer": "c",
+          "explanation": "Every class in Java implicitly extends java.lang.Object."
+        },
+        {
+          "id": "Q18",
+          "question": "Can you have multiple main methods in one class?",
+          "options": {
+            "a": "No",
+            "b": "Yes, through overloading",
+            "c": "Only if they are private",
+            "d": "Only if they are static",
+            "e": "Yes, if they have different return types"
+          },
+          "correct_answer": "b",
+          "explanation": "Yes, you can overload the main method, though only the standard signature is used by the JVM for entry."
+        },
+        {
+          "id": "Q19",
+          "question": "Which of these is a valid declaration of a constant?",
+          "options": {
+            "a": "var X = 10;",
+            "b": "final int X = 10;",
+            "c": "const int X = 10;",
+            "d": "static int X = 10;",
+            "e": "int X = 10;"
+          },
+          "correct_answer": "b",
+          "explanation": "The 'final' keyword prevents modification of the variable once initialized.",
+          "code": "public class Constants {\n    // \"final\" makes it a constant\n    public static final double PI = 3.14159;\n    final int MAX_SIZE = 100;\n}"
+        },
+        {
+          "id": "Q20",
+          "question": "What is a 'package'?",
+          "options": {
+            "a": "A collection of methods",
+            "b": "A library for classes",
+            "c": "A namespace for organizing related classes",
+            "d": "An object type",
+            "e": "A compiler directive"
+          },
+          "correct_answer": "c",
+          "explanation": "Packages provide structure and prevent naming conflicts in Java projects."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 2: ENCAPSULATION & ACCESS CONTROL (Q21-Q40)",
+      "questions": [
+        {
+          "id": "Q21",
+          "question": "Encapsulation is primarily used for:",
+          "options": {
+            "a": "Performance speed",
+            "b": "Data hiding and protection",
+            "c": "Code generation",
+            "d": "Memory allocation",
+            "e": "Infinite loops"
+          },
+          "correct_answer": "b",
+          "explanation": "Encapsulation restricts direct access to data, protecting the internal state of an object.",
+          "code": "public class BankAccount {\n    private double balance;  // data hiding\n\n    public double getBalance() {  // controlled access\n        return balance;\n    }\n}"
+        },
+        {
+          "id": "Q22",
+          "question": "Which access modifier is the most restrictive?",
+          "options": {
+            "a": "public",
+            "b": "protected",
+            "c": "default",
+            "d": "private",
+            "e": "static"
+          },
+          "correct_answer": "d",
+          "explanation": "Private members are only accessible within the class they are defined in."
+        },
+        {
+          "id": "Q23",
+          "question": "What is a getter method?",
+          "options": {
+            "a": "A method to delete data",
+            "b": "A method to set a value",
+            "c": "A method to retrieve the value of a private field",
+            "d": "A constructor",
+            "e": "A static method"
+          },
+          "correct_answer": "c",
+          "explanation": "Getters provide controlled, read-only or validated access to private fields.",
+          "code": "public class Student {\n    private String name;\n\n    // Getter - returns the field value\n    public String getName() {\n        return name;\n    }\n}"
+        },
+        {
+          "id": "Q24",
+          "question": "What is a setter method?",
+          "options": {
+            "a": "A method to update a private field",
+            "b": "A method to print data",
+            "c": "A method to initialize a class",
+            "d": "A method to return a value",
+            "e": "A destructor"
+          },
+          "correct_answer": "a",
+          "explanation": "Setters allow external classes to modify private fields safely, often with validation logic.",
+          "code": "public class Student {\n    private String name;\n\n    // Setter - validates and sets the field\n    public void setName(String name) {\n        if (name != null && !name.isEmpty()) {\n            this.name = name;\n        }\n    }\n}"
+        },
+        {
+          "id": "Q25",
+          "question": "Default access (no specifier) means the member is visible to:",
+          "options": {
+            "a": "Everything",
+            "b": "Only the class",
+            "c": "Only the package",
+            "d": "Only subclasses",
+            "e": "Nowhere"
+          },
+          "correct_answer": "c",
+          "explanation": "Also known as package-private, this is the default if no modifier is used."
+        },
+        {
+          "id": "Q26",
+          "question": "Which access modifier allows access from subclasses in different packages?",
+          "options": {
+            "a": "private",
+            "b": "protected",
+            "c": "public",
+            "d": "default",
+            "e": "static"
+          },
+          "correct_answer": "b",
+          "explanation": "Protected is visible to the package and subclasses elsewhere."
+        },
+        {
+          "id": "Q27",
+          "question": "Why use encapsulation?",
+          "options": {
+            "a": "To make code harder to hack",
+            "b": "To simplify maintenance",
+            "c": "To reduce compile time",
+            "d": "To remove the need for constructors",
+            "e": "To allow public access to all variables"
+          },
+          "correct_answer": "b",
+          "explanation": "By controlling access, developers can change internal implementations without breaking external code."
+        },
+        {
+          "id": "Q28",
+          "question": "Which keyword is NOT an access modifier?",
+          "options": {
+            "a": "public",
+            "b": "private",
+            "c": "protected",
+            "d": "final",
+            "e": "default"
+          },
+          "correct_answer": "d",
+          "explanation": "Final is a non-access modifier used to restrict entities (variables, methods, classes)."
+        },
+        {
+          "id": "Q29",
+          "question": "Can a private method be accessed from a child class?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if static",
+            "d": "Only via getters",
+            "e": "Yes, if in the same package"
+          },
+          "correct_answer": "b",
+          "explanation": "Private members are strictly limited to the class in which they are defined."
+        },
+        {
+          "id": "Q30",
+          "question": "Access control in Java helps with:",
+          "options": {
+            "a": "Security and modularity",
+            "b": "Faster compilation",
+            "c": "CPU optimization",
+            "d": "Decreasing file size",
+            "e": "None of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Access control allows developers to hide sensitive implementation logic from external tampering."
+        },
+        {
+          "id": "Q31",
+          "question": "What is data hiding?",
+          "options": {
+            "a": "Encrypting files",
+            "b": "Making all variables public",
+            "c": "Restricting access to internal object data",
+            "d": "Deleting data",
+            "e": "Commenting out code"
+          },
+          "correct_answer": "c",
+          "explanation": "Data hiding is the essence of encapsulation."
+        },
+        {
+          "id": "Q32",
+          "question": "If you need to strictly control validation when setting a variable, you should:",
+          "options": {
+            "a": "Make it public",
+            "b": "Use a setter method",
+            "c": "Make it static",
+            "d": "Delete the variable",
+            "e": "Make it final"
+          },
+          "correct_answer": "b",
+          "explanation": "Setters allow you to inject `if` checks or validation logic before assigning a value."
+        },
+        {
+          "id": "Q33",
+          "question": "Which modifier should be used for variables that are internal implementation details?",
+          "options": {
+            "a": "public",
+            "b": "private",
+            "c": "static",
+            "d": "final",
+            "e": "none"
+          },
+          "correct_answer": "b",
+          "explanation": "Hiding implementation details prevents dependencies and accidental modification."
+        },
+        {
+          "id": "Q34",
+          "question": "Can a public class have private members?",
+          "options": {
+            "a": "No",
+            "b": "Yes",
+            "c": "Only if they are final",
+            "d": "Only if they are static",
+            "e": "No, if the class is public, all members must be public"
+          },
+          "correct_answer": "b",
+          "explanation": "Access levels are defined per member, independent of the class modifier."
+        },
+        {
+          "id": "Q35",
+          "question": "Which modifier allows classes in other packages to access a member?",
+          "options": {
+            "a": "private",
+            "b": "protected",
+            "c": "public",
+            "d": "default",
+            "e": "none"
+          },
+          "correct_answer": "c",
+          "explanation": "Public is the least restrictive level."
+        },
+        {
+          "id": "Q36",
+          "question": "When does encapsulation make software safer?",
+          "options": {
+            "a": "When it prevents unauthorized mutation",
+            "b": "When it encrypts the bytecode",
+            "c": "When it adds a password to the class",
+            "d": "When it increases memory usage",
+            "e": "It does not improve safety"
+          },
+          "correct_answer": "a",
+          "explanation": "Encapsulation acts as a gatekeeper, ensuring valid state transitions."
+        },
+        {
+          "id": "Q37",
+          "question": "Which of these is considered a 'mutator' method?",
+          "options": {
+            "a": "Constructor",
+            "b": "Getter",
+            "c": "Setter",
+            "d": "Main",
+            "e": "Finalizer"
+          },
+          "correct_answer": "c",
+          "explanation": "A mutator method modifies the internal state of an object."
+        },
+        {
+          "id": "Q38",
+          "question": "Which of these is considered an 'accessor' method?",
+          "options": {
+            "a": "Setter",
+            "b": "Constructor",
+            "c": "Getter",
+            "d": "Main",
+            "e": "Void method"
+          },
+          "correct_answer": "c",
+          "explanation": "An accessor method provides read access to internal state."
+        },
+        {
+          "id": "Q39",
+          "question": "Can private members be accessed via reflection?",
+          "options": {
+            "a": "No",
+            "b": "Yes, using setAccessible(true)",
+            "c": "Only in C++",
+            "d": "Never",
+            "e": "Only if declared protected"
+          },
+          "correct_answer": "b",
+          "explanation": "Java Reflection API is a powerful feature that can bypass access modifiers for advanced manipulation."
+        },
+        {
+          "id": "Q40",
+          "question": "Is it good practice to make fields public?",
+          "options": {
+            "a": "Yes, always",
+            "b": "No, it violates encapsulation",
+            "c": "Only for primitive types",
+            "d": "Only for strings",
+            "e": "Yes, for better performance"
+          },
+          "correct_answer": "b",
+          "explanation": "Public fields expose internal state to unintended changes, violating OOP best practices."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 3: INHERITANCE & POLYMORPHISM (Q41-Q60)",
+      "questions": [
+        {
+          "id": "Q41",
+          "question": "Inheritance is achieved using which keyword?",
+          "options": {
+            "a": "implements",
+            "b": "extends",
+            "c": "inherits",
+            "d": "uses",
+            "e": "extends_class"
+          },
+          "correct_answer": "b",
+          "explanation": "The 'extends' keyword is used to create a subclass in Java.",
+          "code": "// Inheritance using \"extends\"\nclass Animal {\n    void eat() { System.out.println(\"Eating...\"); }\n}\n\nclass Dog extends Animal {\n    void bark() { System.out.println(\"Barking...\"); }\n}\n// Dog inherits eat() from Animal"
+        },
+        {
+          "id": "Q42",
+          "question": "Which of the following is true about inheritance?",
+          "options": {
+            "a": "It supports multiple inheritance of classes",
+            "b": "It supports only single inheritance of classes",
+            "c": "It is not supported in Java",
+            "d": "It requires abstract classes",
+            "e": "It makes programs run slower"
+          },
+          "correct_answer": "b",
+          "explanation": "Java supports single inheritance of classes to avoid complexity like the 'diamond problem'."
+        },
+        {
+          "id": "Q43",
+          "question": "What is method overriding?",
+          "options": {
+            "a": "Creating methods with the same name and parameters in the same class",
+            "b": "Redefining a superclass method in a subclass",
+            "c": "Deleting a method",
+            "d": "Calling a method from another package",
+            "e": "Using a static method"
+          },
+          "correct_answer": "b",
+          "explanation": "Overriding provides specific subclass behavior for a method inherited from a parent.",
+          "code": "class Parent {\n    void show() { System.out.println(\"Parent\"); }\n}\n\nclass Child extends Parent {\n    @Override\n    void show() { System.out.println(\"Child\"); }  // overriding\n}"
+        },
+        {
+          "id": "Q44",
+          "question": "What is method overloading?",
+          "options": {
+            "a": "Multiple methods with same name but different parameters",
+            "b": "Redefining a parent method",
+            "c": "Calling a method recursively",
+            "d": "Using two classes",
+            "e": "It is not supported"
+          },
+          "correct_answer": "a",
+          "explanation": "Overloading allows multiple methods to share a name if their parameter signatures are distinct."
+        },
+        {
+          "id": "Q45",
+          "question": "The 'super' keyword is used to:",
+          "options": {
+            "a": "Access current object members",
+            "b": "Access parent class members",
+            "c": "Initialize a static block",
+            "d": "Define a new method",
+            "e": "Delete an object"
+          },
+          "correct_answer": "b",
+          "explanation": "Super allows access to methods or fields of the parent class, or to call parent constructors.",
+          "code": "class Parent {\n    Parent() { System.out.println(\"Parent constructor\"); }\n}\n\nclass Child extends Parent {\n    Child() {\n        super();  // calls Parent constructor\n        System.out.println(\"Child constructor\");\n    }\n}"
+        },
+        {
+          "id": "Q46",
+          "question": "What is polymorphism?",
+          "options": {
+            "a": "The ability to exist in many forms",
+            "b": "The ability to inherit many classes",
+            "c": "A memory optimization technique",
+            "d": "A way to hide code",
+            "e": "A type of loop"
+          },
+          "correct_answer": "a",
+          "explanation": "Polymorphism allows objects to be treated as instances of their superclass or interface."
+        },
+        {
+          "id": "Q47",
+          "question": "Which of these is compile-time polymorphism?",
+          "options": {
+            "a": "Method overriding",
+            "b": "Method overloading",
+            "c": "Abstract classes",
+            "d": "Interfaces",
+            "e": "Constructors"
+          },
+          "correct_answer": "b",
+          "explanation": "Overloading is resolved at compile time based on parameter signatures.",
+          "code": "// Method Overloading (compile-time polymorphism)\nclass MathOp {\n    int add(int a, int b) { return a + b; }\n    int add(int a, int b, int c) { return a + b + c; }\n}\n\n// Method Overriding (runtime polymorphism)\nclass Animal {\n    void sound() { System.out.println(\"Some sound\"); }\n}\nclass Dog extends Animal {\n    void sound() { System.out.println(\"Bark\"); }\n}"
+        },
+        {
+          "id": "Q48",
+          "question": "Which of these is runtime polymorphism?",
+          "options": {
+            "a": "Method overloading",
+            "b": "Method overriding",
+            "c": "Variable hiding",
+            "d": "Static methods",
+            "e": "Primitive types"
+          },
+          "correct_answer": "b",
+          "explanation": "Overriding is resolved at runtime based on the actual object instance."
+        },
+        {
+          "id": "Q49",
+          "question": "Can you override a static method?",
+          "options": {
+            "a": "Yes",
+            "b": "No, it is hidden",
+            "c": "Only in interfaces",
+            "d": "Only if public",
+            "e": "Yes, but with different parameters"
+          },
+          "correct_answer": "b",
+          "explanation": "Static methods are associated with the class, not instances, so they cannot be overridden (only hidden)."
+        },
+        {
+          "id": "Q50",
+          "question": "What does a constructor chain start with?",
+          "options": {
+            "a": "this() or super()",
+            "b": "new",
+            "c": "abstract",
+            "d": "interface",
+            "e": "null"
+          },
+          "correct_answer": "a",
+          "explanation": "The first line of a constructor often calls another constructor (in the same class or superclass).",
+          "code": "class A {\n    A() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    B() { System.out.println(\"B\"); }\n}\nclass C extends B {\n    C() { System.out.println(\"C\"); }\n}\n// new C() outputs: A B C (constructor chain)"
+        },
+        {
+          "id": "Q51",
+          "question": "The 'is-a' relationship describes:",
+          "options": {
+            "a": "Aggregation",
+            "b": "Composition",
+            "c": "Inheritance",
+            "d": "Encapsulation",
+            "e": "Polymorphism"
+          },
+          "correct_answer": "c",
+          "explanation": "A subclass 'is a' superclass (e.g., a Car 'is a' Vehicle)."
+        },
+        {
+          "id": "Q52",
+          "question": "What is the consequence of not overriding an abstract method in a non-abstract subclass?",
+          "options": {
+            "a": "Compiler error",
+            "b": "The program runs fine",
+            "c": "It prints a warning",
+            "d": "The method is ignored",
+            "e": "The class crashes"
+          },
+          "correct_answer": "a",
+          "explanation": "Concrete subclasses must implement all inherited abstract methods."
+        },
+        {
+          "id": "Q53",
+          "question": "Dynamic binding is associated with:",
+          "options": {
+            "a": "Method overloading",
+            "b": "Method overriding",
+            "c": "Static methods",
+            "d": "Final variables",
+            "e": "Constructors"
+          },
+          "correct_answer": "b",
+          "explanation": "Dynamic binding (late binding) links the method call to the implementation at runtime."
+        },
+        {
+          "id": "Q54",
+          "question": "Which of these demonstrates polymorphism?",
+          "options": {
+            "a": "Vehicle v = new Car();",
+            "b": "int x = 10;",
+            "c": "final int Y = 5;",
+            "d": "class A {}",
+            "e": "System.out.println();"
+          },
+          "correct_answer": "a",
+          "explanation": "Using a parent reference (Vehicle) to hold a child object (Car) is a classic example of polymorphism."
+        },
+        {
+          "id": "Q55",
+          "question": "Multiple inheritance in Java is achieved via:",
+          "options": {
+            "a": "Abstract classes",
+            "b": "Multiple class extension",
+            "c": "Interfaces",
+            "d": "Packages",
+            "e": "Not possible"
+          },
+          "correct_answer": "c",
+          "explanation": "Classes can implement multiple interfaces, allowing a form of multiple inheritance.",
+          "code": "interface Flyable { void fly(); }\ninterface Swimmable { void swim(); }\n\n// Multiple inheritance via interfaces\nclass Duck implements Flyable, Swimmable {\n    public void fly() { System.out.println(\"Flying\"); }\n    public void swim() { System.out.println(\"Swimming\"); }\n}"
+        },
+        {
+          "id": "Q56",
+          "question": "Can you override a final method?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if protected",
+            "d": "Only in the same package",
+            "e": "Yes, if final is removed"
+          },
+          "correct_answer": "b",
+          "explanation": "The 'final' keyword forbids overriding."
+        },
+        {
+          "id": "Q57",
+          "question": "When does 'super' call the parent constructor?",
+          "options": {
+            "a": "Only at the beginning of the constructor",
+            "b": "Anywhere in the constructor",
+            "c": "Only after variable initialization",
+            "d": "Only if the class is abstract",
+            "e": "It does not"
+          },
+          "correct_answer": "a",
+          "explanation": "super() must be the first statement in the constructor."
+        },
+        {
+          "id": "Q58",
+          "question": "Is inheritance mandatory in OOP?",
+          "options": {
+            "a": "Yes",
+            "b": "No, it is optional",
+            "c": "Only for abstract classes",
+            "d": "Only for interfaces",
+            "e": "Yes, for the code to compile"
+          },
+          "correct_answer": "b",
+          "explanation": "You can design systems without inheritance using composition."
+        },
+        {
+          "id": "Q59",
+          "question": "Which of these is an example of code reuse?",
+          "options": {
+            "a": "Inheritance",
+            "b": "Overloading",
+            "c": "Encapsulation",
+            "d": "Static blocks",
+            "e": "All of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Inheritance allows subclasses to reuse code and behavior from parent classes."
+        },
+        {
+          "id": "Q60",
+          "question": "Does private inheritance exist in Java?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only for internal classes",
+            "d": "Only in Java 8",
+            "e": "Yes, by default"
+          },
+          "correct_answer": "b",
+          "explanation": "Java only supports public inheritance (the 'extends' keyword)."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 4: ABSTRACTION & INTERFACES (Q61-Q80)",
+      "questions": [
+        {
+          "id": "Q61",
+          "question": "An abstract method has:",
+          "options": {
+            "a": "A block of code",
+            "b": "No body",
+            "c": "Only parameters",
+            "d": "A return type only",
+            "e": "A semicolon"
+          },
+          "correct_answer": "b",
+          "explanation": "Abstract methods define the signature but not the implementation.",
+          "code": "// Abstract class with abstract method\nabstract class Shape {\n    abstract double area();  // no body\n}\n\nclass Circle extends Shape {\n    double area() { return 3.14 * r * r; }  // must implement\n}"
+        },
+        {
+          "id": "Q62",
+          "question": "Can an abstract class be instantiated?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if public",
+            "d": "Only in the same package",
+            "e": "Yes, if it has no abstract methods"
+          },
+          "correct_answer": "b",
+          "explanation": "Abstract classes are incomplete and cannot be instantiated."
+        },
+        {
+          "id": "Q63",
+          "question": "What is an interface?",
+          "options": {
+            "a": "A blueprint with abstract methods",
+            "b": "A class with all private members",
+            "c": "A main method",
+            "d": "A data type",
+            "e": "An object instance"
+          },
+          "correct_answer": "a",
+          "explanation": "Interfaces define contracts of behavior that classes must implement.",
+          "code": "// Interface - pure abstraction\ninterface Drawable {\n    void draw();  // implicitly public abstract\n}"
+        },
+        {
+          "id": "Q64",
+          "question": "Can interfaces contain concrete methods?",
+          "options": {
+            "a": "No, never",
+            "b": "Yes, using default or static methods (Java 8+)",
+            "c": "Only if they are private",
+            "d": "Only if they are final",
+            "e": "Only if they are protected"
+          },
+          "correct_answer": "b",
+          "explanation": "Java 8+ allows default and static methods in interfaces."
+        },
+        {
+          "id": "Q65",
+          "question": "Which keyword is used to implement an interface?",
+          "options": {
+            "a": "extends",
+            "b": "implements",
+            "c": "inherits",
+            "d": "uses",
+            "e": "interface"
+          },
+          "correct_answer": "b",
+          "explanation": "Classes implement interfaces.",
+          "code": "interface Printable {\n    void print();\n}\n\n// \"implements\" keyword\nclass Document implements Printable {\n    public void print() {\n        System.out.println(\"Printing...\");\n    }\n}"
+        },
+        {
+          "id": "Q66",
+          "question": "Are interface methods public by default?",
+          "options": {
+            "a": "No",
+            "b": "Yes",
+            "c": "Depends on the version",
+            "d": "Only if explicitly stated",
+            "e": "They are private"
+          },
+          "correct_answer": "b",
+          "explanation": "Methods in interfaces are implicitly public and abstract."
+        },
+        {
+          "id": "Q67",
+          "question": "Abstraction is primarily about:",
+          "options": {
+            "a": "Showing implementation details",
+            "b": "Hiding implementation details",
+            "c": "Faster execution",
+            "d": "Memory management",
+            "e": "Creating objects"
+          },
+          "correct_answer": "b",
+          "explanation": "Abstraction simplifies complex systems by showing only necessary features."
+        },
+        {
+          "id": "Q68",
+          "question": "Can an interface extend another interface?",
+          "options": {
+            "a": "No",
+            "b": "Yes",
+            "c": "Only if it is abstract",
+            "d": "Only if it is a class",
+            "e": "Never"
+          },
+          "correct_answer": "b",
+          "explanation": "Interfaces can extend multiple interfaces."
+        },
+        {
+          "id": "Q69",
+          "question": "Can a class implement multiple interfaces?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only two",
+            "d": "Only if abstract",
+            "e": "Never"
+          },
+          "correct_answer": "a",
+          "explanation": "Java supports implementing multiple interfaces."
+        },
+        {
+          "id": "Q70",
+          "question": "Are fields in interfaces implicitly:",
+          "options": {
+            "a": "private final",
+            "b": "public static final",
+            "c": "protected",
+            "d": "public abstract",
+            "e": "volatile"
+          },
+          "correct_answer": "b",
+          "explanation": "Interface variables are implicitly constants."
+        },
+        {
+          "id": "Q71",
+          "question": "Which of these is 'pure' abstraction?",
+          "options": {
+            "a": "Abstract class",
+            "b": "Interface",
+            "c": "Concrete class",
+            "d": "Main method",
+            "e": "Variable"
+          },
+          "correct_answer": "b",
+          "explanation": "Interfaces represent a pure abstraction contract."
+        },
+        {
+          "id": "Q72",
+          "question": "Can an abstract class implement an interface?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if final",
+            "d": "Only if it has no abstract methods",
+            "e": "Never"
+          },
+          "correct_answer": "a",
+          "explanation": "Yes, abstract classes can implement interfaces."
+        },
+        {
+          "id": "Q73",
+          "question": "What is the purpose of the 'abstract' keyword on a class?",
+          "options": {
+            "a": "To make it final",
+            "b": "To prevent instantiation",
+            "c": "To make it an interface",
+            "d": "To force static methods",
+            "e": "To speed up performance"
+          },
+          "correct_answer": "b",
+          "explanation": "Abstract classes serve as base blueprints and cannot be directly instantiated."
+        },
+        {
+          "id": "Q74",
+          "question": "Can an abstract method be private?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if static",
+            "d": "Only if final",
+            "e": "Never"
+          },
+          "correct_answer": "b",
+          "explanation": "Abstract methods must be implemented, which is impossible if they are private/invisible."
+        },
+        {
+          "id": "Q75",
+          "question": "How do interfaces facilitate decoupling?",
+          "options": {
+            "a": "They provide concrete implementation",
+            "b": "They define what to do, not how to do it",
+            "c": "They replace inheritance",
+            "d": "They improve execution speed",
+            "e": "They encrypt code"
+          },
+          "correct_answer": "b",
+          "explanation": "Interfaces provide a contract; the implementing class handles the 'how'."
+        },
+        {
+          "id": "Q76",
+          "question": "What is a 'default' method in an interface?",
+          "options": {
+            "a": "A method with an implementation",
+            "b": "A method that is private",
+            "c": "A method that does nothing",
+            "d": "A constructor",
+            "e": "A static variable"
+          },
+          "correct_answer": "a",
+          "explanation": "Default methods allow adding new functionality to interfaces without breaking existing implementations.",
+          "code": "// \"default\" method in interface (Java 8+)\ninterface Logger {\n    void log(String msg);\n    default void logError(String msg) {  // concrete method\n        log(\"[ERROR] \" + msg);\n    }\n}"
+        },
+        {
+          "id": "Q77",
+          "question": "Which of these best describes an Interface?",
+          "options": {
+            "a": "A blueprint of a class",
+            "b": "A protocol or contract",
+            "c": "A memory space",
+            "d": "A thread",
+            "e": "A variable"
+          },
+          "correct_answer": "b",
+          "explanation": "An interface is a contract."
+        },
+        {
+          "id": "Q78",
+          "question": "Can you instantiate an anonymous interface implementation?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only inside main",
+            "d": "Only if static",
+            "e": "Never"
+          },
+          "correct_answer": "a",
+          "explanation": "Yes, using anonymous inner classes."
+        },
+        {
+          "id": "Q79",
+          "question": "Can interfaces have constructors?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if public",
+            "d": "Only if private",
+            "e": "Yes, but they are static"
+          },
+          "correct_answer": "b",
+          "explanation": "Interfaces cannot have constructors because they cannot be instantiated."
+        },
+        {
+          "id": "Q80",
+          "question": "Is it possible to have an empty interface?",
+          "options": {
+            "a": "Yes (Marker interface)",
+            "b": "No",
+            "c": "Only if it extends another",
+            "d": "Only if it is abstract",
+            "e": "Never"
+          },
+          "correct_answer": "a",
+          "explanation": "Marker interfaces (like Serializable) are common in Java."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 5: ADVANCED JAVA & MEMORY (Q81-Q100)",
+      "questions": [
+        {
+          "id": "Q81",
+          "question": "What handles automatic memory management in Java?",
+          "options": {
+            "a": "The programmer",
+            "b": "The Garbage Collector",
+            "c": "The OS",
+            "d": "The ClassLoader",
+            "e": "The main method"
+          },
+          "correct_answer": "b",
+          "explanation": "The Garbage Collector (GC) tracks live objects and reclaims memory from unreachable ones."
+        },
+        {
+          "id": "Q82",
+          "question": "What is the scope of a static variable?",
+          "options": {
+            "a": "The method",
+            "b": "The class",
+            "c": "The object",
+            "d": "The package",
+            "e": "The whole project"
+          },
+          "correct_answer": "b",
+          "explanation": "Static variables are class-level variables."
+        },
+        {
+          "id": "Q83",
+          "question": "Which of these is a keyword used for constant definition?",
+          "options": {
+            "a": "static",
+            "b": "final",
+            "c": "const",
+            "d": "abstract",
+            "e": "volatile"
+          },
+          "correct_answer": "b",
+          "explanation": "Final variables are effectively constants."
+        },
+        {
+          "id": "Q84",
+          "question": "Can static methods access instance variables?",
+          "options": {
+            "a": "Yes",
+            "b": "No",
+            "c": "Only if final",
+            "d": "Only if public",
+            "e": "Yes, using super"
+          },
+          "correct_answer": "b",
+          "explanation": "Static methods cannot access instance members directly because they exist independently of objects.",
+          "code": "public class Example {\n    int instanceVar = 10;\n    static int staticVar = 20;\n\n    static void staticMethod() {\n        System.out.println(staticVar);  // OK\n        // System.out.println(instanceVar);  // ERROR!\n        // Static methods cannot access instance variables\n    }\n}"
+        },
+        {
+          "id": "Q85",
+          "question": "What is a 'shallow copy' of an object?",
+          "options": {
+            "a": "Copying references",
+            "b": "Copying deep contents",
+            "c": "Copying the class",
+            "d": "Deleting the object",
+            "e": "Serializing the object"
+          },
+          "correct_answer": "a",
+          "explanation": "A shallow copy copies the object references."
+        },
+        {
+          "id": "Q86",
+          "question": "Which of these is a class in java.lang?",
+          "options": {
+            "a": "System",
+            "b": "Math",
+            "c": "String",
+            "d": "Object",
+            "e": "All of the above"
+          },
+          "correct_answer": "e",
+          "explanation": "These are core classes in the java.lang package."
+        },
+        {
+          "id": "Q87",
+          "question": "What does the 'transient' keyword do?",
+          "options": {
+            "a": "Prevents serialization",
+            "b": "Makes variables static",
+            "c": "Makes variables final",
+            "d": "Prevents modification",
+            "e": "Optimizes speed"
+          },
+          "correct_answer": "a",
+          "explanation": "Transient fields are ignored during object serialization."
+        },
+        {
+          "id": "Q88",
+          "question": "Which of these is NOT a wrapper class?",
+          "options": {
+            "a": "Integer",
+            "b": "Double",
+            "c": "Character",
+            "d": "String",
+            "e": "Boolean"
+          },
+          "correct_answer": "d",
+          "explanation": "String is a class, not a wrapper for a primitive."
+        },
+        {
+          "id": "Q89",
+          "question": "How are primitive types different from wrapper classes?",
+          "options": {
+            "a": "Primitives are objects",
+            "b": "Wrappers are objects",
+            "c": "There is no difference",
+            "d": "Primitives use more memory",
+            "e": "Wrappers are faster"
+          },
+          "correct_answer": "b",
+          "explanation": "Wrappers wrap primitives into objects."
+        },
+        {
+          "id": "Q90",
+          "question": "What is 'boxing' in Java?",
+          "options": {
+            "a": "Converting primitive to object",
+            "b": "Converting object to primitive",
+            "c": "Deleting objects",
+            "d": "Creating variables",
+            "e": "Method overloading"
+          },
+          "correct_answer": "a",
+          "explanation": "Autoboxing converts primitives (int) to wrappers (Integer).",
+          "code": "// Autoboxing: primitive -> wrapper\nInteger num = 42;  // int -> Integer automatically\n\n// Unboxing: wrapper -> primitive\nint val = num;     // Integer -> int automatically\n\nList<Integer> list = new ArrayList<>();\nlist.add(10);  // autoboxing int 10 to Integer"
+        },
+        {
+          "id": "Q91",
+          "question": "What is the purpose of 'import'?",
+          "options": {
+            "a": "To include external classes",
+            "b": "To export classes",
+            "c": "To define variables",
+            "d": "To run the code",
+            "e": "To create packages"
+          },
+          "correct_answer": "a",
+          "explanation": "Imports make classes from other packages accessible."
+        },
+        {
+          "id": "Q92",
+          "question": "Can you have multiple public classes in one file?",
+          "options": {
+            "a": "Yes",
+            "b": "No, only one",
+            "c": "Only if nested",
+            "d": "Only if abstract",
+            "e": "Never"
+          },
+          "correct_answer": "b",
+          "explanation": "Only one public class is allowed per .java file."
+        },
+        {
+          "id": "Q93",
+          "question": "Which of these manages object lifecycle?",
+          "options": {
+            "a": "Compiler",
+            "b": "Garbage Collector",
+            "c": "Editor",
+            "d": "Main method",
+            "e": "Access modifier"
+          },
+          "correct_answer": "b",
+          "explanation": "The GC manages the object's life from allocation to disposal."
+        },
+        {
+          "id": "Q94",
+          "question": "What happens when an object has no references?",
+          "options": {
+            "a": "It stays in memory",
+            "b": "It is eligible for Garbage Collection",
+            "c": "It is deleted immediately",
+            "d": "It causes a crash",
+            "e": "It is serialized"
+          },
+          "correct_answer": "b",
+          "explanation": "Unreferenced objects become garbage."
+        },
+        {
+          "id": "Q95",
+          "question": "What is the 'synchronized' keyword for?",
+          "options": {
+            "a": "Thread safety",
+            "b": "Speeding up",
+            "c": "Inheritance",
+            "d": "Abstraction",
+            "e": "Serialization"
+          },
+          "correct_answer": "a",
+          "explanation": "Synchronized blocks prevent race conditions in multi-threading.",
+          "code": "// Synchronized method for thread safety\nclass Counter {\n    private int count = 0;\n\n    public synchronized void increment() {\n        count++;  // thread-safe\n    }\n}"
+        },
+        {
+          "id": "Q96",
+          "question": "Which of these is a string comparison method?",
+          "options": {
+            "a": "==",
+            "b": ".equals()",
+            "c": ".compare()",
+            "d": ".match()",
+            "e": ".is()"
+          },
+          "correct_answer": "b",
+          "explanation": ".equals() compares content, == compares references."
+        },
+        {
+          "id": "Q97",
+          "question": "What is an enum?",
+          "options": {
+            "a": "A special class representing a group of constants",
+            "b": "A variable type",
+            "c": "An interface",
+            "d": "A method",
+            "e": "A package"
+          },
+          "correct_answer": "a",
+          "explanation": "Enums simplify handling collections of related constants.",
+          "code": "// Enum - a set of named constants\nenum Day {\n    MONDAY, TUESDAY, WEDNESDAY, THURSDAY,\n    FRIDAY, SATURDAY, SUNDAY\n}\n\nDay today = Day.MONDAY;\nSystem.out.println(today);  // MONDAY"
+        },
+        {
+          "id": "Q98",
+          "question": "What does the 'break' statement do?",
+          "options": {
+            "a": "Exits loop",
+            "b": "Continues loop",
+            "c": "Returns value",
+            "d": "Throws exception",
+            "e": "Terminates program"
+          },
+          "correct_answer": "a",
+          "explanation": "Break exits loops or switch blocks immediately.",
+          "code": "for (int i = 0; i < 10; i++) {\n    if (i == 5) {\n        break;  // exits the loop immediately\n    }\n    System.out.println(i);  // prints 0,1,2,3,4\n}"
+        },
+        {
+          "id": "Q99",
+          "question": "What is the size of a boolean in Java?",
+          "options": {
+            "a": "1 byte",
+            "b": "1 bit",
+            "c": "4 bytes",
+            "d": "8 bytes",
+            "e": "Depends on JVM"
+          },
+          "correct_answer": "e",
+          "explanation": "The JVM specification does not mandate the size of a boolean; it is implementation-dependent."
+        },
+        {
+          "id": "Q100",
+          "question": "Which method is called right before an object is garbage collected?",
+          "options": {
+            "a": "finalize()",
+            "b": "destruct()",
+            "c": "delete()",
+            "d": "remove()",
+            "e": "dispose()"
+          },
+          "correct_answer": "a",
+          "explanation": "The finalize() method is called by the GC, though it is deprecated as of Java 9."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 6: CODING EXERCISES (Q101-Q120)",
+      "questions": [
+        {
+          "id": "Q101",
+          "question": "Which code correctly defines a Student class with name and age fields, a constructor, and a getter for name?",
+          "options": {
+            "a": "public class Student { private String name; private int age; public Student(String name, int age) { this.name = name; this.age = age; } public String getName() { return name; } }",
+            "b": "public class Student { public String name; public int age; public void Student(String n, int a) { name = n; age = a; } public String getName() { return name; } }",
+            "c": "class student { String name; int age; student(String n, int a) { name = n; age = a; } String getName() { name; } }",
+            "d": "public class Student { private String name; private int age; public Student() { } public String getName() { return name; } }",
+            "e": "public class Student { String name; int age; Student(String name, int age) { name = name; age = age; } String getName() { return name; } }"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a correctly uses private fields, a parameterized constructor with this.name to resolve shadowing, and a public getter method with a proper return.",
+          "code": "// Which implementation of a Student class is correct?\npublic class Student {\n    private String name;\n    private int age;\n\n    public Student(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n\n    public String getName() {\n        return name;\n    }\n}"
+        },
+        {
+          "id": "Q102",
+          "question": "What is wrong with this Car class implementation?",
+          "options": {
+            "a": "The class has no constructor",
+            "b": "speed method should return void but returns int",
+            "c": "The fields should be private for proper encapsulation",
+            "d": "The class cannot have both a field and method named speed",
+            "e": "Nothing is wrong; the code compiles and runs fine"
+          },
+          "correct_answer": "c",
+          "explanation": "The Car class exposes its fields directly (public), breaking encapsulation. Fields should be private with getter/setter methods for controlled access.",
+          "code": "public class Car {\n    public String model;\n    public int speed;\n\n    public void accelerate(int amount) {\n        speed += amount;\n    }\n\n    public void display() {\n        System.out.println(model + \" going \" + speed);\n    }\n}"
+        },
+        {
+          "id": "Q103",
+          "question": "Which code correctly implements a BankAccount class with deposit and withdraw methods, ensuring balance never goes negative?",
+          "options": {
+            "a": "public class BankAccount { private double balance; public void deposit(double amt) { balance += amt; } public void withdraw(double amt) { balance -= amt; } }",
+            "b": "public class BankAccount { private double balance; public void deposit(double amt) { if(amt>0) balance += amt; } public boolean withdraw(double amt) { if(amt>0 && amt<=balance) { balance -= amt; return true; } return false; } public double getBalance() { return balance; } }",
+            "c": "public class BankAccount { public double balance; public void deposit(double amt) { balance = balance + amt; } public void withdraw(double amt) { if(balance >= amt) balance = balance - amt; } }",
+            "d": "public class BankAccount { private double balance; public void add(double amt) { balance += amt; } public void take(double amt) { if(amt <= balance) balance -= amt; } }",
+            "e": "public class BankAccount { private double balance; public void deposit(double amt) { balance += amt; } public void withdraw(double amt) throws Exception { if(amt > balance) throw new Exception(); balance -= amt; } }"
+          },
+          "correct_answer": "b",
+          "explanation": "Option b is the most robust: it validates deposits (positive amount), returns a boolean from withdraw to indicate success, checks for sufficient funds, and encapsulates the balance field.",
+          "code": "// Which implementation has the best encapsulation and validation?\npublic class BankAccount {\n    private double balance;\n\n    public void deposit(double amt) {\n        if (amt > 0) balance += amt;\n    }\n\n    public boolean withdraw(double amt) {\n        if (amt > 0 && amt <= balance) {\n            balance -= amt;\n            return true;\n        }\n        return false;\n    }\n\n    public double getBalance() { return balance; }\n}"
+        },
+        {
+          "id": "Q104",
+          "question": "Given the following code, what will be the output when main runs?",
+          "options": {
+            "a": "Animal eats\nDog eats bones",
+            "b": "Animal eats",
+            "c": "Dog eats bones",
+            "d": "Compilation error: Dog does not override eat()",
+            "e": "Animal eats\nAnimal eats"
+          },
+          "correct_answer": "a",
+          "explanation": "Animal ref = new Dog() demonstrates polymorphism. The overridden eat() in Dog is called at runtime (dynamic binding), so ref.eat() executes Dog's version. The output is \"Animal eats\" (from the explicit super call) then \"Dog eats bones\".",
+          "code": "class Animal {\n    void eat() {\n        System.out.println(\"Animal eats\");\n    }\n}\n\nclass Dog extends Animal {\n    void eat() {\n        super.eat();\n        System.out.println(\"Dog eats bones\");\n    }\n}\n\npublic class Test {\n    public static void main(String[] args) {\n        Animal ref = new Dog();\n        ref.eat();\n    }\n}"
+        },
+        {
+          "id": "Q105",
+          "question": "What is the output of this code involving method overloading?",
+          "options": {
+            "a": "5\n10.5",
+            "b": "10.5\n5",
+            "c": "5\n5",
+            "d": "Compilation error: ambiguous method call",
+            "e": "10.5\n10.5"
+          },
+          "correct_answer": "a",
+          "explanation": "The first call add(5, 10) matches add(int, int) -> prints 5. The second call add(5.0, 5.5) matches add(double, double) -> prints 10.5. Java selects the most specific overload at compile-time.",
+          "code": "class Calculator {\n    int add(int a, int b) {\n        int sum = a + b;\n        System.out.println(sum);\n        return sum;\n    }\n\n    double add(double a, double b) {\n        double sum = a + b;\n        System.out.println(sum);\n        return sum;\n    }\n}\n\npublic class Test {\n    public static void main(String[] args) {\n        Calculator c = new Calculator();\n        c.add(5, 10);\n        c.add(5.0, 5.5);\n    }\n}"
+        },
+        {
+          "id": "Q106",
+          "question": "What design principle does this code violate?",
+          "options": {
+            "a": "Inheritance",
+            "b": "Encapsulation",
+            "c": "Polymorphism",
+            "d": "Abstraction",
+            "e": "Method Overloading"
+          },
+          "correct_answer": "b",
+          "explanation": "The fields are public, allowing direct external modification. This violates encapsulation (data hiding). Any class can set accountNumber or balance to invalid values without validation.",
+          "code": "public class BankAccount {\n    public String accountNumber;\n    public double balance;\n    public String ownerName;\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount acc = new BankAccount();\n        acc.balance = -500;  // directly accessible!\n        acc.accountNumber = null;\n    }\n}"
+        },
+        {
+          "id": "Q107",
+          "question": "Which code correctly demonstrates the use of an interface in Java?",
+          "options": {
+            "a": "interface Drawable { void draw(); } class Circle implements Drawable { public void draw() { System.out.println(\"Circle\"); } }",
+            "b": "interface Drawable { public void draw() { } } class Circle implements Drawable { void draw() { } }",
+            "c": "interface Drawable implements Circle { void draw(); }",
+            "d": "class Drawable { abstract void draw(); } class Circle extends Drawable { void draw() { } }",
+            "e": "interface Drawable { abstract void draw(); } class Circle extends Drawable { void draw() { } }"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a correctly declares an interface with an abstract method, uses \"implements\" keyword, and provides the method implementation with public access (required when implementing interface methods).",
+          "code": "// Which is the correct way to define and implement an interface?\ninterface Drawable {\n    void draw();\n}\n\nclass Circle implements Drawable {\n    public void draw() {\n        System.out.println(\"Drawing Circle\");\n    }\n}"
+        },
+        {
+          "id": "Q108",
+          "question": "What is the output of this program?",
+          "options": {
+            "a": "Area: 0.0",
+            "b": "Area: 78.5",
+            "c": "Compilation error: cannot instantiate abstract class",
+            "d": "Runtime error",
+            "e": "Area: 0"
+          },
+          "correct_answer": "c",
+          "explanation": "Shape is an abstract class and cannot be instantiated directly with \"new Shape()\". You must create a concrete subclass (like Circle) that implements the abstract method area().",
+          "code": "abstract class Shape {\n    abstract double area();\n}\n\npublic class Test {\n    public static void main(String[] args) {\n        Shape s = new Shape();\n        System.out.println(\"Area: \" + s.area());\n    }\n}"
+        },
+        {
+          "id": "Q109",
+          "question": "Which code correctly implements a Java class that counts how many objects have been created?",
+          "options": {
+            "a": "public class Counter { private static int count = 0; public Counter() { count++; } public static int getCount() { return count; } }",
+            "b": "public class Counter { private int count = 0; public Counter() { count++; } public int getCount() { return count; } }",
+            "c": "public class Counter { public static int count; public Counter() { this.count++; } }",
+            "d": "public class Counter { private final int count = 0; public Counter() { count++; } public int getCount() { return count; } }",
+            "e": "public class Counter { private static int count; public void Counter() { count++; } public int getCount() { return count; } }"
+          },
+          "correct_answer": "a",
+          "explanation": "A static variable belongs to the class, not instances. Each constructor call increments the same count variable. A static getter returns the shared count. Option b uses an instance variable (each object has its own count starting at 0).",
+          "code": "// Which class correctly counts all created objects?\npublic class Counter {\n    private static int count = 0;\n\n    public Counter() {\n        count++;\n    }\n\n    public static int getCount() {\n        return count;\n    }\n}\n\n// new Counter(); // count = 1\n// new Counter(); // count = 2"
+        },
+        {
+          "id": "Q110",
+          "question": "What does this code print?",
+          "options": {
+            "a": "Hello from Parent",
+            "b": "Hello from Child",
+            "c": "Compilation error",
+            "d": "Hello from Parent\nHello from Child",
+            "e": "Runtime error: ClassCastException"
+          },
+          "correct_answer": "b",
+          "explanation": "Although the reference type is Parent, the object is a Child instance. Since greet() is overridden, Java uses dynamic binding at runtime to call Child's version of greet(). This is runtime polymorphism.",
+          "code": "class Parent {\n    void greet() { System.out.println(\"Hello from Parent\"); }\n}\n\nclass Child extends Parent {\n    void greet() { System.out.println(\"Hello from Child\"); }\n}\n\npublic class Test {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        p.greet();\n    }\n}"
+        },
+        {
+          "id": "Q111",
+          "question": "Which is the correct way to write a Java program that reads integers from the user until they enter -1, then prints the sum?",
+          "options": {
+            "a": "Scanner sc = new Scanner(System.in); int sum = 0; int n = 0; while(n != -1) { n = sc.nextInt(); if(n != -1) sum += n; } System.out.println(sum);",
+            "b": "Scanner sc = new Scanner(System.in); int sum = 0; for(int i=0; i<100; i++) { sum += sc.nextInt(); } System.out.println(sum);",
+            "c": "int sum = 0; int n; do { n = readInt(); sum += n; } while(n != -1); print(sum);",
+            "d": "Scanner sc = new Scanner(System.in); int sum = 0; while(sc.hasNext()) { sum += sc.nextInt(); } System.out.println(sum);",
+            "e": "Scanner sc = new Scanner(System.in); int sum = 0; int n = sc.nextInt(); while(n != -1) { sum += n; } System.out.println(sum);"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a correctly uses a sentinel-controlled while loop: it reads input inside the loop, checks for -1 before adding to sum, and prints the total after the loop terminates.",
+          "code": "// Read integers until -1, then print sum\nimport java.util.Scanner;\n\npublic class SumCalculator {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int sum = 0;\n        int n = 0;\n\n        while (n != -1) {\n            n = sc.nextInt();\n            if (n != -1) sum += n;\n        }\n\n        System.out.println(\"Sum: \" + sum);\n        sc.close();\n    }\n}"
+        },
+        {
+          "id": "Q112",
+          "question": "Which code correctly demonstrates exception handling with try-catch-finally?",
+          "options": {
+            "a": "try { int x = 5 / 0; } catch (Exception e) { System.out.println(\"Error\"); } finally { System.out.println(\"Done\"); }",
+            "b": "try { int x = 5 / 0; } { System.out.println(\"Error\"); }",
+            "c": "try { int x = 5 / 0; } finally { System.out.println(\"Done\"); } catch (Exception e) { }",
+            "d": "try { int x = 5 / 0; } catch { System.out.println(\"Error\"); }",
+            "e": "try int x = 5 / 0; catch (Exception e) { } finally { }"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a has the correct syntax: try block, catch block with exception type, and finally block (always executes). Options b-e have syntax errors: missing catch type, wrong order, missing parentheses, or missing braces.",
+          "code": "// Correct exception handling structure\npublic class ExceptionDemo {\n    public static void main(String[] args) {\n        try {\n            int x = 5 / 0;  // ArithmeticException\n        } catch (ArithmeticException e) {\n            System.out.println(\"Cannot divide by zero\");\n        } finally {\n            System.out.println(\"This always runs\");\n        }\n    }\n}"
+        },
+        {
+          "id": "Q113",
+          "question": "What is the output of this ArrayList code?",
+          "options": {
+            "a": "[10, 20, 30]\nSize: 3",
+            "b": "[10, 20, 30, 40]\nSize: 4",
+            "c": "[30, 20, 10]\nSize: 3",
+            "d": "[10, 30]\nSize: 2",
+            "e": "Compilation error"
+          },
+          "correct_answer": "d",
+          "explanation": "After adding 10, 20, 30, the list is [10, 20, 30]. list.remove(1) removes the element at index 1 (20), leaving [10, 30]. The size is 2.",
+          "code": "import java.util.*;\n\npublic class ListDemo {\n    public static void main(String[] args) {\n        ArrayList<Integer> list = new ArrayList<>();\n        list.add(10);\n        list.add(20);\n        list.add(30);\n\n        list.remove(1);\n\n        System.out.println(list);\n        System.out.println(\"Size: \" + list.size());\n    }\n}"
+        },
+        {
+          "id": "Q114",
+          "question": "Which code correctly implements an inheritance hierarchy where Bird extends Animal, and both have sound methods?",
+          "options": {
+            "a": "class Animal { void sound() { System.out.println(\"Generic\"); } } class Bird extends Animal { void sound() { System.out.println(\"Chirp\"); } }",
+            "b": "class Animal { void sound() { } } class Bird implements Animal { void sound() { } }",
+            "c": "class Animal extends Bird { void sound() { } }",
+            "d": "class Animal { abstract void sound(); } class Bird implements Animal { void sound() { } }",
+            "e": "class Animal { void sound() { } } class Bird extends Animal { void sound(String s) { } }"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a correctly uses extends for inheritance, and Bird overrides sound() with its own implementation. Option b wrongly uses implements (reserved for interfaces). Option c has the hierarchy backwards. Option d uses implements with a class. Option e overloads rather than overrides (different parameter).",
+          "code": "// Correct inheritance with method overriding\nclass Animal {\n    void sound() {\n        System.out.println(\"Generic animal sound\");\n    }\n}\n\nclass Bird extends Animal {\n    @Override\n    void sound() {\n        System.out.println(\"Chirp chirp!\");\n    }\n}"
+        },
+        {
+          "id": "Q115",
+          "question": "What will this code print about string comparison?",
+          "options": {
+            "a": "true true",
+            "b": "true false",
+            "c": "false true",
+            "d": "false false",
+            "e": "Compilation error"
+          },
+          "correct_answer": "c",
+          "explanation": "s1 == s2 compares references — s1 and s2 are different objects, so it's false. s1.equals(s2) compares the actual string values — both are \"Hello\", so it's true.",
+          "code": "public class StringCompare {\n    public static void main(String[] args) {\n        String s1 = new String(\"Hello\");\n        String s2 = new String(\"Hello\");\n\n        System.out.print(s1 == s2);       // reference?\n        System.out.print(\" \");\n        System.out.println(s1.equals(s2)); // value?\n    }\n}"
+        },
+        {
+          "id": "Q116",
+          "question": "Which code correctly creates a simple Java GUI with a button that shows a message when clicked?",
+          "options": {
+            "a": "JFrame frame = new JFrame(); JButton btn = new JButton(\"Click\"); btn.addActionListener(e -> JOptionPane.showMessageDialog(null, \"Hi\")); frame.add(btn); frame.setVisible(true);",
+            "b": "JFrame frame = new JFrame(); JButton btn = new JButton(\"Click\"); btn.onClick() { System.out.println(\"Hi\"); } frame.add(btn);",
+            "c": "Frame f = new Frame(); Button b = new Button(\"Click\"); b.addActionListener(this); f.add(b); f.show();",
+            "d": "JFrame frame = new JFrame(); JButton btn = new JButton(\"Click\"); btn.setActionCommand(\"Hi\"); frame.add(btn); frame.show();",
+            "e": "JFrame frame = JFrame(); JButton btn(\"Click\"); btn.addActionListener(() -> showMessage(\"Hi\")); frame.add(btn);"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a correctly creates a JFrame, creates a JButton with a lambda ActionListener that shows a JOptionPane, adds the button to the frame, and makes it visible.",
+          "code": "// Simple Java Swing GUI\nimport javax.swing.*;\nimport java.awt.event.*;\n\npublic class MyGUI {\n    public static void main(String[] args) {\n        JFrame frame = new JFrame(\"My App\");\n        JButton btn = new JButton(\"Click Me\");\n\n        btn.addActionListener(e ->\n            JOptionPane.showMessageDialog(null, \"Button clicked!\")\n        );\n\n        frame.add(btn);\n        frame.setSize(300, 200);\n        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\n        frame.setVisible(true);\n    }\n}"
+        },
+        {
+          "id": "Q117",
+          "question": "What is the output of this 2D array code?",
+          "options": {
+            "a": "6",
+            "b": "10",
+            "c": "15",
+            "d": "21",
+            "e": "ArrayIndexOutOfBoundsException"
+          },
+          "correct_answer": "d",
+          "explanation": "The code sums every element using nested for-each loops. Sum = 1+2+3+4+5+6 = 21.",
+          "code": "public class Array2D {\n    public static void main(String[] args) {\n        int[][] nums = {\n            {1, 2, 3},\n            {4, 5, 6}\n        };\n\n        int sum = 0;\n        for (int[] row : nums) {\n            for (int val : row) {\n                sum += val;\n            }\n        }\n\n        System.out.println(sum);\n    }\n}"
+        },
+        {
+          "id": "Q118",
+          "question": "Which code correctly demonstrates the use of the final keyword with a class, method, and variable?",
+          "options": {
+            "a": "final class A { final void show() { final int x = 10; x = 20; } }",
+            "b": "final class A { final void show() { final int x = 10; System.out.println(x); } } class B extends A { void show() { } }",
+            "c": "final class A { final void show() { final int x = 10; System.out.println(x); } }",
+            "d": "class A { final void show() { } } final class B extends A { void show() { } }",
+            "e": "final class A { void show() { final int x; x = 10; x = 20; } }"
+          },
+          "correct_answer": "c",
+          "explanation": "Option c correctly uses final on a class (cannot be extended), final on a method (cannot be overridden), and final on a variable (cannot be reassigned — x = 20 would cause an error). Option a tries to reassign x. Options b and d try to override a final method.",
+          "code": "// Correct use of \"final\" keyword\nfinal class Constants {      // class cannot be extended\n    final int MAX = 100;     // variable cannot be changed\n\n    final void display() {   // method cannot be overridden\n        System.out.println(\"Max: \" + MAX);\n    }\n}"
+        },
+        {
+          "id": "Q119",
+          "question": "What is the output of this code demonstrating static vs instance context?",
+          "options": {
+            "a": "Static method\nInstance method",
+            "b": "Instance method\nStatic method",
+            "c": "Static method",
+            "d": "Compilation error: cannot call instance method from static context",
+            "e": "Instance method"
+          },
+          "correct_answer": "d",
+          "explanation": "The main method is static. Calling showInstance() directly from a static context without an object reference causes a compilation error. You must create an instance first: new Test().showInstance().",
+          "code": "public class Test {\n    void showInstance() {\n        System.out.println(\"Instance method\");\n    }\n\n    static void showStatic() {\n        System.out.println(\"Static method\");\n    }\n\n    public static void main(String[] args) {\n        showStatic();\n        showInstance();  // what happens?\n    }\n}"
+        },
+        {
+          "id": "Q120",
+          "question": "Which code correctly implements a constructor that calls another constructor in the same class (constructor chaining)?",
+          "options": {
+            "a": "public class Person { String name; int age; public Person() { this(\"Unknown\", 0); } public Person(String name, int age) { this.name = name; this.age = age; } }",
+            "b": "public class Person { String name; int age; public Person() { Person(\"Unknown\", 0); } public Person(String name, int age) { this.name = name; this.age = age; } }",
+            "c": "public class Person { String name; int age; public Person() { super(\"Unknown\", 0); } public Person(String name, int age) { this.name = name; this.age = age; } }",
+            "d": "public class Person { String name; int age; public Person() { this(\"Unknown\", 0); } public Person(String name, int age) { Person(name, age); } }",
+            "e": "public class Person { String name; int age; public Person() { new Person(\"Unknown\", 0); } public Person(String name, int age) { this.name = name; this.age = age; } }"
+          },
+          "correct_answer": "a",
+          "explanation": "Option a correctly uses this(\"Unknown\", 0) to call the parameterized constructor from the no-arg constructor. this() must be the first statement in the constructor. Option e creates a new object instead of chaining.",
+          "code": "// Constructor chaining with \"this()\"\npublic class Person {\n    String name;\n    int age;\n\n    public Person() {\n        this(\"Unknown\", 0);  // calls the 2-param constructor\n    }\n\n    public Person(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n}"
+        }
+      ]
+    }
+  ]
+}

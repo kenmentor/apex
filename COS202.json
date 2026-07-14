@@ -1,0 +1,1332 @@
+{
+  "course_code": "CSC202/COS202",
+  "course_title": "Computer Programming II",
+  "study_guide_title": "Comprehensive Solved Past Questions Study Guide (Corrected & Grounded)",
+  "sections": [
+    {
+      "section_title": "PART 1: STRUCTURED PROGRAMMING, ARCHITECTURE & CONCEPTS",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "Which of the following is a primary characteristic of Structured Programming?",
+          "options": {
+            "a": "Emphasis on GOTO statements",
+            "b": "Use of modularity and control structures",
+            "c": "Focus purely on hardware optimization",
+            "d": "Complete avoidance of subroutines",
+            "e": "Random execution flow"
+          },
+          "correct_answer": "b",
+          "explanation": "Structured programming relies on the logical flow using sequence, selection, and iteration, emphasizing modularity."
+        },
+        {
+          "id": "Q2",
+          "question": "In software architecture, what does the acronym 'DRY' stand for?",
+          "options": {
+            "a": "Data Retrieval Yearly",
+            "b": "Design Refinement Yield",
+            "c": "Don't Repeat Yourself",
+            "d": "Direct Response Yield",
+            "e": "Dynamic Resource Yield"
+          },
+          "correct_answer": "c",
+          "explanation": "The DRY principle aims to reduce repetition of software patterns, replacing them with abstractions."
+        },
+        {
+          "id": "Q3",
+          "question": "What does the KISS principle advocate in software design?",
+          "options": {
+            "a": "Keep It Securely Stored",
+            "b": "Knowledge In System Software",
+            "c": "Keep It Simple Stupid",
+            "d": "Kernel Integration System Standard",
+            "e": "Key Interface System Setup"
+          },
+          "correct_answer": "c",
+          "explanation": "The KISS principle emphasizes that most systems work best if they are kept simple rather than made complicated."
+        },
+        {
+          "id": "Q4",
+          "question": "Which programming paradigm focuses on classes and objects?",
+          "options": {
+            "a": "Structured Programming",
+            "b": "Object Oriented Programming",
+            "c": "Procedural Programming",
+            "d": "Functional Programming",
+            "e": "Assembly Programming"
+          },
+          "correct_answer": "b",
+          "explanation": "Object Oriented Programming (OOP) is based on the concept of 'objects' which contain data and code."
+        },
+        {
+          "id": "Q5",
+          "question": "A subroutine is best defined as:",
+          "options": {
+            "a": "A global variable that stores data",
+            "b": "A standalone sequence of code to perform a specific task",
+            "c": "A piece of broken hardware",
+            "d": "The main entry point of a program",
+            "e": "A type of compilation error"
+          },
+          "correct_answer": "b",
+          "explanation": "A subroutine (or function) is a reusable block of code designed to perform a specific task."
+        },
+        {
+          "id": "Q6",
+          "question": "Which of the following is NOT a major component of a structured program?",
+          "options": {
+            "a": "Sequence",
+            "b": "Selection",
+            "c": "Iteration (Looping)",
+            "d": "Infinite GOTO jumping",
+            "e": "Modularization"
+          },
+          "correct_answer": "d",
+          "explanation": "Structured programming specifically avoids chaotic GOTO jumping in favor of structured control flow."
+        },
+        {
+          "id": "Q7",
+          "question": "What is the primary role of 'Application Layers' in software architecture?",
+          "options": {
+            "a": "To increase hardware cost",
+            "b": "To logically divide software components",
+            "c": "To replace the need for documentation",
+            "d": "To force binary code execution",
+            "e": "To hide files from the user"
+          },
+          "correct_answer": "b",
+          "explanation": "Application layers help in separating concerns, making code easier to maintain and scale."
+        },
+        {
+          "id": "Q8",
+          "question": "What is the definition of a 'Component' in software architecture?",
+          "options": {
+            "a": "A bug in the source code",
+            "b": "A reusable, self-contained unit of software",
+            "c": "A specific hardware driver",
+            "d": "An internet browser",
+            "e": "A type of compiler"
+          },
+          "correct_answer": "b",
+          "explanation": "Components are modular, reusable blocks of code that serve specific functionalities."
+        },
+        {
+          "id": "Q9",
+          "question": "Which protocol is fundamental for web communication in architecture?",
+          "options": {
+            "a": "HTML",
+            "b": "HTTP",
+            "c": "SMTP",
+            "d": "FTP",
+            "e": "DNS"
+          },
+          "correct_answer": "b",
+          "explanation": "HTTP (HyperText Transfer Protocol) is the foundation of data communication for the World Wide Web."
+        },
+        {
+          "id": "Q10",
+          "question": "What is the benefit of modularity in structured programming?",
+          "options": {
+            "a": "It increases the number of lines of code",
+            "b": "It makes the code harder to debug",
+            "c": "It breaks problems into manageable sub-tasks",
+            "d": "It requires more memory",
+            "e": "It prevents the use of variables"
+          },
+          "correct_answer": "c",
+          "explanation": "Modularity allows for better organization, testing, and debugging by solving small, isolated problems."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 2: ALGORITHMS, FLOWCHARTS & PROBLEM SOLVING",
+      "questions": [
+        {
+          "id": "Q11",
+          "question": "Who is the authority on problem solving mentioned in the syllabus?",
+          "options": {
+            "a": "Charles Babbage",
+            "b": "George Polya",
+            "c": "Alan Turing",
+            "d": "Ada Lovelace",
+            "e": "John von Neumann"
+          },
+          "correct_answer": "b",
+          "explanation": "George Polya is famous for his four-step problem-solving method."
+        },
+        {
+          "id": "Q12",
+          "question": "Which of the following is NOT one of George Polya's four steps?",
+          "options": {
+            "a": "Understand the problem",
+            "b": "Devise a plan",
+            "c": "Carry out the plan",
+            "d": "Look back (review)",
+            "e": "Ignore the errors"
+          },
+          "correct_answer": "e",
+          "explanation": "The four steps are: Understand, Devise a plan, Carry out the plan, and Look back/Reflect."
+        },
+        {
+          "id": "Q13",
+          "question": "What is a 'Flowchart'?",
+          "options": {
+            "a": "A list of hardware specifications",
+            "b": "A visual representation of an algorithm's steps",
+            "c": "A financial spreadsheet",
+            "d": "A compilation of error logs",
+            "e": "A type of programming language"
+          },
+          "correct_answer": "b",
+          "explanation": "A flowchart diagrams the control flow and logic of an algorithm."
+        },
+        {
+          "id": "Q14",
+          "question": "In a flowchart, what shape typically represents a decision (selection)?",
+          "options": {
+            "a": "Rectangle",
+            "b": "Circle",
+            "c": "Diamond",
+            "d": "Parallelogram",
+            "e": "Oval"
+          },
+          "correct_answer": "c",
+          "explanation": "The diamond symbol is used for conditional logic (if-then-else) in flowcharts."
+        },
+        {
+          "id": "Q15",
+          "question": "Which component is essential for an algorithm?",
+          "options": {
+            "a": "Must be infinite",
+            "b": "Must be written in English",
+            "c": "Must have a finite number of steps",
+            "d": "Must be executed by a human only",
+            "e": "Must contain errors"
+          },
+          "correct_answer": "c",
+          "explanation": "An algorithm must be finite; it must have a clear beginning and end."
+        },
+        {
+          "id": "Q16",
+          "question": "What does a 'Break-out Diagram' help achieve?",
+          "options": {
+            "a": "Visualizing complex logical breakdown of a problem",
+            "b": "Formatting memory",
+            "c": "Encrypting data",
+            "d": "Accelerating CPU speed",
+            "e": "Creating graphical user interfaces"
+          },
+          "correct_answer": "a",
+          "explanation": "Break-out diagrams help in dividing and conquering complex problems by breaking them into smaller parts."
+        },
+        {
+          "id": "Q17",
+          "question": "What is 'Solution Refinement'?",
+          "options": {
+            "a": "Deleting the code",
+            "b": "Improving the logic for efficiency and readability",
+            "c": "Adding more bugs",
+            "d": "Changing the programming language",
+            "e": "Ignoring customer requirements"
+          },
+          "correct_answer": "b",
+          "explanation": "Refinement is the process of optimizing and cleaning up the initial solution."
+        },
+        {
+          "id": "Q18",
+          "question": "Which of these is a character input function?",
+          "options": {
+            "a": "printf",
+            "b": "scanf",
+            "c": "count",
+            "d": "input",
+            "e": "sort"
+          },
+          "correct_answer": "b",
+          "explanation": "In languages like C, scanf is commonly used for input."
+        },
+        {
+          "id": "Q19",
+          "question": "What is the result of 'Algorithm Equivalence'?",
+          "options": {
+            "a": "Two algorithms produce the same output for the same input",
+            "b": "Two algorithms are written in different languages",
+            "c": "Two algorithms have different run times",
+            "d": "Two algorithms use different variables",
+            "e": "Two algorithms are equally slow"
+          },
+          "correct_answer": "a",
+          "explanation": "Equivalence means the algorithms perform the same task and yield the same result, regardless of how they are implemented."
+        },
+        {
+          "id": "Q20",
+          "question": "What is an algorithm's 'time complexity'?",
+          "options": {
+            "a": "The time of day the code runs",
+            "b": "How much memory it uses",
+            "c": "The amount of time it takes to run as a function of input size",
+            "d": "The number of lines in the code",
+            "e": "The speed of the processor"
+          },
+          "correct_answer": "c",
+          "explanation": "Time complexity (Big-O) measures how execution time grows with input size."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 3: SORTING, SEARCHING & COMPLEXITY",
+      "questions": [
+        {
+          "id": "Q21",
+          "question": "Which searching algorithm starts at the beginning and checks each element one by one?",
+          "options": {
+            "a": "Binary Search",
+            "b": "Linear Search",
+            "c": "Quick Search",
+            "d": "Hash Search",
+            "e": "Pointer Search"
+          },
+          "correct_answer": "b",
+          "explanation": "Linear search scans sequentially through the entire list."
+        },
+        {
+          "id": "Q22",
+          "question": "What is the requirement for Binary Search to work?",
+          "options": {
+            "a": "The array must be empty",
+            "b": "The array must be sorted",
+            "c": "The array must contain negative numbers",
+            "d": "The array must be small",
+            "e": "The array must contain only strings"
+          },
+          "correct_answer": "b",
+          "explanation": "Binary search relies on dividing a sorted array to find the target element."
+        },
+        {
+          "id": "Q23",
+          "question": "What is the time complexity of a standard loop that runs n times?",
+          "options": {
+            "a": "O(1)",
+            "b": "O(log n)",
+            "c": "O(n)",
+            "d": "O(n^2)",
+            "e": "O(n!)"
+          },
+          "correct_answer": "c",
+          "explanation": "A simple iteration through n elements results in linear O(n) time."
+        },
+        {
+          "id": "Q24",
+          "question": "Which sorting algorithm selects the smallest element and swaps it to the front?",
+          "options": {
+            "a": "Insertion Sort",
+            "b": "Selection Sort",
+            "c": "Quick Sort",
+            "d": "Counting Sort",
+            "e": "Linear Sort"
+          },
+          "correct_answer": "b",
+          "explanation": "Selection Sort works by repeatedly selecting the minimum from the unsorted part and moving it to the beginning."
+        },
+        {
+          "id": "Q25",
+          "question": "What is the time complexity of Quick Sort in the average case?",
+          "options": {
+            "a": "O(n)",
+            "b": "O(n log n)",
+            "c": "O(n^2)",
+            "d": "O(1)",
+            "e": "O(log n)"
+          },
+          "correct_answer": "b",
+          "explanation": "Quick Sort is highly efficient, typically performing at O(n log n) on average."
+        },
+        {
+          "id": "Q26",
+          "question": "What is 'Space Complexity'?",
+          "options": {
+            "a": "The amount of disk space used by the file",
+            "b": "The RAM required by the algorithm as input size grows",
+            "c": "The physical size of the computer",
+            "d": "The distance between variables in memory",
+            "e": "The cloud storage capacity"
+          },
+          "correct_answer": "b",
+          "explanation": "Space complexity measures the additional memory an algorithm uses relative to input size."
+        },
+        {
+          "id": "Q27",
+          "question": "Which of these is the most efficient Big-O complexity for large datasets?",
+          "options": {
+            "a": "O(n^2)",
+            "b": "O(n!)",
+            "c": "O(n)",
+            "d": "O(log n)",
+            "e": "O(2^n)"
+          },
+          "correct_answer": "d",
+          "explanation": "O(log n) is generally more efficient than linear and quadratic growth for searching/sorting."
+        },
+        {
+          "id": "Q28",
+          "question": "In the context of Big-O, what does O(1) represent?",
+          "options": {
+            "a": "Linear time",
+            "b": "Constant time",
+            "c": "Quadratic time",
+            "d": "Exponential time",
+            "e": "Logarithmic time"
+          },
+          "correct_answer": "b",
+          "explanation": "O(1) means the execution time is independent of the input size."
+        },
+        {
+          "id": "Q29",
+          "question": "What is an 'Insertion Sort' best at?",
+          "options": {
+            "a": "Handling infinitely large data",
+            "b": "Sorting small or partially sorted datasets efficiently",
+            "c": "Never using memory",
+            "d": "Always being faster than Quick Sort",
+            "e": "Sorting random strings only"
+          },
+          "correct_answer": "b",
+          "explanation": "Insertion sort is simple and efficient for small or nearly sorted lists."
+        },
+        {
+          "id": "Q30",
+          "question": "Which algorithm uses the 'Divide and Conquer' strategy?",
+          "options": {
+            "a": "Linear Search",
+            "b": "Quick Sort",
+            "c": "Selection Sort",
+            "d": "Insertion Sort",
+            "e": "Sequential Sort"
+          },
+          "correct_answer": "b",
+          "explanation": "Quick Sort partitions the array and recursively sorts the sub-arrays."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 4: RECURSION, STRINGS & MISCELLANEOUS",
+      "questions": [
+        {
+          "id": "Q31",
+          "question": "What is Recursion?",
+          "options": {
+            "a": "A loop that repeats indefinitely",
+            "b": "A function that calls itself",
+            "c": "A variable that changes its data type",
+            "d": "A process of deleting memory",
+            "e": "A hardware interruption"
+          },
+          "correct_answer": "b",
+          "explanation": "Recursion is a programming technique where a function calls itself to solve smaller instances of the problem."
+        },
+        {
+          "id": "Q32",
+          "question": "What is required to prevent a recursive function from looping forever?",
+          "options": {
+            "a": "A large memory buffer",
+            "b": "A base case",
+            "c": "A GOTO statement",
+            "d": "An infinite loop structure",
+            "e": "A faster CPU"
+          },
+          "correct_answer": "b",
+          "explanation": "Every recursive function must have a base case to stop the recursive calls."
+        },
+        {
+          "id": "Q33",
+          "question": "What does 'isalnum' do in string processing?",
+          "options": {
+            "a": "Checks if a character is alphanumeric",
+            "b": "Checks if a file is open",
+            "c": "Calculates the string length",
+            "d": "Converts string to lowercase",
+            "e": "Deletes the string"
+          },
+          "correct_answer": "a",
+          "explanation": "isalnum checks if a character is either a letter or a digit."
+        },
+        {
+          "id": "Q34",
+          "question": "What is 'Tracing Code'?",
+          "options": {
+            "a": "Running the code on a different OS",
+            "b": "Compiling the code into machine language",
+            "c": "Following the program execution step-by-step to understand logic",
+            "d": "Adding comments to the code",
+            "e": "Encrypting the source code"
+          },
+          "correct_answer": "c",
+          "explanation": "Tracing (or dry running) is a debugging technique to follow the value of variables through execution."
+        },
+        {
+          "id": "Q35",
+          "question": "Why is documentation important in program maintenance?",
+          "options": {
+            "a": "It slows down the program",
+            "b": "It makes the code unreadable",
+            "c": "It helps others (and yourself) understand and modify the code later",
+            "d": "It increases the binary file size",
+            "e": "It is required by the computer"
+          },
+          "correct_answer": "c",
+          "explanation": "Documentation ensures maintainability and readability, which is critical for long-term project success."
+        },
+        {
+          "id": "Q36",
+          "question": "When converting Binary to Decimal, what power of 2 corresponds to the rightmost bit?",
+          "options": {
+            "a": "2^1",
+            "b": "2^0",
+            "c": "2^8",
+            "d": "2^-1",
+            "e": "2^n"
+          },
+          "correct_answer": "b",
+          "explanation": "The rightmost bit (Least Significant Bit) is multiplied by 2^0."
+        },
+        {
+          "id": "Q37",
+          "question": "What happens in the 'Coding and Testing' phase of problem solving?",
+          "options": {
+            "a": "The problem is defined",
+            "b": "The algorithm is translated to language and verified for errors",
+            "c": "The customer is interviewed",
+            "d": "The requirements are deleted",
+            "e": "The computer is turned off"
+          },
+          "correct_answer": "b",
+          "explanation": "Coding and testing involves actual implementation and verifying logic through test cases."
+        },
+        {
+          "id": "Q38",
+          "question": "Which of these is a common 'Control Structure'?",
+          "options": {
+            "a": "File path",
+            "b": "Memory allocation",
+            "c": "IF-THEN-ELSE",
+            "d": "System clock",
+            "e": "Screen display"
+          },
+          "correct_answer": "c",
+          "explanation": "IF-THEN-ELSE is a fundamental selection control structure."
+        },
+        {
+          "id": "Q39",
+          "question": "What is the purpose of 'Program Maintenance'?",
+          "options": {
+            "a": "To delete the program",
+            "b": "To update, fix, or improve the software after it is deployed",
+            "c": "To increase the compiler's speed",
+            "d": "To remove all comments from code",
+            "e": "To hide the source code"
+          },
+          "correct_answer": "b",
+          "explanation": "Maintenance is the ongoing process of supporting the software after release."
+        },
+        {
+          "id": "Q40",
+          "question": "What is the result of '1 + 2 + 3 + ... + n'?",
+          "options": {
+            "a": "n",
+            "b": "n^2",
+            "c": "n(n+1)/2",
+            "d": "n!",
+            "e": "log n"
+          },
+          "correct_answer": "c",
+          "explanation": "This is the classic sum of the first n integers formula."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 5: SUPPLEMENTARY LOGIC & FOUNDATIONS (Q41-100)",
+      "questions": [
+        {
+          "id": "Q41",
+          "question": "What defines a 'loop' in programming?",
+          "options": {
+            "a": "A sequence of unrelated commands",
+            "b": "A structure that repeats a block of code based on a condition",
+            "c": "A method to jump to the end of a file",
+            "d": "An error that halts the program",
+            "e": "A definition of a variable"
+          },
+          "correct_answer": "b",
+          "explanation": "Loops (like for, while) allow code blocks to execute repeatedly."
+        },
+        {
+          "id": "Q42",
+          "question": "Which loop guarantees execution at least once?",
+          "options": {
+            "a": "FOR loop",
+            "b": "WHILE loop",
+            "c": "DO-WHILE loop",
+            "d": "IF loop",
+            "e": "FUNCTION loop"
+          },
+          "correct_answer": "c",
+          "explanation": "DO-WHILE checks the condition after the first execution."
+        },
+        {
+          "id": "Q43",
+          "question": "What is an algorithm's 'time complexity' typically denoted by?",
+          "options": {
+            "a": "Alpha notation",
+            "b": "Big-O notation",
+            "c": "Sigma notation",
+            "d": "Delta notation",
+            "e": "Binary notation"
+          },
+          "correct_answer": "b",
+          "explanation": "Big-O notation describes the limiting behavior of a function when the argument trends towards infinity."
+        },
+        {
+          "id": "Q44",
+          "question": "What is the main function of 'Selection' in structured programming?",
+          "options": {
+            "a": "To loop code",
+            "b": "To make decisions based on conditions",
+            "c": "To store data",
+            "d": "To calculate variables",
+            "e": "To print output"
+          },
+          "correct_answer": "b",
+          "explanation": "Selection logic allows programs to branch based on specific conditions."
+        },
+        {
+          "id": "Q45",
+          "question": "What is 'Syntax'?",
+          "options": {
+            "a": "The logic of the program",
+            "b": "The rules governing the structure of statements in a language",
+            "c": "The efficiency of the program",
+            "d": "The number of variables used",
+            "e": "The color of the code"
+          },
+          "correct_answer": "b",
+          "explanation": "Syntax defines the grammatical rules of a programming language."
+        },
+        {
+          "id": "Q46",
+          "question": "What is an 'Array'?",
+          "options": {
+            "a": "A single variable",
+            "b": "A collection of elements of the same type stored in contiguous memory",
+            "c": "A function that calls itself",
+            "d": "A file processing command",
+            "e": "A type of recursive call"
+          },
+          "correct_answer": "b",
+          "explanation": "Arrays are fundamental structures for storing collections of data."
+        },
+        {
+          "id": "Q47",
+          "question": "What does 'Average Word Value' problem typically involve?",
+          "options": {
+            "a": "Finding the longest word",
+            "b": "Calculating the total value of characters in words and dividing by the count",
+            "c": "Sorting words alphabetically",
+            "d": "Counting unique letters",
+            "e": "Deleting words"
+          },
+          "correct_answer": "b",
+          "explanation": "It's an arithmetic application on character string processing."
+        },
+        {
+          "id": "Q48",
+          "question": "Which of these is NOT an example of a data structure?",
+          "options": {
+            "a": "Array",
+            "b": "Queue",
+            "c": "Stack",
+            "d": "Loop",
+            "e": "Linked List"
+          },
+          "correct_answer": "d",
+          "explanation": "A loop is a control structure, not a data structure."
+        },
+        {
+          "id": "Q49",
+          "question": "Why is 'testing strategy' important?",
+          "options": {
+            "a": "To waste time",
+            "b": "To ensure the program behaves correctly under various conditions",
+            "c": "To change the code structure",
+            "d": "To delete old versions",
+            "e": "To make the file larger"
+          },
+          "correct_answer": "b",
+          "explanation": "Testing is crucial for finding bugs and ensuring software quality."
+        },
+        {
+          "id": "Q50",
+          "question": "What does a 'Variable Initialization' look like?",
+          "options": {
+            "a": "f = 0;",
+            "b": "f = f + 1;",
+            "c": "f == 0;",
+            "d": "f < n;",
+            "e": "f++"
+          },
+          "correct_answer": "a",
+          "explanation": "Initialization assigns a starting value to a variable."
+        },
+        {
+          "id": "Q51",
+          "question": "Which sorting algorithm compares and swaps adjacent elements until sorted?",
+          "options": {
+            "a": "Bubble Sort",
+            "b": "Quick Sort",
+            "c": "Insertion Sort",
+            "d": "Counting Sort",
+            "e": "Selection Sort"
+          },
+          "correct_answer": "a",
+          "explanation": "Bubble sort iterates through the list, swapping adjacent elements if they are in the wrong order."
+        },
+        {
+          "id": "Q52",
+          "question": "What is the purpose of 'Documentation'?",
+          "options": {
+            "a": "To slow down compilation",
+            "b": "To provide human-readable explanation of code",
+            "c": "To compile faster",
+            "d": "To encrypt the file",
+            "e": "To delete variables"
+          },
+          "correct_answer": "b",
+          "explanation": "Documentation is key for maintaining and explaining software logic."
+        },
+        {
+          "id": "Q53",
+          "question": "What is 'time complexity' of O(n^2)?",
+          "options": {
+            "a": "Linear",
+            "b": "Quadratic",
+            "c": "Constant",
+            "d": "Logarithmic",
+            "e": "Exponential"
+          },
+          "correct_answer": "b",
+          "explanation": "O(n^2) represents a quadratic growth rate."
+        },
+        {
+          "id": "Q54",
+          "question": "What symbol in a flowchart represents the start/stop of a program?",
+          "options": {
+            "a": "Rectangle",
+            "b": "Oval (Terminator)",
+            "c": "Diamond",
+            "d": "Parallelogram",
+            "e": "Arrow"
+          },
+          "correct_answer": "b",
+          "explanation": "The oval shape (terminator) marks the start and end of a process."
+        },
+        {
+          "id": "Q55",
+          "question": "What is a 'Programming Language'?",
+          "options": {
+            "a": "A way to talk to humans",
+            "b": "A formal set of instructions for a computer",
+            "c": "A type of hardware",
+            "d": "A browser",
+            "e": "A server"
+          },
+          "correct_answer": "b",
+          "explanation": "Programming languages are the interface between human logic and machine execution."
+        },
+        {
+          "id": "Q56",
+          "question": "What does a 'Counter' do in a loop?",
+          "options": {
+            "a": "It calculates the sum",
+            "b": "It tracks the number of iterations",
+            "c": "It deletes the variable",
+            "d": "It prints the result",
+            "e": "It ends the program"
+          },
+          "correct_answer": "b",
+          "explanation": "Counters manage loop iteration counts."
+        },
+        {
+          "id": "Q57",
+          "question": "Which of these is a valid logic error?",
+          "options": {
+            "a": "Missing a semicolon (Syntax error)",
+            "b": "Typing the wrong variable name (Syntax error)",
+            "c": "Using '+' instead of '*' causing wrong results",
+            "d": "Using a character where an integer is expected",
+            "e": "Closing the file early"
+          },
+          "correct_answer": "c",
+          "explanation": "Logic errors produce incorrect output even though the code runs."
+        },
+        {
+          "id": "Q58",
+          "question": "What is 'File Copying'?",
+          "options": {
+            "a": "Reading from one file and writing to another",
+            "b": "Deleting a file",
+            "c": "Renaming a file",
+            "d": "Formatting the drive",
+            "e": "Creating a new OS"
+          },
+          "correct_answer": "a",
+          "explanation": "File copying involves I/O operations from source to destination."
+        },
+        {
+          "id": "Q59",
+          "question": "What is the result of '1 million' in Big-O if it's constant?",
+          "options": {
+            "a": "O(n)",
+            "b": "O(1)",
+            "c": "O(n^2)",
+            "d": "O(log n)",
+            "e": "O(n!)"
+          },
+          "correct_answer": "b",
+          "explanation": "A constant number of steps (even a million) is O(1) in Big-O analysis."
+        },
+        {
+          "id": "Q60",
+          "question": "What is the 'input' in the context of the exam question about staff pay?",
+          "options": {
+            "a": "The computer brand",
+            "b": "The name, ID, and hours worked",
+            "c": "The electricity bill",
+            "d": "The operating system",
+            "e": "The printer settings"
+          },
+          "correct_answer": "b",
+          "explanation": "Input is the data processed by the algorithm."
+        },
+        {
+          "id": "Q61",
+          "question": "What is the standard output device?",
+          "options": {
+            "a": "Keyboard",
+            "b": "Mouse",
+            "c": "Screen (Monitor)",
+            "d": "CPU",
+            "e": "Power supply"
+          },
+          "correct_answer": "c",
+          "explanation": "Output is typically displayed on the monitor."
+        },
+        {
+          "id": "Q62",
+          "question": "What is 'Pseudocode'?",
+          "options": {
+            "a": "Real machine code",
+            "b": "English-like description of algorithm steps",
+            "c": "A broken code",
+            "d": "A compiler language",
+            "e": "A graphic design"
+          },
+          "correct_answer": "b",
+          "explanation": "Pseudocode is used to plan algorithms before actual coding."
+        },
+        {
+          "id": "Q63",
+          "question": "Which of these is a correct loop increment?",
+          "options": {
+            "a": "i = i + 1",
+            "b": "i - 1",
+            "c": "i = 0",
+            "d": "i * 2",
+            "e": "i / 1"
+          },
+          "correct_answer": "a",
+          "explanation": "Incrementing adds to the current value."
+        },
+        {
+          "id": "Q64",
+          "question": "What does a 'Compiler' do?",
+          "options": {
+            "a": "Translates code to machine language",
+            "b": "Runs the program",
+            "c": "Stores the file",
+            "d": "Prints the output",
+            "e": "Draws the flowchart"
+          },
+          "correct_answer": "a",
+          "explanation": "Compilers translate high-level code to machine code."
+        },
+        {
+          "id": "Q65",
+          "question": "What is a 'Condition'?",
+          "options": {
+            "a": "A variable that holds a string",
+            "b": "A logical expression that is true or false",
+            "c": "A type of hardware",
+            "d": "A function",
+            "e": "A file"
+          },
+          "correct_answer": "b",
+          "explanation": "Conditions guide decision-making in programs."
+        },
+        {
+          "id": "Q66",
+          "question": "What is the time complexity of a recursive Fibonacci calculation (naive)?",
+          "options": {
+            "a": "O(n)",
+            "b": "O(log n)",
+            "c": "O(2^n)",
+            "d": "O(n^2)",
+            "e": "O(1)"
+          },
+          "correct_answer": "c",
+          "explanation": "Naive recursive Fibonacci has exponential time complexity."
+        },
+        {
+          "id": "Q67",
+          "question": "What is a 'Base Case' in recursion?",
+          "options": {
+            "a": "The point where the recursion starts",
+            "b": "The condition that stops the recursion",
+            "c": "A variable in the function",
+            "d": "The input value",
+            "e": "A hardware error"
+          },
+          "correct_answer": "b",
+          "explanation": "Base cases prevent infinite recursion."
+        },
+        {
+          "id": "Q68",
+          "question": "What happens if a loop has no exit condition?",
+          "options": {
+            "a": "It runs efficiently",
+            "b": "It crashes",
+            "c": "It becomes an infinite loop",
+            "d": "It skips the block",
+            "e": "It produces correct results"
+          },
+          "correct_answer": "c",
+          "explanation": "Infinite loops occur when the exit condition is never met."
+        },
+        {
+          "id": "Q69",
+          "question": "Which of these is not a number type?",
+          "options": {
+            "a": "Integer",
+            "b": "Float",
+            "c": "Double",
+            "d": "String",
+            "e": "Long"
+          },
+          "correct_answer": "d",
+          "explanation": "String is a collection of characters, not a numeric type."
+        },
+        {
+          "id": "Q70",
+          "question": "What is 'C++'?",
+          "options": {
+            "a": "A hardware brand",
+            "b": "A programming language",
+            "c": "An operating system",
+            "d": "A browser",
+            "e": "A file type"
+          },
+          "correct_answer": "b",
+          "explanation": "C++ is a high-level programming language."
+        },
+        {
+          "id": "Q71",
+          "question": "What is 'Debugging'?",
+          "options": {
+            "a": "Adding new features",
+            "b": "Finding and fixing errors in code",
+            "c": "Deleting the software",
+            "d": "Renaming files",
+            "e": "Changing the screen brightness"
+          },
+          "correct_answer": "b",
+          "explanation": "Debugging is the process of locating and correcting bugs."
+        },
+        {
+          "id": "Q72",
+          "question": "What does a 'Pointer' do (in concept)?",
+          "options": {
+            "a": "Stores a value",
+            "b": "Stores the address of a variable",
+            "c": "Stores the program",
+            "d": "Prints to the screen",
+            "e": "Deletes the program"
+          },
+          "correct_answer": "b",
+          "explanation": "Pointers hold memory addresses."
+        },
+        {
+          "id": "Q73",
+          "question": "What is 'Big-O' of O(n + n)?",
+          "options": {
+            "a": "O(2n)",
+            "b": "O(n)",
+            "c": "O(n^2)",
+            "d": "O(1)",
+            "e": "O(log n)"
+          },
+          "correct_answer": "b",
+          "explanation": "Big-O drops constants, so O(2n) becomes O(n)."
+        },
+        {
+          "id": "Q74",
+          "question": "What is the purpose of 'matching parentheses'?",
+          "options": {
+            "a": "To check if code is balanced",
+            "b": "To print characters",
+            "c": "To sort numbers",
+            "d": "To calculate math",
+            "e": "To copy files"
+          },
+          "correct_answer": "a",
+          "explanation": "Parentheses matching is a common algorithmic stack problem."
+        },
+        {
+          "id": "Q75",
+          "question": "What is a 'stack'?",
+          "options": {
+            "a": "A FIFO structure",
+            "b": "A LIFO structure",
+            "c": "A random structure",
+            "d": "A looping structure",
+            "e": "A sorting algorithm"
+          },
+          "correct_answer": "b",
+          "explanation": "Stacks are Last-In, First-Out structures."
+        },
+        {
+          "id": "Q76",
+          "question": "Which of these is a boolean value?",
+          "options": {
+            "a": "123",
+            "b": "True",
+            "c": "Hello",
+            "d": "3.14",
+            "e": "A"
+          },
+          "correct_answer": "b",
+          "explanation": "Boolean values are True or False."
+        },
+        {
+          "id": "Q77",
+          "question": "What is the output of '2 + 2 * 3'?",
+          "options": {
+            "a": "12",
+            "b": "8",
+            "c": "7",
+            "d": "6",
+            "e": "4"
+          },
+          "correct_answer": "b",
+          "explanation": "Following order of operations, multiplication happens first (2 * 3 = 6, 6 + 2 = 8)."
+        },
+        {
+          "id": "Q78",
+          "question": "What is an 'Identifier'?",
+          "options": {
+            "a": "A keyword",
+            "b": "A variable or function name",
+            "c": "A data type",
+            "d": "A compiler",
+            "e": "A flowchart symbol"
+          },
+          "correct_answer": "b",
+          "explanation": "Identifiers are names given to entities in a program."
+        },
+        {
+          "id": "Q79",
+          "question": "What is 'Modular Programming'?",
+          "options": {
+            "a": "Programming with modules",
+            "b": "Designing a system as a set of interacting modules",
+            "c": "Programming without modules",
+            "d": "Using only one block",
+            "e": "Programming in binary"
+          },
+          "correct_answer": "b",
+          "explanation": "Modularity divides code into manageable pieces."
+        },
+        {
+          "id": "Q80",
+          "question": "What is the purpose of 'Time Complexity' in optimization?",
+          "options": {
+            "a": "To make programs slower",
+            "b": "To predict performance and efficiency",
+            "c": "To change the syntax",
+            "d": "To increase hardware cost",
+            "e": "To delete variables"
+          },
+          "correct_answer": "b",
+          "explanation": "Complexity analysis helps optimize performance."
+        },
+        {
+          "id": "Q81",
+          "question": "What is the result of '10 / 0'?",
+          "options": {
+            "a": "0",
+            "b": "10",
+            "c": "Infinity",
+            "d": "Runtime Error",
+            "e": "1"
+          },
+          "correct_answer": "d",
+          "explanation": "Division by zero is an undefined operation and usually causes an error."
+        },
+        {
+          "id": "Q82",
+          "question": "What is a 'Sequence' structure?",
+          "options": {
+            "a": "Steps executed one after another",
+            "b": "Steps executed based on a condition",
+            "c": "Steps repeated",
+            "d": "Steps skipped",
+            "e": "No steps"
+          },
+          "correct_answer": "a",
+          "explanation": "Sequence is the default order of execution."
+        },
+        {
+          "id": "Q83",
+          "question": "Which of these is a logical operator?",
+          "options": {
+            "a": "+",
+            "b": "-",
+            "c": "AND",
+            "d": "*",
+            "e": "/"
+          },
+          "correct_answer": "c",
+          "explanation": "AND, OR, NOT are logical operators."
+        },
+        {
+          "id": "Q84",
+          "question": "What does a 'Variable' do?",
+          "options": {
+            "a": "It is a fixed value",
+            "b": "It stores data that can change during execution",
+            "c": "It is the compiler",
+            "d": "It prints text",
+            "e": "It is the keyboard"
+          },
+          "correct_answer": "b",
+          "explanation": "Variables are memory locations for data."
+        },
+        {
+          "id": "Q85",
+          "question": "What is a 'String'?",
+          "options": {
+            "a": "A number",
+            "b": "A sequence of characters",
+            "c": "A loop",
+            "d": "A function",
+            "e": "A file"
+          },
+          "correct_answer": "b",
+          "explanation": "Strings are text data."
+        },
+        {
+          "id": "Q86",
+          "question": "What is the Big-O of O(log n) vs O(n)?",
+          "options": {
+            "a": "O(log n) is slower",
+            "b": "O(log n) is faster",
+            "c": "They are the same",
+            "d": "O(n) is faster",
+            "e": "They cannot be compared"
+          },
+          "correct_answer": "b",
+          "explanation": "Logarithmic growth is slower than linear growth, making it more efficient."
+        },
+        {
+          "id": "Q87",
+          "question": "What is 'Internal Sorting'?",
+          "options": {
+            "a": "Sorting data in RAM",
+            "b": "Sorting data on disk",
+            "c": "Sorting data in the cloud",
+            "d": "Sorting data on paper",
+            "e": "Not sorting"
+          },
+          "correct_answer": "a",
+          "explanation": "Internal sorting refers to algorithms that can handle the data in the main memory."
+        },
+        {
+          "id": "Q88",
+          "question": "What is a 'Header' file (in C++)?",
+          "options": {
+            "a": "A file containing function declarations",
+            "b": "The main program",
+            "c": "A picture",
+            "d": "A printer driver",
+            "e": "An error log"
+          },
+          "correct_answer": "a",
+          "explanation": "Header files are used to include declarations in C++."
+        },
+        {
+          "id": "Q89",
+          "question": "Which of these is NOT a stage in program solving?",
+          "options": {
+            "a": "Testing",
+            "b": "Coding",
+            "c": "Documentation",
+            "d": "Buying a laptop",
+            "e": "Algorithm development"
+          },
+          "correct_answer": "d",
+          "explanation": "Buying hardware is not a software programming step."
+        },
+        {
+          "id": "Q90",
+          "question": "What is 'Code Maintenance'?",
+          "options": {
+            "a": "Writing new code",
+            "b": "Modifying existing code",
+            "c": "Deleting code",
+            "d": "Formatting the hard drive",
+            "e": "Shutting down the system"
+          },
+          "correct_answer": "b",
+          "explanation": "Maintenance focuses on updating and fixing existing systems."
+        },
+        {
+          "id": "Q91",
+          "question": "What is a 'Syntax Error'?",
+          "options": {
+            "a": "A mistake in the logic",
+            "b": "A violation of the language grammar",
+            "c": "A runtime crash",
+            "d": "A hardware failure",
+            "e": "A slow algorithm"
+          },
+          "correct_answer": "b",
+          "explanation": "Syntax errors are grammar violations."
+        },
+        {
+          "id": "Q92",
+          "question": "Which loop is used to iterate a known number of times?",
+          "options": {
+            "a": "While loop",
+            "b": "For loop",
+            "c": "If loop",
+            "d": "Do loop",
+            "e": "Go loop"
+          },
+          "correct_answer": "b",
+          "explanation": "For loops are typically used for known iteration counts."
+        },
+        {
+          "id": "Q93",
+          "question": "What is 'Binary'?",
+          "options": {
+            "a": "Base 10 system",
+            "b": "Base 2 system (0 and 1)",
+            "c": "Base 16 system",
+            "d": "A programming language",
+            "e": "A hardware component"
+          },
+          "correct_answer": "b",
+          "explanation": "Computers operate on base 2."
+        },
+        {
+          "id": "Q94",
+          "question": "What does 'Return' do in a function?",
+          "options": {
+            "a": "Ends the program",
+            "b": "Sends a value back to the caller",
+            "c": "Deletes the variable",
+            "d": "Prints output",
+            "e": "Restarts the loop"
+          },
+          "correct_answer": "b",
+          "explanation": "Return passes data back from a function."
+        },
+        {
+          "id": "Q95",
+          "question": "What is 'Memory Allocation'?",
+          "options": {
+            "a": "Reserving memory for data",
+            "b": "Deleting memory",
+            "c": "Formatting memory",
+            "d": "Printing memory",
+            "e": "Reading memory"
+          },
+          "correct_answer": "a",
+          "explanation": "Allocation reserves space for variables."
+        },
+        {
+          "id": "Q96",
+          "question": "What is the purpose of 'Counting Sort'?",
+          "options": {
+            "a": "Counting lines of code",
+            "b": "Sorting based on frequency of values",
+            "c": "Counting variables",
+            "d": "Counting loops",
+            "e": "Deleting elements"
+          },
+          "correct_answer": "b",
+          "explanation": "Counting sort is an integer sorting algorithm."
+        },
+        {
+          "id": "Q97",
+          "question": "What is a 'Runtime Error'?",
+          "options": {
+            "a": "An error found during compilation",
+            "b": "An error that happens while the program is running",
+            "c": "A spelling mistake",
+            "d": "A logic error",
+            "e": "Hardware overheating"
+          },
+          "correct_answer": "b",
+          "explanation": "Runtime errors occur during program execution (e.g., division by zero)."
+        },
+        {
+          "id": "Q98",
+          "question": "What is 'Algorithm'?",
+          "options": {
+            "a": "A language",
+            "b": "A step-by-step set of instructions",
+            "c": "A computer part",
+            "d": "A browser",
+            "e": "A file"
+          },
+          "correct_answer": "b",
+          "explanation": "Algorithms are logical procedures."
+        },
+        {
+          "id": "Q99",
+          "question": "What is 'Code readability'?",
+          "options": {
+            "a": "How hard the code is",
+            "b": "How easy the code is to understand",
+            "c": "How fast the code runs",
+            "d": "How big the file is",
+            "e": "The color of the code"
+          },
+          "correct_answer": "b",
+          "explanation": "Readability is crucial for maintenance."
+        },
+        {
+          "id": "Q100",
+          "question": "What is 'Polya's' first step?",
+          "options": {
+            "a": "Carry out the plan",
+            "b": "Understand the problem",
+            "c": "Devise a plan",
+            "d": "Look back",
+            "e": "Delete the code"
+          },
+          "correct_answer": "b",
+          "explanation": "Understanding the problem is always the starting point."
+        }
+      ]
+    }
+  ]
+}

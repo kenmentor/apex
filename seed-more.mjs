@@ -27,12 +27,12 @@ async function main() {
 
   // ── Define courses ──
   const courses = [
-    { file: 'CSC282 (2).json', code: 'CSC 282', title: 'Computer Lab 2B: Java OOP', icon: '☕', color: '#e67e22', dept: 'CSC', level: '200 Level' },
+    { file: 'CSC282.json', code: 'CSC 282', title: 'Computer Lab 2B: Java OOP', icon: '☕', color: '#e67e22', dept: 'CSC', level: '200 Level' },
     { file: 'COS202.json', code: 'COS 202', title: 'Computer Programming II', icon: '💻', color: '#2980b9', dept: 'COS', level: '200 Level' },
   ];
 
   for (const course of courses) {
-    const jsonPath = join(__dirname, '..', course.file);
+    const jsonPath = join(__dirname, course.file);
     const raw = readFileSync(jsonPath, 'utf-8');
     const data = JSON.parse(raw);
 
