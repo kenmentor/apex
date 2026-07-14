@@ -59,11 +59,11 @@ export default function InstallPrompt() {
     window.addEventListener('beforeinstallprompt', handler)
     window.addEventListener('appinstalled', installedHandler)
 
-    // Show banner after 4s on first visit, or 2s on return visit
+    // Show banner after 30s on first visit, 15s on return (let users engage first)
     const visitCount = parseInt(sessionStorage.getItem('apex_visit_count') || '0') + 1
     sessionStorage.setItem('apex_visit_count', visitCount.toString())
 
-    const delay = visitCount <= 1 ? 4000 : 2000
+    const delay = visitCount <= 1 ? 30000 : 15000
     mounted.current = true
 
     const showTimer = setTimeout(() => {
@@ -146,8 +146,8 @@ export default function InstallPrompt() {
 
         <button
           onClick={handleDismiss}
-          className="w-full cursor-pointer border-none bg-transparent px-3 py-1.5 text-xs font-medium tracking-wide"
-          style={{ color: 'rgba(255,255,255,0.25)' }}
+          className="-mb-2 mt-1 cursor-pointer border-none bg-transparent px-2 py-0.5"
+          style={{ color: 'rgba(255,255,255,0.1)', fontSize: 9, fontWeight: 300, letterSpacing: '0.5px' }}
         >
           Not now
         </button>
