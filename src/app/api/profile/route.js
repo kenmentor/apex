@@ -2,6 +2,33 @@ import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
 
+export async function GET(request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const email = searchParams.get('email')
+    if (!email) return NextResponse.json({ error: 'Email required' }, { status: 400 })
+
+    const users = await getCollection('users')
+    const user = await users.findOne({ email: email.toLowerCase().trim() })
+    if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 })
+
+    return NextResponse.json({
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name || '',
+      school: user.school || '',
+      department: user.department || '',
+      level: user.level || '',
+      avatar: user.avatar || '',
+      verified: !!user.verified,
+      admin: !!user.admin,
+      createdAt: user.createdAt,
+    })
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+}
+
 export async function PUT(request) {
   try {
     const user = await getUserFromToken(request)
