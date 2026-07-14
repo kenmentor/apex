@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen } from 'lucide-react';
+import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen, Layers } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -130,6 +130,10 @@ export default function CourseDetailPage() {
               <BookOpen className="mr-1 size-3" />
               Theory
             </TabsTrigger>
+            <TabsTrigger value="flashcards" className="flex-1">
+              <Layers className="mr-1 size-3" />
+              Cards
+            </TabsTrigger>
             <TabsTrigger value="notes" className="flex-1">
               <FileText className="mr-1 size-3" />
               Notes
@@ -182,6 +186,28 @@ export default function CourseDetailPage() {
                     size="lg"
                   >
                     Start Theory
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="flashcards" className="mt-4">
+            <div className="space-y-4">
+              <Card
+                className="overflow-hidden border-0 text-white"
+                style={{ background: `linear-gradient(135deg, ${course?.color || '#0891b2'}, #164e63)` }}
+              >
+                <CardContent className="p-6 text-center">
+                  <Layers className="mx-auto mb-2 size-9" />
+                  <h3 className="text-lg font-bold">{code} Flash Cards</h3>
+                  <p className="mb-4 text-sm text-white/70">Study theory questions and answers</p>
+                  <Button
+                    onClick={() => router.push(`/courses/${codeForUrl}/flashcards`)}
+                    className="bg-white text-black hover:bg-white/90"
+                    size="lg"
+                  >
+                    Study Cards
                   </Button>
                 </CardContent>
               </Card>

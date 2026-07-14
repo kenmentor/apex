@@ -10,9 +10,17 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const courseCode = searchParams.get('courseCode')
+    const withAnswer = searchParams.get('withAnswer') === 'true'
 
     if (!courseCode) {
       return NextResponse.json({ error: 'courseCode required' }, { status: 400 })
+    }
+
+    if (withAnswer) {
+      const user = await getUserFromToken(request)
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
     }
 
     const refsCol = await getCollection('theory_references')
@@ -21,17 +29,23 @@ export async function GET(request) {
       .sort({ createdAt: -1 })
       .toArray()
 
-    const safe = refs.map(r => ({
-      _id: r._id.toString(),
-      courseCode: r.courseCode,
-      section: r.section,
-      id: r.id,
-      question: r.question,
-      mainConcepts: r.mainConcepts,
-      keywords: r.keywords,
-      difficulty: r.difficulty,
-      maxPoints: r.maxPoints || 10,
-    }))
+    const safe = refs.map(r => {
+      const doc = {
+        _id: r._id.toString(),
+        courseCode: r.courseCode,
+        section: r.section,
+        id: r.id,
+        question: r.question,
+        mainConcepts: r.mainConcepts,
+        keywords: r.keywords,
+        difficulty: r.difficulty,
+        maxPoints: r.maxPoints || 10,
+      }
+      if (withAnswer) {
+        doc.referenceAnswer = r.referenceAnswer
+      }
+      return doc
+    })
 
     return NextResponse.json(safe)
   } catch (error) {
