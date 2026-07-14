@@ -1,13 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { getUser, setUser } from '@/lib/auth'
 import { DEPARTMENTS, LEVELS } from '@/lib/departments'
 import { getToken } from '@/lib/auth'
 
+const STORAGE_KEY = 'apex_profile_prompted'
+const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000
+
+function getDismissedAt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return 0
+    const ts = Number(raw)
+    return isNaN(ts) ? 0 : ts
+  } catch { return 0 }
+}
+
 export default function ProfileCompletePrompt() {
-  const router = useRouter()
   const [show, setShow] = useState(false)
   const [department, setDepartment] = useState('')
   const [level, setLevel] = useState('')
@@ -18,7 +28,10 @@ export default function ProfileCompletePrompt() {
     const user = getUser()
     if (!user || !user.email) return
     if (user.department && user.level) return
-    if (sessionStorage.getItem('apex_profile_prompted')) return
+
+    const dismissedAt = getDismissedAt()
+    if (dismissedAt && Date.now() - dismissedAt < SEVEN_DAYS) return
+
     setDepartment(user.department || '')
     setLevel(user.level || '')
     setShow(true)
@@ -39,7 +52,7 @@ export default function ProfileCompletePrompt() {
       if (data.id) {
         const user = getUser()
         setUser({ ...user, department: data.department, level: data.level })
-        sessionStorage.setItem('apex_profile_prompted', '1')
+        localStorage.removeItem(STORAGE_KEY)
         setShow(false)
       } else {
         setError(data.error || 'Failed to save')
@@ -51,6 +64,11 @@ export default function ProfileCompletePrompt() {
     }
   }
 
+  function handleDismiss() {
+    try { localStorage.setItem(STORAGE_KEY, String(Date.now())) } catch {}
+    setShow(false)
+  }
+
   if (!show) return null
 
   return (
@@ -60,13 +78,13 @@ export default function ProfileCompletePrompt() {
       padding: 20,
     }}>
       <div style={{
-        background: 'white', borderRadius: 20, padding: '32px 24px', maxWidth: 400, width: '100%',
+        background: 'var(--card)', borderRadius: 20, padding: '32px 24px', maxWidth: 400, width: '100%',
         boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
       }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <div style={{
             width: 56, height: 56, borderRadius: 16, margin: '0 auto 12px',
-            background: 'var(--space-purple)',
+            background: 'var(--primary)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -74,20 +92,20 @@ export default function ProfileCompletePrompt() {
               <circle cx="12" cy="7" r="4"/>
             </svg>
           </div>
-          <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-dark)', marginBottom: 4 }}>Complete your profile</h3>
-          <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Tell us your department and level to personalise your experience.</p>
+          <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--foreground)', marginBottom: 4 }}>Complete your profile</h3>
+          <p style={{ fontSize: 13, color: 'var(--muted-foreground)' }}>Tell us your department and level to personalise your experience.</p>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div>
-            <label style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-dark)', display: 'block', marginBottom: 6 }}>Department</label>
+            <label style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)', display: 'block', marginBottom: 6 }}>Department</label>
             <select
               value={department}
               onChange={e => { setDepartment(e.target.value); setError(''); }}
               style={{
-                width: '100%', padding: '12px 14px', borderRadius: 12, border: '2px solid #e2e8f0',
-                fontSize: 14, fontFamily: 'Poppins, sans-serif', color: 'var(--text-dark)',
-                background: '#f8f9fa', outline: 'none', appearance: 'none',
+                width: '100%', padding: '12px 14px', borderRadius: 12, border: '2px solid var(--border)',
+                fontSize: 14, fontFamily: 'Poppins, sans-serif', color: 'var(--foreground)',
+                background: 'var(--muted)', outline: 'none', appearance: 'none',
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`,
                 backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px center',
                 cursor: 'pointer',
@@ -99,14 +117,14 @@ export default function ProfileCompletePrompt() {
           </div>
 
           <div>
-            <label style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-dark)', display: 'block', marginBottom: 6 }}>Level</label>
+            <label style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)', display: 'block', marginBottom: 6 }}>Level</label>
             <select
               value={level}
               onChange={e => { setLevel(e.target.value); setError(''); }}
               style={{
-                width: '100%', padding: '12px 14px', borderRadius: 12, border: '2px solid #e2e8f0',
-                fontSize: 14, fontFamily: 'Poppins, sans-serif', color: 'var(--text-dark)',
-                background: '#f8f9fa', outline: 'none', appearance: 'none',
+                width: '100%', padding: '12px 14px', borderRadius: 12, border: '2px solid var(--border)',
+                fontSize: 14, fontFamily: 'Poppins, sans-serif', color: 'var(--foreground)',
+                background: 'var(--muted)', outline: 'none', appearance: 'none',
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`,
                 backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px center',
                 cursor: 'pointer',
@@ -117,15 +135,15 @@ export default function ProfileCompletePrompt() {
             </select>
           </div>
 
-          {error && <div style={{ fontSize: 12, color: 'var(--error-red)' }}>{error}</div>}
+          {error && <div style={{ fontSize: 12, color: 'hsl(var(--destructive))' }}>{error}</div>}
 
           <button
             onClick={handleSave}
             disabled={saving || !department || !level}
             style={{
               width: '100%', padding: '14px', borderRadius: 14, border: 'none',
-              background: saving || !department || !level ? '#e2e8f0' : 'var(--space-purple)',
-              color: saving || !department || !level ? '#a0aec0' : 'white',
+              background: saving || !department || !level ? 'var(--muted)' : 'var(--primary)',
+              color: saving || !department || !level ? 'var(--muted-foreground)' : 'var(--primary-foreground)',
               fontSize: 14, fontWeight: 600, fontFamily: 'Poppins, sans-serif',
               cursor: saving || !department || !level ? 'not-allowed' : 'pointer',
               marginTop: 4,
@@ -135,10 +153,10 @@ export default function ProfileCompletePrompt() {
           </button>
 
           <button
-            onClick={() => { sessionStorage.setItem('apex_profile_prompted', '1'); setShow(false); }}
+            onClick={handleDismiss}
             style={{
               width: '100%', padding: '10px', borderRadius: 12, border: 'none',
-              background: 'none', color: 'var(--text-muted)', fontSize: 13,
+              background: 'none', color: 'var(--muted-foreground)', fontSize: 13,
               fontFamily: 'Poppins, sans-serif', cursor: 'pointer',
             }}
           >
