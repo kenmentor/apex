@@ -121,7 +121,7 @@ export default function CourseDetailPage() {
 
       <div className="mx-auto w-full max-w-2xl space-y-4 px-4 py-4">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full">
+          <TabsList className="w-full overflow-x-auto flex-nowrap justify-start">
             <TabsTrigger value="quizzes" className="flex-1">
               <Star className="mr-1 size-3" />
               Quizzes
