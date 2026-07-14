@@ -1,41 +1,19 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 
-export async function POST(request) {
-  try {
-    const body = await request.json()
-    const { event, payload } = body
-
-    if (!event || !payload) {
-      return NextResponse.json({ error: 'event and payload required' }, { status: 400 })
-    }
-
-    const col = await getCollection('telemetry')
-    await col.insertOne({
-      event,
-      payload,
-      createdAt: new Date(),
-    })
-
-    return NextResponse.json({ ok: true })
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed' }, { status: 500 })
-  }
-}
-
 export async function GET() {
   try {
-    const col = await getCollection('telemetry')
+    const col = await getCollection('analytics')
 
     // ── 1. Question Friction Index ──
     const frictionData = await col.aggregate([
       { $match: { event: 'quiz_answer_submitted' } },
       {
         $group: {
-          _id: '$payload.question_id',
+          _id: '$data.question_id',
           total: { $sum: 1 },
-          correct: { $sum: { $cond: ['$payload.is_correct', 1, 0] } },
-          avgTime: { $avg: '$payload.time_spent_sec' },
+          correct: { $sum: { $cond: ['$data.is_correct', 1, 0] } },
+          avgTime: { $avg: '$data.time_spent_sec' },
         },
       },
       {
@@ -66,9 +44,9 @@ export async function GET() {
       { $match: { event: 'quiz_session_terminated' } },
       {
         $group: {
-          _id: '$payload.quiz_id',
-          lastStep: { $avg: '$payload.last_completed_step' },
-          totalSteps: { $first: '$payload.total_steps' },
+          _id: '$data.quiz_id',
+          lastStep: { $avg: '$data.last_completed_step' },
+          totalSteps: { $first: '$data.total_steps' },
           count: { $sum: 1 },
         },
       },
@@ -100,14 +78,13 @@ export async function GET() {
       { $match: { event: 'quiz_answer_submitted' } },
       {
         $group: {
-          _id: { question_id: '$payload.question_id', option: '$payload.selected_option_index' },
+          _id: { question_id: '$data.question_id', option: '$data.selected_option_index' },
           count: { $sum: 1 },
         },
       },
       { $sort: { '_id.question_id': 1, count: -1 } },
     ]).toArray()
 
-    // Group by question for display
     const distractorMap = {}
     for (const d of distractorData) {
       const qid = d._id.question_id
@@ -120,8 +97,8 @@ export async function GET() {
       { $match: { event: 'explanation_viewed' } },
       {
         $group: {
-          _id: '$payload.question_id',
-          avgDurationMs: { $avg: '$payload.duration_ms' },
+          _id: '$data.question_id',
+          avgDurationMs: { $avg: '$data.duration_ms' },
           views: { $sum: 1 },
         },
       },
@@ -139,7 +116,7 @@ export async function GET() {
     // ── 5. Zero-Result Queries ──
     const zeroResultData = await col.aggregate([
       { $match: { event: 'search_executed' } },
-      { $group: { _id: '$payload.query_string', count: { $sum: 1 } } },
+      { $group: { _id: '$data.query_string', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 30 },
     ]).toArray()
@@ -149,7 +126,7 @@ export async function GET() {
       { $match: { event: 'space_interaction' } },
       {
         $group: {
-          _id: { space_id: '$payload.space_id', action: '$payload.action' },
+          _id: { space_id: '$data.space_id', action: '$data.action' },
           count: { $sum: 1 },
         },
       },
@@ -173,7 +150,7 @@ export async function GET() {
       { $match: { event: 'syllabus_node_expanded' } },
       {
         $group: {
-          _id: { course_code: '$payload.course_code', topic_id: '$payload.topic_id' },
+          _id: { course_code: '$data.course_code', topic_id: '$data.topic_id' },
           count: { $sum: 1 },
         },
       },
@@ -197,9 +174,9 @@ export async function GET() {
       { $match: { event: 'ui_rage_click' } },
       {
         $group: {
-          _id: '$payload.target_element_selector',
+          _id: '$data.target_element_selector',
           count: { $sum: 1 },
-          coords: { $last: '$payload.click_coordinates' },
+          coords: { $last: '$data.click_coordinates' },
         },
       },
       { $sort: { count: -1 } },
@@ -211,11 +188,11 @@ export async function GET() {
       { $match: { event: 'network_transaction_logged' } },
       {
         $group: {
-          _id: '$payload.endpoint_url',
+          _id: '$data.endpoint_url',
           count: { $sum: 1 },
-          avgDurationMs: { $avg: '$payload.duration_ms' },
-          maxDurationMs: { $max: '$payload.duration_ms' },
-          statuses: { $addToSet: '$payload.http_status' },
+          avgDurationMs: { $avg: '$data.duration_ms' },
+          maxDurationMs: { $max: '$data.duration_ms' },
+          statuses: { $addToSet: '$data.http_status' },
         },
       },
       {
@@ -236,7 +213,7 @@ export async function GET() {
       { $match: { event: 'form_validation_failed' } },
       {
         $group: {
-          _id: { field: '$payload.input_field_id', rule: '$payload.failed_rule_type' },
+          _id: { field: '$data.input_field_id', rule: '$data.failed_rule_type' },
           count: { $sum: 1 },
         },
       },
@@ -249,10 +226,10 @@ export async function GET() {
       { $match: { event: 'text_clipboard_copied' } },
       {
         $group: {
-          _id: '$payload.view_context',
+          _id: '$data.view_context',
           count: { $sum: 1 },
-          avgLength: { $avg: '$payload.copied_text_length' },
-          maxLength: { $max: '$payload.copied_text_length' },
+          avgLength: { $avg: '$data.copied_text_length' },
+          maxLength: { $max: '$data.copied_text_length' },
         },
       },
       {
@@ -271,10 +248,10 @@ export async function GET() {
       { $match: { event: 'runtime_error_caught' } },
       {
         $group: {
-          _id: '$payload.error_message',
+          _id: '$data.error_message',
           count: { $sum: 1 },
-          stack: { $last: '$payload.stack_trace' },
-          activeView: { $last: '$payload.active_view' },
+          stack: { $last: '$data.stack_trace' },
+          activeView: { $last: '$data.active_view' },
         },
       },
       { $sort: { count: -1 } },

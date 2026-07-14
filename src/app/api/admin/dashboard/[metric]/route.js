@@ -172,6 +172,146 @@ export async function GET(request, { params }) {
         return NextResponse.json({ pages, daily })
       }
 
+      // ── QUIZZES ──
+      case 'quizzes': {
+        const started = await col.countDocuments({ ...match, event: 'quiz_started' })
+        const completed = await col.countDocuments({ ...match, event: 'quiz_completed' })
+        const answers = await col.countDocuments({ ...match, event: 'quiz_answer' })
+
+        const dailyStarts = await col.aggregate([
+          { $match: { ...match30, event: 'quiz_started' } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $sort: { _id: 1 } },
+        ]).toArray()
+
+        const dailyCompletions = await col.aggregate([
+          { $match: { ...match30, event: 'quiz_completed' } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $sort: { _id: 1 } },
+        ]).toArray()
+
+        const scores = await col.aggregate([
+          { $match: { ...match, event: 'quiz_completed', 'metadata.score': { $exists: true }, 'metadata.total': { $exists: true } } },
+          { $group: { _id: null, avgScore: { $avg: '$metadata.score' }, avgTotal: { $avg: '$metadata.total' }, avgTime: { $avg: '$metadata.timeSpent' }, count: { $sum: 1 } } },
+        ]).toArray()
+
+        const scoreBuckets = await col.aggregate([
+          { $match: { ...match, event: 'quiz_completed', 'metadata.score': { $exists: true }, 'metadata.total': { $exists: true } } },
+          { $addFields: { pct: { $multiply: [{ $divide: ['$metadata.score', '$metadata.total'] }, 100] } } },
+          { $bucket: { groupBy: '$pct', boundaries: [0, 20, 40, 60, 80, 101], default: 'unknown', output: { count: { $sum: 1 } } } },
+        ]).toArray()
+
+        const byCourse = await col.aggregate([
+          { $match: { ...match, event: 'quiz_completed' } },
+          { $group: { _id: '$metadata.course', count: { $sum: 1 }, avgScore: { $avg: '$metadata.score' } } },
+          { $sort: { count: -1 } },
+        ]).toArray()
+
+        return NextResponse.json({
+          started, completed, answers,
+          completionRate: started > 0 ? Math.round((completed / started) * 100) : 0,
+          avgScore: scores[0] && scores[0].avgTotal > 0 ? Math.round((scores[0].avgScore / scores[0].avgTotal) * 100) : 0,
+          avgTimeSec: scores[0] ? Math.round(scores[0].avgTime) : 0,
+          totalScored: scores[0]?.count || 0,
+          dailyStarts, dailyCompletions, scoreBuckets, byCourse,
+        })
+      }
+
+      // ── RETENTION ──
+      case 'retention': {
+        const allTime = { timestamp: { $gte: thirtyDays } }
+
+        const dayBuckets = await col.aggregate([
+          { $match: allTime },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $group: { _id: '$_id.session', days: { $addToSet: '$_id.day' }, count: { $sum: 1 } } },
+        ]).toArray()
+
+        const returning = dayBuckets.filter(s => s.days.length > 1).length
+        const oneTime = dayBuckets.filter(s => s.days.length === 1).length
+        const retentionRate = (returning + oneTime) > 0 ? Math.round((returning / (returning + oneTime)) * 100) : 0
+
+        const daily = await col.aggregate([
+          { $match: allTime },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, sessions: { $addToSet: '$sessionId' } } },
+          { $sort: { _id: 1 } },
+          { $project: { _id: 1, sessionCount: { $size: '$sessions' } } },
+        ]).toArray()
+
+        const sessionCounts = dayBuckets.map(s => s.count)
+        const avgSessionsPerUser = sessionCounts.length > 0 ? Math.round((sessionCounts.reduce((a, b) => a + b, 0) / sessionCounts.length) * 10) / 10 : 0
+
+        return NextResponse.json({
+          returning, oneTime, retentionRate,
+          totalUsers: returning + oneTime,
+          avgSessionsPerUser,
+          dailyActivity: daily.map(d => ({ date: d._id, sessions: d.sessionCount })),
+          sessionDepth: [
+            { label: '1 session', count: oneTime },
+            { label: '2+ sessions', count: returning },
+          ],
+        })
+      }
+
+      // ── ACTIVE USERS ──
+      case 'active': {
+        const twentyFourHours = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+        const twoDays = new Date(now.getTime() - 48 * 60 * 60 * 1000)
+
+        // Hourly active users (last 24h) using heartbeats as online signals
+        const hourlyActive = await col.aggregate([
+          { $match: { timestamp: { $gte: twentyFourHours }, event: 'heartbeat' } },
+          { $group: { _id: { hour: { $dateToString: { format: '%Y-%m-%dT%H:00:00Z', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $group: { _id: '$_id.hour', count: { $sum: 1 } } },
+          { $sort: { _id: 1 } },
+        ]).toArray()
+
+        // Daily active users (30d) - unique sessions per day
+        const dailyActive = await col.aggregate([
+          { $match: { ...match30, event: 'heartbeat' } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $group: { _id: '$_id.day', count: { $sum: 1 } } },
+          { $sort: { _id: 1 } },
+        ]).toArray()
+
+        // Current active users at various windows
+        const now_ = new Date()
+        const windows = [5, 15, 30, 60]
+        const activeWindows = {}
+        for (const min of windows) {
+          const since = new Date(now_.getTime() - min * 60 * 1000)
+          const sessions = await col.aggregate([
+            { $match: { timestamp: { $gte: since }, event: 'heartbeat' } },
+            { $group: { _id: '$sessionId' } },
+            { $count: 'total' },
+          ]).toArray()
+          activeWindows[`${min}min`] = sessions[0]?.total || 0
+        }
+
+        // Estimated total unique active users per day (last 7 days)
+        const weeklyActive = await col.aggregate([
+          { $match: { timestamp: { $gte: sevenDays }, event: 'heartbeat' } },
+          { $group: { _id: '$sessionId' } },
+          { $count: 'total' },
+        ]).toArray()
+
+        // Session lengths (from heartbeat count per session)
+        const sessionHeartbeats = await col.aggregate([
+          { $match: { timestamp: { $gte: twentyFourHours }, event: 'heartbeat' } },
+          { $group: { _id: '$sessionId', count: { $sum: 1 } } },
+          { $bucket: { groupBy: '$count', boundaries: [1, 3, 6, 12, 24, 48, 999999], default: 'unknown', output: { sessions: { $sum: 1 } } } },
+        ]).toArray()
+
+        return NextResponse.json({
+          hourlyActive,
+          dailyActive,
+          activeWindows,
+          weeklyActive: weeklyActive[0]?.total || 0,
+          sessionHeartbeats,
+          lastUpdated: now_.toISOString(),
+        })
+      }
+
       default:
         return NextResponse.json({ error: 'Unknown metric' }, { status: 400 })
     }

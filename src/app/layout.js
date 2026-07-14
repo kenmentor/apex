@@ -5,6 +5,7 @@ import VisitorTracker from '@/components/VisitorTracker';
 import InstallPrompt from '@/components/InstallPrompt';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import TelemetryProvider from '@/components/TelemetryProvider';
 import ProfileCompletePrompt from '@/components/ProfileCompletePrompt';
 
 export const metadata = {
@@ -60,6 +61,7 @@ export default function RootLayout({ children }) {
           <InstallPrompt />
           <ServiceWorkerRegister />
           <AnalyticsTracker />
+          <TelemetryProvider />
           <ProfileCompletePrompt />
         </ThemeProvider>
       </body>

@@ -7,12 +7,17 @@ import { playClick, playCorrect, playWrong } from '@/lib/sound';
 import { getUser, getToken } from '@/lib/auth';
 import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
 import { trackQuizEvent } from '@/components/AnalyticsTracker';
+import { trackEvent } from '@/lib/tracking';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import CodeBlock from '@/components/CodeBlock';
 import { ChevronLeft, Clock, Check, AlertTriangle } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
+
+function trackQ(event, metadata = {}) {
+  trackEvent(event, metadata)
+}
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -244,6 +249,7 @@ export default function QuizPage() {
     setTimeLeft(settings.timePerQuestion);
     startTime.current = Date.now();
     trackQuizEvent('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: settings.timePerQuestion });
+    trackQ('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: settings.timePerQuestion });
   }
 
   useEffect(() => {
@@ -557,6 +563,7 @@ export default function QuizPage() {
     if (revealAnswer) return;
     playClick();
     setSelected(key === selected ? null : key);
+    if (key !== selected) trackQ('quiz_answer', { course: code, question: currentIndex, selected: key });
   }
 
   function handleShowAnswer() {
@@ -581,6 +588,7 @@ export default function QuizPage() {
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
       trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
+      trackQ('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
       const user = getUser();
       if (user) {
         setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);
@@ -615,6 +623,7 @@ export default function QuizPage() {
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
       trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
+      trackQ('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
       const user = getUser();
       if (user) {
         setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);
@@ -656,11 +665,7 @@ export default function QuizPage() {
     a.href = shareCardUrl
     a.download = 'apex-score.png'
     a.click()
-    try {
-      const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
-      sessionStorage.setItem('_sid', sid)
-      fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'download_click', sessionId: sid, path: window.location.pathname, isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true, metadata: { filename: 'apex-score.png', source: 'quiz' } }), keepalive: true }).catch(() => {})
-    } catch {}
+    trackEvent('download_click', { filename: 'apex-score.png', source: 'quiz' })
   }
 
   async function handleShare() {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getUser, isAdmin } from '@/lib/auth';
 import { Home, LayoutGrid, BarChart3, Settings, User, Users } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { trackEvent } from '@/lib/tracking';
 
 const links = [
   { href: '/', label: 'Home', icon: Home },
@@ -14,21 +15,7 @@ const links = [
 ];
 
 function trackNav(href) {
-  try {
-    const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
-    sessionStorage.setItem('_sid', sid)
-    fetch('/api/track', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event: 'navigation_click',
-        sessionId: sid,
-        path: window.location.pathname,
-        isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true,
-        metadata: { to: href, from: window.location.pathname },
-      }),
-      keepalive: true,
-    }).catch(() => {})
-  } catch {}
+  trackEvent('navigation_click', { to: href, from: window.location.pathname })
 }
 
 export default function NavBar({ active }) {

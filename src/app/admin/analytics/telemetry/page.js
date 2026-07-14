@@ -13,7 +13,7 @@ export default function TelemetryPage() {
 
   useEffect(() => {
     if (!isAdmin()) { router.push('/auth'); return }
-    fetch('/api/telemetry')
+    fetch('/api/analytics/telemetry')
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))

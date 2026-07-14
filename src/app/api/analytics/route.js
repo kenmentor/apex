@@ -27,7 +27,8 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const range = searchParams.get('range') || '7d'
-    const event = searchParams.get('event')
+    const eventFilter = searchParams.get('event')
+    const dateFilter = searchParams.get('date')
 
     const col = await getCollection('analytics')
 
@@ -36,7 +37,19 @@ export async function GET(request) {
     const since = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000)
 
     const match = { createdAt: { $gte: since.toISOString() } }
-    if (event) match.event = event
+
+    // Date filter: narrow to a specific day (YYYY-MM-DD)
+    if (dateFilter) {
+      match.createdAt = {
+        $gte: `${dateFilter}T00:00:00.000Z`,
+        $lt: `${dateFilter}T23:59:59.999Z`,
+      }
+    }
+
+    // Event filter: narrow to a specific event type
+    if (eventFilter) {
+      match.event = eventFilter
+    }
 
     // Total events
     const totalEvents = await col.countDocuments(match)

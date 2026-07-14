@@ -3,23 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { RotateCcw } from 'lucide-react'
 import FormattedContent from './FormattedContent'
-
-function track(event, metadata = {}) {
-  try {
-    const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
-    sessionStorage.setItem('_sid', sid)
-    fetch('/api/track', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event, sessionId: sid,
-        path: window.location.pathname,
-        isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true,
-        metadata,
-      }),
-      keepalive: true,
-    }).catch(() => {})
-  } catch {}
-}
+import { trackEvent } from '@/lib/tracking'
 
 export default function FlashCard({ question, answer, section, index, total }) {
   const [flipped, setFlipped] = useState(false)
@@ -35,11 +19,11 @@ export default function FlashCard({ question, answer, section, index, total }) {
     if (flipped && !trackedOpen.current) {
       trackedOpen.current = true
       flipStart.current = Date.now()
-      track('flashcard_open', { questionIndex: index, section })
+      trackEvent('flashcard_open', { questionIndex: index, section })
     }
     if (!flipped && flipStart.current) {
       const duration = Math.round((Date.now() - flipStart.current) / 1000)
-      track('flashcard_time', { duration, questionIndex: index, section })
+      trackEvent('flashcard_time', { duration, questionIndex: index, section })
       flipStart.current = null
     }
   }, [flipped])
@@ -74,8 +58,8 @@ export default function FlashCard({ question, answer, section, index, total }) {
                 </span>
               )}
             </div>
-            <div className="flex flex-1 items-center justify-center">
-              <p className="text-center text-base font-medium leading-relaxed">{question}</p>
+            <div className="flex flex-1 items-center justify-center overflow-y-auto">
+              <p className="text-center text-base font-medium leading-relaxed break-words">{question}</p>
             </div>
             <p className="text-center text-xs text-muted-foreground">Tap to reveal answer</p>
           </div>

@@ -4,6 +4,7 @@ import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Users, Plus, Send, FileText, Image as ImageIcon, Film, Music, File, X, Download, Heart, MessageCircle, Share2, ChevronDown, ChevronUp, Settings, Palette, Upload, ExternalLink, Trash2 } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
+import { trackEvent } from '@/lib/tracking'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -232,11 +233,7 @@ function PostCard({ post, user, spaceCreator, onDelete }) {
       a.click()
       document.body.removeChild(a)
       URL.revokeObjectURL(blobUrl)
-      try {
-        const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
-        sessionStorage.setItem('_sid', sid)
-        fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'download_click', sessionId: sid, path: window.location.pathname, isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true, metadata: { filename, source: 'space' } }), keepalive: true }).catch(() => {})
-      } catch {}
+      trackEvent('download_click', { filename, source: 'space' })
     }).catch(() => {
       window.open(url, '_blank')
     })

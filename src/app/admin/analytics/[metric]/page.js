@@ -18,11 +18,13 @@ const COLORS = ['#ff9f43', '#130f40', '#34c759', '#9b59b6', '#e17055', '#007aff'
 const PAGE_ICON = {
   overview: TrendingUp, pwa: Smartphone, refreshes: RefreshCw, downloads: Download,
   hours: Clock, flashcards: Layers, engagement: MousePointerClick, pages: Eye,
+  quizzes: Zap, retention: Users, active: Activity,
 }
 
 const PAGE_LABEL = {
   overview: 'Traffic Overview', pwa: 'PWA vs Web', refreshes: 'Page Refreshes', downloads: 'Downloads',
   hours: 'Peak Hours', flashcards: 'Flashcard Analytics', engagement: 'Engagement', pages: 'Top Pages',
+  quizzes: 'Quiz Analytics', retention: 'User Retention', active: 'Active Users',
 }
 
 export default function MetricDetailPage({ params }) {
@@ -67,6 +69,9 @@ export default function MetricDetailPage({ params }) {
         {metric === 'flashcards' && <FlashcardsDetail data={data} />}
         {metric === 'engagement' && <EngagementDetail data={data} />}
         {metric === 'pages' && <PagesDetail data={data} />}
+        {metric === 'quizzes' && <QuizzesDetail data={data} />}
+        {metric === 'retention' && <RetentionDetail data={data} />}
+        {metric === 'active' && <ActiveDetail data={data} />}
       </div>
     </div>
   )
@@ -585,6 +590,277 @@ function PagesDetail({ data }) {
           </table>
         </div>
       </ChartCard>
+    </>
+  )
+}
+
+// ─── QUIZZES ───
+function QuizzesDetail({ data }) {
+  if (!data) return null
+  const { started, completed, answers, completionRate, avgScore, avgTimeSec, totalScored, dailyStarts, dailyCompletions, scoreBuckets, byCourse } = data
+
+  const finalScore = avgScore ? `${avgScore}%` : '—'
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatCard label="Quiz Started (7d)" value={started} color="text-blue-500" />
+        <StatCard label="Completed" value={completed} sub={`${completionRate}% completion`} />
+        <StatCard label="Answers Recorded" value={answers} />
+        <StatCard label="Avg Score" value={finalScore} color={avgScore >= 70 ? 'text-green-500' : avgScore >= 40 ? 'text-orange-500' : 'text-red-500'} sub={totalScored ? `from ${totalScored} quizzes` : ''} />
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ChartCard title="Daily Quiz Starts (30 days)">
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={dailyStarts || []}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="_id" tick={{ fontSize: 10 }} tickFormatter={v => v?.slice(5)} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Area type="monotone" dataKey="count" stroke="#3b82f6" fill="#3b82f680" name="Starts" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+
+        <ChartCard title="Daily Quiz Completions (30 days)">
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={dailyCompletions || []}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="_id" tick={{ fontSize: 10 }} tickFormatter={v => v?.slice(5)} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Area type="monotone" dataKey="count" stroke="#22c55e" fill="#22c55e80" name="Completions" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ChartCard title="Score Distribution">
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={(scoreBuckets || []).map(b => ({ label: b._id === 101 ? '80-100%' : b._id === 'unknown' ? 'Unknown' : `${b._id}-${b._id + 20}%`, count: b.count }))}>
+                <XAxis dataKey="label" tick={{ fontSize: 9 }} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="count" fill="#a855f7" radius={[4, 4, 0, 0]} name="Quizzes" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+
+        <ChartCard title="Quizzes by Course">
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={(byCourse || []).slice(0, 10)} layout="vertical">
+                <XAxis type="number" tick={{ fontSize: 10 }} />
+                <YAxis type="category" dataKey="_id" tick={{ fontSize: 9 }} width={70} />
+                <Tooltip />
+                <Bar dataKey="count" fill="#e11d48" radius={[0, 4, 4, 0]} name="Quizzes" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+      </div>
+
+      {byCourse?.length > 0 && (
+        <ChartCard title="Course Performance">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b text-muted-foreground">
+                  <th className="px-2 py-1.5 text-left font-medium">#</th>
+                  <th className="px-2 py-1.5 text-left font-medium">Course</th>
+                  <th className="px-2 py-1.5 text-right font-medium">Quizzes</th>
+                  <th className="px-2 py-1.5 text-right font-medium">Avg Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {byCourse.map((c, idx) => (
+                  <tr key={idx} className="border-b border-muted/50">
+                    <td className="px-2 py-1.5 text-muted-foreground">{idx + 1}</td>
+                    <td className="px-2 py-1.5 font-mono">{c._id}</td>
+                    <td className="px-2 py-1.5 text-right font-bold">{c.count}</td>
+                    <td className={`px-2 py-1.5 text-right font-bold ${c.avgScore >= 70 ? 'text-green-500' : c.avgScore >= 40 ? 'text-orange-500' : 'text-red-500'}`}>
+                      {c.avgScore ? `${Math.round(c.avgScore)}%` : '—'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ChartCard>
+      )}
+    </>
+  )
+}
+
+// ─── RETENTION ───
+function RetentionDetail({ data }) {
+  if (!data) return null
+  const { returning, oneTime, retentionRate, totalUsers, avgSessionsPerUser, dailyActivity, sessionDepth } = data
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatCard label="Total Users (30d)" value={totalUsers} color="text-blue-500" />
+        <StatCard label="Returning" value={returning} sub={`${retentionRate}% retention`} color="text-green-500" />
+        <StatCard label="One-Time" value={oneTime} color="text-orange-500" />
+        <StatCard label="Avg Sessions/User" value={avgSessionsPerUser} />
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ChartCard title="New vs Returning Users">
+          <div className="h-52">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={sessionDepth || []} dataKey="count" nameKey="label" cx="50%" cy="50%" outerRadius={80}
+                  label={({ label, count }) => `${label}: ${count}`}>
+                  <Cell fill="#22c55e" />
+                  <Cell fill="#f97316" />
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+
+        <ChartCard title="Daily Active Sessions (30 days)">
+          <div className="h-52">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={dailyActivity || []}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={v => v?.slice(5)} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Area type="monotone" dataKey="sessions" stroke="#3b82f6" fill="#3b82f680" name="Sessions" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+      </div>
+
+      <ChartCard title="Retention Summary">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="rounded-lg bg-muted/50 p-3 text-center">
+            <div className="text-2xl font-bold text-blue-500">{totalUsers}</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">Total Users</div>
+          </div>
+          <div className="rounded-lg bg-muted/50 p-3 text-center">
+            <div className="text-2xl font-bold text-green-500">{retentionRate}%</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">Retention Rate</div>
+          </div>
+          <div className="rounded-lg bg-muted/50 p-3 text-center">
+            <div className="text-2xl font-bold text-orange-500">{avgSessionsPerUser}</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">Avg Sessions</div>
+          </div>
+          <div className="rounded-lg bg-muted/50 p-3 text-center">
+            <div className="text-2xl font-bold text-purple-500">{((returning / (totalUsers || 1)) * 100).toFixed(0)}%</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">Return Rate</div>
+          </div>
+        </div>
+      </ChartCard>
+    </>
+  )
+}
+
+// ─── ACTIVE USERS ───
+function ActiveDetail({ data }) {
+  if (!data) return null
+  const { hourlyActive, dailyActive, activeWindows, weeklyActive, sessionHeartbeats, lastUpdated } = data
+
+  const depthLabels = { '1': '~30s', '3': '~1.5m', '6': '~3m', '12': '~6m', '24': '~12m', '48': '~24m' }
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Card>
+          <CardContent className="p-3 text-center">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Now (5min)</div>
+            <div className="text-2xl font-bold text-green-500">{activeWindows?.['5min'] ?? '—'}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-3 text-center">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">15 min</div>
+            <div className="text-2xl font-bold text-blue-500">{activeWindows?.['15min'] ?? '—'}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-3 text-center">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">30 min</div>
+            <div className="text-2xl font-bold text-orange-500">{activeWindows?.['30min'] ?? '—'}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-3 text-center">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">1 hour</div>
+            <div className="text-2xl font-bold text-purple-500">{activeWindows?.['60min'] ?? '—'}</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ChartCard title="Hourly Active Users (24h)">
+          <div className="h-56">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={(hourlyActive || []).map(h => ({ hour: h._id ? h._id.slice(11, 16) : '—', users: h.count }))}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="hour" tick={{ fontSize: 9 }} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Area type="monotone" dataKey="users" stroke="#22c55e" fill="#22c55e80" strokeWidth={2} name="Active Users" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+
+        <ChartCard title="Daily Active Users (30d)">
+          <div className="h-56">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={(dailyActive || []).map(d => ({ date: d._id, users: d.count }))}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="date" tick={{ fontSize: 9 }} tickFormatter={v => v?.slice(5)} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="users" fill="#3b82f6" radius={[4, 4, 0, 0]} name="Active Users" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ChartCard title="Session Duration Distribution (heartbeats)">
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={(sessionHeartbeats || []).map(b => ({ label: depthLabels[b._id] || `${b._id}x`, sessions: b.sessions || 0 }))}>
+                <XAxis dataKey="label" tick={{ fontSize: 9 }} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="sessions" fill="#a855f7" radius={[4, 4, 0, 0]} name="Sessions" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+
+        <ChartCard title="Weekly Active Users">
+          <div className="flex h-48 flex-col items-center justify-center">
+            <div className="text-5xl font-bold text-green-500">{weeklyActive ?? '—'}</div>
+            <div className="mt-1 text-xs text-muted-foreground">unique active sessions (7d)</div>
+            {lastUpdated && (
+              <div className="mt-4 text-[10px] text-muted-foreground">
+                Last updated: {new Date(lastUpdated).toLocaleTimeString()}
+              </div>
+            )}
+          </div>
+        </ChartCard>
+      </div>
     </>
   )
 }

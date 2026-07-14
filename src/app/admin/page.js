@@ -210,7 +210,7 @@ export default function AdminPage() {
               <>
                 {/* Row 1: Core metrics */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" href="/admin/analytics/overview" />
+                  <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" href="/admin/analytics/active" />
                   <MetricCard icon={Users} label="Today" value={d.todayUnique ?? '—'} sub="unique users" href="/admin/analytics/overview" />
                   <MetricCard icon={Users} label="7-Day Sessions" value={d.uniqueSessions ?? '—'} href="/admin/analytics/overview" />
                   <MetricCard icon={Zap} label="Total Events" value={d.totalEvents ?? '—'} href="/admin/analytics/overview" />
@@ -288,7 +288,19 @@ export default function AdminPage() {
                   <MetricCard icon={Eye} label="Page Views" value={d.engagement?.pageViews ?? '—'} href="/admin/analytics/pages" />
                 </div>
 
-                {/* Row 4: Top Pages */}
+                {/* Row 4: Quiz + Retention */}
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  <MetricCard icon={Zap} label="Quiz Analytics"
+                    value={d.eventsBreakdown?.find(e => e.event === 'quiz_started')?.count ?? '—'}
+                    sub="quiz starts (7d)"
+                    href="/admin/analytics/quizzes" />
+                  <MetricCard icon={TrendingUp} label="User Retention"
+                    value={d.eventsBreakdown ? `${Math.round(((d.uniqueSessions - d.todayUnique) / Math.max(d.uniqueSessions, 1)) * 100)}%` : '—'}
+                    sub="returning rate (7d)"
+                    href="/admin/analytics/retention" />
+                </div>
+
+                {/* Row 5: Top Pages */}
                 <Link href="/admin/analytics/pages">
                   <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                     <CardContent className="p-3">

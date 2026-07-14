@@ -20,7 +20,7 @@ export default function DepartmentsPage() {
     setLoading(true)
     setSelectedDept(null)
     setDeptStudents([])
-    fetch(`/api/analytics?range=${range}`)
+    fetch('/api/leaderboard/department')
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))
