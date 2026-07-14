@@ -177,9 +177,9 @@ export default function AdminPage() {
 
         {/* Tabs */}
         <Tabs value={tab} onValueChange={(v) => { setTab(v); setEditDoc(null) }}>
-          <TabsList className="w-full">
+          <TabsList className="w-full overflow-x-auto flex-nowrap justify-start">
             {TABS.map(t => (
-              <TabsTrigger key={t.key} value={t.key} className="flex-1 text-xs">
+              <TabsTrigger key={t.key} value={t.key} className="text-xs">
                 {t.label}
               </TabsTrigger>
             ))}
