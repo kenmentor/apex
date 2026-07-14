@@ -307,20 +307,7 @@ export default function TheoryQuizPage() {
           </h2>
         </div>
 
-        {currentRef.mainConcepts?.length > 0 && !currentResult && (
-          <Card className="border-dashed">
-            <CardContent className="p-3">
-              <p className="mb-1 text-xs font-medium text-muted-foreground">Key areas to cover:</p>
-              <div className="flex flex-wrap gap-1.5">
-                {currentRef.mainConcepts.slice(0, 3).map((c, i) => (
-                  <Badge key={i} variant="secondary" className="text-xs">
-                    {c.length > 50 ? c.slice(0, 50) + '...' : c}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+
 
         {submitting && (
           <div className="flex flex-col items-center gap-3 py-8">
