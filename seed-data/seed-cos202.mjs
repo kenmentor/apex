@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/gss-quiz'
 
 async function main() {
-  const refs = JSON.parse(readFileSync(join(__dirname, 'csc202-theory.json'), 'utf-8'))
+  const refs = JSON.parse(readFileSync(join(__dirname, 'cos202-theory.json'), 'utf-8'))
   const client = new MongoClient(URI, { connectTimeoutMS: 10000, serverSelectionTimeoutMS: 10000 })
   await client.connect()
   const db = client.db()
@@ -30,7 +30,7 @@ async function main() {
   }
 
   await client.close()
-  console.log(`\nDone! ${upserted} CSC 202 theory references upserted.`)
+  console.log(`\nDone! ${upserted} COS 202 theory references upserted.`)
 }
 
 main().catch(e => { console.error('Failed:', e.message); process.exit(1) })

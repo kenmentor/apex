@@ -30,25 +30,25 @@ function getAuthHeaders() {
   return token ? { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' }
 }
 
-function MetricCard({ icon: Icon, label, value, sub, color }) {
-  return (
-    <Card className="overflow-hidden">
-      <CardContent className="p-3">
-        <div className="flex items-start justify-between">
-          <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
-            <div className={`mt-0.5 text-xl font-bold ${color || 'text-foreground'}`}>{value}</div>
-            {sub && <div className="text-[10px] text-muted-foreground mt-0.5">{sub}</div>}
-          </div>
-          {Icon && (
-            <div className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${color ? color.replace('text-', 'bg-').replace('foreground', 'muted') : 'bg-muted'} opacity-60`}>
-              <Icon className="size-4 text-muted-foreground" />
-            </div>
-          )}
+function MetricCard({ icon: Icon, label, value, sub, color, href }) {
+  const inner = (
+    <CardContent className="p-3">
+      <div className="flex items-start justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
+          <div className={`mt-0.5 text-xl font-bold ${color || 'text-foreground'}`}>{value}</div>
+          {sub && <div className="text-[10px] text-muted-foreground mt-0.5">{sub}</div>}
         </div>
-      </CardContent>
-    </Card>
+        {Icon && (
+          <div className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${color ? color.replace('text-', 'bg-').replace('foreground', 'muted') : 'bg-muted'} opacity-60`}>
+            <Icon className="size-4 text-muted-foreground" />
+          </div>
+        )}
+      </div>
+    </CardContent>
   )
+  if (href) return <Link href={href}><Card className="overflow-hidden cursor-pointer hover:bg-accent/50 transition-colors">{inner}</Card></Link>
+  return <Card className="overflow-hidden">{inner}</Card>
 }
 
 function Bar({ value, max, color = 'bg-primary' }) {
@@ -210,92 +210,103 @@ export default function AdminPage() {
               <>
                 {/* Row 1: Core metrics */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" />
-                  <MetricCard icon={Users} label="Today" value={d.todayUnique ?? '—'} sub="unique users" />
-                  <MetricCard icon={Users} label="7-Day Sessions" value={d.uniqueSessions ?? '—'} />
-                  <MetricCard icon={Zap} label="Total Events" value={d.totalEvents ?? '—'} />
+                  <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" href="/admin/analytics/overview" />
+                  <MetricCard icon={Users} label="Today" value={d.todayUnique ?? '—'} sub="unique users" href="/admin/analytics/overview" />
+                  <MetricCard icon={Users} label="7-Day Sessions" value={d.uniqueSessions ?? '—'} href="/admin/analytics/overview" />
+                  <MetricCard icon={Zap} label="Total Events" value={d.totalEvents ?? '—'} href="/admin/analytics/overview" />
                 </div>
 
                 {/* Row 2: PWA / Web + Refreshes + Downloads */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <Card>
-                    <CardContent className="p-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">PWA vs Web</div>
-                      <div className="flex gap-3 text-xs">
-                        <div className="flex items-center gap-1">
-                          <Smartphone className="size-3 text-blue-500" />
-                          <span className="font-bold">{d.webPwaSessions?.pwa ?? 0}</span>
+                  <Link href="/admin/analytics/pwa">
+                    <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
+                      <CardContent className="p-3">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">PWA vs Web</div>
+                        <div className="flex gap-3 text-xs">
+                          <div className="flex items-center gap-1">
+                            <Smartphone className="size-3 text-blue-500" />
+                            <span className="font-bold">{d.webPwaSessions?.pwa ?? 0}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Monitor className="size-3 text-orange-500" />
+                            <span className="font-bold">{d.webPwaSessions?.web ?? 0}</span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Monitor className="size-3 text-orange-500" />
-                          <span className="font-bold">{d.webPwaSessions?.web ?? 0}</span>
+                        <Bar value={d.webPwaSessions?.pwa || 0} max={(d.webPwaSessions?.pwa || 0) + (d.webPwaSessions?.web || 1)} color="bg-blue-500" />
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  <MetricCard icon={RefreshCw} label="Page Refreshes" value={d.pageRefreshes ?? '—'} color="text-orange-500" href="/admin/analytics/refreshes" />
+                  <MetricCard icon={Download} label="Downloads" value={d.downloadClicks ?? '—'} href="/admin/analytics/downloads" />
+                  <Link href="/admin/analytics/hours">
+                    <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
+                      <CardContent className="p-3">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Peak Hour</div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="size-4 text-purple-500" />
+                          <span className="text-lg font-bold">
+                            {d.peakHours?.[0] ? `${d.peakHours[0].hour}:00` : '—'}
+                          </span>
                         </div>
-                      </div>
-                      <Bar value={d.webPwaSessions?.pwa || 0} max={(d.webPwaSessions?.pwa || 0) + (d.webPwaSessions?.web || 1)} color="bg-blue-500" />
-                    </CardContent>
-                  </Card>
-                  <MetricCard icon={RefreshCw} label="Page Refreshes" value={d.pageRefreshes ?? '—'} color="text-orange-500" />
-                  <MetricCard icon={Download} label="Downloads" value={d.downloadClicks ?? '—'} />
-                  <Card>
-                    <CardContent className="p-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Peak Hour</div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="size-4 text-purple-500" />
-                        <span className="text-lg font-bold">
-                          {d.peakHours?.[0] ? `${d.peakHours[0].hour}:00` : '—'}
-                        </span>
-                      </div>
-                      <div className="text-[10px] text-muted-foreground mt-0.5">
-                        {d.peakHours?.[0] ? `${d.peakHours[0].count} events` : 'no data'}
-                      </div>
-                    </CardContent>
-                  </Card>
+                        <div className="text-[10px] text-muted-foreground mt-0.5">
+                          {d.peakHours?.[0] ? `${d.peakHours[0].count} events` : 'no data'}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 </div>
 
                 {/* Row 3: Flashcard + Engagement stats */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   <MetricCard icon={Layers} label="Flashcard Opens"
                     value={d.flashcard?.opens ?? '—'}
-                    sub={d.flashcard?.avgTimeSeconds ? `~${d.flashcard.avgTimeSeconds}s avg` : ''} />
-                  <Card>
-                    <CardContent className="p-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Click-Through</div>
-                      <div className="flex items-center gap-2">
-                        <MousePointerClick className="size-4 text-rose-500" />
-                        <span className="text-lg font-bold">{d.engagement?.ctr ?? 0}%</span>
-                      </div>
-                      <Bar value={d.engagement?.navigationClicks || 0} max={d.engagement?.pageViews || 1} color="bg-rose-500" />
-                      <div className="text-[10px] text-muted-foreground mt-0.5">{d.engagement?.navigationClicks || 0} nav / {d.engagement?.pageViews || 0} views</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Engagement</div>
-                      <div className="text-lg font-bold">{d.engagement?.avgEventsPerSession ?? '—'}</div>
-                      <div className="text-[10px] text-muted-foreground">avg events/session</div>
-                      <div className="mt-1 text-[10px] text-muted-foreground">~{d.engagement?.estimatedActiveMinutes ?? 0} min active</div>
-                    </CardContent>
-                  </Card>
-                  <MetricCard icon={Eye} label="Page Views" value={d.engagement?.pageViews ?? '—'} />
+                    sub={d.flashcard?.avgTimeSeconds ? `~${d.flashcard.avgTimeSeconds}s avg` : ''}
+                    href="/admin/analytics/flashcards" />
+                  <Link href="/admin/analytics/engagement">
+                    <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
+                      <CardContent className="p-3">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Click-Through</div>
+                        <div className="flex items-center gap-2">
+                          <MousePointerClick className="size-4 text-rose-500" />
+                          <span className="text-lg font-bold">{d.engagement?.ctr ?? 0}%</span>
+                        </div>
+                        <Bar value={d.engagement?.navigationClicks || 0} max={d.engagement?.pageViews || 1} color="bg-rose-500" />
+                        <div className="text-[10px] text-muted-foreground mt-0.5">{d.engagement?.navigationClicks || 0} nav / {d.engagement?.pageViews || 0} views</div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  <Link href="/admin/analytics/engagement">
+                    <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
+                      <CardContent className="p-3">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Engagement</div>
+                        <div className="text-lg font-bold">{d.engagement?.avgEventsPerSession ?? '—'}</div>
+                        <div className="text-[10px] text-muted-foreground">avg events/session</div>
+                        <div className="mt-1 text-[10px] text-muted-foreground">~{d.engagement?.estimatedActiveMinutes ?? 0} min active</div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  <MetricCard icon={Eye} label="Page Views" value={d.engagement?.pageViews ?? '—'} href="/admin/analytics/pages" />
                 </div>
 
                 {/* Row 4: Top Pages */}
-                <Card>
-                  <CardContent className="p-3">
-                    <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Top Pages (7d)</div>
-                    <div className="grid grid-cols-2 gap-1 sm:grid-cols-3">
-                      {(d.topPages || []).slice(0, 6).map(p => (
-                        <div key={p.path} className="flex items-center justify-between rounded-lg bg-muted/50 px-2 py-1">
-                          <span className="truncate text-[11px] font-mono text-muted-foreground">{p.path || '/'}</span>
-                          <span className="ml-1 shrink-0 text-xs font-bold">{p.count}</span>
-                        </div>
-                      ))}
-                      {(d.topPages || []).length === 0 && (
-                        <span className="col-span-full text-center text-[11px] text-muted-foreground py-2">No data yet</span>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                <Link href="/admin/analytics/pages">
+                  <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
+                    <CardContent className="p-3">
+                      <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Top Pages (7d)</div>
+                      <div className="grid grid-cols-2 gap-1 sm:grid-cols-3">
+                        {(d.topPages || []).slice(0, 6).map(p => (
+                          <div key={p.path} className="flex items-center justify-between rounded-lg bg-muted/50 px-2 py-1">
+                            <span className="truncate text-[11px] font-mono text-muted-foreground">{p.path || '/'}</span>
+                            <span className="ml-1 shrink-0 text-xs font-bold">{p.count}</span>
+                          </div>
+                        ))}
+                        {(d.topPages || []).length === 0 && (
+                          <span className="col-span-full text-center text-[11px] text-muted-foreground py-2">No data yet</span>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               </>
             )}
           </TabsContent>
