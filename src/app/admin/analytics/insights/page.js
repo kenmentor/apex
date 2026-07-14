@@ -209,12 +209,12 @@ export default function InsightsPage() {
               </div>
               <div className="list">
                 {d.topPerformers.map((u, i) => (
-                  <div key={u.email} className="list-item">
+                  <Link key={u.email} href={`/profile/${encodeURIComponent(u.email)}`} className="list-item" style={{ textDecoration: 'none' }}>
                     <span className="list-rank">{i + 1}</span>
                     <span className="list-name">{u.name || u.email}</span>
                     <span className="list-stat" style={{ color: 'var(--green)' }}>{u.avgPct}%</span>
                     <span className="list-sub">{u.totalQuizzes} quizzes</span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -229,12 +229,12 @@ export default function InsightsPage() {
               </div>
               <div className="list">
                 {d.strugglingUsers.map((u, i) => (
-                  <div key={u.email} className="list-item">
+                  <Link key={u.email} href={`/profile/${encodeURIComponent(u.email)}`} className="list-item" style={{ textDecoration: 'none' }}>
                     <span className="list-rank">{i + 1}</span>
                     <span className="list-name">{u.name || u.email}</span>
                     <span className="list-stat" style={{ color: 'var(--red)' }}>{u.avgPct}%</span>
                     <span className="list-sub">{u.totalQuizzes} quizzes</span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

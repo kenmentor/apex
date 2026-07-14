@@ -70,59 +70,67 @@ function StatCard({ icon: Icon, label, value, color, bg }) {
 
 function PodiumUser({ entry, rank }) {
   const isWinner = rank === 1;
+  const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
     <div className={`flex flex-1 flex-col items-center min-w-0 ${rank === 2 ? 'order-first sm:order-none' : ''}`}>
-      <div className="relative">
-        <Avatar className="size-12 border-4 border-background sm:size-16" style={{ boxShadow: isWinner ? '0 0 0 3px #f1c40f' : undefined }}>
-          <AvatarImage src={entry?.avatar} />
-          <AvatarFallback
-            className="text-lg font-bold text-white"
-            style={{ background: avatars[getAvatarIndex(entry?._id, rank - 1)] }}
+      <Link href={href} className="relative inline-flex flex-col items-center">
+        <div className="relative">
+          <Avatar className="size-12 border-4 border-background sm:size-16" style={{ boxShadow: isWinner ? '0 0 0 3px #f1c40f' : undefined }}>
+            <AvatarImage src={entry?.avatar} />
+            <AvatarFallback
+              className="text-lg font-bold text-white"
+              style={{ background: avatars[getAvatarIndex(entry?._id, rank - 1)] }}
+            >
+              {entry ? getInitials(entry.name) : '??'}
+            </AvatarFallback>
+          </Avatar>
+          {isWinner && (
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+              <Crown className="size-6 text-yellow-400" fill="currentColor" />
+            </div>
+          )}
+          <Badge
+            variant="secondary"
+            className="absolute -bottom-1 left-1/2 size-6 -translate-x-1/2 p-0 text-xs font-bold"
+            style={{
+              background: rank === 1 ? '#f1c40f' : rank === 2 ? '#bdc3c7' : '#cd7f32',
+              color: 'white',
+            }}
           >
-            {entry ? getInitials(entry.name) : '??'}
-          </AvatarFallback>
-        </Avatar>
-        {isWinner && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-            <Crown className="size-6 text-yellow-400" fill="currentColor" />
-          </div>
-        )}
-        <Badge
-          variant="secondary"
-          className="absolute -bottom-1 left-1/2 size-6 -translate-x-1/2 p-0 text-xs font-bold"
-          style={{
-            background: rank === 1 ? '#f1c40f' : rank === 2 ? '#bdc3c7' : '#cd7f32',
-            color: 'white',
-          }}
-        >
-          {rank}
-        </Badge>
-      </div>
-      <div className="mt-3 w-full text-center">
-        <div className="truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
-        <div className="text-xs font-semibold text-primary">{entry?.totalScore || 0} pts</div>
-      </div>
+            {rank}
+          </Badge>
+        </div>
+        <div className="mt-3 w-full text-center">
+          <div className="truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
+          <div className="text-xs font-semibold text-primary">{entry?.totalScore || 0} pts</div>
+        </div>
+      </Link>
     </div>
   );
 }
 
 function LeaderEntry({ entry, rank, isUser }) {
+  const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
     <div className={`rounded-xl border-b border-border p-3 transition-colors last:border-b-0 ${isUser ? 'bg-primary/5 ring-1 ring-primary/20' : 'bg-card hover:bg-muted/50'}`}>
       {/* Top row: rank, avatar, name, score */}
       <div className="flex items-center gap-2.5">
         <span className="w-6 shrink-0 text-center text-sm font-bold text-muted-foreground">{rank}</span>
-        <Avatar className="size-9 shrink-0">
-          <AvatarImage src={entry.avatar} />
-          <AvatarFallback
-            className="text-[10px] font-bold text-white"
-            style={{ background: avatars[getAvatarIndex(entry._id, rank)] }}
-          >
-            {getInitials(entry.name)}
-          </AvatarFallback>
-        </Avatar>
+        <Link href={href}>
+          <Avatar className="size-9 shrink-0">
+            <AvatarImage src={entry.avatar} />
+            <AvatarFallback
+              className="text-[10px] font-bold text-white"
+              style={{ background: avatars[getAvatarIndex(entry._id, rank)] }}
+            >
+              {getInitials(entry.name)}
+            </AvatarFallback>
+          </Avatar>
+        </Link>
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-semibold leading-tight">{entry.name}</div>
+          <Link href={href}>
+            <div className="truncate text-sm font-semibold leading-tight hover:text-primary transition-colors">{entry.name}</div>
+          </Link>
         </div>
         <div className="shrink-0 text-right">
           <div className="text-sm font-bold leading-tight">{entry.totalScore} pts</div>

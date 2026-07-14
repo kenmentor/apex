@@ -105,7 +105,7 @@ export default function DepartmentsPage() {
             ) : (
               <div className="list">
                 {deptStudents.sort((a, b) => b.totalScore - a.totalScore).map((s, i) => (
-                  <div key={s.email} className="list-item">
+                  <Link key={s.email} href={`/profile/${encodeURIComponent(s.email)}`} className="list-item" style={{ textDecoration: 'none' }}>
                     <span className="list-rank">{i + 1}</span>
                     {s.avatar && <img src={s.avatar} alt="" className="avatar" />}
                     <span className="list-name">{s.name}</span>
@@ -113,7 +113,7 @@ export default function DepartmentsPage() {
                     <span className="list-sub" style={{ color: 'var(--green)' }}>{s.avgPct}%</span>
                     <span className="list-sub">{s.quizCount} quizzes</span>
                     <span className="list-sub">{s.level || '—'}</span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}

@@ -256,7 +256,7 @@ function PostCard({ post, user, spaceCreator, onDelete }) {
   return (
     <div className="border-b border-border last:border-b-0 p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
+        <Link href={`/profile/${encodeURIComponent(post.authorEmail)}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <Avatar className="size-7 shrink-0">
             <AvatarImage src={post.authorAvatar} />
             <AvatarFallback className="bg-primary text-[8px] font-bold text-primary-foreground">
@@ -264,7 +264,7 @@ function PostCard({ post, user, spaceCreator, onDelete }) {
             </AvatarFallback>
           </Avatar>
           <span className="text-xs font-semibold">{post.authorName}</span>
-        </div>
+        </Link>
         <span className="text-[10px] text-muted-foreground">{timeAgo}</span>
       </div>
 
@@ -360,15 +360,17 @@ function PostCard({ post, user, spaceCreator, onDelete }) {
             <div className="space-y-2.5">
               {comments.map(c => (
                 <div key={c._id} className="flex items-start gap-2">
-                  <Avatar className="size-6 shrink-0">
-                    <AvatarImage src={c.authorAvatar} />
-                    <AvatarFallback className="bg-muted text-[7px] font-bold">
-                      {(c.authorName || '?').slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <Link href={`/profile/${encodeURIComponent(c.authorEmail)}`}>
+                    <Avatar className="size-6 shrink-0">
+                      <AvatarImage src={c.authorAvatar} />
+                      <AvatarFallback className="bg-muted text-[7px] font-bold">
+                        {(c.authorName || '?').slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Link>
                   <div className="min-w-0 flex-1 rounded-lg bg-muted/50 px-3 py-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-semibold">{c.authorName}</span>
+                      <Link href={`/profile/${encodeURIComponent(c.authorEmail)}`} className="text-[11px] font-semibold hover:text-primary transition-colors">{c.authorName}</Link>
                       <span className="text-[9px] text-muted-foreground">{getTimeAgo(c.createdAt)}</span>
                     </div>
                     <p className="text-xs leading-relaxed mt-0.5">{c.content}</p>
