@@ -4,9 +4,8 @@ import { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
-import rehypeHighlight from 'rehype-highlight'
-import 'highlight.js/styles/github-dark-dimmed.min.css'
 import 'katex/dist/katex.min.css'
+import CodeMirrorBlock from './CodeBlock'
 
 function CodeBlock({ node, className, children, ...props }) {
   const match = /language-(\w+)/.exec(className || '')
@@ -21,16 +20,7 @@ function CodeBlock({ node, className, children, ...props }) {
     )
   }
 
-  return (
-    <div className="fc-code-block">
-      {lang && <span className="fc-code-lang">{lang}</span>}
-      <pre>
-        <code className={className} {...props}>
-          {code}
-        </code>
-      </pre>
-    </div>
-  )
+  return <CodeMirrorBlock code={code} />
 }
 
 export default function FormattedContent({ content, className = '' }) {
@@ -47,7 +37,7 @@ export default function FormattedContent({ content, className = '' }) {
     <div className={`fc-root ${className}`}>
       <Markdown
         remarkPlugins={[remarkMath]}
-        rehypePlugins={[rehypeKatex, rehypeHighlight]}
+        rehypePlugins={[rehypeKatex]}
         components={{
           code: CodeBlock,
           h1: ({ children }) => <h1 className="fc-h1">{children}</h1>,
