@@ -1,14 +1,13 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getUser, getToken } from '@/lib/auth'
-import { playClick, playCorrect, playWrong } from '@/lib/sound'
-import { ChevronLeft, Clock, BookOpen, Loader2, AlertTriangle, CheckCircle } from 'lucide-react'
+import { playClick, playWrong } from '@/lib/sound'
+import { ChevronLeft, Clock, BookOpen, Loader2, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
 
 export default function TheoryQuizPage() {
   const params = useParams()
@@ -27,22 +26,53 @@ export default function TheoryQuizPage() {
   const [showConfirm, setShowConfirm] = useState(false)
   const [examFinished, setExamFinished] = useState(false)
   const [grading, setGrading] = useState(false)
-  const [startTime, setStartTime] = useState(null)
+  const [error, setError] = useState(null)
+  const startTimeRef = useRef(null)
 
   useEffect(() => {
     fetch(`/api/theory/references?courseCode=${encodeURIComponent(formattedCode)}`)
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load questions')
+        return r.json()
+      })
       .then(data => {
         setReferences(Array.isArray(data) ? data : [])
         setLoading(false)
       })
-      .catch(() => setLoading(false))
+      .catch(() => {
+        setError('Failed to load examination questions. Please try again.')
+        setLoading(false)
+      })
   }, [formattedCode])
+
+  const timeExpiredRef = useRef()
+  timeExpiredRef.current = { references, currentIndex, answers, currentText }
 
   useEffect(() => {
     if (!started || timeLeft === null || examFinished || grading) return
     if (timeLeft <= 0) {
-      handleTimeExpired()
+      const { references: refs, currentIndex: idx, answers: prevAnswers, currentText: text } = timeExpiredRef.current
+      const ref = refs[idx]
+      if (!ref) {
+        setError('Examination error: question not found.')
+        return
+      }
+      const newAnswers = [...prevAnswers, {
+        referenceId: ref.id,
+        text: text.trim(),
+        answerType: 'text',
+      }]
+      setAnswers(newAnswers)
+      setCurrentText('')
+      playWrong()
+
+      if (idx < refs.length - 1) {
+        setCurrentIndex(idx + 1)
+        setTimeLeft(600)
+      } else {
+        setExamFinished(true)
+        submitAllAnswers(newAnswers)
+      }
       return
     }
     const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000)
@@ -57,27 +87,7 @@ export default function TheoryQuizPage() {
     setCurrentText('')
     setStarted(true)
     setTimeLeft(600)
-    setStartTime(Date.now())
-  }
-
-  function handleTimeExpired() {
-    const ref = references[currentIndex]
-    const newAnswers = [...answers, {
-      referenceId: ref.id,
-      text: currentText.trim(),
-      answerType: 'text',
-    }]
-    setAnswers(newAnswers)
-    setCurrentText('')
-    playWrong()
-
-    if (currentIndex < references.length - 1) {
-      setCurrentIndex(prev => prev + 1)
-      setTimeLeft(600)
-    } else {
-      setExamFinished(true)
-      submitAllAnswers(newAnswers)
-    }
+    startTimeRef.current = Date.now()
   }
 
   function handleSubmitRequest() {
@@ -86,11 +96,13 @@ export default function TheoryQuizPage() {
   }
 
   function handleConfirmSubmit() {
+    const ref = references[currentIndex]
+    if (!ref) return
+
     setShowConfirm(false)
     setSubmitting(true)
     playClick()
 
-    const ref = references[currentIndex]
     const newAnswers = [...answers, {
       referenceId: ref.id,
       text: currentText.trim(),
@@ -117,7 +129,14 @@ export default function TheoryQuizPage() {
     try {
       const user = getUser()
       if (!user?.email) {
-        alert('Please sign in to view your results.')
+        setError('Please sign in to view your results.')
+        setGrading(false)
+        return
+      }
+
+      const token = getToken()
+      if (!token) {
+        setError('Session expired. Please sign in again.')
         setGrading(false)
         return
       }
@@ -125,7 +144,7 @@ export default function TheoryQuizPage() {
       const res = await fetch('/api/theory/grade', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${getToken()}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -134,13 +153,22 @@ export default function TheoryQuizPage() {
         }),
       })
 
-      const data = await res.json()
+      let data
+      try {
+        data = await res.json()
+      } catch {
+        throw new Error('Server returned an invalid response. Please try again.')
+      }
 
       if (!res.ok) {
         throw new Error(data.error || 'Grading failed')
       }
 
-      const elapsed = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0
+      if (!data.results || !Array.isArray(data.results) || data.results.length === 0) {
+        throw new Error('No results returned from examiner.')
+      }
+
+      const elapsed = startTimeRef.current ? Math.floor((Date.now() - startTimeRef.current) / 1000) : 0
 
       try {
         sessionStorage.setItem('theory_results', JSON.stringify({
@@ -157,9 +185,34 @@ export default function TheoryQuizPage() {
 
       router.push(`/courses/${paramCode.toLowerCase()}/theory/results`)
     } catch (err) {
-      alert(err.message || 'Grading failed. Please try again.')
+      setError(err.message || 'Examination grading failed. Please try again.')
       setGrading(false)
     }
+  }
+
+  // ─────────── ERROR ───────────
+  if (error) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+        <Card className="w-full max-w-lg py-16 text-center">
+          <div className="space-y-4 px-6">
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+              <AlertTriangle className="size-7 text-red-500" />
+            </div>
+            <h2 className="text-lg font-bold">Examination Error</h2>
+            <p className="text-sm text-muted-foreground">{error}</p>
+            <div className="flex gap-3 pt-2">
+              <Button variant="outline" className="flex-1" onClick={() => router.push(`/courses/${paramCode.toLowerCase()}`)}>
+                Back to Course
+              </Button>
+              <Button className="flex-1" onClick={() => { setError(null); setGrading(false); setExamFinished(false) }}>
+                Retry
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    )
   }
 
   // ─────────── LOADING ───────────
@@ -275,6 +328,11 @@ export default function TheoryQuizPage() {
 
   // ─────────── EXAM SCREEN ───────────
   const currentRef = references[currentIndex]
+  if (!currentRef) {
+    setError('Question not found.')
+    return null
+  }
+
   const progress = ((currentIndex) / references.length) * 100
   const mins = Math.floor((timeLeft || 0) / 60)
   const secs = (timeLeft || 0) % 60
