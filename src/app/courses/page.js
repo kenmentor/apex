@@ -178,7 +178,7 @@ export default function CoursesPage() {
         </div>
 
         <Tabs defaultValue="category">
-          <TabsList className="w-full">
+          <TabsList className="w-full overflow-x-auto flex-nowrap justify-start">
             <TabsTrigger value="category">Category</TabsTrigger>
             <TabsTrigger value="department">Department</TabsTrigger>
             <TabsTrigger value="level">Level</TabsTrigger>
