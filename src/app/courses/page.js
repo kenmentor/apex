@@ -79,21 +79,20 @@ export default function CoursesPage() {
   const deptMap = {};
   for (const d of departments) deptMap[d.code] = d;
 
-  // ── CATEGORY VIEW ──
-  const grouped = {};
+  // ── CATEGORY VIEW (grouped by title, merging codes with same name) ──
+  const codeToCatTitle = {};
   for (const cat of categories) {
-    if (cat.code) grouped[cat.code] = { title: cat.title, color: cat.color, courses: [] };
+    if (cat.code) codeToCatTitle[cat.code] = { title: cat.title, color: cat.color };
   }
+  const catGroups = {};
   for (const course of courses) {
     const prefix = (course.code || '').split(/\s/)[0];
-    if (grouped[prefix]) {
-      grouped[prefix].courses.push(course);
-    } else {
-      if (!grouped['other']) grouped['other'] = { title: 'Other', color: '#636e72', courses: [] };
-      grouped['other'].courses.push(course);
-    }
+    const match = codeToCatTitle[prefix];
+    const key = match ? match.title : 'other';
+    if (!catGroups[key]) catGroups[key] = { title: match?.title || 'Other', color: match?.color || '#636e72', courses: [] };
+    catGroups[key].courses.push(course);
   }
-  let categoryEntries = Object.entries(grouped).filter(([, g]) => g.title !== 'Other' || g.courses.length > 0);
+  let categoryEntries = Object.entries(catGroups).filter(([, g]) => g.title !== 'Other' || g.courses.length > 0);
   if (q) {
     categoryEntries = categoryEntries
       .map(([k, g]) => [k, { ...g, courses: g.courses.filter(c => c.code?.toLowerCase().includes(q) || c.title?.toLowerCase().includes(q)) }])
@@ -195,13 +194,13 @@ export default function CoursesPage() {
               <div className="divide-y divide-border rounded-xl border border-border overflow-hidden">
                 {categoryEntries.map(([key, group]) => (
                   <div key={key}>
-                    <SectionHeader label={group.title} color={DEPT_COLORS[key] || '#636e72'} count={group.courses.length} />
+                    <SectionHeader label={group.title} color={group.color} count={group.courses.length} />
                     <div className="divide-y divide-border">
                       {group.courses.map((course, i) => (
                         <CourseRow
                           key={course.id || i}
                           course={course}
-                          deptColor={DEPT_COLORS[key] || '#636e72'}
+                          deptColor={group.color}
                           onClick={() => navigateToCourse(course.code)}
                         />
                       ))}
