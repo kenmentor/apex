@@ -100,26 +100,26 @@ export default function CoursesPage() {
       .filter(([, g]) => g.courses.length > 0);
   }
 
-  // ── DEPARTMENT VIEW ──
-  const deptLevels = {};
+  // ── DEPARTMENT VIEW (grouped by department title, merging cross-listed codes) ──
+  const deptGroups = {};
   for (const entry of curriculum) {
-    const deptCode = entry.department_code;
-    if (!deptLevels[deptCode]) deptLevels[deptCode] = {};
-    if (!deptLevels[deptCode][entry.level]) deptLevels[deptCode][entry.level] = [];
+    const dept = deptMap[entry.department_code];
+    const title = dept?.title || entry.department_code;
+    const color = dept?.color || '#636e72';
+    if (!deptGroups[title]) deptGroups[title] = { color, courses: [] };
     for (const cc of entry.course_codes) {
-      deptLevels[deptCode][entry.level].push(courseMap[cc] || { code: cc, title: cc });
+      const course = courseMap[cc] || { code: cc, title: cc };
+      if (!deptGroups[title].courses.some(c => c.code === course.code)) {
+        deptGroups[title].courses.push(course);
+      }
     }
   }
-  let filteredDepts = Object.entries(deptLevels);
+  let filteredDepts = Object.entries(deptGroups);
   if (q) {
-    filteredDepts = filteredDepts.map(([code, levels]) => [
-      code,
-      Object.fromEntries(
-        Object.entries(levels)
-          .map(([level, items]) => [level, items.filter(c => c.code?.toLowerCase().includes(q) || c.title?.toLowerCase().includes(q))])
-          .filter(([, items]) => items.length > 0)
-      ),
-    ]).filter(([, levels]) => Object.keys(levels).length > 0);
+    filteredDepts = filteredDepts.map(([title, group]) => [
+      title,
+      { ...group, courses: group.courses.filter(c => c.code?.toLowerCase().includes(q) || c.title?.toLowerCase().includes(q)) },
+    ]).filter(([, group]) => group.courses.length > 0);
   }
 
   // ── LEVEL VIEW ──
@@ -220,28 +220,21 @@ export default function CoursesPage() {
               </div>
             ) : (
               <div className="divide-y divide-border rounded-xl border border-border overflow-hidden">
-                {filteredDepts.map(([deptCode, levels]) => {
-                  const dept = deptMap[deptCode];
-                  const color = dept?.color || '#636e72';
-                  const total = Object.values(levels).reduce((s, arr) => s + arr.length, 0);
-                  return (
-                    <div key={deptCode}>
-                      <SectionHeader label={dept?.title || deptCode} color={color} count={total} />
-                      <div className="divide-y divide-border">
-                        {Object.entries(levels).sort().map(([level, items]) =>
-                          items.map((course, i) => (
-                            <CourseRow
-                              key={course.code || i}
-                              course={course}
-                              deptColor={color}
-                              onClick={() => navigateToCourse(course.code)}
-                            />
-                          ))
-                        )}
-                      </div>
+                {filteredDepts.map(([title, group]) => (
+                  <div key={title}>
+                    <SectionHeader label={title} color={group.color} count={group.courses.length} />
+                    <div className="divide-y divide-border">
+                      {group.courses.map((course, i) => (
+                        <CourseRow
+                          key={course.code || i}
+                          course={course}
+                          deptColor={group.color}
+                          onClick={() => navigateToCourse(course.code)}
+                        />
+                      ))}
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             )}
           </TabsContent>
