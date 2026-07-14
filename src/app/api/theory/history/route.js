@@ -30,15 +30,13 @@ export async function GET(request) {
       courseCode: d.courseCode,
       referenceId: d.referenceId,
       answerType: d.answerType,
-      keywordScore: d.keywordScore,
-      llmScore: d.llmScore,
-      totalPoints: d.totalPoints,
+      points: d.points,
+      remark: d.remark,
       percentage: d.percentage,
-      evaluation: d.evaluation,
       createdAt: d.createdAt,
     }))
 
-    const totalPoints = safe.reduce((sum, s) => sum + (s.totalPoints || 0), 0)
+    const totalPoints = safe.reduce((sum, s) => sum + (s.points || 0), 0)
     const avgPercentage = safe.length > 0
       ? Math.round(safe.reduce((sum, s) => sum + (s.percentage || 0), 0) / safe.length)
       : 0

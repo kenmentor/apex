@@ -5,13 +5,10 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getUser, getToken } from '@/lib/auth'
 import { playClick, playCorrect, playWrong } from '@/lib/sound'
-import { ArrowLeft, Clock, BookOpen, Loader2, AlertTriangle, ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Clock, BookOpen, Loader2, AlertTriangle, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
-import TheoryInput from '@/components/TheoryInput'
-import TheoryResult from '@/components/TheoryResult'
 
 export default function TheoryQuizPage() {
   const params = useParams()
@@ -22,12 +19,14 @@ export default function TheoryQuizPage() {
   const [references, setReferences] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [results, setResults] = useState([])
-  const [currentResult, setCurrentResult] = useState(null)
-  const [submitting, setSubmitting] = useState(false)
+  const [answers, setAnswers] = useState([])
+  const [currentText, setCurrentText] = useState('')
   const [started, setStarted] = useState(false)
   const [timeLeft, setTimeLeft] = useState(null)
-  const [confirmSubmit, setConfirmSubmit] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [examFinished, setExamFinished] = useState(false)
+  const [grading, setGrading] = useState(false)
   const [startTime, setStartTime] = useState(null)
 
   useEffect(() => {
@@ -41,144 +40,140 @@ export default function TheoryQuizPage() {
   }, [formattedCode])
 
   useEffect(() => {
-    if (!started || timeLeft === null || currentResult) return
+    if (!started || timeLeft === null || examFinished || grading) return
     if (timeLeft <= 0) {
-      handleAutoSubmit()
+      handleTimeExpired()
       return
     }
     const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000)
     return () => clearTimeout(timer)
-  }, [started, timeLeft, currentResult])
+  }, [started, timeLeft, examFinished, grading])
 
-  function startQuiz() {
+  function startExam() {
     const shuffled = [...references].sort(() => Math.random() - 0.5)
     setReferences(shuffled)
     setCurrentIndex(0)
-    setResults([])
-    setCurrentResult(null)
+    setAnswers([])
+    setCurrentText('')
     setStarted(true)
     setTimeLeft(600)
     setStartTime(Date.now())
   }
 
-  const handleAutoSubmit = useCallback(() => {
-    if (currentResult || submitting) return
+  function handleTimeExpired() {
+    const ref = references[currentIndex]
+    const newAnswers = [...answers, {
+      referenceId: ref.id,
+      text: currentText.trim(),
+      answerType: 'text',
+    }]
+    setAnswers(newAnswers)
+    setCurrentText('')
     playWrong()
-    const skipped = {
-      keywordScore: 0,
-      llmScore: 0,
-      totalPoints: 0,
-      percentage: 0,
-      feedback: { breakdown: 'Time expired. No answer was recorded for this question.', matchedConcepts: [], missingConcepts: [], suggestions: '' },
-      keywordMatched: [],
-    }
-    setCurrentResult(skipped)
-    setResults(prev => [...prev, skipped])
-  }, [currentResult, submitting])
 
-  async function handleSubmit(answer) {
-    if (submitting) return
-    setConfirmSubmit(false)
+    if (currentIndex < references.length - 1) {
+      setCurrentIndex(prev => prev + 1)
+      setTimeLeft(600)
+    } else {
+      setExamFinished(true)
+      submitAllAnswers(newAnswers)
+    }
+  }
+
+  function handleSubmitRequest() {
+    if (currentText.trim().length < 10) return
+    setShowConfirm(true)
+  }
+
+  function handleConfirmSubmit() {
+    setShowConfirm(false)
     setSubmitting(true)
     playClick()
 
+    const ref = references[currentIndex]
+    const newAnswers = [...answers, {
+      referenceId: ref.id,
+      text: currentText.trim(),
+      answerType: 'text',
+    }]
+    setAnswers(newAnswers)
+    setCurrentText('')
+
+    if (currentIndex < references.length - 1) {
+      setTimeout(() => {
+        setCurrentIndex(prev => prev + 1)
+        setTimeLeft(600)
+        setSubmitting(false)
+      }, 300)
+    } else {
+      setExamFinished(true)
+      setSubmitting(false)
+      submitAllAnswers(newAnswers)
+    }
+  }
+
+  async function submitAllAnswers(allAnswers) {
+    setGrading(true)
     try {
       const user = getUser()
-      const ref = references[currentIndex]
-
       if (!user?.email) {
-        alert('Please sign in to submit your answer.')
-        setSubmitting(false)
+        alert('Please sign in to view your results.')
+        setGrading(false)
         return
       }
 
-      let res
-      if (answer.answerType === 'image' && answer.imageFile) {
-        const form = new FormData()
-        form.append('courseCode', formattedCode)
-        form.append('referenceId', ref.id)
-        form.append('answerType', 'image')
-        form.append('image', answer.imageFile)
-
-        res = await fetch('/api/theory/submit', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${getToken()}` },
-          body: form,
-        })
-      } else {
-        res = await fetch('/api/theory/submit', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            courseCode: formattedCode,
-            referenceId: ref.id,
-            answerType: 'text',
-            text: answer.text,
-          }),
-        })
-      }
+      const res = await fetch('/api/theory/grade', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          courseCode: formattedCode,
+          answers: allAnswers,
+        }),
+      })
 
       const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.error || 'Submission failed')
+        throw new Error(data.error || 'Grading failed')
       }
 
-      if (data.totalPoints >= 7) playCorrect()
-      else if (data.totalPoints >= 4) playClick()
-      else playWrong()
-
-      const result = {
-        keywordScore: data.keywordScore,
-        llmScore: data.llmScore,
-        totalPoints: data.totalPoints,
-        percentage: data.percentage,
-        feedback: data.feedback,
-        keywordMatched: data.keywordMatched,
-      }
-
-      setCurrentResult(result)
-      setResults(prev => [...prev, result])
-    } catch (err) {
-      alert(err.message || 'Failed to submit answer.')
-    }
-    setSubmitting(false)
-  }
-
-  function goNext() {
-    if (currentIndex < references.length - 1) {
-      setCurrentIndex(prev => prev + 1)
-      setCurrentResult(null)
-      setConfirmSubmit(false)
-      setTimeLeft(600)
-    } else {
       const elapsed = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0
+
       try {
         sessionStorage.setItem('theory_results', JSON.stringify({
           courseCode: formattedCode,
-          results,
+          results: data.results,
           references: references.map(r => ({ id: r.id, question: r.question })),
+          totalPoints: data.totalPoints,
+          maxPoints: data.maxPoints,
+          percentage: data.percentage,
           elapsed,
           totalQuestions: references.length,
         }))
       } catch {}
+
       router.push(`/courses/${paramCode.toLowerCase()}/theory/results`)
+    } catch (err) {
+      alert(err.message || 'Grading failed. Please try again.')
+      setGrading(false)
     }
   }
 
+  // ─────────── LOADING ───────────
   if (loading) {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
         <Card className="w-full max-w-lg flex items-center justify-center py-20">
-          <p className="text-sm text-muted-foreground">Loading theory questions...</p>
+          <p className="text-sm text-muted-foreground">Loading examination...</p>
         </Card>
       </div>
     )
   }
 
+  // ─────────── NO QUESTIONS ───────────
   if (references.length === 0) {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
@@ -195,7 +190,24 @@ export default function TheoryQuizPage() {
     )
   }
 
-  // ─────────── EXAM INSTRUCTIONS SCREEN ───────────
+  // ─────────── GRADING SCREEN ───────────
+  if (grading) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+        <Card className="w-full max-w-lg py-16 text-center">
+          <div className="space-y-4">
+            <Loader2 className="mx-auto size-10 animate-spin text-primary" />
+            <h2 className="text-lg font-bold">Evaluating Examination</h2>
+            <p className="text-sm text-muted-foreground px-8">
+              The examiner is reviewing your answers. This may take a moment.
+            </p>
+          </div>
+        </Card>
+      </div>
+    )
+  }
+
+  // ─────────── EXAM INSTRUCTIONS ───────────
   if (!started) {
     return (
       <div className="flex min-h-dvh flex-col bg-background px-5 pb-24 pt-6">
@@ -223,30 +235,19 @@ export default function TheoryQuizPage() {
               <CardContent className="p-5">
                 <h3 className="mb-4 text-sm font-bold uppercase tracking-wide">Examination Rules</h3>
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">1</span>
-                    <p className="text-sm text-muted-foreground">This examination consists of <span className="font-semibold text-foreground">{references.length} essay questions</span>. Answer all questions.</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">2</span>
-                    <p className="text-sm text-muted-foreground">Each question carries <span className="font-semibold text-foreground">10 marks</span> (4 marks for keyword relevance, 6 marks for AI examiner evaluation). Total: <span className="font-semibold text-foreground">{references.length * 10} marks</span>.</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">3</span>
-                    <p className="text-sm text-muted-foreground">You have <span className="font-semibold text-foreground">10 minutes per question</span>. The clock starts when you view each question.</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">4</span>
-                    <p className="text-sm text-muted-foreground"><span className="font-semibold text-foreground">No going back.</span> Once you submit an answer, you cannot return to a previous question.</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">5</span>
-                    <p className="text-sm text-muted-foreground">If time expires before submission, the question will be marked as <span className="font-semibold text-foreground"> unanswered (0 marks)</span>.</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">6</span>
-                    <p className="text-sm text-muted-foreground">Answers are evaluated by an AI examiner using a reference marking guide. Write clearly and demonstrate understanding of key concepts.</p>
-                  </div>
+                  {[
+                    `This examination consists of ${references.length} essay questions. Answer all questions.`,
+                    'Each question is graded out of 6 marks by the examiner. Total: ' + (references.length * 6) + ' marks.',
+                    'You have 10 minutes per question. The clock starts when you view the question.',
+                    'No going back. Once you submit, you cannot return to a previous question.',
+                    'If time expires, the question is marked as unanswered (0 marks).',
+                    'Answers are evaluated strictly by the examiner. Write clearly and demonstrate understanding.',
+                  ].map((rule, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">{i + 1}</span>
+                      <p className="text-sm text-muted-foreground">{rule}</p>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -255,15 +256,15 @@ export default function TheoryQuizPage() {
               <CardContent className="flex items-start gap-3 p-4">
                 <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-600" />
                 <div>
-                  <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">Important Notice</p>
+                  <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">Academic Integrity</p>
                   <p className="mt-1 text-xs text-amber-700 dark:text-amber-400">
-                    By starting this examination, you agree to answer independently without external assistance. Your responses will be evaluated for originality and conceptual accuracy.
+                    By starting this examination, you agree to answer independently. Your responses will be evaluated for originality and conceptual accuracy.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Button onClick={startQuiz} className="w-full py-6 text-base font-bold tracking-wide">
+            <Button onClick={startExam} className="w-full py-6 text-base font-bold tracking-wide">
               BEGIN EXAMINATION
             </Button>
           </div>
@@ -274,7 +275,7 @@ export default function TheoryQuizPage() {
 
   // ─────────── EXAM SCREEN ───────────
   const currentRef = references[currentIndex]
-  const progress = ((currentIndex + (currentResult ? 1 : 0)) / references.length) * 100
+  const progress = ((currentIndex) / references.length) * 100
   const mins = Math.floor((timeLeft || 0) / 60)
   const secs = (timeLeft || 0) % 60
 
@@ -285,10 +286,8 @@ export default function TheoryQuizPage() {
         <div className="mb-5 flex items-center justify-between">
           <button
             onClick={() => {
-              if (!currentResult && !submitting) {
-                if (confirm('Exit examination? Your progress on this question will be lost.')) {
-                  router.push(`/courses/${paramCode.toLowerCase()}`)
-                }
+              if (!submitting && confirm('Exit examination? Your progress will be lost.')) {
+                router.push(`/courses/${paramCode.toLowerCase()}`)
               }
             }}
             className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80"
@@ -308,7 +307,7 @@ export default function TheoryQuizPage() {
           <div
             className="h-full rounded-full transition-all duration-400 ease-out"
             style={{
-              width: `${(currentIndex / references.length) * 100}%`,
+              width: `${progress}%`,
               background: 'linear-gradient(90deg, #ff9f43, #ff4757)',
             }}
           />
@@ -319,27 +318,53 @@ export default function TheoryQuizPage() {
           <p className="text-base font-medium leading-relaxed">{currentRef.question}</p>
         </Card>
 
-        {/* Grading in progress */}
-        {submitting && (
-          <div className="flex flex-col items-center gap-3 py-12">
-            <Loader2 className="size-8 animate-spin text-primary" />
-            <p className="text-sm font-medium text-muted-foreground">Evaluating your response...</p>
-            <p className="text-xs text-muted-foreground">This may take a moment</p>
+        {/* Input area */}
+        {!submitting && (
+          <div className="space-y-3">
+            <textarea
+              value={currentText}
+              onChange={(e) => setCurrentText(e.target.value)}
+              placeholder="Write your answer here..."
+              className="w-full min-h-[200px] resize-none rounded-xl border bg-muted/30 p-4 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-primary/50"
+              autoFocus
+            />
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">
+                {currentText.trim().length} characters {currentText.trim().length < 10 && `(minimum 10)`}
+              </span>
+              <Button
+                onClick={handleSubmitRequest}
+                disabled={currentText.trim().length < 10}
+                size="sm"
+                className="font-bold"
+              >
+                SUBMIT ANSWER
+              </Button>
+            </div>
           </div>
         )}
 
-        {/* Result */}
-        {!submitting && currentResult && (
-          <TheoryResult
-            result={currentResult}
-            onNext={goNext}
-            isLast={currentIndex === references.length - 1}
-          />
-        )}
-
-        {/* Input */}
-        {!submitting && !currentResult && (
-          <TheoryInput onSubmit={handleSubmit} disabled={submitting} />
+        {/* Submit confirmation */}
+        {showConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-5 backdrop-blur-sm">
+            <Card className="w-full max-w-sm space-y-4 py-8 text-center">
+              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30">
+                <AlertTriangle className="size-7 text-amber-600" />
+              </div>
+              <h3 className="text-xl font-bold">Submit Answer?</h3>
+              <p className="px-6 text-sm text-muted-foreground">
+                Once submitted, you cannot go back to change your answer.
+              </p>
+              <div className="space-y-2 px-6 pt-2">
+                <Button onClick={handleConfirmSubmit} className="w-full py-5 text-sm font-bold">
+                  YES, SUBMIT
+                </Button>
+                <Button variant="ghost" className="w-full" onClick={() => setShowConfirm(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </Card>
+          </div>
         )}
       </div>
     </div>

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
-import { ArrowLeft, User, Camera, LogOut, Shield, CheckCircle, Send, FileText, TrendingUp, Clock, Medal, Sun, Moon, Monitor, BookOpen } from 'lucide-react'
+import { ArrowLeft, User, Camera, LogOut, Shield, CheckCircle, Send, FileText, TrendingUp, Clock, Medal, Sun, Moon, Monitor } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -52,8 +52,6 @@ function ProfileContent() {
   const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState('')
   const [sendingVerify, setSendingVerify] = useState(false)
-  const [theoryStats, setTheoryStats] = useState(null)
-
   useEffect(() => {
     const u = getUser()
     setUserState(u)
@@ -64,14 +62,12 @@ function ProfileContent() {
         fetch(`/api/scores?email=${encodeURIComponent(u.email)}`).then(r => r.json()),
         fetch(`/api/leaderboard?email=${encodeURIComponent(u.email)}`).then(r => r.json()),
         fetch('/api/leaderboard').then(r => r.json()),
-        fetch('/api/theory/history', { headers: { Authorization: `Bearer ${getToken()}` } }).then(r => r.json()).catch(() => null),
       ])
-        .then(([myScores, myLeaderboard, allScores, theoryData]) => {
+        .then(([myScores, myLeaderboard, allScores]) => {
           const my = Array.isArray(myScores) ? myScores : []
           const myAgg = Array.isArray(myLeaderboard) ? myLeaderboard : []
           const all = Array.isArray(allScores) ? allScores : []
           setScores(my)
-          if (theoryData?.stats) setTheoryStats(theoryData.stats)
           if (myAgg.length > 0 && all.length > 0) {
             const myBestPct = myAgg[0].avgPct || 0
             const topRank = all.findIndex(s => s.email?.toLowerCase() === u.email?.toLowerCase())
@@ -297,17 +293,6 @@ function ProfileContent() {
                   <StatCard icon={Clock} label="Total Time" value={formatTime(totalTime)} bg="#f4e6fd" color="#9b59b6" />
                   <StatCard icon={Medal} label="Best Rank" value={globalRank ? `#${globalRank}` : '—'} bg="#e8f4fd" color="#3498db" />
                 </div>
-
-                {theoryStats && theoryStats.totalAttempts > 0 && (
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-semibold">Theory Stats</h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      <StatCard icon={BookOpen} label="Theory Attempts" value={theoryStats.totalAttempts} bg="#ede9fe" color="#7c3aed" />
-                      <StatCard icon={TrendingUp} label="Theory Points" value={theoryStats.totalPoints} bg="#fce7f3" color="#db2777" />
-                      <StatCard icon={Medal} label="Avg Theory %" value={`${theoryStats.avgPercentage}%`} bg="#fef3c7" color="#d97706" />
-                    </div>
-                  </div>
-                )}
 
                 <div className="space-y-3">
                   <h3 className="text-sm font-semibold">Score History</h3>

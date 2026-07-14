@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Check, X, AlertCircle, Lightbulb, Sparkles } from 'lucide-react'
+import { Check, X, Lightbulb } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-function ScoreRing({ score, max = 10 }) {
+function ScoreRing({ score, max = 6 }) {
   const [animated, setAnimated] = useState(0)
   const pct = (score / max) * 100
   const circumference = 2 * Math.PI * 45
@@ -43,10 +43,9 @@ function ScoreRing({ score, max = 10 }) {
 export default function TheoryResult({ result, onNext, isLast }) {
   if (!result) return null
 
-  const { keywordScore, llmScore, totalPoints, percentage, feedback, keywordMatched } = result
-
-  const grade = percentage >= 90 ? 'A' : percentage >= 80 ? 'B' : percentage >= 70 ? 'C' : percentage >= 60 ? 'D' : percentage >= 50 ? 'E' : 'F'
-  const gradeColor = percentage >= 70 ? 'text-green-600' : percentage >= 50 ? 'text-amber-600' : 'text-red-500'
+  const { points, remark, matchedConcepts, missingConcepts, suggestion } = result
+  const totalPoints = points || 0
+  const percentage = Math.round((totalPoints / 6) * 100)
 
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -55,56 +54,32 @@ export default function TheoryResult({ result, onNext, isLast }) {
         <div className="space-y-3">
           <ScoreRing score={totalPoints} />
           <div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wide">Score</p>
-            <p className={`text-2xl font-bold ${gradeColor}`}>{grade}</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">Examiner Score</p>
+            <p className={`text-sm font-bold ${percentage >= 70 ? 'text-green-600' : percentage >= 50 ? 'text-amber-600' : 'text-red-500'}`}>
+              {percentage}%
+            </p>
           </div>
         </div>
       </Card>
 
-      {/* Breakdown */}
-      <Card className="divide-y p-0">
-        <div className="flex items-center justify-between p-4">
-          <span className="text-sm text-muted-foreground">Keyword Relevance</span>
-          <span className="text-sm font-bold">{keywordScore.toFixed(1)} / 4.0</span>
-        </div>
-        <div className="flex items-center justify-between p-4">
-          <span className="text-sm text-muted-foreground">Examiner Evaluation</span>
-          <span className="text-sm font-bold">{llmScore.toFixed(1)} / 6.0</span>
-        </div>
-        <div className="flex items-center justify-between p-4">
-          <span className="text-sm text-muted-foreground">Total Marks</span>
-          <span className={`text-sm font-bold ${gradeColor}`}>{totalPoints.toFixed(1)} / 10.0</span>
-        </div>
-        <div className="flex items-center justify-between p-4">
-          <span className="text-sm text-muted-foreground">Percentage</span>
-          <span className={`text-sm font-bold ${gradeColor}`}>{percentage}%</span>
-        </div>
-      </Card>
-
-      {/* Examiner Remarks */}
-      {feedback?.breakdown && (
+      {/* Examiner Remark */}
+      {remark && (
         <Card>
           <CardContent className="p-4">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Examiner Remarks</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{feedback.breakdown}</p>
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Examiner Remark</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{remark}</p>
           </CardContent>
         </Card>
       )}
 
-      {/* Concept Assessment */}
-      {(feedback?.matchedConcepts?.length > 0 || keywordMatched?.length > 0) && (
+      {/* Concepts Demonstrated */}
+      {matchedConcepts?.length > 0 && (
         <Card>
           <CardContent className="p-4">
             <p className="mb-2 text-xs font-bold uppercase tracking-wide text-green-600">Concepts Demonstrated</p>
             <div className="flex flex-wrap gap-1.5">
-              {keywordMatched?.map((kw) => (
-                <Badge key={`kw-${kw}`} variant="secondary" className="bg-green-100 text-green-700 text-xs">
-                  <Check className="mr-1 size-3" />
-                  {kw}
-                </Badge>
-              ))}
-              {feedback?.matchedConcepts?.map((c) => (
-                <Badge key={`lc-${c}`} variant="secondary" className="bg-green-100 text-green-700 text-xs">
+              {matchedConcepts.map((c, i) => (
+                <Badge key={`mc-${i}`} variant="secondary" className="bg-green-100 text-green-700 text-xs">
                   <Check className="mr-1 size-3" />
                   {c.length > 45 ? c.slice(0, 45) + '...' : c}
                 </Badge>
@@ -114,13 +89,14 @@ export default function TheoryResult({ result, onNext, isLast }) {
         </Card>
       )}
 
-      {feedback?.missingConcepts?.length > 0 && (
+      {/* Concepts Missing */}
+      {missingConcepts?.length > 0 && (
         <Card>
           <CardContent className="p-4">
             <p className="mb-2 text-xs font-bold uppercase tracking-wide text-red-500">Concepts Not Demonstrated</p>
             <div className="flex flex-wrap gap-1.5">
-              {feedback.missingConcepts.map((c) => (
-                <Badge key={c} variant="secondary" className="bg-red-50 text-red-600 text-xs">
+              {missingConcepts.map((c, i) => (
+                <Badge key={`ms-${i}`} variant="secondary" className="bg-red-50 text-red-600 text-xs">
                   <X className="mr-1 size-3" />
                   {c.length > 45 ? c.slice(0, 45) + '...' : c}
                 </Badge>
@@ -130,47 +106,34 @@ export default function TheoryResult({ result, onNext, isLast }) {
         </Card>
       )}
 
-      {feedback?.illegible?.length > 0 && (
-        <Card>
-          <CardContent className="p-4">
-            <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-amber-600">
-              <AlertCircle className="size-3.5" />
-              Illegible Content Detected
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Portions of your response could not be read clearly. Write more clearly to ensure full evaluation.
-            </p>
-          </CardContent>
-        </Card>
-      )}
-
-      {feedback?.suggestions && (
+      {/* Suggestion — only if there is one */}
+      {suggestion && (
         <Card>
           <CardContent className="p-4">
             <p className="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide">
               <Lightbulb className="size-3.5 text-amber-500" />
-              Recommendation
+              Suggestion
             </p>
-            <p className="text-sm text-muted-foreground">{feedback.suggestions}</p>
+            <p className="text-sm text-muted-foreground">{suggestion}</p>
           </CardContent>
         </Card>
       )}
 
-      {/* Points earned */}
+      {/* Points awarded */}
       <div className="flex justify-center pt-1">
         <Badge variant="outline" className={`${percentage >= 50 ? 'border-green-300 text-green-600' : 'border-red-300 text-red-500'} text-xs`}>
-          +{totalPoints.toFixed(1)} marks awarded
+          {totalPoints} / 6 marks awarded
         </Badge>
       </div>
 
       {/* Next button */}
       {onNext && (
-        <Button
+        <button
           onClick={onNext}
-          className="w-full py-6 text-base font-bold"
+          className="w-full rounded-xl bg-primary py-5 text-base font-bold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           {isLast ? 'VIEW RESULTS' : 'NEXT QUESTION'}
-        </Button>
+        </button>
       )}
     </div>
   )
