@@ -1,0 +1,406 @@
+[
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "TH-001",
+    "question": "What is inheritance in Java? Explain with a simple example.",
+    "keywords": [
+      "inheritance",
+      "extends",
+      "parent",
+      "child",
+      "superclass",
+      "subclass",
+      "code reuse",
+      "IS-A relationship"
+    ],
+    "mainConcepts": [
+      "Inheritance is an OOP mechanism where a new class acquires properties and behaviors of an existing class",
+      "The keyword extends is used to inherit from a parent class",
+      "The parent/superclass is the class being inherited from",
+      "The child/subclass is the class that inherits",
+      "Inheritance promotes code reuse and establishes an IS-A relationship",
+      "A subclass can override parent methods to provide specific behavior"
+    ],
+    "referenceAnswer": "Inheritance is a fundamental Object-Oriented Programming (OOP) mechanism in Java where a new class (called the subclass or child class) acquires the properties (fields) and behaviors (methods) of an existing class (called the superclass or parent class). It is implemented using the extends keyword.\n\nInheritance establishes an IS-A relationship between classes. For example, a Dog IS-A Animal, so Dog can inherit from Animal.\n\nSimple Example:\nclass Animal {\n    String name;\n    void eat() {\n        System.out.println(name + \" is eating.\");\n    }\n}\n\nclass Dog extends Animal {\n    void bark() {\n        System.out.println(name + \" is barking.\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Dog d = new Dog();\n        d.name = \"Buddy\";\n        d.eat();   // Inherited from Animal\n        d.bark();  // Defined in Dog\n    }\n}\n\nOutput:\nBuddy is eating.\nBuddy is barking.\n\nKey points:\n- Dog inherits the name field and eat() method from Animal automatically\n- Dog adds its own method bark()\n- The Dog object can access both inherited and its own methods\n- Java supports single inheritance only (one parent class per subclass)\n- Multiple inheritance is achieved through interfaces",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "TH-002",
+    "question": "In OOP, how does Java achieve Encapsulation?",
+    "keywords": [
+      "encapsulation",
+      "data hiding",
+      "private",
+      "getter",
+      "setter",
+      "access modifier",
+      "information hiding",
+      "bundle"
+    ],
+    "mainConcepts": [
+      "Encapsulation is the bundling of data (fields) and methods that operate on that data into a single class",
+      "Data hiding is achieved by making fields private",
+      "Public getter and setter methods provide controlled access to private fields",
+      "Encapsulation protects internal state from unauthorized access and modification",
+      "Access modifiers (private, protected, public, default) control visibility",
+      "It promotes modularity and makes code easier to maintain"
+    ],
+    "referenceAnswer": "Encapsulation is an OOP principle that bundles data (attributes/fields) and the methods that operate on that data into a single unit (class), while restricting direct access to the fields from outside the class. It is also called data hiding.\n\nJava achieves encapsulation through:\n\n1. DECLARING FIELDS AS PRIVATE: This prevents direct access from outside the class.\n\n2. PROVIDING PUBLIC GETTER AND SETTER METHODS: These methods provide controlled access to the private fields.\n\nExample:\npublic class BankAccount {\n    private double balance;  // private - cannot be accessed directly\n    private String owner;\n\n    // Getter\n    public double getBalance() {\n        return balance;\n    }\n\n    // Setter with validation\n    public void setBalance(double amount) {\n        if (amount >= 0) {\n            this.balance = amount;\n        }\n    }\n\n    public void deposit(double amount) {\n        if (amount > 0) {\n            balance += amount;\n        }\n    }\n}\n\nIn this example:\n- balance is private, so no one can do: account.balance = -1000\n- The setter validates the input before updating\n- The deposit method adds business logic\n- Internal state is protected from invalid modifications\n\nBenefits:\n- Data integrity: Invalid values are prevented by validation in setters\n- Flexibility: Internal representation can change without affecting external code\n- Debugging: All access goes through methods, making bugs easier to trace",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "TH-003",
+    "question": "What is the difference between abstract class and interface in Java?",
+    "keywords": [
+      "abstract class",
+      "interface",
+      "abstract method",
+      "implements",
+      "extends",
+      "multiple inheritance",
+      "contract",
+      "partial abstraction",
+      "full abstraction"
+    ],
+    "mainConcepts": [
+      "An abstract class can have both abstract (unimplemented) and concrete (implemented) methods",
+      "An interface can only have abstract methods (prior to Java 8) and constants",
+      "A class can extend only one abstract class but can implement multiple interfaces",
+      "Abstract classes use the extends keyword; interfaces use the implements keyword",
+      "Interfaces provide full abstraction; abstract classes provide partial abstraction",
+      "Interfaces define a contract; abstract classes provide a base implementation"
+    ],
+    "referenceAnswer": "ABSTRACT CLASS vs INTERFACE in Java:\n\n1. METHODS:\n- Abstract class: Can have both abstract methods (no body) AND concrete methods (with body)\n- Interface: Can only have abstract methods (prior to Java 8). From Java 8, interfaces can have default and static methods with bodies.\n\n2. CONSTRUCTORS:\n- Abstract class: Can have constructors\n- Interface: Cannot have constructors\n\n3. INHERITANCE:\n- Abstract class: A class can extend only ONE abstract class (single inheritance)\n- Interface: A class can implement MULTIPLE interfaces (multiple inheritance of type)\n\n4. KEYWORDS:\n- Abstract class: Uses extends keyword\n- Interface: Uses implements keyword\n\n5. FIELDS:\n- Abstract class: Can have any type of fields (instance variables)\n- Interface: All fields are implicitly public, static, and final (constants)\n\n6. ACCESS MODIFIERS:\n- Abstract class: Methods can have any access modifier\n- Interface: Methods are implicitly public (prior to Java 9)\n\nExample:\nabstract class Shape {\n    String color;\n    abstract double area();  // abstract method\n    void displayColor() {   // concrete method\n        System.out.println(\"Color: \" + color);\n    }\n}\n\ninterface Drawable {\n    void draw();  // abstract method\n    default void resize() {  // default method (Java 8+)\n        System.out.println(\"Resizing...\");\n    }\n}\n\nclass Circle extends Shape implements Drawable {\n    double radius;\n    double area() { return Math.PI * radius * radius; }\n    void draw() { System.out.println(\"Drawing circle\"); }\n}\n\nUse abstract class when classes share common state and behavior. Use interface when defining a contract that unrelated classes must follow.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "TH-004",
+    "question": "What are the four main pillars of Object-Oriented Programming?",
+    "keywords": [
+      "OOP",
+      "encapsulation",
+      "inheritance",
+      "polymorphism",
+      "abstraction",
+      "pillars",
+      "four pillars"
+    ],
+    "mainConcepts": [
+      "Encapsulation bundles data and methods, hiding internal details using access modifiers",
+      "Inheritance allows a class to acquire properties of another class, promoting code reuse",
+      "Polymorphism allows one interface to have multiple forms — methods behave differently based on the object",
+      "Abstraction hides complex implementation details and shows only essential features",
+      "Together these four pillars form the foundation of OOP design"
+    ],
+    "referenceAnswer": "The four main pillars of Object-Oriented Programming (OOP) are:\n\n1. ENCAPSULATION: The bundling of data (fields) and methods that operate on that data into a single class, while restricting direct access to the fields. Data is hidden behind public methods (getters/setters). Example: Making fields private and providing public methods to access them.\n\n2. INHERITANCE: A mechanism where a new class (subclass) acquires the properties and behaviors of an existing class (superclass). It promotes code reuse and establishes an IS-A relationship. Example: Dog extends Animal.\n\n3. POLYMORPHISM: The ability of an object to take many forms. One interface can be used for different types of objects, and the same method call can produce different behaviors. Two types:\n   - Compile-time (method overloading): Same method name, different parameters\n   - Runtime (method overriding): Subclass redefines a parent method\n\n4. ABSTRACTION: Hiding complex implementation details and showing only the essential features of an object. Achieved through abstract classes and interfaces. Example: A car driver uses the steering wheel without knowing the internal mechanics.\n\nThese four pillars work together to create modular, maintainable, and reusable code. Encapsulation protects data, inheritance promotes reuse, polymorphism provides flexibility, and abstraction simplifies complexity.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-005",
+    "question": "Differentiate between method overloading and method overriding in Java.",
+    "keywords": [
+      "method overloading",
+      "method overriding",
+      "compile-time",
+      "runtime",
+      "same name",
+      "different parameters",
+      "same signature",
+      "@Override"
+    ],
+    "mainConcepts": [
+      "Method overloading: same class, same method name, different parameter list (compile-time polymorphism)",
+      "Method overriding: subclass redefines a parent class method with the same signature (runtime polymorphism)",
+      "Overloading does not require inheritance; overriding requires an IS-A relationship",
+      "Overloading is resolved at compile time; overriding is resolved at runtime",
+      "Overriding uses the @Override annotation for safety",
+      "Return types can differ in overloading but must be same or covariant in overriding"
+    ],
+    "referenceAnswer": "METHOD OVERLOADING vs METHOD OVERRIDING:\n\nMETHOD OVERLOADING (Compile-time Polymorphism):\n- Same method name, DIFFERENT parameter list (different number, type, or order of parameters)\n- Occurs within the SAME class\n- Resolved at COMPILE TIME (compiler decides which method to call)\n- No inheritance required\n- Return type can be different\n\npublic class Calculator {\n    int add(int a, int b) { return a + b; }\n    double add(double a, double b) { return a + b; }  // overloaded\n    int add(int a, int b, int c) { return a + b + c; }  // overloaded\n}\n\nMETHOD OVERRIDING (Runtime Polymorphism):\n- Same method name AND same parameter list (same signature)\n- Occurs in a SUBCLASS redefining a method from its PARENT class\n- Resolved at RUNTIME (JVM decides which method to call based on object type)\n- Requires inheritance (IS-A relationship)\n- Return type must be the same or a subtype (covariant)\n- Use @Override annotation for compile-time checking\n\nclass Animal {\n    void sound() { System.out.println(\"Some sound\"); }\n}\n\nclass Dog extends Animal {\n    @Override\n    void sound() { System.out.println(\"Bark\"); }\n}\n\nKey Differences:\n1. Parameters: Overloading has different params; overriding has same params\n2. Inheritance: Overloading needs no inheritance; overriding requires it\n3. Binding: Overloading = compile-time; Overriding = runtime\n4. Annotation: @Override is used only for overriding\n5. Scope: Overloading is within one class; overriding spans parent-child classes",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-006",
+    "question": "Explain polymorphism in Java.",
+    "keywords": [
+      "polymorphism",
+      "many forms",
+      "compile-time",
+      "runtime",
+      "method overloading",
+      "method overriding",
+      "dynamic binding",
+      "upcasting"
+    ],
+    "mainConcepts": [
+      "Polymorphism means \"many forms\" — the same interface can be used for different underlying data types",
+      "Compile-time polymorphism is achieved through method overloading",
+      "Runtime polymorphism is achieved through method overriding and dynamic method dispatch",
+      "A parent class reference can hold a child class object (upcasting)",
+      "The JVM determines at runtime which overridden method to call based on the actual object type",
+      "Polymorphism enables writing flexible, extensible, and maintainable code"
+    ],
+    "referenceAnswer": "Polymorphism is a core OOP principle meaning \"many forms.\" It allows objects of different types to be treated through a single interface, where the actual behavior depends on the specific type of the object at runtime.\n\nTWO TYPES OF POLYMORPHISM IN JAVA:\n\n1. COMPILE-TIME POLYMORPHISM (Method Overloading):\nThe compiler determines which method to call based on the method signature (name + parameters).\n\nclass Printer {\n    void print(String s) { System.out.println(\"String: \" + s); }\n    void print(int n) { System.out.println(\"Number: \" + n); }\n    void print(String s, int n) { System.out.println(s + \": \" + n); }\n}\n// The correct print() is chosen at compile time based on argument types.\n\n2. RUNTIME POLYMORPHISM (Method Overriding):\nThe JVM determines which method to call at runtime based on the actual object type, not the reference type.\n\nclass Shape {\n    double area() { return 0; }\n}\n\nclass Circle extends Shape {\n    double radius;\n    double area() { return Math.PI * radius * radius; }\n}\n\nclass Rectangle extends Shape {\n    double width, height;\n    double area() { return width * height; }\n}\n\n// Runtime polymorphism in action:\nShape s1 = new Circle();     // parent reference, child object\nShape s2 = new Rectangle();\nSystem.out.println(s1.area());  // Calls Circle.area() → πr²\nSystem.out.println(s2.area());  // Calls Rectangle.area() → w×h\n\nThis is called dynamic method dispatch — the JVM looks at the actual object (Circle or Rectangle) to decide which area() to call, even though the reference type is Shape.\n\nBenefits:\n- Code flexibility: New subclasses can be added without changing existing code\n- Code reusability: Common interface for different types\n- Loose coupling: Code works with the parent type, not specific implementations",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-007",
+    "question": "Explain the use of the super keyword in Java.",
+    "keywords": [
+      "super",
+      "parent class",
+      "constructor",
+      "method",
+      "field",
+      "chaining",
+      "override",
+      "access parent"
+    ],
+    "mainConcepts": [
+      "super refers to the immediate parent class object",
+      "super() calls the parent class constructor — must be the first statement",
+      "super.method() calls the parent version of an overridden method",
+      "super.field accesses a parent class field hidden by a child class field",
+      "Constructor chaining ensures parent class initialization happens before child",
+      "If no super() is called, Java automatically inserts super() (no-arg)"
+    ],
+    "referenceAnswer": "The super keyword in Java is a reference variable that refers to the immediate parent class. It is used to access parent class members (fields, methods, constructors) that may be hidden or overridden in the subclass.\n\nTHREE USES OF super:\n\n1. ACCESSING PARENT CLASS CONSTRUCTOR:\nsuper() calls the parent class constructor. It must be the first statement in the child constructor.\n\nclass Person {\n    String name;\n    Person(String name) { this.name = name; }\n}\n\nclass Student extends Person {\n    int rollNo;\n    Student(String name, int rollNo) {\n        super(name);  // calls Person(String name)\n        this.rollNo = rollNo;\n    }\n}\n\nIf the parent has a no-arg constructor, Java automatically calls super(). But if the parent only has parameterized constructors, you MUST explicitly call super(args).\n\n2. CALLING OVERRIDDEN PARENT METHOD:\nsuper.method() calls the parent version of a method that has been overridden.\n\nclass Animal {\n    void sound() { System.out.println(\"Some sound\"); }\n}\n\nclass Dog extends Animal {\n    @Override\n    void sound() {\n        super.sound();  // calls Animal.sound() first\n        System.out.println(\"Bark\");  // then adds own behavior\n    }\n}\n// Output: Some sound\\nBark\n\n3. ACCESSING HIDDEN PARENT FIELD:\nsuper.field accesses a parent field when the child has a field with the same name.\n\nclass Parent {\n    int x = 10;\n}\n\nclass Child extends Parent {\n    int x = 20;\n    void print() {\n        System.out.println(x);      // 20 (child)\n        System.out.println(super.x); // 10 (parent)\n    }\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "TH-008",
+    "question": "What is abstraction in Java? How is it implemented?",
+    "keywords": [
+      "abstraction",
+      "abstract class",
+      "interface",
+      "abstract method",
+      "hide complexity",
+      "essential features",
+      "partial abstraction",
+      "full abstraction"
+    ],
+    "mainConcepts": [
+      "Abstraction hides complex implementation details and shows only essential features to the user",
+      "It is implemented through abstract classes and interfaces",
+      "Abstract classes provide partial abstraction — they can have both abstract and concrete methods",
+      "Interfaces provide full abstraction — they define a contract with no implementation (pre-Java 8)",
+      "An abstract class cannot be instantiated directly",
+      "Abstract methods have no body and must be implemented by subclasses"
+    ],
+    "referenceAnswer": "Abstraction is an OOP principle that hides the complex implementation details of a system and exposes only the essential features to the user. The user interacts with the abstract interface without needing to understand the internal workings.\n\nHOW ABSTRACTION IS IMPLEMENTED IN JAVA:\n\n1. ABSTRACT CLASSES (Partial Abstraction):\nAn abstract class is declared using the abstract keyword. It can contain both abstract methods (no body) and concrete methods (with body). It cannot be instantiated.\n\nabstract class Vehicle {\n    String model;\n    \n    void displayInfo() {  // concrete method\n        System.out.println(\"Model: \" + model);\n    }\n    \n    abstract void start();  // abstract method - no body\n    abstract void stop();   // abstract method - no body\n}\n\nclass Car extends Vehicle {\n    void start() { System.out.println(\"Car engine started\"); }\n    void stop() { System.out.println(\"Car engine stopped\"); }\n}\n\n// Vehicle v = new Vehicle();  // ERROR - cannot instantiate abstract class\nVehicle v = new Car();  // OK - polymorphism\nv.start();  // Car engine started\n\n2. INTERFACES (Full Abstraction):\nAn interface defines a contract that implementing classes must follow. All methods are abstract by default (pre-Java 8).\n\ninterface Drawable {\n    void draw();  // abstract by default\n}\n\nclass Circle implements Drawable {\n    public void draw() { System.out.println(\"Drawing circle\"); }\n}\n\nclass Square implements Drawable {\n    public void draw() { System.out.println(\"Drawing square\"); }\n}\n\nA class can implement multiple interfaces:\nclass Shape implements Drawable, Resizable {\n    // must implement methods from both interfaces\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "TH-009",
+    "question": "Why is encapsulation considered important in OOP design?",
+    "keywords": [
+      "encapsulation",
+      "data protection",
+      "modularity",
+      "maintainability",
+      "flexibility",
+      "debugging",
+      "validation",
+      "loose coupling"
+    ],
+    "mainConcepts": [
+      "Encapsulation protects internal object state from unauthorized external access",
+      "It allows internal implementation to change without affecting external code",
+      "Validation logic in setters prevents invalid data from corrupting object state",
+      "It makes debugging easier because all access goes through controlled methods",
+      "It promotes loose coupling between components",
+      "It supports modularity — each class is a self-contained unit"
+    ],
+    "referenceAnswer": "Encapsulation is important in OOP design for several key reasons:\n\n1. DATA PROTECTION: By making fields private, encapsulation prevents external code from directly modifying object state. This prevents accidental corruption of data. For example, a bank account balance cannot be set to a negative value by external code.\n\n2. FLEXIBILITY AND MAINTAINABILITY: Internal implementation can change without affecting code that uses the class. If a class stores data differently internally, as long as the public methods (getters/setters) remain the same, no external code needs to change.\n\n3. DATA VALIDATION: Setters can include validation logic to ensure only valid data is stored. For example, a setAge() method can reject negative values or unrealistic ages.\n\n4. EASIER DEBUGGING: Since all access to data goes through methods, it is easier to trace bugs. You can add logging to a setter to see every modification, rather than searching through all code that directly accesses a field.\n\n5. MODULARITY: Each class becomes a self-contained unit with a clear boundary between its public interface and private implementation. This makes the codebase easier to understand and navigate.\n\n6. LOOSE COUPLING: Components interact through well-defined public interfaces rather than internal details. This reduces dependencies and makes the system more modular and easier to test.\n\nExample:\npublic class Temperature {\n    private double celsius;\n    \n    public void setCelsius(double c) {\n        if (c < -273.15) throw new IllegalArgumentException(\"Below absolute zero\");\n        this.celsius = c;\n    }\n    \n    public double getFahrenheit() {\n        return (celsius * 9/5) + 32;\n    }\n}\n// Internal representation (celsius) is hidden. External code uses the public interface.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "TH-010",
+    "question": "What is the role of the final keyword in Java for classes and methods?",
+    "keywords": [
+      "final",
+      "final class",
+      "final method",
+      "final variable",
+      "cannot override",
+      "cannot extend",
+      "constant",
+      "immutability"
+    ],
+    "mainConcepts": [
+      "final class: cannot be extended/inherited (e.g., String class is final)",
+      "final method: cannot be overridden by subclasses",
+      "final variable: becomes a constant — its value cannot be changed after assignment",
+      "final prevents breaking of immutability contracts",
+      "final classes ensure security and prevent subclass tampering",
+      "final methods preserve the original behavior in inheritance hierarchies"
+    ],
+    "referenceAnswer": "The final keyword in Java is used to restrict modification. Its role differs depending on what it is applied to:\n\n1. FINAL CLASS:\nA class declared as final cannot be extended (subclassed). This prevents inheritance.\n\nfinal class MathUtils {\n    static double square(double x) { return x * x; }\n}\n\n// class Extended extends MathUtils {} // COMPILE ERROR - cannot extend final class\n\nJava's String class is final for security — it cannot be subclassed to alter string behavior.\n\n2. FINAL METHOD:\nA method declared as final cannot be overridden by subclasses. This preserves the original behavior.\n\nclass Parent {\n    final void criticalMethod() {\n        System.out.println(\"Original implementation\");\n    }\n}\n\nclass Child extends Parent {\n    // void criticalMethod() {} // COMPILE ERROR - cannot override final method\n}\n\nThis is used when the method contains critical logic that must not be changed by subclasses.\n\n3. FINAL VARIABLE:\nA variable declared as final can only be assigned once. After assignment, its value cannot change. It becomes a constant.\n\nfinal int MAX_SIZE = 100;\n// MAX_SIZE = 200; // COMPILE ERROR - cannot reassign final variable\n\nFor object references, final means the reference cannot point to a different object, but the object's internal state can still change:\n\nfinal int[] arr = {1, 2, 3};\narr[0] = 10;  // OK - modifying contents\n// arr = new int[5];  // ERROR - cannot reassign reference\n\nBenefits:\n- Security: Prevents subclasses from overriding critical methods\n- Immutability: Final variables create constants\n- Thread safety: Final fields are safe to share across threads\n- Clarity: Signals to other developers that something should not change",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "TH-011",
+    "question": "Explain with examples how Java supports multiple inheritance using interfaces.",
+    "keywords": [
+      "multiple inheritance",
+      "interface",
+      "implements",
+      "diamond problem",
+      "default method",
+      "abstract method",
+      "type"
+    ],
+    "mainConcepts": [
+      "Java does not support multiple inheritance with classes to avoid the diamond problem",
+      "A class can implement multiple interfaces, achieving multiple inheritance of type",
+      "Each interface defines a contract that the implementing class must fulfill",
+      "From Java 8, interfaces can have default methods, adding complexity",
+      "If two interfaces have the same default method, the class must override it to resolve ambiguity",
+      "This approach gives the benefits of multiple inheritance without the problems"
+    ],
+    "referenceAnswer": "Java does not support multiple inheritance with classes (a class cannot extend more than one class) to avoid the diamond problem — ambiguity that arises when two parent classes have the same method. However, Java supports multiple inheritance of type through interfaces.\n\nA class can implement multiple interfaces, thereby inheriting the abstract methods from all of them:\n\ninterface Flyable {\n    void fly();\n}\n\ninterface Swimmable {\n    void swim();\n}\n\ninterface Drivable {\n    void drive();\n}\n\nclass Duck implements Flyable, Swimmable, Drivable {\n    public void fly() { System.out.println(\"Duck is flying\"); }\n    public void swim() { System.out.println(\"Duck is swimming\"); }\n    public void drive() { System.out.println(\"Duck is driving (somehow)\"); }\n}\n\nDuck inherits from THREE interfaces and must implement all their methods.\n\nMULTIPLE INHERITANCE OF BEHAVIOR (Java 8+ default methods):\n\ninterface A {\n    default void show() { System.out.println(\"From A\"); }\n}\n\ninterface B {\n    default void show() { System.out.println(\"From B\"); }\n}\n\n// Diamond problem resolved by explicit override:\nclass C implements A, B {\n    @Override\n    public void show() {\n        A.super.show();  // explicitly choose A's version\n    }\n}\n\nMultiple inheritance of STATE is not possible (no multiple extends), but multiple inheritance of TYPE and BEHAVIOR is fully supported through interfaces.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "TH-012",
+    "question": "State the difference between a class and an object in Java.",
+    "keywords": [
+      "class",
+      "object",
+      "blueprint",
+      "instance",
+      "template",
+      "memory",
+      "instantiation",
+      "new keyword"
+    ],
+    "mainConcepts": [
+      "A class is a blueprint or template; an object is an instance of a class",
+      "A class defines properties and behaviors; an object holds actual values",
+      "No memory is allocated for fields when a class is declared; memory is allocated when an object is created",
+      "Multiple objects can be created from one class, each with its own state",
+      "A class is a logical entity; an object is a physical entity in memory",
+      "The new keyword creates an object (instantiation)"
+    ],
+    "referenceAnswer": "CLASS vs OBJECT in Java:\n\nA CLASS is a blueprint or template that defines the structure (fields) and behavior (methods) that objects of that type will have. It is a logical entity that does not occupy memory for its instance fields.\n\nAn OBJECT is a specific instance of a class — a concrete entity created from the blueprint. It occupies memory and holds actual values for the fields defined by the class.\n\nExample:\n// CLASS definition (blueprint)\nclass Car {\n    String model;\n    int year;\n    \n    void start() {\n        System.out.println(model + \" started\");\n    }\n}\n\n// OBJECT creation (instances)\nCar car1 = new Car();  // object 1\ncar1.model = \"Toyota\";\ncar1.year = 2023;\n\ncar2.model = \"Honda\";\ncar2.year = 2024;\n\n// Both car1 and car2 are objects of the same class Car\n// but they have different states (different model and year values)\n\nKEY DIFFERENCES:\n1. Definition: Class = blueprint; Object = instance of that blueprint\n2. Memory: Class declaration allocates no instance memory; object creation allocates memory (via new)\n3. Quantity: One class can create unlimited objects\n4. Existence: Class exists as code; object exists at runtime in memory\n5. Creation: Class is defined with class keyword; Object is created with new keyword\n6. State: Class defines possible state (fields); Object holds actual state (field values)\n7. Nature: Class is a logical entity; Object is a physical entity in heap memory",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "TH-013",
+    "question": "What are getter and setter methods?",
+    "keywords": [
+      "getter",
+      "setter",
+      "accessor",
+      "mutator",
+      "encapsulation",
+      "private field",
+      "get",
+      "set",
+      "data access"
+    ],
+    "mainConcepts": [
+      "Getter methods (accessors) return the value of a private field",
+      "Setter methods (mutators) assign a value to a private field",
+      "They are the primary mechanism for implementing encapsulation",
+      "Setters can include validation logic before updating the field",
+      "Naming convention: getFieldName() and setFieldName()",
+      "They provide controlled access to private data"
+    ],
+    "referenceAnswer": "Getter and setter methods are special methods used in encapsulation to provide controlled access to private fields of a class.\n\nGETTER METHOD (Accessor):\nReturns the value of a private field. It has no parameters and returns the field value.\n\npublic class Person {\n    private String name;\n    private int age;\n    \n    // Getter for name\n    public String getName() {\n        return name;\n    }\n    \n    // Getter for age\n    public int getAge() {\n        return age;\n    }\n}\n\nSETTER METHOD (Mutator):\nAssigns a value to a private field. It takes a parameter and returns void (or boolean for success/failure).\n\npublic class Person {\n    private String name;\n    private int age;\n    \n    // Setter for name\n    public void setName(String name) {\n        this.name = name;\n    }\n    \n    // Setter for age with validation\n    public void setAge(int age) {\n        if (age >= 0 && age <= 150) {\n            this.age = age;\n        } else {\n            System.out.println(\"Invalid age\");\n        }\n    }\n}\n\nUsage:\nPerson p = new Person();\np.setName(\"John\");  // setter\np.setAge(25);       // setter with validation\nSystem.out.println(p.getName());  // getter → \"John\"\nSystem.out.println(p.getAge());   // getter → 25\n\nWhy use them:\n1. Data validation: Setter can reject invalid values\n2. Read-only fields: Provide getter but no setter\n3. Computed values: Getter can calculate and return derived values\n4. Logging: Methods can log access for debugging\n5. Flexibility: Internal representation can change without breaking external code",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "TH-014",
+    "question": "How are constructors different from methods in Java?",
+    "keywords": [
+      "constructor",
+      "method",
+      "instantiation",
+      "new",
+      "return type",
+      "class name",
+      "initialization",
+      "parameterized",
+      "default"
+    ],
+    "mainConcepts": [
+      "A constructor is called when an object is created using the new keyword; methods are called after creation",
+      "A constructor has the same name as the class; methods can have any name",
+      "Constructors have no return type (not even void); methods must have a return type",
+      "A constructor initializes a new object; methods perform operations on existing objects",
+      "Java provides a default no-arg constructor if none is defined",
+      "Constructors can be overloaded but not overridden"
+    ],
+    "referenceAnswer": "Constructors and methods are both blocks of code in a class, but they differ in several important ways:\n\n1. PURPOSE:\n- Constructor: Initializes a newly created object. It is called automatically when new is used.\n- Method: Performs operations on an already existing object. It is called explicitly.\n\n2. NAME:\n- Constructor: Must have the same name as the class\n- Method: Can have any valid identifier as its name\n\n3. RETURN TYPE:\n- Constructor: Has NO return type (not even void)\n- Method: Must have a return type (void if returns nothing)\n\n4. INVOCATION:\n- Constructor: Called automatically via the new keyword\n- Method: Called explicitly on an object reference (obj.method())\n\n5. OVERLOADING vs OVERRIDING:\n- Constructor: Can be overloaded (different parameters) but NOT overridden\n- Method: Can be both overloaded and overridden\n\n6. DEFAULT:\n- Constructor: Java provides a default no-arg constructor if none is defined\n- Method: No default method is provided\n\nExample:\npublic class Student {\n    String name;\n    int id;\n    \n    // Constructor (same name as class, no return type)\n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n    \n    // Method (different name, has return type)\n    public void displayInfo() {\n        System.out.println(name + \" - \" + id);\n    }\n    \n    public String getName() {\n        return name;\n    }\n}\n\nStudent s = new Student(\"Alice\", 101);  // constructor called\ns.displayInfo();  // method called",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "TH-015",
+    "question": "What is the purpose of the this keyword in Java? Give an example.",
+    "keywords": [
+      "this",
+      "current object",
+      "instance reference",
+      "constructor chaining",
+      "shadowing",
+      "field access",
+      "self"
+    ],
+    "mainConcepts": [
+      "this is a reference to the current object — the object on which a method or constructor was invoked",
+      "this.field distinguishes instance variables from local variables with the same name",
+      "this() calls another constructor in the same class (constructor chaining)",
+      "this can be passed as an argument to other methods",
+      "this resolves variable shadowing when parameter names match field names",
+      "this cannot be used in static contexts"
+    ],
+    "referenceAnswer": "The this keyword in Java is a reference variable that refers to the current object — the instance on which a method or constructor is currently being executed.\n\nPURPOSES OF this:\n\n1. TO DISTINGUISH INSTANCE VARIABLES FROM LOCAL VARIABLES:\nWhen a parameter or local variable has the same name as an instance variable, this resolves the ambiguity.\n\npublic class Person {\n    String name;\n    \n    Person(String name) {\n        this.name = name;  // this.name = field, name = parameter\n    }\n    \n    void setName(String name) {\n        this.name = name;  // same disambiguation\n    }\n}\n\nWithout this, the line \"name = name\" would assign the parameter to itself (shadowing).\n\n2. CONSTRUCTOR CHAINING (calling another constructor):\nthis() with parameters calls another constructor in the same class. It must be the first statement.\n\npublic class Student {\n    String name;\n    int id;\n    \n    Student() {\n        this(\"Unknown\", 0);  // calls the parameterized constructor\n    }\n    \n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n}\n\n3. PASSING THE CURRENT OBJECT:\nthis can be passed as an argument to other methods.\n\npublic class Printer {\n    void print(Student s) { System.out.println(s.name); }\n}\n\npublic class Student {\n    String name;\n    void sendToPrinter(Printer p) {\n        p.print(this);  // passes the current Student object\n    }\n}\n\n4. RETURNING THE CURRENT OBJECT:\nthis can be returned for method chaining.\n\npublic class Builder {\n    int x, y;\n    Builder setX(int x) { this.x = x; return this; }\n    Builder setY(int y) { this.y = y; return this; }\n}\n// Used as: new Builder().setX(1).setY(2);",
+    "difficulty": "easy",
+    "maxPoints": 6
+  }
+]
