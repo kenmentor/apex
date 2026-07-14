@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
-import { ArrowLeft, User, Camera, LogOut, Shield, CheckCircle, Send, FileText, TrendingUp, Clock, Medal, Sun, Moon, UserPlus, UserCheck, Target, GraduationCap } from 'lucide-react'
+import { ArrowLeft, User, Camera, LogOut, Shield, CheckCircle, Send, Medal, Clock, Target, GraduationCap, Sun, Moon } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -153,102 +153,70 @@ function ProfileContent() {
   const totalTime = scores.reduce((s, e) => s + (e.timeSpent || 0), 0)
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+    <div className="flex min-h-dvh flex-col bg-background pb-24">
       <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Link href="/leaderboard" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
           <ArrowLeft className="size-4" />
         </Link>
-        <h1 className="flex-1 text-base font-bold">Profile</h1>
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="flex size-9 items-center justify-center rounded-lg hover:bg-muted"
-        >
+        <h1 className="flex-1 text-base font-bold truncate">{user?.name || 'Profile'}</h1>
+        <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
           {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
         </button>
       </header>
 
       <div className="mx-auto w-full max-w-lg space-y-3 px-3 pt-3">
-        {!user ? (
-          <div className="flex flex-col items-center gap-4 py-16">
-            <Avatar className="size-16">
-              <AvatarFallback className="bg-muted">
-                <User className="size-8 text-muted-foreground" />
-              </AvatarFallback>
-            </Avatar>
-            <p className="text-muted-foreground">Not signed in</p>
-            <Button asChild>
-              <Link href="/auth">Sign In</Link>
-            </Button>
-          </div>
+        {loading ? (
+          <>
+            <Skeleton className="h-28 w-full rounded-xl" />
+            <Skeleton className="h-20 w-full rounded-xl" />
+            <Skeleton className="h-40 w-full rounded-xl" />
+          </>
+        ) : !user ? (
+          <Card>
+            <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
+              <Avatar className="size-16">
+                <AvatarFallback className="bg-muted">
+                  <User className="size-8 text-muted-foreground" />
+                </AvatarFallback>
+              </Avatar>
+              <p className="text-muted-foreground">Not signed in</p>
+              <Button asChild>
+                <Link href="/auth">Sign In</Link>
+              </Button>
+            </CardContent>
+          </Card>
         ) : (
           <>
-            {/* Public-facing profile card */}
+            {/* ── Public Profile Card ── */}
             <Card>
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <div className="relative">
-                  <Avatar className="size-16 border-3 border-primary">
-                    <AvatarImage src={user.avatar} />
-                    <AvatarFallback className="bg-primary text-xl font-bold text-primary-foreground">
-                      {user.email[0].toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <label className="absolute -bottom-1 -right-1 flex size-7 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90">
-                    <Camera className="size-3.5" />
-                    <input type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" disabled={uploading} />
-                  </label>
+                <Avatar className="size-16">
+                  <AvatarImage src={user.avatar} />
+                  <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
+                    {user.email[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h2 className="text-lg font-bold">{user.name || 'Anonymous'}</h2>
+                  <p className="text-xs text-muted-foreground">{user.email}</p>
                 </div>
-                {uploading && <span className="text-xs text-muted-foreground">Uploading...</span>}
-
-                {editing ? (
-                  <form onSubmit={handleSave} className="w-full max-w-xs space-y-3">
-                    <Input value={name} onChange={e => setName(e.target.value)} placeholder="Your name" />
-                    <Input value={school} onChange={e => setSchool(e.target.value)} placeholder="University" />
-                    <Input value={department} onChange={e => setDepartment(e.target.value)} placeholder="Department" />
-                    <Input value={level} onChange={e => setLevel(e.target.value)} placeholder="Level (e.g. 200)" />
-                    <div className="flex gap-2">
-                      <Button type="submit" disabled={saving} className="flex-1">{saving ? 'Saving...' : 'Save'}</Button>
-                      <Button type="button" variant="outline" onClick={() => setEditing(false)}>Cancel</Button>
-                    </div>
-                  </form>
-                ) : (
-                  <div>
-                    <h2 className="text-lg font-bold">{user.name || 'Anonymous'}</h2>
-                    <p className="text-xs text-muted-foreground">{user.email}</p>
-                    {user.school && (
-                      <div className="mt-1 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-                        <GraduationCap className="size-3.5" />
-                        {user.school}
-                        {user.department && <span>· {user.department}</span>}
-                        {user.level && <span>· {user.level} Level</span>}
-                      </div>
-                    )}
-                    <div className="mt-2 flex items-center justify-center gap-2">
-                      {user.verified ? (
-                        <span className="flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                          <CheckCircle className="size-3" />
-                          Verified
-                        </span>
-                      ) : (
-                        <button onClick={handleSendVerification} disabled={sendingVerify} className="text-[11px] text-blue-500 underline hover:text-blue-600">
-                          {sendingVerify ? 'Sending...' : 'Verify email'}
-                        </button>
-                      )}
-                      {isAdmin() && <Badge variant="secondary" className="bg-orange-100 text-orange-600">Admin</Badge>}
-                    </div>
-                    <div className="mt-3 flex justify-center gap-2">
-                      <Button variant="outline" size="sm" onClick={() => setEditing(true)}>Edit Profile</Button>
-                      {isAdmin() && (
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href="/admin"><Shield className="mr-1 size-3" />Admin</Link>
-                        </Button>
-                      )}
-                    </div>
+                {user.school && (
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <GraduationCap className="size-3.5" />
+                    {user.school}
+                    {user.department && <span>· {user.department}</span>}
+                    {user.level && <span>· {user.level} Level</span>}
                   </div>
+                )}
+                {user.verified && (
+                  <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                    ✓ Verified
+                  </span>
                 )}
               </CardContent>
             </Card>
 
-            {/* Followers / Following / Quizzes */}
+            {/* ── Followers / Following / Quizzes ── */}
             <div className="grid grid-cols-3 gap-2">
               <Card>
                 <CardContent className="flex flex-col items-center py-3 text-center">
@@ -270,7 +238,7 @@ function ProfileContent() {
               </Card>
             </div>
 
-            {/* Stats */}
+            {/* ── Stats ── */}
             <Card>
               <CardContent className="divide-y p-0">
                 <div className="flex items-center justify-between px-4 py-3">
@@ -297,43 +265,118 @@ function ProfileContent() {
               </CardContent>
             </Card>
 
+            {/* ── Separator ── */}
+            <div className="flex items-center gap-3 py-2">
+              <div className="h-px flex-1 bg-border" />
+              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Settings</span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+
+            {/* ── Settings / Editing ── */}
+            {editing ? (
+              <Card>
+                <CardContent className="p-4">
+                  <form onSubmit={handleSave} className="space-y-3">
+                    <div>
+                      <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Name</label>
+                      <Input value={name} onChange={e => setName(e.target.value)} placeholder="Your name" />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-[11px] font-medium text-muted-foreground">University</label>
+                      <Input value={school} onChange={e => setSchool(e.target.value)} placeholder="University" />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Department</label>
+                      <Input value={department} onChange={e => setDepartment(e.target.value)} placeholder="Department" />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Level</label>
+                      <Input value={level} onChange={e => setLevel(e.target.value)} placeholder="e.g. 200" />
+                    </div>
+                    <div className="flex gap-2 pt-1">
+                      <Button type="submit" disabled={saving} className="flex-1">{saving ? 'Saving...' : 'Save'}</Button>
+                      <Button type="button" variant="outline" onClick={() => setEditing(false)}>Cancel</Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="flex flex-wrap justify-center gap-2">
+                <Button variant="outline" size="sm" onClick={() => setEditing(true)}>
+                  <User className="mr-1.5 size-3.5" />
+                  Edit Profile
+                </Button>
+                <label className="cursor-pointer">
+                  <Button variant="outline" size="sm" asChild>
+                    <span>
+                      <Camera className="mr-1.5 size-3.5" />
+                      {uploading ? 'Uploading...' : 'Change Photo'}
+                    </span>
+                  </Button>
+                  <input type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" disabled={uploading} />
+                </label>
+                {!user.verified && (
+                  <Button variant="outline" size="sm" onClick={handleSendVerification} disabled={sendingVerify}>
+                    <CheckCircle className="mr-1.5 size-3.5" />
+                    {sendingVerify ? 'Sending...' : 'Verify Email'}
+                  </Button>
+                )}
+                {isAdmin() && (
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href="/admin"><Shield className="mr-1.5 size-3.5" />Admin</Link>
+                  </Button>
+                )}
+              </div>
+            )}
+
             {message && (
               <div className={`text-center text-sm ${message.includes('fail') || message.includes('error') || message.includes('Failed') ? 'text-red-500' : 'text-green-600'}`}>
                 {message}
               </div>
             )}
 
-            {/* Score History */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold">Score History</h3>
-              {scores.length === 0 ? (
-                <div className="py-8 text-center text-sm text-muted-foreground">
-                  No scores yet. Take a quiz to see your results here.
+            {/* ── Separator ── */}
+            <div className="flex items-center gap-3 py-2">
+              <div className="h-px flex-1 bg-border" />
+              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">History</span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+
+            {/* ── Score History ── */}
+            {scores.length === 0 ? (
+              <div className="py-8 text-center text-sm text-muted-foreground">
+                No scores yet. Take a quiz to see your results here.
+              </div>
+            ) : (
+              <ScrollArea className="max-h-[300px]">
+                <div className="space-y-2">
+                  {scores.map((s, i) => (
+                    <Card key={`${i}-${s.course || 'unknown'}`}>
+                      <CardContent className="flex items-center justify-between p-3">
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-sm font-semibold">{s.course}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {formatTime(s.timeSpent)} · {new Date(s.createdAt).toLocaleDateString()}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-muted-foreground">{s.score}/{s.total}</span>
+                          <span className={`text-base font-bold ${s.percentage >= 50 ? 'text-green-600' : 'text-red-500'}`}>
+                            {s.percentage}%
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
-              ) : (
-                <ScrollArea className="max-h-[300px]">
-                  <div className="space-y-2">
-                    {scores.map((s, i) => (
-                      <Card key={`${i}-${s.course || 'unknown'}`}>
-                        <CardContent className="flex items-center justify-between p-3">
-                          <div className="min-w-0 flex-1">
-                            <div className="truncate text-sm font-semibold">{s.course}</div>
-                            <div className="text-xs text-muted-foreground">
-                              {formatTime(s.timeSpent)} · {new Date(s.createdAt).toLocaleDateString()}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground">{s.score}/{s.total}</span>
-                            <span className={`text-base font-bold ${s.percentage >= 50 ? 'text-green-600' : 'text-red-500'}`}>
-                              {s.percentage}%
-                            </span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </ScrollArea>
-              )}
+              </ScrollArea>
+            )}
+
+            {/* ── Separator ── */}
+            <div className="flex items-center gap-3 py-2">
+              <div className="h-px flex-1 bg-border" />
+              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Account</span>
+              <div className="h-px flex-1 bg-border" />
             </div>
 
             <Button variant="destructive" className="w-full" onClick={handleLogout}>
