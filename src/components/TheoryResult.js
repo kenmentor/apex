@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Check, X, Lightbulb } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import FormattedContent from './FormattedContent'
 
 function ScoreRing({ score, max = 6 }) {
   const [animated, setAnimated] = useState(0)
@@ -67,7 +68,7 @@ export default function TheoryResult({ result, onNext, isLast }) {
         <Card>
           <CardContent className="p-4">
             <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Examiner Remark</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{remark}</p>
+            <FormattedContent content={remark} className="text-sm text-muted-foreground" />
           </CardContent>
         </Card>
       )}
@@ -114,7 +115,7 @@ export default function TheoryResult({ result, onNext, isLast }) {
               <Lightbulb className="size-3.5 text-amber-500" />
               Suggestion
             </p>
-            <p className="text-sm text-muted-foreground">{suggestion}</p>
+            <FormattedContent content={suggestion} className="text-sm text-muted-foreground" />
           </CardContent>
         </Card>
       )}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { RotateCcw } from 'lucide-react'
+import FormattedContent from './FormattedContent'
 
 export default function FlashCard({ question, answer, section, index, total }) {
   const [flipped, setFlipped] = useState(false)
@@ -60,7 +61,7 @@ export default function FlashCard({ question, answer, section, index, total }) {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto">
-              <p className="text-sm leading-relaxed text-card-foreground whitespace-pre-wrap">{answer}</p>
+              <FormattedContent content={answer} className="text-sm leading-relaxed text-card-foreground" />
             </div>
           </div>
         </div>

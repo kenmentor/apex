@@ -7,6 +7,7 @@ import { ChevronLeft, Clock, Check, X, AlertTriangle } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import FormattedContent from '@/components/FormattedContent'
 
 function ScoreRing({ score, max = 60, size = 140 }) {
   const [animated, setAnimated] = useState(0)
@@ -177,7 +178,7 @@ export default function TheoryResultsPage() {
                   {r.remark && (
                     <div className="mb-2 rounded-lg bg-muted/50 p-3">
                       <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Examiner Remark</p>
-                      <p className="text-xs text-muted-foreground">{r.remark}</p>
+                      <FormattedContent content={r.remark} className="text-xs text-muted-foreground" />
                     </div>
                   )}
 
@@ -204,7 +205,7 @@ export default function TheoryResultsPage() {
                   {r.suggestion && (
                     <div className="mt-2 rounded-lg bg-amber-50 p-3 dark:bg-amber-950/20">
                       <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600 mb-1">Suggestion</p>
-                      <p className="text-xs text-amber-800 dark:text-amber-300">{r.suggestion}</p>
+                      <FormattedContent content={r.suggestion} className="text-xs text-amber-800 dark:text-amber-300" />
                     </div>
                   )}
                 </CardContent>
