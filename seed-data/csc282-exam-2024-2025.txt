@@ -1,0 +1,40 @@
+UNIVERSITY OF CALABAR
+DEPARTMENT OF COMPUTER SCIENCE
+SESSIONAL EXAMINATION: SECOND SEMESTER
+ACADEMIC SESSION: 2024/2025
+
+COURSE TITLE: COMPUTER LAB 2B
+COURSE CODE: CSC282
+TIME: 1:30 min
+INSTRUCTIONS: *Answer all the Questions **Do not write on your question paper***
+
+1. In Java, a class is defined using the keyword __________
+2. What is inheritance in Java? Explain with a simple example.
+3. In OOP, how does Java achieve Encapsulation?
+4. The process of using one method name to perform different tasks is called __________
+5. List the four main pillars of Object-Oriented Programming.
+6. What is the difference between abstract class and interface in Java?
+7. In Java, the keyword used to create an object is __________
+8. What is the purpose of the this keyword in Java? Give an example.
+9. A class that is inherited is called a __________ class, and the class that inherits is called a __________ class.
+10. Differentiate between method overloading and method overriding in Java.
+11. Explain polymorphism in Java?
+12. A method that has no body and is meant to be overridden is called an __________ method.
+13. How are constructors different from methods?
+14. Explain the use of the super keyword in Java.
+15. In Java, access specifiers include __________, protected, and default (no specifier).
+16. Why is encapsulation considered important in OCP design?
+17. What is the role of the final keyword in Java for classes and methods?
+18. Java does not support __________ inheritance using classes, but it supports it using interfaces.
+19. State the difference between a class and an object in Java.
+20. List three differences between public and private access modifiers in Java.
+21. What is abstraction in Java? How is it implemented?
+22. A __________ class in Java cannot be instantiated directly.
+23. Define a constructor and write two rules for constructors in Java.
+24. Explain how Java handles memory management (in relation to objects).
+25. What are getter and setter methods?
+26. The concept of binding a variable or method call to its type at runtime is called __________ binding.
+27. Write a simple Java class Student that has private attributes name and age. Provide getter and setter methods for both.
+28. Create a base class Vehicle with a method move() that prints "Vehicle is moving". Create a derived class Car that overrides the move() method to print "Car is driving". In the main method, demonstrate both methods.
+29. Explain with examples how Java supports multiple inheritance using interfaces.
+30. A method in Java is said to be __________ if it belongs to the class rather than to instances of the class.

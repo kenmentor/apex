@@ -1,0 +1,291 @@
+[
+  {
+    "courseCode": "CSC 202",
+    "section": "Programming Fundamentals",
+    "id": "TH-001",
+    "question": "What is Computer Programming? Hence discuss the relationship between a computer program and its programming languages.",
+    "keywords": ["programming", "computer program", "programming language", "source code", "compiler", "interpreter", "syntax", "semantics", "high-level language", "machine language"],
+    "mainConcepts": [
+      "Computer programming is the process of designing, writing, testing, debugging, and maintaining source code to create programs",
+      "A computer program is a set of instructions that tells a computer what to do",
+      "Programming languages provide the vocabulary and rules for writing programs",
+      "There is a hierarchy: machine language, assembly language, and high-level language",
+      "Translators (compilers and interpreters) convert high-level code to machine-readable form",
+      "Syntax refers to the rules of the language; semantics refers to the meaning of the instructions",
+      "Different programming languages are suited to different tasks (system programming, web development, scientific computing)"
+    ],
+    "referenceAnswer": "Computer programming is the process of designing, writing, testing, debugging, and maintaining source code to create computer programs. It involves using a formal language (a programming language) to express algorithms and logic that a computer can execute.\n\nA computer program is a sequence of instructions written in a programming language that directs a computer to perform specific tasks. It serves as the bridge between human intent and machine execution.\n\nThe relationship between a computer program and its programming language is fundamental: the programming language provides the vocabulary (keywords, operators) and syntax (rules for combining them) that define how a program must be written. Without a programming language, there is no way to express instructions the computer can understand.\n\nProgramming languages exist in a hierarchy. At the lowest level is machine language (binary 0s and 1s) which the computer's processor executes directly. Assembly language uses mnemonic codes (like MOV, ADD, JMP) as a thin wrapper over machine language. High-level languages (like C, Java, Python) use English-like syntax that is easier for humans to read and write.\n\nTranslators bridge the gap between high-level code and machine execution. A compiler translates the entire source code into machine code before execution (e.g., C compiler). An interpreter translates and executes line by line at runtime (e.g., Python interpreter). Some languages use both approaches (Java compiles to bytecode, which the JVM interprets).\n\nSyntax refers to the grammatical rules of the language — how instructions must be structured. Semantics refers to what the instructions actually mean — the effect they produce when executed. A program can be syntactically correct but semantically wrong (it compiles but produces the wrong result).",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Programming Fundamentals",
+    "id": "TH-002",
+    "question": "Given that 200 CSC students wrote the CSC201 exams, write an algorithm, flowchart and a computer program that will accept as input: (i) name of a student (ii) Matric no. of a student (iii) CA score (iv) Exam score. Compute Total Score = Exam Score + CA Score and display each student's complete information.",
+    "keywords": ["algorithm", "flowchart", "input", "output", "process", "loop", "array", "total score", "CA score", "exam score", "pseudocode"],
+    "mainConcepts": [
+      "An algorithm is a step-by-step procedure to solve a problem",
+      "The algorithm must handle input of name, matric number, CA score, and exam score for each student",
+      "Total score is computed as CA score plus exam score",
+      "A loop is needed to process all 200 students iteratively",
+      "The flowchart uses standard symbols: ovals for start/end, parallelograms for I/O, rectangles for processing, diamonds for decisions",
+      "The program must display all student information after computation",
+      "Data validation should ensure scores are within valid ranges"
+    ],
+    "referenceAnswer": "ALGORITHM:\nStep 1: START\nStep 2: Set counter = 1\nStep 3: While counter <= 200, do Steps 4-8\nStep 4: INPUT student_name, matric_no, ca_score, exam_score\nStep 5: COMPUTE total_score = ca_score + exam_score\nStep 6: DISPLAY student_name, matric_no, ca_score, exam_score, total_score\nStep 7: INCREMENT counter by 1\nStep 8: END WHILE\nStep 9: STOP\n\nFLOWCHART DESCRIPTION:\nThe flowchart begins with a Start oval, followed by initializing counter = 1. A diamond decision box checks if counter <= 200. If YES, parallelogram boxes handle INPUT of name, matric, CA, exam. A rectangle processes total = CA + exam. A parallelogram displays all info. Counter increments by 1. Flow returns to the decision. If NO, flow goes to STOP.\n\nPROGRAM (in C):\n#include <stdio.h>\n\nint main() {\n    char name[50];\n    char matric[20];\n    float ca_score, exam_score, total_score;\n    int counter;\n    \n    for (counter = 1; counter <= 200; counter++) {\n        printf(\"\\nStudent %d:\\n\", counter);\n        printf(\"Enter name: \");\n        scanf(\"%s\", name);\n        printf(\"Enter matric number: \");\n        scanf(\"%s\", matric);\n        printf(\"Enter CA score: \");\n        scanf(\"%f\", &ca_score);\n        printf(\"Enter exam score: \");\n        scanf(\"%f\", &exam_score);\n        \n        total_score = ca_score + exam_score;\n        \n        printf(\"\\nName: %s\\n\", name);\n        printf(\"Matric: %s\\n\", matric);\n        printf(\"CA: %.1f\\n\", ca_score);\n        printf(\"Exam: %.1f\\n\", exam_score);\n        printf(\"Total: %.1f\\n\", total_score);\n    }\n    \n    return 0;\n}",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Loops",
+    "id": "TH-003",
+    "question": "What type of loop do you employ in the solution of question (1b) above and why?",
+    "keywords": ["for loop", "definite iteration", "counter-controlled", "loop", "iteration", "known number of iterations", "structured programming"],
+    "mainConcepts": [
+      "A for loop (definite/counted iteration) is used because the number of iterations is known in advance (200 students)",
+      "A for loop combines initialization, condition, and increment in one line making it concise and readable",
+      "The counter variable tracks how many students have been processed",
+      "A while loop could also work but requires separate initialization and increment statements",
+      "A do-while loop is less suitable because it always executes at least once before checking the condition",
+      "The for loop is preferred for counted iteration scenarios"
+    ],
+    "referenceAnswer": "A for loop (definite iteration or counter-controlled loop) is the most appropriate for the solution in question 1b.\n\nThe for loop is preferred because:\n\n1. The number of iterations is known in advance — exactly 200 students must be processed. The for loop is specifically designed for situations where the number of repetitions is predetermined.\n\n2. The for loop combines initialization (counter = 1), condition (counter <= 200), and increment (counter++) in a single line, making the code compact, readable, and less error-prone.\n\n3. The counter variable cleanly tracks progress through the 200 students.\n\nThe syntax is:\nfor (initialization; condition; increment) {\n    // body\n}\n\nFor our problem:\nfor (counter = 1; counter <= 200; counter++) {\n    // Accept input, compute score, display output\n}\n\nA while loop could work but would require the counter to be initialized before the loop and incremented inside the body, increasing the risk of forgetting the increment (infinite loop). A do-while loop is unsuitable because it guarantees at least one execution before testing the condition, which is unnecessary here since we want to process exactly 200 iterations starting from 1.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Structured Programming",
+    "id": "TH-004",
+    "question": "What is structured programming? Hence discuss any four (4) major components of a structured program known to you and discuss its design model.",
+    "keywords": ["structured programming", "modularity", "sequence", "selection", "iteration", "subprograms", "functions", "procedures", "top-down design", "Dijkstra", "GOTO"],
+    "mainConcepts": [
+      "Structured programming is a programming paradigm that enforces a logical program structure using only three control structures",
+      "The three basic control structures are: sequence, selection (if-else), and iteration (loops)",
+      "Modularity means breaking a program into smaller, self-contained functions or procedures",
+      "Top-down design involves solving the problem by breaking it into smaller sub-problems",
+      "Structured programming eliminates the use of GOTO statements to prevent spaghetti code",
+      "Each module/function has a single entry point and single exit point",
+      "The design model follows a hierarchical structure where main program calls sub-programs"
+    ],
+    "referenceAnswer": "Structured programming is a programming paradigm that enforces a disciplined, logical program structure by restricting control flow to three basic structures: sequence, selection, and iteration. It was promoted by Dijkstra and others to replace the chaotic use of GOTO statements that led to unmaintainable 'spaghetti code'.\n\nThe four major components of a structured program are:\n\n1. SEQUENCE: Statements execute one after another in linear order. This is the simplest control structure. For example: a = 5; b = a + 3; printf(b); executes top to bottom with no branching.\n\n2. SELECTION (Decision-making): The program chooses between different paths based on a condition. The two main forms are: if-else (tests a condition and executes one of two blocks) and switch-case (selects from multiple options based on a value). For example: if (score >= 50) pass(); else fail();\n\n3. ITERATION (Looping): A block of code repeats while a condition is true. The three forms are: for loop (counter-controlled), while loop (pre-test), and do-while loop (post-test). This allows processing collections of data or repeating operations.\n\n4. MODULARITY (Subprograms): Programs are divided into smaller, self-contained modules — functions and procedures — each performing a specific task. Modules have a single entry and single exit point. The main program calls modules as needed, and modules can call other modules in a hierarchical tree structure.\n\nDESIGN MODEL:\nThe structured programming design model follows a TOP-DOWN approach. The problem is decomposed into a main module and several sub-modules. The main module calls sub-modules, which may call further sub-modules, forming a hierarchical tree. Each module is designed, coded, and tested independently. This approach promotes readability, maintainability, and debugging efficiency.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Problem Solving",
+    "id": "TH-005",
+    "question": "What is problem solving using a computer system? Hence George Polya, an authority on problem solving, divided problem solving into four (4) step activities. Comment briefly on these four steps.",
+    "keywords": ["problem solving", "computer", "Polya", "understanding the problem", "devising a plan", "carrying out the plan", "looking back", "algorithm", "debugging"],
+    "mainConcepts": [
+      "Problem solving with a computer involves defining the problem, designing a solution algorithm, coding, testing, and maintaining",
+      "Polya's four steps are: (1) Understand the problem, (2) Devise a plan, (3) Carry out the plan, (4) Look back/review",
+      "Step 1 involves identifying what is given (input), what is required (output), and any constraints",
+      "Step 2 involves choosing a strategy: divide and conquer, working backwards, drawing diagrams, etc.",
+      "Step 3 is implementing the solution — writing and executing the code",
+      "Step 4 is reviewing, optimizing, and generalizing the solution"
+    ],
+    "referenceAnswer": "Problem solving using a computer system is the systematic process of identifying a problem, designing a logical solution (algorithm), implementing it as a computer program, testing it, and maintaining it. It combines analytical thinking with programming skills.\n\nGeorge Polya, in his influential work 'How to Solve It' (1945), divided problem solving into four steps:\n\n1. UNDERSTAND THE PROBLEM: Before attempting a solution, you must fully comprehend what the problem is asking. This involves identifying the given information (inputs), what needs to be found (outputs), and any constraints or conditions. In computing, this means reading the problem specification carefully, identifying variables, and clarifying requirements.\n\n2. DEVISE A PLAN: Develop a strategy for solving the problem. This may involve: drawing diagrams, looking for patterns, using analogies, breaking the problem into smaller sub-problems (divide and conquer), working backwards from the desired result, or using known algorithms. In computing, this is the algorithm design phase — using tools like pseudocode, flowcharts, or structured English.\n\n3. CARRY OUT THE PLAN: Implement the solution by following the strategy devised. In computing, this means writing the actual program code in a chosen programming language, following the algorithm step by step. Patience and persistence are key — debugging and fixing errors is part of this step.\n\n4. LOOK BACK (REVIEW): Examine the solution to verify correctness, consider if there is a simpler or more efficient approach, and generalize the method to solve similar problems. In computing, this includes testing with different inputs, optimizing the code, and documenting the solution.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Programming Fundamentals",
+    "id": "TH-006",
+    "question": "Given that there are eighty (80) staff working in a production company, write a program, flowchart and algorithm that will accept as input: (i) name of staff (ii) staff ID (iii) hours worked. Compute gross pay: if hours <= 40, pay = hours * N10.00. If hours > 40, overtime is paid at N50.00 per extra hour. Display each staff's complete information.",
+    "keywords": ["algorithm", "flowchart", "if-else", "overtime", "gross pay", "selection", "condition", "loop", "array", "structure"],
+    "mainConcepts": [
+      "The algorithm must process 80 staff records using a loop",
+      "Selection (if-else) handles the two pay conditions: normal hours and overtime",
+      "Normal pay = hours * 10 when hours <= 40",
+      "Overtime pay = (40 * 10) + ((hours - 40) * 50) when hours > 40",
+      "The flowchart uses a diamond for the decision (hours > 40 or not)",
+      "The program must display staff name, ID, hours worked, and gross pay",
+      "The loop iterates exactly 80 times for all staff members"
+    ],
+    "referenceAnswer": "ALGORITHM:\nStep 1: START\nStep 2: Set counter = 1\nStep 3: While counter <= 80, do Steps 4-10\nStep 4: INPUT staff_name, staff_id, hours_worked\nStep 5: IF hours_worked <= 40 THEN\nStep 6:   gross_pay = hours_worked * 10.00\nStep 7: ELSE\nStep 8:   gross_pay = (40 * 10.00) + ((hours_worked - 40) * 50.00)\nStep 9: END IF\nStep 10: DISPLAY staff_name, staff_id, hours_worked, gross_pay\nStep 11: INCREMENT counter by 1\nStep 12: END WHILE\nStep 13: STOP\n\nPROGRAM (in C):\n#include <stdio.h>\n\nint main() {\n    char name[50], staff_id[20];\n    float hours, gross_pay;\n    int i;\n    \n    for (i = 1; i <= 80; i++) {\n        printf(\"\\nStaff %d:\\n\", i);\n        printf(\"Enter name: \");\n        scanf(\"%s\", name);\n        printf(\"Enter staff ID: \");\n        scanf(\"%s\", staff_id);\n        printf(\"Enter hours worked: \");\n        scanf(\"%f\", &hours);\n        \n        if (hours <= 40) {\n            gross_pay = hours * 10.00;\n        } else {\n            gross_pay = (40 * 10.00) + ((hours - 40) * 50.00);\n        }\n        \n        printf(\"\\nName: %s\\n\", name);\n        printf(\"Staff ID: %s\\n\", staff_id);\n        printf(\"Hours: %.1f\\n\", hours);\n        printf(\"Gross Pay: N%.2f\\n\", gross_pay);\n    }\n    return 0;\n}\n\nFLOWCHART DESCRIPTION:\nStart → Initialize counter = 1 → Decision: counter <= 80? If NO → Stop. If YES → Input name, ID, hours → Decision: hours <= 40? If YES → gross = hours * 10. If NO → gross = 400 + (hours-40)*50 → Display all info → counter++ → Loop back to counter <= 80 check.",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Loops",
+    "id": "TH-007",
+    "question": "What is a loop? Write the syntax of any three looping structures known to you and comment on the three components of a loop.",
+    "keywords": ["loop", "iteration", "for loop", "while loop", "do-while", "initialization", "condition", "increment", "counter", "pre-test", "post-test", "repetition"],
+    "mainConcepts": [
+      "A loop is a control structure that repeats a block of code multiple times until a condition is met",
+      "The three main looping structures are: for loop, while loop, and do-while loop",
+      "The three components of a loop are: (1) initialization, (2) condition, (3) increment/update",
+      "Initialization sets the starting value of the loop counter before the loop begins",
+      "Condition is evaluated before each iteration — the loop continues while it is true",
+      "Increment/update modifies the counter variable to progress toward the exit condition",
+      "For loop: for(init; condition; increment) { body }",
+      "While loop: init; while(condition) { body; increment; }",
+      "Do-while: init; do { body; increment; } while(condition);"
+    ],
+    "referenceAnswer": "A loop is a control structure in programming that allows a block of code to be repeated multiple times. Loops are essential for processing collections of data, performing repetitive calculations, and implementing algorithms that require iteration.\n\nTHREE LOOPING STRUCTURES:\n\n1. FOR LOOP:\nfor (initialization; condition; increment) {\n    // body\n}\nExample: for (i = 1; i <= 10; i++) { printf(\"%d\", i); }\nThe for loop is used when the number of iterations is known in advance. It combines all three components in one line.\n\n2. WHILE LOOP:\ninitialization;\nwhile (condition) {\n    // body\n    increment;\n}\nExample: i = 1; while (i <= 10) { printf(\"%d\", i); i++; }\nThe while loop is a pre-test loop — it checks the condition before executing the body. The body may not execute at all if the condition is initially false.\n\n3. DO-WHILE LOOP:\ninitialization;\ndo {\n    // body\n    increment;\n} while (condition);\nExample: i = 1; do { printf(\"%d\", i); i++; } while (i <= 10);\nThe do-while loop is a post-test loop — it executes the body first, then checks the condition. The body always executes at least once.\n\nTHREE COMPONENTS OF A LOOP:\n\n1. INITIALIZATION: Setting the loop counter variable to its starting value before the loop begins. Example: i = 1. This happens once, before the first iteration.\n\n2. CONDITION: A Boolean expression that is evaluated before each iteration. The loop continues to execute as long as the condition is true. When it becomes false, the loop terminates. Example: i <= 10.\n\n3. INCREMENT (Update): Modifying the loop counter variable after each iteration to move toward the termination condition. Example: i++ (increases i by 1). Without this, the loop becomes infinite.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Selection",
+    "id": "TH-008",
+    "question": "What is selection? Comment briefly on any two types of selection known to you with the aid of suitable diagrams.",
+    "keywords": ["selection", "if-else", "switch", "decision", "branching", "conditional", "ternary", "case", "flowchart"],
+    "mainConcepts": [
+      "Selection (decision-making) is a control structure that chooses between alternative paths based on a condition",
+      "The if-else statement tests a single condition and executes one of two blocks",
+      "The if-else-if ladder tests multiple conditions in sequence",
+      "The switch-case statement selects among multiple alternatives based on the value of an expression",
+      "Selection is represented in flowcharts using diamond-shaped decision boxes",
+      "Nested selection occurs when an if or switch is placed inside another",
+      "Selection enables programs to respond differently to different inputs and situations"
+    ],
+    "referenceAnswer": "Selection (also called decision-making or branching) is a control structure that allows a program to choose between two or more alternative paths of execution based on whether a condition evaluates to true or false. It enables programs to make decisions and respond differently to different situations.\n\nTYPE 1: IF-ELSE STATEMENT\nThe if-else statement tests a Boolean condition and executes one of two code blocks:\n\n    if (condition) {\n        // executed if condition is true\n    } else {\n        // executed if condition is false\n    }\n\nFLOWCHART for if-else:\n    [Start] → <Condition?> —Yes→ [Block A] ——→ [Join] → [Next]\n                     |\n                    No\n                     |\n                   [Block B] ——→ [Join]\n\nExample: if (marks >= 50) printf(\"Pass\"); else printf(\"Fail\");\n\nThe if-else-if ladder extends this to test multiple conditions:\n    if (condition1) { block A }\n    else if (condition2) { block B }\n    else { block C }\n\nTYPE 2: SWITCH-CASE STATEMENT\nThe switch statement selects among multiple alternatives based on the value of an integer or character expression:\n\n    switch (expression) {\n        case value1: // block A; break;\n        case value2: // block B; break;\n        default:     // block C; break;\n    }\n\nFLOWCHART for switch:\n    [Start] → [Evaluate expression] → <Match value1?> —Yes→ [Block A] → [Break] → [Next]\n                                             |\n                                            No\n                                             |\n                                    <Match value2?> —Yes→ [Block B] → [Break]\n                                             |\n                                            No\n                                             |\n                                           [Default Block C]\n\nExample: switch(day) { case 1: printf(\"Monday\"); break; case 2: printf(\"Tuesday\"); break; default: printf(\"Other\"); }\n\nThe switch is more efficient than multiple if-else when comparing one variable against many discrete values. The break statement prevents fall-through to subsequent cases.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Loops",
+    "id": "TH-009",
+    "question": "With the aid of a simple program skeleton, comment briefly on: (i) loop counter variable initialization (ii) loop counter variable incrementation (iii) loop counter variable incrementation by step (iv) entrance to a loop (v) exit from a loop.",
+    "keywords": ["initialization", "increment", "step", "entrance", "exit", "for loop", "counter", "loop control", "termination", "step value"],
+    "mainConcepts": [
+      "Initialization sets the counter to a starting value before the loop begins (e.g., i = 1)",
+      "Incrementation increases the counter by a fixed amount (usually 1) after each iteration (e.g., i++)",
+      "Incrementation by step allows the counter to change by a value other than 1 (e.g., i += 2 for even numbers)",
+      "Entrance to a loop is the point where control first enters the loop body, determined by the condition check",
+      "Exit from a loop occurs when the condition becomes false, and control passes to the first statement after the loop",
+      "In a for loop: for(i=1; i<=n; i++) — i=1 is initialization, i<=n is the entry condition, i++ is increment",
+      "Step value can be positive (counting up) or negative (counting down)"
+    ],
+    "referenceAnswer": "Using the program skeleton: for (i = 1; i <= 10; i += 2) { printf(\"%d \", i); }\n\n(i) LOOP COUNTER VARIABLE INITIALIZATION:\ni = 1 — This sets the counter variable to its starting value before the loop begins. It is executed only once, at the very beginning. In the for loop, it appears in the first position of the parentheses. The initialization establishes the starting point of the iteration.\n\n(ii) LOOP COUNTER VARIABLE INCREMENTATION:\ni++ (or i = i + 1) — After each iteration of the loop body, the counter is increased by 1 (by default). This is the most common update pattern and ensures the loop progresses toward its termination condition. Without incrementation, the loop becomes infinite.\n\n(iii) LOOP COUNTER VARIABLE INCREMENTATION BY STEP:\ni += 2 — This increments the counter by 2 instead of 1 in each iteration. The step value controls how the counter changes. A step of 2 would produce the series: 1, 3, 5, 7, 9. A step of -1 counts downwards. The step value can be any integer and determines the granularity of iteration. For example, for(i = 0; i <= 20; i += 5) produces: 0, 5, 10, 15, 20.\n\n(iv) ENTRANCE TO A LOOP:\nThe entrance point is where control first passes into the loop body. For a for loop and while loop (pre-test loops), the condition is checked BEFORE the body executes. If the condition is true on the first check, the body executes. If false, the body is skipped entirely. In the skeleton, control enters when i <= 10 evaluates to true (i=1, so 1 <= 10 is true).\n\n(v) EXIT FROM A LOOP:\nThe exit occurs when the loop condition evaluates to false. At this point, control transfers to the first statement after the loop body. In the skeleton, the loop exits when i exceeds 10 (i = 11, so 11 <= 10 is false). The for loop exits, and any code after the closing brace executes next.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Algorithms",
+    "id": "TH-010",
+    "question": "Define sorting algorithm, and list the five (5) types of sorting algorithms known to you.",
+    "keywords": ["sorting", "algorithm", "bubble sort", "selection sort", "insertion sort", "quick sort", "merge sort", "order", "ascending", "descending", "comparison"],
+    "mainConcepts": [
+      "A sorting algorithm arranges elements of a list in a specific order (ascending or descending)",
+      "Sorting is fundamental to many computer science applications (searching, databases, graphics)",
+      "Bubble sort repeatedly swaps adjacent elements if they are in the wrong order",
+      "Selection sort finds the minimum element and places it at the beginning, repeatedly",
+      "Insertion sort builds the sorted array one element at a time by inserting each element into its correct position",
+      "Quick sort uses a pivot element to partition the array and recursively sorts the partitions",
+      "Merge sort divides the array in half, recursively sorts each half, then merges the sorted halves",
+      "Time complexity varies: bubble O(n^2), quick O(n log n) average, merge O(n log n) guaranteed"
+    ],
+    "referenceAnswer": "A sorting algorithm is a procedure that arranges the elements of a list or array in a specific order — either ascending (smallest to largest) or descending (largest to smallest). Sorting is one of the most fundamental operations in computer science, used as a building block in searching, database operations, graphics rendering, and many other applications.\n\nFIVE TYPES OF SORTING ALGORITHMS:\n\n1. BUBBLE SORT: Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The largest unsorted element 'bubbles up' to its correct position in each pass. Time complexity: O(n^2). Simple but inefficient for large datasets.\n\n2. SELECTION SORT: Divides the array into sorted and unsorted portions. In each pass, it finds the minimum element from the unsorted portion and swaps it with the first unsorted element. Time complexity: O(n^2). Performs well when memory writes are expensive.\n\n3. INSERTION SORT: Builds the sorted array one element at a time. For each element, it finds the correct position in the already-sorted portion and shifts elements to make room. Time complexity: O(n^2). Efficient for small or nearly sorted datasets.\n\n4. QUICK SORT: A divide-and-conquer algorithm that selects a pivot element, partitions the array so elements smaller than the pivot go left and larger go right, then recursively sorts the two partitions. Average time complexity: O(n log n). Worst case O(n^2). Widely used in practice.\n\n5. MERGE SORT: A divide-and-conquer algorithm that divides the array in half, recursively sorts each half, then merges the two sorted halves. Time complexity: O(n log n) guaranteed. Stable sort but requires extra memory for merging.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Algorithms",
+    "id": "TH-011",
+    "question": "Given the following program: f = 0; for (i=1; f <= n; i++) { f = f + i; } Use the tracing method to compute the series generated by function f, and the time complexity (Big-O notation) of the program.",
+    "keywords": ["tracing", "Big-O", "time complexity", "series", "loop", "iteration", "summation", "linear", "O(n)", "execution count"],
+    "mainConcepts": [
+      "The program computes a cumulative sum: f = 1 + 2 + 3 + ... + i until f exceeds n",
+      "Tracing shows the values of f and i at each iteration",
+      "The series generated is the triangular numbers: 1, 3, 6, 10, 15, 21, ...",
+      "The loop runs approximately sqrt(2n) times because the sum 1+2+...+k = k(k+1)/2",
+      "The time complexity depends on how many iterations are needed for f to exceed n",
+      "The Big-O notation describes how the running time grows with input size n",
+      "Since the number of iterations is proportional to sqrt(n), the time complexity is O(sqrt(n))"
+    ],
+    "referenceAnswer": "TRACING THE PROGRAM:\nGiven: f = 0; for (i = 1; f <= n; i++) { f = f + i; }\n\nAssume n = 10:\n\nIteration 1: i = 1, f = 0 + 1 = 1, check: 1 <= 10 → continue\nIteration 2: i = 2, f = 1 + 2 = 3, check: 3 <= 10 → continue\nIteration 3: i = 3, f = 3 + 3 = 6, check: 6 <= 10 → continue\nIteration 4: i = 4, f = 6 + 4 = 10, check: 10 <= 10 → continue\nIteration 5: i = 5, f = 10 + 5 = 15, check: 15 <= 10 → STOP\n\nThe series generated is: 1, 3, 6, 10, 15 — these are triangular numbers where each value is the sum of consecutive integers.\n\nThe general formula for f after k iterations is: f = k(k+1)/2\n\nThe loop terminates when f > n, i.e., when k(k+1)/2 > n. Solving for k: k ≈ sqrt(2n).\n\nTherefore the loop executes approximately sqrt(2n) times.\n\nTIME COMPLEXITY (Big-O):\nThe number of iterations grows proportionally to sqrt(n), so the time complexity is O(sqrt(n)).\n\nThis is sub-linear — the program runs faster than O(n) because the cumulative sum grows quadratically with each iteration, meaning fewer iterations are needed as n increases.",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Algorithms",
+    "id": "TH-012",
+    "question": "List and explain 'to a novice programmer' the six (6) characteristics of an algorithm.",
+    "keywords": ["algorithm", "finiteness", "definiteness", "input", "output", "effectiveness", "generality", "unambiguous", "termination"],
+    "mainConcepts": [
+      "Finiteness: an algorithm must terminate after a finite number of steps",
+      "Definiteness: each step must be precisely defined and unambiguous",
+      "Input: an algorithm has zero or more inputs taken from a specified set",
+      "Output: an algorithm has one or more outputs that relate to the inputs",
+      "Effectiveness: each step must be basic enough to be carried out in practice",
+      "Generality: the algorithm should solve a class of problems, not just one specific case",
+      "An algorithm that does not terminate is not valid",
+      "Vague instructions like 'do something nice' violate definiteness"
+    ],
+    "referenceAnswer": "The six characteristics of an algorithm, explained for a novice programmer:\n\n1. FINITENESS: An algorithm must always terminate — it cannot run forever. It must complete within a finite number of steps. If you write a program that loops infinitely, it is not a valid algorithm. For example, a recipe that says 'keep stirring until the pot disappears' would never end. An algorithm must have a clear stopping point.\n\n2. DEFINITENESS: Each step of the algorithm must be precisely and unambiguously defined. There should be no room for interpretation. For example, 'add 5 to x' is definite, but 'add a reasonable number to x' is not — what counts as 'reasonable'? Every instruction must be crystal clear.\n\n3. INPUT: An algorithm takes zero or more inputs — values provided from outside before the algorithm begins. Inputs must come from a specified set. For example, a sorting algorithm takes an array of numbers as input. An algorithm to compute area of a circle takes the radius as input. Some algorithms may have no input (e.g., printing a fixed pattern).\n\n4. OUTPUT: An algorithm must produce one or more outputs that are the result of the computation. The outputs must bear a specified relationship to the inputs. For example, if the input is a list of numbers, the output might be the sorted list. Without output, the algorithm serves no purpose.\n\n5. EFFECTIVENESS: Each step must be sufficiently basic that it can, in principle, be carried out by a human with pencil and paper, or by a computer, in finite time. Instructions must be practical and executable. For example, 'compute the square root' is effective because there are known methods to do it, but 'find the meaning of life' is not.\n\n6. GENERALITY: The algorithm should be general enough to solve a whole class of problems, not just one specific case. For example, an algorithm to find the largest of 3 specific numbers is less general than one that finds the largest of any n numbers. A good algorithm works for all valid inputs, not just one example.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Complexity",
+    "id": "TH-013",
+    "question": "What do you understand by the terms: time and space complexity of an algorithm? Why are the two concepts important in program optimization?",
+    "keywords": ["time complexity", "space complexity", "Big-O", "optimization", "efficiency", "memory", "execution time", "algorithm analysis", "resource"],
+    "mainConcepts": [
+      "Time complexity measures the amount of time an algorithm takes to run as a function of input size",
+      "Space complexity measures the amount of memory an algorithm requires as a function of input size",
+      "Big-O notation describes the upper bound of complexity in the worst case",
+      "Common time complexities: O(1), O(log n), O(n), O(n log n), O(n^2), O(2^n)",
+      "Optimization involves choosing algorithms with lower complexity for better performance",
+      "Time-space tradeoff: sometimes using more memory can reduce time and vice versa",
+      "Both concepts are critical for large-scale systems where resources are limited"
+    ],
+    "referenceAnswer": "TIME COMPLEXITY:\nTime complexity is a measure of the amount of computational time an algorithm requires to complete, expressed as a function of the input size (n). It does not measure actual clock time (which depends on hardware) but rather the number of basic operations the algorithm performs relative to the input size. Time complexity is typically expressed using Big-O notation, which describes the growth rate in the worst case.\n\nFor example, an algorithm that examines every element in an array of n elements has O(n) time complexity — if n doubles, the time roughly doubles. An algorithm with O(n^2) complexity would take roughly four times as long when n doubles.\n\nSPACE COMPLEXITY:\nSpace complexity measures the total amount of memory (RAM) an algorithm needs to execute, also expressed as a function of input size n. This includes memory for variables, data structures, recursion stack, and temporary storage. For example, an algorithm that creates a copy of an input array has O(n) space complexity. An in-place sorting algorithm that uses only a few extra variables has O(1) space complexity.\n\nWHY BOTH ARE IMPORTANT IN OPTIMIZATION:\n\n1. PERFORMANCE: Lower time complexity means faster programs. For a database with millions of records, choosing an O(n log n) sort over an O(n^2) sort can mean the difference between seconds and hours.\n\n2. RESOURCE CONSTRAINTS: Mobile devices, embedded systems, and servers have limited memory. An algorithm with high space complexity may cause out-of-memory errors.\n\n3. SCALABILITY: As data sizes grow (big data), algorithms with poor complexity become unusable. Optimizing for both time and space ensures the system can scale.\n\n4. TRADE-OFFS: Sometimes there is a time-space tradeoff — using more memory can speed up computation (e.g., caching/memoization) and vice versa. Understanding both concepts helps developers make informed trade-off decisions.\n\n5. COST EFFICIENCY: Faster algorithms on cheaper hardware save money. Less memory usage reduces infrastructure costs in cloud computing.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Searching",
+    "id": "TH-014",
+    "question": "Given an array of size n elements, write the procedure and pseudocode to search for an element K in the dataset using linear (sequential) search algorithm.",
+    "keywords": ["linear search", "sequential search", "array", "pseudocode", "comparison", "found", "not found", "O(n)", "iteration", "search key"],
+    "mainConcepts": [
+      "Linear search examines each element in the array sequentially from start to end",
+      "The algorithm compares each element with the search key K",
+      "If a match is found, the position/index is returned",
+      "If the end of the array is reached without a match, 'not found' is reported",
+      "Linear search works on both sorted and unsorted arrays",
+      "Time complexity is O(n) in the worst case — every element must be checked",
+      "The procedure is simple but inefficient for large datasets compared to binary search"
+    ],
+    "referenceAnswer": "PROCEDURE FOR LINEAR SEARCH:\n1. Start at the first element of the array (index 0)\n2. Compare the current element with the search key K\n3. If the current element equals K, return the current index (search successful)\n4. If not, move to the next element\n5. Repeat steps 2-4 until K is found or the end of the array is reached\n6. If the end is reached without finding K, return 'not found'\n\nPSEUDOCODE:\n\nFUNCTION LinearSearch(array A, integer n, element K)\n    // A is the array, n is the number of elements, K is the search key\n    \n    FOR i = 0 TO n - 1 DO\n        IF A[i] EQUALS K THEN\n            RETURN i    // Element found at index i\n        END IF\n    END FOR\n    \n    RETURN -1    // Element not found\nEND FUNCTION\n\nOR using a while loop:\n\nFUNCTION LinearSearch(array A, integer n, element K)\n    SET i = 0\n    WHILE i < n DO\n        IF A[i] EQUALS K THEN\n            RETURN i\n        END IF\n        SET i = i + 1\n    END WHILE\n    RETURN -1\nEND FUNCTION\n\nEXAMPLE:\nArray A = [15, 23, 7, 42, 56, 89, 31]\nSearch for K = 42\n\ni=0: A[0]=15, 15 != 42, move on\ni=1: A[1]=23, 23 != 42, move on\ni=2: A[2]=7, 7 != 42, move on\ni=3: A[3]=42, 42 == 42 → Return 3 (found at index 3)\n\nANALYSIS:\nBest case: O(1) — element is at the first position\nWorst case: O(n) — element is at the last position or not in the array\nAverage case: O(n/2) = O(n) — on average, half the elements are checked\nSpace complexity: O(1) — only one extra variable (i) is needed",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 202",
+    "section": "Complexity",
+    "id": "TH-015",
+    "question": "Explain the three (3) types of time complexity, and compute the time complexity of the following functions: (i) x^2 + 10^1000 (ii) 2000Y + YLOG(Y) (iii) 2(n+n) - 1 (iv) 2n^4 + 10^n + 25 (v) 1 million",
+    "keywords": ["time complexity", "best case", "worst case", "average case", "Big-O", "dominant term", "constant", "polynomial", "exponential", "asymptotic"],
+    "mainConcepts": [
+      "Best case complexity is the minimum time an algorithm takes for any input of size n",
+      "Worst case complexity is the maximum time an algorithm takes for any input of size n",
+      "Average case complexity is the expected time averaged over all possible inputs of size n",
+      "In Big-O analysis, we keep only the dominant (fastest-growing) term and drop constants",
+      "(i) x^2 + 10^1000 → O(x^2) because 10^1000 is a constant",
+      "(ii) 2000Y + YLOG(Y) → O(Y log Y) because Y log Y grows faster than Y",
+      "(iii) 2(n+n) - 1 = 4n - 1 → O(n)",
+      "(iv) 2n^4 + 10^n + 25 → O(10^n) or O(2^n) because exponential dominates polynomial",
+      "(v) 1 million = 10^6 → O(1) because it is a constant"
+    ],
+    "referenceAnswer": "THREE TYPES OF TIME COMPLEXITY:\n\n1. BEST CASE COMPLEXITY: The minimum time an algorithm takes for the most favorable input of size n. For example, in linear search, the best case is O(1) — the target element is at the first position. Best case tells us the algorithm's performance under ideal conditions.\n\n2. WORST CASE COMPLEXITY: The maximum time an algorithm takes for the least favorable input of size n. This is the most commonly analyzed because it provides an upper bound guarantee. For linear search, worst case is O(n) — the target is last or absent. Worst case is critical for systems requiring guaranteed performance.\n\n3. AVERAGE CASE COMPLEXITY: The expected time averaged over all possible inputs of size n, assuming each input is equally likely. For linear search, average case is O(n/2) = O(n) — on average, half the array is scanned. Average case gives the most realistic performance estimate.\n\nCOMPUTING TIME COMPLEXITY:\nIn Big-O analysis, we keep only the dominant (fastest-growing) term and discard constants and lower-order terms.\n\n(i) x^2 + 10^1000 → O(x^2)\n10^1000 is a constant (it does not grow with x). The dominant term is x^2.\n\n(ii) 2000Y + Y log Y → O(Y log Y)\nY log Y grows faster than 2000Y as Y increases. Y log Y dominates.\n\n(iii) 2(n + n) - 1 = 2(2n) - 1 = 4n - 1 → O(n)\nThe dominant term is 4n, and we drop the constant 4 and the -1.\n\n(iv) 2n^4 + 10^n + 25 → O(10^n)\nExponential functions (10^n) grow much faster than polynomial functions (n^4). The exponential term dominates.\n\n(v) 1 million (10^6) → O(1)\nThis is a constant — it does not depend on any input size n. Constant time.",
+    "difficulty": "hard",
+    "maxPoints": 6
+  }
+]

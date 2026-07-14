@@ -147,6 +147,7 @@ export default function FlashCardsPage() {
         {/* Flash Card */}
         <div className="mb-6">
           <FlashCard
+            key={currentIdx}
             question={current.question}
             answer={current.referenceAnswer || 'Answer not available.'}
             section={current.section}
