@@ -1,0 +1,29 @@
+UNIVERSITY OF CALABAR
+FACULTY OF COMPUTING
+DEPARTMENT OF COMPUTER SCIENCE
+SEMESTER: SECOND SEMESTER EXAMINATION SESSION: 2024/2025
+
+COURSE TITLE: HUMAN COMPUTER INTERFACE
+COURSE CODE: INS 202
+INSTRUCTION: ANSWER ANY 3 QUESTIONS
+TIME: 90 MINS
+
+1a. What is human computer interaction (HCI).
+1b. State why human computer interaction is important.
+1c. State and explain the Application of HCI.
+
+2a. Outline and explain the 4 iterative steps of HCI design.
+2b. In the context of requirement analysis for HCI design, what do you understand by the following: (i) functional-task requirements, (ii) functional-UI requirements and (iii) nonfunctional UI requirements
+2c. Comment briefly on the best operating environments and tasks that best suit the use of the following hardware platforms: (i) desktop (stationary), (ii) smartphones/handhelds (mobile), (iii) tablet/pads (mobile)
+
+3a. Differentiate between usability and user experience (UX) as two criteria for User Interface evaluation.
+3b. Write short notes on the quantitative and qualitative methods to measure usability approach in user interface evaluation.
+3c. Regardless of the type of method used for the User Interface evaluation, the evaluation method can be characterized by 4 factors. List these factors.
+
+4a. What is interaction design?
+4b. Bob was tasked with designing a graphical user interface (GUI) to facilitate the copying of files from one location to another within a computer system. To ensure a flawless user experience (UX), suggest possible GUI elements he should include in his design and explain the purpose of each element.
+4c. Describe any three (3) of the following User Interface Paradigms and give one example use case for each: (i) Graphic User Interface (GUI) (ii) Command Line Interface (CLI) (iii) Voice User Interface (VUI) (iv) Natural Language Interface (NLI) (v) Gesture-Based Interface (GBI).
+
+5a. What is interface design? Using a suitable example or diagram, explain the usefulness of feedback in user interface design.
+5b. Identify and explain any five (5) common GUI components and their functions.
+5c. Below are seven (7) of Nielsen's 10 usability heuristics for evaluating user interfaces and identifying areas for improvement. Using a banking app, e-commerce site, or social media platform as a case study, discuss any two of the following principles: (i) Error Prevention (ii) Consistency and Standards (iii) User Control and Freedom (iv) Match Between System and the Real World (v) Visibility of System Status (vi) Flexibility and Efficiency of Use (vii) Help and Documentation.
