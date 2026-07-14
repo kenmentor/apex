@@ -31,6 +31,7 @@ export async function GET(request) {
         options: d.options,
         correct_answer: d.correctAnswer,
         explanation: d.explanation || '',
+        ...(d.code ? { code: d.code } : {}),
       })
     }
 

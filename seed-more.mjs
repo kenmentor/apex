@@ -63,6 +63,7 @@ async function main() {
           options: q.options,
           correctAnswer: q.correct_answer,
           explanation: q.explanation || '',
+          ...(q.code ? { code: q.code } : {}),
         });
       }
     }

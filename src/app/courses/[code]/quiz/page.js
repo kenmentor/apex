@@ -9,6 +9,7 @@ import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
 import { trackQuizEvent } from '@/components/AnalyticsTracker';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import CodeBlock from '@/components/CodeBlock';
 import { ChevronLeft, Clock, Check, AlertTriangle } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
@@ -889,6 +890,11 @@ export default function QuizPage() {
         <Card className="mb-6 flex min-h-[120px] items-center justify-center px-7 py-9 text-center">
           <p className="text-base font-medium leading-relaxed">{question.question}</p>
         </Card>
+
+        {/* Code block */}
+        {question.code && (
+          <CodeBlock code={question.code} />
+        )}
 
         {/* Options */}
         <div className="mb-6 space-y-3">

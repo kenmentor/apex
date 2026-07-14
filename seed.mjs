@@ -76,6 +76,7 @@ async function seed() {
         courseCode: COURSE_CODE, section: section.section_title,
         id: q.id, question: q.question, options: q.options,
         correctAnswer: q.correct_answer, explanation: q.explanation || '',
+        ...(q.code ? { code: q.code } : {}),
       });
     }
   }
