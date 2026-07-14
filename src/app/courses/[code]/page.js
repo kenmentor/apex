@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play } from 'lucide-react';
+import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -126,6 +126,10 @@ export default function CourseDetailPage() {
               <Star className="mr-1 size-3" />
               Quizzes
             </TabsTrigger>
+            <TabsTrigger value="theory" className="flex-1">
+              <BookOpen className="mr-1 size-3" />
+              Theory
+            </TabsTrigger>
             <TabsTrigger value="notes" className="flex-1">
               <FileText className="mr-1 size-3" />
               Notes
@@ -157,6 +161,28 @@ export default function CourseDetailPage() {
                   ) : (
                     <p className="text-sm text-white/60">No questions available yet.</p>
                   )}
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="theory" className="mt-4">
+            <div className="space-y-4">
+              <Card
+                className="overflow-hidden border-0 text-white"
+                style={{ background: `linear-gradient(135deg, ${course?.color || '#6b21a8'}, #312e81)` }}
+              >
+                <CardContent className="p-6 text-center">
+                  <BookOpen className="mx-auto mb-2 size-9" />
+                  <h3 className="text-lg font-bold">{code} Theory Exam</h3>
+                  <p className="mb-4 text-sm text-white/70">Type or snap your answers</p>
+                  <Button
+                    onClick={() => router.push(`/courses/${codeForUrl}/theory`)}
+                    className="bg-white text-black hover:bg-white/90"
+                    size="lg"
+                  >
+                    Start Theory
+                  </Button>
                 </CardContent>
               </Card>
             </div>
