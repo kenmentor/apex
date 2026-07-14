@@ -94,11 +94,13 @@ export default function PublicProfilePage({ params }) {
                   <p className="text-xs text-muted-foreground">{decodedEmail}</p>
                 </div>
                 {profile.school && (
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GraduationCap className="size-3.5" />
-                    {profile.school}
-                    {profile.department && <span>· {profile.department}</span>}
-                    {profile.level && <span>· {profile.level} Level</span>}
+                  <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
+                    <GraduationCap className="size-3.5 shrink-0" />
+                    <span>{profile.school}</span>
+                    {profile.department && <span className="opacity-50">·</span>}
+                    {profile.department && <span>{profile.department}</span>}
+                    {profile.level && <span className="opacity-50">·</span>}
+                    {profile.level && <span>{profile.level}</span>}
                   </div>
                 )}
                 {profile.verified && (
