@@ -656,6 +656,11 @@ export default function QuizPage() {
     a.href = shareCardUrl
     a.download = 'apex-score.png'
     a.click()
+    try {
+      const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
+      sessionStorage.setItem('_sid', sid)
+      fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'download_click', sessionId: sid, path: window.location.pathname, isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true, metadata: { filename: 'apex-score.png', source: 'quiz' } }), keepalive: true }).catch(() => {})
+    } catch {}
   }
 
   async function handleShare() {

@@ -232,6 +232,11 @@ function PostCard({ post, user, spaceCreator, onDelete }) {
       a.click()
       document.body.removeChild(a)
       URL.revokeObjectURL(blobUrl)
+      try {
+        const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
+        sessionStorage.setItem('_sid', sid)
+        fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'download_click', sessionId: sid, path: window.location.pathname, isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true, metadata: { filename, source: 'space' } }), keepalive: true }).catch(() => {})
+      } catch {}
     }).catch(() => {
       window.open(url, '_blank')
     })

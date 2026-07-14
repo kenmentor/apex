@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getUser, isAdmin, getToken } from '@/lib/auth';
+import { getUser, isAdmin } from '@/lib/auth';
 import { Home, LayoutGrid, BarChart3, Settings, User, Users } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -12,6 +12,24 @@ const links = [
   { href: '/spaces', label: 'Spaces', icon: Users },
   { href: '/leaderboard', label: 'Rankings', icon: BarChart3 },
 ];
+
+function trackNav(href) {
+  try {
+    const sid = sessionStorage.getItem('_sid') || crypto.randomUUID()
+    sessionStorage.setItem('_sid', sid)
+    fetch('/api/track', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'navigation_click',
+        sessionId: sid,
+        path: window.location.pathname,
+        isPwa: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true,
+        metadata: { to: href, from: window.location.pathname },
+      }),
+      keepalive: true,
+    }).catch(() => {})
+  } catch {}
+}
 
 export default function NavBar({ active }) {
   const [user, setUser] = useState(null);
@@ -32,6 +50,7 @@ export default function NavBar({ active }) {
             <Link
               key={l.href}
               href={l.href}
+              onClick={() => trackNav(l.href)}
               className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs transition-colors sm:px-0 ${
                 isActive
                   ? 'text-primary font-semibold'
@@ -46,6 +65,7 @@ export default function NavBar({ active }) {
         {mounted && user && isAdmin() && (
           <Link
             href="/admin"
+            onClick={() => trackNav('/admin')}
             className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs transition-colors sm:px-0 ${
               active === '/admin'
                 ? 'text-primary font-semibold'
@@ -58,6 +78,7 @@ export default function NavBar({ active }) {
         )}
         <Link
           href="/profile"
+          onClick={() => trackNav('/profile')}
           className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs transition-colors sm:px-0 ${
             active === '/profile'
               ? 'text-primary font-semibold'

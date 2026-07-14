@@ -46,6 +46,7 @@ export default function InstallPrompt() {
     const { outcome } = await deferredPrompt.userChoice
     if (outcome === 'accepted') {
       setShowBanner(false)
+      try { fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'pwa_install', sessionId: sessionStorage.getItem('_sid') || crypto.randomUUID(), path: window.location.pathname, isPwa: false, metadata: { outcome: 'accepted' } }), keepalive: true }).catch(() => {}) } catch {}
     }
     setDeferredPrompt(null)
   }
