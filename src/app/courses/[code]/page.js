@@ -3,14 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import NavBar from '@/components/NavBar';
-import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X } from 'lucide-react';
-
-const SEGMENTS = [
-  { key: 'quizzes', label: 'Quizzes', icon: <Star size={16} /> },
-  { key: 'notes', label: 'Notes', icon: <FileText size={16} /> },
-  { key: 'videos', label: 'Videos', icon: <PlayCircle size={16} /> },
-];
+import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen, Layers } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -62,137 +61,282 @@ export default function CourseDetailPage() {
     return m ? m[1] : null;
   }
 
+  async function submitFeedback() {
+    if (feedbackRating === 0) return;
+    setFeedbackSubmitting(true);
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course: code,
+          rating: feedbackRating,
+          comment: feedbackComment.trim() || null,
+        }),
+      });
+      setFeedbackSent(true);
+      setTimeout(() => {
+        setShowFeedback(false);
+        setFeedbackSent(false);
+        setFeedbackRating(0);
+        setFeedbackComment('');
+      }, 2000);
+    } catch {
+      // silently fail
+    }
+    setFeedbackSubmitting(false);
+  }
+
   if (loading) {
     return (
-      <div className="app-wrapper">
-        <div className="quiz-container" style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ color: 'var(--text-muted)', fontSize: 16 }}>Loading...</div>
+    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+            <ArrowLeft className="size-4" />
+          </Link>
+          <h1 className="flex-1 text-center text-base font-bold">
+            <Skeleton className="mx-auto h-5 w-20" />
+          </h1>
+          <div className="size-9" />
+        </header>
+      <div className="mx-auto w-full max-w-2xl space-y-4 px-4 pt-4">
+          <Skeleton className="h-10 w-full rounded-xl" />
+          <Skeleton className="h-48 w-full rounded-2xl" />
         </div>
       </div>
     );
   }
 
-  const renderFeed = () => {
-    switch (activeTab) {
-      case 'notes':
-        return readings.length === 0 ? (
-          <div className="feed-card" style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)', fontSize: 14 }}>
-            <FileText size={48} style={{ marginBottom: 16, opacity: 0.4 }} />
-            No notes yet for {code}.
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 8 }}>
-            {readings.map((r) => (
-              <div key={r._id} className="feed-card" style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column' }}>
-                <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, color: 'var(--text-dark)' }}>{r.title}</h2>
-                <div className="reading-content" dangerouslySetInnerHTML={{ __html: r.content }} />
-              </div>
-            ))}
-          </div>
-        );
-
-      case 'videos':
-        return videos.length === 0 ? (
-          <div className="feed-card" style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)', fontSize: 14 }}>
-            <Film size={48} style={{ marginBottom: 16, opacity: 0.4 }} />
-            No videos yet for {code}.
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 8 }}>
-            {videos.map((v) => {
-              const vid = getYouTubeId(v.url);
-              return (
-                <a key={v._id} href={v.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                  <div className="feed-card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                    {vid && (
-                      <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#000' }}>
-                        <img src={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="8,5 19,12 8,19"/></svg>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    <div style={{ padding: '12px 16px' }}>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-dark)', marginBottom: 2 }}>{v.title}</div>
-                      {v.description && <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{v.description}</div>}
-                    </div>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-        );
-
-      case 'quizzes':
-        return (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 8 }}>
-            <div style={{
-              background: `linear-gradient(135deg, ${course?.color || '#130f40'}, #2c2c54)`,
-              borderRadius: 20, padding: 24, color: 'white', textAlign: 'center',
-            }}>
-              <ClipboardList size={36} style={{ marginBottom: 8 }} />
-              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 4 }}>{code} Full Quiz</h3>
-              <p style={{ fontSize: 13, opacity: 0.7, marginBottom: 16 }}>{questionCount || 0} questions</p>
-              {questionCount > 0 ? (
-                <button
-                  onClick={() => router.push(`/courses/${codeForUrl}/quiz`)}
-                  className="btn-next"
-                  style={{ width: 'auto', padding: '14px 32px', display: 'inline-block', fontSize: 15 }}
-                >
-                  Start Quiz
-                </button>
-              ) : (
-                <div style={{ fontSize: 13, opacity: 0.6 }}>No questions available yet.</div>
-              )}
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="app-wrapper">
-      <div className="quiz-container">
-        <div className="top-bar" style={{ marginBottom: 16 }}>
-          <Link href="/courses" className="back-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+      <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+            <ArrowLeft className="size-4" />
           </Link>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-dark)' }}>{code}</div>
-            {course?.title && <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>{course.title}</div>}
-          </div>
-          <div className="back-btn" style={{ background: 'none' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-            </svg>
-          </div>
-        </div>
+          <h1 className="flex-1 text-center text-base font-bold">{code}</h1>
+          <button
+            onClick={() => setShowFeedback(true)}
+            className="flex size-9 items-center justify-center rounded-lg hover:bg-muted"
+            title="Rate this course"
+          >
+            <MessageSquare className="size-4" />
+          </button>
+        </header>
 
-        <div className="segment-control-wrapper">
-          {SEGMENTS.map((seg) => (
-            <button
-              key={seg.key}
-              className={`segment-btn ${activeTab === seg.key ? 'active' : ''}`}
-              onClick={() => setActiveTab(seg.key)}
-            >
-              <span>{seg.icon}</span> {seg.label}
-            </button>
-          ))}
-        </div>
+      <div className="mx-auto w-full max-w-2xl space-y-4 px-4 py-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="w-full overflow-x-auto flex-nowrap justify-start">
+            <TabsTrigger value="quizzes" className="flex-1">
+              <Star className="mr-1 size-3" />
+              Quizzes
+            </TabsTrigger>
+            <TabsTrigger value="theory" className="flex-1">
+              <BookOpen className="mr-1 size-3" />
+              Theory
+            </TabsTrigger>
+            <TabsTrigger value="flashcards" className="flex-1">
+              <Layers className="mr-1 size-3" />
+              Cards
+            </TabsTrigger>
+            <TabsTrigger value="notes" className="flex-1">
+              <FileText className="mr-1 size-3" />
+              Notes
+            </TabsTrigger>
+            <TabsTrigger value="videos" className="flex-1">
+              <PlayCircle className="mr-1 size-3" />
+              Videos
+            </TabsTrigger>
+          </TabsList>
 
-        <div className="resource-feed">
-          {renderFeed()}
-        </div>
+          <TabsContent value="quizzes" className="mt-4">
+            <div className="space-y-4">
+              <Card
+                className="overflow-hidden border-0 text-white"
+                style={{ background: `linear-gradient(135deg, ${course?.color || '#130f40'}, #2c2c54)` }}
+              >
+                <CardContent className="p-6 text-center">
+                  <ClipboardList className="mx-auto mb-2 size-9" />
+                  <h3 className="text-lg font-bold">{code} Full Quiz</h3>
+                  <p className="mb-4 text-sm text-white/70">{questionCount || 0} questions</p>
+                  {questionCount > 0 ? (
+                    <Button
+                      onClick={() => router.push(`/courses/${codeForUrl}/quiz`)}
+                      className="bg-white text-black hover:bg-white/90"
+                      size="lg"
+                    >
+                      Start Quiz
+                    </Button>
+                  ) : (
+                    <p className="text-sm text-white/60">No questions available yet.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
 
-        <NavBar active="/courses" />
+          <TabsContent value="theory" className="mt-4">
+            <div className="space-y-4">
+              <Card
+                className="overflow-hidden border-0 text-white"
+                style={{ background: `linear-gradient(135deg, ${course?.color || '#6b21a8'}, #312e81)` }}
+              >
+                <CardContent className="p-6 text-center">
+                  <BookOpen className="mx-auto mb-2 size-9" />
+                  <h3 className="text-lg font-bold">{code} Theory Exam</h3>
+                  <p className="mb-4 text-sm text-white/70">Type or snap your answers</p>
+                  <Button
+                    onClick={() => router.push(`/courses/${codeForUrl}/theory`)}
+                    className="bg-white text-black hover:bg-white/90"
+                    size="lg"
+                  >
+                    Start Theory
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="flashcards" className="mt-4">
+            <div className="space-y-4">
+              <Card
+                className="overflow-hidden border-0 text-white"
+                style={{ background: `linear-gradient(135deg, ${course?.color || '#0891b2'}, #164e63)` }}
+              >
+                <CardContent className="p-6 text-center">
+                  <Layers className="mx-auto mb-2 size-9" />
+                  <h3 className="text-lg font-bold">{code} Flash Cards</h3>
+                  <p className="mb-4 text-sm text-white/70">Study theory questions and answers</p>
+                  <Button
+                    onClick={() => router.push(`/courses/${codeForUrl}/flashcards`)}
+                    className="bg-white text-black hover:bg-white/90"
+                    size="lg"
+                  >
+                    Study Cards
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="notes" className="mt-4">
+            <ScrollArea className="max-h-[calc(100dvh-200px)]">
+              {readings.length === 0 ? (
+                <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
+                  <FileText className="size-12 opacity-40" />
+                  <p className="text-sm">No notes yet for {code}.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {readings.map((r) => (
+                    <Card key={r._id}>
+                      <CardContent className="p-5">
+                        <h2 className="mb-3 text-lg font-bold">{r.title}</h2>
+                        <div
+                          className="prose prose-sm max-w-none text-muted-foreground"
+                          dangerouslySetInnerHTML={{ __html: r.content }}
+                        />
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </ScrollArea>
+          </TabsContent>
+
+          <TabsContent value="videos" className="mt-4">
+            <ScrollArea className="max-h-[calc(100dvh-200px)]">
+              {videos.length === 0 ? (
+                <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
+                  <Film className="size-12 opacity-40" />
+                  <p className="text-sm">No videos yet for {code}.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {videos.map((v) => {
+                    const vid = getYouTubeId(v.url);
+                    return (
+                      <a key={v._id} href={v.url} target="_blank" rel="noopener noreferrer" className="block">
+                        <Card className="overflow-hidden transition-colors hover:bg-accent">
+                          {vid && (
+                            <div className="relative aspect-video bg-black">
+                              <img
+                                src={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`}
+                                alt={v.title}
+                                className="size-full object-cover"
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="flex size-12 items-center justify-center rounded-full bg-black/70">
+                                  <Play className="size-5 text-white" fill="white" />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          <CardContent className="p-3">
+                            <div className="text-sm font-semibold">{v.title}</div>
+                            {v.description && (
+                              <div className="mt-1 text-xs text-muted-foreground">{v.description}</div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </ScrollArea>
+          </TabsContent>
+        </Tabs>
       </div>
+
+      {/* Feedback Modal */}
+      {showFeedback && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <Card className="w-full max-w-sm">
+            <CardContent className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-lg font-bold">Rate this course</h3>
+                <button onClick={() => { setShowFeedback(false); setFeedbackSent(false); }} className="rounded-lg p-1 hover:bg-muted">
+                  <X className="size-4" />
+                </button>
+              </div>
+              {feedbackSent ? (
+                <p className="text-center text-sm text-green-600">Thanks for your feedback!</p>
+              ) : (
+                <>
+                  <div className="mb-4 flex justify-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        onClick={() => setFeedbackRating(star)}
+                        onMouseEnter={() => setFeedbackHover(star)}
+                        onMouseLeave={() => setFeedbackHover(0)}
+                        className="text-2xl transition-colors"
+                        style={{ color: star <= (feedbackHover || feedbackRating) ? '#f59e0b' : '#d1d5db' }}
+                      >
+                        ★
+                      </button>
+                    ))}
+                  </div>
+                  <textarea
+                    placeholder="Optional comment..."
+                    value={feedbackComment}
+                    onChange={(e) => setFeedbackComment(e.target.value)}
+                    className="mb-4 w-full rounded-lg border p-3 text-sm outline-none focus:border-primary"
+                    rows={3}
+                  />
+                  <Button
+                    onClick={submitFeedback}
+                    disabled={feedbackRating === 0 || feedbackSubmitting}
+                    className="w-full"
+                  >
+                    {feedbackSubmitting ? 'Sending...' : 'Send Feedback'}
+                  </Button>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

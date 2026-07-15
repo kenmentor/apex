@@ -12,8 +12,8 @@ function Trend({ trend, change }) {
   return <span className="inline-flex items-center gap-0.5 text-xs font-bold text-muted-foreground"><Minus className="size-3" /> 0%</span>
 }
 
-function StatCard({ icon: Icon, label, now, prev, trend, change, color }) {
-  return (
+function StatCard({ icon: Icon, label, now, prev, trend, change, color, href }) {
+  const inner = (
     <div className="rounded-xl border bg-card p-4">
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center gap-2">
@@ -30,6 +30,8 @@ function StatCard({ icon: Icon, label, now, prev, trend, change, color }) {
       </div>
     </div>
   )
+  if (href) return <Link href={href} className="cursor-pointer hover:opacity-80 transition-opacity">{inner}</Link>
+  return inner
 }
 
 function HealthGauge({ score, direction }) {
@@ -90,20 +92,22 @@ export default function ProgressPage() {
       <div className="mx-auto max-w-4xl space-y-4 px-3 pt-4">
         {/* Health score */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <HealthGauge score={h.score} direction={h.direction} />
+          <Link href="/admin/analytics/insights" className="cursor-pointer hover:opacity-80 transition-opacity">
+            <HealthGauge score={h.score} direction={h.direction} />
+          </Link>
           <div className="col-span-1 grid grid-rows-3 gap-3 sm:col-span-3 sm:grid-cols-3 sm:grid-rows-2">
-            <div className="flex items-center gap-3 rounded-xl border bg-card p-4">
+            <Link href="/admin/analytics/insights" className="flex items-center gap-3 rounded-xl border bg-card p-4 cursor-pointer hover:opacity-80 transition-opacity">
               <div className="flex size-10 items-center justify-center rounded-full bg-green-500/10"><TrendingUp className="size-5 text-green-500" /></div>
               <div><div className="text-lg font-bold text-green-500">{h.improving ?? 0}</div><div className="text-[10px] text-muted-foreground">Improving</div></div>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border bg-card p-4">
+            </Link>
+            <Link href="/admin/analytics/insights" className="flex items-center gap-3 rounded-xl border bg-card p-4 cursor-pointer hover:opacity-80 transition-opacity">
               <div className="flex size-10 items-center justify-center rounded-full bg-red-500/10"><TrendingDown className="size-5 text-red-500" /></div>
               <div><div className="text-lg font-bold text-red-500">{h.declining ?? 0}</div><div className="text-[10px] text-muted-foreground">Declining</div></div>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border bg-card p-4">
+            </Link>
+            <Link href="/admin/analytics/insights" className="flex items-center gap-3 rounded-xl border bg-card p-4 cursor-pointer hover:opacity-80 transition-opacity">
               <div className="flex size-10 items-center justify-center rounded-full bg-muted"><Minus className="size-5 text-muted-foreground" /></div>
               <div><div className="text-lg font-bold">{h.stable ?? 0}</div><div className="text-[10px] text-muted-foreground">Stable</div></div>
-            </div>
+            </Link>
             <div className="sm:col-span-3 flex items-center gap-3 rounded-xl border bg-card p-4">
               <Activity className="size-5 text-muted-foreground" />
               <div className="text-xs text-muted-foreground">
@@ -118,10 +122,10 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Engagement</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={Zap} label="Total Events" {...m.totalEvents} />
-            <StatCard icon={Users} label="Unique Sessions" {...m.uniqueSessions} />
-            <StatCard icon={Eye} label="Page Views" {...m.pageViews} />
-            <StatCard icon={RefreshCw} label="Page Refreshes" {...m.pageRefreshes} />
+            <StatCard icon={Zap} label="Total Events" {...m.totalEvents} href="/admin/analytics/overview" />
+            <StatCard icon={Users} label="Unique Sessions" {...m.uniqueSessions} href="/admin/analytics/retention" />
+            <StatCard icon={Eye} label="Page Views" {...m.pageViews} href="/admin/analytics/pages" />
+            <StatCard icon={RefreshCw} label="Page Refreshes" {...m.pageRefreshes} href="/admin/analytics/refreshes" />
           </div>
         </div>
 
@@ -129,10 +133,10 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quiz Performance</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={Zap} label="Quizzes Started" {...m.quizStarted} />
-            <StatCard icon={Zap} label="Quizzes Completed" {...m.quizCompleted} />
-            <StatCard icon={Zap} label="Completion Rate" {...m.quizCompletionRate} />
-            <StatCard icon={BarChart3} label="Avg Score" {...m.quizAvgScore} />
+            <StatCard icon={Zap} label="Quizzes Started" {...m.quizStarted} href="/admin/analytics/quizzes" />
+            <StatCard icon={Zap} label="Quizzes Completed" {...m.quizCompleted} href="/admin/analytics/quizzes" />
+            <StatCard icon={Zap} label="Completion Rate" {...m.quizCompletionRate} href="/admin/analytics/quizzes" />
+            <StatCard icon={BarChart3} label="Avg Score" {...m.quizAvgScore} href="/admin/analytics/quizzes" />
           </div>
         </div>
 
@@ -140,8 +144,8 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Flashcards</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={Layers} label="Flashcard Opens" {...m.flashcardOpens} />
-            <StatCard icon={Clock} label="Avg Duration (s)" {...m.flashcardAvgDurationSec} />
+            <StatCard icon={Layers} label="Flashcard Opens" {...m.flashcardOpens} href="/admin/analytics/flashcards" />
+            <StatCard icon={Clock} label="Avg Duration (s)" {...m.flashcardAvgDurationSec} href="/admin/analytics/flashcards" />
           </div>
         </div>
 
@@ -149,10 +153,10 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Activity</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={MousePointerClick} label="Nav Clicks" {...m.navClicks} />
-            <StatCard icon={Download} label="Downloads" {...m.downloads} />
-            <StatCard icon={Activity} label="Heartbeats" {...m.heartbeats} />
-            <StatCard icon={Clock} label="Active Minutes" {...m.estimatedActiveMinutes} />
+            <StatCard icon={MousePointerClick} label="Nav Clicks" {...m.navClicks} href="/admin/analytics/engagement" />
+            <StatCard icon={Download} label="Downloads" {...m.downloads} href="/admin/analytics/downloads" />
+            <StatCard icon={Activity} label="Heartbeats" {...m.heartbeats} href="/admin/analytics/active" />
+            <StatCard icon={Clock} label="Active Minutes" {...m.estimatedActiveMinutes} href="/admin/analytics/active" />
           </div>
         </div>
 
@@ -160,9 +164,9 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sessions</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={Smartphone} label="PWA Sessions" {...m.pwaSessions} />
-            <StatCard icon={Activity} label="Avg Events/Session" {...m.avgEventsPerSession} />
-            <StatCard icon={Clock} label="Avg Duration (sec)" {...m.avgSessionDurationSec} />
+            <StatCard icon={Smartphone} label="PWA Sessions" {...m.pwaSessions} href="/admin/analytics/pwa" />
+            <StatCard icon={Activity} label="Avg Events/Session" {...m.avgEventsPerSession} href="/admin/analytics/engagement" />
+            <StatCard icon={Clock} label="Avg Duration (sec)" {...m.avgSessionDurationSec} href="/admin/analytics/engagement" />
           </div>
         </div>
       </div>

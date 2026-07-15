@@ -1,0 +1,157 @@
+{
+  "course_code": "PHY 102",
+  "course_title": "General Physics II",
+  "study_guide_title": "PHY 102 General Physics II - Comprehensive Question Bank",
+  "sections": [
+    {
+      "section_title": "ELECTROSTATICS",
+      "questions": [
+        {"id":"Q1","question":"Two point charges +3 μC and -3 μC are 10 cm apart. The force between them is:","options":{"a":"Attractive, 8.1 N","b":"Repulsive, 8.1 N","c":"Attractive, 2.7 N","d":"Repulsive, 2.7 N"},"correct_answer":"a","explanation":"F = k|q₁q₂|/r² = 9×10⁹×9×10⁻¹²/0.01 = 8.1 N. Opposite charges attract."},
+        {"id":"Q2","question":"The SI unit of electric field intensity is:","options":{"a":"N/C","b":"V/m","c":"Both N/C and V/m","d":"J/C"},"correct_answer":"c","explanation":"Electric field can be expressed in N/C (force per unit charge) or V/m (potential gradient). Both are equivalent."},
+        {"id":"Q3","question":"A charge of 4 μC experiences a force of 0.02 N in an electric field. The field strength is:","options":{"a":"5000 N/C","b":"2000 N/C","c":"8000 N/C","d":"4000 N/C"},"correct_answer":"a","explanation":"E = F/q = 0.02/(4×10⁻⁶) = 5000 N/C."},
+        {"id":"Q4","question":"The electric field at a distance of 3 m from a 2 μC point charge is approximately:","options":{"a":"2000 N/C","b":"6000 N/C","c":"3000 N/C","d":"9000 N/C"},"correct_answer":"a","explanation":"E = kq/r² = 9×10⁹×2×10⁻⁶/9 = 2000 N/C."},
+        {"id":"Q5","question":"Gauss's law states that the total electric flux through a closed surface equals:","options":{"a":"Q/ε₀","b":"Qε₀","c":"4πkQ","d":"Both A and C"},"correct_answer":"d","explanation":"Gauss's law: Φ = Q/ε₀ = 4πkQ. The total flux depends only on the enclosed charge."},
+        {"id":"Q6","question":"A point charge q is placed at the center of a cube. The electric flux through one face is:","options":{"a":"q/ε₀","b":"q/6ε₀","c":"q/4ε₀","d":"0"},"correct_answer":"b","explanation":"Total flux = q/ε₀. A cube has 6 faces, so flux through one face = q/6ε₀."},
+        {"id":"Q7","question":"Two charges +4 μC and +9 μC are 3 m apart. Where should a test charge be placed for zero net force?","options":{"a":"1.2 m from the 4 μC charge","b":"1.5 m from the 4 μC charge","c":"1.8 m from the 4 μC charge","d":"2.0 m from the 4 μC charge"},"correct_answer":"a","explanation":"Let x = distance from q₁. kq₁/x² = kq₂/(3-x)² → 4/x² = 9/(3-x)² → 2/x = 3/(3-x) → 6-2x = 3x → x = 1.2 m."},
+        {"id":"Q8","question":"A charged body in motion generates:","options":{"a":"Only electric field","b":"Only magnetic field","c":"Both electric and magnetic fields","d":"No field"},"correct_answer":"c","explanation":"A moving charge creates both an electric field (due to the charge itself) and a magnetic field (due to its motion)."},
+        {"id":"Q9","question":"Two identical conducting spheres with charges +6 μC and -2 μC are touched and separated. The charge on each is:","options":{"a":"+4 μC","b":"+2 μC","c":"-2 μC","d":"0 μC"},"correct_answer":"b","explanation":"Total charge = +6 + (-2) = +4 μC. Upon contact, charge distributes equally: +4/2 = +2 μC each."},
+        {"id":"Q10","question":"The electric field inside a hollow charged conducting sphere is:","options":{"a":"Maximum","b":"Constant non-zero","c":"Zero","d":"Infinite"},"correct_answer":"c","explanation":"By Gauss's law, the electric field inside a hollow conductor in electrostatic equilibrium is zero (Faraday cage effect)."}
+      ]
+    },
+    {
+      "section_title": "ELECTRIC POTENTIAL & CAPACITANCE",
+      "questions": [
+        {"id":"Q11","question":"The work done to move a 2 μC charge through a potential difference of 12 V is:","options":{"a":"6 μJ","b":"24 μJ","c":"12 μJ","d":"48 μJ"},"correct_answer":"b","explanation":"W = qV = 2×10⁻⁶×12 = 24×10⁻⁶ J = 24 μJ."},
+        {"id":"Q12","question":"A 10 μF capacitor is charged to 100 V. The energy stored is:","options":{"a":"0.05 J","b":"0.1 J","c":"0.5 J","d":"0.01 J"},"correct_answer":"a","explanation":"E = ½CV² = 0.5×10×10⁻⁶×10000 = 0.05 J."},
+        {"id":"Q13","question":"Three capacitors 2 μF, 3 μF, and 6 μF are connected in series. The equivalent capacitance is:","options":{"a":"1 μF","b":"2 μF","c":"11 μF","d":"1.5 μF"},"correct_answer":"a","explanation":"1/Ceq = 1/2 + 1/3 + 1/6 = 3/6+2/6+1/6 = 6/6 = 1. Ceq = 1 μF."},
+        {"id":"Q14","question":"The same capacitors in parallel give an equivalent capacitance of:","options":{"a":"1 μF","b":"11 μF","c":"4 μF","d":"36 μF"},"correct_answer":"b","explanation":"Ceq = 2+3+6 = 11 μF."},
+        {"id":"Q15","question":"The capacitance of a parallel plate capacitor depends on:","options":{"a":"Plate area and separation only","b":"Charge stored","c":"Voltage applied","d":"Both charge and voltage"},"correct_answer":"a","explanation":"C = ε₀A/d. Capacitance depends on geometry (area A, separation d) and the dielectric material, not on Q or V."},
+        {"id":"Q16","question":"A dielectric inserted between capacitor plates increases capacitance because:","options":{"a":"It increases plate area","b":"It reduces the effective electric field","c":"It increases voltage","d":"It stores more charge"},"correct_answer":"b","explanation":"Dielectric polarization reduces the effective electric field, allowing more charge to be stored at the same voltage: C = κC₀."},
+        {"id":"Q17","question":"If the plate separation of a capacitor is doubled, the capacitance becomes:","options":{"a":"Double","b":"Half","c":"Four times","d":"Unchanged"},"correct_answer":"b","explanation":"C ∝ 1/d. If d doubles, C becomes half."},
+        {"id":"Q18","question":"The equivalent capacitance of two 4 μF capacitors in series is:","options":{"a":"8 μF","b":"4 μF","c":"2 μF","d":"16 μF"},"correct_answer":"c","explanation":"1/Ceq = 1/4+1/4 = 1/2. Ceq = 2 μF."},
+        {"id":"Q19","question":"The potential at a point 0.5 m from a 5 μC charge is: (k = 9×10⁹)","options":{"a":"9×10⁴ V","b":"9×10³ V","c":"9×10⁵ V","d":"4.5×10⁴ V"},"correct_answer":"a","explanation":"V = kq/r = 9×10⁹×5×10⁻⁶/0.5 = 45×10³/0.5 = 9×10⁴ V."},
+        {"id":"Q20","question":"The energy stored in a 20 μF capacitor charged to 50 V is:","options":{"a":"0.025 J","b":"0.05 J","c":"0.5 J","d":"0.01 J"},"correct_answer":"a","explanation":"E = ½CV² = 0.5×20×10⁻⁶×2500 = 0.025 J."}
+      ]
+    },
+    {
+      "section_title": "CURRENT & DC CIRCUITS",
+      "questions": [
+        {"id":"Q21","question":"A current of 2 A flows for 3 minutes. The charge transferred is:","options":{"a":"6 C","b":"360 C","c":"120 C","d":"60 C"},"correct_answer":"b","explanation":"Q = It = 2×(3×60) = 360 C."},
+        {"id":"Q22","question":"The resistance of a wire depends on all EXCEPT:","options":{"a":"Length","b":"Cross-sectional area","c":"Resistivity","d":"Current through it"},"correct_answer":"d","explanation":"R = ρL/A. Resistance depends on material (ρ), length (L), and area (A), not on the current."},
+        {"id":"Q23","question":"A 100 Ω resistor has a potential difference of 20 V across it. The current is:","options":{"a":"0.2 A","b":"5 A","c":"2 A","d":"0.5 A"},"correct_answer":"a","explanation":"I = V/R = 20/100 = 0.2 A."},
+        {"id":"Q24","question":"Ohm's law is NOT obeyed by:","options":{"a":"Metallic conductors at constant temperature","b":"Diodes","c":"Resistors","d":"Copper wire"},"correct_answer":"b","explanation":"Ohm's law applies to ohmic materials (metals at constant temperature). Diodes, transistors, and semiconductors are non-ohmic."},
+        {"id":"Q25","question":"Kirchhoff's current law (KCL) states that:","options":{"a":"Sum of voltages around a closed loop is zero","b":"Sum of currents entering a junction equals sum leaving","c":"Power dissipated equals power supplied","d":"Resistance adds in series"},"correct_answer":"b","explanation":"KCL: the algebraic sum of currents at any junction is zero — current in = current out."},
+        {"id":"Q26","question":"Kirchhoff's voltage law (KVL) states that:","options":{"a":"Sum of currents at a junction is zero","b":"Sum of EMFs equals sum of potential drops around a loop","c":"Voltage is constant in a series circuit","d":"Current divides equally in parallel"},"correct_answer":"b","explanation":"KVL: the sum of all EMFs and potential drops around any closed loop is zero."},
+        {"id":"Q27","question":"Three resistors 2 Ω, 3 Ω, and 5 Ω are in series with a 10 V battery. The current is:","options":{"a":"1 A","b":"2 A","c":"0.5 A","d":"10 A"},"correct_answer":"a","explanation":"RT = 2+3+5 = 10 Ω. I = V/RT = 10/10 = 1 A."},
+        {"id":"Q28","question":"The same resistors in parallel with a 10 V battery draw a total current of:","options":{"a":"5.3 A","b":"10.3 A","c":"3.2 A","d":"7.5 A"},"correct_answer":"b","explanation":"1/RT = 1/2+1/3+1/5 = 15/30+10/30+6/30 = 31/30. RT = 30/31 ≈ 0.97 Ω. I = 10/0.97 ≈ 10.3 A."},
+        {"id":"Q29","question":"A 60 W bulb operates on 240 V. Its resistance is:","options":{"a":"960 Ω","b":"14400 Ω","c":"4 Ω","d":"240 Ω"},"correct_answer":"a","explanation":"P = V²/R → R = V²/P = 240²/60 = 57600/60 = 960 Ω."},
+        {"id":"Q30","question":"Electrical power can be expressed as all EXCEPT:","options":{"a":"VI","b":"I²R","c":"V²/R","d":"IR²"},"correct_answer":"d","explanation":"Power P = VI = I²R = V²/R. IR² is not a valid expression for power."}
+      ]
+    },
+    {
+      "section_title": "MAGNETIC FIELDS & FORCES",
+      "questions": [
+        {"id":"Q31","question":"A 2.0 m wire carrying 3.0 A at 40° to a 0.70 T field experiences a force of:","options":{"a":"1.62 N","b":"1.87 N","c":"2.44 N","d":"2.70 N"},"correct_answer":"d","explanation":"F = BIL sinθ = 0.70×3.0×2.0×sin40° = 4.2×0.6428 = 2.70 N."},
+        {"id":"Q32","question":"The force on a current-carrying conductor in a magnetic field is maximized when the angle between current and field is:","options":{"a":"0°","b":"45°","c":"90°","d":"180°"},"correct_answer":"c","explanation":"F = BIL sinθ. sinθ is maximum (1) at θ = 90°."},
+        {"id":"Q33","question":"The SI unit of magnetic field is:","options":{"a":"Weber","b":"Tesla","c":"Gauss","d":"Henry"},"correct_answer":"b","explanation":"The SI unit of magnetic flux density (magnetic field) is the Tesla (T). 1 T = 1 N/(A·m)."},
+        {"id":"Q34","question":"A magnetic field of 0.5 T is produced by a 5 A current in a 0.2 m wire experiencing 0.5 N. What is the angle?","options":{"a":"30°","b":"45°","c":"60°","d":"90°"},"correct_answer":"d","explanation":"F = BIL sinθ → sinθ = F/(BIL) = 0.5/(0.5×5×0.2) = 0.5/0.5 = 1. θ = 90°."},
+        {"id":"Q35","question":"Biot-Savart law gives the magnetic field due to:","options":{"a":"A point charge at rest","b":"A current element","c":"A changing electric field","d":"A magnetic monopole"},"correct_answer":"b","explanation":"Biot-Savart law: dB = (μ₀/4π)(Idℓ×r̂/r²), giving the magnetic field due to a small current element."},
+        {"id":"Q36","question":"Ampere's law states that the line integral of B around a closed loop equals:","options":{"a":"μ₀I_enc","b":"I_enc/μ₀","c":"ε₀dΦ/dt","d":"0"},"correct_answer":"a","explanation":"Ampere's law: ∮B·dℓ = μ₀I_enc, where I_enc is the current enclosed by the Amperian loop."},
+        {"id":"Q37","question":"The magnetic field at the center of a long solenoid with n turns per meter carrying current I is:","options":{"a":"μ₀nI","b":"μ₀I/(2πr)","c":"μ₀I/(2r)","d":"μ₀n²I"},"correct_answer":"a","explanation":"For an ideal solenoid, B = μ₀nI at the center, where n = N/L (turns per unit length)."},
+        {"id":"Q38","question":"A compass needle aligns with the Earth's magnetic field. The Earth's magnetic north pole is near the:","options":{"a":"Geographic North Pole","b":"Geographic South Pole","c":"Equator","d":"Prime meridian"},"correct_answer":"b","explanation":"Earth's magnetic north pole is near the geographic South Pole (and vice versa). A compass needle's north end points toward geographic north."},
+        {"id":"Q39","question":"Two parallel wires carrying currents in the same direction experience:","options":{"a":"Attraction","b":"Repulsion","c":"No force","d":"Rotation"},"correct_answer":"a","explanation":"Parallel currents in the same direction attract; opposite currents repel."},
+        {"id":"Q40","question":"A charge +q moving with velocity v enters a uniform magnetic field B perpendicularly. Its path is:","options":{"a":"Straight line","b":"Circular","c":"Parabolic","d":"Elliptical"},"correct_answer":"b","explanation":"The magnetic force F = qvB provides centripetal force, causing circular motion (radius r = mv/qB)."}
+      ]
+    },
+    {
+      "section_title": "ELECTROMAGNETIC INDUCTION & AC",
+      "questions": [
+        {"id":"Q41","question":"Faraday's law states that induced EMF equals:","options":{"a":"-dΦ/dt","b":"-NdΦ/dt","c":"-dΦB/dt","d":"All of the above"},"correct_answer":"d","explanation":"Faraday's law: ε = -dΦ/dt. For N turns, ε = -NdΦ/dt. Φ is the magnetic flux."},
+        {"id":"Q42","question":"Lenz's law states that induced current opposes:","options":{"a":"The magnetic field","b":"The change in magnetic flux","c":"The current in the circuit","d":"The motion of the magnet"},"correct_answer":"b","explanation":"Lenz's law: the induced current flows in a direction that opposes the change in magnetic flux that produced it."},
+        {"id":"Q43","question":"A coil of 100 turns has a magnetic flux changing at 0.05 Wb/s. The induced EMF is:","options":{"a":"0.5 V","b":"5 V","c":"50 V","d":"0.05 V"},"correct_answer":"b","explanation":"ε = N(dΦ/dt) = 100×0.05 = 5 V."},
+        {"id":"Q44","question":"A transformer steps up voltage from 100 V to 1000 V. If the secondary has 500 turns, the primary turns are:","options":{"a":"50","b":"5000","c":"500","d":"5"},"correct_answer":"a","explanation":"Vₚ/Vₛ = Nₚ/Nₛ → 100/1000 = Nₚ/500 → Nₚ = 50 turns."},
+        {"id":"Q45","question":"The inductive reactance of a 50 mH inductor at 100 Hz is:","options":{"a":"31.4 Ω","b":"15.7 Ω","c":"62.8 Ω","d":"3.14 Ω"},"correct_answer":"a","explanation":"XL = 2πfL = 2π×100×0.05 = 31.42 Ω."},
+        {"id":"Q46","question":"A 20 mH inductor with 10 V, 50 Hz supply passes a current of:","options":{"a":"1.59 A","b":"3.18 A","c":"0.5 A","d":"5 A"},"correct_answer":"a","explanation":"XL = 2π×50×0.02 = 6.28 Ω. I = V/XL = 10/6.28 = 1.59 A."},
+        {"id":"Q47","question":"Energy stored in a 10 mH inductor carrying 2 A is:","options":{"a":"0.02 J","b":"0.04 J","c":"0.2 J","d":"0.01 J"},"correct_answer":"a","explanation":"E = ½LI² = 0.5×0.01×4 = 0.02 J."},
+        {"id":"Q48","question":"The capacitive reactance of a 100 μF capacitor at 50 Hz is:","options":{"a":"31.8 Ω","b":"15.9 Ω","c":"318 Ω","d":"159 Ω"},"correct_answer":"a","explanation":"XC = 1/(2πfC) = 1/(2π×50×100×10⁻⁶) = 1/0.0314 = 31.8 Ω."},
+        {"id":"Q49","question":"At resonance in an RLC circuit, the impedance is:","options":{"a":"Minimum, equal to R","b":"Maximum","c":"Zero","d":"Infinite"},"correct_answer":"a","explanation":"At resonance, XL = XC, so impedance Z = R (minimum). The circuit behaves as purely resistive."},
+        {"id":"Q50","question":"In an AC circuit, power factor is given by:","options":{"a":"cosφ","b":"sinφ","c":"tanφ","d":"R/Z"},"correct_answer":"d","explanation":"Power factor = cosφ = R/Z. It's the ratio of real power to apparent power."}
+      ]
+    },
+    {
+      "section_title": "ELECTROMAGNETIC WAVES",
+      "questions": [
+        {"id":"Q51","question":"Maxwell's equations predict that the speed of electromagnetic waves in vacuum is:","options":{"a":"1/√(μ₀ε₀)","b":"√(μ₀/ε₀)","c":"√(ε₀/μ₀)","d":"μ₀ε₀"},"correct_answer":"a","explanation":"c = 1/√(μ₀ε₀) ≈ 3×10⁸ m/s, derived from Maxwell's equations."},
+        {"id":"Q52","question":"Electromagnetic waves are:","options":{"a":"Longitudinal","b":"Transverse","c":"Neither longitudinal nor transverse","d":"Both"},"correct_answer":"b","explanation":"EM waves are transverse — the E and B fields oscillate perpendicular to the direction of propagation."},
+        {"id":"Q53","question":"The ratio of electric field to magnetic field in an EM wave is:","options":{"a":"1","b":"c","c":"1/c","d":"c²"},"correct_answer":"b","explanation":"In an EM wave, E/B = c. The electric and magnetic fields are in phase and perpendicular."},
+        {"id":"Q54","question":"Visible light is an EM wave with wavelength approximately:","options":{"a":"400-700 nm","b":"1-10 mm","c":"10-100 μm","d":"100-400 nm"},"correct_answer":"a","explanation":"Visible light ranges from about 400 nm (violet) to 700 nm (red)."},
+        {"id":"Q55","question":"The EM spectrum in order of increasing wavelength is:","options":{"a":"Gamma, X-ray, UV, visible, IR, microwave, radio","b":"Radio, microwave, IR, visible, UV, X-ray, gamma","c":"Gamma, UV, X-ray, visible, IR, radio, microwave","d":"Visible, IR, UV, X-ray, gamma, radio, microwave"},"correct_answer":"a","explanation":"From shortest to longest wavelength: Gamma, X-ray, UV, Visible, IR, Microwave, Radio."},
+        {"id":"Q56","question":"Maxwell's correction to Ampere's law added which term?","options":{"a":"Conduction current","b":"Displacement current","c":"Induced EMF","d":"Magnetic flux"},"correct_answer":"b","explanation":"Maxwell added the displacement current term (ε₀ dΦ/dt) to Ampere's law, enabling the prediction of EM waves."}
+      ]
+    },
+    {
+      "section_title": "MODERN PHYSICS & QUANTUM THEORY",
+      "questions": [
+        {"id":"Q57","question":"The photoelectric effect demonstrates that light behaves as:","options":{"a":"A wave","b":"A particle (photon)","c":"Both wave and particle","d":"Neither"},"correct_answer":"b","explanation":"The photoelectric effect (Einstein, 1905) is explained by light as discrete photons, each with energy E = hf."},
+        {"id":"Q58","question":"The work function of a metal is 2.0 eV. The threshold frequency for photoemission is: (h = 4.14×10⁻¹⁵ eV·s)","options":{"a":"4.83×10¹⁴ Hz","b":"2.41×10¹⁴ Hz","c":"9.66×10¹⁴ Hz","d":"1.21×10¹⁵ Hz"},"correct_answer":"a","explanation":"f₀ = φ/h = 2.0/(4.14×10⁻¹⁵) = 4.83×10¹⁴ Hz."},
+        {"id":"Q59","question":"The energy of a photon with wavelength 500 nm is: (h = 6.63×10⁻³⁴ Js, c = 3×10⁸ m/s)","options":{"a":"3.98×10⁻¹⁹ J","b":"1.99×10⁻¹⁹ J","c":"6.63×10⁻¹⁹ J","d":"9.95×10⁻¹⁹ J"},"correct_answer":"a","explanation":"E = hc/λ = 6.63×10⁻³⁴×3×10⁸/(500×10⁻⁹) = 19.89×10⁻²⁶/5×10⁻⁷ = 3.98×10⁻¹⁹ J."},
+        {"id":"Q60","question":"The de Broglie wavelength of an electron moving at 2×10⁶ m/s is: (h = 6.63×10⁻³⁴ Js, m_e = 9.11×10⁻³¹ kg)","options":{"a":"3.64×10⁻¹⁰ m","b":"1.82×10⁻¹⁰ m","c":"7.28×10⁻¹⁰ m","d":"9.11×10⁻¹⁰ m"},"correct_answer":"a","explanation":"λ = h/(mv) = 6.63×10⁻³⁴/(9.11×10⁻³¹×2×10⁶) = 6.63×10⁻³⁴/1.822×10⁻²⁴ = 3.64×10⁻¹⁰ m."},
+        {"id":"Q61","question":"The Heisenberg uncertainty principle states:","options":{"a":"Δx·Δp ≥ h/(4π)","b":"ΔE·Δt ≥ h/(4π)","c":"Both A and B","d":"Δx·Δp ≤ h/(4π)"},"correct_answer":"c","explanation":"Heisenberg: Δx·Δp ≥ ħ/2 and ΔE·Δt ≥ ħ/2, where ħ = h/(2π)."},
+        {"id":"Q62","question":"Planck's hypothesis introduced the concept of:","options":{"a":"Continuous energy radiation","b":"Quantized energy levels","c":"Wave-particle duality","d":"Spacetime curvature"},"correct_answer":"b","explanation":"Planck proposed that energy is emitted/absorbed in discrete quanta: E = nhf."},
+        {"id":"Q63","question":"The Compton effect demonstrates:","options":{"a":"Wave nature of electrons","b":"Particle nature of photons","c":"Nuclear fission","d":"Photoelectric effect"},"correct_answer":"b","explanation":"Compton scattering (photon-electron collision) shows that photons have momentum, confirming their particle nature."},
+        {"id":"Q64","question":"The ground state energy of a hydrogen atom is:","options":{"a":"-13.6 eV","b":"-3.4 eV","c":"-1.51 eV","d":"0 eV"},"correct_answer":"a","explanation":"The ground state (n=1) energy of hydrogen is -13.6 eV. The negative sign indicates the electron is bound."}
+      ]
+    },
+    {
+      "section_title": "RELATIVITY",
+      "questions": [
+        {"id":"Q65","question":"A meter stick moving at 0.6c measures:","options":{"a":"0.8 m","b":"1.0 m","c":"0.6 m","d":"1.25 m"},"correct_answer":"a","explanation":"L = L₀√(1-v²/c²) = 1.0×√(1-0.36) = 0.8 m."},
+        {"id":"Q66","question":"γ (Lorentz factor) for v = 0.6c is:","options":{"a":"1.25","b":"1.67","c":"1.0","d":"0.8"},"correct_answer":"a","explanation":"γ = 1/√(1-v²/c²) = 1/√0.64 = 1/0.8 = 1.25."},
+        {"id":"Q67","question":"A muon with proper lifetime 2.2 μs moves at 0.99c. Its lifetime in Earth's frame is:","options":{"a":"15.6 μs","b":"2.2 μs","c":"0.31 μs","d":"7.1 μs"},"correct_answer":"a","explanation":"γ = 1/√(1-0.9801) = 1/0.141 = 7.09. t = γt₀ = 7.09×2.2 = 15.6 μs."},
+        {"id":"Q68","question":"Relativistic momentum is given by:","options":{"a":"p = mv","b":"p = γmv","c":"p = mγ²v","d":"p = ½mv²"},"correct_answer":"b","explanation":"Relativistic momentum p = γmv = mv/√(1-v²/c²)."},
+        {"id":"Q69","question":"Einstein's famous mass-energy equivalence is:","options":{"a":"E = ½mv²","b":"E = mc²","c":"E = hf","d":"E = γmc²"},"correct_answer":"b","explanation":"E = mc² states that mass and energy are equivalent. Total energy includes rest energy: E = γmc²."},
+        {"id":"Q70","question":"The special theory of relativity is based on how many postulates?","options":{"a":"1","b":"2","c":"3","d":"4"},"correct_answer":"b","explanation":"Two postulates: (1) Laws of physics same in all inertial frames. (2) Speed of light constant in all inertial frames."},
+        {"id":"Q71","question":"Time dilation means that a moving clock:","options":{"a":"Runs faster","b":"Runs slower","c":"Stops","d":"Is unaffected"},"correct_answer":"b","explanation":"Time dilation: a clock moving relative to an observer ticks slower by factor γ: Δt = γΔt₀."},
+        {"id":"Q72","question":"Length contraction occurs only along:","options":{"a":"The direction of motion","b":"Perpendicular to motion","c":"Both directions","d":"No direction"},"correct_answer":"a","explanation":"Length contraction occurs only along the direction of relative motion. Dimensions perpendicular to motion are unchanged."},
+        {"id":"Q73","question":"General relativity describes gravity as:","options":{"a":"A force between masses","b":"Curvature of spacetime","c":"A property of particles","d":"An electromagnetic effect"},"correct_answer":"b","explanation":"General relativity: gravity is the curvature of spacetime caused by mass and energy."},
+        {"id":"Q74","question":"GPS satellites require relativity corrections because:","options":{"a":"They are far from Earth","b":"Both special and general relativity affect satellite clocks","c":"They use atomic clocks","d":"Batteries lose power"},"correct_answer":"b","explanation":"GPS corrects for both special relativity (satellite motion → time dilation) and general relativity (weaker gravity → faster time)."}
+      ]
+    },
+    {
+      "section_title": "NUCLEAR & RADIOACTIVITY",
+      "questions": [
+        {"id":"Q75","question":"The number of neutrons in Cadmium-114 (Z=48) is:","options":{"a":"48","b":"66","c":"114","d":"162"},"correct_answer":"b","explanation":"N = A - Z = 114 - 48 = 66 neutrons."},
+        {"id":"Q76","question":"Binding energy is the energy equivalent to:","options":{"a":"The total mass of the nucleus","b":"The mass defect of the nucleus","c":"The kinetic energy of nucleons","d":"The Coulomb energy"},"correct_answer":"b","explanation":"Binding energy = Δmc², where Δm is the mass defect (difference between nuclear mass and sum of constituent nucleons)."},
+        {"id":"Q77","question":"Nuclear fission involves:","options":{"a":"Splitting a heavy nucleus","b":"Combining light nuclei","c":"Spontaneous decay","d":"Electron capture"},"correct_answer":"a","explanation":"Fission: a heavy nucleus (e.g., U-235) splits into lighter nuclei, releasing energy and neutrons."},
+        {"id":"Q78","question":"Nuclear fusion involves:","options":{"a":"Splitting a heavy nucleus","b":"Combining light nuclei","c":"Alpha decay","d":"Gamma emission"},"correct_answer":"b","explanation":"Fusion: light nuclei (e.g., hydrogen isotopes) combine to form a heavier nucleus, releasing energy."},
+        {"id":"Q79","question":"Alpha radiation consists of:","options":{"a":"Helium nuclei","b":"Electrons","c":"Photons","d":"Neutrons"},"correct_answer":"a","explanation":"Alpha particles are helium nuclei (2 protons + 2 neutrons), with charge +2 and mass 4 amu."},
+        {"id":"Q80","question":"Beta radiation consists of:","options":{"a":"Helium nuclei","b":"Electrons or positrons","c":"Photons","d":"Protons"},"correct_answer":"b","explanation":"Beta decay involves emission of electrons (β⁻) or positrons (β⁺) from the nucleus."},
+        {"id":"Q81","question":"Gamma radiation consists of:","options":{"a":"Helium nuclei","b":"Electrons","c":"High-energy photons","d":"Neutrons"},"correct_answer":"c","explanation":"Gamma rays are high-energy electromagnetic photons emitted from excited nuclei."},
+        {"id":"Q82","question":"The half-life of a radioactive substance is 10 days. After 30 days, the fraction remaining is:","options":{"a":"1/2","b":"1/4","c":"1/8","d":"1/16"},"correct_answer":"c","explanation":"30 days = 3 half-lives. Remaining fraction = (1/2)³ = 1/8."},
+        {"id":"Q83","question":"The strong nuclear force is:","options":{"a":"Long-range and charge-dependent","b":"Short-range and charge-independent","c":"Electromagnetic","d":"Gravitational"},"correct_answer":"b","explanation":"The strong force is short-range (≈10⁻¹⁵ m), charge-independent, and binds nucleons together."},
+        {"id":"Q84","question":"Isotopes have the same number of:","options":{"a":"Neutrons","b":"Protons","c":"Nucleons","d":"Electrons"},"correct_answer":"b","explanation":"Isotopes have the same number of protons (same element) but different numbers of neutrons."},
+        {"id":"Q85","question":"Isotones have the same number of:","options":{"a":"Protons","b":"Neutrons","c":"Nucleons","d":"Nuclei"},"correct_answer":"b","explanation":"Isotones are nuclei with the same number of neutrons but different numbers of protons."},
+        {"id":"Q86","question":"In a nuclear reaction, the total ___ is conserved.","options":{"a":"Mass number","b":"Charge","c":"Energy","d":"All of the above"},"correct_answer":"d","explanation":"Nuclear reactions conserve mass number (A), charge (Z), energy, and momentum."},
+        {"id":"Q87","question":"The (d,p) reaction involves:","options":{"a":"Target emitting a proton","b":"Target absorbing a neutron from the deuteron","c":"Deuteron emission","d":"Alpha capture"},"correct_answer":"b","explanation":"In (d,p), the target absorbs a deuteron (²H) and emits a proton, effectively gaining a neutron."},
+        {"id":"Q88","question":"Radioactive decay follows which order of kinetics?","options":{"a":"Zero order","b":"First order","c":"Second order","d":"Third order"},"correct_answer":"b","explanation":"Radioactive decay is first-order: dN/dt = -λN, with constant half-life t₁/₂ = ln2/λ."},
+        {"id":"Q89","question":"The decay constant λ is related to half-life t₁/₂ by:","options":{"a":"λ = t₁/₂/ln2","b":"λ = ln2/t₁/₂","c":"λ = 1/t₁/₂","d":"λ = t₁/₂×ln2"},"correct_answer":"b","explanation":"For first-order decay: t₁/₂ = ln2/λ, so λ = ln2/t₁/₂."},
+        {"id":"Q90","question":"A sample starts with 1000 nuclei. After two half-lives, how many remain?","options":{"a":"500","b":"250","c":"125","d":"0"},"correct_answer":"b","explanation":"After 1 half-life: 500. After 2 half-lives: 250. N = N₀(1/2)ⁿ where n is number of half-lives."}
+      ]
+    },
+    {
+      "section_title": "SOLIDS & SEMICONDUCTORS",
+      "questions": [
+        {"id":"Q91","question":"In a conductor, the valence band and conduction band:","options":{"a":"Overlap","b":"Have a small gap","c":"Have a large gap","d":"Are separated by an insulator"},"correct_answer":"a","explanation":"In conductors, the valence and conduction bands overlap, allowing free electron movement and high conductivity."},
+        {"id":"Q92","question":"In an insulator, the band gap is typically:","options":{"a":"< 1 eV","b":"1-3 eV","c":"> 3 eV","d":"0 eV"},"correct_answer":"c","explanation":"Insulators have large band gaps (> 3 eV) that electrons cannot easily cross, resulting in very low conductivity."},
+        {"id":"Q93","question":"In a semiconductor at 0 K, the material behaves as:","options":{"a":"A conductor","b":"An insulator","c":"A superconductor","d":"A semiconductor"},"correct_answer":"b","explanation":"At 0 K, the valence band is full and the conduction band is empty, so the semiconductor behaves as an insulator."},
+        {"id":"Q94","question":"Doping a semiconductor with a pentavalent impurity produces:","options":{"a":"n-type semiconductor","b":"p-type semiconductor","c":"Intrinsic semiconductor","d":"Insulator"},"correct_answer":"a","explanation":"Pentavalent impurities (P, As, Sb) donate extra electrons, creating n-type (negative) semiconductor."},
+        {"id":"Q95","question":"Doping with a trivalent impurity produces:","options":{"a":"n-type","b":"p-type","c":"Intrinsic","d":"Metal"},"correct_answer":"b","explanation":"Trivalent impurities (B, Al, Ga) create electron deficiencies (holes), producing p-type (positive) semiconductor."},
+        {"id":"Q96","question":"A p-n junction under forward bias:","options":{"a":"Conducts current","b":"Blocks current","c":"Becomes an insulator","d":"Generates voltage"},"correct_answer":"a","explanation":"Forward bias (p-side positive, n-side negative) reduces the depletion region and allows current flow."},
+        {"id":"Q97","question":"A p-n junction under reverse bias:","options":{"a":"Conducts heavily","b":"Conducts minimally","c":"Acts as a voltage source","d":"Generates light"},"correct_answer":"b","explanation":"Reverse bias widens the depletion region, allowing only a tiny leakage current (until breakdown)."},
+        {"id":"Q98","question":"A Zener diode is used primarily for:","options":{"a":"Rectification","b":"Voltage regulation","c":"Amplification","d":"Switching"},"correct_answer":"b","explanation":"Zener diodes are designed to operate in reverse breakdown, providing stable reference voltages."},
+        {"id":"Q99","question":"The magnetic flux density of an iron core with area 0.2 cm² and flux 0.1 μWb is:","options":{"a":"5×10⁻³ T","b":"2×10⁻² T","c":"5×10⁻⁴ T","d":"2×10⁻³ T"},"correct_answer":"a","explanation":"B = Φ/A = 0.1×10⁻⁶/(0.2×10⁻⁴) = 10⁻⁷/(2×10⁻⁵) = 5×10⁻³ T."},
+        {"id":"Q100","question":"The primary cause of Earth's magnetic field is:","options":{"a":"Solar wind","b":"Rotation of solid iron core","c":"Convection currents in the liquid outer core","d":"Earth's tilt"},"correct_answer":"c","explanation":"Earth's magnetic field is generated by convection currents of molten iron and nickel in the outer core (geodynamo)."}
+      ]
+    }
+  ]
+}

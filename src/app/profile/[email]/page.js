@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { use } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, UserPlus, UserCheck, Medal, Clock, Target, GraduationCap } from 'lucide-react'
+import { ArrowLeft, UserPlus, UserCheck, Medal, Clock, Target, GraduationCap, User } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -86,9 +87,12 @@ export default function PublicProfilePage({ params }) {
           <>
             <Card>
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <div className="flex size-16 items-center justify-center rounded-full bg-primary/10 text-2xl font-bold text-primary">
-                  {profile.name?.[0]?.toUpperCase() || decodedEmail[0].toUpperCase()}
-                </div>
+                <Avatar className="size-16">
+                  <AvatarImage src={profile.avatar} />
+                  <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
+                    {profile.name?.[0]?.toUpperCase() || decodedEmail[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
                 <div>
                   <h2 className="text-lg font-bold">{profile.name || 'Anonymous'}</h2>
                   <p className="text-xs text-muted-foreground">{decodedEmail}</p>

@@ -1,0 +1,42 @@
+{
+  "course_code": "CSC 102",
+  "course_title": "Introduction to Problem Solving",
+  "study_guide_title": "CSC 102 Introduction to Problem Solving - Past Questions",
+  "sections": [
+    {
+      "section_title": "PROBLEM SOLVING FUNDAMENTALS",
+      "questions": [
+        {"id":"Q1","question":"The two levels of languages used in Problem Solving are:","options":{"a":"High-level and Low-level","b":"Procedural and Object-oriented","c":"Compiled and Interpreted","d":"Static and Dynamic"},"correct_answer":"a","explanation":"The two levels are high-level languages (Python, Java) and low-level languages (assembly, machine code)."},
+        {"id":"Q2","question":"How does a computer understand high-level languages?","options":{"a":"Direct execution","b":"Through compilers or interpreters","c":"Through hardware circuits","d":"Through BIOS"},"correct_answer":"b","explanation":"High-level languages are translated to machine code by compilers (entire program) or interpreters (line by line)."},
+        {"id":"Q3","question":"The process of fixing errors in code is called:","options":{"a":"Testing","b":"Debugging","c":"Compiling","d":"Executing"},"correct_answer":"b","explanation":"Debugging is the process of identifying and fixing errors in code. Testing is evaluating a program to find errors."},
+        {"id":"Q4","question":"A systematic evaluation of a program to identify and fix errors is:","options":{"a":"Debugging","b":"Testing","c":"Compiling","d":"Linking"},"correct_answer":"b","explanation":"Testing is the systematic evaluation of code to identify errors. Debugging is the process of fixing identified errors."},
+        {"id":"Q5","question":"A logical error is different from a syntax error because:","options":{"a":"Logical error violates grammar rules","b":"Syntax error produces wrong output despite running","c":"Logical error runs but produces wrong results","d":"Syntax error requires debugging tools"},"correct_answer":"c","explanation":"A syntax error violates programming language grammar (code won't compile/run). A logical error runs but produces incorrect results due to flawed logic."},
+        {"id":"Q6","question":"Which of the following is NOT a decision control structure?","options":{"a":"if","b":"if-else","c":"switch","d":"for loop"},"correct_answer":"d","explanation":"if, if-else, and switch are decision control structures. A for loop is a repetition/iteration structure."},
+        {"id":"Q7","question":"The process of simplifying a complex problem by focusing on essential details is:","options":{"a":"Decomposition","b":"Abstraction","c":"Modularization","d":"Encapsulation"},"correct_answer":"b","explanation":"Abstraction is the process of hiding unnecessary details and focusing only on essential features of a problem."},
+        {"id":"Q8","question":"The two fundamental concepts in Problem Solving that promote code organization and reusability are:","options":{"a":"Abstraction and Decomposition","b":"Modularity and Encapsulation","c":"Functions and Classes","d":"Testing and Debugging"},"correct_answer":"b","explanation":"Modularity (breaking code into modules) and Encapsulation (hiding internal details) promote code organization, readability, and reusability."},
+        {"id":"Q9","question":"A good algorithm should be:","options":{"a":"Complex and fast","b":"Unambiguous, finite, and effective","c":"Long and detailed","d":"Written in a specific language"},"correct_answer":"b","explanation":"A good algorithm should be unambiguous (clear steps), finite (terminates), and effective (produces correct results)."},
+        {"id":"Q10","question":"To evaluate the memory required by an algorithm, we use:","options":{"a":"Time complexity","b":"Space complexity","c":"Big-O notation","d":"Algorithm efficiency"},"correct_answer":"b","explanation":"Space complexity measures the amount of memory an algorithm requires. Time complexity measures execution time."},
+        {"id":"Q11","question":"The steps to solve a complex problem in Computer Science include all EXCEPT:","options":{"a":"Problem definition","b":"Algorithm design","c":"Immediate coding","d":"Testing and evaluation"},"correct_answer":"c","explanation":"Problem solving steps: define the problem, analyze requirements, design algorithm, implement (code), test, and maintain. Coding comes after design."}
+      ]
+    },
+    {
+      "section_title": "PROGRAMMING PARADIGMS & CONCEPTS",
+      "questions": [
+        {"id":"Q12","question":"The three major programming paradigms are:","options":{"a":"Procedural, Object-Oriented, Functional","b":"Java, Python, C++","c":"Compiled, Interpreted, Hybrid","d":"Sequential, Parallel, Distributed"},"correct_answer":"a","explanation":"The three major paradigms are Procedural (C, Pascal), Object-Oriented (Java, C++), and Functional (Haskell, Lisp)."},
+        {"id":"Q13","question":"Recursion requires which key component?","options":{"a":"Base case","b":"Recursive case","c":"Both base and recursive cases","d":"Loop condition"},"correct_answer":"c","explanation":"Recursion needs a base case (termination condition) and a recursive case (function calling itself with modified parameters)."},
+        {"id":"Q14","question":"Divide and Conquer is an algorithmic paradigm that:","options":{"a":"Solves problems directly","b":"Divides problem into subproblems, solves each, combines results","c":"Uses iteration only","d":"Avoids recursion"},"correct_answer":"b","explanation":"Divide and Conquer breaks a problem into smaller subproblems, solves each recursively, and combines the results."},
+        {"id":"Q15","question":"Which of the following is a Problem Solving tool?","options":{"a":"Flowchart","b":"Pseudocode","c":"Algorithm","d":"All of the above"},"correct_answer":"d","explanation":"Flowcharts, pseudocode, and algorithms are all tools used in problem solving."},
+        {"id":"Q16","question":"Iterative refinement in problem solving means:","options":{"a":"Solving once and never revisiting","b":"Gradually improving through repeated cycles","c":"Skipping testing","d":"Writing complete code at once"},"correct_answer":"b","explanation":"Iterative refinement involves repeatedly improving a solution through cycles of design, implement, test, and refine."}
+      ]
+    },
+    {
+      "section_title": "PROGRAMMING (C++/PYTHON)",
+      "questions": [
+        {"id":"Q17","question":"In C++, to print a string and its length, you should use:","options":{"a":"cout << name << name.length()","b":"printf(name, strlen(name))","c":"print(name, length(name))","d":"System.out.println(name + name.size())"},"correct_answer":"a","explanation":"In C++, cout << name << name.length() prints a string and its character count."},
+        {"id":"Q18","question":"A program that keeps prompting the user to guess a word with up to 10 guesses should use:","options":{"a":"for loop","b":"while loop with counter","c":"if-else only","d":"switch statement"},"correct_answer":"b","explanation":"A while loop with a counter variable is appropriate when the number of allowed guesses is limited but the user may guess correctly earlier."},
+        {"id":"Q19","question":"To exit a program when the user enters 99, you should use:","options":{"a":"break","b":"continue","c":"return","d":"exit(0)"},"correct_answer":"a","explanation":"Inside a loop, break terminates the loop immediately when the condition is met (e.g., input == 99)."},
+        {"id":"Q20","question":"Which loop would you use to repeatedly prompt user for input until a sentinel value is entered?","options":{"a":"for loop","b":"while loop","c":"do-while loop","d":"Both B and C"},"correct_answer":"d","explanation":"Both while and do-while loops work. A do-while loop is particularly suitable since it ensures at least one prompt before checking the sentinel."}
+      ]
+    }
+  ]
+}

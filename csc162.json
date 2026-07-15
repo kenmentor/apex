@@ -1,0 +1,58 @@
+{
+  "course_code": "CSC 162",
+  "course_title": "Electronics & Computer Hardware",
+  "study_guide_title": "CSC 162 Electronics & Computer Hardware - Past Questions",
+  "sections": [
+    {
+      "section_title": "NUMBER SYSTEMS & BOOLEAN ALGEBRA",
+      "questions": [
+        {"id":"Q1","question":"Perform binary division: 10000001₂ ÷ 110₂","options":{"a":"10101₂","b":"1011₂","c":"11001₂","d":"1111₂"},"correct_answer":"a","explanation":"10000001₂ = 129, 110₂ = 6. 129/6 = 21 remainder 3. 21 = 10101₂."},
+        {"id":"Q2","question":"Perform binary subtraction: 1010111₂ - 111001₂","options":{"a":"11110₂","b":"1110₂","c":"111110₂","d":"1001110₂"},"correct_answer":"a","explanation":"1010111₂ = 87, 111001₂ = 57. 87-57 = 30 = 11110₂."},
+        {"id":"Q3","question":"Evaluate 5F2₁₆ ÷ 9₁₆","options":{"a":"A8₁₆","b":"A9₁₆","c":"98₁₆","d":"B8₁₆"},"correct_answer":"b","explanation":"5F2₁₆ = 1522, 9₁₆ = 9. 1522/9 = 169 remainder 1. 169 = A9₁₆."},
+        {"id":"Q4","question":"Evaluate 7653₈ + 552₈ in octal.","options":{"a":"10425₈","b":"10435₈","c":"10325₈","d":"11425₈"},"correct_answer":"a","explanation":"7653₈ + 552₈ = 10425₈."},
+        {"id":"Q5","question":"Which of the following is a method of representing signed numbers?","options":{"a":"One's complement","b":"Two's complement","c":"Sign-magnitude","d":"All of the above"},"correct_answer":"d","explanation":"Signed numbers can be represented using sign-magnitude, one's complement, and two's complement."},
+        {"id":"Q6","question":"Compute 8 - 14 using two's complement (5-bit).","options":{"a":"10110₂","b":"11010₂","c":"11100₂","d":"10010₂"},"correct_answer":"b","explanation":"8 = 01000₂, 14 = 01110₂. -14 in 2's complement = 10010₂. 01000₂ + 10010₂ = 11010₂ = -6."},
+        {"id":"Q7","question":"Compute 7 - 12 using one's complement (5-bit).","options":{"a":"11011₂","b":"11010₂","c":"10101₂","d":"11101₂"},"correct_answer":"a","explanation":"7 = 00111₂, 12 = 01100₂. -12 in 1's complement = 10011₂. 00111₂ + 10011₂ = 11010₂ + carry = 11011₂ = -5."}
+      ]
+    },
+    {
+      "section_title": "DIGITAL LOGIC & CIRCUITS",
+      "questions": [
+        {"id":"Q8","question":"The number of basic logic gates is:","options":{"a":"3","b":"4","c":"7","d":"2"},"correct_answer":"a","explanation":"The three basic logic gates are AND, OR, and NOT."},
+        {"id":"Q9","question":"Simplify AB + AB + (A+B)(A+B)","options":{"a":"A + B","b":"AB","c":"A ⊕ B","d":"1"},"correct_answer":"a","explanation":"AB + AB = AB. (A+B)(A+B) = A+B. AB + A + B = A + B (since A + AB = A)."},
+        {"id":"Q10","question":"Simplify A ⊕ B ⊕ C","options":{"a":"ABC","b":"A+B+C","c":"(A⊕B)⊕C","d":"A+B+C+ABC"},"correct_answer":"c","explanation":"XOR is associative, so A⊕B⊕C = (A⊕B)⊕C = A⊕(B⊕C)."},
+        {"id":"Q11","question":"A 7-segment display is a:","options":{"a":"Input device","b":"Output device","c":"Storage device","d":"Processing device"},"correct_answer":"b","explanation":"A 7-segment display is an output device that displays decimal digits using 7 LED segments."},
+        {"id":"Q12","question":"Logic gates can be implemented using:","options":{"a":"Transistors","b":"Diodes","c":"Relays","d":"All of the above"},"correct_answer":"d","explanation":"Logic gates can be built using transistors, diodes, and even relays or other switching elements."}
+      ]
+    },
+    {
+      "section_title": "CIRCUIT ANALYSIS",
+      "questions": [
+        {"id":"Q13","question":"Five resistors R₁=5Ω, R₂=1Ω, R₃=4Ω, R₄=2Ω, R₅=3Ω in series gives total resistance:","options":{"a":"5Ω","b":"10Ω","c":"15Ω","d":"3Ω"},"correct_answer":"c","explanation":"RT = 5+1+4+2+3 = 15 Ω."},
+        {"id":"Q14","question":"The same resistors in parallel give total resistance of approximately:","options":{"a":"0.47 Ω","b":"0.62 Ω","c":"1.25 Ω","d":"2.14 Ω"},"correct_answer":"a","explanation":"1/RT = 1/5+1/1+1/4+1/2+1/3 = 0.2+1+0.25+0.5+0.333 = 2.283. RT = 0.438 Ω ≈ 0.47 Ω."},
+        {"id":"Q15","question":"R₁, R₂, R₃ in series and R₄, R₅ in parallel: total resistance?","options":{"a":"10 Ω","b":"12.2 Ω","c":"8.7 Ω","d":"11.2 Ω"},"correct_answer":"b","explanation":"Rseries = 5+1+4 = 10Ω. R₄‖R₅ = (2×3)/(2+3) = 6/5 = 1.2Ω. RT = 10+1.2 = 11.2Ω."},
+        {"id":"Q16","question":"For a 26Ω resistor with ±5% tolerance, the tolerance value is:","options":{"a":"0.5 Ω","b":"1.0 Ω","c":"1.3 Ω","d":"2.6 Ω"},"correct_answer":"c","explanation":"26 × 5% = 26 × 0.05 = 1.3 Ω."},
+        {"id":"Q17","question":"The minimum resistance for a 26Ω ±5% resistor is:","options":{"a":"23.4 Ω","b":"24.7 Ω","c":"25.0 Ω","d":"25.5 Ω"},"correct_answer":"b","explanation":"Rmin = 26 - 1.3 = 24.7 Ω."},
+        {"id":"Q18","question":"The maximum resistance for a 26Ω ±5% resistor is:","options":{"a":"27.0 Ω","b":"27.3 Ω","c":"26.5 Ω","d":"28.6 Ω"},"correct_answer":"b","explanation":"Rmax = 26 + 1.3 = 27.3 Ω."},
+        {"id":"Q19","question":"A variable resistor is also called a:","options":{"a":"Rheostat","b":"Potentiometer","c":"Both A and B","d":"Capacitor"},"correct_answer":"c","explanation":"A variable resistor is called a rheostat (2-terminal) or potentiometer (3-terminal)."},
+        {"id":"Q20","question":"A fuse is used to protect circuits from:","options":{"a":"Overvoltage","b":"Overcurrent","c":"Undervoltage","d":"Frequency changes"},"correct_answer":"b","explanation":"A fuse protects circuits from overcurrent by melting (blowing) when current exceeds its rated value."}
+      ]
+    },
+    {
+      "section_title": "GROUNDING & POWER SYSTEMS",
+      "questions": [
+        {"id":"Q21","question":"Which of the following is a function of a grounding system?","options":{"a":"Safety from electric shock","b":"Stabilize voltage levels","c":"Path for fault current","d":"All of the above"},"correct_answer":"d","explanation":"Grounding provides safety, voltage stabilization, and a path for fault current."},
+        {"id":"Q22","question":"A fast-blow fuse in a motor circuit may cause:","options":{"a":"Better protection","b":"Nuisance tripping during startup","c":"Higher efficiency","d":"Faster motor response"},"correct_answer":"b","explanation":"Motors draw high inrush current at startup. A fast-blow fuse may blow during normal startup (nuisance tripping). A slow-blow fuse is recommended."},
+        {"id":"Q23","question":"In a door security system with 3 switches in OR configuration and a buzzer, the intruder is detected when:","options":{"a":"All switches are closed","b":"Any switch is closed","c":"No switches are closed","d":"Switches are toggled"},"correct_answer":"b","explanation":"In an OR configuration, the buzzer activates when any of the three switches is triggered (closed)."}
+      ]
+    },
+    {
+      "section_title": "MICROCOMPUTER HARDWARE",
+      "questions": [
+        {"id":"Q24","question":"The basic microcomputer hardware consists of:","options":{"a":"CPU, Memory, I/O","b":"Monitor, Keyboard, Mouse","c":"ALU, CU, Register","d":"RAM, ROM, Cache"},"correct_answer":"a","explanation":"The three main components of a microcomputer are the CPU (processor), memory, and I/O (input/output) devices."},
+        {"id":"Q25","question":"A 4-terminal device that can be converted to function as a 3-terminal device is:","options":{"a":"Resistor","b":"Transistor","c":"Transformer","d":"Capacitor"},"correct_answer":"b","explanation":"A transistor has 3 terminals (B, C, E). Some 4-terminal devices like optocouplers can be configured as 3-terminal devices."},
+        {"id":"Q26","question":"Components characterized by number of terminals include all EXCEPT:","options":{"a":"Two-terminal: resistor, diode","b":"Three-terminal: transistor","c":"One-terminal: ground","d":"Four-terminal: optocoupler"},"correct_answer":"c","explanation":"Ground is not a component terminal. Two-terminal devices: resistor, diode. Three-terminal: transistor. Four-terminal: optocoupler."}
+      ]
+    }
+  ]
+}
