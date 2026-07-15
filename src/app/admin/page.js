@@ -215,8 +215,12 @@ export default function AdminPage() {
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" href="/admin/analytics/active" />
                   <MetricCard icon={Users} label="Today" value={d.todayUnique ?? '—'} sub="unique users" href="/admin/analytics/overview" />
-                  <MetricCard icon={Users} label="7-Day Sessions" value={d.uniqueSessions ?? '—'} href="/admin/analytics/overview" />
-                  <MetricCard icon={Zap} label="Total Events" value={d.totalEvents ?? '—'} href="/admin/analytics/overview" />
+                  <MetricCard icon={Users} label="7-Day Sessions" value={d.uniqueSessions ?? '—'}
+                    sub={d.metrics?.uniqueSessions?.trend === 'up' ? `↑ +${d.metrics.uniqueSessions.change}%` : d.metrics?.uniqueSessions?.trend === 'down' ? `↓ ${d.metrics.uniqueSessions.change}%` : '—'}
+                    href="/admin/analytics/overview" />
+                  <MetricCard icon={Zap} label="Total Events" value={d.totalEvents ?? '—'}
+                    sub={d.metrics?.totalEvents?.trend === 'up' ? `↑ +${d.metrics.totalEvents.change}%` : d.metrics?.totalEvents?.trend === 'down' ? `↓ ${d.metrics.totalEvents.change}%` : '—'}
+                    href="/admin/analytics/overview" />
                 </div>
 
                 {/* Row 2: PWA / Web + Refreshes + Downloads */}
@@ -239,8 +243,12 @@ export default function AdminPage() {
                       </CardContent>
                     </Card>
                   </Link>
-                  <MetricCard icon={RefreshCw} label="Page Refreshes" value={d.pageRefreshes ?? '—'} color="text-orange-500" href="/admin/analytics/refreshes" />
-                  <MetricCard icon={Download} label="Downloads" value={d.downloadClicks ?? '—'} href="/admin/analytics/downloads" />
+                  <MetricCard icon={RefreshCw} label="Page Refreshes" value={d.pageRefreshes ?? '—'} color="text-orange-500"
+                    sub={d.metrics?.pageRefreshes?.trend === 'up' ? `↑ +${d.metrics.pageRefreshes.change}%` : d.metrics?.pageRefreshes?.trend === 'down' ? `↓ ${d.metrics.pageRefreshes.change}%` : '—'}
+                    href="/admin/analytics/refreshes" />
+                  <MetricCard icon={Download} label="Downloads" value={d.downloadClicks ?? '—'}
+                    sub={d.metrics?.downloads?.trend === 'up' ? `↑ +${d.metrics.downloads.change}%` : d.metrics?.downloads?.trend === 'down' ? `↓ ${d.metrics.downloads.change}%` : '—'}
+                    href="/admin/analytics/downloads" />
                   <Link href="/admin/analytics/hours">
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                       <CardContent className="p-3">
@@ -263,7 +271,7 @@ export default function AdminPage() {
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   <MetricCard icon={Layers} label="Flashcard Opens"
                     value={d.flashcard?.opens ?? '—'}
-                    sub={d.flashcard?.avgTimeSeconds ? `~${d.flashcard.avgTimeSeconds}s avg` : ''}
+                    sub={d.metrics?.flashcardOpens?.trend === 'up' ? `↑ +${d.metrics.flashcardOpens.change}% · ~${d.flashcard.avgTimeSeconds}s avg` : d.metrics?.flashcardOpens?.trend === 'down' ? `↓ ${d.metrics.flashcardOpens.change}% · ~${d.flashcard.avgTimeSeconds}s avg` : d.flashcard?.avgTimeSeconds ? `~${d.flashcard.avgTimeSeconds}s avg` : ''}
                     href="/admin/analytics/flashcards" />
                   <Link href="/admin/analytics/engagement">
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
@@ -274,7 +282,10 @@ export default function AdminPage() {
                           <span className="text-lg font-bold">{d.engagement?.ctr ?? 0}%</span>
                         </div>
                         <Bar value={d.engagement?.navigationClicks || 0} max={d.engagement?.pageViews || 1} color="bg-rose-500" />
-                        <div className="text-[10px] text-muted-foreground mt-0.5">{d.engagement?.navigationClicks || 0} nav / {d.engagement?.pageViews || 0} views</div>
+                        <div className="flex items-center gap-2 text-[10px] text-muted-foreground mt-0.5">
+                          <span>{d.engagement?.navigationClicks || 0} nav / {d.engagement?.pageViews || 0} views</span>
+                          {d.metrics?.ctr?.trend === 'up' ? <span className="text-green-500">↑ +{d.metrics.ctr.change}%</span> : d.metrics?.ctr?.trend === 'down' ? <span className="text-red-500">↓ {d.metrics.ctr.change}%</span> : null}
+                        </div>
                       </CardContent>
                     </Card>
                   </Link>
@@ -282,25 +293,30 @@ export default function AdminPage() {
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                       <CardContent className="p-3">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Engagement</div>
-                        <div className="text-lg font-bold">{d.engagement?.avgEventsPerSession ?? '—'}</div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold">{d.engagement?.avgEventsPerSession ?? '—'}</span>
+                          {d.metrics?.avgEventsPerSession?.trend === 'up' ? <span className="text-xs text-green-500">↑ +{d.metrics.avgEventsPerSession.change}%</span> : d.metrics?.avgEventsPerSession?.trend === 'down' ? <span className="text-xs text-red-500">↓ {d.metrics.avgEventsPerSession.change}%</span> : null}
+                        </div>
                         <div className="text-[10px] text-muted-foreground">avg events/session</div>
                         <div className="mt-1 text-[10px] text-muted-foreground">~{d.engagement?.estimatedActiveMinutes ?? 0} min active</div>
                       </CardContent>
                     </Card>
                   </Link>
-                  <MetricCard icon={Eye} label="Page Views" value={d.engagement?.pageViews ?? '—'} href="/admin/analytics/pages" />
+                  <MetricCard icon={Eye} label="Page Views" value={d.engagement?.pageViews ?? '—'}
+                    sub={d.metrics?.pageViews?.trend === 'up' ? `↑ +${d.metrics.pageViews.change}%` : d.metrics?.pageViews?.trend === 'down' ? `↓ ${d.metrics.pageViews.change}%` : '—'}
+                    href="/admin/analytics/pages" />
                 </div>
 
                 {/* Row 4: Quiz + Retention */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <MetricCard icon={Zap} label="Quiz Analytics"
-                    value={d.eventsBreakdown?.find(e => e.event === 'quiz_started')?.count ?? '—'}
-                    sub="quiz starts (7d)"
+                  <MetricCard icon={Zap} label="Quiz Started"
+                    value={d.metrics?.quizStarted?.now ?? '—'}
+                    sub={d.metrics?.quizStarted?.trend === 'up' ? `↑ +${d.metrics.quizStarted.change}%` : d.metrics?.quizStarted?.trend === 'down' ? `↓ ${d.metrics.quizStarted.change}%` : '—'}
                     href="/admin/analytics/quizzes" />
-                  <MetricCard icon={TrendingUp} label="User Retention"
-                    value={d.eventsBreakdown ? `${Math.round(((d.uniqueSessions - d.todayUnique) / Math.max(d.uniqueSessions, 1)) * 100)}%` : '—'}
-                    sub="returning rate (7d)"
-                    href="/admin/analytics/retention" />
+                  <MetricCard icon={BarChart3} label="Quiz Avg Score"
+                    value={d.metrics?.quizAvgScore?.now != null ? `${d.metrics.quizAvgScore.now}%` : '—'}
+                    sub={d.metrics?.quizAvgScore?.trend === 'up' ? `↑ +${d.metrics.quizAvgScore.change}%` : d.metrics?.quizAvgScore?.trend === 'down' ? `↓ ${d.metrics.quizAvgScore.change}%` : '—'}
+                    href="/admin/analytics/quizzes" />
                 </div>
 
                 {/* Row 5: Top Pages */}

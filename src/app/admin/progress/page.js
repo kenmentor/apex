@@ -129,10 +129,10 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quiz Performance</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={Zap} label="Quizzes Started" {...m.quiz?.started} />
-            <StatCard icon={Zap} label="Quizzes Completed" {...m.quiz?.completed} />
-            <StatCard icon={Zap} label="Completion Rate" {...m.quiz?.completionRate} />
-            <StatCard icon={BarChart3} label="Avg Score" {...m.quiz?.avgScore} />
+            <StatCard icon={Zap} label="Quizzes Started" {...m.quizStarted} />
+            <StatCard icon={Zap} label="Quizzes Completed" {...m.quizCompleted} />
+            <StatCard icon={Zap} label="Completion Rate" {...m.quizCompletionRate} />
+            <StatCard icon={BarChart3} label="Avg Score" {...m.quizAvgScore} />
           </div>
         </div>
 
@@ -140,8 +140,8 @@ export default function ProgressPage() {
         <div>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Flashcards</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatCard icon={Layers} label="Flashcard Opens" {...m.flashcard?.opens} />
-            <StatCard icon={Clock} label="Avg Duration (s)" {...m.flashcard?.avgDuration} />
+            <StatCard icon={Layers} label="Flashcard Opens" {...m.flashcardOpens} />
+            <StatCard icon={Clock} label="Avg Duration (s)" {...m.flashcardAvgDurationSec} />
           </div>
         </div>
 
