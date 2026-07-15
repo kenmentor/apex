@@ -68,28 +68,20 @@ export default function AnalyticsPage() {
 
         {/* Quiz stats */}
         <div style={{ background: '#fff', borderRadius: 12, padding: 20, marginBottom: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Quiz Performance</h2>
+          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#130f40' }}>Quiz Performance</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 16 }}>
-            <div>
-              <div style={{ fontSize: 12, color: '#999' }}>Started</div>
-              <div style={{ fontSize: 20, fontWeight: 700 }}>{quiz.started || 0}</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 12, color: '#999' }}>Completed</div>
-              <div style={{ fontSize: 20, fontWeight: 700 }}>{quiz.completed || 0}</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 12, color: '#999' }}>Completion Rate</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: quiz.completionRate > 60 ? '#27ae60' : '#ff9f43' }}>{quiz.completionRate || 0}%</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 12, color: '#999' }}>Avg Score</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: quiz.avgScore > 60 ? '#27ae60' : '#ff4757' }}>{quiz.avgScore || 0}%</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 12, color: '#999' }}>Avg Time/Quiz</div>
-              <div style={{ fontSize: 20, fontWeight: 700 }}>{quiz.avgTimePerQuiz ? `${Math.round(quiz.avgTimePerQuiz / 60)}m` : '—'}</div>
-            </div>
+            {[
+              { label: 'Started', value: quiz.started || 0, color: '#130f40' },
+              { label: 'Completed', value: quiz.completed || 0, color: '#27ae60' },
+              { label: 'Completion Rate', value: `${quiz.completionRate || 0}%`, color: quiz.completionRate > 60 ? '#27ae60' : '#ff9f43' },
+              { label: 'Avg Score', value: `${quiz.avgScore || 0}%`, color: quiz.avgScore > 60 ? '#27ae60' : '#ff4757' },
+              { label: 'Avg Time/Quiz', value: quiz.avgTimePerQuiz ? `${Math.round(quiz.avgTimePerQuiz / 60)}m` : '—', color: '#130f40' },
+            ].map(s => (
+              <div key={s.label}>
+                <div style={{ fontSize: 12, color: '#999' }}>{s.label}</div>
+                <div style={{ fontSize: 20, fontWeight: 700, color: s.color }}>{s.value}</div>
+              </div>
+            ))}
           </div>
         </div>
 
