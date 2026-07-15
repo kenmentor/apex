@@ -4,12 +4,12 @@ import { getCollection } from '@/lib/db'
 export async function GET(request, { params }) {
   try {
     const { metric } = await params
-    const col = await getCollection('events')
+    const col = await getCollection('analytics')
     const now = new Date()
     const sevenDays = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     const thirtyDays = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-    const match = { timestamp: { $gte: sevenDays } }
-    const match30 = { timestamp: { $gte: thirtyDays } }
+    const match = { createdAt: { $gte: sevenDays } }
+    const match30 = { createdAt: { $gte: thirtyDays } }
 
     switch (metric) {
 
@@ -17,13 +17,13 @@ export async function GET(request, { params }) {
       case 'overview': {
         const dailyViews = await col.aggregate([
           { $match: { ...match30, event: 'page_view' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const dailySessions = await col.aggregate([
           { $match: match30 },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.day', count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
@@ -41,19 +41,19 @@ export async function GET(request, { params }) {
       case 'pwa': {
         const byPath = await col.aggregate([
           { $match: { ...match, event: 'page_view' } },
-          { $group: { _id: { path: '$path', pwa: '$isPwa' }, count: { $sum: 1 } } },
+          { $group: { _id: { path: '$data.path', pwa: '$data.isPwa' }, count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
         const pwaDaily = await col.aggregate([
-          { $match: { ...match30, event: 'page_view', isPwa: true } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $match: { ...match30, event: 'page_view', 'data.isPwa': true } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const webDaily = await col.aggregate([
-          { $match: { ...match30, event: 'page_view', isPwa: false } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $match: { ...match30, event: 'page_view', 'data.isPwa': false } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -64,13 +64,13 @@ export async function GET(request, { params }) {
       case 'refreshes': {
         const byPath = await col.aggregate([
           { $match: { ...match, event: 'page_refresh' } },
-          { $group: { _id: '$path', count: { $sum: 1 } } },
+          { $group: { _id: '$data.path', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'page_refresh' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -81,13 +81,13 @@ export async function GET(request, { params }) {
       case 'downloads': {
         const bySource = await col.aggregate([
           { $match: { ...match, event: 'download_click' } },
-          { $group: { _id: '$metadata.source', count: { $sum: 1 } } },
+          { $group: { _id: '$data.source', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'download_click' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -98,13 +98,13 @@ export async function GET(request, { params }) {
       case 'hours': {
         const hourly = await col.aggregate([
           { $match: match },
-          { $group: { _id: { $hour: '$timestamp' }, count: { $sum: 1 } } },
+          { $group: { _id: { $hour: '$createdAt' }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const byEventType = await col.aggregate([
           { $match: match },
-          { $group: { _id: { hour: { $hour: '$timestamp' }, event: '$event' }, count: { $sum: 1 } } },
+          { $group: { _id: { hour: { $hour: '$createdAt' }, event: '$event' }, count: { $sum: 1 } } },
           { $sort: { '_id.hour': 1 } },
         ]).toArray()
 
@@ -115,24 +115,24 @@ export async function GET(request, { params }) {
       case 'flashcards': {
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'flashcard_open' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const durations = await col.aggregate([
-          { $match: { ...match, event: 'flashcard_time', 'metadata.duration': { $exists: true } } },
-          { $group: { _id: null, avg: { $avg: '$metadata.duration' }, min: { $min: '$metadata.duration' }, max: { $max: '$metadata.duration' }, count: { $sum: 1 } } },
+          { $match: { ...match, event: 'flashcard_time', 'data.duration': { $exists: true } } },
+          { $group: { _id: null, avg: { $avg: '$data.duration' }, min: { $min: '$data.duration' }, max: { $max: '$data.duration' }, count: { $sum: 1 } } },
         ]).toArray()
 
         const bySection = await col.aggregate([
-          { $match: { ...match, event: 'flashcard_open', 'metadata.section': { $exists: true } } },
-          { $group: { _id: '$metadata.section', count: { $sum: 1 } } },
+          { $match: { ...match, event: 'flashcard_open', 'data.section': { $exists: true } } },
+          { $group: { _id: '$data.section', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
         const durationBuckets = await col.aggregate([
-          { $match: { ...match, event: 'flashcard_time', 'metadata.duration': { $exists: true } } },
-          { $bucket: { groupBy: '$metadata.duration', boundaries: [0, 5, 10, 20, 30, 60, 120, 999999], default: 'unknown', output: { count: { $sum: 1 } } } },
+          { $match: { ...match, event: 'flashcard_time', 'data.duration': { $exists: true } } },
+          { $bucket: { groupBy: '$data.duration', boundaries: [0, 5, 10, 20, 30, 60, 120, 999999], default: 'unknown', output: { count: { $sum: 1 } } } },
         ]).toArray()
 
         return NextResponse.json({ daily, durations: durations[0] || null, bySection, durationBuckets })
@@ -142,13 +142,13 @@ export async function GET(request, { params }) {
       case 'engagement': {
         const eventDepth = await col.aggregate([
           { $match: match },
-          { $group: { _id: '$sessionId', count: { $sum: 1 } } },
+          { $group: { _id: '$data.sessionId', count: { $sum: 1 } } },
           { $bucket: { groupBy: '$count', boundaries: [1, 3, 6, 10, 20, 50, 100, 999999], default: 'unknown', output: { sessions: { $sum: 1 } } } },
         ]).toArray()
 
         const navPaths = await col.aggregate([
-          { $match: { ...match, event: 'navigation_click', 'metadata.to': { $exists: true } } },
-          { $group: { _id: '$metadata.to', count: { $sum: 1 } } },
+          { $match: { ...match, event: 'navigation_click', 'data.to': { $exists: true } } },
+          { $group: { _id: '$data.to', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
@@ -159,13 +159,13 @@ export async function GET(request, { params }) {
       case 'pages': {
         const pages = await col.aggregate([
           { $match: { ...match30, event: 'page_view' } },
-          { $group: { _id: '$path', count: { $sum: 1 } } },
+          { $group: { _id: '$data.path', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'page_view' } },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, path: '$path' }, count: { $sum: 1 } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, path: '$data.path' }, count: { $sum: 1 } } },
           { $sort: { '_id.day': 1 } },
         ]).toArray()
 
@@ -180,30 +180,30 @@ export async function GET(request, { params }) {
 
         const dailyStarts = await col.aggregate([
           { $match: { ...match30, event: 'quiz_started' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const dailyCompletions = await col.aggregate([
           { $match: { ...match30, event: 'quiz_completed' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const scores = await col.aggregate([
-          { $match: { ...match, event: 'quiz_completed', 'metadata.score': { $exists: true }, 'metadata.total': { $exists: true } } },
-          { $group: { _id: null, avgScore: { $avg: '$metadata.score' }, avgTotal: { $avg: '$metadata.total' }, avgTime: { $avg: '$metadata.timeSpent' }, count: { $sum: 1 } } },
+          { $match: { ...match, event: 'quiz_completed', 'data.score': { $exists: true }, 'data.total': { $exists: true } } },
+          { $group: { _id: null, avgScore: { $avg: '$data.score' }, avgTotal: { $avg: '$data.total' }, avgTime: { $avg: '$data.timeSpent' }, count: { $sum: 1 } } },
         ]).toArray()
 
         const scoreBuckets = await col.aggregate([
-          { $match: { ...match, event: 'quiz_completed', 'metadata.score': { $exists: true }, 'metadata.total': { $exists: true } } },
-          { $addFields: { pct: { $multiply: [{ $divide: ['$metadata.score', '$metadata.total'] }, 100] } } },
+          { $match: { ...match, event: 'quiz_completed', 'data.score': { $exists: true }, 'data.total': { $exists: true } } },
+          { $addFields: { pct: { $multiply: [{ $divide: ['$data.score', '$data.total'] }, 100] } } },
           { $bucket: { groupBy: '$pct', boundaries: [0, 20, 40, 60, 80, 101], default: 'unknown', output: { count: { $sum: 1 } } } },
         ]).toArray()
 
         const byCourse = await col.aggregate([
           { $match: { ...match, event: 'quiz_completed' } },
-          { $group: { _id: '$metadata.course', count: { $sum: 1 }, avgScore: { $avg: '$metadata.score' } } },
+          { $group: { _id: '$data.course', count: { $sum: 1 }, avgScore: { $avg: '$data.score' } } },
           { $sort: { count: -1 } },
         ]).toArray()
 
@@ -219,11 +219,11 @@ export async function GET(request, { params }) {
 
       // ── RETENTION ──
       case 'retention': {
-        const allTime = { timestamp: { $gte: thirtyDays } }
+        const allTime = { createdAt: { $gte: thirtyDays } }
 
         const dayBuckets = await col.aggregate([
           { $match: allTime },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.session', days: { $addToSet: '$_id.day' }, count: { $sum: 1 } } },
         ]).toArray()
 
@@ -233,7 +233,7 @@ export async function GET(request, { params }) {
 
         const daily = await col.aggregate([
           { $match: allTime },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, sessions: { $addToSet: '$sessionId' } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, sessions: { $addToSet: '$data.sessionId' } } },
           { $sort: { _id: 1 } },
           { $project: { _id: 1, sessionCount: { $size: '$sessions' } } },
         ]).toArray()
@@ -260,8 +260,8 @@ export async function GET(request, { params }) {
 
         // Hourly active users (last 24h) using heartbeats as online signals
         const hourlyActive = await col.aggregate([
-          { $match: { timestamp: { $gte: twentyFourHours }, event: 'heartbeat' } },
-          { $group: { _id: { hour: { $dateToString: { format: '%Y-%m-%dT%H:00:00Z', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $match: { createdAt: { $gte: twentyFourHours }, event: 'heartbeat' } },
+          { $group: { _id: { hour: { $dateToString: { format: '%Y-%m-%dT%H:00:00Z', date: '$createdAt' } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.hour', count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
@@ -269,7 +269,7 @@ export async function GET(request, { params }) {
         // Daily active users (30d) - unique sessions per day
         const dailyActive = await col.aggregate([
           { $match: { ...match30, event: 'heartbeat' } },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, session: '$sessionId' } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.day', count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
@@ -281,8 +281,8 @@ export async function GET(request, { params }) {
         for (const min of windows) {
           const since = new Date(now_.getTime() - min * 60 * 1000)
           const sessions = await col.aggregate([
-            { $match: { timestamp: { $gte: since }, event: 'heartbeat' } },
-            { $group: { _id: '$sessionId' } },
+            { $match: { createdAt: { $gte: since }, event: 'heartbeat' } },
+            { $group: { _id: '$data.sessionId' } },
             { $count: 'total' },
           ]).toArray()
           activeWindows[`${min}min`] = sessions[0]?.total || 0
@@ -290,15 +290,15 @@ export async function GET(request, { params }) {
 
         // Estimated total unique active users per day (last 7 days)
         const weeklyActive = await col.aggregate([
-          { $match: { timestamp: { $gte: sevenDays }, event: 'heartbeat' } },
-          { $group: { _id: '$sessionId' } },
+          { $match: { createdAt: { $gte: sevenDays }, event: 'heartbeat' } },
+          { $group: { _id: '$data.sessionId' } },
           { $count: 'total' },
         ]).toArray()
 
         // Session lengths (from heartbeat count per session)
         const sessionHeartbeats = await col.aggregate([
-          { $match: { timestamp: { $gte: twentyFourHours }, event: 'heartbeat' } },
-          { $group: { _id: '$sessionId', count: { $sum: 1 } } },
+          { $match: { createdAt: { $gte: twentyFourHours }, event: 'heartbeat' } },
+          { $group: { _id: '$data.sessionId', count: { $sum: 1 } } },
           { $bucket: { groupBy: '$count', boundaries: [1, 3, 6, 12, 24, 48, 999999], default: 'unknown', output: { sessions: { $sum: 1 } } } },
         ]).toArray()
 

@@ -8,16 +8,13 @@ import { getUser, getToken } from '@/lib/auth';
 import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
 import { trackQuizEvent } from '@/components/AnalyticsTracker';
 import { trackEvent } from '@/lib/tracking';
+import { trackAnswerSubmitted, trackSessionTerminated, trackExplanationViewed, trackTextCopied } from '@/lib/telemetry';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import CodeBlock from '@/components/CodeBlock';
 import { ChevronLeft, Clock, Check, AlertTriangle } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
-
-function trackQ(event, metadata = {}) {
-  trackEvent(event, metadata)
-}
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -249,7 +246,6 @@ export default function QuizPage() {
     setTimeLeft(settings.timePerQuestion);
     startTime.current = Date.now();
     trackQuizEvent('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: settings.timePerQuestion });
-    trackQ('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: settings.timePerQuestion });
   }
 
   useEffect(() => {
@@ -563,12 +559,15 @@ export default function QuizPage() {
     if (revealAnswer) return;
     playClick();
     setSelected(key === selected ? null : key);
-    if (key !== selected) trackQ('quiz_answer', { course: code, question: currentIndex, selected: key });
+    if (key !== selected) trackQuizEvent('quiz_answer', { course: code, question: currentIndex, selected: key });
   }
 
   function handleShowAnswer() {
     clearInterval(timerRef.current);
     setRevealAnswer(true);
+    if (question?.explanation) {
+      trackExplanationViewed({ question_id: question._id || question.id || `${question.question?.slice(0, 30)}`, duration_ms: 0 });
+    }
   }
 
   function handleNextAfterReveal() {
@@ -588,7 +587,7 @@ export default function QuizPage() {
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
       trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
-      trackQ('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
+      trackSessionTerminated({ quiz_id: code, last_completed_step: total, total_steps: total });
       const user = getUser();
       if (user) {
         setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);
@@ -607,6 +606,23 @@ export default function QuizPage() {
     const newAnswers = [...answers, { selected: answered, questionIndex: currentIndex, question: question.question, options: question.options }];
     setAnswers(newAnswers);
 
+    // Telemetry per answer
+    if (answered != null && question) {
+      const correctAns = String(question.correct_answer).toLowerCase();
+      const selectedOpt = String(answered).toLowerCase();
+      const correctIndex = question.options ? Object.keys(question.options).findIndex(k => String(k).toLowerCase() === correctAns) : -1;
+      const selectedIndex = question.options ? Object.keys(question.options).findIndex(k => k === answered) : -1;
+      const timeSpent = settings.timePerQuestion - timeLeft;
+      trackAnswerSubmitted({
+        question_id: question._id || question.id || `${question.question?.slice(0, 30)}`,
+        is_correct: selectedOpt === correctAns,
+        time_spent_sec: Math.max(1, timeSpent),
+        selected_option_index: selectedIndex,
+        correct_option_index: correctIndex,
+        course_code: code,
+      });
+    }
+
     const finalCorrectCount = newAnswers.reduce((count, a) => {
       const q = questions[a.questionIndex];
       return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
@@ -623,7 +639,7 @@ export default function QuizPage() {
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
       trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
-      trackQ('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
+      trackSessionTerminated({ quiz_id: code, last_completed_step: total, total_steps: total });
       const user = getUser();
       if (user) {
         setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);

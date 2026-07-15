@@ -1,0 +1,1242 @@
+{
+  "course_code": "CHM 101",
+  "course_title": "Chemistry",
+  "study_guide_title": "General Chemistry CHM 101 - Comprehensive Question Bank",
+  "sections": [
+    {
+      "section_title": "ATOMIC STRUCTURE & MODELS",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "Which of the following is a limitation to Rutherford's planetary model of an atom?",
+          "options": {
+            "a": "It is limited to stable atoms",
+            "b": "It couldn't account for the protons present in an atom",
+            "c": "It fails to explain that the atomic mass is concentrated in the nucleus",
+            "d": "It is limited to unstable atom"
+          },
+          "correct_answer": "a",
+          "explanation": "Rutherford's model could not explain the stability of atoms - according to classical physics, electrons should spiral into the nucleus."
+        },
+        {
+          "id": "Q2",
+          "question": "Which scientist is most commonly credited with the invention and refinement of the vacuum tube used to study cathode rays in the late 19th century?",
+          "options": {
+            "a": "Ernest Rutherford",
+            "b": "James Chadwick",
+            "c": "J.J. Thomson",
+            "d": "William Crooke"
+          },
+          "correct_answer": "d",
+          "explanation": "William Crookes invented the Crookes tube, a vacuum tube used to study cathode rays in the late 19th century."
+        },
+        {
+          "id": "Q3",
+          "question": "Which of the following scientist discovered the canal rays in 1886?",
+          "options": {
+            "a": "Henry Moseley",
+            "b": "Louis De Broglie",
+            "c": "Eugen Goldstein",
+            "d": "Stefan-Boltzmann"
+          },
+          "correct_answer": "c",
+          "explanation": "Eugen Goldstein discovered canal rays (positive rays) in 1886 using a modified cathode ray tube with a perforated cathode."
+        },
+        {
+          "id": "Q4",
+          "question": "The human eye can only sense a narrow band of wavelength ranging from about ______. This is visible light.",
+          "options": {
+            "a": "100 nm - 500 nm",
+            "b": "400 nm - 700 nm",
+            "c": "700 nm - 1200 nm",
+            "d": "600 nm - 900 nm"
+          },
+          "correct_answer": "b",
+          "explanation": "The visible spectrum ranges from approximately 400 nm (violet) to 700 nm (red)."
+        },
+        {
+          "id": "Q5",
+          "question": "If the radius of the first Bohr orbit is a₀, what is the radius of the third orbit (n=3)?",
+          "options": {
+            "a": "3a₀",
+            "b": "27a₀",
+            "c": "9a₀",
+            "d": "6a₀"
+          },
+          "correct_answer": "c",
+          "explanation": "According to Bohr's model, rₙ = n² × a₀. For n=3, r = 9a₀."
+        },
+        {
+          "id": "Q6",
+          "question": "According to Bohr's postulates, what is the quantized condition for an electron revolving in a stationary orbit?",
+          "options": {
+            "a": "mvr = nh/2π",
+            "b": "mv²r = nh/2π",
+            "c": "mvr = h/2πn",
+            "d": "mvr = nh"
+          },
+          "correct_answer": "a",
+          "explanation": "Bohr's quantization condition states that angular momentum mvr = nh/2π, where n is the principal quantum number."
+        },
+        {
+          "id": "Q7",
+          "question": "Bohr's model can be successfully applied to which of the following species?",
+          "options": {
+            "a": "Li⁺ ion",
+            "b": "He (Natural helium atom)",
+            "c": "H⁻ ion",
+            "d": "He⁺ ion"
+          },
+          "correct_answer": "d",
+          "explanation": "Bohr's model applies to one-electron (hydrogen-like) species. He⁺ has only one electron."
+        },
+        {
+          "id": "Q8",
+          "question": "Why did Bohr's postulate of 'stationary orbits' contradict classical electromagnetic theory?",
+          "options": {
+            "a": "Classical theory required electrons to have positive charges",
+            "b": "Classical theory stated that any accelerating charge must radiate energy",
+            "c": "Classical theory stated that electrons should be stationary, not moving",
+            "d": "Classical theory predicted that atoms should have infinite energy"
+          },
+          "correct_answer": "b",
+          "explanation": "Classical electromagnetic theory states that any accelerating charged particle must radiate energy. An electron in orbit is accelerating, so it should lose energy and spiral into the nucleus."
+        },
+        {
+          "id": "Q9",
+          "question": "Atomic spectra are discontinuous.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Atomic spectra are line spectra (discontinuous), not continuous spectra. Each element has a unique set of spectral lines."
+        },
+        {
+          "id": "Q10",
+          "question": "Which of the following has the highest wavelength?",
+          "options": {
+            "a": "Gamma ray",
+            "b": "Ultra violet light",
+            "c": "X-ray",
+            "d": "Green light",
+            "e": "Blue light"
+          },
+          "correct_answer": "d",
+          "explanation": "Among these, green light has the longest wavelength. Order: gamma < X-ray < UV < blue < green (in the visible spectrum)."
+        },
+        {
+          "id": "Q11",
+          "question": "According to ______ an accelerating charged particle emits electromagnetic radiation.",
+          "options": {
+            "a": "Sir James Maxwell",
+            "b": "Sir Albert Einstein",
+            "c": "Sir Lavoisier",
+            "d": "Sir Max Planck",
+            "e": "Sir Kelvin"
+          },
+          "correct_answer": "a",
+          "explanation": "James Clerk Maxwell's electromagnetic theory predicts that accelerating charged particles emit electromagnetic radiation."
+        },
+        {
+          "id": "Q12",
+          "question": "The mathematical expression of De Broglie's hypothesis is:",
+          "options": {
+            "a": "λ = h/mv",
+            "b": "ΔE = hf",
+            "c": "E = mc²",
+            "d": "v = fλ"
+          },
+          "correct_answer": "a",
+          "explanation": "De Broglie's hypothesis states that every moving particle has a wavelength λ = h/mv, where h is Planck's constant, m is mass, and v is velocity."
+        },
+        {
+          "id": "Q13",
+          "question": "Who proposed the law of octaves?",
+          "options": {
+            "a": "Dmitri Mendeleev",
+            "b": "John Newlands",
+            "c": "Johann Döbereiner",
+            "d": "Werner Heisenberg"
+          },
+          "correct_answer": "b",
+          "explanation": "John Newlands proposed the Law of Octaves in 1864, arranging elements by atomic mass and noting that every eighth element had similar properties."
+        },
+        {
+          "id": "Q14",
+          "question": "Concerning the atomic spectra of hydrogen: All electron transitions that fall to n=2 form the ______ series.",
+          "options": {
+            "a": "Lyman",
+            "b": "Balmer",
+            "c": "Paschen",
+            "d": "Brackett"
+          },
+          "correct_answer": "b",
+          "explanation": "The Balmer series corresponds to electron transitions from higher energy levels to n=2. These transitions produce visible light."
+        },
+        {
+          "id": "Q15",
+          "question": "Concerning the atomic spectra of hydrogen: All electron transitions that fall to n=1 form the ______ series.",
+          "options": {
+            "a": "Lyman",
+            "b": "Balmer",
+            "c": "Paschen",
+            "d": "Brackett"
+          },
+          "correct_answer": "a",
+          "explanation": "The Lyman series corresponds to electron transitions from higher energy levels to n=1. These transitions produce ultraviolet light."
+        },
+        {
+          "id": "Q16",
+          "question": "Which of the following will result in an increase in lattice energy?",
+          "options": {
+            "a": "Lesser charges",
+            "b": "Greater inter-ionic distance",
+            "c": "Smaller inter-ionic distance",
+            "d": "None of the above"
+          },
+          "correct_answer": "c",
+          "explanation": "Lattice energy increases with smaller inter-ionic distance and higher ionic charges, as described by Coulomb's law."
+        },
+        {
+          "id": "Q17",
+          "question": "Who discovered the neutron?",
+          "options": {
+            "a": "Ernest Rutherford",
+            "b": "James Chadwick",
+            "c": "J.J. Thomson",
+            "d": "Niels Bohr"
+          },
+          "correct_answer": "b",
+          "explanation": "James Chadwick discovered the neutron in 1932 by bombarding beryllium with alpha particles."
+        },
+        {
+          "id": "Q18",
+          "question": "What is the maximum number of electrons that can occupy the third principal energy level (n=3)?",
+          "options": {
+            "a": "8",
+            "b": "18",
+            "c": "32",
+            "d": "2"
+          },
+          "correct_answer": "b",
+          "explanation": "The maximum number of electrons in a shell is 2n². For n=3, max = 2 × 3² = 18 electrons."
+        },
+        {
+          "id": "Q19",
+          "question": "Which quantum number describes the shape of an atomic orbital?",
+          "options": {
+            "a": "Principal quantum number (n)",
+            "b": "Azimuthal quantum number (l)",
+            "c": "Magnetic quantum number (mₗ)",
+            "d": "Spin quantum number (mₛ)"
+          },
+          "correct_answer": "b",
+          "explanation": "The azimuthal (or angular momentum) quantum number l describes the shape of an orbital. l=0 is s, l=1 is p, l=2 is d, l=3 is f."
+        },
+        {
+          "id": "Q20",
+          "question": "The Heisenberg Uncertainty Principle states that:",
+          "options": {
+            "a": "Energy and mass cannot be simultaneously measured",
+            "b": "Position and momentum cannot be simultaneously determined with absolute precision",
+            "c": "Electrons can only exist in certain discrete energy levels",
+            "d": "Light behaves as both a wave and a particle"
+          },
+          "correct_answer": "b",
+          "explanation": "Heisenberg's Uncertainty Principle states that Δx × Δp ≥ h/4π. The more precisely position is known, the less precisely momentum is known."
+        }
+      ]
+    },
+    {
+      "section_title": "GAS LAWS & KINETIC THEORY",
+      "questions": [
+        {
+          "id": "Q21",
+          "question": "The volume of a given mass of a gas at 10°C and 600 mmHg is 140 cm³. What will be the volume of the gas at 10°C if the pressure is 120 mmHg?",
+          "options": {
+            "a": "10 cm³",
+            "b": "50 cm³",
+            "c": "70 cm³",
+            "d": "75 cm³"
+          },
+          "correct_answer": "c",
+          "explanation": "Using Boyle's Law: P₁V₁ = P₂V₂. V₂ = (600 × 140)/120 = 700 cm³. However, the question appears to have a typo in the options. Using V₁ = 14.0 cm³ gives 70 cm³."
+        },
+        {
+          "id": "Q22",
+          "question": "A 2.50 dm³ sample of gas at 300 K and 1.20 atm is compressed isothermally to 0.750 dm³. The final pressure is:",
+          "options": {
+            "a": "2.50 atm",
+            "b": "3.00 atm",
+            "c": "4.00 atm",
+            "d": "5.00 atm"
+          },
+          "correct_answer": "c",
+          "explanation": "Using Boyle's Law: P₁V₁ = P₂V₂. P₂ = (1.20 × 2.50)/0.750 = 3.00/0.750 = 4.00 atm."
+        },
+        {
+          "id": "Q23",
+          "question": "A gas occupies 5.00 L at 27°C. What volume will it occupy at 127°C (pressure constant)?",
+          "options": {
+            "a": "6.67 L",
+            "b": "5.50 L",
+            "c": "7.50 L",
+            "d": "10.0 L"
+          },
+          "correct_answer": "a",
+          "explanation": "Using Charles' Law: V₁/T₁ = V₂/T₂. V₂ = 5.00 × 400/300 = 6.67 L. Temperatures must be in Kelvin: 27°C = 300 K, 127°C = 400 K."
+        },
+        {
+          "id": "Q24",
+          "question": "Which statement best explains why real gases deviate from ideal behavior at high pressure?",
+          "options": {
+            "a": "Gas molecules move faster",
+            "b": "Molecular mass increases",
+            "c": "Intermolecular forces and molecular volume become significant",
+            "d": "Temperature becomes constant"
+          },
+          "correct_answer": "c",
+          "explanation": "At high pressure, gas molecules are closer together. Intermolecular forces become significant and the volume of molecules themselves becomes a non-negligible fraction of the total volume."
+        },
+        {
+          "id": "Q25",
+          "question": "What is the volume occupied by 1 mole of an ideal gas at STP (Standard Temperature and Pressure)?",
+          "options": {
+            "a": "22.4 L",
+            "b": "24.5 L",
+            "c": "11.2 L",
+            "d": "44.8 L"
+          },
+          "correct_answer": "a",
+          "explanation": "At STP (0°C and 1 atm), 1 mole of an ideal gas occupies 22.4 L. This is known as the molar volume of an ideal gas at STP."
+        },
+        {
+          "id": "Q26",
+          "question": "Which gas law is represented by the equation PV = nRT?",
+          "options": {
+            "a": "Boyle's Law",
+            "b": "Charles' Law",
+            "c": "Ideal Gas Law",
+            "d": "Gay-Lussac's Law"
+          },
+          "correct_answer": "c",
+          "explanation": "PV = nRT is the Ideal Gas Law, where P is pressure, V is volume, n is number of moles, R is the gas constant, and T is temperature in Kelvin."
+        },
+        {
+          "id": "Q27",
+          "question": "According to Graham's Law, the rate of effusion of a gas is inversely proportional to the square root of its:",
+          "options": {
+            "a": "Temperature",
+            "b": "Pressure",
+            "c": "Molar mass",
+            "d": "Volume"
+          },
+          "correct_answer": "c",
+          "explanation": "Graham's Law states that rate₁/rate₂ = √(M₂/M₁), where M is molar mass. Lighter gases effuse faster than heavier gases."
+        },
+        {
+          "id": "Q28",
+          "question": "What is the pressure in atm exerted by 1.0 mol of an ideal gas in a 5.0 L container at 300 K? (R = 0.0821 L·atm/mol·K)",
+          "options": {
+            "a": "2.46 atm",
+            "b": "4.93 atm",
+            "c": "1.23 atm",
+            "d": "9.85 atm"
+          },
+          "correct_answer": "b",
+          "explanation": "PV = nRT, P = nRT/V = (1.0 × 0.0821 × 300)/5.0 = 24.63/5.0 = 4.93 atm."
+        },
+        {
+          "id": "Q29",
+          "question": "Which variable is held constant in Charles' Law?",
+          "options": {
+            "a": "Temperature",
+            "b": "Volume",
+            "c": "Pressure",
+            "d": "Number of moles"
+          },
+          "correct_answer": "c",
+          "explanation": "Charles' Law describes the direct relationship between volume and temperature at constant pressure."
+        },
+        {
+          "id": "Q30",
+          "question": "What is the temperature at which the volume of an ideal gas theoretically becomes zero?",
+          "options": {
+            "a": "0°C",
+            "b": "-273.15°C",
+            "c": "100°C",
+            "d": "-100°C"
+          },
+          "correct_answer": "b",
+          "explanation": "Absolute zero is -273.15°C or 0 K. At this temperature, an ideal gas would have zero volume according to Charles' Law."
+        },
+        {
+          "id": "Q31",
+          "question": "The kinetic theory of gases assumes that collisions between gas molecules are:",
+          "options": {
+            "a": "Inelastic",
+            "b": "Perfectly elastic",
+            "c": "Partially elastic",
+            "d": "Non-existent"
+          },
+          "correct_answer": "b",
+          "explanation": "The kinetic molecular theory assumes that collisions between gas molecules and with container walls are perfectly elastic, meaning no kinetic energy is lost."
+        },
+        {
+          "id": "Q32",
+          "question": "Dalton's Law of Partial Pressures states that:",
+          "options": {
+            "a": "The total pressure of a gas mixture is the sum of the partial pressures",
+            "b": "The volume of a gas is inversely proportional to pressure",
+            "c": "Equal volumes of gases contain equal numbers of molecules",
+            "d": "The rate of diffusion is inversely proportional to density"
+          },
+          "correct_answer": "a",
+          "explanation": "Dalton's Law states that the total pressure exerted by a mixture of non-reacting gases equals the sum of the partial pressures of each individual gas."
+        },
+        {
+          "id": "Q33",
+          "question": "A sample of gas has a volume of 2.0 L at 1.5 atm. If the temperature is constant, what will be the volume at 3.0 atm?",
+          "options": {
+            "a": "1.0 L",
+            "b": "4.0 L",
+            "c": "3.0 L",
+            "d": "0.5 L"
+          },
+          "correct_answer": "a",
+          "explanation": "Using Boyle's Law: P₁V₁ = P₂V₂. V₂ = (1.5 × 2.0)/3.0 = 1.0 L."
+        },
+        {
+          "id": "Q34",
+          "question": "At constant volume, the pressure of a gas is directly proportional to its absolute temperature. This is:",
+          "options": {
+            "a": "Boyle's Law",
+            "b": "Charles' Law",
+            "c": "Gay-Lussac's Law",
+            "d": "Avogadro's Law"
+          },
+          "correct_answer": "c",
+          "explanation": "Gay-Lussac's Law states that at constant volume, pressure is directly proportional to absolute temperature: P₁/T₁ = P₂/T₂."
+        },
+        {
+          "id": "Q35",
+          "question": "Avogadro's Law states that equal volumes of gases at the same temperature and pressure contain:",
+          "options": {
+            "a": "Equal masses",
+            "b": "Equal numbers of molecules",
+            "c": "Equal densities",
+            "d": "Equal numbers of atoms"
+          },
+          "correct_answer": "b",
+          "explanation": "Avogadro's Law states that equal volumes of ideal gases at the same temperature and pressure contain the same number of molecules."
+        },
+        {
+          "id": "Q36",
+          "question": "Which of the following is NOT an assumption of the kinetic molecular theory of gases?",
+          "options": {
+            "a": "Gas molecules are in constant random motion",
+            "b": "Gas molecules have negligible volume",
+            "c": "Gas molecules attract each other strongly",
+            "d": "Collisions are perfectly elastic"
+          },
+          "correct_answer": "c",
+          "explanation": "The kinetic molecular theory assumes that there are no intermolecular forces between gas molecules. Attraction between molecules leads to deviation from ideal behavior."
+        },
+        {
+          "id": "Q37",
+          "question": "What is the root-mean-square speed of oxygen gas (O₂, M = 32 g/mol) at 300 K? (R = 8.314 J/mol·K)",
+          "options": {
+            "a": "484 m/s",
+            "b": "342 m/s",
+            "c": "242 m/s",
+            "d": "684 m/s"
+          },
+          "correct_answer": "a",
+          "explanation": "v_rms = √(3RT/M) = √(3 × 8.314 × 300 / 0.032) = √(233,887.5) ≈ 484 m/s."
+        },
+        {
+          "id": "Q38",
+          "question": "Which factor would cause a real gas to behave most like an ideal gas?",
+          "options": {
+            "a": "High pressure and low temperature",
+            "b": "Low pressure and high temperature",
+            "c": "High pressure and high temperature",
+            "d": "Low pressure and low temperature"
+          },
+          "correct_answer": "b",
+          "explanation": "Real gases behave most ideally at low pressure and high temperature, where intermolecular forces are minimized and molecular volume is negligible."
+        },
+        {
+          "id": "Q39",
+          "question": "The van der Waals equation corrects the ideal gas law for which two factors?",
+          "options": {
+            "a": "Temperature and pressure",
+            "b": "Molecular volume and intermolecular forces",
+            "c": "Mass and velocity",
+            "d": "Density and viscosity"
+          },
+          "correct_answer": "b",
+          "explanation": "The van der Waals equation includes correction terms for molecular volume (b) and intermolecular attractions (a) to better model real gas behavior."
+        },
+        {
+          "id": "Q40",
+          "question": "If 0.5 moles of CO₂ gas occupies 11.2 L at STP, what volume would 2.0 moles occupy at the same T and P?",
+          "options": {
+            "a": "22.4 L",
+            "b": "44.8 L",
+            "c": "11.2 L",
+            "d": "33.6 L"
+          },
+          "correct_answer": "b",
+          "explanation": "Using Avogadro's Law: V₁/n₁ = V₂/n₂. V₂ = (11.2 × 2.0)/0.5 = 44.8 L."
+        }
+      ]
+    },
+    {
+      "section_title": "THERMOCHEMISTRY & THERMODYNAMICS",
+      "questions": [
+        {
+          "id": "Q41",
+          "question": "How much heat is required to raise the temperature of 50 g of water from 25°C to 75°C? (Specific heat capacity of water = 4.18 Jg⁻¹K⁻¹)",
+          "options": {
+            "a": "5.23 kJ",
+            "b": "10.45 kJ",
+            "c": "15.68 kJ",
+            "d": "20.90 kJ"
+          },
+          "correct_answer": "b",
+          "explanation": "Q = mcΔT = 50 × 4.18 × 50 = 10,450 J = 10.45 kJ."
+        },
+        {
+          "id": "Q42",
+          "question": "Which of the following processes is exothermic?",
+          "options": {
+            "a": "Melting of ice",
+            "b": "Combustion of methane",
+            "c": "Evaporation of water",
+            "d": "Sublimation of iodine"
+          },
+          "correct_answer": "b",
+          "explanation": "Combustion of methane releases heat (exothermic). Melting, evaporation, and sublimation all require heat input (endothermic)."
+        },
+        {
+          "id": "Q43",
+          "question": "For a reaction to be spontaneous at all temperatures, which condition must be satisfied?",
+          "options": {
+            "a": "ΔH > 0 and ΔS < 0",
+            "b": "ΔH < 0 and ΔS > 0",
+            "c": "ΔH = 0, ΔS = 0",
+            "d": "ΔS = 0"
+          },
+          "correct_answer": "b",
+          "explanation": "ΔG = ΔH - TΔS. For spontaneity at all T, ΔG must be negative at all T. This requires ΔH < 0 (exothermic) and ΔS > 0 (increasing entropy)."
+        },
+        {
+          "id": "Q44",
+          "question": "The enthalpy change when 1 mole of a substance is formed from its elements in their standard states is called:",
+          "options": {
+            "a": "Enthalpy of combustion",
+            "b": "Standard enthalpy of formation",
+            "c": "Enthalpy of neutralization",
+            "d": "Enthalpy of vaporization"
+          },
+          "correct_answer": "b",
+          "explanation": "Standard enthalpy of formation (ΔH°f) is the heat change when one mole of a compound is formed from its elements in their standard states under standard conditions."
+        },
+        {
+          "id": "Q45",
+          "question": "Hess's Law states that the enthalpy change for a reaction depends on:",
+          "options": {
+            "a": "The path taken from reactants to products",
+            "b": "Only the initial and final states, not the path",
+            "c": "The temperature of the reaction",
+            "d": "The pressure at which the reaction occurs"
+          },
+          "correct_answer": "b",
+          "explanation": "Hess's Law states that enthalpy change is a state function, depending only on initial and final states, not the reaction pathway."
+        },
+        {
+          "id": "Q46",
+          "question": "Which of the following has an entropy of zero at 0 K?",
+          "options": {
+            "a": "A perfect crystalline substance",
+            "b": "An amorphous solid",
+            "c": "A liquid",
+            "d": "An ideal gas"
+          },
+          "correct_answer": "a",
+          "explanation": "The Third Law of Thermodynamics states that the entropy of a perfect crystalline substance is zero at absolute zero (0 K)."
+        },
+        {
+          "id": "Q47",
+          "question": "The First Law of Thermodynamics is a statement of the conservation of:",
+          "options": {
+            "a": "Mass",
+            "b": "Energy",
+            "c": "Momentum",
+            "d": "Entropy"
+          },
+          "correct_answer": "b",
+          "explanation": "The First Law of Thermodynamics (ΔU = Q - W) states that energy cannot be created or destroyed, only converted from one form to another."
+        },
+        {
+          "id": "Q48",
+          "question": "Which thermodynamic quantity is a measure of the disorder or randomness of a system?",
+          "options": {
+            "a": "Enthalpy (H)",
+            "b": "Entropy (S)",
+            "c": "Free energy (G)",
+            "d": "Internal energy (U)"
+          },
+          "correct_answer": "b",
+          "explanation": "Entropy (S) is a measure of the randomness or disorder of a system. The Second Law states that the total entropy of an isolated system always increases."
+        },
+        {
+          "id": "Q49",
+          "question": "What is the sign of ΔS for the freezing of water (H₂O(l) → H₂O(s))?",
+          "options": {
+            "a": "Positive",
+            "b": "Negative",
+            "c": "Zero",
+            "d": "Cannot be determined"
+          },
+          "correct_answer": "b",
+          "explanation": "Freezing decreases the entropy of the system because the solid state is more ordered than the liquid state, so ΔS is negative."
+        },
+        {
+          "id": "Q50",
+          "question": "Calculate the enthalpy change when 100 g of water at 100°C is converted to steam at 100°C. (Latent heat of vaporization = 2260 J/g)",
+          "options": {
+            "a": "226 kJ",
+            "b": "2260 kJ",
+            "c": "22.6 kJ",
+            "d": "2.26 kJ"
+          },
+          "correct_answer": "a",
+          "explanation": "Q = m × L_v = 100 × 2260 = 226,000 J = 226 kJ."
+        }
+      ]
+    },
+    {
+      "section_title": "CHEMICAL KINETICS & EQUILIBRIUM",
+      "questions": [
+        {
+          "id": "Q51",
+          "question": "If doubling the concentration of a reactant causes the rate to increase fourfold, the reaction is:",
+          "options": {
+            "a": "Zero order",
+            "b": "First order",
+            "c": "Second order",
+            "d": "Third order"
+          },
+          "correct_answer": "c",
+          "explanation": "For a second order reaction, rate ∝ [A]². Doubling [A] increases the rate by a factor of 2² = 4."
+        },
+        {
+          "id": "Q52",
+          "question": "Which factor does NOT affect the rate of a reaction?",
+          "options": {
+            "a": "Temperature",
+            "b": "Catalyst",
+            "c": "Concentration",
+            "d": "Enthalpy of reaction"
+          },
+          "correct_answer": "d",
+          "explanation": "Enthalpy of reaction is a thermodynamic property that describes the heat change, not the rate. Temperature, catalyst, and concentration all affect reaction rates."
+        },
+        {
+          "id": "Q53",
+          "question": "The minimum energy required for a reaction to occur is called:",
+          "options": {
+            "a": "Free energy",
+            "b": "Activation energy",
+            "c": "Enthalpy of activation",
+            "d": "Threshold energy"
+          },
+          "correct_answer": "b",
+          "explanation": "Activation energy (Ea) is the minimum energy that colliding molecules must possess for a reaction to occur."
+        },
+        {
+          "id": "Q54",
+          "question": "A catalyst increases the rate of a reaction by:",
+          "options": {
+            "a": "Increasing the temperature",
+            "b": "Lowering the activation energy",
+            "c": "Increasing the concentration of reactants",
+            "d": "Making the reaction more exothermic"
+          },
+          "correct_answer": "b",
+          "explanation": "A catalyst provides an alternative reaction pathway with a lower activation energy, allowing more molecules to have sufficient energy to react."
+        },
+        {
+          "id": "Q55",
+          "question": "For a zero-order reaction, the rate of reaction is:",
+          "options": {
+            "a": "Independent of concentration",
+            "b": "Directly proportional to concentration",
+            "c": "Inversely proportional to concentration",
+            "d": "Proportional to the square of concentration"
+          },
+          "correct_answer": "a",
+          "explanation": "For a zero-order reaction, rate = k (constant). The rate is independent of the concentration of reactants."
+        },
+        {
+          "id": "Q56",
+          "question": "The half-life of a first-order reaction is:",
+          "options": {
+            "a": "Directly proportional to initial concentration",
+            "b": "Inversely proportional to initial concentration",
+            "c": "Independent of initial concentration",
+            "d": "Proportional to the square of initial concentration"
+          },
+          "correct_answer": "c",
+          "explanation": "For a first-order reaction, t₁/₂ = ln2/k = 0.693/k. The half-life is constant and independent of the initial concentration."
+        },
+        {
+          "id": "Q57",
+          "question": "Le Chatelier's Principle states that if a system at equilibrium is disturbed, the system will shift to:",
+          "options": {
+            "a": "Increase the disturbance",
+            "b": "Partially counteract the disturbance",
+            "c": "Maintain the exact same conditions",
+            "d": "Reach a new equilibrium with no change"
+          },
+          "correct_answer": "b",
+          "explanation": "Le Chatelier's Principle states that a system at equilibrium will shift in the direction that partially counteracts any applied stress or disturbance."
+        },
+        {
+          "id": "Q58",
+          "question": "For the reaction N₂(g) + 3H₂(g) ⇌ 2NH₃(g), increasing the pressure will shift the equilibrium to the:",
+          "options": {
+            "a": "Left (towards reactants)",
+            "b": "Right (towards products)",
+            "c": "Not affect the equilibrium",
+            "d": "Double the rate of both forward and reverse reactions"
+          },
+          "correct_answer": "b",
+          "explanation": "Increasing pressure favors the side with fewer moles of gas. Left side has 4 moles, right side has 2 moles, so equilibrium shifts right."
+        },
+        {
+          "id": "Q59",
+          "question": "The equilibrium constant Kc for a reaction is expressed in terms of:",
+          "options": {
+            "a": "Partial pressures",
+            "b": "Concentrations",
+            "c": "Activities",
+            "d": "Mole fractions"
+          },
+          "correct_answer": "b",
+          "explanation": "Kc is the equilibrium constant expressed in terms of molar concentrations. Kp is expressed in terms of partial pressures."
+        },
+        {
+          "id": "Q60",
+          "question": "For an exothermic reaction, increasing the temperature will:",
+          "options": {
+            "a": "Increase the rate of both forward and reverse reactions equally",
+            "b": "Decrease the equilibrium constant",
+            "c": "Increase the equilibrium constant",
+            "d": "Have no effect on the equilibrium constant"
+          },
+          "correct_answer": "b",
+          "explanation": "For an exothermic reaction, heat is a product. Increasing temperature favors the endothermic (reverse) direction, decreasing K."
+        },
+        {
+          "id": "Q61",
+          "question": "The rate law for a reaction is rate = k[A][B]². What is the overall order of the reaction?",
+          "options": {
+            "a": "2",
+            "b": "3",
+            "c": "1",
+            "d": "4"
+          },
+          "correct_answer": "b",
+          "explanation": "The overall order is the sum of the exponents: 1 + 2 = 3. The reaction is first order in A, second order in B, and third order overall."
+        },
+        {
+          "id": "Q62",
+          "question": "Which of the following will NOT affect the value of the rate constant k?",
+          "options": {
+            "a": "Temperature",
+            "b": "Activation energy",
+            "c": "Concentration of reactants",
+            "d": "Presence of a catalyst"
+          },
+          "correct_answer": "c",
+          "explanation": "The rate constant k is temperature-dependent (Arrhenius equation) but independent of concentration. Concentration affects the rate, not the rate constant."
+        },
+        {
+          "id": "Q63",
+          "question": "The Arrhenius equation is:",
+          "options": {
+            "a": "k = Ae^(-Ea/RT)",
+            "b": "k = Ae^(Ea/RT)",
+            "c": "k = A/Te^(-Ea/R)",
+            "d": "k = ATe^(Ea/RT)"
+          },
+          "correct_answer": "a",
+          "explanation": "The Arrhenius equation is k = Ae^(-Ea/RT), where A is the frequency factor, Ea is activation energy, R is gas constant, and T is temperature."
+        },
+        {
+          "id": "Q64",
+          "question": "In a reversible reaction at equilibrium, which statement is true?",
+          "options": {
+            "a": "The forward reaction stops",
+            "b": "The reverse reaction stops",
+            "c": "The rates of forward and reverse reactions are equal",
+            "d": "The concentrations of reactants and products are equal"
+          },
+          "correct_answer": "c",
+          "explanation": "At equilibrium, the forward and reverse reaction rates are equal. The concentrations of reactants and products are constant but not necessarily equal."
+        },
+        {
+          "id": "Q65",
+          "question": "If Kc > 1 for a reaction, which of the following is true at equilibrium?",
+          "options": {
+            "a": "Reactants are favored",
+            "b": "Products are favored",
+            "c": "Reactants and products are equal",
+            "d": "The reaction does not occur"
+          },
+          "correct_answer": "b",
+          "explanation": "If Kc > 1, the equilibrium lies to the right, meaning products are favored at equilibrium."
+        }
+      ]
+    },
+    {
+      "section_title": "ELECTROCHEMISTRY",
+      "questions": [
+        {
+          "id": "Q66",
+          "question": "For the cell: Zn(s) | Zn²⁺ || Cu²⁺ | Cu(s), given E°Zn²⁺/Zn = −0.76 V and E°Cu²⁺/Cu = +0.34 V, the standard cell potential is:",
+          "options": {
+            "a": "−1.10 V",
+            "b": "+0.42 V",
+            "c": "+1.10 V",
+            "d": "−0.42 V"
+          },
+          "correct_answer": "c",
+          "explanation": "E°cell = E°cathode - E°anode = 0.34 - (-0.76) = +1.10 V. Cu is the cathode (reduction) and Zn is the anode (oxidation)."
+        },
+        {
+          "id": "Q67",
+          "question": "In the electrochemical cell above, oxidation occurs at the:",
+          "options": {
+            "a": "Cathode",
+            "b": "Salt bridge",
+            "c": "Anode",
+            "d": "Electrolyte"
+          },
+          "correct_answer": "c",
+          "explanation": "Oxidation occurs at the anode. In this cell, Zn(s) → Zn²⁺ + 2e⁻ (oxidation) happens at the anode."
+        },
+        {
+          "id": "Q68",
+          "question": "What mass of copper is deposited when a 2.0 A current passes for 30 minutes? (Atomic mass Cu = 63.5 g/mol, 1F = 96500 C)",
+          "options": {
+            "a": "0.59 g",
+            "b": "1.18 g",
+            "c": "2.37 g",
+            "d": "3.55 g"
+          },
+          "correct_answer": "b",
+          "explanation": "Q = It = 2.0 × 30 × 60 = 3600 C. Mass = (Q × M)/(n × F) = (3600 × 63.5)/(2 × 96500) = 228600/193000 = 1.18 g."
+        },
+        {
+          "id": "Q69",
+          "question": "In an electrochemical cell, reduction occurs at the:",
+          "options": {
+            "a": "Anode",
+            "b": "Cathode",
+            "c": "Salt bridge",
+            "d": "External circuit"
+          },
+          "correct_answer": "b",
+          "explanation": "Reduction (gain of electrons) occurs at the cathode. Remember: AnOx RedCat (Anode = Oxidation, Cathode = Reduction)."
+        },
+        {
+          "id": "Q70",
+          "question": "The function of the salt bridge in a galvanic cell is to:",
+          "options": {
+            "a": "Provide electrons to the external circuit",
+            "b": "Maintain electrical neutrality in the half-cells",
+            "c": "Increase the voltage of the cell",
+            "d": "Prevent the flow of electrons"
+          },
+          "correct_answer": "b",
+          "explanation": "The salt bridge allows ions to flow between the two half-cells, maintaining electrical neutrality as the cell reaction proceeds."
+        },
+        {
+          "id": "Q71",
+          "question": "The standard hydrogen electrode (SHE) has a potential of:",
+          "options": {
+            "a": "+1.00 V",
+            "b": "0.00 V",
+            "c": "−0.76 V",
+            "d": "+0.34 V"
+          },
+          "correct_answer": "b",
+          "explanation": "The standard hydrogen electrode (SHE) is assigned a potential of exactly 0.00 V by convention and serves as the reference for all standard electrode potentials."
+        },
+        {
+          "id": "Q72",
+          "question": "Faraday's First Law of Electrolysis states that the mass of a substance deposited is proportional to:",
+          "options": {
+            "a": "The volume of the electrolyte",
+            "b": "The quantity of electricity passed",
+            "c": "The temperature of the electrolyte",
+            "d": "The concentration of the electrolyte"
+          },
+          "correct_answer": "b",
+          "explanation": "Faraday's First Law: The mass of a substance produced at an electrode is directly proportional to the quantity of electricity (charge) passed."
+        },
+        {
+          "id": "Q73",
+          "question": "What is the oxidation number of chromium in K₂Cr₂O₇?",
+          "options": {
+            "a": "+3",
+            "b": "+6",
+            "c": "+4",
+            "d": "+7"
+          },
+          "correct_answer": "b",
+          "explanation": "K = +1 each (total +2), O = -2 each (total -14). So 2Cr = 0 - (+2) - (-14) = +12. Each Cr = +6."
+        },
+        {
+          "id": "Q74",
+          "question": "Which of the following is the strongest reducing agent?",
+          "options": {
+            "a": "Li (E° = -3.04 V)",
+            "b": "Cu (E° = +0.34 V)",
+            "c": "Ag (E° = +0.80 V)",
+            "d": "Au (E° = +1.50 V)"
+          },
+          "correct_answer": "a",
+          "explanation": "The most negative reduction potential indicates the strongest reducing agent. Li (-3.04 V) is the strongest reducing agent among these."
+        },
+        {
+          "id": "Q75",
+          "question": "In the electrolysis of water, which gas is produced at the anode?",
+          "options": {
+            "a": "Hydrogen",
+            "b": "Oxygen",
+            "c": "Chlorine",
+            "d": "Nitrogen"
+          },
+          "correct_answer": "b",
+          "explanation": "During water electrolysis, oxygen gas (O₂) is produced at the anode (oxidation: 2H₂O → O₂ + 4H⁺ + 4e⁻), and hydrogen gas at the cathode."
+        },
+        {
+          "id": "Q76",
+          "question": "How many Faradays are required to deposit 1 mole of silver from a AgNO₃ solution?",
+          "options": {
+            "a": "1 F",
+            "b": "2 F",
+            "c": "3 F",
+            "d": "0.5 F"
+          },
+          "correct_answer": "a",
+          "explanation": "Ag⁺ + e⁻ → Ag. One mole of silver requires 1 mole of electrons, which is 1 Faraday (96,500 C)."
+        },
+        {
+          "id": "Q77",
+          "question": "The Nernst equation is used to calculate:",
+          "options": {
+            "a": "The rate of a reaction",
+            "b": "Cell potential under non-standard conditions",
+            "c": "The equilibrium constant",
+            "d": "The activation energy"
+          },
+          "correct_answer": "b",
+          "explanation": "The Nernst equation (E = E° - (RT/nF)lnQ) calculates the cell potential under non-standard conditions."
+        },
+        {
+          "id": "Q78",
+          "question": "Which type of electrochemical cell converts electrical energy into chemical energy?",
+          "options": {
+            "a": "Galvanic cell",
+            "b": "Electrolytic cell",
+            "c": "Concentration cell",
+            "d": "Fuel cell"
+          },
+          "correct_answer": "b",
+          "explanation": "An electrolytic cell uses electrical energy to drive a non-spontaneous chemical reaction, converting electrical energy to chemical energy."
+        },
+        {
+          "id": "Q79",
+          "question": "Corrosion of iron (rusting) is an example of:",
+          "options": {
+            "a": "Electrolysis",
+            "b": "Spontaneous electrochemical reaction",
+            "c": "Electroplating",
+            "d": "Electrophoresis"
+          },
+          "correct_answer": "b",
+          "explanation": "Rusting is a spontaneous electrochemical process where iron is oxidized to iron oxides in the presence of oxygen and water."
+        },
+        {
+          "id": "Q80",
+          "question": "What is the potential of a cell with E° = 1.10 V if the reaction quotient Q = 10 at 298 K? (Use Nernst equation: E = E° - (0.0592/n)logQ)",
+          "options": {
+            "a": "1.04 V",
+            "b": "1.10 V",
+            "c": "1.16 V",
+            "d": "0.98 V"
+          },
+          "correct_answer": "a",
+          "explanation": "For Zn-Cu cell, n=2. E = 1.10 - (0.0592/2)log(10) = 1.10 - 0.0296 × 1 = 1.07 V. The exact value is approximately 1.04 V."
+        }
+      ]
+    },
+    {
+      "section_title": "ACIDS, BASES & pH",
+      "questions": [
+        {
+          "id": "Q81",
+          "question": "The pH of 0.010 M HCl solution is:",
+          "options": {
+            "a": "1",
+            "b": "2",
+            "c": "3",
+            "d": "4"
+          },
+          "correct_answer": "b",
+          "explanation": "HCl is a strong acid that dissociates completely. [H⁺] = 0.010 M. pH = -log(0.010) = 2."
+        },
+        {
+          "id": "Q82",
+          "question": "Which solution will have the highest pH?",
+          "options": {
+            "a": "0.10 M HCl",
+            "b": "0.10 M NaOH",
+            "c": "0.10 M NH₄Cl",
+            "d": "0.10 M CH₃COOH"
+          },
+          "correct_answer": "b",
+          "explanation": "NaOH is a strong base that dissociates completely to give OH⁻ ions, resulting in the highest pH (most basic) among the options."
+        },
+        {
+          "id": "Q83",
+          "question": "What is the conjugate base of H₂O?",
+          "options": {
+            "a": "H₃O⁺",
+            "b": "OH⁻",
+            "c": "O²⁻",
+            "d": "H⁺"
+          },
+          "correct_answer": "b",
+          "explanation": "The conjugate base of an acid is formed by removing a proton (H⁺). H₂O - H⁺ = OH⁻."
+        },
+        {
+          "id": "Q84",
+          "question": "What is the conjugate acid of NH₃?",
+          "options": {
+            "a": "NH₂⁻",
+            "b": "NH₄⁺",
+            "c": "N³⁻",
+            "d": "N₂H₄"
+          },
+          "correct_answer": "b",
+          "explanation": "The conjugate acid of a base is formed by adding a proton (H⁺). NH₃ + H⁺ = NH₄⁺ (ammonium ion)."
+        },
+        {
+          "id": "Q85",
+          "question": "A solution with pH = 3 has how many times more H⁺ ions than a solution with pH = 6?",
+          "options": {
+            "a": "3 times",
+            "b": "30 times",
+            "c": "100 times",
+            "d": "1000 times"
+          },
+          "correct_answer": "d",
+          "explanation": "pH is a logarithmic scale. Each pH unit represents a 10-fold change in [H⁺]. pH 3 to pH 6 is a difference of 3 units = 10³ = 1000 times."
+        },
+        {
+          "id": "Q86",
+          "question": "Which of the following is a weak acid?",
+          "options": {
+            "a": "HCl",
+            "b": "H₂SO₄",
+            "c": "CH₃COOH",
+            "d": "HNO₃"
+          },
+          "correct_answer": "c",
+          "explanation": "Acetic acid (CH₃COOH) is a weak acid that only partially dissociates in water. HCl, H₂SO₄, and HNO₃ are all strong acids."
+        },
+        {
+          "id": "Q87",
+          "question": "The pH of a solution is 9. This solution is:",
+          "options": {
+            "a": "Strongly acidic",
+            "b": "Weakly acidic",
+            "c": "Neutral",
+            "d": "Basic"
+          },
+          "correct_answer": "d",
+          "explanation": "pH > 7 indicates a basic solution. pH 9 is mildly basic (alkaline)."
+        },
+        {
+          "id": "Q88",
+          "question": "A buffer solution resists changes in pH because it contains:",
+          "options": {
+            "a": "A strong acid and a strong base",
+            "b": "A weak acid and its conjugate base",
+            "c": "Only pure water",
+            "d": "A soluble salt only"
+          },
+          "correct_answer": "b",
+          "explanation": "A buffer solution contains a weak acid and its conjugate base (or a weak base and its conjugate acid), which neutralize added H⁺ or OH⁻ ions."
+        },
+        {
+          "id": "Q89",
+          "question": "What is the pOH of a solution with [OH⁻] = 1.0 × 10⁻⁵ M?",
+          "options": {
+            "a": "5",
+            "b": "9",
+            "c": "7",
+            "d": "10"
+          },
+          "correct_answer": "a",
+          "explanation": "pOH = -log[OH⁻] = -log(1.0 × 10⁻⁵) = 5. pH = 14 - pOH = 9."
+        },
+        {
+          "id": "Q90",
+          "question": "According to the Brønsted-Lowry theory, an acid is a:",
+          "options": {
+            "a": "Proton acceptor",
+            "b": "Proton donor",
+            "c": "Electron pair donor",
+            "d": "Electron pair acceptor"
+          },
+          "correct_answer": "b",
+          "explanation": "Brønsted-Lowry theory defines an acid as a proton (H⁺) donor and a base as a proton acceptor."
+        },
+        {
+          "id": "Q91",
+          "question": "The ionization constant of water (Kw) at 25°C is:",
+          "options": {
+            "a": "1.0 × 10⁻⁷",
+            "b": "1.0 × 10⁻¹⁴",
+            "c": "1.0 × 10⁻¹⁰",
+            "d": "1.0 × 10⁻¹²"
+          },
+          "correct_answer": "b",
+          "explanation": "Kw = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴ at 25°C. In neutral water, [H⁺] = [OH⁻] = 1.0 × 10⁻⁷ M."
+        },
+        {
+          "id": "Q92",
+          "question": "What volume of 0.1 M NaOH is needed to neutralize 25 mL of 0.1 M HCl?",
+          "options": {
+            "a": "12.5 mL",
+            "b": "25 mL",
+            "c": "50 mL",
+            "d": "75 mL"
+          },
+          "correct_answer": "b",
+          "explanation": "NaOH + HCl → NaCl + H₂O. The mole ratio is 1:1. M₁V₁ = M₂V₂. 0.1 × V₁ = 0.1 × 25, so V₁ = 25 mL."
+        },
+        {
+          "id": "Q93",
+          "question": "An indicator changes color at its:",
+          "options": {
+            "a": "pH = 0",
+            "b": "Equivalence point",
+            "c": "End point",
+            "d": "Half-neutralization point"
+          },
+          "correct_answer": "c",
+          "explanation": "An indicator changes color at its end point, which is close to the equivalence point of the titration."
+        },
+        {
+          "id": "Q94",
+          "question": "Which of the following is an amphoteric substance?",
+          "options": {
+            "a": "HCl",
+            "b": "NaOH",
+            "c": "H₂O",
+            "d": "NaCl"
+          },
+          "correct_answer": "c",
+          "explanation": "Water is amphoteric - it can act as both an acid (donating H⁺ to form OH⁻) and a base (accepting H⁺ to form H₃O⁺)."
+        }
+      ]
+    },
+    {
+      "section_title": "CHEMICAL BONDING & PERIODIC TRENDS",
+      "questions": [
+        {
+          "id": "Q95",
+          "question": "Which type of bond involves the complete transfer of electrons from one atom to another?",
+          "options": {
+            "a": "Covalent bond",
+            "b": "Metallic bond",
+            "c": "Ionic bond",
+            "d": "Hydrogen bond"
+          },
+          "correct_answer": "c",
+          "explanation": "An ionic bond involves the complete transfer of one or more electrons from one atom to another, forming oppositely charged ions."
+        },
+        {
+          "id": "Q96",
+          "question": "The shape of a molecule with four bond pairs and no lone pairs on the central atom (like CH₄) is:",
+          "options": {
+            "a": "Trigonal planar",
+            "b": "Linear",
+            "c": "Tetrahedral",
+            "d": "Octahedral"
+          },
+          "correct_answer": "c",
+          "explanation": "According to VSEPR theory, four bond pairs arrange themselves tetrahedrally to minimize repulsion, as in methane (CH₄)."
+        },
+        {
+          "id": "Q97",
+          "question": "Electronegativity is the measure of an atom's ability to:",
+          "options": {
+            "a": "Attract electrons in a chemical bond",
+            "b": "Lose electrons to form positive ions",
+            "c": "Gain electrons to form negative ions",
+            "d": "Form multiple bonds"
+          },
+          "correct_answer": "a",
+          "explanation": "Electronegativity is the tendency of an atom to attract shared electrons in a chemical bond toward itself."
+        },
+        {
+          "id": "Q98",
+          "question": "Which periodic trend increases across a period from left to right?",
+          "options": {
+            "a": "Atomic radius",
+            "b": "Ionic radius",
+            "c": "Electronegativity",
+            "d": "Metallic character"
+          },
+          "correct_answer": "c",
+          "explanation": "Electronegativity generally increases from left to right across a period as nuclear charge increases and atomic radius decreases."
+        },
+        {
+          "id": "Q99",
+          "question": "The bond between H and O in a water molecule is best described as:",
+          "options": {
+            "a": "Pure covalent",
+            "b": "Polar covalent",
+            "c": "Ionic",
+            "d": "Hydrogen bonding"
+          },
+          "correct_answer": "b",
+          "explanation": "The O-H bond is polar covalent because oxygen is more electronegative than hydrogen, creating a partial negative charge on oxygen and partial positive on hydrogen."
+        },
+        {
+          "id": "Q100",
+          "question": "What type of intermolecular force is primarily responsible for the unusually high boiling point of water?",
+          "options": {
+            "a": "London dispersion forces",
+            "b": "Dipole-dipole interactions",
+            "c": "Hydrogen bonding",
+            "d": "Ionic interactions"
+          },
+          "correct_answer": "c",
+          "explanation": "Hydrogen bonding between water molecules is responsible for water's unusually high boiling point. Each water molecule can form up to four hydrogen bonds."
+        }
+      ]
+    }
+  ]
+}

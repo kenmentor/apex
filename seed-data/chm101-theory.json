@@ -1,0 +1,148 @@
+[
+  {
+    "courseCode": "CHM 101",
+    "section": "Atomic Structure",
+    "id": "TH-001",
+    "question": "Describe Rutherford's gold foil experiment and explain how it led to the nuclear model of the atom. What were the key observations and conclusions?",
+    "keywords": ["Rutherford", "gold foil", "alpha particle", "nucleus", "scattering", "planetary model", "atom"],
+    "mainConcepts": [
+      "Rutherford bombarded thin gold foil with alpha particles",
+      "Most alpha particles passed straight through",
+      "Some were deflected at small angles",
+      "A very few (1 in 8000) bounced back",
+      "Conclusion: atom is mostly empty space with a small, dense, positively charged nucleus",
+      "The nuclear model replaced Thomson's plum pudding model"
+    ],
+    "referenceAnswer": "Rutherford's gold foil experiment (1909-1911) involved firing a beam of alpha particles at a very thin sheet of gold foil. According to Thomson's plum pudding model, the alpha particles should have passed through with minimal deflection. Three key observations were made: (1) Most alpha particles passed straight through undeflected, indicating that atoms are mostly empty space. (2) Some particles were deflected at small angles, suggesting a concentrated positive charge. (3) Approximately 1 in 8000 alpha particles bounced back almost in the opposite direction, which Rutherford described as \"almost as incredible as if you fired a 15-inch shell at a piece of tissue paper and it came back and hit you.\" These observations led to the nuclear model: the atom consists of a tiny, dense, positively charged nucleus containing most of the mass, surrounded by mostly empty space where electrons orbit. However, this model could not explain the stability of atoms or the line spectra of elements.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Atomic Structure",
+    "id": "TH-002",
+    "question": "Explain the four quantum numbers that describe electrons in atoms. How do they relate to the arrangement of electrons in multi-electron atoms?",
+    "keywords": ["quantum numbers", "principal", "azimuthal", "magnetic", "spin", "Pauli exclusion", "Aufbau", "Hund's rule"],
+    "mainConcepts": [
+      "Principal quantum number (n) determines energy level and size",
+      "Azimuthal quantum number (l) determines orbital shape",
+      "Magnetic quantum number (m_l) determines orbital orientation",
+      "Spin quantum number (m_s) determines electron spin direction",
+      "Pauli exclusion principle: no two electrons can have the same four quantum numbers",
+      "Aufbau principle: electrons fill lowest energy orbitals first",
+      "Hund's rule: electrons occupy degenerate orbitals singly before pairing"
+    ],
+    "referenceAnswer": "Four quantum numbers uniquely describe each electron in an atom. The principal quantum number (n = 1, 2, 3...) determines the energy level and average distance from the nucleus; higher n means higher energy and larger orbital. The azimuthal quantum number (l = 0 to n-1) determines the orbital shape: l=0 is s (spherical), l=1 is p (dumbbell), l=2 is d (clover), l=3 is f (complex). The magnetic quantum number (m_l = -l to +l) determines the orbital's spatial orientation. The spin quantum number (m_s = +1/2 or -1/2) describes the electron's intrinsic angular momentum. The Pauli exclusion principle states no two electrons can share the same set of four quantum numbers, limiting each orbital to two electrons of opposite spin. The Aufbau principle dictates that electrons fill orbitals in order of increasing energy (1s, 2s, 2p, 3s, 3p, 4s, 3d...), and Hund's rule states that electrons occupy degenerate orbitals singly with parallel spins before pairing.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Gas Laws",
+    "id": "TH-003",
+    "question": "State and explain the combined gas law. A sample of gas has a volume of 2.50 L at 25°C and 1.20 atm. Calculate the volume at STP (0°C and 1.00 atm).",
+    "keywords": ["combined gas law", "Boyle's law", "Charles' law", "P₁V₁/T₁ = P₂V₂/T₂", "STP", "volume calculation"],
+    "mainConcepts": [
+      "Combined gas law combines Boyle's, Charles', and Gay-Lussac's laws",
+      "Formula: P₁V₁/T₁ = P₂V₂/T₂",
+      "Temperature must be in Kelvin",
+      "STP is 0°C (273.15 K) and 1.00 atm",
+      "Used when amount of gas (n) is constant"
+    ],
+    "referenceAnswer": "The combined gas law relates pressure, volume, and temperature of a fixed amount of gas: P₁V₁/T₁ = P₂V₂/T₂. It combines Boyle's Law (PV = constant at constant T), Charles' Law (V/T = constant at constant P), and Gay-Lussac's Law (P/T = constant at constant V). Given: V₁ = 2.50 L, T₁ = 25°C = 298 K, P₁ = 1.20 atm. STP: P₂ = 1.00 atm, T₂ = 0°C = 273 K. Using P₁V₁/T₁ = P₂V₂/T₂: V₂ = P₁V₁T₂/P₂T₁ = (1.20 × 2.50 × 273)/(1.00 × 298) = 819/298 = 2.75 L. So the gas would occupy 2.75 L at STP.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Thermochemistry",
+    "id": "TH-004",
+    "question": "Explain the First and Second Laws of Thermodynamics. Provide one practical example of each and discuss their significance in chemistry.",
+    "keywords": ["First Law", "thermodynamics", "energy conservation", "Second Law", "entropy", "ΔU = Q - W", "spontaneity"],
+    "mainConcepts": [
+      "First Law: Energy cannot be created or destroyed, only converted",
+      "Mathematically: ΔU = Q - W",
+      "First Law example: Bomb calorimeter measures heat of combustion",
+      "Second Law: Total entropy of an isolated system always increases",
+      "Entropy is a measure of disorder or randomness",
+      "Second Law determines spontaneity of processes",
+      "Gibbs free energy combines both laws: ΔG = ΔH - TΔS"
+    ],
+    "referenceAnswer": "The First Law of Thermodynamics (Law of Energy Conservation) states that energy cannot be created or destroyed in an isolated system; it can only be converted from one form to another. Mathematically: ΔU = Q - W, where ΔU is internal energy change, Q is heat added, and W is work done by the system. A practical example is a bomb calorimeter used to measure the enthalpy of combustion of a substance - the heat released equals the change in internal energy. The Second Law of Thermodynamics states that the total entropy of an isolated system always increases over time. Entropy (S) measures the randomness or disorder of a system. A practical example is that heat flows spontaneously from a hot object to a cold object, not the reverse. The Second Law determines whether a process is spontaneous (ΔS_universe > 0). The Gibbs free energy equation (ΔG = ΔH - TΔS) combines both laws: a process is spontaneous when ΔG < 0. In chemistry, these laws govern reaction feasibility, equilibrium, and energy changes in all chemical processes.",
+    "difficulty": "hard",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Chemical Kinetics",
+    "id": "TH-005",
+    "question": "Explain the factors that affect the rate of a chemical reaction. How does the Arrhenius equation relate temperature to reaction rate?",
+    "keywords": ["reaction rate", "temperature", "concentration", "catalyst", "activation energy", "Arrhenius equation", "collision theory"],
+    "mainConcepts": [
+      "Rate depends on concentration, temperature, catalyst, surface area, and nature of reactants",
+      "Collision theory: molecules must collide with sufficient energy and correct orientation",
+      "Activation energy (Ea) is the minimum energy required for reaction",
+      "Arrhenius equation: k = Ae^(-Ea/RT)",
+      "Increasing temperature increases the fraction of molecules with energy > Ea",
+      "Catalysts lower activation energy without being consumed"
+    ],
+    "referenceAnswer": "The rate of a chemical reaction is affected by five main factors: (1) Concentration of reactants - higher concentration increases collision frequency, generally increasing the rate. (2) Temperature - higher temperature increases molecular kinetic energy, increasing both collision frequency and the fraction of collisions with energy exceeding the activation energy. (3) Catalyst - provides an alternative reaction pathway with lower activation energy, increasing the rate without being consumed. (4) Surface area - for heterogeneous reactions, greater surface area increases contact between reactants. (5) Nature of reactants - ionic reactions are typically fast while covalent bond breaking is slow. The Arrhenius equation, k = Ae^(-Ea/RT), quantitatively relates temperature and reaction rate. Here, k is the rate constant, A is the frequency factor (related to collision frequency and orientation), Ea is the activation energy, R is the gas constant, and T is absolute temperature. The exponential term e^(-Ea/RT) represents the fraction of molecules with sufficient energy to overcome the activation barrier. As T increases, this fraction increases exponentially, explaining why even small temperature increases can dramatically accelerate reactions.",
+    "difficulty": "hard",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Electrochemistry",
+    "id": "TH-006",
+    "question": "Describe the components and functioning of a galvanic (voltaic) cell. Use the Daniell cell (Zn-Cu) as an example and explain how to calculate the standard cell potential.",
+    "keywords": ["galvanic cell", "Daniell cell", "anode", "cathode", "salt bridge", "cell potential", "Nernst equation"],
+    "mainConcepts": [
+      "Galvanic cell converts chemical energy to electrical energy through spontaneous redox reactions",
+      "Daniell cell: Zn anode (oxidation) and Cu cathode (reduction)",
+      "Salt bridge maintains electrical neutrality",
+      "Standard cell potential E°cell = E°cathode - E°anode",
+      "Electrons flow from anode to cathode through external circuit",
+      "Cell notation: Zn | Zn²⁺ || Cu²⁺ | Cu"
+    ],
+    "referenceAnswer": "A galvanic (voltaic) cell is an electrochemical device that converts chemical energy into electrical energy through spontaneous redox reactions. The Daniell cell consists of a zinc electrode immersed in ZnSO₄ solution (anode compartment) and a copper electrode immersed in CuSO₄ solution (cathode compartment), connected by a salt bridge (typically containing KCl or KNO₃). Oxidation occurs at the anode: Zn(s) → Zn²⁺(aq) + 2e⁻. Reduction occurs at the cathode: Cu²⁺(aq) + 2e⁻ → Cu(s). Overall: Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s). The salt bridge allows ions to flow, maintaining electrical neutrality as Zn²⁺ accumulates and Cu²⁺ depletes. Electrons flow through the external circuit from anode (Zn) to cathode (Cu). The standard cell potential is E°cell = E°cathode - E°anode = +0.34 V - (-0.76 V) = +1.10 V. The positive value confirms the reaction is spontaneous. Cell notation represents this as: Zn(s) | Zn²⁺(aq) || Cu²⁺(aq) | Cu(s).",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Acids and Bases",
+    "id": "TH-007",
+    "question": "Compare and contrast the Arrhenius, Brønsted-Lowry, and Lewis definitions of acids and bases. Provide examples for each definition.",
+    "keywords": ["Arrhenius", "Brønsted-Lowry", "Lewis", "acid", "base", "proton donor", "proton acceptor", "electron pair"],
+    "mainConcepts": [
+      "Arrhenius: acid produces H⁺ in water, base produces OH⁻",
+      "Limitation: only applies to aqueous solutions",
+      "Brønsted-Lowry: acid donates H⁺, base accepts H⁺",
+      "Conjugate acid-base pairs",
+      "Lewis: acid accepts electron pair, base donates electron pair",
+      "Lewis definition is the most general"
+    ],
+    "referenceAnswer": "Three progressively broader definitions of acids and bases exist. The Arrhenius definition states that acids produce H⁺ ions in aqueous solution (e.g., HCl → H⁺ + Cl⁻) and bases produce OH⁻ ions in aqueous solution (e.g., NaOH → Na⁺ + OH⁻). Its main limitation is that it only applies to aqueous solutions and cannot explain basicity of substances like NH₃. The Brønsted-Lowry definition broadens this: an acid is a proton (H⁺) donor and a base is a proton acceptor. For example, in HCl + H₂O → H₃O⁺ + Cl⁻, HCl is the acid (donates H⁺) and H₂O is the base (accepts H⁺). This introduces conjugate acid-base pairs: Cl⁻ is the conjugate base of HCl, and H₃O⁺ is the conjugate acid of H₂O. The Lewis definition is the most comprehensive: a Lewis acid accepts an electron pair and a Lewis base donates an electron pair. For example, in BF₃ + NH₃ → F₃B:NH₃, BF₃ is the Lewis acid (accepts electron pair) and NH₃ is the Lewis base (donates electron pair). This definition includes coordination compounds and reactions in non-aqueous media.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "CHM 101",
+    "section": "Chemical Bonding",
+    "id": "TH-008",
+    "question": "Discuss the differences between ionic, covalent, and metallic bonding. Using specific examples, explain how bond type influences the physical properties of substances.",
+    "keywords": ["ionic bond", "covalent bond", "metallic bond", "electronegativity", "melting point", "conductivity", "solubility"],
+    "mainConcepts": [
+      "Ionic bonds form by electron transfer between metals and nonmetals",
+      "Covalent bonds form by electron sharing between nonmetals",
+      "Metallic bonds involve delocalized electrons in a sea of positive ions",
+      "Ionic compounds: high melting points, conduct when molten/dissolved",
+      "Covalent compounds: low melting points, poor conductors",
+      "Metals: high melting points, good conductors, malleable/ductile",
+      "Electronegativity difference determines bond type"
+    ],
+    "referenceAnswer": "Ionic bonding involves the complete transfer of electrons from a metal to a nonmetal, forming oppositely charged ions held together by electrostatic attraction. Example: NaCl (Na⁺ and Cl⁻). Ionic compounds form crystalline lattices with high melting points (e.g., NaCl melts at 801°C), are hard and brittle, conduct electricity when melted or dissolved in water but not as solids, and are typically soluble in polar solvents. Covalent bonding involves the sharing of electrons between nonmetal atoms. Example: H₂O, where oxygen shares electrons with two hydrogen atoms. Covalent compounds can form discrete molecules (like CO₂) or giant covalent networks (like diamond). They typically have lower melting points (e.g., H₂O melts at 0°C), are poor electrical conductors, and may be soluble in polar or nonpolar solvents depending on their polarity. Metallic bonding involves a lattice of positive metal ions surrounded by a \"sea\" of delocalized valence electrons. Example: copper metal. Metals have a wide range of melting points (mercury at -39°C to tungsten at 3422°C), are excellent conductors of heat and electricity due to mobile electrons, are malleable (can be hammered into sheets) and ductile (drawn into wires). The electronegativity difference between atoms determines bond type: large difference (>1.7) favors ionic, small difference (<0.4) favors nonpolar covalent, intermediate difference favors polar covalent.",
+    "difficulty": "hard",
+    "maxPoints": 10
+  }
+]

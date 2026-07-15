@@ -1,0 +1,116 @@
+[
+  {
+    "courseCode": "PHY 108",
+    "section": "Error Analysis",
+    "id": "TH-001",
+    "question": "Distinguish between systematic and random errors in experimental physics. Give two examples of each and explain how they can be minimized.",
+    "keywords": ["systematic error", "random error", "accuracy", "precision", "zero error", "calibration", "repeated measurements"],
+    "mainConcepts": [
+      "Systematic errors are consistent offset errors that affect all readings in the same direction",
+      "Random errors cause scatter in readings around the true value",
+      "Systematic errors affect accuracy, random errors affect precision",
+      "Examples of systematic: zero error, incorrect calibration, parallax error",
+      "Examples of random: environmental fluctuations, estimation uncertainty",
+      "Systematic errors minimized by calibration and correct technique",
+      "Random errors minimized by repeated measurements and averaging"
+    ],
+    "referenceAnswer": "Systematic errors are errors that consistently shift all measurements in one direction (either too high or too low). They affect the accuracy of measurements. Examples include: (1) Zero error in instruments like an ammeter that reads 1 A when no current flows, and (2) Parallax error from incorrect eye position when reading a scale. Systematic errors are minimized by calibrating instruments before use, applying correction factors, and using proper measurement techniques (e.g., positioning the eye directly above the scale). Random errors cause unpredictable fluctuations in readings, with measurements scattered around the true value. They affect the precision of measurements. Examples include: (1) Fluctuations in environmental conditions (temperature, pressure) during an experiment, and (2) Variations in judgment when timing with a stopwatch. Random errors are minimized by taking many repeated measurements and calculating the mean, as the random variations tend to cancel out. The standard error of the mean decreases as the number of measurements increases (σ/√n). The key distinction: systematic errors cannot be reduced by averaging, while random errors can.",
+    "difficulty": "hard",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "PHY 108",
+    "section": "Graphical Analysis",
+    "id": "TH-002",
+    "question": "Explain how to linearize the equation T = 2π√(M/K) for a spring-mass experiment. Describe what graph you would plot, what the slope and intercept represent, and how to determine K from the graph.",
+    "keywords": ["linearization", "spring constant", "graph", "slope", "intercept", "T² vs M", "SHM"],
+    "mainConcepts": [
+      "Start with T = 2π√(M/K)",
+      "Square both sides: T² = 4π²M/K",
+      "Plot T² (y-axis) against M (x-axis)",
+      "Slope = 4π²/K, so K = 4π²/slope",
+      "The intercept represents the effective mass of the spring",
+      "Linearization converts non-linear relationships to straight-line form",
+      "Straight-line graphs allow easier determination of constants"
+    ],
+    "referenceAnswer": "To linearize T = 2π√(M/K), where T is the period of oscillation, M is the mass, and K is the spring constant, we square both sides: T² = 4π²M/K. This is now in the form y = mx where y = T² and x = M. The slope m = 4π²/K. Therefore, K = 4π²/slope. To account for the effective mass of the spring (m₀), the actual equation is T² = 4π²(M + m₀)/K = (4π²/K)M + (4π²m₀/K). This gives y = mx + c, where the intercept c = 4π²m₀/K, from which the effective spring mass m₀ = cK/(4π²) = c/slope. The procedure: (1) Measure T for various masses M, (2) Calculate T² for each, (3) Plot T² on the y-axis against M on the x-axis, (4) Determine the slope of the best-fit straight line, (5) Calculate K = 4π²/slope, (6) The y-intercept gives information about the effective mass of the spring.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "PHY 108",
+    "section": "Measuring Instruments",
+    "id": "TH-003",
+    "question": "Describe how to read a micrometer screw gauge and a vernier calliper. Include the calculation of least count, how to identify zero error, and how to apply correction for zero error.",
+    "keywords": ["micrometer", "vernier calliper", "least count", "pitch", "zero error", "main scale", "circular scale"],
+    "mainConcepts": [
+      "Least count = smallest division on the instrument",
+      "Micrometer: LC = pitch/number of circular divisions",
+      "Vernier calliper: LC = 1 MSD - 1 VSD",
+      "Micrometer reading = main scale + (circular scale × LC)",
+      "Vernier reading = main scale + (coinciding division × LC)",
+      "Zero error: positive when zero mark is to the right, negative when to the left",
+      "Corrected reading = observed reading - zero error"
+    ],
+    "referenceAnswer": "A micrometer screw gauge measures small dimensions with typical precision of 0.01 mm. It has a pitch (distance moved per revolution, usually 0.5 mm) and a circular scale with typically 50 divisions. The least count = pitch/number of divisions = 0.5/50 = 0.01 mm. To read: (1) Note the main scale reading visible on the sleeve (e.g., 5.5 mm), (2) Note the circular scale division aligned with the horizontal line (e.g., 28), (3) Reading = main scale + (circular scale × LC) = 5.5 + (28 × 0.01) = 5.78 mm. A vernier calliper measures internal and external dimensions with typical precision of 0.1 mm or 0.05 mm. The least count = 1 main scale division - 1 vernier scale division. For a standard calliper with 10 vernier divisions covering 9 mm, LC = 1 - 0.9 = 0.1 mm. To read: (1) Note the main scale reading before the zero of the vernier scale, (2) Find the vernier division that exactly coincides with a main scale division, (3) Reading = main scale + (coinciding division × LC). Zero error: with jaws closed, if the zero marks do not align, there is zero error. If the vernier zero is to the right of the main scale zero, the error is positive; if to the left, negative. Corrected reading = observed reading - zero error.",
+    "difficulty": "hard",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "PHY 108",
+    "section": "Electrical Measurements",
+    "id": "TH-004",
+    "question": "Explain how to convert a galvanometer into a voltmeter and into an ammeter. Include the circuit diagrams, the type and arrangement of resistors required, and the effect on the instrument's internal resistance.",
+    "keywords": ["galvanometer", "voltmeter", "ammeter", "shunt", "multiplier", "series resistance", "parallel resistance"],
+    "mainConcepts": [
+      "Galvanometer is a sensitive current detector with full-scale deflection current Ig and resistance G",
+      "To convert to voltmeter: connect a high resistance (multiplier) in series with the galvanometer",
+      "Series resistance Rs = V/Ig - G, where V is desired voltage range",
+      "Voltmeter has high internal resistance (ideally infinite)",
+      "To convert to ammeter: connect a low resistance (shunt) in parallel with the galvanometer",
+      "Shunt resistance S = Ig × G / (I - Ig), where I is desired current range",
+      "Ammeter has low internal resistance (ideally zero)"
+    ],
+    "referenceAnswer": "A galvanometer is a sensitive instrument that detects small currents. It can be converted into a voltmeter or ammeter by appropriate modification. To convert a galvanometer into a voltmeter: A high resistance (called a multiplier) is connected in series with the galvanometer. The series resistance Rs is calculated as Rs = V/Ig - G, where V is the desired full-scale voltage range, Ig is the full-scale deflection current of the galvanometer, and G is the galvanometer resistance. The voltmeter should have very high resistance (ideally infinite) so it draws negligible current from the circuit. For example, if Ig = 1 mA and G = 50 Ω, to measure up to 10 V: Rs = 10/0.001 - 50 = 10,000 - 50 = 9,950 Ω. To convert a galvanometer into an ammeter: A low resistance (called a shunt) is connected in parallel with the galvanometer. The shunt resistance S is calculated as S = Ig × G / (I - Ig), where I is the desired full-scale current range. The ammeter should have very low resistance (ideally zero) so it does not affect the circuit current. For example, if Ig = 1 mA and G = 50 Ω, to measure up to 1 A: S = (0.001 × 50)/(1 - 0.001) = 0.05/0.999 ≈ 0.05 Ω. Conversion to voltmeter increases the effective resistance of the instrument, while conversion to ammeter decreases it.",
+    "difficulty": "hard",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "PHY 108",
+    "section": "Oscillations & SHM",
+    "id": "TH-005",
+    "question": "Describe the procedure for determining the acceleration due to gravity (g) using a simple pendulum. Include the experimental setup, measurements to be taken, precautions, and how to calculate g from the results.",
+    "keywords": ["simple pendulum", "gravity", "period", "length", "SHM", "graph", "T² vs L", "g = 4π²L/T²"],
+    "mainConcepts": [
+      "Simple pendulum consists of a bob suspended by a light inextensible string",
+      "Period T = 2π√(L/g) for small oscillations",
+      "Measure length L from suspension point to center of bob",
+      "Measure time for 20 oscillations to reduce timing error",
+      "Repeat for different lengths L",
+      "Plot T² against L: slope = 4π²/g",
+      "Calculate g = 4π²/slope"
+    ],
+    "referenceAnswer": "To determine g using a simple pendulum: Setup: Suspend a small heavy bob using a light inextensible string from a rigid clamp. Procedure: (1) Measure the length L from the point of suspension to the center of the bob using a metre rule. (2) Displace the bob slightly (small angle < 10°) and release. (3) Measure the time t for 20 complete oscillations using a stopwatch, starting timing at the equilibrium position. (4) Calculate the period T = t/20. (5) Repeat for at least 6 different lengths, taking multiple readings at each length. (6) Calculate T² for each length. (7) Plot a graph of T² (y-axis) against L (x-axis). (8) The graph should be a straight line through the origin with slope = 4π²/g. (9) Calculate g = 4π²/slope. Precautions: (1) Keep the amplitude small (< 10°) to ensure SHM. (2) Time from the equilibrium position where the bob moves fastest. (3) Ensure the string is inextensible and the bob oscillates in a single plane (no conical motion). (4) Avoid parallax error when measuring length. (5) Use a fiducial marker at the equilibrium position. (6) Ensure the support is rigid to avoid energy loss. The theoretical relationship T = 2π√(L/g) gives g = 4π²L/T² for a single measurement, but the graphical method is more reliable as it averages random errors.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "PHY 108",
+    "section": "Precision & Accuracy",
+    "id": "TH-006",
+    "question": "Explain the concepts of accuracy, precision, resolution, and sensitivity in the context of experimental measurements. How do these concepts relate to the choice of measuring instruments?",
+    "keywords": ["accuracy", "precision", "resolution", "sensitivity", "least count", "systematic error", "random error", "significant figures"],
+    "mainConcepts": [
+      "Accuracy: how close a measurement is to the true value",
+      "Precision: how consistent repeated measurements are (spread)",
+      "Resolution: smallest detectable change the instrument can display (least count)",
+      "Sensitivity: ratio of output signal change to input quantity change",
+      "Accuracy depends on systematic errors; precision depends on random errors",
+      "High precision does not guarantee high accuracy",
+      "The choice of instrument should match the required precision of the experiment"
+    ],
+    "referenceAnswer": "Accuracy refers to how close a measured value is to the true or accepted value. It is affected by systematic errors — if an instrument has a zero error, measurements will be consistently offset and inaccurate even if they are precise. Precision refers to the consistency or reproducibility of repeated measurements. It is quantified by the standard deviation — smaller standard deviation means higher precision. Precision is affected by random errors. Resolution (or least count) is the smallest change in the measured quantity that the instrument can detect. For example, a metre rule has a resolution of 0.1 cm, while a micrometer has a resolution of 0.001 cm. Sensitivity is the ratio of the change in the instrument's output (pointer deflection or digital display) to the change in the measured quantity. A more sensitive instrument shows a larger response for the same input change. The relationship between these concepts: High resolution enables high precision but does not guarantee accuracy. An instrument can be precise (consistent readings) but inaccurate (all readings are wrong due to systematic error). When choosing an instrument, the resolution should be appropriate for the required precision of the experiment. For measuring wire thickness, a micrometer (0.01 mm resolution) is suitable, while for measuring table length, a metre rule (0.1 cm resolution) is adequate. Significant figures in a measurement reflect the resolution of the instrument used.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  }
+]

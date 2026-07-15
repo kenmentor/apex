@@ -1,0 +1,154 @@
+[
+  {
+    "courseCode": "STA 111",
+    "section": "Introduction to Statistics",
+    "id": "TH-001",
+    "question": "Define statistics and explain its importance in everyday life and research.",
+    "keywords": ["statistics", "data", "collection", "analysis", "interpretation", "decision making", "research"],
+    "mainConcepts": [
+      "Statistics is the science of collecting, analyzing, interpreting, presenting, and organizing data",
+      "Helps in making informed decisions based on data",
+      "Used in business, economics, education, medicine, and research",
+      "Summarizes large amounts of data into meaningful insights",
+      "Distinguishes between descriptive and inferential statistics"
+    ],
+    "referenceAnswer": "Statistics is the science of collecting, analyzing, interpreting, presenting, and organizing data. Its importance includes: (1) Decision making - statistics provides evidence-based insights for making informed decisions in business, government, and personal life. (2) Research - it forms the backbone of scientific research by helping design experiments, analyze results, and draw conclusions. (3) Economics and business - used for market analysis, quality control, risk assessment, and forecasting. (4) Medicine - clinical trials, drug effectiveness studies, and epidemiological research all rely on statistical methods. (5) Education - analyzing student performance, evaluating teaching methods, and educational research. Descriptive statistics summarize data (mean, median, mode, graphs) while inferential statistics draw conclusions about populations from samples (hypothesis testing, confidence intervals).",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Data Types & Variables",
+    "id": "TH-002",
+    "question": "Differentiate between qualitative and quantitative data, and between discrete and continuous variables. Provide examples of each and explain why these distinctions matter in statistical analysis.",
+    "keywords": ["qualitative", "quantitative", "discrete", "continuous", "categorical", "numerical", "variable types"],
+    "mainConcepts": [
+      "Qualitative data: non-numerical, categorical (gender, hair color, blood type)",
+      "Quantitative data: numerical, measurable (height, weight, marks)",
+      "Discrete variables: countable values, usually integers (number of students, cars)",
+      "Continuous variables: any value within a range (height, weight, temperature)",
+      "Data type determines appropriate statistical methods and graphs",
+      "Qualitative → bar charts, pie charts; Quantitative → histograms, line graphs",
+      "Variable type determines which measures of central tendency and dispersion are appropriate"
+    ],
+    "referenceAnswer": "Qualitative (categorical) data represents categories or labels that cannot be measured numerically. Examples include gender (male/female), blood type (A, B, AB, O), marital status, and eye color. Quantitative (numerical) data represents measurable quantities. Examples include height, weight, age, and test scores. The distinction matters because different statistical methods apply to each type. Quantitative variables are further classified as discrete or continuous. Discrete variables take countable values, typically integers. Examples include number of students in a class, number of cars in a parking lot, and number of heads in coin tosses. Continuous variables can take any value within a range, including fractions and decimals. Examples include height (150.5 cm), weight (65.3 kg), temperature (36.7°C), and time (12.45 s). The distinction between discrete and continuous affects: (1) Choice of graphical representation (bar chart for discrete, histogram for continuous), (2) Probability distributions (binomial for discrete, normal for continuous), and (3) Mathematical operations (counting for discrete, measurement for continuous).",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Measures of Central Tendency",
+    "id": "TH-003",
+    "question": "Define mean, median, and mode. Explain when each measure is most appropriate, their advantages and disadvantages, and how outliers affect each measure.",
+    "keywords": ["mean", "median", "mode", "central tendency", "average", "outlier", "skewed distribution"],
+    "mainConcepts": [
+      "Mean: sum of all values divided by number of values",
+      "Median: middle value when data is arranged in order",
+      "Mode: most frequently occurring value",
+      "Mean is sensitive to outliers; median is robust",
+      "Mode is useful for categorical data",
+      "In symmetrical distributions: mean = median = mode",
+      "In right-skewed: mean > median > mode",
+      "In left-skewed: mean < median < mode"
+    ],
+    "referenceAnswer": "The three main measures of central tendency are: (1) Mean - the arithmetic average calculated by summing all values and dividing by the count. Advantage: uses all data values. Disadvantage: highly sensitive to outliers. Example: mean of 2,4,6,8,10 = 30/5 = 6. (2) Median - the middle value when data is arranged in ascending order. For odd count, it's the middle value; for even count, it's the average of two middle values. Advantage: not affected by extreme values (robust). Disadvantage: ignores most data values. (3) Mode - the value that appears most frequently. Advantage: can be used for categorical data; useful for bimodal distributions. Disadvantage: may not exist or may have multiple values. When to use each: Mean is preferred for symmetrical data without outliers. Median is preferred when data has outliers or is skewed (e.g., income data). Mode is preferred for categorical data or when identifying the most common value. For example, for house prices in a neighborhood, median is better than mean because a few very expensive houses would skew the mean upward.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Measures of Dispersion",
+    "id": "TH-004",
+    "question": "Explain the concepts of variance and standard deviation. How are they calculated, how are they related, and why are they important in descriptive statistics?",
+    "keywords": ["variance", "standard deviation", "dispersion", "spread", "deviation", "σ²", "σ"],
+    "mainConcepts": [
+      "Variance (σ²): average of squared deviations from the mean",
+      "Standard deviation (σ): square root of variance",
+      "SD is in the same units as the original data",
+      "Steps to calculate variance: find mean, subtract mean, square, sum, divide by n",
+      "SD = √Variance",
+      "Small SD → data clustered around mean",
+      "Large SD → data spread out widely",
+      "Empirical rule: 68% within 1 SD, 95% within 2 SD, 99.7% within 3 SD"
+    ],
+    "referenceAnswer": "Variance and standard deviation are the most important measures of dispersion. Variance (σ² for population, s² for sample) is the average of the squared deviations from the mean. Calculation steps: (1) Find the mean x̄, (2) Subtract the mean from each value to get deviations (x - x̄), (3) Square each deviation, (4) Sum all squared deviations, (5) Divide by n (population) or n-1 (sample). Standard deviation (σ) is the square root of the variance. Its key advantage is being in the same units as the original data, making it interpretable. For example, if data is in cm, variance is in cm² but SD is in cm. Importance: (1) Quantifies the spread or variability in data. (2) Used in the empirical rule for normal distributions: approximately 68% of data falls within 1 SD of the mean, 95% within 2 SD, and 99.7% within 3 SD. (3) Essential for calculating z-scores, confidence intervals, and hypothesis tests. (4) Allows comparison of variability between different datasets. A small SD indicates data is clustered around the mean (precise), while a large SD indicates data is widely spread.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Quartiles & IQR",
+    "id": "TH-005",
+    "question": "Explain the concepts of quartiles and interquartile range (IQR). How are they calculated, and why is the IQR often preferred over the range as a measure of dispersion?",
+    "keywords": ["quartile", "Q1", "Q2", "Q3", "IQR", "percentile", "median", "range", "outlier"],
+    "mainConcepts": [
+      "Quartiles divide data into four equal parts (25% each)",
+      "Q1 = 25th percentile, Q2 = 50th percentile (median), Q3 = 75th percentile",
+      "IQR = Q3 - Q1, measures spread of middle 50% of data",
+      "IQR is not affected by outliers",
+      "Range is sensitive to extreme values",
+      "IQR used to identify outliers: values below Q1 - 1.5×IQR or above Q3 + 1.5×IQR",
+      "Five-number summary: Min, Q1, Median, Q3, Max"
+    ],
+    "referenceAnswer": "Quartiles divide a dataset into four equal parts, each containing 25% of the observations. Q1 (first quartile or 25th percentile) is the value below which 25% of the data falls. Q2 (second quartile or 50th percentile) is the median. Q3 (third quartile or 75th percentile) is the value below which 75% of the data falls. The interquartile range (IQR) is Q3 - Q1, representing the spread of the middle 50% of the data. For example, with data 150, 155, 160, 165, 170, 175, 180, 185: Q1 = (155+160)/2 = 157.5, Q3 = (175+180)/2 = 177.5, IQR = 177.5 - 157.5 = 20. The IQR is preferred over the range because: (1) It is not affected by extreme values (outliers), unlike the range which depends only on the maximum and minimum. (2) It focuses on the central portion of the data where most observations lie. (3) It is used in box plots and outlier detection (Tukey's fences: values beyond Q1 - 1.5×IQR or Q3 + 1.5×IQR are potential outliers). The five-number summary (Min, Q1, Median, Q3, Max) together with the IQR provides a comprehensive picture of data distribution.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Probability",
+    "id": "TH-006",
+    "question": "Define probability and explain the three approaches to probability: classical, relative frequency, and subjective. Include the axioms of probability and the complement rule.",
+    "keywords": ["probability", "classical", "relative frequency", "subjective", "sample space", "event", "complement", "axioms"],
+    "mainConcepts": [
+      "Probability measures the likelihood of an event occurring, 0 ≤ P ≤ 1",
+      "Classical: P = number of favorable outcomes / total possible outcomes",
+      "Relative frequency: P = number of times event occurs / total number of trials",
+      "Subjective: based on personal judgment or experience",
+      "Axiom 1: P(E) ≥ 0 for any event E",
+      "Axiom 2: P(S) = 1 for the sample space S",
+      "Axiom 3: For mutually exclusive events, P(A∪B) = P(A) + P(B)",
+      "Complement rule: P(not E) = 1 - P(E)"
+    ],
+    "referenceAnswer": "Probability is a numerical measure of the likelihood that an event will occur, ranging from 0 (impossible) to 1 (certain). There are three approaches: (1) Classical (a priori) probability: based on equally likely outcomes. P(E) = number of favorable outcomes / total number of possible outcomes. Example: probability of rolling a 4 on a fair die = 1/6. Requires that all outcomes are equally likely. (2) Relative frequency (empirical) probability: based on observed data. P(E) = number of times E occurs / total number of trials. Example: if a die is rolled 60 times and a 4 appears 12 times, P(4) ≈ 12/60 = 0.2. The accuracy increases with more trials (law of large numbers). (3) Subjective probability: based on personal judgment, experience, or belief. Example: a doctor's estimate that a patient has a 70% chance of recovery. The three axioms of probability: (1) P(E) ≥ 0 for any event E, (2) P(S) = 1 where S is the sample space (all possible outcomes), (3) For mutually exclusive events, P(A∪B) = P(A) + P(B). The complement rule states that P(not E) = 1 - P(E). For example, if P(rain) = 0.3, then P(no rain) = 0.7.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Data Presentation",
+    "id": "TH-007",
+    "question": "Compare and contrast histograms, bar charts, and frequency polygons. When should each be used, and what type of data is each suitable for?",
+    "keywords": ["histogram", "bar chart", "frequency polygon", "graph", "continuous data", "categorical data", "frequency distribution"],
+    "mainConcepts": [
+      "Histogram: bars touch, used for continuous data",
+      "Bar chart: bars separated, used for discrete/categorical data",
+      "Frequency polygon: line connecting class midpoints",
+      "Histogram shows frequency distribution of continuous data",
+      "Bar chart compares frequencies across categories",
+      "Frequency polygon useful for comparing multiple distributions",
+      "Both histograms and bar charts show frequency; data type determines choice"
+    ],
+    "referenceAnswer": "Histograms, bar charts, and frequency polygons are graphical tools for displaying data distributions. A histogram displays continuous data using bars that touch each other, where the width represents class intervals and the height represents frequency. Example: displaying the distribution of test scores with intervals 0-10, 11-20, etc. The bars touch because the data is continuous with no gaps between intervals. A bar chart displays discrete or categorical data using separated bars of equal width. Example: showing the number of students in different departments. The bars are separated because categories are distinct. A frequency polygon is a line graph connecting the midpoints of each class interval at their corresponding frequencies. It is created by plotting frequency against class midpoint and connecting points with straight lines. Frequency polygons are useful for: (1) Comparing two or more distributions on the same graph, (2) Showing the shape of a distribution clearly, (3) Identifying trends. Key differences: Histograms have touching bars and are for continuous data; bar charts have separated bars and are for categorical/discrete data; frequency polygons use lines instead of bars and are useful for comparing multiple datasets. All three provide visual insight into data patterns, central tendency, and dispersion.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  },
+  {
+    "courseCode": "STA 111",
+    "section": "Descriptive Statistics Applications",
+    "id": "TH-008",
+    "question": "Explain the purpose of descriptive statistics in research. How do measures of central tendency and dispersion work together to summarize data effectively?",
+    "keywords": ["descriptive statistics", "research", "summary", "central tendency", "dispersion", "data analysis", "interpretation"],
+    "mainConcepts": [
+      "Descriptive statistics summarize and organize data to reveal patterns and trends",
+      "Central tendency measures show the center or typical value",
+      "Dispersion measures show the spread or variability",
+      "Both are needed for a complete picture of the data",
+      "Example: mean = 70, SD = 5 tells a very different story than mean = 70, SD = 20",
+      "Descriptive statistics guide further analysis and decision making"
+    ],
+    "referenceAnswer": "Descriptive statistics serve to summarize, organize, and present data in a meaningful way so that patterns and insights emerge. They form the foundation of any statistical analysis. The two main components are measures of central tendency (mean, median, mode) which describe the typical or central value, and measures of dispersion (range, variance, standard deviation, IQR) which describe how spread out the data is. These two types of measures must be used together for a complete understanding. For example, two classes could both have a mean score of 70%, but one has a standard deviation of 5 (most students scored between 65% and 75%) while the other has SD = 20 (scores range from 30% to 100%). The same mean tells very different stories depending on the dispersion. In research, descriptive statistics: (1) Allow researchers to quickly grasp data characteristics, (2) Help identify errors or unusual values, (3) Guide the choice of inferential statistical methods, (4) Communicate findings clearly through tables and graphs, (5) Support evidence-based decision making. Common descriptive tools also include frequency distributions, percentiles, z-scores, and graphical displays (histograms, bar charts, box plots, scatter plots). Together, they transform raw data into actionable knowledge.",
+    "difficulty": "medium",
+    "maxPoints": 10
+  }
+]

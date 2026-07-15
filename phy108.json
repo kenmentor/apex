@@ -1,0 +1,733 @@
+{
+  "course_code": "PHY 108",
+  "course_title": "Laboratory Physics",
+  "study_guide_title": "PHY 108 Laboratory Physics - Comprehensive Test Question Bank",
+  "sections": [
+    {
+      "section_title": "PART 1: MEASUREMENT & ERROR ANALYSIS",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "Which of the following instruments is most suitable for measuring the internal diameter of a narrow test tube?",
+          "options": {
+            "a": "Micrometer screw gauge",
+            "b": "Vernier callipers",
+            "c": "Metre rule",
+            "d": "Spherometer"
+          },
+          "correct_answer": "b",
+          "explanation": "Vernier callipers have jaws that can measure internal diameters. A micrometer screw gauge is better for external diameters of small objects."
+        },
+        {
+          "id": "Q2",
+          "question": "Given that in a simple pendulum experiment, the measured variables L and T are related as T = 2π√(L/g). If a graph of T² against L is plotted, which expression is equal to the slope?",
+          "options": {
+            "a": "g",
+            "b": "π",
+            "c": "4π²/g",
+            "d": "g/(4π²)"
+          },
+          "correct_answer": "c",
+          "explanation": "T² = (4π²/g)L. So the slope of T² vs L is 4π²/g."
+        },
+        {
+          "id": "Q3",
+          "question": "What does a parallax error occur from?",
+          "options": {
+            "a": "Faulty calibration of the instrument",
+            "b": "Wrong positioning of the observer's eye",
+            "c": "Environmental temperature changes",
+            "d": "Friction in the instrument bearings"
+          },
+          "correct_answer": "b",
+          "explanation": "Parallax error occurs when the observer's eye is not positioned directly above the scale marking, causing an apparent shift in the reading."
+        },
+        {
+          "id": "Q4",
+          "question": "When using a metre rule, what is the absolute uncertainty (least count)?",
+          "options": {
+            "a": "0.1 cm",
+            "b": "0.01 cm",
+            "c": "0.001 cm",
+            "d": "None of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "A standard metre rule has markings at 1 mm = 0.1 cm intervals. The least count is half the smallest division = 0.05 cm, but the absolute uncertainty is typically taken as 0.1 cm."
+        },
+        {
+          "id": "Q5",
+          "question": "The following data represents measurements of time using a stopwatch: 25.5, 25.7, 25.6, 25.5, 26.0, 25.8, 25.7, 25.6, 25.6, 25.8 s. What type of error can be identified?",
+          "options": {
+            "a": "Gross error",
+            "b": "Systematic error",
+            "c": "Random error",
+            "d": "Parallax error"
+          },
+          "correct_answer": "c",
+          "explanation": "The readings vary randomly around a mean value (about 25.7 s), indicating random error. Random errors cause scatter in measurements."
+        },
+        {
+          "id": "Q6",
+          "question": "For the data in Q5, which is the correct expression of the mean and standard error in the mean?",
+          "options": {
+            "a": "25.8 ± 0.05 s",
+            "b": "25.80 ± 0.5 s",
+            "c": "25.80 ± 0.05 s",
+            "d": "25.8 ± 0.5 s"
+          },
+          "correct_answer": "c",
+          "explanation": "Mean = 25.68 s ≈ 25.80 s (to correct sig figs). Standard error ≈ 0.05 s. So 25.80 ± 0.05 s is the correct expression."
+        },
+        {
+          "id": "Q9",
+          "question": "Which of these can cause random error in experimental data?",
+          "options": {
+            "a": "Fluctuations in environmental conditions",
+            "b": "The pointer of an instrument not pointing at zero when no signal passes through",
+            "c": "Students making wrong calculations",
+            "d": "All of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Fluctuations in environmental conditions (temperature, pressure, etc.) cause random errors. Zero error causes systematic error, and wrong calculations cause gross errors."
+        },
+        {
+          "id": "Q10",
+          "question": "Which is the recommended method of minimising random error?",
+          "options": {
+            "a": "Taking repeated measurements and finding their average",
+            "b": "Lowering the temperature of the room",
+            "c": "Rounding up data to two decimal places",
+            "d": "Using a correct scale to plot experimental readings"
+          },
+          "correct_answer": "a",
+          "explanation": "Repeated measurements and averaging reduces the effect of random errors, as the random variations tend to cancel out."
+        },
+        {
+          "id": "Q12",
+          "question": "Which of these procedures can you use to determine the precision of a set of experimental data?",
+          "options": {
+            "a": "Mean",
+            "b": "Median",
+            "c": "Variance",
+            "d": "Standard deviation"
+          },
+          "correct_answer": "d",
+          "explanation": "Standard deviation measures the spread of data around the mean, directly indicating the precision of measurements. Variance is the square of standard deviation."
+        },
+        {
+          "id": "Q13",
+          "question": "If a student uses an ammeter whose pointer points at 1 A mark when no signal is passing through, what type of error will be introduced?",
+          "options": {
+            "a": "Substitution error",
+            "b": "Random error",
+            "c": "Systematic error",
+            "d": "Setting error"
+          },
+          "correct_answer": "c",
+          "explanation": "Zero error is a constant offset that affects all readings in the same way, making it a systematic error."
+        },
+        {
+          "id": "Q14",
+          "question": "For the ammeter described in Q13, determine the actual reading if the final pointer position is 5 A.",
+          "options": {
+            "a": "3 A",
+            "b": "4 A",
+            "c": "5 A",
+            "d": "6 A"
+          },
+          "correct_answer": "b",
+          "explanation": "The zero error is +1 A (reads 1 A when no current). Actual reading = observed - error = 5 - 1 = 4 A."
+        },
+        {
+          "id": "Q15",
+          "question": "If the percentage error in experimental data is small, the data can be described as:",
+          "options": {
+            "a": "Precise",
+            "b": "Accurate",
+            "c": "Excellent",
+            "d": "Perfect"
+          },
+          "correct_answer": "b",
+          "explanation": "Small percentage error indicates the measured values are close to the true value, which means high accuracy. Precision refers to the consistency of repeated measurements."
+        },
+        {
+          "id": "Q21",
+          "question": "Which of these readings do you think was measured using a more sensitive equipment?",
+          "options": {
+            "a": "2.0",
+            "b": "2.01",
+            "c": "2.00",
+            "d": "2.010"
+          },
+          "correct_answer": "d",
+          "explanation": "More decimal places indicate more sensitive (higher resolution) equipment. 2.010 has three decimal places, suggesting the finest resolution."
+        },
+        {
+          "id": "Q39",
+          "question": "A student measured the length of an object five times: 12.30, 12.4, 12.4, 12.335, and 12.45 cm. What is the mean in the correct number of significant figures?",
+          "options": {
+            "a": "12.38 cm",
+            "b": "12.4 cm",
+            "c": "12.377 cm",
+            "d": "12.3 cm"
+          },
+          "correct_answer": "b",
+          "explanation": "Mean = (12.30 + 12.40 + 12.40 + 12.335 + 12.45)/5 = 61.885/5 = 12.377 cm. Rounded to the least precise decimal place (12.4 has 1 decimal), the mean = 12.4 cm."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 2: GRAPHS & LINEARIZATION",
+      "questions": [
+        {
+          "id": "Q7",
+          "question": "Which of these equations describes a straight-line graph with y-intercept c and slope m?",
+          "options": {
+            "a": "y = mx + c",
+            "b": "y = mx - c",
+            "c": "y = mx",
+            "d": "y = -mx + c"
+          },
+          "correct_answer": "a",
+          "explanation": "The general equation of a straight line is y = mx + c, where m is the slope and c is the y-intercept."
+        },
+        {
+          "id": "Q8",
+          "question": "In the straight-line equation y = mx + c, which symbols represent the variables?",
+          "options": {
+            "a": "y and c",
+            "b": "c and m",
+            "c": "m and x",
+            "d": "x and y"
+          },
+          "correct_answer": "d",
+          "explanation": "In y = mx + c, x and y are the variables (plotted on the axes), m is the slope (constant), and c is the intercept (constant)."
+        },
+        {
+          "id": "Q18",
+          "question": "Express the relationship between the variables in a straight-line graph in the form y = mx ± c, where x and y are variables and m and c are constants.",
+          "options": {
+            "a": "y = mx + c",
+            "b": "y = m + xc",
+            "c": "y = c + mx",
+            "d": "Both A and C"
+          },
+          "correct_answer": "d",
+          "explanation": "Both y = mx + c and y = c + mx represent the same straight-line relationship with slope m and intercept c."
+        },
+        {
+          "id": "Q19",
+          "question": "Transform T = 2π√((H - L)/g) into linear form, where L and T are variables.",
+          "options": {
+            "a": "T² = (4π²/g)H - (4π²/g)L",
+            "b": "T = 2π√(H/g) - 2π√(L/g)",
+            "c": "T² = (4π²/g)L + (4π²/g)H",
+            "d": "Log T = log(2π) + 0.5log(H-L) - 0.5log(g)"
+          },
+          "correct_answer": "a",
+          "explanation": "Squaring both sides: T² = 4π²(H-L)/g = 4π²H/g - 4π²L/g. This is of the form y = mx + c where y = T², x = L, slope = -4π²/g, intercept = 4π²H/g."
+        },
+        {
+          "id": "Q28",
+          "question": "When plotting an experimental graph, the independent variable is conventionally plotted on which axis?",
+          "options": {
+            "a": "Y-axis",
+            "b": "X-axis",
+            "c": "Origin",
+            "d": "Logarithmic axis"
+          },
+          "correct_answer": "b",
+          "explanation": "By convention, the independent variable is plotted on the x-axis (horizontal) and the dependent variable on the y-axis (vertical)."
+        },
+        {
+          "id": "Q31",
+          "question": "In an experiment to find the focal length of a concave lens using 1/u + 1/v = 1/f, a graph of 1/v against 1/u is plotted. Which expression can be used to determine f from the intercept?",
+          "options": {
+            "a": "1/slope",
+            "b": "1/intercept",
+            "c": "1/u + 1/v",
+            "d": "2f"
+          },
+          "correct_answer": "b",
+          "explanation": "Rearranging: 1/v = -1/u + 1/f. The y-intercept of 1/v vs 1/u graph is 1/f. Therefore f = 1/(intercept)."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 3: MEASURING INSTRUMENTS",
+      "questions": [
+        {
+          "id": "Q23",
+          "question": "Which of these instruments is most suitable for measuring the thickness of a piece of wire?",
+          "options": {
+            "a": "Vernier callipers",
+            "b": "Ruler",
+            "c": "Measuring tape",
+            "d": "Micrometer screw gauge"
+          },
+          "correct_answer": "d",
+          "explanation": "A micrometer screw gauge has the highest precision (typically 0.01 mm) and is designed for measuring small dimensions like wire thickness."
+        },
+        {
+          "id": "Q26",
+          "question": "If the zero mark of a Vernier calliper is to the right of the main scale zero mark when the jaws are closed, the zero error is:",
+          "options": {
+            "a": "Positive",
+            "b": "Negative",
+            "c": "Neutral",
+            "d": "Indeterminate"
+          },
+          "correct_answer": "a",
+          "explanation": "When the zero mark is to the right of the main scale zero (jaws closed), the instrument reads a positive value when it should read zero — this is a positive zero error."
+        },
+        {
+          "id": "Q32",
+          "question": "What is the least count of a micrometer screw gauge with a pitch of 0.5 mm and 50 circular scale divisions?",
+          "options": {
+            "a": "0.001 mm",
+            "b": "0.01 mm",
+            "c": "0.1 mm",
+            "d": "0.05 mm"
+          },
+          "correct_answer": "b",
+          "explanation": "Least count = pitch / number of divisions = 0.5 mm / 50 = 0.01 mm."
+        },
+        {
+          "id": "Q40",
+          "question": "Which of these instruments is most suitable for measuring the diameter of a small spherical object?",
+          "options": {
+            "a": "Metre rule",
+            "b": "Travelling microscope",
+            "c": "Vernier calliper",
+            "d": "Micrometer screw gauge"
+          },
+          "correct_answer": "d",
+          "explanation": "A micrometer screw gauge provides the precision needed for measuring small diameters, typically to 0.01 mm accuracy."
+        },
+        {
+          "id": "Q16",
+          "question": "What is the reading on a micrometer screw gauge if the main scale shows 5.5 mm and the circular scale shows 28 divisions (least count = 0.01 mm)?",
+          "options": {
+            "a": "5.78 mm",
+            "b": "5.28 mm",
+            "c": "5.50 mm",
+            "d": "5.82 mm"
+          },
+          "correct_answer": "a",
+          "explanation": "Reading = main scale + (circular scale × least count) = 5.5 + (28 × 0.01) = 5.5 + 0.28 = 5.78 mm."
+        },
+        {
+          "id": "Q17",
+          "question": "A vernier calliper with 10 vernier divisions (each 0.9 mm) coinciding with 9 mm of the main scale. If the main scale reads 2.3 cm and the 6th vernier division coincides, what is the reading?",
+          "options": {
+            "a": "2.36 cm",
+            "b": "2.30 cm",
+            "c": "2.90 cm",
+            "d": "2.06 cm"
+          },
+          "correct_answer": "a",
+          "explanation": "Least count = 1 mm/10 = 0.1 mm = 0.01 cm. Reading = main scale + (coinciding division × LC) = 2.3 + (6 × 0.01) = 2.36 cm."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 4: ELECTRICAL MEASUREMENTS",
+      "questions": [
+        {
+          "id": "Q22",
+          "question": "Which of these wire configurations will offer the highest resistance to the flow of current?",
+          "options": {
+            "a": "Short thick wire",
+            "b": "Long thin wire",
+            "c": "Short thin wire",
+            "d": "Long thick wire"
+          },
+          "correct_answer": "b",
+          "explanation": "Resistance R = ρL/A. A long wire increases resistance, and a thin wire (small cross-sectional area) also increases resistance. A long thin wire has the highest resistance."
+        },
+        {
+          "id": "Q24",
+          "question": "The resistance of a constantan wire will generally increase when there is an increase in:",
+          "options": {
+            "a": "Length",
+            "b": "Cross sectional area",
+            "c": "Noise",
+            "d": "Heat and temperature"
+          },
+          "correct_answer": "a",
+          "explanation": "Resistance is directly proportional to length (R ∝ L). Increasing length increases resistance. Increasing cross-sectional area decreases resistance."
+        },
+        {
+          "id": "Q25",
+          "question": "What is the primary purpose of a commutator/reversing switch in an electrical circuit experiment?",
+          "options": {
+            "a": "To change the magnitude of the current",
+            "b": "To reverse the direction of the current",
+            "c": "To break the circuit safely",
+            "d": "To protect the galvanometer from damage"
+          },
+          "correct_answer": "b",
+          "explanation": "A commutator/reversing switch reverses the direction of current flow in a circuit, which is useful in experiments involving potentiometers and bridge circuits."
+        },
+        {
+          "id": "Q27",
+          "question": "To convert a galvanometer into a voltmeter, one must connect a:",
+          "options": {
+            "a": "Low resistance in series",
+            "b": "High resistance in parallel",
+            "c": "Low resistance in parallel",
+            "d": "High resistance in series"
+          },
+          "correct_answer": "d",
+          "explanation": "A high resistance connected in series with the galvanometer limits the current, allowing the instrument to measure voltage. The range depends on the series resistance value."
+        },
+        {
+          "id": "Q33",
+          "question": "In an electrical experiment, which device is used to vary the resistance in a circuit continuously without breaking the connection?",
+          "options": {
+            "a": "Rheostat",
+            "b": "Resistor box",
+            "c": "Galvanometer",
+            "d": "Commutator"
+          },
+          "correct_answer": "a",
+          "explanation": "A rheostat (variable resistor) can continuously vary resistance while maintaining the circuit connection by sliding a contact along a resistive element."
+        },
+        {
+          "id": "Q37",
+          "question": "The internal resistance of an ideal voltmeter is:",
+          "options": {
+            "a": "Zero",
+            "b": "Very low",
+            "c": "Infinite",
+            "d": "1 ohm"
+          },
+          "correct_answer": "c",
+          "explanation": "An ideal voltmeter has infinite internal resistance so that it draws no current from the circuit being measured."
+        },
+        {
+          "id": "Q29",
+          "question": "If the length of a constantan wire is doubled in an experiment, its resistivity will:",
+          "options": {
+            "a": "Double",
+            "b": "Halve",
+            "c": "Quadruple",
+            "d": "Remain unchanged"
+          },
+          "correct_answer": "d",
+          "explanation": "Resistivity is an intrinsic material property that depends only on the material and temperature, not on the dimensions of the wire. It remains unchanged when length changes."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 5: HEAT, OPTICS & GENERAL PHYSICS",
+      "questions": [
+        {
+          "id": "Q11",
+          "question": "In a thermal physics experiment, why is a calorimeter wrapped in cotton wool?",
+          "options": {
+            "a": "To increase its heat capacity",
+            "b": "To minimize heat loss by radiation",
+            "c": "To minimize heat loss by conduction and convection",
+            "d": "To prevent the vessel from breaking"
+          },
+          "correct_answer": "c",
+          "explanation": "Cotton wool is a poor conductor and traps air, minimizing heat loss by conduction and convection. It also reduces radiation to some extent."
+        },
+        {
+          "id": "Q30",
+          "question": "Which instrument can be used in an experiment to determine the refractive index of glass?",
+          "options": {
+            "a": "Travelling microscope",
+            "b": "Sextant",
+            "c": "Blackbody",
+            "d": "Spectrometer"
+          },
+          "correct_answer": "a",
+          "explanation": "A travelling microscope is used to measure apparent depth, from which the refractive index can be calculated (n = real depth/apparent depth)."
+        },
+        {
+          "id": "Q34",
+          "question": "When plotting a calibration curve for a thermocouple, the temperature at which the thermo-emf becomes maximum is known as the:",
+          "options": {
+            "a": "Inversion temperature",
+            "b": "Neutral temperature",
+            "c": "Critical temperature",
+            "d": "Curie temperature"
+          },
+          "correct_answer": "b",
+          "explanation": "The neutral temperature of a thermocouple is the temperature at which the thermo-emf reaches its maximum value."
+        },
+        {
+          "id": "Q35",
+          "question": "The phenomenon of a liquid rising or falling in a narrow tube due to surface tension is called:",
+          "options": {
+            "a": "Osmosis",
+            "b": "Diffusion",
+            "c": "Capillarity",
+            "d": "Brownian motion"
+          },
+          "correct_answer": "c",
+          "explanation": "Capillarity (capillary action) is the rise or fall of a liquid in a narrow tube due to the combined effects of adhesion, cohesion, and surface tension."
+        },
+        {
+          "id": "Q36",
+          "question": "To determine the focal length of a concave lens using an auxiliary convex lens, the two lenses must be placed:",
+          "options": {
+            "a": "Coaxially",
+            "b": "Perpendicularly",
+            "c": "At right angles",
+            "d": "As far apart as possible"
+          },
+          "correct_answer": "a",
+          "explanation": "The two lenses must be placed coaxially (with their principal axes coincident) to ensure the light rays pass through both lenses symmetrically."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 6: OSCILLATIONS & SPRING EXPERIMENT",
+      "questions": [
+        {
+          "id": "Q41",
+          "question": "In a spring oscillation experiment, the time for 10 oscillations is measured rather than 1 to:",
+          "options": {
+            "a": "Reduce random error",
+            "b": "Increase the amplitude",
+            "c": "Change the period",
+            "d": "Eliminate systematic error"
+          },
+          "correct_answer": "a",
+          "explanation": "Measuring the time for multiple oscillations and dividing reduces the random error in determining the period, as timing errors are averaged over more cycles."
+        },
+        {
+          "id": "Q42",
+          "question": "In a spring-mass system, the period of oscillation T is related to mass M and spring constant K by:",
+          "options": {
+            "a": "T = 2π√(M/K)",
+            "b": "T = 2π√(K/M)",
+            "c": "T = √(M/K)",
+            "d": "T = 2π√(MK)"
+          },
+          "correct_answer": "a",
+          "explanation": "The period of a spring-mass system is T = 2π√(M/K), where M is the mass and K is the spring constant."
+        },
+        {
+          "id": "Q43",
+          "question": "If a graph of mass M is plotted against T² for a spring experiment, the slope of the graph is related to the spring constant K by:",
+          "options": {
+            "a": "K = 4π² × slope",
+            "b": "K = 4π²/slope",
+            "c": "K = slope/(4π²)",
+            "d": "K = slope × 2π"
+          },
+          "correct_answer": "b",
+          "explanation": "From T = 2π√(M/K), we get T² = (4π²/K)M. So slope = 4π²/K. Therefore K = 4π²/slope."
+        },
+        {
+          "id": "Q44",
+          "question": "In the spring experiment, what is T if t = 15.2 s for 10 oscillations?",
+          "options": {
+            "a": "1.52 s",
+            "b": "15.2 s",
+            "c": "0.152 s",
+            "d": "152 s"
+          },
+          "correct_answer": "a",
+          "explanation": "T = t/10 = 15.2/10 = 1.52 s. T is the period for one oscillation."
+        },
+        {
+          "id": "Q45",
+          "question": "In a spring experiment, a student adds masses one by one. The correct procedure is to:",
+          "options": {
+            "a": "Add masses and start timing immediately",
+            "b": "Allow the spring to settle before timing",
+            "c": "Pull the mass down and release without stretching the spring beyond elastic limit",
+            "d": "Both B and C"
+          },
+          "correct_answer": "d",
+          "explanation": "Allow time for the spring to settle (reach equilibrium) and ensure oscillations are within the elastic limit to maintain a constant spring constant."
+        },
+        {
+          "id": "Q46",
+          "question": "In an oscillation experiment, the amplitude of oscillation should be kept small to:",
+          "options": {
+            "a": "Ensure simple harmonic motion",
+            "b": "Reduce the period",
+            "c": "Make the mass oscillate faster",
+            "d": "Prevent the spring from breaking"
+          },
+          "correct_answer": "a",
+          "explanation": "Simple harmonic motion (SHM) is only valid for small oscillations where Hooke's law is obeyed and the restoring force is proportional to displacement."
+        },
+        {
+          "id": "Q47",
+          "question": "Which of the following precautions is important when using a stopwatch in an oscillation experiment?",
+          "options": {
+            "a": "Start the stopwatch at the extreme position",
+            "b": "Start the stopwatch at the equilibrium position",
+            "c": "Take the time for one oscillation only",
+            "d": "Use the stopwatch with the lowest resolution"
+          },
+          "correct_answer": "b",
+          "explanation": "Start timing at the equilibrium (mean) position where the speed is maximum, making it easier to judge the exact moment consistently."
+        },
+        {
+          "id": "Q48",
+          "question": "If the mass in a spring experiment is doubled, the period T will:",
+          "options": {
+            "a": "Double",
+            "b": "Increase by a factor of √2",
+            "c": "Halve",
+            "d": "Remain unchanged"
+          },
+          "correct_answer": "b",
+          "explanation": "From T = 2π√(M/K), if M is doubled, T becomes 2π√(2M/K) = √2 × 2π√(M/K) = √2 × T."
+        },
+        {
+          "id": "Q49",
+          "question": "Regular and irregular errors in an experiment can be minimized by:",
+          "options": {
+            "a": "Using more sensitive instruments and taking averages",
+            "b": "Ignoring outliers",
+            "c": "Measuring once only",
+            "d": "Using a longer wire"
+          },
+          "correct_answer": "a",
+          "explanation": "Regular (systematic) errors are minimized by using properly calibrated, sensitive instruments. Irregular (random) errors are minimized by taking repeated measurements and averaging."
+        },
+        {
+          "id": "Q50",
+          "question": "In a graph of M against T² for a spring experiment, the y-intercept represents:",
+          "options": {
+            "a": "The spring constant",
+            "b": "Zero mass",
+            "c": "The effective mass of the spring system",
+            "d": "The amplitude"
+          },
+          "correct_answer": "c",
+          "explanation": "The y-intercept represents the effective mass of the spring itself, since the equation T² = (4π²/K)(M + m_effective) accounts for the spring's own mass contribution."
+        },
+        {
+          "id": "Q51",
+          "question": "Hooke's Law states that the extension of a spring is proportional to the:",
+          "options": {
+            "a": "Mass applied",
+            "b": "Weight applied",
+            "c": "Length of spring",
+            "d": "Time of oscillation"
+          },
+          "correct_answer": "b",
+          "explanation": "Hooke's Law: F = kx, where F is the force (weight = mg) applied and x is the extension. The force is proportional to the extension."
+        },
+        {
+          "id": "Q52",
+          "question": "Which of these is NOT a precaution when performing the spring oscillation experiment?",
+          "options": {
+            "a": "Ensure the spring oscillates vertically",
+            "b": "Use a fiducial marker at the equilibrium position",
+            "c": "Use the largest possible amplitude",
+            "d": "Avoid parallax error when reading the stopwatch"
+          },
+          "correct_answer": "c",
+          "explanation": "The amplitude should be kept small to maintain SHM. Large amplitudes may exceed the elastic limit and invalidate Hooke's law."
+        },
+        {
+          "id": "Q53",
+          "question": "A student measured t = 12.4 s for 10 oscillations of a 50 g mass. The period T is:",
+          "options": {
+            "a": "1.24 s",
+            "b": "12.4 s",
+            "c": "0.124 s",
+            "d": "124 s"
+          },
+          "correct_answer": "a",
+          "explanation": "T = t/10 = 12.4/10 = 1.24 s."
+        },
+        {
+          "id": "Q54",
+          "question": "The instrument used to measure the extension of a spring in a static experiment is:",
+          "options": {
+            "a": "Micrometer screw gauge",
+            "b": "Metre rule",
+            "c": "Vernier calliper",
+            "d": "Travelling microscope"
+          },
+          "correct_answer": "b",
+          "explanation": "A metre rule is most suitable for measuring the extension of a spring as the extension is typically in the centimeter range."
+        },
+        {
+          "id": "Q55",
+          "question": "If a graph in an experiment does not pass through the origin, possible reasons include:",
+          "options": {
+            "a": "Systematic error or zero error",
+            "b": "The graph should always pass through the origin",
+            "c": "Random error only",
+            "d": "The experiment is invalid"
+          },
+          "correct_answer": "a",
+          "explanation": "A non-zero intercept may indicate a systematic error (like zero error) or that the relationship between variables does not pass through the origin."
+        },
+        {
+          "id": "Q56",
+          "question": "In a simple pendulum experiment, the period T is measured for different lengths L. The graph of T² against L should be:",
+          "options": {
+            "a": "A curve",
+            "b": "A straight line through the origin",
+            "c": "A straight line with positive intercept",
+            "d": "A horizontal line"
+          },
+          "correct_answer": "b",
+          "explanation": "T² = (4π²/g)L, so T² is directly proportional to L. The graph is a straight line passing through the origin with slope 4π²/g."
+        },
+        {
+          "id": "Q57",
+          "question": "To minimize error in a pendulum experiment, the timing should be:",
+          "options": {
+            "a": "Started at the extreme position",
+            "b": "Started at the equilibrium position",
+            "c": "Started when the pendulum is at rest",
+            "d": "Started randomly"
+          },
+          "correct_answer": "b",
+          "explanation": "Timing should begin at the equilibrium (mean) position where the pendulum moves fastest, making it easier to judge the exact moment consistently."
+        },
+        {
+          "id": "Q58",
+          "question": "The standard error of the mean decreases as the number of measurements:",
+          "options": {
+            "a": "Increases",
+            "b": "Decreases",
+            "c": "Stays constant",
+            "d": "Fluctuates"
+          },
+          "correct_answer": "a",
+          "explanation": "Standard error = σ/√n. As n (number of measurements) increases, the standard error decreases, improving the precision of the mean."
+        },
+        {
+          "id": "Q59",
+          "question": "To convert a galvanometer into an ammeter, one must connect a:",
+          "options": {
+            "a": "High resistance in series",
+            "b": "Low resistance in parallel (shunt)",
+            "c": "High resistance in parallel",
+            "d": "Low resistance in series"
+          },
+          "correct_answer": "b",
+          "explanation": "A low resistance (shunt) connected in parallel with the galvanometer allows most of the current to bypass it, enabling the measurement of larger currents."
+        },
+        {
+          "id": "Q60",
+          "question": "Which graph shape is obtained when plotting the extension of a spring against the applied load within the elastic limit?",
+          "options": {
+            "a": "Hyperbola",
+            "b": "Parabola",
+            "c": "Straight line through the origin",
+            "d": "Exponential curve"
+          },
+          "correct_answer": "c",
+          "explanation": "According to Hooke's law (F = kx), extension is directly proportional to applied force (load). The graph is a straight line through the origin with slope = 1/k."
+        }
+      ]
+    }
+  ]
+}

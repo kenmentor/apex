@@ -1,0 +1,928 @@
+{
+  "course_code": "GSS 101",
+  "course_title": "Use of English & Communication Skills",
+  "study_guide_title": "Comprehensive Solved Past Questions Study Guide",
+  "sections": [
+    {
+      "section_title": "PART 1: LISTENING SKILLS",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "Which of these is not a type of listening?",
+          "options": { "a": "Generational listening", "b": "Transactional listening", "c": "Critical listening", "d": "Recreational listening" },
+          "correct_answer": "a",
+          "explanation": "The main types of listening are transactional, critical, recreational, and appreciative listening. 'Generational listening' is not a recognized type."
+        },
+        {
+          "id": "Q2",
+          "question": "_______ is the person being spoken to directly and has equal speaking rights.",
+          "options": { "a": "The participant", "b": "The overhearer", "c": "The addressee", "d": "The audience" },
+          "correct_answer": "a",
+          "explanation": "A participant in a conversation has equal speaking rights and actively takes part in the discourse."
+        },
+        {
+          "id": "Q3",
+          "question": "________ is the one spoken to directly but with limited right to respond.",
+          "options": { "a": "The addressee", "b": "The participant", "c": "The audience", "d": "The overhearer" },
+          "correct_answer": "a",
+          "explanation": "The addressee is the person being directly spoken to but may have limited or no right to respond depending on the context."
+        },
+        {
+          "id": "Q4",
+          "question": "_________ is not being addressed although he is within earshot.",
+          "options": { "a": "The overhearer", "b": "The audience", "c": "The participant", "d": "The addressee" },
+          "correct_answer": "a",
+          "explanation": "An overhearer is someone who happens to hear a conversation but is not the intended recipient of the message."
+        },
+        {
+          "id": "Q5",
+          "question": "One of these is a factor which affects effective listening.",
+          "options": { "a": "Linguistic factors", "b": "School factor", "c": "Economic factor", "d": "Political factor" },
+          "correct_answer": "a",
+          "explanation": "Linguistic factors such as unfamiliar vocabulary, accent, and complex sentence structures affect listening comprehension."
+        },
+        {
+          "id": "Q6",
+          "question": "Inference enables us to _______.",
+          "options": { "a": "Make connections between what we hear and what we know", "b": "Forget what we are not interesting in hearing", "c": "Listen attentively to details", "d": "Read quickly" },
+          "correct_answer": "a",
+          "explanation": "Inference is the process of drawing conclusions based on evidence and reasoning, connecting new information to existing knowledge."
+        },
+        {
+          "id": "Q7",
+          "question": "What is content knowledge?",
+          "options": { "a": "Our familiarity with a topic", "b": "Knowledge gotten from lectures", "c": "Knowledge generated from reading a novel", "d": "Getting to know a topic better" },
+          "correct_answer": "a",
+          "explanation": "Content knowledge refers to the extent of our familiarity and understanding of a particular subject or topic."
+        },
+        {
+          "id": "Q8",
+          "question": "Pre-listening activities include all except _______.",
+          "options": { "a": "Evaluation", "b": "Brainstorming", "c": "Onset question", "d": "Auditory sensitization" },
+          "correct_answer": "a",
+          "explanation": "Evaluation is a post-listening activity. Brainstorming, onset questions, and auditory sensitization are pre-listening activities."
+        },
+        {
+          "id": "Q111",
+          "question": "The deliberate reception, analysis and processing of information or message by the decoder from an encoder is called -?",
+          "options": { "a": "Listening", "b": "Writing", "c": "Speaking", "d": "Reading" },
+          "correct_answer": "a",
+          "explanation": "Listening is the deliberate process of receiving, analyzing, and processing information from a speaker (encoder) by the listener (decoder)."
+        },
+        {
+          "id": "Q113",
+          "question": "In academic listening, the elements needed to have a complete communication are -?",
+          "options": { "a": "Encoder, message and decoder", "b": "Message, Speech and Speaker", "c": "Listener, Speaker and audience", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "For complete communication, you need an encoder (speaker), a message (the content), and a decoder (listener)."
+        },
+        {
+          "id": "Q114",
+          "question": "One of these is not a pre-listening activity.",
+          "options": { "a": "Summary task", "b": "Brainstorming", "c": "Onset question", "d": "Thematic focus" },
+          "correct_answer": "a",
+          "explanation": "Summary tasks are post-listening activities. Brainstorming, onset questions, and thematic focus prepare the listener before the actual listening."
+        },
+        {
+          "id": "Q115",
+          "question": "Tiredness, hunger and illness are examples of - factor that affects listening.",
+          "options": { "a": "Psychological factor", "b": "Environmental factor", "c": "Cultural", "d": "Religious" },
+          "correct_answer": "a",
+          "explanation": "Tiredness, hunger, and illness are internal psychological and physiological factors that affect one's ability to listen effectively."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 2: PHONETICS & PHONOLOGY",
+      "questions": [
+        {
+          "id": "Q9",
+          "question": "How many basic tones are there in English?",
+          "options": { "a": "3", "b": "4", "c": "6", "d": "5" },
+          "correct_answer": "b",
+          "explanation": "English has four basic tones: falling, rising, fall-rise, and level (or combination) tones."
+        },
+        {
+          "id": "Q10",
+          "question": "Which of these is not amongst the basic tones in English?",
+          "options": { "a": "Expectant tone", "b": "Falling tone", "c": "Rising tone", "d": "Combination tone" },
+          "correct_answer": "a",
+          "explanation": "The basic tones in English are falling, rising, and combination (fall-rise/level) tones. 'Expectant tone' is not a recognized basic tone."
+        },
+        {
+          "id": "Q14",
+          "question": "How many consonant sounds are there in English?",
+          "options": { "a": "24", "b": "20", "c": "23", "d": "22" },
+          "correct_answer": "a",
+          "explanation": "English has 24 consonant sounds (phonemes), classified by place and manner of articulation."
+        },
+        {
+          "id": "Q15",
+          "question": "Which word contains the /p/ sound?",
+          "options": { "a": "Pet", "b": "Phone", "c": "Comb", "d": "Bomb" },
+          "correct_answer": "a",
+          "explanation": "The /p/ sound is a voiceless bilabial plosive. 'Pet' begins with /p/. 'Phone' begins with /f/, 'Comb' and 'Bomb' end with silent letters."
+        },
+        {
+          "id": "Q16",
+          "question": "Which word contains the /dz/ sound?",
+          "options": { "a": "Joy", "b": "Zip", "c": "Decimal", "d": "Zoom" },
+          "correct_answer": "a",
+          "explanation": "The /dz/ sound (or /dʒ/) is a voiced palato-alveolar affricate. 'Joy' begins with this sound. 'Zip' and 'Zoom' have /z/, 'Decimal' has /d/ and /s/."
+        },
+        {
+          "id": "Q17",
+          "question": "Which word contains the /j/ sound?",
+          "options": { "a": "Yet", "b": "Jet", "c": "Jam", "d": "Geezer" },
+          "correct_answer": "a",
+          "explanation": "The /j/ sound is a voiced palatal approximant. 'Yet' begins with /j/. 'Jet', 'Jam', and 'Geezer' begin with the /dʒ/ sound."
+        },
+        {
+          "id": "Q18",
+          "question": "Which word contains the /ei/ sound?",
+          "options": { "a": "Pay", "b": "Cow", "c": "Man", "d": "Part" },
+          "correct_answer": "a",
+          "explanation": "The /ei/ sound is a diphthong. 'Pay' has the /ei/ sound. 'Cow' has /au/, 'Man' has /æ/, and 'Part' has /ɑː/."
+        },
+        {
+          "id": "Q19",
+          "question": "Which word contains the /ai/ sound?",
+          "options": { "a": "Eye", "b": "Bat", "c": "Day", "d": "Know" },
+          "correct_answer": "a",
+          "explanation": "The /ai/ sound is a diphthong. 'Eye' is pronounced /aɪ/. 'Bat' has /æ/, 'Day' has /ei/, and 'Know' has /əʊ/."
+        },
+        {
+          "id": "Q20",
+          "question": "Which word contains the /au/ sound?",
+          "options": { "a": "Cow", "b": "Boat", "c": "Come", "d": "Tough" },
+          "correct_answer": "a",
+          "explanation": "The /au/ sound is a diphthong. 'Cow' has the /aʊ/ sound. 'Boat' has /əʊ/, 'Come' has /ʌ/, and 'Tough' has /ʌ/."
+        },
+        {
+          "id": "Q21",
+          "question": "The act of representing speech sounds by means of phonetic symbols is ________.",
+          "options": { "a": "Transcription", "b": "Translation", "c": "Interpretation", "d": "Symbolism" },
+          "correct_answer": "a",
+          "explanation": "Phonetic transcription is the systematic representation of speech sounds using phonetic symbols."
+        },
+        {
+          "id": "Q22",
+          "question": "Words with two syllables are called _____.",
+          "options": { "a": "Disyllables", "b": "Duosyllable", "c": "Monosyllables", "d": "Polysyllabes" },
+          "correct_answer": "a",
+          "explanation": "Disyllables (or disyllabic words) have two syllables. Monosyllables have one, and polysyllables have more than two."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 3: STUDY SKILLS & READING",
+      "questions": [
+        {
+          "id": "Q11",
+          "question": "What is the explication of the acronym PQRST?",
+          "options": { "a": "Preview, Question, Read, Summarise, Test", "b": "Prepare, Question, Read, Survey, Test", "c": "Preview, Question, Re-evaluate, Summarise, Test", "d": "Prepare, Question, Re-evaluate, Survey, Test" },
+          "correct_answer": "a",
+          "explanation": "PQRST stands for Preview, Question, Read, Summarise, Test — a structured study method for effective reading comprehension."
+        },
+        {
+          "id": "Q12",
+          "question": "Explicate SQ3R.",
+          "options": { "a": "Survey, Question, Read, Recall, Review", "b": "Summarise, Question, Read, Recall, Review", "c": "Submit, Question, Review, Recall, Read", "d": "Source, Question, Re-evaluate, Recall, Review" },
+          "correct_answer": "a",
+          "explanation": "SQ3R stands for Survey, Question, Read, Recall, Review — a popular reading comprehension method developed by Francis Robinson."
+        },
+        {
+          "id": "Q13",
+          "question": "Note taking during lectures requires which skills?",
+          "options": { "a": "Listening and Writing", "b": "Interacting and writing", "c": "Asking questions and jotting", "d": "Responding and writings" },
+          "correct_answer": "a",
+          "explanation": "Effective note-taking requires the combined skills of attentive listening and efficient writing to capture key points."
+        },
+        {
+          "id": "Q23",
+          "question": "Which one the following is a part of intensive reading?",
+          "options": { "a": "Scanning", "b": "Citations", "c": "Summary", "d": "Epilogue" },
+          "correct_answer": "a",
+          "explanation": "Scanning is a technique used in intensive reading to locate specific information quickly."
+        },
+        {
+          "id": "Q33",
+          "question": "______ is an example of effective study habits.",
+          "options": { "a": "Study time/planning", "b": "Hazy goals", "c": "Wrong choice of place of study", "d": "Bad habit" },
+          "correct_answer": "a",
+          "explanation": "Planning study time effectively is a key characteristic of good study habits."
+        },
+        {
+          "id": "Q34",
+          "question": "Developing effective study skills include the following except _____.",
+          "options": { "a": "Wrong place of study", "b": "Conducive environment", "c": "Timed reading", "d": "Exploiting the resources of the language" },
+          "correct_answer": "a",
+          "explanation": "A wrong place of study hinders concentration and is not part of effective study skills."
+        },
+        {
+          "id": "Q35",
+          "question": "________ is a deliberate, reception, analysis and processing of information.",
+          "options": { "a": "Listening", "b": "Reading", "c": "Skimming", "d": "Scanning" },
+          "correct_answer": "a",
+          "explanation": "Listening is the deliberate act of receiving, analyzing, and processing information from a speaker."
+        },
+        {
+          "id": "Q36",
+          "question": "The following are elements needed for communication to be complete except ______.",
+          "options": { "a": "Academic", "b": "Encoder", "c": "Decoder", "d": "Message" },
+          "correct_answer": "a",
+          "explanation": "Encoder, decoder, and message are essential elements of communication. 'Academic' is not a communication element."
+        },
+        {
+          "id": "Q37",
+          "question": "Reading impediments include the following except _____.",
+          "options": { "a": "Group reading", "b": "Hand movement", "c": "Pointing of fingers", "d": "Vocalisation" },
+          "correct_answer": "a",
+          "explanation": "Group reading is a beneficial activity, not an impediment. Hand movement, pointing fingers, and vocalisation are reading impediments."
+        },
+        {
+          "id": "Q38",
+          "question": "_________ is reading quickly to find the main facts or ideas.",
+          "options": { "a": "Skimming", "b": "Critical reading", "c": "Creative reading", "d": "Scanning" },
+          "correct_answer": "a",
+          "explanation": "Skimming is a speed-reading technique used to get a general overview and identify the main ideas of a text."
+        },
+        {
+          "id": "Q39",
+          "question": "________ is reading for specific information.",
+          "options": { "a": "Scanning", "b": "Critical reading", "c": "Creative reading", "d": "Skimming" },
+          "correct_answer": "a",
+          "explanation": "Scanning involves searching for specific information, keywords, or details within a text without reading everything."
+        },
+        {
+          "id": "Q106",
+          "question": "The art of developing efficiency and effectiveness in reading and studying in general is called -?",
+          "options": { "a": "Study Skills", "b": "Writing Skills", "c": "Reading Skills", "d": "Listening" },
+          "correct_answer": "a",
+          "explanation": "Study skills refer to the techniques and strategies that help students read, learn, and retain information efficiently."
+        },
+        {
+          "id": "Q107",
+          "question": "For students to have effective study, they should consider one of these.",
+          "options": { "a": "Choice of reading place", "b": "Listening to music", "c": "Date of exams", "d": "Classroom interaction" },
+          "correct_answer": "a",
+          "explanation": "Choosing a conducive reading place is essential for effective study as it minimizes distractions."
+        },
+        {
+          "id": "Q108",
+          "question": "Which of these are examples of bad reading habits?",
+          "options": { "a": "Head movement, fingering words, and eye movement", "b": "Ear movement, head movement and lip movement", "c": "Lip movement, leg movement and mouth movement", "d": "All of the above" },
+          "correct_answer": "a",
+          "explanation": "Head movement (moving the head while reading), fingering words (pointing at words), and unnecessary eye movement are common bad reading habits."
+        },
+        {
+          "id": "Q109",
+          "question": "To develop effective study skills, students are to consider these except one.",
+          "options": { "a": "Read every night", "b": "Mental activation", "c": "Plan study time", "d": "Study group" },
+          "correct_answer": "b",
+          "explanation": "Planning study time, joining study groups, and consistent reading are established study skills. 'Mental activation' is not a recognized study technique."
+        },
+        {
+          "id": "Q110",
+          "question": "The recommended number of students for a study group is -?",
+          "options": { "a": "3-4", "b": "1-2", "c": "6-7", "d": "5-10" },
+          "correct_answer": "a",
+          "explanation": "A study group of 3-4 members is recommended for effective collaboration and discussion."
+        },
+        {
+          "id": "Q112",
+          "question": "The four (4) basic skills that aid language proficiency are?",
+          "options": { "a": "Writing, Speaking, Listening and Reading", "b": "Writing, traveling, writing and acting", "c": "Preparation, reading, studying and speaking", "d": "All of the above" },
+          "correct_answer": "a",
+          "explanation": "The four basic language skills are Listening, Speaking, Reading, and Writing."
+        },
+        {
+          "id": "Q116",
+          "question": "The two basic speed reading techniques are?",
+          "options": { "a": "Skimming and Scanning", "b": "Fast and slow", "c": "Critical and vocalization", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "Skimming (reading for main ideas) and Scanning (reading for specific information) are the two basic speed reading techniques."
+        },
+        {
+          "id": "Q117",
+          "question": "--- is a reading skill used for finding specific information from a reading material.",
+          "options": { "a": "Scanning", "b": "Critical", "c": "Skimming", "d": "Rapid reading" },
+          "correct_answer": "a",
+          "explanation": "Scanning is the reading skill specifically used to locate particular facts, figures, or specific pieces of information."
+        },
+        {
+          "id": "Q121",
+          "question": "How many language skills do we have in English?",
+          "options": { "a": "4", "b": "3", "c": "2", "d": "1" },
+          "correct_answer": "a",
+          "explanation": "There are four language skills: Listening (receptive), Speaking (productive), Reading (receptive), and Writing (productive)."
+        },
+        {
+          "id": "Q122",
+          "question": "Listening is a --------- language skill.",
+          "options": { "a": "Receptive", "b": "Expressive", "c": "Primary", "d": "Secondary" },
+          "correct_answer": "a",
+          "explanation": "Listening is a receptive skill because it involves receiving and processing information rather than producing language."
+        },
+        {
+          "id": "Q123",
+          "question": "The smallest unit of English grammar is?",
+          "options": { "a": "Morpheme", "b": "Word", "c": "Phrase", "d": "Clause" },
+          "correct_answer": "a",
+          "explanation": "A morpheme is the smallest grammatical unit in a language that carries meaning."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 4: VOCABULARY (SYNONYMS & ANTONYMS)",
+      "questions": [
+        {
+          "id": "Q24",
+          "question": "The harvest is abundant. (Choose the nearest in meaning)",
+          "options": { "a": "Plentiful", "b": "Few", "c": "High", "d": "Many" },
+          "correct_answer": "a",
+          "explanation": "'Abundant' means existing in large quantities, and 'plentiful' is its closest synonym."
+        },
+        {
+          "id": "Q25",
+          "question": "He arrived here yesterday. (Choose the nearest in meaning)",
+          "options": { "a": "Got", "b": "Come", "c": "Traveled", "d": "Reached" },
+          "correct_answer": "a",
+          "explanation": "'Arrived' means reached a destination. 'Got' (when used as 'got to' a place) is the closest equivalent among the options."
+        },
+        {
+          "id": "Q26",
+          "question": "I bought the TV yesterday. (Choose the nearest in meaning)",
+          "options": { "a": "Purchased", "b": "Rented", "c": "Got", "d": "Sold" },
+          "correct_answer": "a",
+          "explanation": "'Bought' means obtained in exchange for money, and 'purchased' is its direct synonym."
+        },
+        {
+          "id": "Q27",
+          "question": "The gate to hell is broad. (Choose the nearest in meaning)",
+          "options": { "a": "Wide", "b": "Open", "c": "Narrow", "d": "Large" },
+          "correct_answer": "a",
+          "explanation": "'Broad' means having a wide extent. 'Wide' is the most direct synonym."
+        },
+        {
+          "id": "Q28",
+          "question": "He is as magnanimous as his father. (Choose the nearest in meaning)",
+          "options": { "a": "Generous", "b": "Huge", "c": "Large", "d": "Stingy" },
+          "correct_answer": "a",
+          "explanation": "'Magnanimous' means very generous or forgiving. 'Generous' is the closest synonym."
+        },
+        {
+          "id": "Q29",
+          "question": "I made a good profit from the sales. (Choose the opposite in meaning)",
+          "options": { "a": "Loss", "b": "Increase", "c": "Decrease", "d": "Loose" },
+          "correct_answer": "a",
+          "explanation": "The opposite of 'profit' (financial gain) is 'loss' (financial deficit)."
+        },
+        {
+          "id": "Q30",
+          "question": "Okocha won a landslide victory. (Choose the opposite in meaning)",
+          "options": { "a": "Narrow", "b": "Great", "c": "Overwhelming", "d": "Partial" },
+          "correct_answer": "a",
+          "explanation": "The opposite of a 'landslide' (overwhelming) victory is a 'narrow' victory (won by a small margin)."
+        },
+        {
+          "id": "Q31",
+          "question": "Okon is a garrulous neighbour. (Choose the opposite in meaning)",
+          "options": { "a": "Taciturn", "b": "Busybody", "c": "Persistent", "d": "Conservative" },
+          "correct_answer": "a",
+          "explanation": "'Garrulous' means excessively talkative. 'Taciturn' means reserved or uncommunicative, making it the correct antonym."
+        },
+        {
+          "id": "Q32",
+          "question": "Kalu is usually ferocious in a fight. (Choose the opposite in meaning)",
+          "options": { "a": "Gentle", "b": "Aggressive", "c": "Strong", "d": "Weak" },
+          "correct_answer": "a",
+          "explanation": "'Ferocious' means fierce or savage. 'Gentle' is the most direct opposite."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 5: GRAMMAR & SENTENCE STRUCTURE",
+      "questions": [
+        {
+          "id": "Q45",
+          "question": "________ is not a part of speech in English.",
+          "options": { "a": "Concord", "b": "Verb", "c": "Adjective", "d": "Noun" },
+          "correct_answer": "a",
+          "explanation": "Concord (subject-verb agreement) is a grammatical concept, not a part of speech. The parts of speech are noun, verb, adjective, adverb, pronoun, preposition, conjunction, and interjection."
+        },
+        {
+          "id": "Q46",
+          "question": "_______ is a group of words with no finite verb and makes no complete sense.",
+          "options": { "a": "Phrase", "b": "Clause", "c": "Sentence", "d": "Noun" },
+          "correct_answer": "a",
+          "explanation": "A phrase is a group of words that lacks a finite verb and does not express a complete thought."
+        },
+        {
+          "id": "Q47",
+          "question": "_________ is a group of words with a finite verb and makes complete sense.",
+          "options": { "a": "Clause", "b": "Noun", "c": "Verb", "d": "Phrase" },
+          "correct_answer": "a",
+          "explanation": "A clause contains a finite verb and can express a complete thought (independent clause) or a partial thought (dependent clause)."
+        },
+        {
+          "id": "Q48",
+          "question": "_______ is the doer of the action in a sentence.",
+          "options": { "a": "Subject", "b": "Object", "c": "Predicate", "d": "Verb" },
+          "correct_answer": "a",
+          "explanation": "The subject is the person or thing that performs the action in a sentence."
+        },
+        {
+          "id": "Q49",
+          "question": "The object in a sentence refers to the ________.",
+          "options": { "a": "The receiver of the action", "b": "The addressee", "c": "The participant", "d": "The doer of the action" },
+          "correct_answer": "a",
+          "explanation": "The object is the entity that receives the action of the verb."
+        },
+        {
+          "id": "Q50",
+          "question": "Another word for the verb in a sentence is _______.",
+          "options": { "a": "Predicator", "b": "Noun", "c": "Adverb", "d": "Pronoun" },
+          "correct_answer": "a",
+          "explanation": "In grammatical analysis, 'predicator' is another term for the verb or verb phrase that expresses the action or state."
+        },
+        {
+          "id": "Q51",
+          "question": "What sentence type according to function is 'I had a dream'?",
+          "options": { "a": "Declarative sentence", "b": "Imperative sentence", "c": "Interrogatory sentence", "d": "Exclamatory sentence" },
+          "correct_answer": "a",
+          "explanation": "A declarative sentence makes a statement or expresses an opinion. 'I had a dream' is a statement."
+        },
+        {
+          "id": "Q52",
+          "question": "What sentence type according to function is 'Who are you?'",
+          "options": { "a": "Interrogatory sentence", "b": "Exclamatory sentence", "c": "Declarative sentence", "d": "Imperative sentence" },
+          "correct_answer": "a",
+          "explanation": "An interrogative sentence asks a question. 'Who are you?' is a question."
+        },
+        {
+          "id": "Q53",
+          "question": "What sentence type according to function is 'Come here!'",
+          "options": { "a": "Imperative sentence", "b": "Declarative sentence", "c": "Interrogatory sentence", "d": "Exclamatory sentence" },
+          "correct_answer": "a",
+          "explanation": "An imperative sentence gives a command or makes a request. 'Come here!' gives a command."
+        },
+        {
+          "id": "Q58",
+          "question": "_______ is a sentence that contains a main clause and a subordinate clause.",
+          "options": { "a": "Complex sentence", "b": "Simple sentence", "c": "Improper sentence", "d": "Balanced sentence" },
+          "correct_answer": "a",
+          "explanation": "A complex sentence has one independent (main) clause and at least one dependent (subordinate) clause."
+        },
+        {
+          "id": "Q59",
+          "question": "_______ is a type of sentence that contains two independent clauses.",
+          "options": { "a": "Compound sentence", "b": "Di-sentences", "c": "Compound-simple sentence", "d": "Complex sentence" },
+          "correct_answer": "a",
+          "explanation": "A compound sentence consists of two or more independent clauses joined by coordinating conjunctions."
+        },
+        {
+          "id": "Q60",
+          "question": "A type of sentence which contains two or more independent clauses and two or more dependent clauses is called a _____.",
+          "options": { "a": "Compound-complex sentence", "b": "Multiple sentence", "c": "Dynamic sentence", "d": "Elongated sentence" },
+          "correct_answer": "a",
+          "explanation": "A compound-complex sentence contains at least two independent clauses and at least one dependent clause."
+        },
+        {
+          "id": "Q61",
+          "question": "Identify the adverb in: 'Mary is extremely happy.'",
+          "options": { "a": "Extremely", "b": "Happy", "c": "Is", "d": "Mary" },
+          "correct_answer": "a",
+          "explanation": "'Extremely' is an adverb of degree modifying the adjective 'happy'."
+        },
+        {
+          "id": "Q62",
+          "question": "Identify the adverb in: 'She sings slowly.'",
+          "options": { "a": "Slowly", "b": "She", "c": "Sings", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "'Slowly' is an adverb of manner modifying the verb 'sings'."
+        },
+        {
+          "id": "Q63",
+          "question": "Identify the adverb in: 'She comes often.'",
+          "options": { "a": "Often", "b": "Comes", "c": "She", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "'Often' is an adverb of frequency modifying the verb 'comes'."
+        },
+        {
+          "id": "Q64",
+          "question": "Identify the adjective in: 'She is such a prudent lady.'",
+          "options": { "a": "Prudent", "b": "Lady", "c": "She", "d": "Such" },
+          "correct_answer": "a",
+          "explanation": "'Prudent' is an adjective describing the noun 'lady'."
+        },
+        {
+          "id": "Q65",
+          "question": "Identify the adjective in: 'Anthony is an inquisitive fellow.'",
+          "options": { "a": "Inquisitive", "b": "Fellow", "c": "Anthony", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "'Inquisitive' is an adjective describing the noun 'fellow'."
+        },
+        {
+          "id": "Q66",
+          "question": "Identify the adjective in: 'Uche is beside the red car.'",
+          "options": { "a": "Red", "b": "Beside", "c": "Car", "d": "Uche" },
+          "correct_answer": "a",
+          "explanation": "'Red' is an adjective describing the noun 'car'."
+        },
+        {
+          "id": "Q72",
+          "question": "SVCOA as sentence elements means _____.",
+          "options": { "a": "Subject, Verb, Complement, Object, Adverb", "b": "Subject, Verb, Conjunction, Object, Adjectives", "c": "Subordinate, Verbal, Coordination, Object, Adverbial", "d": "Subject, Verb, Coordination, Object, Adjectival" },
+          "correct_answer": "a",
+          "explanation": "SVCOA stands for Subject, Verb, Complement, Object, Adverb — the five main elements of a sentence."
+        },
+        {
+          "id": "Q78",
+          "question": "A thesis statement or a topic sentence contains the _____ of a passage.",
+          "options": { "a": "Key idea", "b": "Additional information", "c": "Complementary information", "d": "Background information" },
+          "correct_answer": "a",
+          "explanation": "A thesis statement or topic sentence expresses the main or key idea of a passage or paragraph."
+        },
+        {
+          "id": "Q79",
+          "question": "Ideally, a sentence should embody _____.",
+          "options": { "a": "A single main idea", "b": "Many information", "c": "A command", "d": "An instruction" },
+          "correct_answer": "a",
+          "explanation": "A well-constructed sentence should express a single complete thought or main idea."
+        },
+        {
+          "id": "Q80",
+          "question": "A good paragraph should be _____.",
+          "options": { "a": "Complete and unified", "b": "Concise and free", "c": "Understandable and long", "d": "None of the enough" },
+          "correct_answer": "a",
+          "explanation": "A good paragraph must be complete (covering the topic adequately) and unified (focusing on a single idea)."
+        },
+        {
+          "id": "Q86",
+          "question": "_____ gives more information about a noun.",
+          "options": { "a": "Adjective", "b": "Verb", "c": "Pronoun", "d": "Preposition" },
+          "correct_answer": "a",
+          "explanation": "An adjective is a part of speech that modifies or gives more information about a noun."
+        },
+        {
+          "id": "Q87",
+          "question": "_____ can be used in place of a noun.",
+          "options": { "a": "Pronoun", "b": "Verb", "c": "Preposition", "d": "Conjunction" },
+          "correct_answer": "a",
+          "explanation": "A pronoun is a word that replaces a noun to avoid repetition."
+        },
+        {
+          "id": "Q88",
+          "question": "____ is the most important part of speech in a sentence.",
+          "options": { "a": "Verb", "b": "Noun", "c": "Subject", "d": "Adverb" },
+          "correct_answer": "a",
+          "explanation": "The verb is often considered the most important part of speech as it expresses the action or state of being in a sentence."
+        },
+        {
+          "id": "Q99",
+          "question": "Breakdown the following into their structure: 'She sings'.",
+          "options": { "a": "S V", "b": "S O", "c": "O V", "d": "V C" },
+          "correct_answer": "a",
+          "explanation": "'She' is the Subject and 'sings' is the Verb, giving the structure S V (Subject + Verb)."
+        },
+        {
+          "id": "Q100",
+          "question": "A simple sentence has ____.",
+          "options": { "a": "One main verb", "b": "More than one verb", "c": "Multiple subjects", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "A simple sentence contains one independent clause with one main verb (though it may have compound elements)."
+        },
+        {
+          "id": "Q118",
+          "question": "Sentences in English Language are broadly subdivided by - and -.",
+          "options": { "a": "Structure and function", "b": "Reason and function", "c": "Look and meaning", "d": "Types and classification" },
+          "correct_answer": "a",
+          "explanation": "Sentences are classified by structure (simple, compound, complex, compound-complex) and by function (declarative, interrogative, imperative, exclamatory)."
+        },
+        {
+          "id": "Q119",
+          "question": "---- type of sentence has two main clauses.",
+          "options": { "a": "Compound", "b": "Simple", "c": "Multiple", "d": "Complex" },
+          "correct_answer": "a",
+          "explanation": "A compound sentence consists of two or more independent (main) clauses joined by coordinating conjunctions."
+        },
+        {
+          "id": "Q120",
+          "question": "'The Vice-Chancellor planned and prayed and worked successfully.' What type of sentence is this?",
+          "options": { "a": "Multiple", "b": "Simple", "c": "Complex", "d": "Compound" },
+          "correct_answer": "a",
+          "explanation": "This is a multiple sentence (or simple sentence with a compound predicate) where one subject performs multiple verbs. In the Nigerian GSS context, sentences with multiple coordinated predicates are classified as 'multiple sentences'."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 6: SUBJECT-VERB AGREEMENT (CONCORD)",
+      "questions": [
+        {
+          "id": "Q81",
+          "question": "Each of these companies had ___ books audited.",
+          "options": { "a": "Its", "b": "Their", "c": "It's", "d": "They" },
+          "correct_answer": "a",
+          "explanation": "'Each' is a singular indefinite pronoun, so the possessive pronoun must be singular: 'its'."
+        },
+        {
+          "id": "Q82",
+          "question": "Neither Okon nor Etim ____ that the evidence is circumstantial.",
+          "options": { "a": "Feels", "b": "Feel", "c": "Feeling", "d": "Feel's" },
+          "correct_answer": "a",
+          "explanation": "With 'neither...nor', the verb agrees with the closest subject. 'Etim' is singular, so the verb is 'feels'."
+        },
+        {
+          "id": "Q83",
+          "question": "A fountain and a hanging basket _____ the entrance.",
+          "options": { "a": "Adorn", "b": "Adorns", "c": "Adornment", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "A compound subject joined by 'and' takes a plural verb. 'A fountain and a hanging basket' = plural, so 'adorn'."
+        },
+        {
+          "id": "Q84",
+          "question": "The study of words ____ facilitated by breaking them down into prefixes, suffixes and roots.",
+          "options": { "a": "Is", "b": "Are", "c": "All of the above", "d": "Have" },
+          "correct_answer": "a",
+          "explanation": "'The study' is the singular subject. The phrase 'of words' is a prepositional phrase. Singular subject takes 'is'."
+        },
+        {
+          "id": "Q85",
+          "question": "The choir is writing ____ own music.",
+          "options": { "a": "Its", "b": "Their", "c": "They", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "'The choir' is treated as a singular collective noun (acting as one unit), so the possessive is 'its'."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 7: SUMMARY & NOTE-TAKING",
+      "questions": [
+        {
+          "id": "Q40",
+          "question": "________ is not a type of summary.",
+          "options": { "a": "Facebook", "b": "Blurbs", "c": "Notices", "d": "Abstract" },
+          "correct_answer": "a",
+          "explanation": "Blurbs, notices, and abstracts are all types of summaries. 'Facebook' is a social media platform, not a type of summary."
+        },
+        {
+          "id": "Q41",
+          "question": "________ is a means which students record most information.",
+          "options": { "a": "Note taking", "b": "Paraphrase", "c": "Quotation", "d": "Abstract" },
+          "correct_answer": "a",
+          "explanation": "Note-taking is the primary method students use to record and capture information during lectures."
+        },
+        {
+          "id": "Q42",
+          "question": "__________ enables information to be retrieved, revised and used.",
+          "options": { "a": "Note taking", "b": "Summary", "c": "Note making", "d": "Note copying" },
+          "correct_answer": "a",
+          "explanation": "Note-taking enables students to store, retrieve, revise, and use information effectively."
+        },
+        {
+          "id": "Q43",
+          "question": "All are tools of note taking except ____.",
+          "options": { "a": "Abstract", "b": "Book", "c": "Pen", "d": "Shorthand" },
+          "correct_answer": "a",
+          "explanation": "An abstract is a type of summary, not a physical tool for note-taking. Books, pens, and shorthand are actual note-taking tools."
+        },
+        {
+          "id": "Q44",
+          "question": "__________ is not a technique of note taking.",
+          "options": { "a": "Quotation", "b": "Abbreviation", "c": "Use of shorthand", "d": "Leaving space to fill information" },
+          "correct_answer": "a",
+          "explanation": "Quotation involves copying verbatim and is more a research technique than a note-taking technique. Abbreviation, shorthand, and leaving space are note-taking techniques."
+        },
+        {
+          "id": "Q73",
+          "question": "The different forms of summaries are all except?",
+          "options": { "a": "Information", "b": "Advertisements", "c": "Outlines", "d": "Reports" },
+          "correct_answer": "a",
+          "explanation": "Advertisements, outlines, and reports can all be forms of summaries. 'Information' is too broad and not itself a form of summary."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 8: ESSAY TYPES & LITERATURE",
+      "questions": [
+        {
+          "id": "Q67",
+          "question": "________ is the sequence in which events unfolds in a story.",
+          "options": { "a": "Plot", "b": "Setting", "c": "Theme", "d": "Message" },
+          "correct_answer": "a",
+          "explanation": "The plot is the sequence of events that make up a story."
+        },
+        {
+          "id": "Q68",
+          "question": "________ is the physical, social, cultural environment against which the story takes place.",
+          "options": { "a": "Setting", "b": "Situation", "c": "Style", "d": "Plot" },
+          "correct_answer": "a",
+          "explanation": "The setting encompasses the time, place, and social context in which a story unfolds."
+        },
+        {
+          "id": "Q69",
+          "question": "______ is a leading or main character in a novel or play.",
+          "options": { "a": "Protagonist", "b": "Cast", "c": "Crew", "d": "Villain" },
+          "correct_answer": "a",
+          "explanation": "The protagonist is the central or main character around whom the story revolves."
+        },
+        {
+          "id": "Q70",
+          "question": "_______ is the medium through which literature expresses itself.",
+          "options": { "a": "Language", "b": "Text", "c": "Literature", "d": "Novel" },
+          "correct_answer": "a",
+          "explanation": "Language is the fundamental medium of expression in literature."
+        },
+        {
+          "id": "Q71",
+          "question": "_______ is a struggle or contest.",
+          "options": { "a": "Conflict", "b": "Complication", "c": "Crisis", "d": "Problem" },
+          "correct_answer": "a",
+          "explanation": "Conflict is the central struggle or contest between opposing forces in a narrative."
+        },
+        {
+          "id": "Q74",
+          "question": "________ is a type of essay which seeks to explain and inform on how to make or understand something.",
+          "options": { "a": "Exposition", "b": "Narrative essay", "c": "Argumentative essay", "d": "Descriptive essay" },
+          "correct_answer": "a",
+          "explanation": "An expository essay explains, informs, or describes a process, concept, or topic."
+        },
+        {
+          "id": "Q75",
+          "question": "________ is a type of essay that requires the writer to describe a scene, a situation, a person or a thing.",
+          "options": { "a": "Descriptive essay", "b": "Narrative essay", "c": "Informative essay", "d": "Factual essay" },
+          "correct_answer": "a",
+          "explanation": "A descriptive essay aims to paint a vivid picture of a person, place, object, or scene using sensory details."
+        },
+        {
+          "id": "Q76",
+          "question": "_______ essay aims at recreating real or imaginary events in the mind of the reader.",
+          "options": { "a": "Narrative", "b": "Imaginative", "c": "Descriptive", "d": "Fictional" },
+          "correct_answer": "a",
+          "explanation": "A narrative essay tells a story by recreating events in a sequence."
+        },
+        {
+          "id": "Q77",
+          "question": "An essay written to persuade or appeal is a ______.",
+          "options": { "a": "Argumentative essay", "b": "Persuasive essay", "c": "Imaginative essay", "d": "Outspoken essay" },
+          "correct_answer": "a",
+          "explanation": "An argumentative essay aims to persuade the reader to accept a particular viewpoint through reasoning and evidence."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 9: REPORTED SPEECH & AMBIGUITY",
+      "questions": [
+        {
+          "id": "Q54",
+          "question": "________ is a mistake arising from confusing two words that mean almost the same thing in most speaker's first languages.",
+          "options": { "a": "Malapropism", "b": "Interference", "c": "Mistake", "d": "Borrowing" },
+          "correct_answer": "a",
+          "explanation": "Malapropism is the mistaken use of a word in place of a similar-sounding one, often with unintentionally amusing effect."
+        },
+        {
+          "id": "Q55",
+          "question": "Ambiguity arises when ______.",
+          "options": { "a": "An utterance has more than one possible meaning", "b": "A sentence is opposite in nature", "c": "A sentence has no meaning", "d": "An utterance is meant for two listeners" },
+          "correct_answer": "a",
+          "explanation": "Ambiguity occurs when a word, phrase, or sentence can be interpreted in more than one way."
+        },
+        {
+          "id": "Q56",
+          "question": "________ is used when somebody does not want to quote the speaker/writer verbatim.",
+          "options": { "a": "Indirect reporting", "b": "Quotation", "c": "Direct speech", "d": "Passive sentence" },
+          "correct_answer": "a",
+          "explanation": "Indirect (reported) speech conveys what someone said without using their exact words."
+        },
+        {
+          "id": "Q57",
+          "question": "__________ occurs when an individual reports word for word or verbatim what he heard some other person say.",
+          "options": { "a": "Direct reporting", "b": "Indirect reporting", "c": "Double quotation", "d": "Example" },
+          "correct_answer": "a",
+          "explanation": "Direct reporting (direct speech) quotes the speaker's exact words, typically enclosed in quotation marks."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 10: REFERENCE MATERIALS & WORD FORMATION",
+      "questions": [
+        {
+          "id": "Q89",
+          "question": "____ is a reference material designed to guide a learner's knowledge of a new language.",
+          "options": { "a": "Dictionary", "b": "Encyclopedia", "c": "Vocabulary", "d": "Lexis" },
+          "correct_answer": "a",
+          "explanation": "A dictionary is a reference book that lists words and their meanings, pronunciations, and usage, essential for language learners."
+        },
+        {
+          "id": "Q90",
+          "question": "A dictionary is used for all of the following except?",
+          "options": { "a": "Language complexity", "b": "Transcription", "c": "Etymology", "d": "Spelling" },
+          "correct_answer": "a",
+          "explanation": "Dictionaries provide transcriptions (pronunciation), etymology (word origins), and spelling, but 'language complexity' is not a standard dictionary feature."
+        },
+        {
+          "id": "Q91",
+          "question": "Prefixes are attached at the ____ of a root word.",
+          "options": { "a": "Beginning", "b": "End", "c": "Middle", "d": "None of the above" },
+          "correct_answer": "a",
+          "explanation": "A prefix is a morpheme added to the beginning of a root word to modify its meaning."
+        },
+        {
+          "id": "Q92",
+          "question": "Suffixes are attached at the _____ of a root word.",
+          "options": { "a": "End", "b": "Middle", "c": "Beginning", "d": "Beginning and end" },
+          "correct_answer": "a",
+          "explanation": "A suffix is a morpheme added to the end of a root word to change its meaning or grammatical function."
+        },
+        {
+          "id": "Q93",
+          "question": "'im', 'il' and 'de' are examples of?",
+          "options": { "a": "Prefixes", "b": "Infixes", "c": "Suffixes", "d": "All of the above" },
+          "correct_answer": "a",
+          "explanation": "'im-', 'il-', and 'de-' are all prefixes attached to the beginning of words."
+        },
+        {
+          "id": "Q94",
+          "question": "'-er', '-dom' and '-al' are examples of?",
+          "options": { "a": "Suffixes", "b": "Prefixes", "c": "Infixes", "d": "Unfixes" },
+          "correct_answer": "a",
+          "explanation": "'-er', '-dom', and '-al' are all suffixes attached to the end of words."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 11: SPELLING",
+      "questions": [
+        {
+          "id": "Q95",
+          "question": "Choose the correct spelling:",
+          "options": { "a": "Entrepreneur", "b": "Entrepreneur (alt)", "c": "Enterprenor", "d": "Intrepreneur" },
+          "correct_answer": "a",
+          "explanation": "The correct spelling is 'entrepreneur'."
+        },
+        {
+          "id": "Q96",
+          "question": "Choose the correct spelling:",
+          "options": { "a": "Parallel", "b": "Parrallel", "c": "Parallell", "d": "Paralell" },
+          "correct_answer": "a",
+          "explanation": "The correct spelling is 'parallel'."
+        },
+        {
+          "id": "Q97",
+          "question": "Choose the correct spelling:",
+          "options": { "a": "Cemetery", "b": "Cematary", "c": "Cemetry", "d": "Cematary" },
+          "correct_answer": "a",
+          "explanation": "The correct spelling is 'cemetery'."
+        },
+        {
+          "id": "Q98",
+          "question": "Choose the correct spelling:",
+          "options": { "a": "Hierarchy", "b": "Hirachy", "c": "Hierachy", "d": "Hierahchy" },
+          "correct_answer": "a",
+          "explanation": "The correct spelling is 'hierarchy'."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 12: HOMOPHONES & CONFUSABLES",
+      "questions": [
+        {
+          "id": "Q101",
+          "question": "The ______ is made of marble.",
+          "options": { "a": "Altar", "b": "Alter", "c": "Alltar", "d": "Alter (alt)" },
+          "correct_answer": "a",
+          "explanation": "'Altar' is a sacred table used in worship. 'Alter' means to change."
+        },
+        {
+          "id": "Q102",
+          "question": "Please, _____ with the school authority.",
+          "options": { "a": "Bear", "b": "Bare", "c": "Bere", "d": "Beer" },
+          "correct_answer": "a",
+          "explanation": "'Bear' means to endure or carry. 'Bare' means to uncover. In this context, 'bear with' means to be patient with."
+        },
+        {
+          "id": "Q103",
+          "question": "The _____ in the car is bad.",
+          "options": { "a": "Brake", "b": "Break", "c": "Brek", "d": "Broke" },
+          "correct_answer": "a",
+          "explanation": "'Brake' is the stopping mechanism in a vehicle. 'Break' means to separate into pieces."
+        },
+        {
+          "id": "Q104",
+          "question": "The journey of life is not an easy _____.",
+          "options": { "a": "Course", "b": "Cause", "c": "Curse", "d": "Cost" },
+          "correct_answer": "a",
+          "explanation": "'Course' means a path or route. 'Cause' means reason. 'Curse' is a swear word. The journey/path of life is described as a 'course'."
+        },
+        {
+          "id": "Q105",
+          "question": "The _____ is sunny today.",
+          "options": { "a": "Weather", "b": "Whether", "c": "Whither", "d": "Wither" },
+          "correct_answer": "a",
+          "explanation": "'Weather' refers to atmospheric conditions. 'Whether' expresses a choice. 'Whither' means where. 'Wither' means to dry up."
+        }
+      ]
+    }
+  ]
+}

@@ -3,14 +3,14 @@ import { getCollection } from '@/lib/db'
 
 export async function GET() {
   try {
-    const col = await getCollection('events')
+    const col = await getCollection('analytics')
 
     const now = new Date()
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
-    const baseMatch = { timestamp: { $gte: sevenDaysAgo } }
-    const todayMatch = { timestamp: { $gte: todayStart } }
+    const baseMatch = { createdAt: { $gte: sevenDaysAgo } }
+    const todayMatch = { createdAt: { $gte: todayStart } }
 
     // Total events
     const totalEvents = await col.countDocuments(baseMatch)
@@ -18,7 +18,7 @@ export async function GET() {
     // Unique sessions
     const sessions = await col.aggregate([
       { $match: baseMatch },
-      { $group: { _id: '$sessionId' } },
+      { $group: { _id: '$data.sessionId' } },
       { $count: 'total' },
     ]).toArray()
     const uniqueSessions = sessions[0]?.total || 0
@@ -26,7 +26,7 @@ export async function GET() {
     // Unique sessions today
     const todaySessions = await col.aggregate([
       { $match: todayMatch },
-      { $group: { _id: '$sessionId' } },
+      { $group: { _id: '$data.sessionId' } },
       { $count: 'total' },
     ]).toArray()
     const todayUnique = todaySessions[0]?.total || 0
@@ -34,8 +34,8 @@ export async function GET() {
     // Active users right now (last 5 min)
     const fiveMinAgo = new Date(now.getTime() - 5 * 60 * 1000)
     const activeNow = await col.aggregate([
-      { $match: { timestamp: { $gte: fiveMinAgo } } },
-      { $group: { _id: '$sessionId' } },
+      { $match: { createdAt: { $gte: fiveMinAgo } } },
+      { $group: { _id: '$data.sessionId' } },
       { $count: 'total' },
     ]).toArray()
 
@@ -47,8 +47,8 @@ export async function GET() {
 
     // PWA vs Web
     const pwaCount = await col.aggregate([
-      { $match: { ...baseMatch, event: 'page_view', isPwa: true } },
-      { $group: { _id: '$sessionId' } },
+      { $match: { ...baseMatch, event: 'page_view', 'data.isPwa': true } },
+      { $group: { _id: '$data.sessionId' } },
       { $count: 'total' },
     ]).toArray()
     const webPwaSessions = {
@@ -65,7 +65,7 @@ export async function GET() {
     // Peak active hours (hourly distribution)
     const hourlyActivity = await col.aggregate([
       { $match: baseMatch },
-      { $group: { _id: { $hour: '$timestamp' }, count: { $sum: 1 } } },
+      { $group: { _id: { $hour: '$createdAt' }, count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 5 },
     ]).toArray()
@@ -76,18 +76,14 @@ export async function GET() {
       event: 'flashcard_open',
     })
     const flashcardTimes = await col.aggregate([
-      { $match: { ...baseMatch, event: 'flashcard_time', 'metadata.duration': { $exists: true } } },
-      { $group: { _id: null, avgDuration: { $avg: '$metadata.duration' }, total: { $sum: 1 } } },
+      { $match: { ...baseMatch, event: 'flashcard_time', 'data.duration': { $exists: true } } },
+      { $group: { _id: null, avgDuration: { $avg: '$data.duration' }, total: { $sum: 1 } } },
     ]).toArray()
 
     // Click-through rate
     const navigationClicks = await col.countDocuments({
       ...baseMatch,
       event: 'navigation_click',
-    })
-    const clickThroughs = await col.countDocuments({
-      ...baseMatch,
-      event: 'click_through',
     })
     const pageViews = await col.countDocuments({
       ...baseMatch,
@@ -98,7 +94,7 @@ export async function GET() {
     // Session engagement (avg events per session)
     const sessionsWithCount = await col.aggregate([
       { $match: baseMatch },
-      { $group: { _id: '$sessionId', count: { $sum: 1 } } },
+      { $group: { _id: '$data.sessionId', count: { $sum: 1 } } },
       { $group: { _id: null, avgEvents: { $avg: '$count' }, maxEvents: { $max: '$count' } } },
     ]).toArray()
     const avgEventsPerSession = sessionsWithCount[0]?.avgEvents || 0
@@ -114,7 +110,7 @@ export async function GET() {
     // Top pages
     const topPages = await col.aggregate([
       { $match: { ...baseMatch, event: 'page_view' } },
-      { $group: { _id: '$path', count: { $sum: 1 } } },
+      { $group: { _id: '$data.path', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 10 },
     ]).toArray()
@@ -143,7 +139,6 @@ export async function GET() {
       engagement: {
         ctr,
         navigationClicks,
-        clickThroughs,
         pageViews,
         avgEventsPerSession: Math.round(avgEventsPerSession * 10) / 10,
         maxEventsPerSession,

@@ -1,0 +1,262 @@
+{
+  "course_code": "STA 111",
+  "course_title": "Descriptive Statistics",
+  "study_guide_title": "STA 111 Descriptive Statistics - Comprehensive Past Questions",
+  "sections": [
+    {
+      "section_title": "INTRODUCTION TO STATISTICS",
+      "questions": [
+        {
+          "id": "Q1", "question": "Statistics is primarily concerned with:", "options": {"a": "Studying languages", "b": "Collecting, analyzing, and interpreting data", "c": "Writing essays", "d": "Memorizing facts"}, "correct_answer": "b", "explanation": "Statistics is the science of collecting, analyzing, interpreting, presenting, and organizing data."
+        },
+        {
+          "id": "Q2", "question": "Qualitative data refers to:", "options": {"a": "Numerical data", "b": "Categorical data", "c": "Data that can be measured exactly", "d": "Continuous data"}, "correct_answer": "b", "explanation": "Qualitative data represents categories or labels (e.g., gender, blood type)."
+        },
+        {
+          "id": "Q3", "question": "Which of the following is a continuous variable?", "options": {"a": "Number of students in a class", "b": "Height of students", "c": "Hair color", "d": "Number of cars in a parking lot"}, "correct_answer": "b", "explanation": "Continuous variables can take any value within a range (e.g., height, weight)."
+        },
+        {
+          "id": "Q15", "question": "Which of the following is a discrete variable?", "options": {"a": "Weight of a student", "b": "Number of cars in a parking lot", "c": "Height of a tree", "d": "Temperature"}, "correct_answer": "b", "explanation": "Discrete variables take countable values (0, 1, 2, ...)."
+        },
+        {
+          "id": "Q31", "question": "Which of the following is a quantitative variable?", "options": {"a": "Marital status", "b": "Age of students", "c": "Eye color", "d": "Blood type"}, "correct_answer": "b", "explanation": "Quantitative variables are numerical and measurable (e.g., age, height, weight)."
+        },
+        {
+          "id": "Q38", "question": "Which of the following is a discrete variable?", "options": {"a": "Number of students in a class", "b": "Height of students", "c": "Temperature", "d": "Weight"}, "correct_answer": "a", "explanation": "Discrete variables take countable values (0, 1, 2, ...). Number of students is countable."
+        }
+      ]
+    },
+    {
+      "section_title": "DATA PRESENTATION & GRAPHS",
+      "questions": [
+        {
+          "id": "Q10", "question": "A pie chart is used to:", "options": {"a": "Show the relationship between two variables", "b": "Display frequencies in percentages", "c": "Compute mean and standard deviation", "d": "Organize numerical data only"}, "correct_answer": "b", "explanation": "Pie charts display data as proportions of a whole, usually in percentages."
+        },
+        {
+          "id": "Q17", "question": "A histogram is used to display:", "options": {"a": "Categorical data", "b": "Continuous data", "c": "Both categorical and continuous", "d": "Only percentages"}, "correct_answer": "b", "explanation": "Histograms are for continuous or interval data, showing frequency distribution."
+        },
+        {
+          "id": "Q20", "question": "A bar chart is mainly used to display:", "options": {"a": "Continuous data", "b": "Discrete or categorical data", "c": "Probability distributions", "d": "Mean and median"}, "correct_answer": "b", "explanation": "Bar charts represent frequencies of discrete/categorical variables."
+        },
+        {
+          "id": "Q25", "question": "A histogram differs from a bar chart in that:", "options": {"a": "Bars are separated in histogram", "b": "Bars touch each other in histogram", "c": "Histograms are for qualitative data", "d": "Histograms cannot show frequency"}, "correct_answer": "b", "explanation": "Histogram bars touch each other to indicate continuous data intervals."
+        },
+        {
+          "id": "Q27", "question": "Which type of graph is suitable for showing parts of a whole?", "options": {"a": "Line graph", "b": "Histogram", "c": "Pie chart", "d": "Scatter plot"}, "correct_answer": "c", "explanation": "Pie chart displays proportions as parts of a whole."
+        },
+        {
+          "id": "Q35", "question": "Which of the following is true about a cumulative frequency graph?", "options": {"a": "It shows class intervals only", "b": "It is used to calculate median and percentiles", "c": "It displays data qualitatively", "d": "Bars are separated"}, "correct_answer": "b", "explanation": "Cumulative frequency graphs (ogives) are used to estimate median, quartiles, and percentiles."
+        },
+        {
+          "id": "Q44", "question": "A histogram is used to display:", "options": {"a": "Categorical data", "b": "Continuous data", "c": "Both continuous and categorical", "d": "Only percentages"}, "correct_answer": "b", "explanation": "Histograms represent continuous or interval data using connected bars."
+        },
+        {
+          "id": "Q49", "question": "A bar chart is suitable for displaying:", "options": {"a": "Continuous data", "b": "Discrete or categorical data", "c": "Probability distributions", "d": "Standard deviation"}, "correct_answer": "b", "explanation": "Bar charts represent frequencies of discrete or categorical variables."
+        },
+        {
+          "id": "Q57", "question": "A frequency polygon is:", "options": {"a": "A type of bar chart", "b": "A line graph connecting class midpoints", "c": "Pie chart", "d": "Histogram"}, "correct_answer": "b", "explanation": "A frequency polygon is a line graph connecting the midpoints of each class interval."
+        },
+        {
+          "id": "Q63", "question": "Which graph is suitable for showing trends over time?", "options": {"a": "Pie chart", "b": "Histogram", "c": "Line graph", "d": "Bar chart"}, "correct_answer": "c", "explanation": "Line graphs show trends and changes over time."
+        },
+        {
+          "id": "Q66", "question": "A stem-and-leaf plot is used to:", "options": {"a": "Show data distribution while keeping actual data", "b": "Calculate mean", "c": "Draw a histogram", "d": "Show probabilities"}, "correct_answer": "a", "explanation": "Stem-and-leaf plots display data while preserving actual values."
+        }
+      ]
+    },
+    {
+      "section_title": "MEASURES OF CENTRAL TENDENCY",
+      "questions": [
+        {
+          "id": "Q4", "question": "The mean of the data set 2, 4, 6, 8, 10 is:", "options": {"a": "5", "b": "6", "c": "7", "d": "8"}, "correct_answer": "b", "explanation": "Mean = (2+4+6+8+10)/5 = 30/5 = 6"
+        },
+        {
+          "id": "Q5", "question": "The mode of 3, 5, 3, 8, 3, 9 is:", "options": {"a": "3", "b": "5", "c": "8", "d": "9"}, "correct_answer": "a", "explanation": "Mode = value occurring most frequently = 3"
+        },
+        {
+          "id": "Q6", "question": "The median of 1, 4, 7, 10, 12, 15 is:", "options": {"a": "7", "b": "8.5", "c": "10", "d": "11"}, "correct_answer": "b", "explanation": "Median = average of middle two numbers: (7+10)/2 = 17/2 = 8.5"
+        },
+        {
+          "id": "Q7", "question": "Which measure of central tendency is most affected by extreme values?", "options": {"a": "Mode", "b": "Median", "c": "Mean", "d": "All are equally affected"}, "correct_answer": "c", "explanation": "Mean is sensitive to outliers, unlike median or mode."
+        },
+        {
+          "id": "Q16", "question": "The mean of 4, 8, 6, 10, 12 is:", "options": {"a": "8", "b": "9", "c": "10", "d": "7"}, "correct_answer": "a", "explanation": "Mean = (4+8+6+10+12)/5 = 40/5 = 8"
+        },
+        {
+          "id": "Q21", "question": "The median of 3, 7, 9, 12, 15, 18 is:", "options": {"a": "9", "b": "10.5", "c": "12", "d": "13"}, "correct_answer": "b", "explanation": "Median = average of middle two numbers: (9+12)/2 = 21/2 = 10.5"
+        },
+        {
+          "id": "Q22", "question": "The mode of 5, 7, 5, 8, 5, 10 is:", "options": {"a": "5", "b": "7", "c": "8", "d": "10"}, "correct_answer": "a", "explanation": "Mode = most frequent value = 5"
+        },
+        {
+          "id": "Q32", "question": "In a data set, the value that occurs most frequently is called:", "options": {"a": "Median", "b": "Mode", "c": "Mean", "d": "Range"}, "correct_answer": "b", "explanation": "Mode = most frequently occurring value in a dataset."
+        },
+        {
+          "id": "Q41", "question": "The mean of 10, 15, 20, 25, 30 is:", "options": {"a": "20", "b": "25", "c": "15", "d": "10"}, "correct_answer": "a", "explanation": "Mean = (10+15+20+25+30)/5 = 100/5 = 20"
+        },
+        {
+          "id": "Q42", "question": "The median of 5, 8, 12, 14, 20, 25 is:", "options": {"a": "12", "b": "13", "c": "14", "d": "15"}, "correct_answer": "b", "explanation": "Median = average of middle two numbers: (12+14)/2 = 26/2 = 13"
+        },
+        {
+          "id": "Q43", "question": "The mode of 2, 3, 5, 3, 7, 3, 8 is:", "options": {"a": "2", "b": "3", "c": "5", "d": "8"}, "correct_answer": "b", "explanation": "Mode = most frequent value = 3"
+        },
+        {
+          "id": "Q51", "question": "The mean of 4, 8, 6, 10, 12 is:", "options": {"a": "8", "b": "9", "c": "10", "d": "7"}, "correct_answer": "a", "explanation": "Mean = (4+8+6+10+12)/5 = 40/5 = 8"
+        },
+        {
+          "id": "Q52", "question": "The median of 7, 3, 12, 10, 5 is:", "options": {"a": "5", "b": "7", "c": "10", "d": "8"}, "correct_answer": "b", "explanation": "Arrange in order: 3, 5, 7, 10, 12 → middle value = 7"
+        },
+        {
+          "id": "Q53", "question": "The mode of 2, 4, 4, 5, 6, 4, 7 is:", "options": {"a": "2", "b": "4", "c": "5", "d": "6"}, "correct_answer": "b", "explanation": "Mode = value occurring most frequently = 4"
+        },
+        {
+          "id": "Q64", "question": "In a dataset, which measure is least affected by outliers?", "options": {"a": "Mean", "b": "Median", "c": "Mode", "d": "Standard deviation"}, "correct_answer": "b", "explanation": "Median is robust to extreme values, unlike mean."
+        }
+      ]
+    },
+    {
+      "section_title": "MEASURES OF DISPERSION",
+      "questions": [
+        {
+          "id": "Q8", "question": "The range of 5, 9, 12, 4, 8 is:", "options": {"a": "5", "b": "7", "c": "8", "d": "12"}, "correct_answer": "b", "explanation": "Range = Max − Min = 12 − 5 = 7"
+        },
+        {
+          "id": "Q9", "question": "The standard deviation is a measure of:", "options": {"a": "Central tendency", "b": "Dispersion", "c": "Mode", "d": "Frequency"}, "correct_answer": "b", "explanation": "Standard deviation measures how spread out the data is around the mean."
+        },
+        {
+          "id": "Q13", "question": "The variance of 2, 4, 6, 8, 10 is:", "options": {"a": "8", "b": "10", "c": "6", "d": "4"}, "correct_answer": "a", "explanation": "Mean = 6; deviations: -4, -2, 0, 2, 4 → squared = 16,4,0,4,16 → sum = 40 → variance = 40/5 = 8"
+        },
+        {
+          "id": "Q18", "question": "If Q1 = 20 and Q3 = 50, the interquartile range (IQR) is:", "options": {"a": "30", "b": "20", "c": "50", "d": "70"}, "correct_answer": "a", "explanation": "IQR = Q3 − Q1 = 50 − 20 = 30"
+        },
+        {
+          "id": "Q23", "question": "Which of the following is NOT a measure of dispersion?", "options": {"a": "Variance", "b": "Range", "c": "Mean", "d": "Standard deviation"}, "correct_answer": "c", "explanation": "Mean is a measure of central tendency, not dispersion."
+        },
+        {
+          "id": "Q26", "question": "If σ² = 25, then the standard deviation σ is:", "options": {"a": "5", "b": "25", "c": "√25", "d": "10"}, "correct_answer": "a", "explanation": "σ = √variance → √25 = 5"
+        },
+        {
+          "id": "Q29", "question": "The variance of 2, 4, 6, 8, 10 using the population formula is:", "options": {"a": "8", "b": "10", "c": "6", "d": "4"}, "correct_answer": "a", "explanation": "Mean = 6; deviations: -4, -2, 0, 2, 4 → squared = 16,4,0,4,16 → sum = 40 → variance = 40/5 = 8"
+        },
+        {
+          "id": "Q33", "question": "The difference between the highest and lowest value in a data set is called:", "options": {"a": "Standard deviation", "b": "Variance", "c": "Range", "d": "Mean"}, "correct_answer": "c", "explanation": "Range = Max − Min"
+        },
+        {
+          "id": "Q37", "question": "The standard deviation of a data set tells us:", "options": {"a": "The middle value", "b": "How spread out the data is from the mean", "c": "The sum of all values", "d": "The highest value"}, "correct_answer": "b", "explanation": "Standard deviation measures dispersion around the mean."
+        },
+        {
+          "id": "Q45", "question": "The interquartile range (IQR) is calculated as:", "options": {"a": "Q1 − Q3", "b": "Q3 − Q1", "c": "Q2 − Q1", "d": "Q3 + Q1"}, "correct_answer": "b", "explanation": "IQR = Q3 − Q1, showing the spread of the middle 50% of the data."
+        },
+        {
+          "id": "Q47", "question": "The range of the data 12, 15, 18, 20, 25 is:", "options": {"a": "13", "b": "10", "c": "12", "d": "15"}, "correct_answer": "a", "explanation": "Range = Max − Min = 25 − 12 = 13"
+        },
+        {
+          "id": "Q54", "question": "Standard deviation is a measure of:", "options": {"a": "Central tendency", "b": "Dispersion", "c": "Frequency", "d": "Probability"}, "correct_answer": "b", "explanation": "Standard deviation measures spread of data around the mean."
+        },
+        {
+          "id": "Q55", "question": "Range is calculated as:", "options": {"a": "Max − Min", "b": "Min − Max", "c": "Mean − Median", "d": "Q3 − Q1"}, "correct_answer": "a", "explanation": "Range = difference between maximum and minimum values"
+        },
+        {
+          "id": "Q59", "question": "Variance of 3, 5, 7, 9, 11 is:", "options": {"a": "8", "b": "10", "c": "20", "d": "5"}, "correct_answer": "a", "explanation": "Mean = 7; deviations: -4, -2, 0, 2, 4 → squared = 16,4,0,4,16 → sum = 40 → variance = 40/5 = 8"
+        },
+        {
+          "id": "Q70", "question": "Measures of dispersion include:", "options": {"a": "Mean, Median, Mode", "b": "Variance, Standard deviation, Range", "c": "Probability, Odds", "d": "Frequency"}, "correct_answer": "b", "explanation": "Dispersion measures spread of data (variance, SD, range)."
+        }
+      ]
+    },
+    {
+      "section_title": "CUMULATIVE FREQUENCY & QUARTILES",
+      "questions": [
+        {
+          "id": "Q11", "question": "Cumulative frequency is used to:", "options": {"a": "Determine mean", "b": "Show total number of observations up to a point", "c": "Calculate variance", "d": "Draw histograms"}, "correct_answer": "b", "explanation": "Cumulative frequency = sum of frequencies up to a certain class or value."
+        },
+        {
+          "id": "Q24", "question": "In a frequency distribution, cumulative frequency for a class is:", "options": {"a": "Frequency of that class only", "b": "Sum of frequencies of that and previous classes", "c": "Total number of classes", "d": "Mean of all frequencies"}, "correct_answer": "b", "explanation": "Cumulative frequency = sum of frequencies up to that class"
+        },
+        {
+          "id": "Q39", "question": "The first quartile (Q1) is:", "options": {"a": "The minimum value", "b": "The 25th percentile", "c": "Median", "d": "Maximum value"}, "correct_answer": "b", "explanation": "Q1 = 25th percentile of the data"
+        },
+        {
+          "id": "Q61", "question": "The first quartile (Q1) represents:", "options": {"a": "Median", "b": "25th percentile", "c": "50th percentile", "d": "Maximum value"}, "correct_answer": "b", "explanation": "Q1 = 25th percentile, value below which 25% of data lies."
+        },
+        {
+          "id": "Q62", "question": "The third quartile (Q3) represents:", "options": {"a": "25th percentile", "b": "Median", "c": "75th percentile", "d": "Maximum"}, "correct_answer": "c", "explanation": "Q3 = 75th percentile, value below which 75% of data lies."
+        }
+      ]
+    },
+    {
+      "section_title": "SKEWNESS & DISTRIBUTION SHAPE",
+      "questions": [
+        {
+          "id": "Q12", "question": "If a data set is skewed to the right, which is true?", "options": {"a": "Mean < Median", "b": "Mean = Median", "c": "Mean > Median", "d": "Mode > Mean"}, "correct_answer": "c", "explanation": "Right-skewed distribution → mean > median > mode."
+        },
+        {
+          "id": "Q36", "question": "In a right-skewed distribution, the order of mean, median, and mode is usually:", "options": {"a": "Mode > Median > Mean", "b": "Mean > Median > Mode", "c": "Median > Mode > Mean", "d": "Mean = Median = Mode"}, "correct_answer": "b", "explanation": "Right-skewed → mean > median > mode"
+        },
+        {
+          "id": "Q58", "question": "A right-skewed distribution has:", "options": {"a": "Mean < Median < Mode", "b": "Mode < Median < Mean", "c": "Median = Mean = Mode", "d": "Mode > Mean > Median"}, "correct_answer": "b", "explanation": "Right-skewed → tail on the right → mean > median > mode"
+        }
+      ]
+    },
+    {
+      "section_title": "SUMS & DEVIATIONS",
+      "questions": [
+        {
+          "id": "Q19", "question": "The sum of deviations of all values from the mean is always:", "options": {"a": "Positive", "b": "Negative", "c": "Zero", "d": "Undefined"}, "correct_answer": "c", "explanation": "Σ(x − x̄) = 0 by definition of the mean."
+        },
+        {
+          "id": "Q40", "question": "The sum of deviations from the mean in any data set is always:", "options": {"a": "Positive", "b": "Negative", "c": "Zero", "d": "Undefined"}, "correct_answer": "c", "explanation": "By definition, Σ(x − x̄) = 0"
+        },
+        {
+          "id": "Q60", "question": "The sum of deviations of all observations from the mean is always:", "options": {"a": "Positive", "b": "Zero", "c": "Negative", "d": "Undefined"}, "correct_answer": "b", "explanation": "Σ(x − x̄) = 0 by definition of mean"
+        }
+      ]
+    },
+    {
+      "section_title": "PROBABILITY",
+      "questions": [
+        {
+          "id": "Q14", "question": "Probability of an event always lies between:", "options": {"a": "0 and 1", "b": "−1 and 1", "c": "0 and 100", "d": "−100 and 100"}, "correct_answer": "a", "explanation": "Probability (P) satisfies 0 ≤ P ≤ 1."
+        },
+        {
+          "id": "Q28", "question": "Probability of an impossible event is:", "options": {"a": "0", "b": "1", "c": "0.5", "d": "Undefined"}, "correct_answer": "a", "explanation": "Impossible event → P = 0"
+        },
+        {
+          "id": "Q30", "question": "The sum of all probabilities of all possible outcomes in a sample space is:", "options": {"a": "0", "b": "0.5", "c": "1", "d": "2"}, "correct_answer": "c", "explanation": "ΣP(all events) = 1 by definition of probability."
+        },
+        {
+          "id": "Q34", "question": "The probability of an event happening is 0.8. The probability of it not happening is:", "options": {"a": "0.2", "b": "0.8", "c": "1", "d": "0"}, "correct_answer": "a", "explanation": "P(not E) = 1 − P(E) = 1 − 0.8 = 0.2"
+        },
+        {
+          "id": "Q48", "question": "In a probability experiment, the sum of probabilities of all possible outcomes is:", "options": {"a": "0", "b": "1", "c": "0.5", "d": "Undefined"}, "correct_answer": "b", "explanation": "By definition, ΣP(all outcomes) = 1"
+        },
+        {
+          "id": "Q50", "question": "Probability of an impossible event is:", "options": {"a": "1", "b": "0", "c": "0.5", "d": "Undefined"}, "correct_answer": "b", "explanation": "Impossible event → P = 0"
+        },
+        {
+          "id": "Q56", "question": "If P(E) = 0.6, then P(not E) =", "options": {"a": "0.4", "b": "0.6", "c": "1", "d": "0"}, "correct_answer": "a", "explanation": "P(not E) = 1 − P(E) = 1 − 0.6 = 0.4"
+        },
+        {
+          "id": "Q65", "question": "Probability of an event is 0.25. Probability of its complement is:", "options": {"a": "0.25", "b": "0.75", "c": "0.5", "d": "1"}, "correct_answer": "b", "explanation": "P(not E) = 1 − P(E) = 1 − 0.25 = 0.75"
+        },
+        {
+          "id": "Q67", "question": "A binomial distribution requires:", "options": {"a": "Continuous outcomes", "b": "Two outcomes (success/failure) per trial", "c": "More than two outcomes", "d": "No trials"}, "correct_answer": "b", "explanation": "Binomial distribution = fixed number of independent trials with two possible outcomes per trial."
+        },
+        {
+          "id": "Q69", "question": "The probability of rolling a 4 on a fair die is:", "options": {"a": "1/2", "b": "1/6", "c": "1/3", "d": "1/4"}, "correct_answer": "b", "explanation": "A die has 6 sides → P(4) = 1/6"
+        }
+      ]
+    },
+    {
+      "section_title": "Z-SCORES & NORMAL DISTRIBUTION",
+      "questions": [
+        {
+          "id": "Q46", "question": "If mean = 50 and standard deviation = 5, a data value of 60 has a z-score of:", "options": {"a": "2", "b": "1", "c": "−2", "d": "10"}, "correct_answer": "a", "explanation": "z = (X − mean)/SD = (60 − 50)/5 = 10/5 = 2"
+        },
+        {
+          "id": "Q68", "question": "In a normal distribution, mean = 50 and SD = 5. Approximately 68% of data lies between:", "options": {"a": "45 and 55", "b": "40 and 60", "c": "50 and 60", "d": "30 and 70"}, "correct_answer": "a", "explanation": "68% of data lies within 1 SD of the mean → 50 ± 5 = 45 to 55"
+        }
+      ]
+    }
+  ]
+}

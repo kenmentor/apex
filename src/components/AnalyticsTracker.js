@@ -20,7 +20,7 @@ export default function AnalyticsTracker() {
     const nav = performance.getEntriesByType('navigation')[0]
     const isRefresh = nav && nav.type === 'reload'
 
-    trackEvent('pageview', { path: pathname })
+    trackEvent('page_view', { path: pathname })
     if (isRefresh) trackEvent('page_refresh', { path: pathname })
     if (getPwaStatus()) trackEvent('pwa_active', { path: pathname })
 

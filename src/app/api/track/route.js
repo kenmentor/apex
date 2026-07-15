@@ -10,15 +10,17 @@ export async function POST(request) {
       return NextResponse.json({ error: 'event required' }, { status: 400 })
     }
 
-    const col = await getCollection('events')
+    const col = await getCollection('analytics')
     await col.insertOne({
       event,
-      sessionId: sessionId || 'anon',
-      path: path || '/',
-      isPwa: !!isPwa,
-      userAgent: request.headers.get('user-agent') || '',
-      metadata,
-      timestamp: new Date(),
+      data: {
+        sessionId: sessionId || 'anon',
+        path: path || '/',
+        isPwa: !!isPwa,
+        userAgent: request.headers.get('user-agent') || '',
+        ...metadata,
+      },
+      createdAt: new Date(),
     })
 
     return NextResponse.json({ ok: true })
