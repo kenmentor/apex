@@ -186,7 +186,10 @@ export default function AdminPage() {
           <ArrowLeft className="size-4" />
         </Link>
         <h1 className="flex-1 text-base font-bold">Admin</h1>
-        <Link href="/admin/analytics" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+        <Link href="/admin/progress" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted" title="Progress">
+          <TrendingUp className="size-4" />
+        </Link>
+        <Link href="/admin/analytics" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted" title="Analytics">
           <BarChart3 className="size-4" />
         </Link>
       </header>
