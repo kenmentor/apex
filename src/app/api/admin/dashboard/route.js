@@ -9,8 +9,8 @@ export async function GET() {
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
-    const baseMatch = { createdAt: { $gte: sevenDaysAgo } }
-    const todayMatch = { createdAt: { $gte: todayStart } }
+    const baseMatch = { createdAt: { $gte: sevenDaysAgo.toISOString() } }
+    const todayMatch = { createdAt: { $gte: todayStart.toISOString() } }
 
     // Total events
     const totalEvents = await col.countDocuments(baseMatch)
@@ -34,7 +34,7 @@ export async function GET() {
     // Active users right now (last 5 min)
     const fiveMinAgo = new Date(now.getTime() - 5 * 60 * 1000)
     const activeNow = await col.aggregate([
-      { $match: { createdAt: { $gte: fiveMinAgo } } },
+      { $match: { createdAt: { $gte: fiveMinAgo.toISOString() } } },
       { $group: { _id: '$data.sessionId' } },
       { $count: 'total' },
     ]).toArray()
@@ -65,7 +65,7 @@ export async function GET() {
     // Peak active hours (hourly distribution)
     const hourlyActivity = await col.aggregate([
       { $match: baseMatch },
-      { $group: { _id: { $hour: '$createdAt' }, count: { $sum: 1 } } },
+      { $group: { _id: { $hour: { $dateFromString: { dateString: '$createdAt' } } }, count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 5 },
     ]).toArray()

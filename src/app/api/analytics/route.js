@@ -14,7 +14,7 @@ export async function POST(request) {
     await col.insertOne({
       event,
       data,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     })
 
     return NextResponse.json({ ok: true })
@@ -36,13 +36,13 @@ export async function GET(request) {
     const daysBack = range === '24h' ? 1 : range === '30d' ? 30 : 7
     const since = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000)
 
-    const match = { createdAt: { $gte: since } }
+    const match = { createdAt: { $gte: since.toISOString() } }
 
     // Date filter: narrow to a specific day (YYYY-MM-DD)
     if (dateFilter) {
       match.createdAt = {
-        $gte: new Date(`${dateFilter}T00:00:00.000Z`),
-        $lt: new Date(`${dateFilter}T23:59:59.999Z`),
+        $gte: `${dateFilter}T00:00:00.000Z`,
+        $lt: `${dateFilter}T23:59:59.999Z`,
       }
     }
 
@@ -104,7 +104,7 @@ export async function GET(request) {
     // Daily active users
     const dailyActive = await col.aggregate([
       { $match: match },
-      { $addFields: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } } } },
+      { $addFields: { day: { $substr: ['$createdAt', 0, 10] } } },
       { $group: { _id: { day: '$day', sessionId: '$data.sessionId' } } },
       { $group: { _id: '$_id.day', users: { $sum: 1 } } },
       { $sort: { _id: 1 } },

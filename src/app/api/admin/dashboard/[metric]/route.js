@@ -8,8 +8,8 @@ export async function GET(request, { params }) {
     const now = new Date()
     const sevenDays = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     const thirtyDays = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-    const match = { createdAt: { $gte: sevenDays } }
-    const match30 = { createdAt: { $gte: thirtyDays } }
+    const match = { createdAt: { $gte: sevenDays.toISOString() } }
+    const match30 = { createdAt: { $gte: thirtyDays.toISOString() } }
 
     switch (metric) {
 
@@ -17,13 +17,13 @@ export async function GET(request, { params }) {
       case 'overview': {
         const dailyViews = await col.aggregate([
           { $match: { ...match30, event: 'page_view' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const dailySessions = await col.aggregate([
           { $match: match30 },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, session: '$data.sessionId' } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.day', count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
@@ -47,13 +47,13 @@ export async function GET(request, { params }) {
 
         const pwaDaily = await col.aggregate([
           { $match: { ...match30, event: 'page_view', 'data.isPwa': true } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const webDaily = await col.aggregate([
           { $match: { ...match30, event: 'page_view', 'data.isPwa': false } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -70,7 +70,7 @@ export async function GET(request, { params }) {
 
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'page_refresh' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -87,7 +87,7 @@ export async function GET(request, { params }) {
 
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'download_click' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -98,13 +98,13 @@ export async function GET(request, { params }) {
       case 'hours': {
         const hourly = await col.aggregate([
           { $match: match },
-          { $group: { _id: { $hour: '$createdAt' }, count: { $sum: 1 } } },
+          { $group: { _id: { $hour: { $dateFromString: { dateString: '$createdAt' } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const byEventType = await col.aggregate([
           { $match: match },
-          { $group: { _id: { hour: { $hour: '$createdAt' }, event: '$event' }, count: { $sum: 1 } } },
+          { $group: { _id: { hour: { $hour: { $dateFromString: { dateString: '$createdAt' } } }, event: '$event' }, count: { $sum: 1 } } },
           { $sort: { '_id.hour': 1 } },
         ]).toArray()
 
@@ -115,7 +115,7 @@ export async function GET(request, { params }) {
       case 'flashcards': {
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'flashcard_open' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -165,7 +165,7 @@ export async function GET(request, { params }) {
 
         const daily = await col.aggregate([
           { $match: { ...match30, event: 'page_view' } },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, path: '$data.path' }, count: { $sum: 1 } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, path: '$data.path' }, count: { $sum: 1 } } },
           { $sort: { '_id.day': 1 } },
         ]).toArray()
 
@@ -180,13 +180,13 @@ export async function GET(request, { params }) {
 
         const dailyStarts = await col.aggregate([
           { $match: { ...match30, event: 'quiz_started' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
         const dailyCompletions = await col.aggregate([
           { $match: { ...match30, event: 'quiz_completed' } },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
 
@@ -219,11 +219,11 @@ export async function GET(request, { params }) {
 
       // ── RETENTION ──
       case 'retention': {
-        const allTime = { createdAt: { $gte: thirtyDays } }
+        const allTime = { createdAt: { $gte: thirtyDays.toISOString() } }
 
         const dayBuckets = await col.aggregate([
           { $match: allTime },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, session: '$data.sessionId' } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.session', days: { $addToSet: '$_id.day' }, count: { $sum: 1 } } },
         ]).toArray()
 
@@ -233,7 +233,7 @@ export async function GET(request, { params }) {
 
         const daily = await col.aggregate([
           { $match: allTime },
-          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, sessions: { $addToSet: '$data.sessionId' } } },
+          { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, sessions: { $addToSet: '$data.sessionId' } } },
           { $sort: { _id: 1 } },
           { $project: { _id: 1, sessionCount: { $size: '$sessions' } } },
         ]).toArray()
@@ -260,8 +260,8 @@ export async function GET(request, { params }) {
 
         // Hourly active users (last 24h) using heartbeats as online signals
         const hourlyActive = await col.aggregate([
-          { $match: { createdAt: { $gte: twentyFourHours }, event: 'heartbeat' } },
-          { $group: { _id: { hour: { $dateToString: { format: '%Y-%m-%dT%H:00:00Z', date: '$createdAt' } }, session: '$data.sessionId' } } },
+          { $match: { createdAt: { $gte: twentyFourHours.toISOString() }, event: 'heartbeat' } },
+          { $group: { _id: { hour: { $dateToString: { format: '%Y-%m-%dT%H:00:00Z', date: { $dateFromString: { dateString: '$createdAt' } } } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.hour', count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
@@ -269,7 +269,7 @@ export async function GET(request, { params }) {
         // Daily active users (30d) - unique sessions per day
         const dailyActive = await col.aggregate([
           { $match: { ...match30, event: 'heartbeat' } },
-          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, session: '$data.sessionId' } } },
+          { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: { $dateFromString: { dateString: '$createdAt' } } } }, session: '$data.sessionId' } } },
           { $group: { _id: '$_id.day', count: { $sum: 1 } } },
           { $sort: { _id: 1 } },
         ]).toArray()
@@ -281,7 +281,7 @@ export async function GET(request, { params }) {
         for (const min of windows) {
           const since = new Date(now_.getTime() - min * 60 * 1000)
           const sessions = await col.aggregate([
-            { $match: { createdAt: { $gte: since }, event: 'heartbeat' } },
+            { $match: { createdAt: { $gte: since.toISOString() }, event: 'heartbeat' } },
             { $group: { _id: '$data.sessionId' } },
             { $count: 'total' },
           ]).toArray()
@@ -290,14 +290,14 @@ export async function GET(request, { params }) {
 
         // Estimated total unique active users per day (last 7 days)
         const weeklyActive = await col.aggregate([
-          { $match: { createdAt: { $gte: sevenDays }, event: 'heartbeat' } },
+          { $match: { createdAt: { $gte: sevenDays.toISOString() }, event: 'heartbeat' } },
           { $group: { _id: '$data.sessionId' } },
           { $count: 'total' },
         ]).toArray()
 
         // Session lengths (from heartbeat count per session)
         const sessionHeartbeats = await col.aggregate([
-          { $match: { createdAt: { $gte: twentyFourHours }, event: 'heartbeat' } },
+          { $match: { createdAt: { $gte: twentyFourHours.toISOString() }, event: 'heartbeat' } },
           { $group: { _id: '$data.sessionId', count: { $sum: 1 } } },
           { $bucket: { groupBy: '$count', boundaries: [1, 3, 6, 12, 24, 48, 999999], default: 'unknown', output: { sessions: { $sum: 1 } } } },
         ]).toArray()
