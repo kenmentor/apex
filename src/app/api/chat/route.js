@@ -17,34 +17,11 @@ const COURSE_ALIASES = {
   'csc 282': 'CSC 282', 'data structures': 'CSC 282',
 }
 
-const TOPIC_KEYWORDS = {
-  'Electrostatics': ['charge', 'coulomb', 'electric field', 'potential', 'capacitor', 'dielectric', 'electrostatic'],
-  'Magnetism': ['magnetic', 'flux', 'faraday', 'lenz', 'induction', 'solenoid', 'electromagnet'],
-  'Nuclear Physics': ['binding energy', 'mass defect', 'fission', 'fusion', 'radioactive', 'nuclear'],
-  'Optics': ['lens', 'mirror', 'refraction', 'reflection', 'diffraction', 'interference', 'wavelength', 'light', 'optic'],
-  'Thermodynamics': ['heat', 'temperature', 'entropy', 'enthalpy', 'gas law', 'carnot', 'thermo'],
-  'Waves': ['amplitude', 'frequency', 'wave', 'oscillation', 'pendulum', 'standing wave', 'wave'],
-  'Citizenship': ['citizen', 'citizenship', 'birth', 'naturalisation', 'registration', 'constitution', 'alien', 'nationality'],
-  'Nigeria': ['nigeria', 'africa', 'lagos', 'abuja', 'flag', 'anthem', 'coat of arms', 'amalgamation'],
-  'Ethnic Groups': ['hausa', 'igbo', 'yoruba', 'fulani', 'tiv', 'ethnic', 'tribe', 'indigenous'],
-  'Culture': ['culture', 'tradition', 'festival', 'language', 'heritage', 'moral', 'value', 'custom'],
-  'Democracy': ['democracy', 'election', 'vote', 'governance', 'president', 'parliament', 'democratic'],
-  'Development': ['development', 'economy', 'self-reliance', 'isi', 'eoi', 'industrialisation'],
-  'Corruption': ['corruption', 'efcc', 'icpc', 'wai', 'indiscipline', 'accountable', 'bribe'],
-  'Leadership': ['leader', 'leadership', 'integrity', 'vision', 'governance', 'management'],
-  'History': ['amalgamation', '1914', 'independence', 'colonial', 'republic', 'lugard', '1960'],
-  'Physics': ['force', 'energy', 'velocity', 'acceleration', 'mass', 'newton', 'momentum', 'kinetic', 'potential'],
-  'Chemistry': ['atom', 'molecule', 'bond', 'element', 'compound', 'reaction', 'acid', 'base', 'periodic'],
-  'Data Structures': ['array', 'linked list', 'stack', 'queue', 'tree', 'graph', 'sorting', 'algorithm'],
-  'Electricity': ['current', 'voltage', 'resistance', 'ohm', 'circuit', 'series', 'parallel', 'capacitor'],
-}
-
-// Simple in-memory session: maps a session key to last quiz question
 const sessions = new Map()
 
 function getSession(email) {
   if (!email) return null
-  if (!sessions.has(email)) sessions.set(email, {})
+  if (!sessions.has(email)) sessions.set(email, { history: [] })
   return sessions.get(email)
 }
 
@@ -56,149 +33,69 @@ function normalizeCourse(input) {
   return null
 }
 
-function extractTopics(input) {
-  const lower = input.toLowerCase()
-  const found = []
-  for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
-    for (const kw of keywords) {
-      if (lower.includes(kw)) { found.push(topic); break }
-    }
-  }
-  return found
+async function fetchRandomQuestion(courseCode) {
+  const questionsCol = await getCollection('questions')
+  const total = await questionsCol.countDocuments({ courseCode })
+  if (total === 0) return null
+  const skip = Math.floor(Math.random() * total)
+  const docs = await questionsCol.find({ courseCode }).skip(skip).limit(1).toArray()
+  return docs[0] || null
 }
 
-function buildLesson(topic, question, explanation) {
-  const lines = [`## 📖 ${topic}`]
-  if (question) lines.push('', `**Question to test yourself:** ${question}`)
-  if (explanation) lines.push('', `**Explanation:** ${explanation}`)
-  return lines.join('\n')
+async function queryAI(messages) {
+  const apiKey = process.env.OPENROUTER_API_KEY
+  const model = process.env.OPENROUTER_MODEL || 'google/gemini-2.5-flash-image'
+
+  if (!apiKey) return null
+
+  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+      'HTTP-Referer': 'https://apex-tau-gules.vercel.app',
+      'X-Title': 'Apex Tutor',
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      temperature: 0.7,
+      max_tokens: 1024,
+    }),
+  })
+
+  if (!res.ok) return null
+
+  const data = await res.json()
+  return data.choices?.[0]?.message?.content || null
 }
 
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { message, userName, courseContext, sessionEmail } = body
+    const { message, userName, sessionEmail } = body
     if (!message?.trim()) return NextResponse.json({ error: 'Message required' }, { status: 400 })
 
     const msg = message.trim()
     const lower = msg.toLowerCase()
-
-    const questionsCol = await getCollection('questions')
-    const coursesCol = await getCollection('courses')
-    const theoryCol = await getCollection('theory_references')
-
     const email = sessionEmail || 'anonymous'
     const session = getSession(email)
 
-    // --- HELP ---
-    if (lower === '/help' || lower === 'help' || lower === 'what can you do' || lower === 'commands') {
-      return NextResponse.json({
-        messages: [{ role: 'assistant', text: `Here's what I can do:
+    const coursesCol = await getCollection('courses')
+    const allCourses = await coursesCol.find({}).sort({ code: 1 }).toArray()
+    const courseList = allCourses.map(c => `${c.code} — ${c.title || ''}`).join('\n')
 
-📝 **Quiz me** — *"Give me a PHY 102 question"* or *"Quiz me"*
-📖 **Teach me** — *"Teach me about citizenship"* or *"Explain electrostatics"*
-✅ **Check my answer** — *"The answer is B"* (after I show you a question)
-🔍 **Search topics** — *"Questions about leadership"*
-📚 **List courses** — *"What courses are available?"*
-💡 **Help** — Type **/help** anytime
-
-Just ask naturally and I'll help you learn!` }],
-      })
-    }
-
-    const courseCode = normalizeCourse(msg)
-    const topics = extractTopics(msg)
-
-    // --- LIST COURSES ---
-    if ((lower.includes('course') || lower.includes('subject')) && (lower.includes('available') || lower.includes('list') || lower.includes('what') || lower.includes('show') || lower.includes('all'))) {
-      const allCourses = await coursesCol.find({}).sort({ code: 1 }).toArray()
-      const list = allCourses.map(c => `• **${c.code}** — ${c.title || ''}`).join('\n')
-      return NextResponse.json({
-        messages: [{ role: 'assistant', text: `Here are all available courses:\n\n${list}\n\nSay *"Give me [course] question"* to practice!` }],
-      })
-    }
-
-    // --- TEACH / EXPLAIN a concept ---
-    const teachTriggers = ['teach', 'explain', 'what is', 'what are', 'define', 'meaning of', 'tell me about', 'learn', 'understand', 'what does']
-    const isTeachRequest = teachTriggers.some(t => lower.startsWith(t) || lower.includes(t + ' '))
-
-    if (isTeachRequest && (topics.length > 0 || courseCode)) {
-      // First try to find theory references matching the topic
-      const topicName = topics[0] || (courseCode ? courseCode + ' concepts' : '')
-      let theoryRefs = []
-      try {
-        theoryRefs = await theoryCol.find({
-          courseCode: courseCode ? courseCode : { $exists: true },
-          $or: topics.map(t => ({
-            $or: [
-              { section: { $regex: t, $options: 'i' } },
-              { question: { $regex: t, $options: 'i' } },
-              { mainConcepts: { $regex: t, $options: 'i' } },
-            ],
-          })),
-        }).toArray()
-      } catch {}
-
-      if (theoryRefs.length > 0) {
-        const ref = theoryRefs[0]
-        const concepts = (ref.mainConcepts || []).map(c => `• ${c}`).join('\n')
-        return NextResponse.json({
-          messages: [{ role: 'assistant', text: `## 📖 ${ref.section || topicName}\n\n${ref.referenceAnswer || ''}\n\n**Key concepts:**\n${concepts}` }],
-        })
-      }
-
-      // Fallback: search questions for the topic and build a lesson
-      let filter = {}
-      if (courseCode) filter.courseCode = courseCode
-
-      const allQs = await questionsCol.find(filter).toArray()
-      const relevant = allQs.filter(q => {
-        const text = (q.question + ' ' + (q.explanation || '') + ' ' + (q.section || '')).toLowerCase()
-        return topics.some(t => TOPIC_KEYWORDS[t]?.some(kw => text.includes(kw))) || text.includes(lower.slice(0, 25))
-      })
-
-      if (relevant.length > 0) {
-        // Combine explanations to form a lesson
-        const explanations = relevant.slice(0, 3).map(q => q.explanation).filter(Boolean)
-        const uniqueExplanations = [...new Set(explanations)]
-        const lesson = uniqueExplanations.length > 0
-          ? uniqueExplanations.join('\n\n')
-          : `Questions about **${topicName}** found! Try one out below.`
-
-        const pick = relevant[0]
-        const optionsList = Object.entries(pick.options || {}).map(([k, v]) => `**${k.toUpperCase()}.** ${v}`).join('\n')
-
-        session.lastQuiz = { correctAnswer: pick.correctAnswer, explanation: pick.explanation, courseCode: pick.courseCode }
-
-        return NextResponse.json({
-          messages: [{ role: 'assistant', text: `## 📖 ${topicName}\n\n${lesson}` }],
-        })
-      }
-
-      // No topic match but we have a course code — teach from questions
-      if (courseCode) {
-        const total = await questionsCol.countDocuments({ courseCode })
-        if (total > 0) {
-          const docs = await questionsCol.find({ courseCode }).limit(5).toArray()
-          const sampleQuestions = docs.slice(0, 3).map(q => `• **${q.question}** — *${q.explanation || ''}*`).join('\n')
-          return NextResponse.json({
-            messages: [{ role: 'assistant', text: `## 📖 ${courseCode}\n\nHere are some key questions and concepts from this course:\n\n${sampleQuestions}\n\nWant me to quiz you on any of these?` }],
-          })
-        }
-      }
-    }
-
-    // --- ANSWER CHECKING ---
+    // --- ANSWER CHECKING (server-side, precise) ---
     const answerMatch = lower.match(/(?:the answer is|answer is|it is|i think|i choose|my answer|is it|answer)\s*[:.]?\s*([a-d])/i)
+
     if (answerMatch && session.lastQuiz) {
       const userAnswer = answerMatch[1].toLowerCase()
       const correct = session.lastQuiz.correctAnswer
       const isCorrect = userAnswer === correct
-      const explanation = session.lastQuiz.explanation || ''
 
       const response = isCorrect
-        ? `✅ **Correct!** Well done!\n\n${explanation ? `**Explanation:** ${explanation}` : ''}`
-        : `❌ **Not quite.** The correct answer is **${correct.toUpperCase()}**.\n\n${explanation ? `**Explanation:** ${explanation}\n\nDon't worry, keep practicing!` : 'Keep practicing!'}`
+        ? `✅ **Correct!** Well done!${session.lastQuiz.explanation ? `\n\n**Explanation:** ${session.lastQuiz.explanation}` : ''}`
+        : `❌ **Not quite.** The correct answer is **${correct.toUpperCase()}**.${session.lastQuiz.explanation ? `\n\n**Explanation:** ${session.lastQuiz.explanation}\n\nDon't worry, keep practicing!` : ' Keep practicing!'}`
 
       session.lastQuiz = null
 
@@ -207,33 +104,26 @@ Just ask naturally and I'll help you learn!` }],
       })
     }
 
-    // Answer checking without active quiz
+    // Answer pattern but no active quiz
     if (answerMatch) {
       return NextResponse.json({
         messages: [{ role: 'assistant', text: `I'd love to check your answer! First, ask me for a question like *"Give me a PHY 102 question"* and then tell me your answer.` }],
       })
     }
 
-    // --- RANDOM QUESTION from a specific course ---
-    if (courseCode && (lower.includes('question') || lower.includes('quiz') || lower.includes('give') || lower.includes('random') || lower.includes('practice') || lower.includes('test') || lower.match(/^(give|show|get|a)\s/))) {
-      const total = await questionsCol.countDocuments({ courseCode })
-      if (total === 0) {
+    // --- QUESTION FETCHING (server-side, precise) ---
+    const courseCode = normalizeCourse(msg)
+
+    // Explicit question request for a specific course
+    if (courseCode && (lower.includes('question') || lower.includes('quiz') || lower.includes('give') || lower.includes('random') || lower.includes('practice') || lower.includes('test') || lower.includes('ask'))) {
+      const q = await fetchRandomQuestion(courseCode)
+      if (!q) {
         return NextResponse.json({
-          messages: [{ role: 'assistant', text: `I couldn't find any questions for **${courseCode}**. Check the code or try *"What courses are available?"*` }],
+          messages: [{ role: 'assistant', text: `I couldn't find any questions for **${courseCode}**. Here are available courses:\n\n${courseList}\n\nWhich one interests you?` }],
         })
       }
-      const skip = Math.floor(Math.random() * total)
-      const docs = await questionsCol.find({ courseCode }).skip(skip).limit(1).toArray()
-      if (!docs.length) {
-        return NextResponse.json({ messages: [{ role: 'assistant', text: `No questions found for **${courseCode}**.` }] })
-      }
-
-      const q = docs[0]
       const optionsList = Object.entries(q.options || {}).map(([k, v]) => `**${k.toUpperCase()}.** ${v}`).join('\n')
-
-      // Save to session for answer checking
       session.lastQuiz = { correctAnswer: q.correctAnswer, explanation: q.explanation, courseCode: q.courseCode }
-
       return NextResponse.json({
         messages: [{ role: 'assistant', text: `Here's a question from **${q.courseCode}** (*${q.section || ''}*):\n\n**${q.question}**\n\n${optionsList}\n\nWhat do you think? Tell me *"The answer is B"*` }],
         quiz: {
@@ -247,134 +137,83 @@ Just ask naturally and I'll help you learn!` }],
       })
     }
 
-    // --- TOPIC SEARCH ---
-    if (topics.length > 0) {
-      let filter = {}
-      if (courseCode) filter.courseCode = courseCode
-
-      const allQuestions = await questionsCol.find(filter).toArray()
-      const relevant = allQuestions.filter(q => {
-        const text = (q.question + ' ' + (q.explanation || '') + ' ' + (q.section || '')).toLowerCase()
-        for (const topic of topics) {
-          if (TOPIC_KEYWORDS[topic]?.some(kw => text.includes(kw))) return true
-        }
-        return false
-      })
-
-      if (relevant.length > 0) {
-        const pick = relevant[Math.floor(Math.random() * Math.min(relevant.length, 5))]
-        const topicLabel = topics[0]
-        const optionsList = Object.entries(pick.options || {}).map(([k, v]) => `**${k.toUpperCase()}.** ${v}`).join('\n')
-
-        session.lastQuiz = { correctAnswer: pick.correctAnswer, explanation: pick.explanation, courseCode: pick.courseCode }
-
+    // Generic quiz request
+    if ((lower.includes('quiz') || lower.includes('test me') || lower.includes('practice') || lower.includes('ask me') || lower.includes('question')) && !courseCode) {
+      const codes = allCourses.map(c => c.code)
+      const q = await fetchRandomQuestion(codes[Math.floor(Math.random() * codes.length)])
+      if (q) {
+        const optionsList = Object.entries(q.options || {}).map(([k, v]) => `**${k.toUpperCase()}.** ${v}`).join('\n')
+        session.lastQuiz = { correctAnswer: q.correctAnswer, explanation: q.explanation, courseCode: q.courseCode }
         return NextResponse.json({
-          messages: [{ role: 'assistant', text: `I found a question about **${topicLabel}** from **${pick.courseCode}**:\n\n**${pick.question}**\n\n${optionsList}\n\nTap to answer or tell me your choice!` }],
+          messages: [{ role: 'assistant', text: `Sure! Here's a random question:\n\n**${q.question}**\n\n${optionsList}\n\nWhat's your answer?` }],
           quiz: {
-            id: pick.id,
-            question: pick.question,
-            options: pick.options,
-            correctAnswer: pick.correctAnswer,
-            explanation: pick.explanation,
-            courseCode: pick.courseCode,
+            id: q.id,
+            question: q.question,
+            options: q.options,
+            correctAnswer: q.correctAnswer,
+            explanation: q.explanation,
+            courseCode: q.courseCode,
           },
         })
       }
-
-      // Check theory refs for the topic
-      let theoryRefs = []
-      try {
-        theoryRefs = await theoryCol.find({
-          $or: topics.map(t => ({
-            $or: [
-              { section: { $regex: t, $options: 'i' } },
-              { question: { $regex: t, $options: 'i' } },
-              { keywords: { $in: topics.map(tk => new RegExp(tk, 'i')) } },
-            ],
-          })),
-        }).limit(1).toArray()
-      } catch {}
-
-      if (theoryRefs.length > 0) {
-        const ref = theoryRefs[0]
-        return NextResponse.json({
-          messages: [{ role: 'assistant', text: `## 📖 ${ref.section || topics[0]}\n\n${ref.referenceAnswer || ''}` }],
-        })
-      }
-
-      // Fallback: random question
-      const allCourses = await coursesCol.find({}).toArray()
-      const codes = allCourses.map(c => c.code)
-      const total = await questionsCol.countDocuments({ courseCode: { $in: codes } })
-      if (total > 0) {
-        const skip = Math.floor(Math.random() * total)
-        const docs = await questionsCol.find({ courseCode: { $in: codes } }).skip(skip).limit(1).toArray()
-        if (docs.length > 0) {
-          const pick = docs[0]
-          const optionsList = Object.entries(pick.options || {}).map(([k, v]) => `**${k.toUpperCase()}.** ${v}`).join('\n')
-          session.lastQuiz = { correctAnswer: pick.correctAnswer, explanation: pick.explanation, courseCode: pick.courseCode }
-          return NextResponse.json({
-            messages: [{ role: 'assistant', text: `I don't have a direct match for that topic, but here's a question from **${pick.courseCode}**:\n\n**${pick.question}**\n\n${optionsList}` }],
-            quiz: {
-              id: pick.id,
-              question: pick.question,
-              options: pick.options,
-              correctAnswer: pick.correctAnswer,
-              explanation: pick.explanation,
-              courseCode: pick.courseCode,
-            },
-          })
-        }
-      }
     }
 
-    // --- GENERIC QUIZ REQUEST ---
-    if (lower.includes('quiz') || lower.includes('test me') || lower.includes('practice') || lower.includes('ask me') || lower.includes('question')) {
-      const allCourses = await coursesCol.find({}).toArray()
-      const codes = allCourses.map(c => c.code)
-      const total = await questionsCol.countDocuments({ courseCode: { $in: codes } })
-      if (total > 0) {
-        const skip = Math.floor(Math.random() * total)
-        const docs = await questionsCol.find({ courseCode: { $in: codes } }).skip(skip).limit(1).toArray()
-        if (docs.length > 0) {
-          const q = docs[0]
-          const optionsList = Object.entries(q.options || {}).map(([k, v]) => `**${k.toUpperCase()}.** ${v}`).join('\n')
-          session.lastQuiz = { correctAnswer: q.correctAnswer, explanation: q.explanation, courseCode: q.courseCode }
-          return NextResponse.json({
-            messages: [{ role: 'assistant', text: `Sure! Here's a random question:\n\n**${q.question}**\n\n${optionsList}\n\nWhat's your answer?` }],
-            quiz: {
-              id: q.id,
-              question: q.question,
-              options: q.options,
-              correctAnswer: q.correctAnswer,
-              explanation: q.explanation,
-              courseCode: q.courseCode,
-            },
-          })
-        }
-      }
-    }
+    // --- AI-POWERED RESPONSE ---
+    const systemPrompt = `You are **Alex**, a friendly and knowledgeable tutor for Apex — a university exam prep app. You help students practice past questions, explain concepts, and prepare for exams.
 
-    // --- GREETING ---
-    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'sup', 'yo']
-    if (greetings.some(g => lower === g || lower.startsWith(g + ' ') || lower === g + '!')) {
+**Available courses:**
+${courseList}
+
+**Your capabilities:**
+- Answer questions about courses, topics, and concepts
+- Explain difficult ideas in simple terms
+- Give study advice and exam tips
+- When a student asks for a question or quiz, ask which course or topic they want
+- Be encouraging and supportive
+- Keep responses concise and helpful (2-4 paragraphs max)
+
+**Rules:**
+- When a student asks "what courses are available", list the courses above
+- If they ask about a topic you don't know, admit it honestly and suggest related courses
+- Never make up quiz questions or answers — use the app's question system
+- If they want a specific question, ask for the course code first
+- Be warm and use occasional emojis but don't overdo it
+- The user's name is ${userName || 'Student'}
+- Respond naturally as a knowledgeable tutor`
+
+    const aiMessages = [
+      { role: 'system', content: systemPrompt },
+      ...(session.history || []).slice(-10),
+      { role: 'user', content: msg },
+    ]
+
+    // Try AI response
+    let aiReply = null
+    try {
+      aiReply = await queryAI(aiMessages)
+    } catch {}
+
+    if (aiReply) {
+      session.history.push({ role: 'user', content: msg })
+      session.history.push({ role: 'assistant', content: aiReply })
       return NextResponse.json({
-        messages: [{ role: 'assistant', text: `Hey${userName ? ' ' + userName : ''}! 👋 Ready to study?\n\n• *"Quiz me on citizenship"* — practice a topic\n• *"Teach me about electrostatics"* — learn a concept\n• *"Give me a PHY 102 question"* — specific course practice\n• Type **/help** for all commands` }],
+        messages: [{ role: 'assistant', text: aiReply }],
       })
     }
 
-    // --- FALLBACK ---
-    let response = `I'm not sure I understood that. Here's what I can help with:\n\n`
-    response += `📝 **Practice** — *"Give me a PHY 102 question"*\n`
-    response += `📖 **Learn** — *"Teach me about citizenship"*\n`
-    response += `✅ **Answer check** — *"The answer is B"* (after a question)\n`
-    response += `📚 **Courses** — *"What courses are available?"*\n`
-    response += `💡 **Help** — Type **/help**\n`
+    // --- FALLBACK (no AI key or AI failed) ---
+    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'sup', 'yo']
+    if (greetings.some(g => lower === g || lower.startsWith(g + ' ') || lower === g + '!')) {
+      return NextResponse.json({
+        messages: [{ role: 'assistant', text: `Hey${userName ? ' ' + userName : ''}! 👋 Ready to study?\n\n• *"Quiz me on citizenship"* — practice a topic\n• *"Teach me about electrostatics"* — learn a concept\n• *"Give me a PHY 102 question"* — specific course practice` }],
+      })
+    }
 
     return NextResponse.json({
-      messages: [{ role: 'assistant', text: response }],
+      messages: [{ role: 'assistant', text: `I'm here to help you study! Try:\n\n📝 **Practice** — *"Give me a PHY 102 question"*\n📖 **Explain** — *"Explain electrostatics"*\n📚 **Courses** — *"What courses are available?"*` }],
     })
   } catch (error) {
+    console.error('Chat error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
