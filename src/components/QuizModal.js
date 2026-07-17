@@ -1,13 +1,33 @@
 'use client';
 
-import { useState } from 'react';
-import { X, Check, X as XIcon } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { X, Check, X as XIcon, Timer } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
 
 export default function QuizModal({ quiz, onClose }) {
   const [selected, setSelected] = useState(null);
   const [revealed, setRevealed] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    if (!quiz) return;
+    setSelected(null);
+    setRevealed(false);
+    setTimeLeft(30);
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          setRevealed(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timerRef.current);
+  }, [quiz]);
 
   if (!quiz) return null;
 
@@ -15,21 +35,25 @@ export default function QuizModal({ quiz, onClose }) {
     if (revealed) return;
     setSelected(key);
     setRevealed(true);
+    clearInterval(timerRef.current);
   };
 
   const isCorrect = selected === quiz.correctAnswer;
   const handleClose = () => {
+    clearInterval(timerRef.current);
     setSelected(null);
     setRevealed(false);
     onClose();
   };
+
+  const timerColor = timeLeft > 10 ? 'text-muted-foreground' : timeLeft > 5 ? 'text-amber-500' : 'text-red-500';
 
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-5 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) handleClose() }}
     >
-      <div className="relative w-full max-w-lg rounded-2xl border bg-card shadow-2xl">
+      <div className="relative w-full max-w-lg rounded-2xl border bg-card shadow-2xl animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between border-b px-6 py-4">
           <div className="flex items-center gap-2">
@@ -37,9 +61,17 @@ export default function QuizModal({ quiz, onClose }) {
             <span className="text-sm font-bold">Alex Quiz</span>
             <span className="text-[10px] text-muted-foreground">· {quiz.courseCode}</span>
           </div>
-          <button onClick={handleClose} className="text-muted-foreground hover:text-foreground transition-colors">
-            <X className="size-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            {!revealed && (
+              <div className={`flex items-center gap-1 text-xs font-medium ${timerColor}`}>
+                <Timer className="size-3.5" />
+                <span className="tabular-nums">{timeLeft}s</span>
+              </div>
+            )}
+            <button onClick={handleClose} className="text-muted-foreground hover:text-foreground transition-colors">
+              <X className="size-5" />
+            </button>
+          </div>
         </div>
 
         {/* Question */}
@@ -83,7 +115,7 @@ export default function QuizModal({ quiz, onClose }) {
                 {isCorrect ? <Check className="size-3.5" /> : <XIcon className="size-3.5" />}
               </span>
               <div className="min-w-0">
-                <p className="text-sm font-semibold mb-1">{isCorrect ? 'Correct!' : 'Not quite'}</p>
+                <p className="text-sm font-semibold mb-1">{isCorrect ? 'Correct!' : 'Time\'s up!'}</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">{quiz.explanation || 'No explanation available.'}</p>
               </div>
             </div>
