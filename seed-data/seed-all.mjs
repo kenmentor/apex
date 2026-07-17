@@ -28,6 +28,11 @@ const COURSES = [
     dept: { code: 'CSC', title: 'Computer Science', color: '#1a5276' },
     file: 'csc182.json', theory: 'csc182-theory.json',
   },
+  {
+    code: 'GSS 112', title: 'Nigerian People, Culture & Citizenship', icon: 'N', color: '#2ecc71',
+    dept: { code: 'GSS', title: 'General Studies', color: '#27ae60' },
+    file: 'gss112.json', theory: 'gss112-theory.json',
+  },
 ]
 
 async function seedCourse(db, course) {

@@ -1,6 +1,7 @@
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import NavWrapper from '@/components/NavWrapper';
+import AlexChat from '@/components/AlexChat';
 import VisitorTracker from '@/components/VisitorTracker';
 import InstallPrompt from '@/components/InstallPrompt';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
@@ -57,6 +58,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
           <NavWrapper />
+          <AlexChat />
           <VisitorTracker />
           <InstallPrompt />
           <ServiceWorkerRegister />
