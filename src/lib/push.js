@@ -1,14 +1,20 @@
 import webpush from 'web-push'
 
-webpush.setVapidDetails(
-  'mailto:agentwithme@gmail.com',
-  process.env.VAPID_PUBLIC_KEY,
-  process.env.VAPID_PRIVATE_KEY
-)
+function getWebPush() {
+  try {
+    webpush.setVapidDetails(
+      'mailto:agentwithme@gmail.com',
+      process.env.VAPID_PUBLIC_KEY,
+      process.env.VAPID_PRIVATE_KEY
+    )
+  } catch {}
+  return webpush
+}
 
 export async function sendPushNotification(subscription, title, body, url) {
+  const wp = getWebPush()
   try {
-    await webpush.sendNotification(subscription, JSON.stringify({ title, body, url }))
+    await wp.sendNotification(subscription, JSON.stringify({ title, body, url }))
     return true
   } catch (err) {
     if (err.statusCode === 410 || err.statusCode === 404) {
