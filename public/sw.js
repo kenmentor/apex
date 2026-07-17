@@ -1,4 +1,4 @@
-const CACHE = 'apex-cache-v4'
+const CACHE = 'apex-cache-v5'
 const PRECACHE = [
   '/',
   '/courses',
@@ -30,6 +30,40 @@ self.addEventListener('activate', (e) => {
     caches.keys().then((keys) =>
       Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
+  )
+})
+
+self.addEventListener('push', (e) => {
+  let data = { title: 'Apex', body: '', url: '/' }
+  try {
+    data = e.data?.json() || data
+  } catch {}
+  const { title, body, url } = data
+  const options = {
+    body,
+    icon: '/icon-192.png',
+    badge: '/icon-192.png',
+    vibrate: [200, 100, 200],
+    data: { url },
+  }
+  e.waitUntil(self.registration.showNotification(title, options))
+})
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close()
+  const url = e.notification.data?.url || '/'
+  e.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      const matching = windowClients.find((c) => {
+        try { return new URL(c.url).origin === location.origin } catch { return false }
+      })
+      if (matching) {
+        matching.focus()
+        matching.navigate(url)
+        return
+      }
+      clients.openWindow(url)
+    })
   )
 })
 

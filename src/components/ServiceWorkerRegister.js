@@ -1,18 +1,50 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { getToken, getUser } from '@/lib/auth'
+
+const VAPID_PUBLIC_KEY = 'BLJ8XZqvsEwOsl4S6yj2zlmI5gQofHMg24B_MiQNv4YsBRPw9JyDT1SEVPHPYhTsmI_bpEV4b5fvB0P_W2-9fLk'
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4)
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
+  const raw = atob(base64)
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)))
+}
+
+async function subscribePush(reg) {
+  try {
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+    })
+    const token = getToken()
+    if (token) {
+      await fetch('/api/push/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ subscription: sub.toJSON() }),
+      })
+    }
+  } catch (err) {
+    if (err.name !== 'NotAllowedError' && err.name !== 'AbortError') {
+      console.error('Push subscribe error:', err)
+    }
+  }
+}
 
 export default function ServiceWorkerRegister() {
   const [updateAvailable, setUpdateAvailable] = useState(false)
+  const [subscribed, setSubscribed] = useState(false)
 
   useEffect(() => {
     if (!('serviceWorker' in navigator)) return
 
     navigator.serviceWorker.register('/sw.js').then((reg) => {
-      // Check for updates every 60 seconds
+      reg.update()
+
       const interval = setInterval(() => reg.update(), 60000)
 
-      // Listen for new service worker installing
       reg.addEventListener('updatefound', () => {
         const newWorker = reg.installing
         if (!newWorker) return
@@ -23,16 +55,34 @@ export default function ServiceWorkerRegister() {
         })
       })
 
+      // Push subscription
+      if ('PushManager' in window && Notification.permission === 'granted' && !subscribed) {
+        subscribePush(reg)
+        setSubscribed(true)
+      }
+
       return () => clearInterval(interval)
     }).catch(() => {})
 
-    // Listen for controlling change
     let refreshing = false
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (refreshing) return
       refreshing = true
       window.location.reload()
     })
+  }, [subscribed])
+
+  // Permission request on auth
+  useEffect(() => {
+    const user = getUser()
+    if (user && 'Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission().then((perm) => {
+        if (perm === 'granted') {
+          navigator.serviceWorker.ready.then((reg) => subscribePush(reg))
+          setSubscribed(true)
+        }
+      })
+    }
   }, [])
 
   if (!updateAvailable) return null

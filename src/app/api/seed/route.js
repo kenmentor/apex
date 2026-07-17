@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { getDB } from '@/lib/db'
+import { getDB, getCollection } from '@/lib/db'
+import { sendToAll } from '@/lib/push'
 import fs from 'fs'
 import path from 'path'
 
@@ -79,6 +80,32 @@ export async function POST() {
       }
       await db.collection('readings').insertMany(readings)
     }
+
+    // Push notification about new course
+    try {
+      const notifCol = await getCollection('notifications')
+      const subsCol = await getCollection('push_subscriptions')
+      const subs = await subsCol.find({}).project({ userEmail: 1 }).toArray()
+      for (const sub of subs) {
+        if (sub.userEmail) {
+          await notifCol.insertOne({
+            userEmail: sub.userEmail,
+            type: 'new_course',
+            title: '📚 New Course Available!',
+            message: `${data.course_code} — ${data.course_title || 'A new course'} has been added. Start practicing now!`,
+            link: `/courses/${data.course_code.toLowerCase().replace(/\s+/g, '')}`,
+            read: false,
+            createdAt: new Date().toISOString(),
+          })
+        }
+      }
+      sendToAll(
+        '📚 New Course Available!',
+        `${data.course_code} — ${data.course_title || 'A new course'} has been added. Start practicing now!`,
+        `/courses/${data.course_code.toLowerCase().replace(/\s+/g, '')}`,
+        getCollection
+      )
+    } catch {}
 
     return NextResponse.json({
       success: true,

@@ -9,8 +9,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const DEPT_COLORS = { GSS: '#130f40', COS: '#1a5276', MTH: '#7d3c98', PHY: '#c0392b' };
 
-const FEED_ICONS = { continue: BookOpen, recommended: Sparkles, space_post: Users, challenge: RefreshCw, milestone: Sparkles };
-
 function getTimeAgo(dateStr) {
   if (!dateStr) return '';
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -23,7 +21,7 @@ function getTimeAgo(dateStr) {
   return `${days}d ago`;
 }
 
-function ChallengeCard({ question, onRefresh, compact }) {
+function ChallengeCard({ question, onRefresh }) {
   const [revealed, setRevealed] = useState(false);
   const [selected, setSelected] = useState(null);
   if (!question) return null;
@@ -36,6 +34,12 @@ function ChallengeCard({ question, onRefresh, compact }) {
 
   const isCorrect = selected === question.correctAnswer;
 
+  const handleRefresh = () => {
+    setRevealed(false);
+    setSelected(null);
+    onRefresh();
+  };
+
   return (
     <div className="rounded-xl border bg-card space-y-3">
       <div className="flex items-center justify-between px-5 pt-4">
@@ -44,14 +48,14 @@ function ChallengeCard({ question, onRefresh, compact }) {
           Quick Challenge
           <span className="text-[10px] text-muted-foreground/60">· {question.courseCode}</span>
         </div>
-        <button onClick={onRefresh} className="text-muted-foreground hover:text-foreground transition-colors">
+        <button onClick={handleRefresh} className="text-muted-foreground hover:text-foreground transition-colors" title="New question">
           <RefreshCw className="size-3.5" />
         </button>
       </div>
       <div className="px-5">
         <p className="text-sm font-medium leading-relaxed">{question.question}</p>
       </div>
-      <div className={`space-y-1 ${compact ? 'px-5 pb-4' : 'px-5 pb-4'}`}>
+      <div className="space-y-1 px-5 pb-4">
         {Object.entries(question.options).map(([key, val]) => {
           let cls = 'flex items-center gap-2.5 rounded-lg border px-3.5 py-2.5 text-sm transition-all cursor-pointer';
           if (!revealed) cls += ' hover:bg-accent hover:border-foreground/20';
@@ -179,13 +183,13 @@ export default function HomePage() {
 
   const refreshChallenge = () => {
     if (!user?.email) return;
-    fetch(`/api/feed/personalized?email=${encodeURIComponent(user.email)}`, {
-      headers: { Authorization: `Bearer ${getToken()}` },
-    })
+    const codes = feed.filter(i => i.type === 'continue').map(i => i.data.courseCode).filter(Boolean);
+    if (codes.length === 0) return;
+    fetch(`/api/questions/random?courses=${encodeURIComponent(codes.join(','))}`)
       .then(r => r.json())
-      .then(data => {
-        if (data?.items) setFeed(data.items);
-        if (data?.profile) setProfile(data.profile);
+      .then(q => {
+        if (!q) return;
+        setFeed(prev => prev.map(i => i.type === 'challenge' ? { ...i, data: q } : i));
       })
       .catch(() => {});
   };
@@ -262,7 +266,7 @@ export default function HomePage() {
           <Link href="/notifications" className="relative flex size-10 items-center justify-center rounded-xl hover:bg-muted shrink-0">
             <Bell className="size-5 text-muted-foreground" />
             {unreadCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex size-4.5 items-center justify-center rounded-full bg-primary text-[8px] font-bold text-primary-foreground">
+              <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-primary text-[8px] font-bold text-primary-foreground">
                 {unreadCount > 9 ? '9+' : unreadCount}
               </span>
             )}
@@ -279,7 +283,7 @@ export default function HomePage() {
         onClick={() => router.push('/courses')}
         className="flex cursor-pointer items-center gap-3 rounded-xl border bg-card p-3.5 transition-colors hover:bg-accent"
       >
-        <Search className="size-4.5 text-muted-foreground shrink-0" />
+        <Search className="size-4 text-muted-foreground shrink-0" />
         <span className="text-sm text-muted-foreground">Search courses...</span>
       </div>
 

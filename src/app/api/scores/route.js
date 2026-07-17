@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
+import { sendToUser } from '@/lib/push'
 
 function normalizeCourse(code) {
   return (code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2')
@@ -108,6 +109,39 @@ export async function POST(request) {
             read: false,
             createdAt: new Date().toISOString(),
           })
+        }
+
+        // Push notification: notify previous high scorers on same course they've been beaten
+        if (email && percentage >= 50) {
+          try {
+            const beatenBy = userName.trim()
+            const courseNormal = normalizeCourse(courseCode)
+            const topScores = await scoresCol
+              .find({ course: courseNormal, email: { $ne: email.toLowerCase().trim() } })
+              .sort({ percentage: -1 })
+              .toArray()
+
+            const alreadyNotified = new Set()
+            for (const s of topScores) {
+              if (s.percentage < percentage && s.email && !alreadyNotified.has(s.email)) {
+                alreadyNotified.add(s.email)
+                await notifCol.insertOne({
+                  userEmail: s.email,
+                  type: 'score_beaten',
+                  title: '📊 Score Beaten!',
+                  message: `${beatenBy} beat your ${s.percentage}% on ${courseNormal} with ${percentage}%!`,
+                  link: `/courses/${courseNormal.toLowerCase().replace(/\s+/g, '')}`,
+                  read: false,
+                  createdAt: new Date().toISOString(),
+                })
+                sendToUser(s.email, '📊 Score Beaten!',
+                  `${beatenBy} beat your ${s.percentage}% on ${courseNormal} with ${percentage}%!`,
+                  `/courses/${courseNormal.toLowerCase().replace(/\s+/g, '')}`,
+                  getCollection
+                )
+              }
+            }
+          } catch {}
         }
       } catch {}
     }
