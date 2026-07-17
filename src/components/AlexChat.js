@@ -265,7 +265,7 @@ export default function AlexChat({ fullPage }) {
   if (fullPage) {
     return (
       <>
-        <QuizModal quiz={quiz} onClose={() => setQuiz(null)} />
+        <QuizModal quiz={quiz} onClose={(result) => { setQuiz(null); if (result) send(`/answered ${result.selected} on ${result.courseCode} (${result.correct ? 'correct' : 'wrong'}, correct was ${result.correctAnswer})`); }} />
         {showTodos && <TodoPanel todos={todos} setTodos={setTodos} onClose={() => setShowTodos(false)} />}
         <div className="mx-auto flex min-h-dvh max-w-3xl flex-col pb-24">
           <div className="flex shrink-0 items-center gap-3 border-b bg-gradient-to-r from-primary/10 to-primary/5 px-5 py-4">

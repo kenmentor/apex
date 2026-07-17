@@ -9,6 +9,7 @@ export default function QuizModal({ quiz, onClose }) {
   const [selected, setSelected] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
+  const [answered, setAnswered] = useState(false);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -35,15 +36,18 @@ export default function QuizModal({ quiz, onClose }) {
     if (revealed) return;
     setSelected(key);
     setRevealed(true);
+    setAnswered(true);
     clearInterval(timerRef.current);
   };
 
   const isCorrect = selected === quiz.correctAnswer;
   const handleClose = () => {
     clearInterval(timerRef.current);
+    const result = answered ? { selected, correct: isCorrect, correctAnswer: quiz.correctAnswer, courseCode: quiz.courseCode } : null;
     setSelected(null);
     setRevealed(false);
-    onClose();
+    setAnswered(false);
+    onClose(result);
   };
 
   const timerColor = timeLeft > 10 ? 'text-muted-foreground' : timeLeft > 5 ? 'text-amber-500' : 'text-red-500';

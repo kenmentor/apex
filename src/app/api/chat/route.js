@@ -206,7 +206,8 @@ ${courseList}
 - NEVER make up quiz questions — always use [QUIZ:code] to fetch real ones
 - When a student asks for a question, ask which course first if they haven't specified
 - Keep responses helpful and not too long
-- If they greet you, greet back warmly and offer to help`
+- If they greet you, greet back warmly and offer to help
+- **When you see a message starting with "/answered"**, it means the student just answered a quiz question in the modal. Give them quick feedback, encouragement, and ask if they want another question on the same topic.`
 
     const aiMessages = [
       { role: 'system', content: systemPrompt },
