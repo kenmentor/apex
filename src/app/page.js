@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Search, Bell, BookOpen, ArrowRight, Trophy, Users, RefreshCw, Sparkles } from 'lucide-react';
+import { Search, Bell, BookOpen, ArrowRight, Trophy, Users, Sparkles } from 'lucide-react';
 import { getUser, getToken } from '@/lib/auth';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -19,78 +19,6 @@ function getTimeAgo(dateStr) {
   if (hrs < 24) return `${hrs}h ago`;
   const days = Math.floor(hrs / 24);
   return `${days}d ago`;
-}
-
-function ChallengeCard({ question, onRefresh, onDismiss }) {
-  const [revealed, setRevealed] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [dismissed, setDismissed] = useState(false);
-  if (!question) return null;
-
-  const handleSelect = (key) => {
-    if (revealed) return;
-    setSelected(key);
-    setRevealed(true);
-    setTimeout(() => {
-      setDismissed(true);
-      setTimeout(() => onDismiss?.(), 300);
-    }, 4000);
-  };
-
-  const isCorrect = selected === question.correctAnswer;
-
-  const handleRefresh = () => {
-    setRevealed(false);
-    setSelected(null);
-    onRefresh();
-  };
-
-  if (dismissed) return null;
-
-  return (
-    <div className={`rounded-xl border bg-card space-y-3 transition-all duration-300 ${revealed ? 'opacity-60' : ''}`}>
-      <div className="flex items-center justify-between px-5 pt-4">
-        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-          <Sparkles className="size-3.5" />
-          Quick Challenge
-          <span className="text-[10px] text-muted-foreground/60">· {question.courseCode}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          {revealed && (
-            <button onClick={() => { setDismissed(true); setTimeout(() => onDismiss?.(), 300); }} className="text-[10px] text-muted-foreground/60 hover:text-muted-foreground transition-colors mr-1">
-              Dismiss
-            </button>
-          )}
-          <button onClick={handleRefresh} className="text-muted-foreground hover:text-foreground transition-colors" title="New question">
-            <RefreshCw className="size-3.5" />
-          </button>
-        </div>
-      </div>
-      <div className="px-5">
-        <p className="text-sm font-medium leading-relaxed">{question.question}</p>
-      </div>
-      <div className="space-y-1 px-5 pb-4">
-        {Object.entries(question.options).map(([key, val]) => {
-          let cls = 'flex items-center gap-2.5 rounded-lg border px-3.5 py-2.5 text-sm transition-all cursor-pointer';
-          if (!revealed) cls += ' hover:bg-accent hover:border-foreground/20';
-          else if (key === question.correctAnswer) cls += ' border-green-500 bg-green-50 dark:bg-green-950/20 text-green-700 dark:text-green-400';
-          else if (key === selected) cls += ' border-red-500 bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-400';
-          else cls += ' opacity-40';
-          return (
-            <div key={key} className={cls} onClick={() => handleSelect(key)}>
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-[11px] font-bold">{key.toUpperCase()}</span>
-              <span>{val}</span>
-            </div>
-          );
-        })}
-      </div>
-      {revealed && question.explanation && (
-        <div className="border-t px-5 pb-4 pt-3">
-          <p className="text-xs text-muted-foreground leading-relaxed">{isCorrect ? '✓ ' : ''}{question.explanation}</p>
-        </div>
-      )}
-    </div>
-  );
 }
 
 function FeedItem({ item }) {
@@ -195,19 +123,6 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const refreshChallenge = () => {
-    if (!user?.email) return;
-    const codes = feed.filter(i => i.type === 'continue').map(i => i.data.courseCode).filter(Boolean);
-    if (codes.length === 0) return;
-    fetch(`/api/questions/random?courses=${encodeURIComponent(codes.join(','))}`)
-      .then(r => r.json())
-      .then(q => {
-        if (!q) return;
-        setFeed(prev => prev.map(i => i.type === 'challenge' ? { ...i, data: q } : i));
-      })
-      .catch(() => {});
-  };
-
   useEffect(() => {
     const u = getUser();
     setUser(u);
@@ -267,7 +182,6 @@ export default function HomePage() {
   const continueItems = feed.filter(i => i.type === 'continue');
   const recommendedItems = feed.filter(i => i.type === 'recommended');
   const spaceItems = feed.filter(i => i.type === 'space_post');
-  const challengeItem = feed.find(i => i.type === 'challenge');
   const milestoneItems = feed.filter(i => i.type === 'milestone');
   const hasFeed = feed.length > 0;
 
@@ -332,17 +246,6 @@ export default function HomePage() {
           {milestoneItems.length > 0 && (
             <section className="space-y-2">
               {milestoneItems.map((item, i) => <FeedItem key={`mile-${i}`} item={item} />)}
-            </section>
-          )}
-
-          {/* Quick Challenge */}
-          {challengeItem && (
-            <section className="space-y-2">
-              <ChallengeCard
-                question={challengeItem.data}
-                onRefresh={refreshChallenge}
-                onDismiss={() => setFeed(prev => prev.filter(i => i.type !== 'challenge'))}
-              />
             </section>
           )}
 
