@@ -21,15 +21,20 @@ function getTimeAgo(dateStr) {
   return `${days}d ago`;
 }
 
-function ChallengeCard({ question, onRefresh }) {
+function ChallengeCard({ question, onRefresh, onDismiss }) {
   const [revealed, setRevealed] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [dismissed, setDismissed] = useState(false);
   if (!question) return null;
 
   const handleSelect = (key) => {
     if (revealed) return;
     setSelected(key);
     setRevealed(true);
+    setTimeout(() => {
+      setDismissed(true);
+      setTimeout(() => onDismiss?.(), 300);
+    }, 4000);
   };
 
   const isCorrect = selected === question.correctAnswer;
@@ -40,17 +45,26 @@ function ChallengeCard({ question, onRefresh }) {
     onRefresh();
   };
 
+  if (dismissed) return null;
+
   return (
-    <div className="rounded-xl border bg-card space-y-3">
+    <div className={`rounded-xl border bg-card space-y-3 transition-all duration-300 ${revealed ? 'opacity-60' : ''}`}>
       <div className="flex items-center justify-between px-5 pt-4">
         <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
           <Sparkles className="size-3.5" />
           Quick Challenge
           <span className="text-[10px] text-muted-foreground/60">· {question.courseCode}</span>
         </div>
-        <button onClick={handleRefresh} className="text-muted-foreground hover:text-foreground transition-colors" title="New question">
-          <RefreshCw className="size-3.5" />
-        </button>
+        <div className="flex items-center gap-1">
+          {revealed && (
+            <button onClick={() => { setDismissed(true); setTimeout(() => onDismiss?.(), 300); }} className="text-[10px] text-muted-foreground/60 hover:text-muted-foreground transition-colors mr-1">
+              Dismiss
+            </button>
+          )}
+          <button onClick={handleRefresh} className="text-muted-foreground hover:text-foreground transition-colors" title="New question">
+            <RefreshCw className="size-3.5" />
+          </button>
+        </div>
       </div>
       <div className="px-5">
         <p className="text-sm font-medium leading-relaxed">{question.question}</p>
@@ -220,7 +234,15 @@ export default function HomePage() {
         setCategories(catsData.docs || []);
         if (notifData) setUnreadCount(notifData.unreadCount || 0);
         if (feedData?.items) {
-          setFeed(feedData.items);
+          const twoDaysAgo = Date.now() - 48 * 60 * 60 * 1000;
+          const filtered = feedData.items.filter(i => {
+            if (i.type === 'space_post' || i.type === 'recommended') {
+              const t = new Date(i.data?.createdAt || i.createdAt || 0).getTime();
+              return t > twoDaysAgo;
+            }
+            return true;
+          });
+          setFeed(filtered);
           setProfile(feedData.profile || null);
         }
         setLoading(false);
@@ -319,7 +341,7 @@ export default function HomePage() {
               <ChallengeCard
                 question={challengeItem.data}
                 onRefresh={refreshChallenge}
-                compact
+                onDismiss={() => setFeed(prev => prev.filter(i => i.type !== 'challenge'))}
               />
             </section>
           )}
