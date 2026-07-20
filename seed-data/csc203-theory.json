@@ -1,0 +1,82 @@
+[
+  {
+    "courseCode": "CSC 203",
+    "section": "Logical Equivalence — Implication and Distribution",
+    "question": "Use truth-table and propositional connectives to show that A → (B ∨ C) and (A → B) ∨ (A → C) are logically equivalent.",
+    "referenceAnswer": "Construct a truth table for both expressions:\n\n| A | B | C | B∨C | A→(B∨C) | A→B | A→C | (A→B)∨(A→C) |\n|---|---|---|---|---|---|---|---|\n| T | T | T | T | T | T | T | T |\n| T | T | F | T | T | T | F | T |\n| T | F | T | T | T | F | T | T |\n| T | F | F | F | F | F | F | F |\n| F | T | T | T | T | T | T | T |\n| F | T | F | T | T | T | T | T |\n| F | F | T | T | T | T | T | T |\n| F | F | F | F | T | T | T | T |\n\nThe columns for A→(B∨C) and (A→B)∨(A→C) are identical in every row. Therefore, they are logically equivalent.",
+    "mainConcepts": ["Truth table", "Logical equivalence", "Implication distribution", "Propositional connectives"],
+    "keywords": ["truth table", "logically equivalent", "implication", "distributive", "proposition"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Logical Equivalence — Conjunction and Implication",
+    "question": "Use truth-table and propositional connectives to show that (A ∧ B) → C and (A → C) ∨ (B → C) are logically equivalent.",
+    "referenceAnswer": "Truth table:\n\n| A | B | C | A∧B | (A∧B)→C | A→C | B→C | (A→C)∨(B→C) |\n|---|---|---|---|---|---|---|---|\n| T | T | T | T | T | T | T | T |\n| T | T | F | T | F | F | F | F |\n| T | F | T | F | T | T | T | T |\n| T | F | F | F | T | F | T | T |\n| F | T | T | F | T | T | T | T |\n| F | T | F | F | T | T | F | T |\n| F | F | T | F | T | T | T | T |\n| F | F | F | F | T | T | T | T |\n\nThe columns for (A∧B)→C and (A→C)∨(B→C) are identical in every row. Therefore, they are logically equivalent.",
+    "mainConcepts": ["Truth table", "Logical equivalence", "Conjunction", "Implication"],
+    "keywords": ["truth table", "logically equivalent", "conjunction", "implication", "distribution"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Power Sets and Partitions",
+    "question": "Ascertain the power set P(B) of B = {a, b, c, d, e}. Find all partitions of S = {1, 2, 3, 4}.",
+    "referenceAnswer": "Power set P(B): The power set has 2^5 = 32 subsets.\nP(B) = {∅, {a}, {b}, {c}, {d}, {e}, {a,b}, {a,c}, {a,d}, {a,e}, {b,c}, {b,d}, {b,e}, {c,d}, {c,e}, {d,e}, {a,b,c}, {a,b,d}, {a,b,e}, {a,c,d}, {a,c,e}, {a,d,e}, {b,c,d}, {b,c,e}, {b,d,e}, {c,d,e}, {a,b,c,d}, {a,b,c,e}, {a,b,d,e}, {a,c,d,e}, {b,c,d,e}, {a,b,c,d,e}}\n\nPartitions of S = {1,2,3,4}: There are 15 distinct partitions (Bell number B₄ = 15).\n1. {{1,2,3,4}}\n2. {{1,2,3}, {4}}\n3. {{1,2,4}, {3}}\n4. {{1,3,4}, {2}}\n5. {{2,3,4}, {1}}\n6. {{1,2}, {3,4}}\n7. {{1,3}, {2,4}}\n8. {{1,4}, {2,3}}\n9. {{1,2}, {3}, {4}}\n10. {{1,3}, {2}, {4}}\n11. {{1,4}, {2}, {3}}\n12. {{2,3}, {1}, {4}}\n13. {{2,4}, {1}, {3}}\n14. {{3,4}, {1}, {2}}\n15. {{1}, {2}, {3}, {4}}",
+    "mainConcepts": ["Power set", "Partitions", "Bell numbers", "Subsets", "Set theory"],
+    "keywords": ["power set", "partition", "Bell number", "subset", "set theory"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Overlapping Sets — Inclusion-Exclusion",
+    "question": "Show that n(A ∪ B) = n(A) + n(B) - n(A ∩ B) and n(A) = n(A - B) + n(A ∩ B).",
+    "referenceAnswer": "Using Venn diagram reasoning:\n\ni. n(A ∪ B) = n(A) + n(B) - n(A ∩ B)\nThe union of A and B contains all elements that are in A, in B, or in both. When we add n(A) and n(B), the elements in the intersection A ∩ B are counted twice (once in n(A) and once in n(B)). To get the correct count for the union, we subtract n(A ∩ B) once. This is the inclusion-exclusion principle for two sets.\n\nii. n(A) = n(A - B) + n(A ∩ B)\nSet A can be partitioned into two disjoint subsets: (A - B) which contains elements in A but not in B, and (A ∩ B) which contains elements in both A and B. Since these two sets are disjoint and their union equals A, n(A) = n(A - B) + n(A ∩ B).",
+    "mainConcepts": ["Inclusion-Exclusion principle", "Venn diagram", "Set difference", "Disjoint sets"],
+    "keywords": ["inclusion-exclusion", "Venn diagram", "union", "intersection", "set difference"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Tautology, Contradiction, and Contingency",
+    "question": "Determine whether each proposition is a tautology, contradiction, or contingency: (i) (A→B)∨((C→∼B)∧∼C) (ii) (A∧B)∧∼(A∨B) (iii) A∨∼(A∧B)",
+    "referenceAnswer": "i. (A → B) ∨ ((C → ∼B) ∧ ∼C) — TAUTOLOGY\nIf A is False, then A → B is True (implication is true when the hypothesis is false), making the whole expression True regardless of B and C. If A is True and B is False, then A → B is False. Looking at the second part: when C is False, ∼C is True, and C → ∼B is True (since hypothesis C is False), so the second part is True. The entire expression is always True.\n\nii. (A ∧ B) ∧ ∼(A ∨ B) — CONTRADICTION\nBy De Morgan's law: ∼(A ∨ B) = ∼A ∧ ∼B.\nSo the expression becomes: (A ∧ B) ∧ (∼A ∧ ∼B) = (A ∧ ∼A) ∧ (B ∧ ∼B) = False ∧ False = False.\nThis is always false — a contradiction.\n\niii. A ∨ ∼(A ∧ B) — TAUTOLOGY\nUsing De Morgan's law: ∼(A ∧ B) = ∼A ∨ ∼B.\nSo: A ∨ (∼A ∨ ∼B) = (A ∨ ∼A) ∨ ∼B = True ∨ ∼B = True.\nThis is always true — a tautology.",
+    "mainConcepts": ["Tautology", "Contradiction", "Contingency", "De Morgan's law", "Logical simplification"],
+    "keywords": ["tautology", "contradiction", "contingency", "De Morgan", "logical equivalence"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Non-Associativity of Implication",
+    "question": "Use truth table to show that implication connective (→) is not associative: (D→E)→F is not equivalent to D→(E→F).",
+    "referenceAnswer": "Let D = False, E = False, F = False:\n\nLHS: (D → E) → F = (F → F) → F = T → F = F\nRHS: D → (E → F) = F → (F → F) = F → T = T\n\nSince F ≠ T, the two expressions are not equivalent. Therefore, implication is not associative.\n\nWe can confirm with a full truth table:\n\n| D | E | F | D→E | (D→E)→F | E→F | D→(E→F) |\n|---|---|---|---|---|---|---|\n| T | T | T | T | T | T | T |\n| T | T | F | T | F | F | F |\n| T | F | T | F | T | T | T |\n| T | F | F | F | T | F | F |\n| F | T | T | T | T | T | T |\n| F | T | F | T | F | F | T |\n| F | F | T | T | T | T | T |\n| F | F | F | T | F | T | T |\n\nRows 6 and 8 show different truth values, proving non-associativity.",
+    "mainConcepts": ["Associativity", "Implication", "Truth table", "Logical operators"],
+    "keywords": ["associativity", "implication", "non-associative", "truth table", "counterexample"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Set Operations — Symmetric Difference",
+    "question": "Given N = {1,2,3,...}, A = {n | n ≤ 6}, B = {n | 4 ≤ n ≤ 9}, C = {1,3,5,7,9}, D = {2,3,5,7,8}. Find: (i) A⊕B (ii) B⊕C (iii) A∩(B⊕D) (iv) (A∩B)⊕(A∩D)",
+    "referenceAnswer": "Given: A = {1,2,3,4,5,6}, B = {4,5,6,7,8,9}, C = {1,3,5,7,9}, D = {2,3,5,7,8}\n\ni. A ⊕ B = (A ∪ B) − (A ∩ B)\nA ∪ B = {1,2,3,4,5,6,7,8,9}\nA ∩ B = {4,5,6}\nA ⊕ B = {1,2,3,7,8,9}\n\nii. B ⊕ C = (B ∪ C) − (B ∩ C)\nB ∪ C = {1,3,4,5,6,7,8,9}\nB ∩ C = {5,7,9}\nB ⊕ C = {1,3,4,6,8}\n\niii. A ∩ (B ⊕ D)\nFirst, B ⊕ D = {4,5,6,7,8,9} ⊕ {2,3,5,7,8} = {2,3,4,6,9}\nA ∩ {2,3,4,6,9} = {2,3,4,6}\n\niv. (A ∩ B) ⊕ (A ∩ D)\nA ∩ B = {4,5,6}\nA ∩ D = {2,3,5}\n{4,5,6} ⊕ {2,3,5} = {2,3,4,6}",
+    "mainConcepts": ["Symmetric difference", "Union", "Intersection", "Set operations"],
+    "keywords": ["symmetric difference", "union", "intersection", "set", "⊕"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Total Probability and Bayes' Theorem",
+    "question": "Three machines E₁, E₂ and E₃ produce 50%, 25% and 25% of total output respectively. Each has a defect rate. If one tube is picked at random, calculate the probability it is defective.",
+    "referenceAnswer": "Using the Law of Total Probability:\n\nP(Defective) = P(E₁) × P(Defect|E₁) + P(E₂) × P(Defect|E₂) + P(E₃) × P(Defect|E₃)\n\nGiven:\nP(E₁) = 50% = 0.50\nP(E₂) = 25% = 0.25\nP(E₃) = 25% = 0.25\n\n(Assuming standard defect rates if not specified: D₁, D₂, D₃)\n\nThe formula setup is:\nP(Defective) = (0.50 × D₁) + (0.25 × D₂) + (0.25 × D₃)\n\nThis is the application of the law of total probability: the total defect probability is the weighted average of individual defect rates, weighted by each machine's production share.",
+    "mainConcepts": ["Total probability", "Conditional probability", "Weighted average", "Defect rate"],
+    "keywords": ["total probability", "Bayes", "conditional probability", "defective", "machine"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Stirling Numbers and Onto Functions",
+    "question": "Find the number of ways a company can assign 7 projects to 4 people so each person gets at least one project.",
+    "referenceAnswer": "This is the number of onto functions from a set of 7 distinct projects to a set of 4 distinct people.\n\nUsing Stirling numbers of the second kind S(7,4):\nS(7,4) counts the ways to partition 7 distinct items into 4 non-empty unlabeled subsets.\nThen multiply by 4! to assign the 4 subsets to the 4 distinct people.\n\nWays = 4! × S(7,4) = 24 × 350 = 8,400\n\nAlternatively using inclusion-exclusion:\nTotal functions (no restrictions): 4⁷\nSubtract those missing at least one person:\nWays = 4⁷ − C(4,1)×3⁷ + C(4,2)×2⁷ − C(4,3)×1⁷\n= 16,384 − 4×2,187 + 6×128 − 4×1\n= 16,384 − 8,748 + 768 − 4\n= 8,400",
+    "mainConcepts": ["Stirling numbers", "Onto functions", "Inclusion-Exclusion", "Combinatorics"],
+    "keywords": ["Stirling numbers", "onto functions", "inclusion-exclusion", "combinatorics", "partition"]
+  },
+  {
+    "courseCode": "CSC 203",
+    "section": "Combinations and Sample Space",
+    "question": "A student is selected from 100 students (30 Math, 20 Chemistry, 10 both). Find P(Math or Chemistry). Compute permutations and combinations.",
+    "referenceAnswer": "Probability of Math or Chemistry:\nP(M ∪ C) = P(M) + P(C) − P(M ∩ C)\n= 30/100 + 20/100 − 10/100\n= 40/100 = 0.4 (or 40%)\n\nComputations:\ni. 4! × 5! = 24 × 120 = 2,880\nii. 7! / 10! = 7! / (10 × 9 × 8 × 7!) = 1/720\n\nCombinations:\nChoosing 4 from 6 members:\nC(6,4) = 6! / (4! × 2!) = (6 × 5) / (2 × 1) = 15 ways\n\nCoin toss sample space (3 tosses):\nS = {HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}\nTotal outcomes = 2³ = 8",
+    "mainConcepts": ["Probability", "Combinations", "Factorials", "Sample space", "Inclusion-Exclusion"],
+    "keywords": ["probability", "combination", "factorial", "sample space", "inclusion-exclusion"]
+  }
+]
