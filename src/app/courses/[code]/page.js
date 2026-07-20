@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen, Layers } from 'lucide-react';
+import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen, Layers, Share2 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +29,8 @@ export default function CourseDetailPage() {
   const [feedbackComment, setFeedbackComment] = useState('');
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
+  const [playingVideo, setPlayingVideo] = useState(null);
+  const [shareToast, setShareToast] = useState(false);
 
   const code = course?.code || formattedCode;
   const codeForUrl = code.toLowerCase().replace(/\s+/g, '');
@@ -55,6 +57,21 @@ export default function CourseDetailPage() {
       })
       .catch(() => setLoading(false));
   }, [paramCode, formattedCode]);
+
+  // Auto-trigger feedback popup after 30s, max once per 7 days per course
+  useEffect(() => {
+    if (loading) return
+    const key = `fb_shown_${formattedCode}`
+    try {
+      const lastShown = localStorage.getItem(key)
+      if (lastShown && Date.now() - Number(lastShown) < 7 * 24 * 60 * 60 * 1000) return
+    } catch {}
+    const timer = setTimeout(() => {
+      setShowFeedback(true)
+      try { localStorage.setItem(key, String(Date.now())) } catch {}
+    }, 30000)
+    return () => clearTimeout(timer)
+  }, [loading, formattedCode])
 
   function getYouTubeId(url) {
     const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
@@ -87,6 +104,20 @@ export default function CourseDetailPage() {
     setFeedbackSubmitting(false);
   }
 
+  async function handleShare() {
+    const url = window.location.href
+    const title = `${code} - ${course?.title || 'Past Questions & Theory'} | Apex`
+    if (navigator.share) {
+      try { await navigator.share({ title, url }) } catch {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(url)
+        setShareToast(true)
+        setTimeout(() => setShareToast(false), 2000)
+      } catch {}
+    }
+  }
+
   if (loading) {
     return (
     <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
@@ -114,6 +145,13 @@ export default function CourseDetailPage() {
             <ArrowLeft className="size-4" />
           </Link>
           <h1 className="flex-1 text-center text-base font-bold">{code}</h1>
+          <button
+            onClick={handleShare}
+            className="flex size-9 items-center justify-center rounded-lg hover:bg-muted"
+            title="Share this course"
+          >
+            <Share2 className="size-4" />
+          </button>
           <button
             onClick={() => setShowFeedback(true)}
             className="flex size-9 items-center justify-center rounded-lg hover:bg-muted"
@@ -255,7 +293,7 @@ export default function CourseDetailPage() {
                   {videos.map((v) => {
                     const vid = getYouTubeId(v.url);
                     return (
-                      <a key={v._id} href={v.url} target="_blank" rel="noopener noreferrer" className="block">
+                      <button key={v._id} onClick={() => setPlayingVideo(v)} className="w-full text-left">
                         <Card className="overflow-hidden transition-colors hover:bg-accent">
                           {vid && (
                             <div className="relative aspect-video bg-black">
@@ -278,7 +316,7 @@ export default function CourseDetailPage() {
                             )}
                           </CardContent>
                         </Card>
-                      </a>
+                      </button>
                     );
                   })}
                 </div>
@@ -335,6 +373,36 @@ export default function CourseDetailPage() {
               )}
             </CardContent>
           </Card>
+        </div>
+      )}
+
+      {/* Video Player Modal */}
+      {playingVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setPlayingVideo(null)}>
+          <div className="w-full max-w-3xl" onClick={e => e.stopPropagation()}>
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-white truncate">{playingVideo.title}</h3>
+              <button onClick={() => setPlayingVideo(null)} className="flex size-8 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20">
+                <X className="size-4" />
+              </button>
+            </div>
+            <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
+              <iframe
+                src={`https://www.youtube.com/embed/${getYouTubeId(playingVideo.url)}?autoplay=1&rel=0`}
+                title={playingVideo.title}
+                className="size-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Share toast */}
+      {shareToast && (
+        <div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background shadow-lg animate-in fade-in slide-in-from-bottom-2">
+          Link copied to clipboard!
         </div>
       )}
     </div>

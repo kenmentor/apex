@@ -134,11 +134,13 @@ export default function HomePage() {
     if (u?.email) {
       fetches.push(
         fetch('/api/notifications?limit=1', {
+          cache: 'no-store',
           headers: { Authorization: `Bearer ${getToken()}` },
         }).then(r => r.json()).catch(() => ({ unreadCount: 0 }))
       );
       fetches.push(
         fetch(`/api/feed/personalized?email=${encodeURIComponent(u.email)}`, {
+          cache: 'no-store',
           headers: { Authorization: `Bearer ${getToken()}` },
         }).then(r => r.json()).catch(() => ({ items: [] }))
       );
@@ -164,6 +166,27 @@ export default function HomePage() {
       })
       .catch(() => setLoading(false));
   }, []);
+
+  // Refresh unread count when tab regains focus (after viewing notifications page)
+  useEffect(() => {
+    const u = getUser();
+    if (!u?.email) return
+    function refresh() {
+      fetch('/api/notifications?limit=1', {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${getToken()}` },
+      }).then(r => r.json()).then(d => {
+        if (d.unreadCount != null) setUnreadCount(d.unreadCount)
+      }).catch(() => {})
+    }
+    function onVisible() { if (document.visibilityState === 'visible') refresh() }
+    addEventListener('visibilitychange', onVisible)
+    addEventListener('focus', refresh)
+    return () => {
+      removeEventListener('visibilitychange', onVisible)
+      removeEventListener('focus', refresh)
+    }
+  }, [])
 
   if (loading) {
     return (

@@ -23,6 +23,7 @@ const CRUD_TABS = [
   { key: 'questions', label: 'Questions' },
   { key: 'videos', label: 'Videos' },
   { key: 'readings', label: 'Readings' },
+  { key: 'feedback', label: 'Feedback' },
 ]
 
 function getAuthHeaders() {
@@ -345,37 +346,70 @@ export default function AdminPage() {
           {/* ════ CRUD TABS ════ */}
           {CRUD_TABS.map(t => (
             <TabsContent key={t.key} value={t.key} className="mt-3 space-y-3">
-              <Card>
-                <CardContent className="p-4">
-                  <h2 className="mb-3 text-sm font-bold">{editDoc ? 'Edit' : 'Add'} {t.label.slice(0, -1)}</h2>
-                  <form onSubmit={handleSave} className="space-y-3">
-                    {tab === t.key && renderForm()}
-                    <div className="flex gap-2 pt-1">
-                      <Button type="submit" disabled={saving} size="sm">
-                        {saving ? 'Saving...' : editDoc ? 'Update' : 'Create'}
-                      </Button>
-                      {editDoc && (
-                        <Button type="button" variant="outline" size="sm" onClick={() => setEditDoc(null)}>
-                          Cancel
+              {t.key !== 'feedback' && (
+                <Card>
+                  <CardContent className="p-4">
+                    <h2 className="mb-3 text-sm font-bold">{editDoc ? 'Edit' : 'Add'} {t.label.slice(0, -1)}</h2>
+                    <form onSubmit={handleSave} className="space-y-3">
+                      {tab === t.key && renderForm()}
+                      <div className="flex gap-2 pt-1">
+                        <Button type="submit" disabled={saving} size="sm">
+                          {saving ? 'Saving...' : editDoc ? 'Update' : 'Create'}
                         </Button>
-                      )}
-                    </div>
-                  </form>
-                  {message && (
-                    <p className={`mt-2 text-xs font-medium ${message === 'Saved!' ? 'text-green-500' : 'text-red-500'}`}>{message}</p>
-                  )}
-                </CardContent>
-              </Card>
+                        {editDoc && (
+                          <Button type="button" variant="outline" size="sm" onClick={() => setEditDoc(null)}>
+                            Cancel
+                          </Button>
+                        )}
+                      </div>
+                    </form>
+                    {message && (
+                      <p className={`mt-2 text-xs font-medium ${message === 'Saved!' ? 'text-green-500' : 'text-red-500'}`}>{message}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
 
               <Card>
                 <CardContent className="p-0">
                   <div className="flex items-center justify-between border-b px-4 py-2.5">
                     <span className="text-xs font-semibold text-muted-foreground">{docs.length} {t.label.toLowerCase()}</span>
+                    {t.key === 'feedback' && (
+                      <button onClick={() => loadDocs()} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                        <RefreshCw className="size-3" />
+                      </button>
+                    )}
                   </div>
                   {tab !== t.key ? null : loading ? (
                     <div className="space-y-2 p-4">{[1, 2, 3].map(i => <Skeleton key={i} className="h-10 w-full rounded-lg" />)}</div>
                   ) : docs.length === 0 ? (
                     <div className="py-10 text-center text-sm text-muted-foreground">No {t.label.toLowerCase()} yet</div>
+                  ) : t.key === 'feedback' ? (
+                    <div className="divide-y divide-border">
+                      {docs.map(doc => (
+                        <div key={doc._id} className="px-4 py-3">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0 flex-1 space-y-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-semibold text-muted-foreground">{doc.course || '—'}</span>
+                                <div className="flex gap-0.5">
+                                  {[1, 2, 3, 4, 5].map(s => (
+                                    <span key={s} className="text-sm" style={{ color: s <= doc.rating ? '#f59e0b' : '#d1d5db' }}>★</span>
+                                  ))}
+                                </div>
+                                <span className="text-[10px] text-muted-foreground">{new Date(doc.createdAt).toLocaleDateString()}</span>
+                              </div>
+                              {doc.comment && (
+                                <p className="text-sm text-foreground leading-relaxed">{doc.comment}</p>
+                              )}
+                            </div>
+                            <Button variant="outline" size="sm" onClick={() => handleDelete(doc._id)} className="shrink-0 text-red-500 hover:text-red-600 hover:bg-red-500/10">
+                              <Trash2 className="size-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   ) : (
                     <div className="divide-y divide-border">
                       {docs.map(doc => (

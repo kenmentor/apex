@@ -35,15 +35,12 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url)
     const courseCode = searchParams.get('course')
 
-    if (!courseCode) {
-      return NextResponse.json({ error: 'course query param required' }, { status: 400 })
-    }
-
     const feedbackCol = await getCollection('feedback')
+    const filter = courseCode ? { course: normalizeCourse(courseCode) } : {}
     const docs = await feedbackCol
-      .find({ course: normalizeCourse(courseCode) })
+      .find(filter)
       .sort({ createdAt: -1 })
-      .limit(50)
+      .limit(100)
       .toArray()
 
     return NextResponse.json(docs.map((d) => ({ ...d, _id: d._id.toString() })))

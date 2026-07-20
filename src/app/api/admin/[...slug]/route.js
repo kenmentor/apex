@@ -3,7 +3,7 @@ import { getCollection } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth-server'
 import { ObjectId } from 'mongodb'
 
-const ALLOWED = ['categories', 'courses', 'questions', 'videos', 'readings']
+const ALLOWED = ['categories', 'courses', 'questions', 'videos', 'readings', 'feedback']
 
 function getId(params) {
   const slug = params.slug || []
