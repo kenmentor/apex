@@ -76,7 +76,7 @@ export async function GET(request) {
             txt(number, { fontSize: 80, fontWeight: 900, color: 'rgba(255,255,255,0.7)', lineHeight: 1, letterSpacing: -1 }),
           ),
           course.title ? txt(course.title, { fontSize: 28, color: 'rgba(255,255,255,0.85)', fontWeight: 500, marginTop: 6, letterSpacing: -0.5 }) : null,
-          el('div', { display: 'inline-flex', alignItems: 'center', gap: 10, marginTop: 20, background: 'rgba(255,255,255,0.12)', borderRadius: 14, padding: '10px 22px', backdropFilter: 'blur(8px)' },
+          el('div', { display: 'flex', alignItems: 'center', gap: 10, marginTop: 20, background: 'rgba(255,255,255,0.12)', borderRadius: 14, padding: '10px 22px' },
             txt('📖', { fontSize: 22 }),
             txt('Past Questions & Theory Now Available!', { fontSize: 22, fontWeight: 700, color: 'white', letterSpacing: -0.3 }),
             txt('✨', { fontSize: 18 }),
