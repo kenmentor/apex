@@ -28,16 +28,17 @@ function lighten(hex, pct) {
 }
 
 export async function GET(request) {
-  const { searchParams } = new URL(request.url)
-  const code = searchParams.get('code') || 'GSS 112'
-  const course = COURSES[code] || { title: '', color: '#130f40', emoji: '📚' }
-  const color = course.color
-  const bright = lighten(color, 0.08)
+  try {
+    const { searchParams } = new URL(request.url)
+    const code = searchParams.get('code') || 'GSS 112'
+    const course = COURSES[code] || { title: '', color: '#130f40', emoji: '📚' }
+    const color = course.color
+    const bright = lighten(color, 0.08)
 
-  const prefix = code.split(/\s/)[0]
-  const number = code.split(/\s/)[1] || ''
+    const prefix = code.split(/\s/)[0]
+    const number = code.split(/\s/)[1] || ''
 
-  return new ImageResponse(
+    return new ImageResponse(
     <div style={{
       width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
       background: `linear-gradient(135deg, ${color} 0%, ${bright} 40%, ${color} 100%)`,
@@ -128,4 +129,7 @@ export async function GET(request) {
     </div>,
     { width: 1200, height: 630 }
   )
+  } catch (e) {
+    return new Response(e.message, { status: 500 })
+  }
 }

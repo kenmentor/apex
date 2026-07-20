@@ -9,8 +9,15 @@ import AnalyticsTracker from '@/components/AnalyticsTracker';
 import TelemetryProvider from '@/components/TelemetryProvider';
 import ProfileCompletePrompt from '@/components/ProfileCompletePrompt';
 
+function getBaseUrl() {
+  const url = process.env.NEXT_PUBLIC_BASE_URL || process.env.FRONTEND_URL
+  if (url) return new URL(url)
+  if (process.env.VERCEL_URL) return new URL(`https://${process.env.VERCEL_URL}`)
+  return new URL('https://apex-tau-gules.vercel.app')
+}
+
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || process.env.FRONTEND_URL || 'https://apex-tau-gules.vercel.app'),
+  metadataBase: getBaseUrl(),
   title: 'Apex',
   description: 'Master your exams with past questions, quizzes, and study materials',
   manifest: '/manifest.json',
