@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { getUserFromToken } from '@/lib/auth-server'
 
 function normalizeCourse(code) {
   return (code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2')
@@ -14,12 +15,17 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Course and rating (1-5) are required' }, { status: 400 })
     }
 
+    const userFromToken = await getUserFromToken(request).catch(() => null)
+
     const feedbackCol = await getCollection('feedback')
 
     const doc = {
       course: normalizeCourse(courseCode),
       rating: Math.round(rating),
       comment: (comment || '').trim().slice(0, 500),
+      userEmail: userFromToken?.email || null,
+      userName: userFromToken?.name || null,
+      userAvatar: userFromToken?.avatar || null,
       createdAt: new Date().toISOString(),
     }
 

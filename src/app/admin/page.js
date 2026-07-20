@@ -390,7 +390,7 @@ export default function AdminPage() {
                         <div key={doc._id} className="px-4 py-3">
                           <div className="flex items-start justify-between gap-3">
                             <div className="min-w-0 flex-1 space-y-1">
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-2 flex-wrap">
                                 <span className="text-xs font-semibold text-muted-foreground">{doc.course || '—'}</span>
                                 <div className="flex gap-0.5">
                                   {[1, 2, 3, 4, 5].map(s => (
@@ -399,6 +399,21 @@ export default function AdminPage() {
                                 </div>
                                 <span className="text-[10px] text-muted-foreground">{new Date(doc.createdAt).toLocaleDateString()}</span>
                               </div>
+                              {doc.userName && (
+                                <Link
+                                  href={doc.userEmail ? `/profile/${encodeURIComponent(doc.userEmail)}` : '#'}
+                                  className="inline-flex items-center gap-1.5 rounded-lg bg-muted/50 px-2 py-1 text-xs text-muted-foreground hover:bg-muted transition-colors"
+                                >
+                                  {doc.userAvatar ? (
+                                    <img src={doc.userAvatar} alt="" className="size-4 rounded-full object-cover" />
+                                  ) : (
+                                    <div className="flex size-4 items-center justify-center rounded-full bg-primary/20 text-[8px] font-bold text-primary">
+                                      {(doc.userName?.[0] || '?').toUpperCase()}
+                                    </div>
+                                  )}
+                                  <span className="font-medium">{doc.userName}</span>
+                                </Link>
+                              )}
                               {doc.comment && (
                                 <p className="text-sm text-foreground leading-relaxed">{doc.comment}</p>
                               )}
