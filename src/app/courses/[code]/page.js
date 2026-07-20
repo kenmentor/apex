@@ -29,7 +29,6 @@ export default function CourseDetailPage() {
   const [feedbackComment, setFeedbackComment] = useState('');
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
-  const [playingVideo, setPlayingVideo] = useState(null);
   const [shareToast, setShareToast] = useState(false);
 
   const code = course?.code || formattedCode;
@@ -58,20 +57,18 @@ export default function CourseDetailPage() {
       .catch(() => setLoading(false));
   }, [paramCode, formattedCode]);
 
-  // Auto-trigger feedback popup after 30s, max once per 7 days per course
+  // Auto-trigger feedback popup once after 30s, only once ever
   useEffect(() => {
     if (loading) return
-    const key = `fb_shown_${formattedCode}`
     try {
-      const lastShown = localStorage.getItem(key)
-      if (lastShown && Date.now() - Number(lastShown) < 7 * 24 * 60 * 60 * 1000) return
+      if (localStorage.getItem('fb_shown')) return
     } catch {}
     const timer = setTimeout(() => {
       setShowFeedback(true)
-      try { localStorage.setItem(key, String(Date.now())) } catch {}
+      try { localStorage.setItem('fb_shown', '1') } catch {}
     }, 30000)
     return () => clearTimeout(timer)
-  }, [loading, formattedCode])
+  }, [loading])
 
   function getYouTubeId(url) {
     const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
@@ -293,7 +290,7 @@ export default function CourseDetailPage() {
                   {videos.map((v) => {
                     const vid = getYouTubeId(v.url);
                     return (
-                      <button key={v._id} onClick={() => setPlayingVideo(v)} className="w-full text-left">
+                      <a key={v._id} href={v.url} target="_blank" rel="noopener noreferrer" className="block w-full text-left">
                         <Card className="overflow-hidden transition-colors hover:bg-accent">
                           {vid && (
                             <div className="relative aspect-video bg-black">
@@ -316,7 +313,7 @@ export default function CourseDetailPage() {
                             )}
                           </CardContent>
                         </Card>
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
@@ -373,29 +370,6 @@ export default function CourseDetailPage() {
               )}
             </CardContent>
           </Card>
-        </div>
-      )}
-
-      {/* Video Player Modal */}
-      {playingVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setPlayingVideo(null)}>
-          <div className="w-full max-w-3xl" onClick={e => e.stopPropagation()}>
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white truncate">{playingVideo.title}</h3>
-              <button onClick={() => setPlayingVideo(null)} className="flex size-8 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20">
-                <X className="size-4" />
-              </button>
-            </div>
-            <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
-              <iframe
-                src={`https://www.youtube.com/embed/${getYouTubeId(playingVideo.url)}?autoplay=1&rel=0`}
-                title={playingVideo.title}
-                className="size-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
         </div>
       )}
 

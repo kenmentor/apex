@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import React from 'react'
 
 export const runtime = 'edge'
 
@@ -27,6 +28,11 @@ function lighten(hex, pct) {
   return `rgb(${f(r)}, ${f(g)}, ${f(b)})`
 }
 
+const el = (tag, style, ...children) =>
+  React.createElement(tag, style ? { style } : null, ...children.flat(Infinity).filter(Boolean))
+
+const txt = (content, style) => el('span', style, content)
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
@@ -39,96 +45,60 @@ export async function GET(request) {
     const number = code.split(/\s/)[1] || ''
 
     return new ImageResponse(
-    <div style={{
-      width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
-      background: `linear-gradient(135deg, ${color} 0%, ${bright} 40%, ${color} 100%)`,
-      position: 'relative', overflow: 'hidden', fontFamily: 'system-ui',
-    }}>
-      {/* Decorative circles */}
-      <div style={{ position: 'absolute', top: -80, right: -60, width: 320, height: 320, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
-      <div style={{ position: 'absolute', bottom: -100, left: -80, width: 400, height: 400, borderRadius: '50%', background: 'rgba(255,255,255,0.03)' }} />
-      <div style={{ position: 'absolute', top: '30%', right: '10%', width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-
-      {/* Decorative dots pattern */}
-      <div style={{ position: 'absolute', top: 40, left: 40, display: 'flex', gap: 8 }}>
-        {[1,2,3].map(i => <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.15)' }} />)}
-      </div>
-
-      {/* Sparkle decorations */}
-      <div style={{ position: 'absolute', top: 60, right: 100, fontSize: 28, opacity: 0.4 }}>✦</div>
-      <div style={{ position: 'absolute', bottom: 80, left: 120, fontSize: 20, opacity: 0.3 }}>✦</div>
-
-      {/* Header badge */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, position: 'absolute', top: 28, left: 40 }}>
-        <span style={{ fontSize: 24, lineHeight: 1 }}>📚</span>
-        <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 16, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase' }}>APEX</span>
-      </div>
-
-      {/* Main content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 60px' }}>
-        {/* Course emoji */}
-        <div style={{ fontSize: 56, marginBottom: 4 }}>{course.emoji}</div>
-
-        {/* Course code - massive */}
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-          <span style={{ fontSize: 96, fontWeight: 900, color: 'white', lineHeight: 1, letterSpacing: -2 }}>{prefix}</span>
-          <span style={{ fontSize: 80, fontWeight: 900, color: 'rgba(255,255,255,0.7)', lineHeight: 1, letterSpacing: -1 }}>{number}</span>
-        </div>
-
-        {/* Course title */}
-        {course.title && (
-          <div style={{ fontSize: 28, color: 'rgba(255,255,255,0.85)', fontWeight: 500, marginTop: 6, letterSpacing: -0.5 }}>
-            {course.title}
-          </div>
-        )}
-
-        {/* Available now highlight bar */}
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 10, marginTop: 20,
-          background: 'rgba(255,255,255,0.12)', borderRadius: 14, padding: '10px 22px',
-          backdropFilter: 'blur(8px)',
-        }}>
-          <span style={{ fontSize: 22 }}>📖</span>
-          <span style={{ fontSize: 22, fontWeight: 700, color: 'white', letterSpacing: -0.3 }}>
-            Past Questions & Theory Now Available!
-          </span>
-          <span style={{ fontSize: 18 }}>✨</span>
-        </div>
-
-        {/* Question count bar */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 6, marginTop: 12,
-          color: 'rgba(255,255,255,0.6)', fontSize: 15, fontWeight: 500,
-        }}>
-          <span>✅ Practice Quizzes</span>
-          <span style={{ margin: '0 6px', opacity: 0.4 }}>•</span>
-          <span>📝 Theory Answers</span>
-          <span style={{ margin: '0 6px', opacity: 0.4 }}>•</span>
-          <span>🏆 Leaderboard</span>
-        </div>
-      </div>
-
-      {/* Bottom CTA */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '20px 40px 28px',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ fontSize: 20 }}>🔥</span>
-          <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 16, fontWeight: 600, letterSpacing: 0.5 }}>
-            Ace Your Exams
-          </span>
-        </div>
-        <div style={{
-          background: 'rgba(255,255,255,0.95)', color, fontWeight: 700,
-          padding: '8px 20px', borderRadius: 10, fontSize: 15, letterSpacing: 0.3,
-        }}>
-          Start Now →
-        </div>
-      </div>
-    </div>,
-    { width: 1200, height: 630 }
-  )
+      el('div', {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: `linear-gradient(135deg, ${color} 0%, ${bright} 40%, ${color} 100%)`,
+        position: 'relative',
+        overflow: 'hidden',
+        fontFamily: 'system-ui',
+      },
+        el('div', { position: 'absolute', top: -80, right: -60, width: 320, height: 320, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }),
+        el('div', { position: 'absolute', bottom: -100, left: -80, width: 400, height: 400, borderRadius: '50%', background: 'rgba(255,255,255,0.03)' }),
+        el('div', { position: 'absolute', top: '30%', right: '10%', width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }),
+        el('div', { position: 'absolute', top: 40, left: 40, display: 'flex', gap: 8 },
+          el('div', { width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.15)' }),
+          el('div', { width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.15)' }),
+          el('div', { width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.15)' }),
+        ),
+        txt('✦', { position: 'absolute', top: 60, right: 100, fontSize: 28, opacity: 0.4 }),
+        txt('✦', { position: 'absolute', bottom: 80, left: 120, fontSize: 20, opacity: 0.3 }),
+        el('div', { display: 'flex', alignItems: 'center', gap: 8, position: 'absolute', top: 28, left: 40 },
+          txt('📚', { fontSize: 24, lineHeight: 1 }),
+          txt('APEX', { color: 'rgba(255,255,255,0.85)', fontSize: 16, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase' }),
+        ),
+        el('div', { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 60px' },
+          txt(course.emoji, { fontSize: 56, marginBottom: 4 }),
+          el('div', { display: 'flex', alignItems: 'baseline', gap: 12 },
+            txt(prefix, { fontSize: 96, fontWeight: 900, color: 'white', lineHeight: 1, letterSpacing: -2 }),
+            txt(number, { fontSize: 80, fontWeight: 900, color: 'rgba(255,255,255,0.7)', lineHeight: 1, letterSpacing: -1 }),
+          ),
+          course.title ? txt(course.title, { fontSize: 28, color: 'rgba(255,255,255,0.85)', fontWeight: 500, marginTop: 6, letterSpacing: -0.5 }) : null,
+          el('div', { display: 'inline-flex', alignItems: 'center', gap: 10, marginTop: 20, background: 'rgba(255,255,255,0.12)', borderRadius: 14, padding: '10px 22px', backdropFilter: 'blur(8px)' },
+            txt('📖', { fontSize: 22 }),
+            txt('Past Questions & Theory Now Available!', { fontSize: 22, fontWeight: 700, color: 'white', letterSpacing: -0.3 }),
+            txt('✨', { fontSize: 18 }),
+          ),
+          el('div', { display: 'flex', alignItems: 'center', gap: 6, marginTop: 12, color: 'rgba(255,255,255,0.6)', fontSize: 15, fontWeight: 500 },
+            txt('✅ Practice Quizzes'),
+            txt('•', { margin: '0 6px', opacity: 0.4 }),
+            txt('📝 Theory Answers'),
+            txt('•', { margin: '0 6px', opacity: 0.4 }),
+            txt('🏆 Leaderboard'),
+          ),
+        ),
+        el('div', { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 40px 28px' },
+          el('div', { display: 'flex', alignItems: 'center', gap: 6 },
+            txt('🔥', { fontSize: 20 }),
+            txt('Ace Your Exams', { color: 'rgba(255,255,255,0.75)', fontSize: 16, fontWeight: 600, letterSpacing: 0.5 }),
+          ),
+          el('div', { background: 'rgba(255,255,255,0.95)', color, fontWeight: 700, padding: '8px 20px', borderRadius: 10, fontSize: 15, letterSpacing: 0.3 }, 'Start Now →'),
+        ),
+      ),
+      { width: 1200, height: 630 }
+    )
   } catch (e) {
     return new Response(e.message, { status: 500 })
   }
