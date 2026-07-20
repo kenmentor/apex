@@ -1,0 +1,82 @@
+[
+  {
+    "courseCode": "BCM 242",
+    "section": "Phosphogluconate Pathway (HMP Shunt)",
+    "question": "Give a diagram to illustrate the reactions of the phosphogluconate pathway and state any four (4) importance of the pathway.",
+    "referenceAnswer": "The pentose phosphate pathway (HMP shunt) occurs in the cytosol and consists of oxidative and non-oxidative phases. The oxidative phase: Glucose-6-P → 6-phosphoglucono-δ-lactone → 6-phosphogluconate → ribulose-5-P + CO2, producing 2 NADPH. The non-oxidative phase involves isomerization and transketolase/transaldolase reactions to generate ribose-5-P and glycolytic intermediates.\n\nFour importances:\n1. Production of NADPH for reductive biosynthesis (fatty acids, steroids) and antioxidant defense (glutathione reduction in RBCs)\n2. Production of ribose-5-phosphate for nucleotide and nucleic acid synthesis\n3. Provides erythrose-4-phosphate for aromatic amino acid synthesis\n4. Interconverts pentoses with glycolytic intermediates to meet cellular metabolic needs",
+    "mainConcepts": ["Pentose phosphate pathway", "Oxidative phase produces NADPH", "Non-oxidative phase produces ribose-5-P", "G6PD deficiency", "NADPH in RBC protection"],
+    "keywords": ["phosphogluconate", "pentose phosphate", "HMP shunt", "hexose monophosphate", "NADPH", "ribose"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Calvin Cycle (Carbon Fixation)",
+    "question": "Write an essay explaining how carbon is fixed in the stroma of leaves during the Calvin cycle.",
+    "referenceAnswer": "The Calvin cycle (dark reactions of photosynthesis) occurs in the stroma of chloroplasts in three phases:\n1. Carbon fixation: Rubisco (RuBisCO) catalyzes the carboxylation of ribulose-1,5-bisphosphate (RuBP) with CO2 to form two molecules of 3-phosphoglycerate (3-PGA).\n2. Reduction: 3-PGA is phosphorylated by ATP to 1,3-bisphosphoglycerate, then reduced by NADPH to glyceraldehyde-3-phosphate (G3P).\n3. Regeneration of RuBP: G3P molecules are rearranged through a series of reactions to regenerate RuBP, consuming ATP.\n\nFor every 3 CO2 molecules fixed, 6 G3P molecules are produced, with 1 G3P exported for carbohydrate synthesis and 5 recycled to regenerate 3 RuBP molecules.",
+    "mainConcepts": ["Rubisco", "Carbon fixation", "Stroma", "RuBP regeneration", "Calvin-Benson cycle"],
+    "keywords": ["Calvin cycle", "carbon fixation", "stroma", "Rubisco", "RuBP", "photosynthesis"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Cori Cycle",
+    "question": "Illustrate the reactions that take place during the Cori cycle and state any four (4) significance of the cycle.",
+    "referenceAnswer": "The Cori cycle describes the recycling of lactate between muscle and liver:\n1. In muscle (anaerobic glycolysis): Glucose → 2 Pyruvate → 2 Lactate (produces 2 ATP)\n2. Lactate is released into the blood and transported to the liver\n3. In the liver (gluconeogenesis): 2 Lactate → 2 Pyruvate → Glucose (consumes 6 ATP)\n4. Glucose is released back into the blood for use by muscles\n\nFour significances:\n1. Prevents lactic acidosis by removing lactate from muscle\n2. Provides a mechanism to regenerate NAD+ in muscle during anaerobic conditions\n3. Allows the liver to clear lactate and supply glucose to peripheral tissues\n4. Shifts the metabolic burden from muscle to liver (hepatic gluconeogenesis)",
+    "mainConcepts": ["Lactate recycling", "Gluconeogenesis in liver", "Anaerobic glycolysis in muscle", "Lactic acidosis prevention"],
+    "keywords": ["Cori cycle", "lactate", "gluconeogenesis", "lactic acid", "muscle", "liver"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Digestion and Absorption of Carbohydrates",
+    "question": "Write notes on: i. Absorption of sugars in the G.I.T. ii. Digestion of sugars in the G.I.T. iii. Simple sugars.",
+    "referenceAnswer": "i. Absorption of sugars: Monosaccharides are absorbed across the intestinal brush border by specific transporters. Glucose and galactose are absorbed via SGLT-1 (Na+-dependent co-transport), while fructose uses GLUT-5 (facilitated diffusion). All exit the enterocyte into portal circulation via GLUT-2.\n\nii. Digestion of sugars: Starch digestion begins in the mouth with salivary α-amylase, continues in the small intestine with pancreatic α-amylase. Disaccharidases (maltase, sucrase, lactase, isomaltase) on the brush border hydrolyze disaccharides to monosaccharides.\n\niii. Simple sugars: Monosaccharides include glucose, fructose, and galactose. Glucose is the primary energy source. Disaccharides include sucrose (glucose+fructose), lactose (glucose+galactose), and maltose (glucose+glucose).",
+    "mainConcepts": ["SGLT-1", "GLUT transporters", "Brush border enzymes", "Carbohydrate digestion", "Monosaccharide absorption"],
+    "keywords": ["absorption", "digestion", "starch", "amylase", "SGLT", "GLUT", "monosaccharide", "disaccharide"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Glycolysis",
+    "question": "Outline the reactions of the glycolytic pathway, highlighting the regulation of the pathway.",
+    "referenceAnswer": "Glycolysis occurs in the cytosol in 10 steps:\nEnergy investment phase (steps 1-5): Glucose → Glucose-6-P → Fructose-6-P → Fructose-1,6-bisP → G3P + DHAP → 2 G3P (consumes 2 ATP)\nEnergy payoff phase (steps 6-10): 2 G3P → 2 1,3-BPG → 2 3-PGA → 2 2-PGA → 2 PEP → 2 Pyruvate (produces 4 ATP + 2 NADH)\nNet: Glucose + 2 NAD+ + 2 ADP → 2 Pyruvate + 2 NADH + 2 ATP + 2 H2O\n\nRegulation:\n1. Hexokinase: Inhibited by glucose-6-P\n2. Phosphofructokinase-1 (PFK-1): Key regulatory enzyme. Activated by AMP, ADP, fructose-2,6-bisP. Inhibited by ATP, citrate\n3. Pyruvate kinase: Activated by fructose-1,6-bisP, inhibited by ATP, alanine\n\nFive functions of glycolysis:\n1. Energy production (ATP) under anaerobic and aerobic conditions\n2. Provides pyruvate for TCA cycle\n3. Provides intermediates for biosynthesis (e.g., G3P for lipid synthesis)\n4. Produces NADH for oxidative phosphorylation or fermentation\n5. Only energy source for RBCs and exercising muscle",
+    "mainConcepts": ["PFK-1 regulation", "Hexokinase", "Pyruvate kinase", "ATP production", "Anaerobic vs aerobic"],
+    "keywords": ["glycolysis", "glycolytic pathway", "PFK", "hexokinase", "pyruvate kinase", "Embden-Meyerhof"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "TCA Cycle (Krebs Cycle)",
+    "question": "Show the reactions, enzymes, regulation and energetics of the Krebs cycle. State any four functions of the Krebs cycle.",
+    "referenceAnswer": "The TCA cycle occurs in the mitochondrial matrix:\n1. Acetyl-CoA + Oxaloacetate → Citrate (citrate synthase)\n2. Citrate → Isocitrate (aconitase)\n3. Isocitrate → α-Ketoglutarate + CO2 + NADH (isocitrate dehydrogenase)\n4. α-Ketoglutarate → Succinyl-CoA + CO2 + NADH (α-KGDH complex)\n5. Succinyl-CoA → Succinate + GTP (succinyl-CoA synthetase)\n6. Succinate → Fumarate + FADH2 (succinate dehydrogenase)\n7. Fumarate → Malate (fumarase)\n8. Malate → Oxaloacetate + NADH (malate dehydrogenase)\n\nEnergetics per turn: 3 NADH (7.5 ATP), 1 FADH2 (1.5 ATP), 1 GTP (1 ATP) = ~10 ATP.\nPer glucose (2 turns): ~20 ATP.\n\nRegulation: Inhibited by high NADH/ATP, activated by high ADP/NAD+/Ca2+. Key regulated enzymes: citrate synthase, isocitrate dehydrogenase, α-KGDH.\n\nFour functions:\n1. Complete oxidation of acetyl-CoA to CO2\n2. Production of NADH and FADH2 for oxidative phosphorylation\n3. Provides intermediates for biosynthesis (amphibolic role)\n4. Links carbohydrate, fat, and protein metabolism",
+    "mainConcepts": ["Citrate synthase", "Isocitrate dehydrogenase", "α-Ketoglutarate dehydrogenase", "Amphibolic role", "Oxidative phosphorylation"],
+    "keywords": ["TCA cycle", "Krebs cycle", "citric acid cycle", "citrate synthase", "isocitrate dehydrogenase", "succinyl-CoA", "oxaloacetate"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Pyruvate Dehydrogenase Complex",
+    "question": "Write notes on the pyruvate dehydrogenase complex.",
+    "referenceAnswer": "The pyruvate dehydrogenase complex (PDC) is a multi-enzyme complex in the mitochondrial matrix that catalyzes the irreversible conversion of pyruvate to acetyl-CoA:\nPyruvate + CoA + NAD+ → Acetyl-CoA + CO2 + NADH\n\nThree enzyme components:\n1. Pyruvate dehydrogenase (E1) — Decarboxylates pyruvate, requiring TPP\n2. Dihydrolipoyl transacetylase (E2) — Transfers acetyl group to CoA, requiring lipoic acid\n3. Dihydrolipoyl dehydrogenase (E3) — Regenerates oxidized lipoamide, producing NADH, requiring FAD\n\nCofactors: TPP, lipoic acid, CoA, FAD, NAD+\n\nRegulation: Inactivated by phosphorylation (PDK kinases activated by high NADH/ATP/acetyl-CoA), activated by dephosphorylation (PDP phosphatases activated by Ca2+/insulin).",
+    "mainConcepts": ["Pyruvate dehydrogenase", "E1, E2, E3 subunits", "Cofactors TPP/lipoic acid", "Regulation by phosphorylation", "Link to TCA cycle"],
+    "keywords": ["pyruvate dehydrogenase complex", "PDC", "acetyl-CoA", "TPP", "lipoic acid", "PDK"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Metabolism Definitions and Overview",
+    "question": "Define metabolism and give three differences between catabolism and anabolism. Explain how the energy of the sun is stored in dietary nutrients and by what reactions it is released.",
+    "referenceAnswer": "Metabolism is the sum of all chemical reactions that occur in living organisms to maintain life, including both energy-releasing (catabolic) and energy-consuming (anabolic) reactions.\n\nThree differences:\n1. Catabolism breaks down complex molecules into simpler ones; anabolism builds complex molecules from simpler ones\n2. Catabolism releases energy (exergonic); anabolism requires energy (endergonic)\n3. Catabolism produces NADH/FADH2/ATP; anabolism consumes ATP and NADPH\n\nEnergy of the sun is captured by chlorophyll during photosynthesis and stored as chemical bonds in carbohydrates (glucose, starch). This energy is released through cellular respiration — glycolysis, TCA cycle, and oxidative phosphorylation — which breaks these bonds stepwise, capturing energy as ATP.",
+    "mainConcepts": ["Catabolism vs anabolism", "Energy capture from sun", "Photosynthesis", "Cellular respiration"],
+    "keywords": ["metabolism", "catabolism", "anabolism", "photosynthesis", "energy", "ATP"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Starch Structure and Gastrointestinal Digestion",
+    "question": "Draw the structures of amylose and amylopectin and show the points of action of hydrolytic enzymes. In what section of the GIT is α-1,6-glucosidase found?",
+    "referenceAnswer": "Amylose: Linear polymer of glucose with α-1,4 glycosidic bonds. Amylopectin: Branched polymer with α-1,4 bonds and α-1,6 branch points every 24-30 residues.\n\nHydrolytic enzyme action:\n- α-Amylase: Cleaves α-1,4 bonds (but not α-1,6 bonds or terminal α-1,4 bonds), producing maltose, maltotriose, and α-limit dextrins\n- α-1,6-Glucosidase (debranching enzyme): Cleaves α-1,6 branch points in α-limit dextrins\n- Maltase: Cleaves maltose to 2 glucose\n\nα-1,6-Glucosidase is found on the brush border of the small intestine (enterocytes).\n\nSodium-potassium pump in ORT: The Na+/K+ ATPase maintains a low intracellular Na+ gradient, driving SGLT-1 co-transport of glucose and Na+ across the brush border. Water follows osmotically, facilitating rehydration in ORT.",
+    "mainConcepts": ["Amylose", "Amylopectin", "α-Amylase", "α-1,6-Glucosidase", "Brush border enzymes", "Oral Rehydration Therapy"],
+    "keywords": ["amylose", "amylopectin", "starch", "α-amylase", "debranching enzyme", "ORT", "SGLT-1"]
+  },
+  {
+    "courseCode": "BCM 242",
+    "section": "Amphibolic Roles of TCA Cycle",
+    "question": "Write notes on: a. Amphibolic roles of the tricarboxylic acid (TCA) cycle. b. The pyruvate dehydrogenase complex. c. Regulation of the citric acid cycle.",
+    "referenceAnswer": "a. Amphibolic roles: The TCA cycle is both catabolic (oxidizes acetyl-CoA) and anabolic (provides intermediates). Intermediates are drawn off for biosynthesis: citrate for fatty acid synthesis, α-ketoglutarate for glutamate/amino acids, succinyl-CoA for heme synthesis, oxaloacetate for gluconeogenesis. Anaplerotic reactions (e.g., pyruvate carboxylase) replenish cycle intermediates.\n\nb. Pyruvate dehydrogenase complex: Multi-enzyme complex (E1-E2-E3) converting pyruvate to acetyl-CoA irreversibly. Requires 5 cofactors (TPP, lipoic acid, CoA, FAD, NAD+). Regulated by covalent phosphorylation (PDK inactivates, PDP activates).\n\nc. Regulation of TCA cycle: Key control points at citrate synthase, isocitrate dehydrogenase, and α-KGDH. High ATP/NADH inhibits; high ADP/NAD+/Ca2+ activates. Substrate availability (acetyl-CoA) and product inhibition also regulate flux.",
+    "mainConcepts": ["Amphibolic", "Anaplerotic reactions", "Biosynthesis from cycle intermediates", "Heme synthesis", "Gluconeogenesis"],
+    "keywords": ["amphibolic", "TCA cycle", "anaplerotic", "cataplerotic", "biosynthesis", "regulation"]
+  }
+]

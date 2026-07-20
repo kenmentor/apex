@@ -1,0 +1,50 @@
+{
+  "course_code": "BCM 242",
+  "course_title": "Carbohydrate Metabolism",
+  "study_guide_title": "BCM 242 - Carbohydrate Metabolism - Comprehensive Q&A on Glycolysis, TCA Cycle, Gluconeogenesis, Glycogen Metabolism & HMP Shunt",
+  "sections": [
+    {
+      "section_title": "GLYCOLYSIS & GLUCONEOGENESIS",
+      "questions": [
+        {"id":"BCM242_Q1","question":"Glycolytic reactions occur in the soluble cytosol. The priming reaction is catalyzed by:","options":{"a":"Hexokinase","b":"Aldolase","c":"Pyruvate kinase","d":"Enolase"},"correct_answer":"a","explanation":"Hexokinase catalyzes the first priming reaction of glycolysis — the phosphorylation of glucose to glucose-6-phosphate."},
+        {"id":"BCM242_Q2","question":"Which enzyme is not involved in gluconeogenesis?","options":{"a":"Phosphoenolpyruvate carboxylase","b":"Glucose-6-phosphatase","c":"Fructose-1,6-bisphosphatase","d":"None of the above"},"correct_answer":"d","explanation":"All three enzymes are involved in gluconeogenesis. PEP carboxykinase (PEPCK) catalyzes the conversion of oxaloacetate to PEP, glucose-6-phosphatase dephosphorylates glucose-6-P, and fructose-1,6-bisphosphatase removes the 1-phosphate from fructose-1,6-bisP."},
+        {"id":"BCM242_Q3","question":"The final product of gluconeogenesis in muscles is:","options":{"a":"Glucose","b":"Glucose-1-phosphate","c":"UDP-glucose","d":"Glucose-6-phosphate"},"correct_answer":"d","explanation":"Muscles lack glucose-6-phosphatase, so the final product of gluconeogenesis in muscles is glucose-6-phosphate, which enters glycolysis."},
+        {"id":"BCM242_Q4","question":"Which enzyme is not involved in glycogenolysis?","options":{"a":"Glycogen phosphorylase","b":"Glycogen synthase","c":"Phosphoglucomutase","d":"Phosphatase"},"correct_answer":"b","explanation":"Glycogen synthase is involved in glycogenesis (glycogen synthesis), not glycogenolysis (glycogen breakdown). Glycogen phosphorylase, phosphoglucomutase, and phosphatase are all involved in glycogenolysis."},
+        {"id":"BCM242_Q5","question":"Hexokinase (Km = 0.1 mM) is for energy liberation, while glucokinase (Km = 10 mM) prepares glucose for storage as glycogen.","options":{"a":"True","b":"False","c":"","d":""},"correct_answer":"a","explanation":"True. Hexokinase has high affinity (low Km) for glucose and is inhibited by glucose-6-P, serving energy needs. Glucokinase has low affinity (high Km), is not inhibited by G6P, and prepares glucose for glycogen storage in the liver."},
+        {"id":"BCM242_Q6","question":"Which of the following is an energy-rich bond?","options":{"a":"Phosphodiester bond","b":"Glycosidic bond","c":"Phosphodiester and phosphoanhydride bond","d":"All of the above"},"correct_answer":"c","explanation":"Phosphoanhydride bonds (e.g., in ATP) are energy-rich bonds. Phosphodiester bonds (e.g., in DNA) are not energy-rich."},
+        {"id":"BCM242_Q7","question":"The number of ATP produced in the Hexose Monophosphate Pathway is:","options":{"a":"0","b":"2","c":"4","d":"8"},"correct_answer":"a","explanation":"The HMP shunt (pentose phosphate pathway) produces zero ATP. Its primary products are NADPH and ribose-5-phosphate for nucleotide synthesis."},
+        {"id":"BCM242_Q8","question":"Genetic deficiency of glucose-6-phosphate dehydrogenase results in lysis of RBC due to deficiency of:","options":{"a":"NADPH","b":"FADH2","c":"NAD+","d":"None of the above"},"correct_answer":"a","explanation":"G6PD deficiency leads to reduced NADPH production in RBCs, making them vulnerable to oxidative stress and leading to hemolytic anemia."},
+        {"id":"BCM242_Q9","question":"The following carbohydrates are not available for human nutrition except:","options":{"a":"Cellulose","b":"Xylans","c":"Pectins","d":"Starch"},"correct_answer":"d","explanation":"Starch is digestible by humans through amylase action. Cellulose, xylans, and pectins are indigestible fiber (humans lack cellulase)."},
+        {"id":"BCM242_Q10","question":"The following tissues do not require insulin for glucose uptake except:","options":{"a":"Brain","b":"Red blood cells","c":"Liver","d":"Skeletal muscles"},"correct_answer":"d","explanation":"Skeletal muscles require insulin for GLUT4 translocation and glucose uptake. Brain, RBCs, and liver have insulin-independent glucose transporters."}
+      ]
+    },
+    {
+      "section_title": "TCA CYCLE & OXIDATIVE METABOLISM",
+      "questions": [
+        {"id":"BCM242_Q11","question":"The number of ATP produced in the TCA cycle from one molecule of glucose is:","options":{"a":"12","b":"18","c":"24","d":"32"},"correct_answer":"c","explanation":"Each turn of the TCA cycle produces 3 NADH (× 3 = 9 ATP), 1 FADH2 (× 2 = 2 ATP), and 1 GTP (1 ATP) = 12 ATP per turn. Two turns per glucose = 24 ATP (using older 3/2 ATP numbering)."},
+        {"id":"BCM242_Q12","question":"Which enzyme is not inhibited by NADH in the TCA cycle?","options":{"a":"Succinyl-CoA synthetase","b":"Citrate synthase","c":"Pyruvate dehydrogenase","d":"α-Ketoglutarate dehydrogenase"},"correct_answer":"a","explanation":"Succinyl-CoA synthetase is not regulated by NADH. Citrate synthase, pyruvate dehydrogenase complex, and α-ketoglutarate dehydrogenase are all inhibited by high NADH/ATP."},
+        {"id":"BCM242_Q13","question":"The amide derivative of nicotinic acid plays a role in energy metabolism.","options":{"a":"True","b":"False","c":"","d":""},"correct_answer":"a","explanation":"True. Nicotinic acid (niacin) is converted to nicotinamide, which forms NAD+ and NADP+ — essential coenzymes in redox reactions of energy metabolism."},
+        {"id":"BCM242_Q14","question":"The following is not a disorder of carbohydrate metabolism:","options":{"a":"Diabetes mellitus","b":"Lactose intolerance","c":"Pentosuria","d":"Phenylketonuria"},"correct_answer":"d","explanation":"Phenylketonuria (PKU) is a disorder of amino acid metabolism (phenylalanine), not carbohydrate metabolism."},
+        {"id":"BCM242_Q15","question":"Which of these is not a disorder of carbohydrate metabolism?","options":{"a":"Pompe's disease","b":"Fructose intolerance","c":"Diabetes mellitus","d":"None of the above"},"correct_answer":"d","explanation":"Pompe's disease (glycogen storage disease type II), fructose intolerance, and diabetes mellitus are all disorders of carbohydrate metabolism."},
+        {"id":"BCM242_Q16","question":"Energy of the sun captured by chlorophyll for photosynthesis is produced by:","options":{"a":"Nuclear fission reaction","b":"Reduction reaction","c":"Electromagnetic waves","d":"None of the above"},"correct_answer":"c","explanation":"Chlorophyll captures energy from sunlight (electromagnetic waves) to drive the light reactions of photosynthesis."},
+        {"id":"BCM242_Q17","question":"Which of the following transports monosaccharides in the portal circulation?","options":{"a":"SGLT-1","b":"GLUT-5","c":"GLUT-2","d":"GLUT-8"},"correct_answer":"c","explanation":"GLUT-2 is the primary transporter for monosaccharides (glucose, galactose, fructose) in the portal circulation, found in intestinal epithelial cells and hepatocytes."}
+      ]
+    },
+    {
+      "section_title": "GLYCOGEN METABOLISM & CORI CYCLE",
+      "questions": [
+        {"id":"BCM242_Q18","question":"The branching enzyme in glycogenesis is:","options":{"a":"Amylo-1,4-transglucosidase","b":"Amylo-1,6-transglucosidase","c":"Amylo-1,4 → Amylo-1,6-transglucosidase","d":"All of the above"},"correct_answer":"c","explanation":"The branching enzyme (amylo-1,4→1,6-transglucosidase) transfers a segment of 6-8 glucose residues from a 1,4-linkage to a 1,6-linkage to create branch points in glycogen."},
+        {"id":"BCM242_Q19","question":"Which statement is not true about the Cori cycle?","options":{"a":"Prevents lactic acidosis","b":"The pathway cannot be sustained indefinitely","c":"Shifts the metabolic burden from the liver to the muscle","d":"Produces 2 ATP and consumes 6 ATP"},"correct_answer":"c","explanation":"The Cori cycle shifts the metabolic burden from muscle to liver (not liver to muscle). Muscle produces lactate which is converted back to glucose in the liver, consuming 6 ATP and producing 2 ATP net."},
+        {"id":"BCM242_Q20","question":"Which of these is not a glycogen store?","options":{"a":"Muscle","b":"Kidney","c":"Brain","d":"None of the above"},"correct_answer":"c","explanation":"The brain has very minimal glycogen stores (mainly in astrocytes). Major glycogen stores are in the liver and skeletal muscles."}
+      ]
+    },
+    {
+      "section_title": "DIGESTION & ABSORPTION OF CARBOHYDRATES",
+      "questions": [
+        {"id":"BCM242_Q21","question":"Digestion of starch begins in the:","options":{"a":"Mouth","b":"Stomach","c":"Small intestine","d":"Large intestine"},"correct_answer":"a","explanation":"Starch digestion begins in the mouth by salivary α-amylase, which breaks down starch into maltose and dextrins."},
+        {"id":"BCM242_Q22","question":"The enzyme responsible for breaking α-1,6 glycosidic bonds in starch digestion is:","options":{"a":"α-Amylase","b":"α-1,6-Glucosidase (debranching enzyme)","c":"Maltase","d":"Lactase"},"correct_answer":"b","explanation":"α-1,6-Glucosidase (debranching enzyme) hydrolyzes the α-1,6 branch points in starch. α-Amylase only cleaves α-1,4 bonds."},
+        {"id":"BCM242_Q23","question":"SGLT-1 is a transporter for:","options":{"a":"Glucose and galactose","b":"Fructose only","c":"All monosaccharides","d":"Disaccharides"},"correct_answer":"a","explanation":"SGLT-1 (sodium-dependent glucose transporter 1) co-transports glucose and galactose with sodium ions across the intestinal brush border membrane."}
+      ]
+    }
+  ]
+}

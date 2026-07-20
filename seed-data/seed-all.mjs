@@ -33,6 +33,11 @@ const COURSES = [
     dept: { code: 'GSS', title: 'General Studies', color: '#27ae60' },
     file: 'gss112.json', theory: 'gss112-theory.json',
   },
+  {
+    code: 'BCM 242', title: 'Carbohydrate Metabolism', icon: 'C', color: '#e74c3c',
+    dept: { code: 'BCM', title: 'Biochemistry', color: '#e74c3c' },
+    file: 'bcm242.json', theory: 'bcm242-theory.json',
+  },
 ]
 
 async function seedCourse(db, course) {
