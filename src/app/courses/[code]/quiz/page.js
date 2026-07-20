@@ -572,7 +572,9 @@ export default function QuizPage() {
 
   function handleNextAfterReveal() {
     setRevealAnswer(false);
-    const finalCorrectCount = answers.reduce((count, a) => {
+    const newAnswers = [...answers, { selected: question?.correct_answer, questionIndex: currentIndex, question: question.question, options: question.options }];
+    setAnswers(newAnswers);
+    const finalCorrectCount = newAnswers.reduce((count, a) => {
       const q = questions[a.questionIndex];
       return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
     }, 0);
@@ -658,6 +660,7 @@ export default function QuizPage() {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
         body: JSON.stringify({
           email: user.email,
+          name: user.name,
           course: code,
           score: scoreOverride ?? correctCount,
           total: totalOverride ?? total,
@@ -669,6 +672,7 @@ export default function QuizPage() {
       if (!res.ok) {
         const data = await res.json()
         console.warn('Score save failed:', data)
+        return;
       }
       clearProgress();
       setSaved(true);

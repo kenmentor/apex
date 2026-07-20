@@ -60,7 +60,7 @@ export async function POST(request) {
     // ─── Server-side time validation ───
     const qLimit = questionLimit || total
     const tpQ = timePerQuestion || 30
-    const maxPossible = qLimit * tpQ * 3
+    const maxPossible = qLimit * tpQ * 6
     if (timeSpent > maxPossible) {
       return NextResponse.json({ error: 'Invalid time' }, { status: 400 })
     }

@@ -10,6 +10,7 @@ import TelemetryProvider from '@/components/TelemetryProvider';
 import ProfileCompletePrompt from '@/components/ProfileCompletePrompt';
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://quiz.apex.app'),
   title: 'Apex',
   description: 'Master your exams with past questions, quizzes, and study materials',
   manifest: '/manifest.json',
