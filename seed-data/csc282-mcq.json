@@ -1,0 +1,746 @@
+[
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-001",
+    "question": "Which of the following is NOT one of the four pillars of Object-Oriented Programming?",
+    "options": ["Encapsulation", "Inheritance", "Compilation", "Polymorphism"],
+    "correctAnswer": 2,
+    "explanation": "The four pillars of OOP are Encapsulation, Inheritance, Polymorphism, and Abstraction. Compilation is a process of converting source code to bytecode, not an OOP pillar."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-002",
+    "question": "What keyword is used to create a subclass in Java?",
+    "options": ["implements", "extends", "inherits", "subclass"],
+    "correctAnswer": 1,
+    "explanation": "The extends keyword is used to create a subclass: class Dog extends Animal { }"
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-003",
+    "question": "Which access modifier makes a member accessible only within the same class?",
+    "options": ["public", "private", "protected", "default"],
+    "correctAnswer": 1,
+    "explanation": "private members are accessible only within the same class. This is the most restrictive access modifier."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-004",
+    "question": "What does the 'new' keyword do in Java?",
+    "options": [
+      "Declares a new variable",
+      "Creates a new object in memory",
+      "Creates a new class",
+      "Deletes an existing object"
+    ],
+    "correctAnswer": 1,
+    "explanation": "The 'new' keyword allocates memory for a new object and calls its constructor."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-005",
+    "question": "Which of the following is TRUE about constructors in Java?",
+    "options": [
+      "They have a return type of void",
+      "They can be overridden",
+      "They have the same name as the class",
+      "They are called explicitly like methods"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Constructors have the same name as the class and no return type (not even void). They cannot be overridden."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-006",
+    "question": "What is method overloading in Java?",
+    "options": [
+      "Multiple methods with the same name and same parameters in the same class",
+      "Multiple methods with the same name but different parameters in the same class",
+      "A subclass redefining a parent class method with the same signature",
+      "Calling a method using the super keyword"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Method overloading is when multiple methods share the same name but have different parameter lists (different number, type, or order of parameters)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-007",
+    "question": "What is the output of the following code?\n\nclass Animal {\n    void sound() { System.out.print(\"Animal \"); }\n}\nclass Dog extends Animal {\n    void sound() { System.out.print(\"Dog \"); }\n}\npublic class Test {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.sound();\n    }\n}",
+    "options": ["Animal", "Dog", "Animal Dog", "Compilation error"],
+    "correctAnswer": 1,
+    "explanation": "This demonstrates runtime polymorphism (dynamic method dispatch). Even though the reference is Animal, the actual object is Dog, so Dog's sound() is called. Output: Dog"
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-008",
+    "question": "Which of the following correctly describes the 'super' keyword?",
+    "options": [
+      "Refers to the current class object",
+      "Refers to the parent class object",
+      "Refers to the child class object",
+      "Creates a new superclass object"
+    ],
+    "correctAnswer": 1,
+    "explanation": "The super keyword refers to the immediate parent class object. It can be used to access parent constructors, methods, and fields."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-009",
+    "question": "Java supports which type(s) of inheritance directly with classes?",
+    "options": [
+      "Multiple inheritance only",
+      "Single, multilevel, and hierarchical",
+      "Multiple and hybrid",
+      "All types including multiple"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Java supports single, multilevel, and hierarchical inheritance with classes. Multiple and hybrid inheritance are NOT supported with classes (only through interfaces)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-010",
+    "question": "What annotation is used in Java to indicate a method is being overridden?",
+    "options": ["@Override", "@Overload", "@Inherit", "@Overrideride"],
+    "correctAnswer": 0,
+    "explanation": "@Override is a compile-time annotation that tells the compiler the method is intended to override a parent class method."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "MCQ-011",
+    "question": "Can an abstract class be instantiated?",
+    "options": [
+      "Yes, like any other class",
+      "No, it cannot be instantiated",
+      "Yes, but only with the new keyword",
+      "Only if it has no abstract methods"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Abstract classes cannot be instantiated directly. They must be subclassed and the subclass must implement all abstract methods before instantiation."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "MCQ-012",
+    "question": "Which keyword is used to implement an interface in Java?",
+    "options": ["extends", "inherits", "implements", "realizes"],
+    "correctAnswer": 2,
+    "explanation": "The 'implements' keyword is used to implement an interface. 'extends' is used for class inheritance."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "MCQ-013",
+    "question": "How many interfaces can a class implement in Java?",
+    "options": ["Only one", "Up to two", "As many as needed", "None, classes cannot implement interfaces"],
+    "correctAnswer": 2,
+    "explanation": "A class can implement multiple interfaces in Java (unlike extends, where a class can only extend one class)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "MCQ-014",
+    "question": "What is the purpose of an abstract method?",
+    "options": [
+      "To provide a complete implementation",
+      "To declare a method without a body that subclasses must implement",
+      "To make a method available to all subclasses",
+      "To prevent method overriding"
+    ],
+    "correctAnswer": 1,
+    "explanation": "An abstract method has no body (no implementation) and must be overridden/implemented by the first concrete subclass."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "MCQ-015",
+    "question": "Encapsulation in Java is achieved by:",
+    "options": [
+      "Using the extends keyword",
+      "Making fields private and providing public getters/setters",
+      "Using abstract classes",
+      "Implementing multiple interfaces"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Encapsulation is achieved by hiding data (private fields) and providing controlled access through public getter and setter methods."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "MCQ-016",
+    "question": "Which access modifier allows access within the same package and by subclasses in other packages?",
+    "options": ["public", "private", "protected", "default"],
+    "correctAnswer": 2,
+    "explanation": "protected access allows access within the same package AND by subclasses in other packages through inheritance."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "MCQ-017",
+    "question": "A class declared as 'final' means:",
+    "options": [
+      "Its methods are all automatically final",
+      "It cannot be extended (subclassed)",
+      "It cannot be instantiated",
+      "It can only be used in the same package"
+    ],
+    "correctAnswer": 1,
+    "explanation": "A final class cannot be subclassed. Example: String is a final class in Java."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "MCQ-018",
+    "question": "If no access modifier is specified for a class member, what is its visibility?",
+    "options": ["public", "private", "protected", "default (package-private)"],
+    "correctAnswer": 3,
+    "explanation": "When no access modifier is specified, the member has default (package-private) visibility — accessible only within the same package."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-019",
+    "question": "Which of the following is a checked exception?",
+    "options": ["NullPointerException", "ArithmeticException", "IOException", "ArrayIndexOutOfBoundsException"],
+    "correctAnswer": 2,
+    "explanation": "IOException is a checked exception — it must be caught with try-catch or declared with throws. The others are unchecked RuntimeException subclasses."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-020",
+    "question": "What happens if an exception is thrown inside a try block and there is no matching catch block?",
+    "options": [
+      "The program continues normally",
+      "The exception is ignored",
+      "The program crashes immediately",
+      "The exception propagates up the call stack, and the finally block (if any) executes first"
+    ],
+    "correctAnswer": 3,
+    "explanation": "If no matching catch is found, the exception propagates up the call stack. Before propagating, the finally block executes (if present)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-021",
+    "question": "What is the purpose of the 'finally' block in exception handling?",
+    "options": [
+      "To handle the exception",
+      "To declare that a method throws an exception",
+      "To ensure cleanup code always executes regardless of exceptions",
+      "To create a custom exception"
+    ],
+    "correctAnswer": 2,
+    "explanation": "The finally block always executes (even if an exception occurs or a return statement is hit), making it ideal for cleanup operations like closing files or database connections."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-022",
+    "question": "What is the difference between 'throw' and 'throws'?",
+    "options": [
+      "They are the same thing",
+      "throw is for checked exceptions, throws is for unchecked",
+      "throw actually throws an exception; throws declares that a method may throw an exception",
+      "throw is used in the method signature; throws is used in the method body"
+    ],
+    "correctAnswer": 2,
+    "explanation": "throw is used inside a method body to actually throw an exception object. throws is used in the method signature to declare that the method may throw certain exceptions."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-023",
+    "question": "Which class should a custom exception extend to make it a checked exception?",
+    "options": ["RuntimeException", "Error", "Exception", "Throwable"],
+    "correctAnswer": 2,
+    "explanation": "To create a checked custom exception, extend the Exception class. To create an unchecked custom exception, extend RuntimeException."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-024",
+    "question": "The 'this' keyword in Java refers to:",
+    "options": [
+      "The parent class object",
+      "The current object instance",
+      "A new object",
+      "The class itself"
+    ],
+    "correctAnswer": 1,
+    "explanation": "'this' is a reference to the current object — the instance on which a method or constructor is being executed."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-025",
+    "question": "What is the difference between 'this()' and 'super()' in a constructor?",
+    "options": [
+      "They are identical in behavior",
+      "this() calls another constructor in the same class; super() calls a parent class constructor",
+      "this() calls parent constructor; super() calls another constructor in same class",
+      "this() can only be used in methods; super() can only be used in constructors"
+    ],
+    "correctAnswer": 1,
+    "explanation": "this() calls another constructor in the SAME class. super() calls a constructor in the PARENT class. Both must be the first statement in the constructor."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-026",
+    "question": "Which of the following is TRUE about static methods?",
+    "options": [
+      "They can access instance variables directly",
+      "They can use the 'this' keyword",
+      "They belong to the class, not to any object instance",
+      "They must be called on an object"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Static methods belong to the class and can be called without creating an object. They cannot access instance variables directly or use 'this'."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-027",
+    "question": "The String class in Java is immutable. Which of the following operations creates a NEW String object?",
+    "options": [
+      "String s = \"Hello\";",
+      "s.toUpperCase()",
+      "s.length()",
+      "s.charAt(0)"
+    ],
+    "correctAnswer": 1,
+    "explanation": "toUpperCase() returns a new String object because Strings are immutable. length() and charAt() just return values without changing the String."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-028",
+    "question": "What is the correct way to compare two Strings for equality in Java?",
+    "options": ["if (s1 == s2)", "if (s1.equals(s2))", "if (s1 = s2)", "if (s1.compare(s2))"],
+    "correctAnswer": 1,
+    "explanation": "Strings should be compared using .equals() for content comparison. == compares object references, not the actual string content."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-029",
+    "question": "Which of the following demonstrates composition (HAS-A relationship)?",
+    "options": [
+      "class Dog extends Animal { }",
+      "class Car { Engine engine; }",
+      "interface Drawable { void draw(); }",
+      "abstract class Shape { }"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Composition is a HAS-A relationship where one class contains an object of another class as a field. Car HAS-A Engine."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-030",
+    "question": "What is the default value of a boolean field in a Java class?",
+    "options": ["true", "false", "null", "0"],
+    "correctAnswer": 1,
+    "explanation": "The default value for a boolean field in Java is false. For reference types, the default is null. For numeric types, the default is 0."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-031",
+    "question": "Which of the following code snippets correctly creates an object?",
+    "options": [
+      "Student s;",
+      "Student s = Student();",
+      "Student s = new Student();",
+      "new Student s;"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Objects are created using the 'new' keyword followed by the constructor: new ClassName()"
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-032",
+    "question": "What will be the output?\n\nclass Parent {\n    int x = 10;\n}\nclass Child extends Parent {\n    int x = 20;\n    void display() {\n        System.out.print(super.x + \" \" + this.x);\n    }\n}",
+    "options": ["10 10", "20 20", "10 20", "20 10"],
+    "correctAnswer": 2,
+    "explanation": "super.x accesses the parent class field (10), this.x accesses the current class field (20). Output: 10 20"
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-033",
+    "question": "Which method makes a JFrame window visible?",
+    "options": ["show()", "setVisible(true)", "render()", "open()"],
+    "correctAnswer": 1,
+    "explanation": "setVisible(true) makes the JFrame window appear on screen. This should be called after all components are added to the frame."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-034",
+    "question": "Which interface must be implemented to handle button click events in Swing?",
+    "options": ["MouseListener", "ActionListener", "KeyListener", "WindowListener"],
+    "correctAnswer": 1,
+    "explanation": "ActionListener is the interface for handling action events like button clicks. Its single method is actionPerformed(ActionEvent e)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-035",
+    "question": "What is the default layout manager of a JPanel?",
+    "options": ["BorderLayout", "GridLayout", "FlowLayout", "BoxLayout"],
+    "correctAnswer": 2,
+    "explanation": "JPanel uses FlowLayout by default. JFrame's content pane uses BorderLayout by default."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-036",
+    "question": "Which layout manager divides the container into NORTH, SOUTH, EAST, WEST, and CENTER regions?",
+    "options": ["FlowLayout", "GridLayout", "BorderLayout", "CardLayout"],
+    "correctAnswer": 2,
+    "explanation": "BorderLayout divides the container into five regions: NORTH, SOUTH, EAST, WEST, and CENTER. It is the default for JFrame."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-037",
+    "question": "Which Swing component is used to display multi-line text?",
+    "options": ["JTextField", "JTextArea", "JLabel", "JButton"],
+    "correctAnswer": 1,
+    "explanation": "JTextArea supports multi-line text display and editing. JTextField is for single-line input only."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-038",
+    "question": "Which class should you use to read a binary file (e.g., image)?",
+    "options": ["FileReader", "BufferedReader", "FileInputStream", "Scanner"],
+    "correctAnswer": 2,
+    "explanation": "FileInputStream reads raw bytes, making it suitable for binary files (images, audio, video). FileReader and BufferedReader are for text files."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-039",
+    "question": "Which of the following correctly wraps a FileReader with buffering for efficient reading?",
+    "options": [
+      "BufferedReader br = new BufferedReader(\"file.txt\");",
+      "BufferedReader br = new BufferedReader(new FileReader(\"file.txt\"));",
+      "BufferedReader br = new FileReader(new BufferedReader(\"file.txt\"));",
+      "BufferedReader br = BufferedReader(FileReader(\"file.txt\"));"
+    ],
+    "correctAnswer": 1,
+    "explanation": "BufferedReader wraps a Reader (like FileReader) to add buffering: new BufferedReader(new FileReader(\"file.txt\"))"
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-040",
+    "question": "What does the readLine() method of BufferedReader return when the end of the file is reached?",
+    "options": ["An empty string \"\"", "The string \"EOF\"", "null", "A string with -1"],
+    "correctAnswer": 2,
+    "explanation": "readLine() returns null when the end of the file is reached. This is the standard signal to stop reading."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-041",
+    "question": "What is serialization in Java?",
+    "options": [
+      "Converting an object to a byte stream for storage or transmission",
+      "Converting a byte stream to an object",
+      "Sorting elements in a collection",
+      "Creating a new thread"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Serialization converts an object's state into a byte stream. Deserialization (option B) is the reverse process."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-042",
+    "question": "What does JDBC stand for?",
+    "options": [
+      "Java Database Connectivity",
+      "Java DataBase Connector",
+      "JavaScript Database Connection",
+      "Java Direct Binary Connection"
+    ],
+    "correctAnswer": 0,
+    "explanation": "JDBC stands for Java Database Connectivity — the API for connecting Java applications to relational databases."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-043",
+    "question": "Which method is used to execute a SELECT query in JDBC?",
+    "options": ["executeUpdate()", "executeSelect()", "executeQuery()", "execute()"],
+    "correctAnswer": 2,
+    "explanation": "executeQuery() is used for SELECT statements and returns a ResultSet. executeUpdate() is for INSERT, UPDATE, DELETE."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-044",
+    "question": "Which JDBC interface should be used to prevent SQL injection attacks?",
+    "options": ["Statement", "PreparedStatement", "CallableStatement", "ResultSet"],
+    "correctAnswer": 1,
+    "explanation": "PreparedStatement uses parameterized queries with ? placeholders, which separates SQL code from data and prevents SQL injection."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-045",
+    "question": "What does the commit() method do in JDBC transaction management?",
+    "options": [
+      "Closes the database connection",
+      "Makes all changes since the last commit/rollback permanent",
+      "Undoes all changes made in the current transaction",
+      "Creates a new transaction"
+    ],
+    "correctAnswer": 1,
+    "explanation": "commit() makes all SQL changes since the last commit or rollback permanent in the database."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-046",
+    "question": "What method starts a transaction in JDBC?",
+    "options": ["startTransaction()", "setAutoCommit(false)", "begin()", "newTransaction()"],
+    "correctAnswer": 1,
+    "explanation": "A transaction begins when you call setAutoCommit(false). Then multiple SQL statements can be grouped, followed by commit() or rollback()."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-047",
+    "question": "Which ResultSet method moves the cursor to the next row?",
+    "options": ["next()", "forward()", "moveNext()", "getNext()"],
+    "correctAnswer": 0,
+    "explanation": "next() moves the cursor to the next row and returns true if a valid row exists, or false if there are no more rows."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-048",
+    "question": "What is the root class of Java's exception hierarchy?",
+    "options": ["Exception", "RuntimeException", "Throwable", "Error"],
+    "correctAnswer": 2,
+    "explanation": "Throwable is the root class. It has two subclasses: Exception (for recoverable errors) and Error (for serious system problems)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-049",
+    "question": "What is the instanceof operator used for?",
+    "options": [
+      "To check if two objects are equal",
+      "To check if an object is an instance of a specific class or interface",
+      "To create a new instance of a class",
+      "To compare primitive values"
+    ],
+    "correctAnswer": 1,
+    "explanation": "instanceof checks whether an object is an instance of a particular class, subclass, or interface. It returns a boolean."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-050",
+    "question": "Which of the following statements about wrapper classes is TRUE?",
+    "options": [
+      "int is the wrapper class for Integer",
+      "Autoboxing converts a wrapper object to a primitive",
+      "Wrapper classes allow primitives to be used in collections like ArrayList",
+      "Integer and int can be used interchangeably in all contexts"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Wrapper classes (Integer, Double, etc.) enable primitives to be used in collections which only work with objects. Autoboxing is primitive to wrapper; unboxing is wrapper to primitive."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-051",
+    "question": "What will this code print?\n\nInteger a = 100;\nInteger b = 100;\nInteger c = 200;\nInteger d = 200;\nSystem.out.println((a==b) + \" \" + (c==d));",
+    "options": ["true true", "false false", "true false", "false true"],
+    "correctAnswer": 2,
+    "explanation": "Java caches Integer objects from -128 to 127. a and b (100) are within the cache so they share the same object (== true). c and d (200) are outside the cache, so they are different objects (== false)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-052",
+    "question": "Which class in java.io is used to read primitive data types (int, double, etc.) from an input stream?",
+    "options": ["BufferedReader", "FileReader", "DataInputStream", "ObjectInputStream"],
+    "correctAnswer": 2,
+    "explanation": "DataInputStream provides methods like readInt(), readDouble(), readUTF() for reading primitive data types from a binary stream."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OOP Fundamentals",
+    "id": "MCQ-053",
+    "question": "What is the output?\n\npublic class Test {\n    static int count = 0;\n    Test() { count++; }\n    public static void main(String[] args) {\n        Test t1 = new Test();\n        Test t2 = new Test();\n        Test t3 = new Test();\n        System.out.println(count);\n    }\n}",
+    "options": ["0", "1", "3", "Compilation error"],
+    "correctAnswer": 2,
+    "explanation": "The static variable count is shared by all instances. Three objects are created, each incrementing count, so count = 3."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-054",
+    "question": "Which of the following is FALSE about Java arrays?",
+    "options": [
+      "Arrays have a fixed size determined at creation",
+      "Array elements are accessed using bracket notation arr[index]",
+      "Arrays can hold both primitives and objects",
+      "Arrays automatically resize when full"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Arrays have a fixed size and do NOT automatically resize. ArrayList provides dynamic resizing but regular arrays do not."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "MCQ-055",
+    "question": "What is the size of an ArrayList after this code?\n\nArrayList<String> list = new ArrayList<>();\nlist.add(\"A\");\nlist.add(\"B\");\nlist.remove(0);",
+    "options": ["0", "1", "2", "3"],
+    "correctAnswer": 1,
+    "explanation": "After adding A and B, size is 2. After removing index 0 (\"A\"), only \"B\" remains. Size = 1."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-056",
+    "question": "Which method is used to get text from a JTextField?",
+    "options": ["getValue()", "getText()", "getString()", "retrieve()"],
+    "correctAnswer": 1,
+    "explanation": "JTextField.getText() returns the text currently entered in the text field as a String."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-057",
+    "question": "Which of the following is the correct JDBC URL format for MySQL?",
+    "options": [
+      "mysql://localhost:3306/database",
+      "jdbc:mysql://localhost:3306/database",
+      "jdbc:mysql:localhost/database",
+      "mysql:jdbc://localhost:3306/database"
+    ],
+    "correctAnswer": 1,
+    "explanation": "The correct JDBC URL format is: jdbc:mysql://host:port/database"
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-058",
+    "question": "What is the purpose of connection pooling?",
+    "options": [
+      "To pool multiple SQL queries together for batch execution",
+      "To reuse database connections instead of creating new ones for each request",
+      "To pool database users into groups",
+      "To combine multiple databases into one connection"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Connection pooling reuses existing connections instead of creating new ones for each request, significantly improving performance."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-059",
+    "question": "Which method of the File class creates a directory?",
+    "options": ["createDir()", "mkdir()", "newDir()", "makeDirectory()"],
+    "correctAnswer": 1,
+    "explanation": "File.mkdir() creates a single directory. File.mkdirs() creates the directory and any necessary parent directories."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-060",
+    "question": "Which of the following is TRUE about method overriding?",
+    "options": [
+      "The method name and parameter list must be different",
+      "It is resolved at compile time",
+      "It occurs between methods in the same class",
+      "It enables runtime polymorphism"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Method overriding enables runtime polymorphism — the JVM decides at runtime which method to call based on the actual object type."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "MCQ-061",
+    "question": "What will happen if we write 'return' inside a try block that has a finally block?",
+    "options": [
+      "The method returns immediately and finally does not execute",
+      "The finally block executes, then the method returns",
+      "Compilation error — cannot use return in try with finally",
+      "The finally block executes after the value is returned"
+    ],
+    "correctAnswer": 1,
+    "explanation": "The finally block always executes before the method returns. It runs after the try block's return statement executes but before control is returned to the caller."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Abstraction & Interfaces",
+    "id": "MCQ-062",
+    "question": "Can an interface contain concrete (implemented) methods in Java 8+?",
+    "options": [
+      "No, interfaces can only have abstract methods",
+      "Yes, using default and static methods",
+      "Yes, but only private methods",
+      "Only if all methods are concrete"
+    ],
+    "correctAnswer": 1,
+    "explanation": "From Java 8, interfaces can have default methods (with body) and static methods. They can also have private methods from Java 9."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "MCQ-063",
+    "question": "What is the output of this code?\n\nString s1 = \"Java\";\nString s2 = new String(\"Java\");\nSystem.out.println(s1 == s2);\nSystem.out.println(s1.equals(s2));",
+    "options": ["true true", "false true", "true false", "false false"],
+    "correctAnswer": 1,
+    "explanation": "s1 is from the String pool, s2 is a new object in heap. == checks references (false). equals() checks content (true)."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "MCQ-064",
+    "question": "Which interface must a class implement to be serializable?",
+    "options": ["Cloneable", "Externalizable", "Serializable", "Comparable"],
+    "correctAnswer": 2,
+    "explanation": "A class must implement the Serializable marker interface (an interface with no methods) to be serializable."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "MCQ-065",
+    "question": "What does the ResultSet.getInt(\"column_name\") method return when the database value is NULL?",
+    "options": ["null", "0", "Throws SQLException", "-1"],
+    "correctAnswer": 1,
+    "explanation": "getInt() returns 0 for SQL NULL. Use wasNull() after calling getInt() to check if the value was actually NULL."
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "MCQ-066",
+    "question": "Which Swing component is best for displaying a drop-down list of options?",
+    "options": ["JList", "JComboBox", "JMenu", "JRadioButton"],
+    "correctAnswer": 1,
+    "explanation": "JComboBox provides a drop-down list where the user can select one option. JList shows all options in a scrollable list."
+  }
+]

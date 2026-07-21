@@ -156,7 +156,7 @@
       "The JVM determines at runtime which overridden method to call based on the actual object type",
       "Polymorphism enables writing flexible, extensible, and maintainable code"
     ],
-    "referenceAnswer": "Polymorphism is a core OOP principle meaning \"many forms.\" It allows objects of different types to be treated through a single interface, where the actual behavior depends on the specific type of the object at runtime.\n\nTWO TYPES OF POLYMORPHISM IN JAVA:\n\n1. COMPILE-TIME POLYMORPHISM (Method Overloading):\nThe compiler determines which method to call based on the method signature (name + parameters).\n\nclass Printer {\n    void print(String s) { System.out.println(\"String: \" + s); }\n    void print(int n) { System.out.println(\"Number: \" + n); }\n    void print(String s, int n) { System.out.println(s + \": \" + n); }\n}\n// The correct print() is chosen at compile time based on argument types.\n\n2. RUNTIME POLYMORPHISM (Method Overriding):\nThe JVM determines which method to call at runtime based on the actual object type, not the reference type.\n\nclass Shape {\n    double area() { return 0; }\n}\n\nclass Circle extends Shape {\n    double radius;\n    double area() { return Math.PI * radius * radius; }\n}\n\nclass Rectangle extends Shape {\n    double width, height;\n    double area() { return width * height; }\n}\n\n// Runtime polymorphism in action:\nShape s1 = new Circle();     // parent reference, child object\nShape s2 = new Rectangle();\nSystem.out.println(s1.area());  // Calls Circle.area() → πr²\nSystem.out.println(s2.area());  // Calls Rectangle.area() → w×h\n\nThis is called dynamic method dispatch — the JVM looks at the actual object (Circle or Rectangle) to decide which area() to call, even though the reference type is Shape.\n\nBenefits:\n- Code flexibility: New subclasses can be added without changing existing code\n- Code reusability: Common interface for different types\n- Loose coupling: Code works with the parent type, not specific implementations",
+    "referenceAnswer": "Polymorphism is a core OOP principle meaning \"many forms.\" It allows objects of different types to be treated through a single interface, where the actual behavior depends on the specific type of the object at runtime.\n\nTWO TYPES OF POLYMORPHISM IN JAVA:\n\n1. COMPILE-TIME POLYMORPHISM (Method Overloading):\nThe compiler determines which method to call based on the method signature (name + parameters).\n\nclass Printer {\n    void print(String s) { System.out.println(\"String: \" + s); }\n    void print(int n) { System.out.println(\"Number: \" + n); }\n    void print(String s, int n) { System.out.println(s + \": \" + n); }\n}\n// The correct print() is chosen at compile time based on argument types.\n\n2. RUNTIME POLYMORPHISM (Method Overriding):\nThe JVM determines which method to call at runtime based on the actual object type, not the reference type.\n\nclass Shape {\n    double area() { return 0; }\n}\n\nclass Circle extends Shape {\n    double radius;\n    double area() { return Math.PI * radius * radius; }\n}\n\nclass Rectangle extends Shape {\n    double width, height;\n    double area() { return width * height; }\n}\n\n// Runtime polymorphism in action:\nShape s1 = new Circle();     // parent reference, child object\nShape s2 = new Rectangle();\nSystem.out.println(s1.area());  // Calls Circle.area() -> \u03c0r\u00b2\nSystem.out.println(s2.area());  // Calls Rectangle.area() -> w\u00d7h\n\nThis is called dynamic method dispatch — the JVM looks at the actual object (Circle or Rectangle) to decide which area() to call, even though the reference type is Shape.\n\nBenefits:\n- Code flexibility: New subclasses can be added without changing existing code\n- Code reusability: Common interface for different types\n- Loose coupling: Code works with the parent type, not specific implementations",
     "difficulty": "medium",
     "maxPoints": 6
   },
@@ -317,7 +317,7 @@
       "A class is a logical entity; an object is a physical entity in memory",
       "The new keyword creates an object (instantiation)"
     ],
-    "referenceAnswer": "CLASS vs OBJECT in Java:\n\nA CLASS is a blueprint or template that defines the structure (fields) and behavior (methods) that objects of that type will have. It is a logical entity that does not occupy memory for its instance fields.\n\nAn OBJECT is a specific instance of a class — a concrete entity created from the blueprint. It occupies memory and holds actual values for the fields defined by the class.\n\nExample:\n// CLASS definition (blueprint)\nclass Car {\n    String model;\n    int year;\n    \n    void start() {\n        System.out.println(model + \" started\");\n    }\n}\n\n// OBJECT creation (instances)\nCar car1 = new Car();  // object 1\ncar1.model = \"Toyota\";\ncar1.year = 2023;\n\ncar2.model = \"Honda\";\ncar2.year = 2024;\n\n// Both car1 and car2 are objects of the same class Car\n// but they have different states (different model and year values)\n\nKEY DIFFERENCES:\n1. Definition: Class = blueprint; Object = instance of that blueprint\n2. Memory: Class declaration allocates no instance memory; object creation allocates memory (via new)\n3. Quantity: One class can create unlimited objects\n4. Existence: Class exists as code; object exists at runtime in memory\n5. Creation: Class is defined with class keyword; Object is created with new keyword\n6. State: Class defines possible state (fields); Object holds actual state (field values)\n7. Nature: Class is a logical entity; Object is a physical entity in heap memory",
+    "referenceAnswer": "CLASS vs OBJECT in Java:\n\nA CLASS is a blueprint or template that defines the structure (fields) and behavior (methods) that objects of that type will have. It is a logical entity that does not occupy memory for its instance fields.\n\nAn OBJECT is a specific instance of a class — a concrete entity created from the blueprint. It occupies memory and holds actual values for the fields defined by the class.\n\nExample:\n// CLASS definition (blueprint)\nclass Car {\n    String model;\n    int year;\n    \n    void start() {\n        System.out.println(model + \" started\");\n    }\n}\n\n// OBJECT creation (instances)\nCar car1 = new Car();  // object 1\ncar1.model = \"Toyota\";\ncar1.year = 2023;\n\nCar car2 = new Car();  // object 2\ncar2.model = \"Honda\";\ncar2.year = 2024;\n\n// Both car1 and car2 are objects of the same class Car\n// but they have different states (different model and year values)\n\nKEY DIFFERENCES:\n1. Definition: Class = blueprint; Object = instance of that blueprint\n2. Memory: Class declaration allocates no instance memory; object creation allocates memory (via new)\n3. Quantity: One class can create unlimited objects\n4. Existence: Class exists as code; object exists at runtime in memory\n5. Creation: Class is defined with class keyword; Object is created with new keyword\n6. State: Class defines possible state (fields); Object holds actual state (field values)\n7. Nature: Class is a logical entity; Object is a physical entity in heap memory",
     "difficulty": "easy",
     "maxPoints": 6
   },
@@ -345,7 +345,7 @@
       "Naming convention: getFieldName() and setFieldName()",
       "They provide controlled access to private data"
     ],
-    "referenceAnswer": "Getter and setter methods are special methods used in encapsulation to provide controlled access to private fields of a class.\n\nGETTER METHOD (Accessor):\nReturns the value of a private field. It has no parameters and returns the field value.\n\npublic class Person {\n    private String name;\n    private int age;\n    \n    // Getter for name\n    public String getName() {\n        return name;\n    }\n    \n    // Getter for age\n    public int getAge() {\n        return age;\n    }\n}\n\nSETTER METHOD (Mutator):\nAssigns a value to a private field. It takes a parameter and returns void (or boolean for success/failure).\n\npublic class Person {\n    private String name;\n    private int age;\n    \n    // Setter for name\n    public void setName(String name) {\n        this.name = name;\n    }\n    \n    // Setter for age with validation\n    public void setAge(int age) {\n        if (age >= 0 && age <= 150) {\n            this.age = age;\n        } else {\n            System.out.println(\"Invalid age\");\n        }\n    }\n}\n\nUsage:\nPerson p = new Person();\np.setName(\"John\");  // setter\np.setAge(25);       // setter with validation\nSystem.out.println(p.getName());  // getter → \"John\"\nSystem.out.println(p.getAge());   // getter → 25\n\nWhy use them:\n1. Data validation: Setter can reject invalid values\n2. Read-only fields: Provide getter but no setter\n3. Computed values: Getter can calculate and return derived values\n4. Logging: Methods can log access for debugging\n5. Flexibility: Internal representation can change without breaking external code",
+    "referenceAnswer": "Getter and setter methods are special methods used in encapsulation to provide controlled access to private fields of a class.\n\nGETTER METHOD (Accessor):\nReturns the value of a private field. It has no parameters and returns the field value.\n\npublic class Person {\n    private String name;\n    private int age;\n    \n    // Getter for name\n    public String getName() {\n        return name;\n    }\n    \n    // Getter for age\n    public int getAge() {\n        return age;\n    }\n}\n\nSETTER METHOD (Mutator):\nAssigns a value to a private field. It takes a parameter and returns void (or boolean for success/failure).\n\npublic class Person {\n    private String name;\n    private int age;\n    \n    // Setter for name\n    public void setName(String name) {\n        this.name = name;\n    }\n    \n    // Setter for age with validation\n    public void setAge(int age) {\n        if (age >= 0 && age <= 150) {\n            this.age = age;\n        } else {\n            System.out.println(\"Invalid age\");\n        }\n    }\n}\n\nUsage:\nPerson p = new Person();\np.setName(\"John\");  // setter\np.setAge(25);       // setter with validation\nSystem.out.println(p.getName());  // getter -> \"John\"\nSystem.out.println(p.getAge());   // getter -> 25\n\nWhy use them:\n1. Data validation: Setter can reject invalid values\n2. Read-only fields: Provide getter but no setter\n3. Computed values: Getter can calculate and return derived values\n4. Logging: Methods can log access for debugging\n5. Flexibility: Internal representation can change without breaking external code",
     "difficulty": "easy",
     "maxPoints": 6
   },
@@ -401,6 +401,1124 @@
     ],
     "referenceAnswer": "The this keyword in Java is a reference variable that refers to the current object — the instance on which a method or constructor is currently being executed.\n\nPURPOSES OF this:\n\n1. TO DISTINGUISH INSTANCE VARIABLES FROM LOCAL VARIABLES:\nWhen a parameter or local variable has the same name as an instance variable, this resolves the ambiguity.\n\npublic class Person {\n    String name;\n    \n    Person(String name) {\n        this.name = name;  // this.name = field, name = parameter\n    }\n    \n    void setName(String name) {\n        this.name = name;  // same disambiguation\n    }\n}\n\nWithout this, the line \"name = name\" would assign the parameter to itself (shadowing).\n\n2. CONSTRUCTOR CHAINING (calling another constructor):\nthis() with parameters calls another constructor in the same class. It must be the first statement.\n\npublic class Student {\n    String name;\n    int id;\n    \n    Student() {\n        this(\"Unknown\", 0);  // calls the parameterized constructor\n    }\n    \n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n}\n\n3. PASSING THE CURRENT OBJECT:\nthis can be passed as an argument to other methods.\n\npublic class Printer {\n    void print(Student s) { System.out.println(s.name); }\n}\n\npublic class Student {\n    String name;\n    void sendToPrinter(Printer p) {\n        p.print(this);  // passes the current Student object\n    }\n}\n\n4. RETURNING THE CURRENT OBJECT:\nthis can be returned for method chaining.\n\npublic class Builder {\n    int x, y;\n    Builder setX(int x) { this.x = x; return this; }\n    Builder setY(int y) { this.y = y; return this; }\n}\n// Used as: new Builder().setX(1).setY(2);",
     "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-016",
+    "question": "What are the different types of inheritance supported in Java? Explain with examples.",
+    "keywords": [
+      "single inheritance",
+      "multilevel inheritance",
+      "hierarchical inheritance",
+      "multiple inheritance",
+      "interface",
+      "extends",
+      "IS-A"
+    ],
+    "mainConcepts": [
+      "Java supports single inheritance (one class extends one parent class)",
+      "Java supports multilevel inheritance (grandparent -> parent -> child)",
+      "Java supports hierarchical inheritance (one parent, multiple children)",
+      "Java does NOT support multiple inheritance with classes (diamond problem)",
+      "Multiple inheritance is achieved through interfaces",
+      "Java also supports hybrid inheritance through interfaces"
+    ],
+    "referenceAnswer": "Java supports the following types of inheritance:\n\n1. SINGLE INHERITANCE:\nA subclass extends one superclass. This is the simplest form.\nclass Animal { }\nclass Dog extends Animal { }\n\n2. MULTILEVEL INHERITANCE:\nA chain of inheritance where a class extends another class that itself extends another class.\nclass GrandParent { }\nclass Parent extends GrandParent { }\nclass Child extends Parent { }\n// Child inherits from both Parent and GrandParent transitively\n\n3. HIERARCHICAL INHERITANCE:\nMultiple subclasses extend the same superclass.\nclass Vehicle { }\nclass Car extends Vehicle { }\nclass Bike extends Vehicle { }\nclass Truck extends Vehicle { }\n\n4. MULTIPLE INHERITANCE (via Interfaces only):\nJava does NOT allow a class to extend multiple classes. This restriction avoids the diamond problem — ambiguity when two parent classes define the same method. Multiple inheritance of type is achieved through interfaces.\ninterface Flyable { }\ninterface Drivable { }\nclass FlyingCar implements Flyable, Drivable { }\n\n5. HYBRID INHERITANCE (via Interfaces):\nA combination of inheritance types, achieved through interfaces.\n\nPractical Example:\nclass Person {\n    String name;\n    void speak() { }\n}\n\nclass Employee extends Person {  // Single inheritance\n    double salary;\n    void work() { }\n}\n\nclass Manager extends Employee {  // Multilevel inheritance\n    int teamSize;\n    void manage() { }\n}\n\n// Hierarchical:\nclass Intern extends Employee { }  // Employee also has Intern\n\nKey Rule: A class can extend only ONE class but can implement MULTIPLE interfaces.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Encapsulation & Access Control",
+    "id": "TH-017",
+    "question": "Explain the four access modifiers in Java with their visibility scope.",
+    "keywords": [
+      "public",
+      "private",
+      "protected",
+      "default",
+      "access modifier",
+      "visibility",
+      "package",
+      "scope"
+    ],
+    "mainConcepts": [
+      "public: accessible from any class in any package",
+      "private: accessible only within the same class",
+      "protected: accessible within the same package and by subclasses in other packages",
+      "default (no modifier): accessible only within the same package",
+      "Access modifiers are used to implement encapsulation",
+      "A class can only be public or default (not private or protected for top-level classes)"
+    ],
+    "referenceAnswer": "Java has four access modifiers that control the visibility of classes, methods, and fields:\n\n1. PUBLIC:\n- Keyword: public\n- Visibility: Accessible from ANY class in ANY package\n- Widest access level — no restrictions\npublic class MyClass {\n    public int value;  // accessible everywhere\n}\n\n2. PRIVATE:\n- Keyword: private\n- Visibility: Accessible ONLY within the SAME class\n- Not visible to subclasses or other classes in the same package\n- Used for encapsulation and data hiding\npublic class MyClass {\n    private int secret;  // only MyClass can access it\n}\n\n3. PROTECTED:\n- Keyword: protected\n- Visibility: Accessible within the SAME PACKAGE + by SUBCLASSES in other packages\n- More restrictive than public, more permissive than default\n- Useful in inheritance hierarchies\npackage p1;\npublic class Parent {\n    protected int value;  // accessible by subclasses (even in other packages)\n}\n\n4. DEFAULT (Package-Private):\n- No keyword (no modifier)\n- Visibility: Accessible ONLY within the SAME PACKAGE\n- Cannot be accessed from other packages, even by subclasses\npackage p1;\nclass MyClass {  // default class\n    int value;  // default field — same package only\n}\n\nSUMMARY TABLE (from most to least restrictive):\nModifier    | Class | Package | Subclass | World\nprivate     |  Yes  |   No    |    No    |  No\ndefault     |  Yes  |   Yes   |    No    |  No\nprotected   |  Yes  |   Yes   |   Yes    |  No\npublic      |  Yes  |   Yes   |   Yes    |  Yes\n\nClass-level rules: Top-level classes can only be public or default (package-private). Inner classes can use any modifier.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-018",
+    "question": "What is exception handling in Java? Explain the try-catch-finally mechanism.",
+    "keywords": [
+      "exception",
+      "try",
+      "catch",
+      "finally",
+      "throw",
+      "runtime error",
+      "exception handling",
+      "error recovery"
+    ],
+    "mainConcepts": [
+      "Exception handling is a mechanism to handle runtime errors gracefully without crashing the program",
+      "try block contains code that might throw an exception",
+      "catch block handles the exception if one occurs",
+      "finally block always executes regardless of whether an exception occurred",
+      "A try block can have multiple catch blocks for different exception types",
+      "Exceptions are objects that extend the Throwable class"
+    ],
+    "referenceAnswer": "Exception handling in Java is a mechanism that allows a program to handle runtime errors (exceptions) gracefully, preventing the program from crashing and providing meaningful error messages.\n\nTHE TRY-CATCH-FINALLY MECHANISM:\n\ntry {\n    // Code that might throw an exception\n    int result = 10 / 0;  // ArithmeticException\n} catch (ArithmeticException e) {\n    // Handle the specific exception\n    System.out.println(\"Cannot divide by zero!\");\n} finally {\n    // Always executes (even if return is called in try/catch)\n    System.out.println(\"This always runs.\");\n}\n\nHOW IT WORKS:\n1. The try block contains code that may cause an exception\n2. If an exception occurs, the JVM creates an exception object and looks for a matching catch block\n3. The catch block executes if it handles the matching exception type\n4. If no exception occurs, catch blocks are skipped\n5. The finally block always executes — used for cleanup (closing files, database connections)\n\nMULTIPLE CATCH BLOCKS:\ntry {\n    String s = null;\n    System.out.println(s.length());    // NullPointerException\n    int[] arr = new int[5];\n    arr[10] = 3;                       // ArrayIndexOutOfBoundsException\n} catch (NullPointerException e) {\n    System.out.println(\"Null reference!\");\n} catch (ArrayIndexOutOfBoundsException e) {\n    System.out.println(\"Array index out of bounds!\");\n} catch (Exception e) {\n    // Generic catch block — should be last\n    System.out.println(\"Some other exception: \" + e);\n}\n\nCATCH-OR-DECLARE RULE:\n- Checked exceptions must either be caught (try-catch) or declared (throws)\n- Unchecked exceptions (RuntimeException) are optional to handle\n\nJava 7+ allows multi-catch:\ntry {\n    // code\n} catch (IOException | SQLException e) {\n    // handle both exception types the same way\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-019",
+    "question": "What is the difference between checked and unchecked exceptions in Java?",
+    "keywords": [
+      "checked exception",
+      "unchecked exception",
+      "compile-time",
+      "runtime",
+      "IOException",
+      "SQLException",
+      "RuntimeException",
+      "throws"
+    ],
+    "mainConcepts": [
+      "Checked exceptions are checked at compile time; the compiler forces handling via try-catch or throws",
+      "Unchecked exceptions occur at runtime and are not checked by the compiler",
+      "Checked exceptions extend Exception (but not RuntimeException)",
+      "Unchecked exceptions extend RuntimeException",
+      "Examples of checked: IOException, SQLException, ClassNotFoundException",
+      "Examples of unchecked: NullPointerException, ArrayIndexOutOfBoundsException, ArithmeticException"
+    ],
+    "referenceAnswer": "CHECKED EXCEPTIONS:\n- Checked at COMPILE TIME — the compiler verifies they are handled\n- Must be caught with try-catch OR declared with throws in the method signature\n- Extend the Exception class (but NOT RuntimeException)\n- Represent external, recoverable errors (file not found, network failure, database error)\n- Examples:\n  - IOException (file read/write failures)\n  - SQLException (database errors)\n  - ClassNotFoundException (class not found on classpath)\n  - InterruptedException (thread interruption)\n\nExample of checked exception handling:\nimport java.io.*;\n\npublic void readFile(String path) {\n    try {\n        FileReader fr = new FileReader(path);  // may throw FileNotFoundException\n        BufferedReader br = new BufferedReader(fr);\n        System.out.println(br.readLine());  // may throw IOException\n    } catch (IOException e) {\n        System.out.println(\"Error reading file: \" + e.getMessage());\n    }\n}\n\n// Alternatively, declare with throws:\npublic void readFile(String path) throws IOException {\n    FileReader fr = new FileReader(path);\n    BufferedReader br = new BufferedReader(fr);\n    System.out.println(br.readLine());\n}\n\nUNCHECKED EXCEPTIONS:\n- NOT checked at compile time — the compiler does not enforce handling\n- Extend RuntimeException\n- Represent programming bugs (logic errors, null references, division by zero, array overflow)\n- Can still be caught but are not required to be\n- Examples:\n  - NullPointerException (calling method on null)\n  - ArrayIndexOutOfBoundsException (index beyond array length)\n  - ArithmeticException (division by zero)\n  - IllegalArgumentException (invalid method argument)\n  - NumberFormatException (invalid string-to-number conversion)\n\nExample:\npublic void divide(int a, int b) {\n    // No compile-time requirement to handle ArithmeticException\n    int result = a / b;  // throws ArithmeticException if b == 0\n}\n\nKEY DIFFERENCE:\nChecked exceptions force the programmer to handle potential failures at compile time. Unchecked exceptions indicate programming errors that should be fixed in code rather than caught at runtime.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-020",
+    "question": "What is the difference between the throw and throws keywords in Java?",
+    "keywords": [
+      "throw",
+      "throws",
+      "exception",
+      "method signature",
+      "declare exception",
+      "throw object",
+      "checked exception",
+      "exception propagation"
+    ],
+    "mainConcepts": [
+      "throw is used to explicitly throw an exception object from code",
+      "throws is used in the method signature to declare that the method may throw certain exceptions",
+      "throw is followed by an exception object; throws is followed by exception class names",
+      "throw appears inside method body; throws appears in the method declaration",
+      "A method can throw only one exception at a time but can declare multiple with throws",
+      "throws delegates exception handling to the caller"
+    ],
+    "referenceAnswer": "THROW:\n- Used to EXPLICITLY throw an exception object from within code\n- Followed by an instance of Throwable (or its subclasses)\n- Placed inside the method body\n- Can only throw ONE exception at a time\n- Stops the current execution and transfers control to the nearest catch block\n\nExample:\npublic void checkAge(int age) {\n    if (age < 18) {\n        throw new IllegalArgumentException(\"Age must be 18 or older\");\n    }\n    System.out.println(\"Access granted\");\n}\n\n// Using throw with custom exception:\nthrow new ArithmeticException(\"Custom error message\");\n\nTHROWS:\n- Used in METHOD SIGNATURE to declare that the method may throw certain exceptions\n- Followed by comma-separated exception class names\n- Delegates the responsibility of handling exceptions to the caller\n- Used primarily for checked exceptions\n- The caller must catch or further declare these exceptions\n\nExample:\npublic void readFile(String path) throws IOException, FileNotFoundException {\n    FileReader fr = new FileReader(path);  // may throw FileNotFoundException\n    BufferedReader br = new BufferedReader(fr);\n    System.out.println(br.readLine());  // may throw IOException\n}\n\n// Caller must handle:\npublic void caller() {\n    try {\n        readFile(\"data.txt\");\n    } catch (IOException e) {\n        System.out.println(\"File error: \" + e.getMessage());\n    }\n}\n\nKEY DIFFERENCES:\nFeature        | throw                    | throws\n---------------|--------------------------|--------------------------\nPurpose        | Actually throw exception  | Declare possible exceptions\nLocation       | Inside method body        | Method signature\nKeyword follows| Exception object          | Exception class name(s)\nQuantity       | One at a time             | Multiple possible\nEffect         | Stops execution           | Tells callers to handle\n\nBoth are commonly used together:\npublic void process(int value) throws IllegalArgumentException {\n    if (value < 0) {\n        throw new IllegalArgumentException(\"Negative value not allowed\");\n    }\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-021",
+    "question": "How do you create and use a custom exception class in Java?",
+    "keywords": [
+      "custom exception",
+      "user-defined exception",
+      "extends Exception",
+      "constructor",
+      "super",
+      "checked exception",
+      "unchecked exception"
+    ],
+    "mainConcepts": [
+      "A custom exception is created by extending Exception (checked) or RuntimeException (unchecked)",
+      "A constructor is defined that calls super() with the error message",
+      "Custom exceptions should have meaningful names ending with 'Exception'",
+      "They are thrown using the throw keyword",
+      "Custom exceptions allow specific, domain-specific error handling",
+      "They can include additional fields for more error context"
+    ],
+    "referenceAnswer": "A custom exception in Java is a user-defined exception class created by extending either Exception (for checked exceptions) or RuntimeException (for unchecked exceptions).\n\nSTEPS TO CREATE A CUSTOM EXCEPTION:\n\n1. EXTEND Exception or RuntimeException:\n- Extend Exception for CHECKED custom exceptions (must be caught or declared)\n- Extend RuntimeException for UNCHECKED custom exceptions (optional to handle)\n\n2. Define a constructor that calls super(message):\n- This passes the error message to the parent class\n\n3. Optionally add extra fields and constructors:\n- For more context about the error (e.g., error codes)\n\nEXAMPLES:\n\n// Checked custom exception\nclass InsufficientBalanceException extends Exception {\n    private double deficit;\n    \n    public InsufficientBalanceException(String message) {\n        super(message);\n    }\n    \n    public InsufficientBalanceException(String message, double deficit) {\n        super(message);\n        this.deficit = deficit;\n    }\n    \n    public double getDeficit() {\n        return deficit;\n    }\n}\n\n// Unchecked custom exception\nclass InvalidInputException extends RuntimeException {\n    public InvalidInputException(String message) {\n        super(message);\n    }\n}\n\nUSING THE CUSTOM EXCEPTION:\npublic class BankAccount {\n    private double balance;\n    \n    public void withdraw(double amount) throws InsufficientBalanceException {\n        if (amount > balance) {\n            double deficit = amount - balance;\n            throw new InsufficientBalanceException(\n                \"Insufficient balance. Short by $\" + deficit, deficit);\n        }\n        balance -= amount;\n    }\n    \n    public void process(String input) {\n        if (input == null || input.isEmpty()) {\n            throw new InvalidInputException(\"Input cannot be null or empty\");\n        }\n    }\n}\n\nCaller handles the checked exception:\ntry {\n    account.withdraw(500);\n} catch (InsufficientBalanceException e) {\n    System.out.println(e.getMessage());\n    System.out.println(\"Deficit: $\" + e.getDeficit());\n}\n\nBest practices:\n- Name custom exceptions with 'Exception' suffix\n- Document the exception with Javadoc\n- Keep the exception specific to the error domain\n- Provide constructors matching superclass patterns",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-022",
+    "question": "What is the try-with-resources statement in Java? Explain with an example.",
+    "keywords": [
+      "try-with-resources",
+      "AutoCloseable",
+      "resource management",
+      "file handling",
+      "close",
+      "Java 7",
+      "automatic cleanup",
+      "finally"
+    ],
+    "mainConcepts": [
+      "try-with-resources automatically closes resources that implement AutoCloseable",
+      "Resources are declared in the try statement with parentheses",
+      "Introduced in Java 7 to simplify resource management",
+      "Resources are closed automatically in reverse order of declaration",
+      "No need for explicit finally block to close resources",
+      "Multiple resources can be declared, separated by semicolons"
+    ],
+    "referenceAnswer": "The try-with-resources statement, introduced in Java 7, is a try statement that declares one or more resources (objects that implement AutoCloseable) and automatically closes them at the end of the statement. This simplifies resource management and reduces boilerplate code.\n\nSYNTAX:\ntry (ResourceType resource = new ResourceType()) {\n    // use resource\n} catch (ExceptionType e) {\n    // handle exception\n}\n\nEXAMPLE WITHOUT try-with-resources (old way):\nBufferedReader br = null;\ntry {\n    br = new BufferedReader(new FileReader(\"file.txt\"));\n    System.out.println(br.readLine());\n} catch (IOException e) {\n    System.out.println(\"Error: \" + e.getMessage());\n} finally {\n    if (br != null) {\n        try {\n            br.close();  // must close manually\n        } catch (IOException e) {\n            System.out.println(\"Error closing: \" + e.getMessage());\n        }\n    }\n}\n\nEXAMPLE WITH try-with-resources:\ntry (BufferedReader br = new BufferedReader(new FileReader(\"file.txt\"))) {\n    System.out.println(br.readLine());\n} catch (IOException e) {\n    System.out.println(\"Error: \" + e.getMessage());\n}\n// br is automatically closed! No finally block needed.\n\nMULTIPLE RESOURCES:\ntry (\n    FileReader fr = new FileReader(\"input.txt\");\n    BufferedReader br = new BufferedReader(fr);\n    PrintWriter pw = new PrintWriter(\"output.txt\")\n) {\n    String line = br.readLine();\n    pw.println(line);\n} catch (IOException e) {\n    System.out.println(\"Error: \" + e.getMessage());\n}\n// Resources are closed in reverse order: pw, br, fr\n\nIMPORTANT POINTS:\n1. Resources must implement AutoCloseable or Closeable interface\n2. Available from Java 7 onwards\n3. Resources are closed even if an exception occurs\n4. Multiple resources are separated by semicolons\n5. Can combine with regular try-catch and finally blocks (Java 9+ allows using effectively-final variables)\n6. The compiler generates the close() calls automatically\n\nJava 9 enhancement: Resources can be declared outside the try:\nBufferedReader br = new BufferedReader(new FileReader(\"file.txt\"));\ntry (br) {  // br is effectively final\n    System.out.println(br.readLine());\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-023",
+    "question": "Explain the concept of static members in Java with examples.",
+    "keywords": [
+      "static",
+      "static variable",
+      "static method",
+      "class member",
+      "instance member",
+      "shared",
+      "without object",
+      "Math class"
+    ],
+    "mainConcepts": [
+      "Static members belong to the class itself, not individual objects",
+      "Static variables are shared across all instances of a class",
+      "Static methods can be called without creating an object (e.g., Math.sqrt())",
+      "Static methods cannot access instance variables directly",
+      "Static blocks are used for static initialization",
+      "Static members are accessed using the class name (e.g., ClassName.staticMember)"
+    ],
+    "referenceAnswer": "Static members (variables, methods, blocks) belong to the CLASS rather than to any specific object/instance of the class. They are shared by all objects of the class and can be accessed using the class name without creating an object.\n\n1. STATIC VARIABLES (Class Variables):\nShared by all instances. Only one copy exists regardless of how many objects are created.\n\nclass Employee {\n    String name;             // instance variable\n    static String company;   // static variable — shared by all employees\n    static int count = 0;    // static variable — tracks total employees\n    \n    Employee(String name) {\n        this.name = name;\n        count++;  // increments for every new employee\n    }\n}\n\n// All employees share the same 'company' value\nEmployee e1 = new Employee(\"Alice\");\nEmployee e2 = new Employee(\"Bob\");\nEmployee.company = \"TechCorp\";  // set once, affects all\nSystem.out.println(e1.count);   // 2 — shared count\n\n2. STATIC METHODS (Class Methods):\nCan be called without creating an object. They cannot directly access instance variables (only static members).\n\nclass MathUtils {\n    static int square(int x) {\n        return x * x;\n    }\n    \n    static double circleArea(double radius) {\n        return Math.PI * radius * radius;  // Math.PI is also static\n    }\n}\n\nint result = MathUtils.square(5);  // called without object\n\n3. STATIC BLOCKS:\nCode that runs once when the class is first loaded into memory. Used for static initialization.\n\nclass Database {\n    static Connection conn;\n    \n    static {\n        // Runs once when Database class is loaded\n        conn = DriverManager.getConnection(\"jdbc:mysql://localhost/db\");\n        System.out.println(\"Database connected\");\n    }\n}\n\nKEY RULES:\n- Static methods can only call other static methods directly\n- Static methods can only access static variables directly\n- Static methods cannot use 'this' or 'super'\n- Instance methods can access both static and instance members\n- Access static members via ClassName.member (best practice), though object.member also works (not recommended)\n\nJava's Math class is entirely static — all its methods and constants (PI, E) are static.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-024",
+    "question": "What is the String class in Java? Explain key methods and immutability.",
+    "keywords": [
+      "String",
+      "immutable",
+      "String pool",
+      "length",
+      "charAt",
+      "substring",
+      "equals",
+      "concatenation"
+    ],
+    "mainConcepts": [
+      "String objects are immutable — once created, their value cannot be changed",
+      "String literals are stored in the String pool for memory efficiency",
+      "String methods include length(), charAt(), substring(), equals(), toLowerCase(), toUpperCase()",
+      "String concatenation with + creates a new String object",
+      "StringBuilder/StringBuffer are the mutable alternatives for frequent modifications",
+      "The String class is final — cannot be subclassed"
+    ],
+    "referenceAnswer": "The String class in Java is one of the most commonly used classes. It represents a sequence of characters and is part of the java.lang package (automatically imported).\n\nKEY CHARACTERISTICS:\n\n1. IMMUTABILITY:\nString objects are immutable — once created, their value cannot be changed. Any operation that seems to modify a String actually creates a new String object.\n\nString s = \"Hello\";\ns = s + \" World\";  // Does NOT modify \"Hello\" — creates a new String \"Hello World\"\n// The original \"Hello\" remains unchanged in memory\n\n2. STRING POOL:\nString literals are stored in a special area of heap memory called the String constant pool. If the same string literal appears again, Java reuses the pooled reference.\n\nString s1 = \"Java\";\nString s2 = \"Java\";     // s2 points to the same object as s1\nString s3 = new String(\"Java\");  // s3 creates a NEW object in heap (not pooled)\nSystem.out.println(s1 == s2);     // true (same reference)\nSystem.out.println(s1 == s3);     // false (different references)\nSystem.out.println(s1.equals(s3)); // true (same value)\n\n3. COMMON METHODS:\n- length(): returns the number of characters\n- charAt(int index): returns the character at the given index\n- substring(int begin, int end): returns a substring\n- equals(String other): compares values (use this, NOT ==)\n- equalsIgnoreCase(String other): case-insensitive comparison\n- toLowerCase() / toUpperCase(): case conversion\n- trim(): removes leading/trailing whitespace\n- replace(char old, char new): replaces occurrences\n- split(String regex): splits into String array\n- indexOf(String s): returns the first index of substring\n- contains(CharSequence s): checks if substring exists\n\nExample:\nString str = \"  Hello, Java!  \";\nSystem.out.println(str.length());              // 15\nSystem.out.println(str.trim());                // \"Hello, Java!\"\nSystem.out.println(str.charAt(7));             // 'J'\nSystem.out.println(str.substring(2, 7));       // \"Hello\"\nSystem.out.println(str.toLowerCase());         // \"  hello, java!  \"\nSystem.out.println(str.contains(\"Java\"));     // true\n\n4. MUTABLE ALTERNATIVES:\n- StringBuilder (not thread-safe, faster)\n- StringBuffer (thread-safe, synchronized)\n\nUsed when many string modifications are needed:\nStringBuilder sb = new StringBuilder();\nsb.append(\"Hello\");\nsb.append(\" \");\nsb.append(\"World\");\nString result = sb.toString();  // \"Hello World\"",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-025",
+    "question": "What is composition in Java? How does it differ from inheritance?",
+    "keywords": [
+      "composition",
+      "HAS-A",
+      "inheritance",
+      "IS-A",
+      "aggregation",
+      "reuse",
+      "loose coupling",
+      "strong association"
+    ],
+    "mainConcepts": [
+      "Composition represents a HAS-A relationship where one object contains another object",
+      "In composition, the contained object's lifecycle depends on the container (strong association)",
+      "Inheritance represents an IS-A relationship using the extends keyword",
+      "Composition provides tighter encapsulation and looser coupling than inheritance",
+      "Composition is more flexible at runtime — behaviors can be swapped dynamically",
+      "Favor composition over inheritance is a well-known OOP design principle"
+    ],
+    "referenceAnswer": "Composition is an OOP design principle where a class contains an object of another class as a field, representing a HAS-A relationship. The contained object's lifecycle is tied to the container — when the container is destroyed, the contained object is also destroyed.\n\nCOMPOSITION vs INHERITANCE:\n\nCOMPOSITION (HAS-A):\nclass Engine {\n    void start() { System.out.println(\"Engine started\"); }\n}\n\nclass Car {\n    private Engine engine;  // Car HAS-A Engine\n    \n    Car() {\n        engine = new Engine();  // Engine created with Car\n    }\n    \n    void start() {\n        engine.start();  // delegating to Engine\n    }\n}\n// Car contains Engine. If Car is destroyed, Engine is also gone.\n\nINHERITANCE (IS-A):\nclass Vehicle {\n    void move() { }\n}\n\nclass Car extends Vehicle {  // Car IS-A Vehicle\n    // inherits move()\n}\n\nKEY DIFFERENCES:\n\n1. RELATIONSHIP:\n- Composition: HAS-A (Car has an Engine)\n- Inheritance: IS-A (Car is a Vehicle)\n\n2. KEYWORD:\n- Composition: Uses object references (fields)\n- Inheritance: Uses the extends keyword\n\n3. FLEXIBILITY:\n- Composition: More flexible — can change behavior at runtime by swapping components\n- Inheritance: Fixed at compile time — the parent-child relationship cannot change\n\n4. COUPLING:\n- Composition: Looser coupling — classes are independent\n- Inheritance: Tighter coupling — child depends on parent's implementation\n\n5. CODE REUSE:\n- Composition: Reuses functionality by delegating to contained objects\n- Inheritance: Reuses functionality by inheriting methods from parent\n\n6. ENCAPSULATION:\n- Composition: Better — internal components are hidden\n- Inheritance: Weaker — child can access parent's protected members\n\nDESIGN PRINCIPLE:\n\"Favor composition over inheritance\" — Use composition when the relationship is 'has-a' and when you want flexibility. Use inheritance when the relationship is truly 'is-a' and the subclass will not need to change the parent's behavior.\n\nAGGREGATION (weaker form of composition):\nclass Department {\n    List<Employee> employees;  // Department HAS-A Employee\n    // But Employee can exist without Department (lifecycle independent)\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-026",
+    "question": "Explain the Student Directory case study design — what classes are involved and their responsibilities?",
+    "keywords": [
+      "Student Directory",
+      "case study",
+      "OO design",
+      "Student",
+      "StudentDirectory",
+      "StudentDatabase",
+      "Output",
+      "Keyboard",
+      "separation of concerns"
+    ],
+    "mainConcepts": [
+      "StudentDirectory is the main controller class that manages the application flow",
+      "Student is the model class containing student data (name, ID, course, etc.)",
+      "StudentDatabase handles all data storage and retrieval operations",
+      "Output handles all display/output to the user",
+      "Keyboard handles all user input from the console",
+      "The design separates data, logic, input, and output into distinct classes"
+    ],
+    "referenceAnswer": "The Student Directory is a classic OOP case study that demonstrates separation of concerns in Java. The application manages student records with the following classes:\n\n1. STUDENT CLASS (Model):\nRepresents a single student entity with fields like name, ID number, course, etc.\npublic class Student {\n    private String name;\n    private int id;\n    private String course;\n    \n    // Constructor, getters, setters\n    public Student(String name, int id, String course) {\n        this.name = name;\n        this.id = id;\n        this.course = course;\n    }\n    \n    // display() method to show student details\n}\n\n2. STUDENTDATABASE CLASS (Data Layer):\nManages the collection of Student objects. Handles adding, removing, searching, and listing students.\npublic class StudentDatabase {\n    private ArrayList<Student> students;  // in-memory storage\n    \n    public void addStudent(Student s) { ... }\n    public Student findById(int id) { ... }\n    public void removeStudent(int id) { ... }\n    public ArrayList<Student> getAllStudents() { ... }\n}\n\n3. KEYBOARD CLASS (Input Handler):\nHandles all user input from the console. Provides methods to read specific data types.\npublic class Keyboard {\n    public static int readInt() { ... }\n    public static String readString() { ... }\n    // Reads input from System.in with error handling\n}\n\n4. OUTPUT CLASS (Output Handler):\nManages all display/output to the console.\npublic class Output {\n    public static void displayMenu() { ... }\n    public static void displayStudent(Student s) { ... }\n    public static void displayAllStudents(ArrayList<Student> list) { ... }\n    public static void displayMessage(String msg) { ... }\n}\n\n5. STUDENTDIRECTORY CLASS (Controller):\nThe main controller that ties everything together. Contains the main menu loop.\npublic class StudentDirectory {\n    private StudentDatabase database;\n    \n    public void run() {\n        // Main menu loop\n        int choice;\n        do {\n            Output.displayMenu();\n            choice = Keyboard.readInt();\n            switch(choice) {\n                case 1: addStudent(); break;\n                case 2: listStudents(); break;\n                case 3: searchStudent(); break;\n                case 4: removeStudent(); break;\n                case 5: System.out.println(\"Goodbye!\"); break;\n            }\n        } while (choice != 5);\n    }\n}\n\nDESIGN PRINCIPLES DEMONSTRATED:\n- Separation of Concerns: Each class has a single, well-defined responsibility\n- Modularity: Classes can be developed, tested, and maintained independently\n- Reusability: Keyboard, Output classes can be reused in other console applications\n- Encapsulation: Data is hidden behind methods\n- Main method in a separate driver class creates the StudentDirectory and calls run()",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-027",
+    "question": "What is Swing in Java? Explain JFrame and JPanel with their roles.",
+    "keywords": [
+      "Swing",
+      "JFrame",
+      "JPanel",
+      "GUI",
+      "window",
+      "container",
+      "component",
+      "setVisible"
+    ],
+    "mainConcepts": [
+      "Swing is Java's GUI framework for building desktop applications",
+      "JFrame represents the main window with title bar, close, and resize controls",
+      "JPanel is a lightweight container used to group and organize components",
+      "JPanel is added to JFrame's content pane",
+      "Swing components are lightweight (pure Java) compared to AWT (native peers)",
+      "JFrame.setVisible(true) makes the window appear on screen"
+    ],
+    "referenceAnswer": "Swing is Java's primary GUI (Graphical User Interface) framework, part of the javax.swing package. It provides a rich set of platform-independent components for building desktop applications.\n\nJFRAME:\n- The main window of a Swing application\n- Has a title bar, minimize/maximize/close buttons\n- Can be resized by default\n- Has a content pane where components are added\n- Created by extending JFrame or instantiating it directly\n\nJFrame example:\nimport javax.swing.*;\n\npublic class MainWindow extends JFrame {\n    public MainWindow() {\n        setTitle(\"My Application\");  // window title\n        setSize(500, 400);           // width, height in pixels\n        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // exit on close\n        setLocationRelativeTo(null); // center on screen\n        setVisible(true);            // make the window visible\n    }\n}\n\n// Or using JFrame directly:\nJFrame frame = new JFrame(\"My App\");\nframe.setSize(500, 400);\nframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\nframe.setVisible(true);\n\nJPANEL:\n- A lightweight container used to GROUP and ORGANIZE components\n- Can hold buttons, labels, text fields, and other components\n- Can have its own layout manager\n- Usually added to the JFrame's content pane\n- Multiple JPanels can be layered for complex layouts\n\nJPanel example:\nJPanel panel = new JPanel();  // default layout is FlowLayout\npanel.add(new JButton(\"Click Me\"));\npanel.add(new JLabel(\"Welcome!\"));\npanel.add(new JTextField(20));\n\nJFrame frame = new JFrame(\"My App\");\nframe.add(panel);  // adds panel to content pane\n\nWORKING TOGETHER:\nJFrame frame = new JFrame(\"Student Directory\");\nframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\nframe.setSize(600, 400);\n\nJPanel inputPanel = new JPanel();\ninputPanel.add(new JLabel(\"Name:\"));\ninputPanel.add(new JTextField(20));\ninputPanel.add(new JButton(\"Add\"));\n\nJPanel listPanel = new JPanel();\nlistPanel.add(new JScrollPane(new JTextArea(10, 40)));\n\nframe.add(inputPanel, BorderLayout.NORTH);\nframe.add(listPanel, BorderLayout.CENTER);\n\nframe.setVisible(true);\n\nKEY POINTS:\n- JFrame is the top-level window; JPanel is a nested container\n- You should add components to JPanel, then add JPanel to JFrame\n- JFrame's setVisible(true) must be called last to show the GUI\n- JFrame.EXIT_ON_CLOSE terminates the program when the window closes",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-028",
+    "question": "How is event handling implemented in Java Swing? Explain the ActionListener interface.",
+    "keywords": [
+      "event handling",
+      "ActionListener",
+      "actionPerformed",
+      "event source",
+      "event listener",
+      "button click",
+      "callback",
+      "delegation model"
+    ],
+    "mainConcepts": [
+      "Java uses the delegation event model: event sources fire events, event listeners handle them",
+      "ActionListener is an interface with one method: actionPerformed(ActionEvent e)",
+      "Components (JButton, JTextField) are event sources",
+      "Listener objects are registered with the source using addActionListener()",
+      "When the event occurs (e.g., button click), the listener's actionPerformed() is called",
+      "The ActionEvent object provides event details (source, command, modifiers)"
+    ],
+    "referenceAnswer": "Java Swing uses the delegation event model for event handling. In this model:\n- Event SOURCE generates events (e.g., JButton when clicked)\n- Event LISTENER registers with the source to receive notifications\n- When an event occurs, the source calls the appropriate listener method\n\nTHE ACTIONLISTENER INTERFACE:\nActionListener is in the java.awt.event package and has a SINGLE method:\n\npublic interface ActionListener {\n    void actionPerformed(ActionEvent e);\n}\n\nIMPLEMENTING EVENT HANDLING (three ways):\n\n1. IMPLEMENTING ACTIONLISTENER IN THE CLASS:\npublic class MyFrame extends JFrame implements ActionListener {\n    JButton btn = new JButton(\"Click\");\n    \n    MyFrame() {\n        btn.addActionListener(this);  // register\n        add(btn);\n    }\n    \n    public void actionPerformed(ActionEvent e) {\n        System.out.println(\"Button clicked!\");\n        JOptionPane.showMessageDialog(this, \"Hello!\");\n    }\n}\n\n2. USING AN ANONYMOUS INNER CLASS:\nJButton btn = new JButton(\"Click\");\nbtn.addActionListener(new ActionListener() {\n    public void actionPerformed(ActionEvent e) {\n        System.out.println(\"Button clicked!\");\n    }\n});\n\n3. USING LAMBDA EXPRESSION (Java 8+):\nJButton btn = new JButton(\"Click\");\nbtn.addActionListener(e -> System.out.println(\"Button clicked!\"));\n\nTHE ACTIONEVENT OBJECT:\nThe actionPerformed method receives an ActionEvent that provides information:\n- getSource(): returns the component that fired the event\n- getActionCommand(): returns the action command string (default: button text)\n- getModifiers(): returns modifier keys held during the event\n\nCommon components that fire action events:\n- JButton (when clicked)\n- JTextField (when Enter is pressed)\n- JMenuItem (when selected)\n- JCheckBox, JRadioButton (when toggled)\n\nExample with multiple buttons:\nJButton addBtn = new JButton(\"Add\");\nJButton clearBtn = new JButton(\"Clear\");\n\nActionListener listener = e -> {\n    String cmd = e.getActionCommand();\n    switch (cmd) {\n        case \"Add\":   // perform add logic\n        case \"Clear\": // perform clear logic\n    }\n};\n\naddBtn.addActionListener(listener);\nclearBtn.addActionListener(listener);",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-029",
+    "question": "What are common Swing components and how do you use JTextField, JLabel, and JButton together?",
+    "keywords": [
+      "JTextField",
+      "JLabel",
+      "JButton",
+      "Swing components",
+      "GUI input",
+      "label",
+      "text field",
+      "button",
+      "getText",
+      "setText"
+    ],
+    "mainConcepts": [
+      "JLabel displays read-only text or an image",
+      "JTextField allows user text input (single line)",
+      "JButton triggers an action when clicked",
+      "Components are added to a container (JPanel/JFrame)",
+      "JTextField.getText() retrieves user input",
+      "JLabel.setText() updates the displayed text"
+    ],
+    "referenceAnswer": "Common Swing components include JLabel, JTextField, JButton, JTextArea, JCheckBox, JRadioButton, JComboBox, JList, JTable, and JScrollPane. Here are three fundamental components:\n\n1. JLABEL:\nDisplays read-only text or an image. Cannot be edited by the user.\n\nJLabel label = new JLabel(\"Enter your name:\");\nJLabel imageLabel = new JLabel(new ImageIcon(\"icon.png\"));\nlabel.setText(\"Updated text\");     // change the text\nString text = label.getText();      // get the text\nlabel.setHorizontalAlignment(SwingConstants.CENTER);\n\n2. JTEXTFIELD:\nAllows the user to enter a single line of text.\n\nJTextField textField = new JTextField(20);         // 20 columns wide\nJTextField textField2 = new JTextField(\"Default\"); // with initial text\nString input = textField.getText();                // get entered text\ntextField.setText(\"\");                             // clear the field\ntextField.setEditable(false);                      // make read-only\n\n3. JBUTTON:\nTriggers an action when clicked by the user.\n\nJButton btn = new JButton(\"Submit\");\nbtn.setEnabled(false);              // disable the button\nbtn.setText(\"Click Here\");         // change button text\nbtn.addActionListener(e -> {\n    System.out.println(\"Button clicked!\");\n});\n\nPUTTING THEM TOGETHER (simple form):\nimport javax.swing.*;\nimport java.awt.*;\n\npublic class SimpleForm {\n    public static void main(String[] args) {\n        JFrame frame = new JFrame(\"Simple Form\");\n        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\n        frame.setSize(400, 150);\n        \n        JPanel panel = new JPanel(new FlowLayout());\n        JLabel label = new JLabel(\"Name:\");\n        JTextField textField = new JTextField(15);\n        JButton submitBtn = new JButton(\"Submit\");\n        JLabel resultLabel = new JLabel(\"\");\n        \n        submitBtn.addActionListener(e -> {\n            String name = textField.getText();\n            resultLabel.setText(\"Hello, \" + name + \"!\");\n        });\n        \n        panel.add(label);\n        panel.add(textField);\n        panel.add(submitBtn);\n        panel.add(resultLabel);\n        \n        frame.add(panel);\n        frame.setVisible(true);\n    }\n}\n\nOTHER COMMON COMPONENTS:\n- JTextArea: Multi-line text input\n- JCheckBox: Checkbox (boolean option)\n- JRadioButton: Radio button (grouped with ButtonGroup)\n- JComboBox: Drop-down list\n- JList: List selection\n- JScrollPane: Adds scroll bars to another component\n- JPasswordField: For password input (hides characters)\n- JOptionPane: For dialog boxes (input, confirmation, message)",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-030",
+    "question": "Explain layout managers in Swing. What is the difference between FlowLayout, BorderLayout, and GridLayout?",
+    "keywords": [
+      "LayoutManager",
+      "FlowLayout",
+      "BorderLayout",
+      "GridLayout",
+      "component positioning",
+      "resizing",
+      "GUI layout",
+      "container"
+    ],
+    "mainConcepts": [
+      "Layout managers automatically arrange components within a container",
+      "FlowLayout places components left-to-right in rows (default for JPanel)",
+      "BorderLayout divides the container into 5 regions: NORTH, SOUTH, EAST, WEST, CENTER (default for JFrame)",
+      "GridLayout divides the container into equal-sized cells in a grid",
+      "Layout managers handle component positioning and resizing automatically",
+      "setLayout() is used to change a container's layout manager"
+    ],
+    "referenceAnswer": "Layout managers in Swing automatically control the positioning and sizing of components within a container. They adapt to different window sizes and platform differences.\n\n1. FLOWLAYOUT:\n- Default layout for JPanel\n- Components are placed left-to-right in a row, wrapping to a new row when needed\n- Each component gets its preferred size\n- Uses: simple sequential layouts, toolbars\n\nJPanel panel = new JPanel(new FlowLayout());  // default\nJPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 20));\n// alignment, hgap, vgap\n\npanel.add(new JButton(\"A\"));\npanel.add(new JButton(\"B\"));\npanel.add(new JButton(\"C\"));\n// Result: [A] [B] [C] in a row\n\n2. BORDERLAYOUT:\n- Default layout for JFrame's content pane\n- Divides container into 5 regions: NORTH, SOUTH, EAST, WEST, CENTER\n- Each region can hold at most one component\n- NORTH/SOUTH: component gets preferred height, full width\n- EAST/WEST: component gets preferred width, remaining height\n- CENTER: gets all remaining space\n- Uses: main application windows\n\nJFrame frame = new JFrame();\nframe.setLayout(new BorderLayout());\n\nframe.add(new JButton(\"Top\"), BorderLayout.NORTH);\nframe.add(new JButton(\"Bottom\"), BorderLayout.SOUTH);\nframe.add(new JButton(\"Left\"), BorderLayout.WEST);\nframe.add(new JButton(\"Right\"), BorderLayout.EAST);\nframe.add(new JTextArea(), BorderLayout.CENTER);  // gets remaining space\n\n3. GRIDLAYOUT:\n- Divides container into equal-sized cells in a grid\n- All cells have the same size\n- Components fill their entire cell\n- When the window resizes, all cells resize equally\n- Uses: calculator buttons, form layouts\n\nJPanel panel = new JPanel(new GridLayout(3, 2));  // 3 rows, 2 columns\n// or: new GridLayout(3, 2, 5, 5) with hgap=5, vgap=5\n\npanel.add(new JLabel(\"Name:\"));\npanel.add(new JTextField());\npanel.add(new JLabel(\"Age:\"));\npanel.add(new JTextField());\npanel.add(new JLabel(\"Email:\"));\npanel.add(new JTextField());\n// Creates a 3x2 grid of label-field pairs\n\nOTHER LAYOUT MANAGERS:\n- CardLayout: stacks components like cards, showing one at a time\n- GridBagLayout: most flexible but complex — components can span multiple cells\n- BoxLayout: arranges components in single row or column\n- GroupLayout: NetBeans-generated layouts (used by GUI builder)\n\nCOMBINING LAYOUTS:\nJFrame (BorderLayout)\n  +-- JPanel (FlowLayout)   -- NORTH (toolbar)\n  +-- JPanel (GridLayout)   -- CENTER (form)\n  +-- JPanel (FlowLayout)   -- SOUTH (status bar)\n\nExample:\nJFrame frame = new JFrame(\"Student Directory\");\nJPanel centerPanel = new JPanel(new GridLayout(4, 2));\ncenterPanel.add(new JLabel(\"Name:\"));\ncenterPanel.add(new JTextField());\ncenterPanel.add(new JLabel(\"ID:\"));\ncenterPanel.add(new JTextField());\n\nJPanel buttonPanel = new JPanel(new FlowLayout());\nbuttonPanel.add(new JButton(\"Add\"));\nbuttonPanel.add(new JButton(\"Clear\"));\n\nframe.add(centerPanel, BorderLayout.CENTER);\nframe.add(buttonPanel, BorderLayout.SOUTH);",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-031",
+    "question": "What is the difference between FileReader/FileWriter and FileInputStream/FileOutputStream in Java?",
+    "keywords": [
+      "FileReader",
+      "FileWriter",
+      "FileInputStream",
+      "FileOutputStream",
+      "character stream",
+      "byte stream",
+      "text file",
+      "binary file"
+    ],
+    "mainConcepts": [
+      "FileReader and FileWriter are character streams — used for text files (reading/writing characters)",
+      "FileInputStream and FileOutputStream are byte streams — used for binary files (reading/writing bytes)",
+      "Character streams handle character encoding and decoding automatically",
+      "Byte streams read/write raw bytes without encoding considerations",
+      "Character streams extend Reader/Writer; byte streams extend InputStream/OutputStream",
+      "Use character streams for .txt, .csv, .html; use byte streams for images, audio, video"
+    ],
+    "referenceAnswer": "The key difference between these two pairs is that FileReader/FileWriter operate on CHARACTERS (text) while FileInputStream/FileOutputStream operate on BYTES (binary data).\n\nCHARACTER STREAMS (FileReader / FileWriter):\n- Work with characters (text)\n- Automatically handle character encoding (UTF-8, etc.)\n- Extend abstract classes Reader and Writer\n- Best for reading/writing text files (.txt, .csv, .html, .java)\n- Often wrapped with BufferedReader/BufferedWriter for efficiency\n\nFILEWRITER example:\nFileWriter writer = new FileWriter(\"output.txt\");\nwriter.write(\"Hello, World!\");\nwriter.write(\"\\nNew line of text\");\nwriter.close();  // always close\n\nFILEREADER example:\nFileReader reader = new FileReader(\"input.txt\");\nint ch;\nwhile ((ch = reader.read()) != -1) {\n    System.out.print((char) ch);  // reads one character at a time\n}\nreader.close();\n\nWith BufferedReader (more efficient):\nBufferedReader br = new BufferedReader(new FileReader(\"input.txt\"));\nString line;\nwhile ((line = br.readLine()) != null) {\n    System.out.println(line);\n}\nbr.close();\n\nBYTE STREAMS (FileInputStream / FileOutputStream):\n- Work with raw bytes (binary data)\n- No character encoding — reads/writes bytes as-is\n- Extend abstract classes InputStream and OutputStream\n- Best for binary files (images, audio, video, PDF, ZIP)\n- Suitable for copying files regardless of type\n\nFILEOUTPUTSTREAM example:\nFileOutputStream fos = new FileOutputStream(\"image_copy.jpg\");\nbyte[] imageData = ... ;  // binary data\nfos.write(imageData);\nfos.close();\n\nFILEINPUTSTREAM example:\nFileInputStream fis = new FileInputStream(\"image.jpg\");\nint byteRead;\nwhile ((byteRead = fis.read()) != -1) {\n    // process byte\n}\nfis.close();\n\nWith BufferedInputStream (more efficient):\nBufferedInputStream bis = new BufferedInputStream(new FileInputStream(\"large.mp4\"));\nbyte[] buffer = new byte[4096];\nint bytesRead;\nwhile ((bytesRead = bis.read(buffer)) != -1) {\n    // process buffer\n}\nbis.close();\n\nSUMMARY:\nFeature        | FileReader/Writer     | FileInputStream/OutputStream\n---------------|-----------------------|-------------------------------\nData type      | Characters (text)     | Bytes (binary)\nFile types     | .txt, .csv, .java     | .jpg, .mp4, .pdf, .zip\nEncoding       | Auto-handled          | Raw bytes, no encoding\nParent class   | Reader/Writer         | InputStream/OutputStream\nWrapping       | BufferedReader/Writer | BufferedInputStream/OutputStream\nBest for       | Text processing       | Binary file copying/manipulation",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-032",
+    "question": "How do you read from and write to a text file using Scanner and PrintWriter in Java?",
+    "keywords": [
+      "Scanner",
+      "PrintWriter",
+      "file reading",
+      "file writing",
+      "text file",
+      "hasNextLine",
+      "nextLine",
+      "println"
+    ],
+    "mainConcepts": [
+      "Scanner reads data from a file using hasNextLine() and nextLine()",
+      "PrintWriter writes formatted text to a file using println() and printf()",
+      "Both must handle FileNotFoundException (checked exception)",
+      "Scanner can parse primitive types (nextInt(), nextDouble()) from files",
+      "PrintWriter overwrites the file by default; use FileWriter with append mode for appending",
+      "Always close both streams after use"
+    ],
+    "referenceAnswer": "Scanner and PrintWriter are convenient classes for reading from and writing to text files in Java.\n\nREADING WITH SCANNER:\nScanner provides nextLine(), nextInt(), nextDouble(), etc. for parsing text files.\n\nimport java.io.*;\nimport java.util.Scanner;\n\npublic void readFile(String path) {\n    try (Scanner scanner = new Scanner(new File(path))) {\n        while (scanner.hasNextLine()) {\n            String line = scanner.nextLine();\n            System.out.println(line);\n        }\n    } catch (FileNotFoundException e) {\n        System.out.println(\"File not found: \" + path);\n    }\n}\n\nReading structured data (CSV):\ntry (Scanner sc = new Scanner(new File(\"students.csv\"))) {\n    while (sc.hasNextLine()) {\n        String line = sc.nextLine();\n        String[] parts = line.split(\",\");\n        String name = parts[0];\n        int id = Integer.parseInt(parts[1]);\n        String course = parts[2];\n        System.out.println(name + \" - \" + id + \" - \" + course);\n    }\n}\n\nReading numbers:\ntry (Scanner sc = new Scanner(new File(\"numbers.txt\"))) {\n    int sum = 0;\n    while (sc.hasNextInt()) {\n        sum += sc.nextInt();\n    }\n    System.out.println(\"Sum: \" + sum);\n}\n\nWRITING WITH PRINTWRITER:\nPrintWriter provides println(), printf(), and print() for formatted text output.\n\npublic void writeFile(String path) {\n    try (PrintWriter pw = new PrintWriter(new File(path))) {\n        pw.println(\"Student Report\");\n        pw.println(\"=============\");\n        pw.printf(\"Name: %s, ID: %d%n\", \"Alice\", 101);\n        pw.printf(\"Name: %s, ID: %d%n\", \"Bob\", 102);\n        pw.println(\"Total students: 2\");\n    } catch (FileNotFoundException e) {\n        System.out.println(\"Error writing file: \" + e.getMessage());\n    }\n}\n\nUsing FileWriter with PrintWriter (for append mode or encoding):\nPrintWriter pw = new PrintWriter(new FileWriter(\"log.txt\", true));  // true = append\npw.println(\"New log entry\");\n\nCOMPLETE EXAMPLE (copy character by character):\npublic void copyFile(String source, String dest) {\n    try (\n        Scanner reader = new Scanner(new File(source));\n        PrintWriter writer = new PrintWriter(new File(dest))\n    ) {\n        while (reader.hasNextLine()) {\n            writer.println(reader.nextLine());\n        }\n        System.out.println(\"File copied successfully.\");\n    } catch (IOException e) {\n        System.out.println(\"Error: \" + e.getMessage());\n    }\n}\n\nKEY METHODS:\nScanner:          | PrintWriter:\n- hasNextLine()   | - println(String)\n- nextLine()      | - print(String)\n- hasNextInt()    | - printf(format, args...)\n- nextInt()       | - format(format, args...)\n- useDelimiter()  | - flush()\n- close()         | - close()\n\nBoth are typically used with try-with-resources (Java 7+) for automatic closing.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-033",
+    "question": "What is serialization in Java? How do you serialize and deserialize objects?",
+    "keywords": [
+      "serialization",
+      "ObjectOutputStream",
+      "ObjectInputStream",
+      "Serializable interface",
+      "writeObject",
+      "readObject",
+      "transient",
+      "serialVersionUID"
+    ],
+    "mainConcepts": [
+      "Serialization converts an object into a byte stream for storage or network transmission",
+      "Deserialization reconstructs the object from the byte stream",
+      "A class must implement the Serializable interface (marker interface) to be serializable",
+      "ObjectOutputStream.writeObject() serializes an object",
+      "ObjectInputStream.readObject() deserializes an object",
+      "The transient keyword marks fields that should not be serialized"
+    ],
+    "referenceAnswer": "Serialization in Java is the process of converting an object's state into a byte stream that can be saved to a file, sent over a network, or stored in a database. Deserialization is the reverse process — reconstructing the object from the byte stream.\n\nHOW TO MAKE A CLASS SERIALIZABLE:\nA class must implement the Serializable marker interface (an interface with no methods).\n\nimport java.io.*;\n\nclass Student implements Serializable {\n    private String name;\n    private int id;\n    private String course;\n    private transient double gpa;    // will NOT be serialized\n    private static final long serialVersionUID = 1L;  // version control\n    \n    public Student(String name, int id, String course) {\n        this.name = name;\n        this.id = id;\n        this.course = course;\n    }\n    \n    public String toString() {\n        return name + \" (\" + id + \") - \" + course;\n    }\n}\n\nSERIALIZING AN OBJECT (ObjectOutputStream):\npublic void serializeStudent(Student s, String filePath) {\n    try (ObjectOutputStream oos = new ObjectOutputStream(\n            new FileOutputStream(filePath))) {\n        oos.writeObject(s);\n        System.out.println(\"Object serialized to \" + filePath);\n    } catch (IOException e) {\n        System.out.println(\"Serialization error: \" + e.getMessage());\n    }\n}\n\nDESERIALIZING AN OBJECT (ObjectInputStream):\npublic Student deserializeStudent(String filePath) {\n    try (ObjectInputStream ois = new ObjectInputStream(\n            new FileInputStream(filePath))) {\n        Student s = (Student) ois.readObject();  // cast required\n        return s;\n    } catch (IOException | ClassNotFoundException e) {\n        System.out.println(\"Deserialization error: \" + e.getMessage());\n        return null;\n    }\n}\n\nUSAGE:\nStudent s1 = new Student(\"Alice\", 101, \"CSC 282\");\nserializeStudent(s1, \"student.ser\");  // save to file\n\nStudent restored = deserializeStudent(\"student.ser\");\nSystem.out.println(restored);  // Alice (101) - CSC 282\n\nKEY CONCEPTS:\n\n1. serialVersionUID:\n- A unique identifier for each serializable class\n- Used during deserialization to verify the sender and receiver have compatible classes\n- If not declared, Java generates one automatically (but can vary between compilers)\n- Always declare explicitly: private static final long serialVersionUID = 1L;\n\n2. TRANSIENT KEYWORD:\n- Fields marked transient are NOT serialized\n- Used for sensitive data (passwords) or derived data (calculated values)\n- On deserialization, transient fields get default values (null for objects, 0 for numbers)\n\n3. STATIC FIELDS:\n- Static fields belong to the class, not the object\n- They are NOT serialized (they are loaded as part of the class definition)\n\n4. WHEN IS SERIALIZATION USED?\n- Saving application state to files\n- Sending objects over network sockets\n- Distributed systems (RMI — Remote Method Invocation)\n- Session replication in web servers\n- Caching objects to disk\n\n5. CUSTOM SERIALIZATION:\nClasses can override writeObject() and readObject() for custom serialization logic.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-034",
+    "question": "Explain the difference between byte streams and character streams in Java I/O.",
+    "keywords": [
+      "byte stream",
+      "character stream",
+      "InputStream",
+      "OutputStream",
+      "Reader",
+      "Writer",
+      "binary",
+      "text"
+    ],
+    "mainConcepts": [
+      "Byte streams (InputStream/OutputStream) handle binary data — raw bytes",
+      "Character streams (Reader/Writer) handle text data — characters with encoding",
+      "Byte streams are base classes for all I/O in Java (InputStream, OutputStream)",
+      "Character streams wrap byte streams and add encoding conversion",
+      "Use byte streams for images, audio, video, zip files; use character streams for text files",
+      "Both use the decorator pattern — add functionality by wrapping streams"
+    ],
+    "referenceAnswer": "Java I/O has two fundamental types of streams: byte streams and character streams.\n\nBYTE STREAMS:\n- Work with raw binary data (bytes)\n- Based on abstract classes InputStream and OutputStream\n- Read/write in units of 8-bit bytes\n- No encoding or character conversion\n- Suitable for ALL file types, but especially binary files\n- Examples: FileInputStream, FileOutputStream, BufferedInputStream, DataInputStream\n\nFileInputStream fis = new FileInputStream(\"image.jpg\");\nint b;\nwhile ((b = fis.read()) != -1) {\n    // b is an int (0-255) representing a byte\n}\nfis.close();\n\nCHARACTER STREAMS:\n- Work with text data (characters)\n- Based on abstract classes Reader and Writer\n- Read/write in units of 16-bit Unicode characters\n- Handle character encoding conversion automatically\n- Only suitable for text files (where character encoding matters)\n- Examples: FileReader, FileWriter, BufferedReader, PrintWriter\n\nBufferedReader br = new BufferedReader(new FileReader(\"text.txt\"));\nString line;\nwhile ((line = br.readLine()) != null) {\n    // line is a String (character-based)\n}\nbr.close();\n\nCHARACTER STREAMS WRAP BYTE STREAMS:\nCharacter streams are built on top of byte streams. InputStreamReader/OutputStreamWriter bridge the gap:\n\nFileInputStream fis = new FileInputStream(\"data.txt\");       // byte stream\nInputStreamReader isr = new InputStreamReader(fis, \"UTF-8\"); // bridge\nBufferedReader br = new BufferedReader(isr);                  // add buffering\n\n// Shorthand:\nBufferedReader br = new BufferedReader(\n    new InputStreamReader(\n        new FileInputStream(\"data.txt\"), \"UTF-8\"));\n\nHIERARCHY:\nByte Streams:                              Character Streams:\nInputStream (abstract)                     Reader (abstract)\n  +-- FileInputStream                         +-- FileReader\n  +-- BufferedInputStream                     +-- BufferedReader\n  +-- DataInputStream                         +-- InputStreamReader\n  +-- ObjectInputStream                          +-- FileReader(internal)\n\nOutputStream (abstract)                     Writer (abstract)\n  +-- FileOutputStream                        +-- FileWriter\n  +-- BufferedOutputStream                    +-- BufferedWriter\n  +-- DataOutputStream                        +-- PrintWriter\n  +-- ObjectOutputStream                      +-- OutputStreamWriter\n  +-- PrintStream                                 +-- FileWriter(internal)\n\nWHICH TO USE?\n- Use BYTE STREAMS for: images (.jpg, .png), audio (.mp3), video (.mp4), archives (.zip), executables (.exe), any binary format\n- Use CHARACTER STREAMS for: text files (.txt), source code (.java), web pages (.html, .css), data files (.csv, .xml, .json), configuration files (.properties, .ini)\n\nSummary: Byte streams read/write bytes; character streams read/write text with encoding support.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-035",
+    "question": "What is JDBC? Explain the steps to connect a Java application to a database.",
+    "keywords": [
+      "JDBC",
+      "Java Database Connectivity",
+      "Connection",
+      "DriverManager",
+      "database",
+      "SQL",
+      "getConnection"
+    ],
+    "mainConcepts": [
+      "JDBC (Java Database Connectivity) is Java's API for connecting to and querying relational databases",
+      "Step 1: Load the JDBC driver (Class.forName() — optional in modern JDBC)",
+      "Step 2: Establish a connection using DriverManager.getConnection(url, user, password)",
+      "Step 3: Create a Statement or PreparedStatement object",
+      "Step 4: Execute SQL queries and process the ResultSet",
+      "Step 5: Close all resources (Connection, Statement, ResultSet)"
+    ],
+    "referenceAnswer": "JDBC (Java Database Connectivity) is an API that enables Java applications to interact with relational databases. It provides methods for connecting to a database, executing SQL queries, and processing results.\n\nSTEPS TO CONNECT TO A DATABASE:\n\nSTEP 1: LOAD THE JDBC DRIVER (optional in JDBC 4.0+):\n// In older JDBC, needed to load the driver class\n// Class.forName(\"com.mysql.cj.jdbc.Driver\");\n// In JDBC 4.0+, the driver is auto-loaded if on classpath\n\nSTEP 2: ESTABLISH A CONNECTION:\nString url = \"jdbc:mysql://localhost:3306/studentdb\";\nString user = \"root\";\nString password = \"password\";\n\nConnection conn = DriverManager.getConnection(url, user, password);\n\nDifferent database URLs:\n- MySQL:    jdbc:mysql://host:port/database\n- PostgreSQL: jdbc:postgresql://host:port/database\n- Oracle:   jdbc:oracle:thin:@host:port:database\n- SQLite:   jdbc:sqlite:database.db\n\nSTEP 3: CREATE A STATEMENT:\nStatement stmt = conn.createStatement();\n// OR (preferred):\nPreparedStatement pstmt = conn.prepareStatement(\"SELECT * FROM students WHERE id = ?\");\n\nSTEP 4: EXECUTE SQL AND PROCESS RESULTS:\n// For SELECT queries:\nResultSet rs = stmt.executeQuery(\"SELECT * FROM students\");\nwhile (rs.next()) {\n    int id = rs.getInt(\"id\");\n    String name = rs.getString(\"name\");\n    String course = rs.getString(\"course\");\n    System.out.println(id + \" - \" + name + \" - \" + course);\n}\n\n// For INSERT/UPDATE/DELETE:\nint rows = stmt.executeUpdate(\"INSERT INTO students VALUES(101, 'Alice', 'CSC 282')\");\n\nSTEP 5: CLOSE RESOURCES:\nrs.close();\nstmt.close();\nconn.close();\n\nCOMPLETE EXAMPLE:\nimport java.sql.*;\n\npublic class DatabaseDemo {\n    public static void main(String[] args) {\n        String url = \"jdbc:mysql://localhost:3306/studentdb\";\n        \n        try (Connection conn = DriverManager.getConnection(url, \"root\", \"password\");\n             Statement stmt = conn.createStatement();\n             ResultSet rs = stmt.executeQuery(\"SELECT * FROM students\")) {\n            \n            while (rs.next()) {\n                System.out.println(rs.getString(\"name\"));\n            }\n            \n        } catch (SQLException e) {\n            System.out.println(\"Database error: \" + e.getMessage());\n        }\n        // Resources are auto-closed by try-with-resources\n    }\n}\n\nTIPS:\n- Always use try-with-resources for automatic cleanup\n- Use PreparedStatement instead of Statement (prevents SQL injection)\n- The JDBC driver JAR must be on the classpath\n- Connection parameters can be stored in configuration files",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-036",
+    "question": "What is the difference between Statement and PreparedStatement in JDBC?",
+    "keywords": [
+      "Statement",
+      "PreparedStatement",
+      "SQL injection",
+      "precompiled",
+      "parameterized query",
+      "performance",
+      "placeholder",
+      "setInt",
+      "setString"
+    ],
+    "mainConcepts": [
+      "PreparedStatement is precompiled and more efficient for repeated execution",
+      "PreparedStatement uses parameter placeholders (?) to prevent SQL injection",
+      "Statement concatenates SQL strings, making it vulnerable to SQL injection",
+      "PreparedStatement handles data type conversion automatically (setInt, setString, etc.)",
+      "Statement is suitable for simple, one-time queries with no parameters",
+      "PreparedStatement is the recommended choice for production applications"
+    ],
+    "referenceAnswer": "Statement and PreparedStatement are both used to execute SQL queries in JDBC, but they differ significantly in security, performance, and usability.\n\n1. PREVENTION OF SQL INJECTION (Most Important):\n\nStatement (vulnerable):\nString userInput = \"1 OR 1=1\";\nString sql = \"SELECT * FROM students WHERE id = \" + userInput;\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(sql);\n// Executes: SELECT * FROM students WHERE id = 1 OR 1=1  -- RETURNS ALL ROWS!\n\nPreparedStatement (safe):\nString sql = \"SELECT * FROM students WHERE id = ?\";\nPreparedStatement pstmt = conn.prepareStatement(sql);\npstmt.setInt(1, Integer.parseInt(userInput));  // input is treated as data, not SQL\nResultSet rs = pstmt.executeQuery();\n// Even if userInput = \"1 OR 1=1\", setInt will throw NumberFormatException\n\n2. PERFORMANCE:\n\nStatement: SQL is compiled every time it is executed.\n\nPreparedStatement: SQL is precompiled once and reused. For batch operations, this is significantly faster.\n\n// Batch insert using PreparedStatement\nPreparedStatement pstmt = conn.prepareStatement(\"INSERT INTO students VALUES(?, ?, ?)\");\nfor (Student s : students) {\n    pstmt.setInt(1, s.getId());\n    pstmt.setString(2, s.getName());\n    pstmt.setString(3, s.getCourse());\n    pstmt.addBatch();  // add to batch\n}\npstmt.executeBatch();  // execute all at once\n\n3. READABILITY AND MAINTAINABILITY:\n\nStatement (harder to read):\nString sql = \"SELECT * FROM students WHERE course = '\" + course + \"' AND year = \" + year;\n\nPreparedStatement (cleaner):\nString sql = \"SELECT * FROM students WHERE course = ? AND year = ?\";\nPreparedStatement pstmt = conn.prepareStatement(sql);\npstmt.setString(1, course);\npstmt.setInt(2, year);\n\n4. DATA TYPE HANDLING:\nPreparedStatement provides type-specific setter methods:\n- setInt(int index, int value)\n- setString(int index, String value)\n- setDouble(int index, double value)\n- setDate(int index, Date value)\n- setObject(int index, Object value)\n\n5. AUTO-GENERATED KEYS:\nBoth can retrieve auto-generated keys:\n\nPreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);\nResultSet rs = pstmt.getGeneratedKeys();\n\nSUMMARY:\nFeature          | Statement               | PreparedStatement\n-----------------|-------------------------|--------------------------\nSQL Injection    | Vulnerable              | Protected\nPerformance      | Compiled each time      | Precompiled, reusable\nParameters       | String concatenation    | ? placeholders\nReadability      | Poor (string concat)    | Clean\nBatch processing | Manual                  | Built-in addBatch()\nType casting     | Manual conversion       | Automatic (setInt, etc.)\nUse case         | Dynamic SQL/DDL queries | Parameterized queries\n\nALWAYS use PreparedStatement when accepting user input or executing the same query multiple times.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-037",
+    "question": "What is the ResultSet interface in JDBC? How do you navigate and retrieve data from it?",
+    "keywords": [
+      "ResultSet",
+      "next",
+      "getInt",
+      "getString",
+      "cursor",
+      "scrollable",
+      "previous",
+      "column"
+    ],
+    "mainConcepts": [
+      "ResultSet represents the results of a SQL query — a table of data",
+      "ResultSet maintains a cursor pointing to the current row",
+      "next() moves the cursor forward and returns false when no more rows exist",
+      "Data is retrieved using getter methods: getInt(), getString(), getDouble(), etc.",
+      "Columns can be accessed by index (1-based) or by column name",
+      "ResultSet is forward-only by default; can be made scrollable with specific parameters"
+    ],
+    "referenceAnswer": "ResultSet is an interface in JDBC that represents the result set of a SQL query. It contains the rows returned by the database and provides methods to navigate through and retrieve data from those rows.\n\nCURSOR NAVIGATION:\nA ResultSet maintains a cursor (pointer) to the current row. Initially, the cursor is positioned BEFORE the first row.\n\n- next(): Moves the cursor to the next row. Returns true if a valid row exists, false if no more rows.\n- previous(): Moves the cursor backward (requires scrollable ResultSet)\n- first() / last(): Move to first/last row (requires scrollable ResultSet)\n- absolute(int row): Move to a specific row (requires scrollable ResultSet)\n- beforeFirst() / afterLast(): Move to before first / after last row\n\nFORWARD-ONLY (default):\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(\"SELECT * FROM students\");\n\nwhile (rs.next()) {  // moves forward one row\n    // process current row\n}\n\nSCROLLABLE ResultSet:\nStatement stmt = conn.createStatement(\n    ResultSet.TYPE_SCROLL_INSENSITIVE,  // or TYPE_SCROLL_SENSITIVE\n    ResultSet.CONCUR_READ_ONLY\n);\nResultSet rs = stmt.executeQuery(\"SELECT * FROM students\");\n\nrs.last();\nint rowCount = rs.getRow();  // get current row number (total rows)\n\nrs.first();\nString firstName = rs.getString(\"name\");\n\nrs.absolute(3);  // go to row 3\n\nRETRIEVING DATA:\nData is retrieved using getter methods, either by column INDEX (1-based) or column NAME.\n\nResultSet rs = stmt.executeQuery(\"SELECT id, name, course FROM students\");\n\nwhile (rs.next()) {\n    // By column index (1-based: first column = 1):\n    int id = rs.getInt(1);\n    String name = rs.getString(2);\n    \n    // By column name (more readable):\n    String course = rs.getString(\"course\");\n    \n    System.out.println(id + \" - \" + name + \" - \" + course);\n}\n\nCOMMON GETTER METHODS:\n- getInt(int/string): retrieves an integer\n- getString(int/string): retrieves a String\n- getDouble(int/string): retrieves a double\n- getBoolean(int/string): retrieves a boolean\n- getDate(int/string): retrieves a java.sql.Date\n- getTimestamp(int/string): retrieves a Timestamp\n- getObject(int/string): retrieves an Object (generic)\n- getBlob(int/string): retrieves a Blob (binary large object)\n\nHANDLING NULL VALUES:\nResultSet methods return 0 or false for SQL NULL by default. Use wasNull() to check:\n\nint value = rs.getInt(\"score\");\nif (rs.wasNull()) {\n    // value was NULL in database, but returned 0\n    value = -1;  // handle appropriately\n}\n\nUPDATING DATA THROUGH ResultSet (updateable ResultSet):\nStatement stmt = conn.createStatement(\n    ResultSet.TYPE_FORWARD_ONLY,\n    ResultSet.CONCUR_UPDATABLE\n);\nResultSet rs = stmt.executeQuery(\"SELECT id, name FROM students\");\n\nrs.next();\nrs.updateString(\"name\", \"New Name\");\nrs.updateRow();  // save changes to database\n\nALWAYS close ResultSet after use (try-with-resources handles this automatically):\ntry (Statement stmt = conn.createStatement();\n     ResultSet rs = stmt.executeQuery(\"SELECT * FROM students\")) {\n    while (rs.next()) {\n        // process\n    }\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-038",
+    "question": "What is connection pooling and why is it important in JDBC applications?",
+    "keywords": [
+      "connection pooling",
+      "HikariCP",
+      "database connection",
+      "performance",
+      "resource management",
+      "DataSource",
+      "reuse connections"
+    ],
+    "mainConcepts": [
+      "Connection pooling maintains a pool of reusable database connections",
+      "Creating a new connection is expensive (network handshake, authentication, memory)",
+      "Pooled connections are borrowed, used, and returned to the pool (not closed)",
+      "Connection pooling significantly improves performance in multi-user applications",
+      "Popular pooling libraries: HikariCP, Apache DBCP, C3P0",
+      "DataSource interface with connection pooling is the standard approach in enterprise Java"
+    ],
+    "referenceAnswer": "Connection pooling is a technique where a pool of database connections is created and maintained, ready to be reused by multiple clients. Instead of creating a new connection for every database operation (which is expensive), applications borrow a connection from the pool, use it, and return it to the pool.\n\nWHY IS CONNECTION CREATION EXPENSIVE?\nEstablishing a database connection involves:\n1. TCP/IP network handshake\n2. Authentication (username/password verification)\n3. Database session initialization\n4. Memory allocation on both client and server\nThis can take 100-500ms per connection — very costly for web applications handling many requests.\n\nWITHOUT CONNECTION POOLING:\n// Every request creates a new connection\npublic void processRequest() {\n    Connection conn = DriverManager.getConnection(url, user, pass);  // expensive!\n    // do database work\n    conn.close();  // connection is destroyed\n}\n// 1000 requests = 1000 connections created and destroyed\n\nWITH CONNECTION POOLING (using HikariCP):\nHikariConfig config = new HikariConfig();\nconfig.setJdbcUrl(\"jdbc:mysql://localhost:3306/studentdb\");\nconfig.setUsername(\"root\");\nconfig.setPassword(\"password\");\nconfig.setMaximumPoolSize(10);  // max 10 connections\n\nHikariDataSource dataSource = new HikariDataSource(config);\n\n// Every request borrows and returns a connection:\npublic void processRequest() {\n    try (Connection conn = dataSource.getConnection()) {  // fast! borrowed from pool\n        // do database work\n    }  // connection is returned to pool, not closed\n}\n\nBENEFITS OF CONNECTION POOLING:\n\n1. PERFORMANCE IMPROVEMENT:\n- Borrowing a connection from the pool takes microseconds\n- Creating a new connection takes hundreds of milliseconds\n- Significant latency reduction for each database operation\n\n2. RESOURCE MANAGEMENT:\n- Limits the total number of connections to the database\n- Prevents connection leak exhaustion\n- Database servers have a max connection limit (e.g., MySQL default: 151)\n- Without pooling, each request could exhaust available connections\n\n3. CONNECTION HEALTH:\n- Pools validate connections before handing them out\n- Stale/broken connections are automatically detected and replaced\n- Idle connections can be closed to free resources\n\n4. CONFIGURATION OPTIONS (HikariCP):\n- maximumPoolSize: max connections in pool\n- minimumIdle: min idle connections to maintain\n- connectionTimeout: max wait time for a connection\n- idleTimeout: max time a connection can be idle\n- maxLifetime: max lifetime of a connection in the pool\n- validationTimeout: timeout for connection validation\n\nEXAMPLE CONFIGURATION:\nHikariConfig config = new HikariConfig();\nconfig.setJdbcUrl(\"jdbc:mysql://localhost:3306/studentdb\");\nconfig.setUsername(\"root\");\nconfig.setPassword(\"password\");\nconfig.setMaximumPoolSize(20);\nconfig.setMinimumIdle(5);\nconfig.setConnectionTimeout(30000);     // 30 seconds\nconfig.setIdleTimeout(600000);          // 10 minutes\nconfig.setMaxLifetime(1800000);         // 30 minutes\n\nHikariDataSource dataSource = new HikariDataSource(config);\n\n// Use in application\nConnection conn = dataSource.getConnection();\n// ... use connection ...\nconn.close();  // returns to pool\n\nEnterprise Java uses javax.sql.DataSource:\nDataSource ds = (DataSource) new InitialContext().lookup(\"jdbc/studentDS\");\nConnection conn = ds.getConnection();  // pooled connection",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-039",
+    "question": "How do you perform CRUD operations using JDBC PreparedStatement?",
+    "keywords": [
+      "CRUD",
+      "INSERT",
+      "SELECT",
+      "UPDATE",
+      "DELETE",
+      "PreparedStatement",
+      "executeQuery",
+      "executeUpdate"
+    ],
+    "mainConcepts": [
+      "CRUD stands for Create, Read, Update, Delete — the four basic database operations",
+      "INSERT: executeUpdate() with INSERT SQL",
+      "SELECT: executeQuery() returns ResultSet",
+      "UPDATE: executeUpdate() with UPDATE SQL",
+      "DELETE: executeUpdate() with DELETE SQL",
+      "PreparedStatement prevents SQL injection and improves performance"
+    ],
+    "referenceAnswer": "CRUD stands for Create, Read, Update, Delete — the four basic operations for persistent data storage. Here's how to implement each using JDBC PreparedStatement:\n\nC — CREATE (INSERT):\npublic void addStudent(Student s) throws SQLException {\n    String sql = \"INSERT INTO students (id, name, course, gpa) VALUES (?, ?, ?, ?)\";\n    \n    try (Connection conn = getConnection();\n         PreparedStatement pstmt = conn.prepareStatement(sql)) {\n        \n        pstmt.setInt(1, s.getId());\n        pstmt.setString(2, s.getName());\n        pstmt.setString(3, s.getCourse());\n        pstmt.setDouble(4, s.getGpa());\n        \n        int rowsInserted = pstmt.executeUpdate();\n        System.out.println(rowsInserted + \" student(s) added.\");\n    }\n}\n\nR — READ (SELECT):\npublic Student getStudentById(int id) throws SQLException {\n    String sql = \"SELECT * FROM students WHERE id = ?\";\n    \n    try (Connection conn = getConnection();\n         PreparedStatement pstmt = conn.prepareStatement(sql)) {\n        \n        pstmt.setInt(1, id);\n        \n        try (ResultSet rs = pstmt.executeQuery()) {\n            if (rs.next()) {\n                return new Student(\n                    rs.getInt(\"id\"),\n                    rs.getString(\"name\"),\n                    rs.getString(\"course\"),\n                    rs.getDouble(\"gpa\")\n                );\n            }\n        }\n    }\n    return null;\n}\n\n// READ all:\npublic List<Student> getAllStudents() throws SQLException {\n    List<Student> students = new ArrayList<>();\n    String sql = \"SELECT * FROM students\";\n    \n    try (Connection conn = getConnection();\n         PreparedStatement pstmt = conn.prepareStatement(sql);\n         ResultSet rs = pstmt.executeQuery()) {\n        \n        while (rs.next()) {\n            students.add(new Student(\n                rs.getInt(\"id\"),\n                rs.getString(\"name\"),\n                rs.getString(\"course\"),\n                rs.getDouble(\"gpa\")\n            ));\n        }\n    }\n    return students;\n}\n\nU — UPDATE:\npublic boolean updateStudentCourse(int id, String newCourse) throws SQLException {\n    String sql = \"UPDATE students SET course = ? WHERE id = ?\";\n    \n    try (Connection conn = getConnection();\n         PreparedStatement pstmt = conn.prepareStatement(sql)) {\n        \n        pstmt.setString(1, newCourse);\n        pstmt.setInt(2, id);\n        \n        int rowsUpdated = pstmt.executeUpdate();\n        return rowsUpdated > 0;\n    }\n}\n\nD — DELETE:\npublic boolean deleteStudent(int id) throws SQLException {\n    String sql = \"DELETE FROM students WHERE id = ?\";\n    \n    try (Connection conn = getConnection();\n         PreparedStatement pstmt = conn.prepareStatement(sql)) {\n        \n        pstmt.setInt(1, id);\n        \n        int rowsDeleted = pstmt.executeUpdate();\n        return rowsDeleted > 0;\n    }\n}\n\nCOMPLETE DAO (Data Access Object) PATTERN:\npublic class StudentDAO {\n    private static final String INSERT_SQL = \"INSERT INTO students VALUES (?, ?, ?, ?)\";\n    private static final String SELECT_BY_ID_SQL = \"SELECT * FROM students WHERE id = ?\";\n    private static final String SELECT_ALL_SQL = \"SELECT * FROM students\";\n    private static final String UPDATE_SQL = \"UPDATE students SET name=?, course=?, gpa=? WHERE id=?\";\n    private static final String DELETE_SQL = \"DELETE FROM students WHERE id = ?\";\n    \n    private Connection getConnection() throws SQLException {\n        // from connection pool\n        return dataSource.getConnection();\n    }\n    \n    // CRUD methods go here\n}\n\nPRACTICE TIPS:\n- Always use try-with-resources to ensure resources are closed\n- Keep SQL strings as constants (static final)\n- Use the DAO pattern to separate data access from business logic\n- Use connection pooling (HikariCP) in production",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-040",
+    "question": "Explain the concept of dynamic method dispatch in Java with an example.",
+    "keywords": [
+      "dynamic method dispatch",
+      "runtime polymorphism",
+      "upcasting",
+      "method overriding",
+      "virtual method",
+      "JVM"
+    ],
+    "mainConcepts": [
+      "Dynamic method dispatch is the mechanism by which a call to an overridden method is resolved at runtime",
+      "JVM determines which method to call based on the actual object type, not the reference type",
+      "Enables runtime polymorphism — one interface, multiple implementations",
+      "Requires upcasting: parent reference = child object",
+      "Only overriding is resolved dynamically (not overloading or fields)",
+      "Also called dynamic binding or late binding"
+    ],
+    "referenceAnswer": "Dynamic method dispatch is the mechanism in Java by which a call to an overridden method is resolved at runtime rather than at compile time. The JVM determines which version of the method to execute based on the actual type of the object, not the type of the reference variable.\n\nHOW IT WORKS:\nWhen a method is called on a reference variable, the JVM:\n1. Looks at the actual object type (the type created with new)\n2. Checks if that type has an overridden version of the method\n3. If yes, calls the overridden version\n4. If no, walks up the inheritance hierarchy\n\nEXAMPLE:\nclass Animal {\n    void sound() {\n        System.out.println(\"Animal makes a sound\");\n    }\n}\n\nclass Dog extends Animal {\n    @Override\n    void sound() {\n        System.out.println(\"Dog barks\");\n    }\n}\n\nclass Cat extends Animal {\n    @Override\n    void sound() {\n        System.out.println(\"Cat meows\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Animal a;  // reference variable of type Animal\n        \n        a = new Animal();\n        a.sound();  // \"Animal makes a sound\"\n        \n        a = new Dog();   // upcasting — Dog object assigned to Animal reference\n        a.sound();  // \"Dog barks\"  (dynamic dispatch!)\n        \n        a = new Cat();   // upcasting — Cat object assigned to Animal reference\n        a.sound();  // \"Cat meows\"  (dynamic dispatch!)\n        \n        // The SAME reference 'a' calls DIFFERENT methods\n        // based on what object type it points to at runtime\n    }\n}\n\nKEY POINTS:\n\n1. UPCASTING: A parent reference can hold a child object. This is always safe and does not require explicit casting.\n   Animal a = new Dog();  // upcasting (implicit)\n\n2. DOWNCASTING: Converting parent reference back to child type. Requires explicit casting and can throw ClassCastException.\n   Dog d = (Dog) a;  // downcasting (explicit)\n\n3. METHOD CALL RESOLUTION:\n   - For non-static methods: resolved at runtime (dynamic dispatch)\n   - For static methods: resolved at compile time (no polymorphism)\n   - For fields: resolved at compile time (no polymorphism)\n\n4. PRACTICAL BENEFIT:\n   - Write code that works with the parent type, and it automatically works with any new subclass\n   - New subclasses can be added without changing existing code (Open/Closed Principle)\n\nEXAMPLE OF EXTENSIBILITY:\npublic static void makeSound(Animal a) {\n    a.sound();  // works for ANY Animal subclass\n}\n\nmakeSound(new Dog());  // \"Dog barks\"\nmakeSound(new Cat());  // \"Cat meows\"\nmakeSound(new Cow());  // if we add Cow class — no code change needed!\n\nThis is the foundation of polymorphic behavior in Java.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-041",
+    "question": "What is covariant return type in method overriding?",
+    "keywords": [
+      "covariant",
+      "return type",
+      "overriding",
+      "subtype",
+      "Java 5",
+      "String",
+      "Object"
+    ],
+    "mainConcepts": [
+      "Covariant return type allows a subclass overriding method to return a more specific (sub)type",
+      "Introduced in Java 5",
+      "Before Java 5, the return type had to match exactly",
+      "Eliminates the need for explicit downcasting after calling overridden methods",
+      "Works only with reference types (not primitives)",
+      "Example: clone() in Object returns Object, but a subclass can override it to return its own type"
+    ],
+    "referenceAnswer": "Covariant return type, introduced in Java 5, allows an overriding method in a subclass to return a more specific (subtype) return type than the method it overrides in the parent class.\n\nBEFORE JAVA 5 (exact match required):\nclass Parent {\n    Object getValue() { return new Object(); }\n}\n\nclass Child extends Parent {\n    @Override\n    Object getValue() { return \"Hello\"; }  // had to return Object, even though String is a subclass\n}\n\n// Usage required casting:\nString s = (String) new Child().getValue();  // explicit cast needed\n\nWITH COVARIANT RETURN TYPE (Java 5+):\nclass Parent {\n    Object getValue() { return new Object(); }\n}\n\nclass Child extends Parent {\n    @Override\n    String getValue() { return \"Hello\"; }  // String is a subtype of Object — allowed!\n}\n\n// Usage — no cast needed:\nString s = new Child().getValue();  // automatic!\n\nANOTHER EXAMPLE:\nclass Animal {\n    Animal reproduce() { return new Animal(); }\n}\n\nclass Dog extends Animal {\n    @Override\n    Dog reproduce() { return new Dog(); }  // Dog is covariant return type (subtype of Animal)\n}\n\n// Usage:\nDog puppy = new Dog().reproduce();  // no cast needed\n\nRULES:\n1. The overriding method's return type must be a subtype of the overridden method's return type\n2. Works with reference types (classes, interfaces) — not with primitives\n3. The subtype relationship must hold through the inheritance chain\n4. Eliminates unnecessary downcasting, making code cleaner and type-safe\n\nCOMPLETE EXAMPLE:\nclass Shape {\n    Shape clone() { return new Shape(); }\n}\n\nclass Circle extends Shape {\n    @Override\n    Circle clone() { return new Circle(); }  // covariant\n}\n\nclass ColoredCircle extends Circle {\n    @Override\n    ColoredCircle clone() { return new ColoredCircle(); }  // also covariant\n}\n\nColoredCircle cc = new ColoredCircle().clone();  // returns ColoredCircle directly\n\nThis is commonly seen with the clone() method and in factory method patterns.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-042",
+    "question": "Explain the instanceof operator in Java. When would you use it?",
+    "keywords": [
+      "instanceof",
+      "type checking",
+      "casting",
+      "downcasting",
+      "ClassCastException",
+      "object type"
+    ],
+    "mainConcepts": [
+      "instanceof checks whether an object is an instance of a specific class, subclass, or interface",
+      "Returns boolean: true if the object is of that type or a subtype",
+      "Often used before downcasting to avoid ClassCastException",
+      "null instanceof Type always returns false",
+      "Can be used with interfaces to check if an object implements a certain interface",
+      "Pattern matching for instanceof (Java 16+) allows combining check and cast"
+    ],
+    "referenceAnswer": "The instanceof operator in Java is a binary operator used to check whether an object is an instance of a particular class, subclass, or interface. It returns a boolean value.\n\nSYNTAX:\nobject instanceof Type\n\nReturns true if:\n- object is a direct instance of Type\n- object is an instance of a subclass of Type\n- object implements the interface Type\n- Type is a superclass/superinterface of object's class\n\nReturns false if:\n- object is not related to Type\n- object is null\n\nEXAMPLES:\nString s = \"Hello\";\nSystem.out.println(s instanceof String);  // true\nSystem.out.println(s instanceof Object);  // true (String IS-A Object)\nSystem.out.println(s instanceof Integer); // false (compiler warning — different hierarchies)\n\n// With inheritance:\nAnimal a = new Dog();\nSystem.out.println(a instanceof Animal);  // true\nSystem.out.println(a instanceof Dog);     // true (actual object is Dog)\nSystem.out.println(a instanceof Cat);     // false\n\n// With interfaces:\nList list = new ArrayList();\nSystem.out.println(list instanceof List);       // true\nSystem.out.println(list instanceof ArrayList);  // true\nSystem.out.println(list instanceof RandomAccess);  // true (ArrayList implements it)\n\n// null check:\nDog d = null;\nSystem.out.println(d instanceof Dog);  // false (not an error)\n\nUSE CASE 1: SAFE DOWNCASTING\nif (animal instanceof Dog) {\n    Dog dog = (Dog) animal;  // safe — already checked\n    dog.bark();\n}\n\nUSE CASE 2: TYPE-BASED BEHAVIOR\npublic void processPayment(Payment payment) {\n    if (payment instanceof CreditCardPayment) {\n        CreditCardPayment cc = (CreditCardPayment) payment;\n        cc.chargeWithCard();\n    } else if (payment instanceof PayPalPayment) {\n        PayPalPayment pp = (PayPalPayment) payment;\n        pp.chargeWithPayPal();\n    }\n}\n\nUSE CASE 3: POLYMORPHIC COLLECTION PROCESSING\nfor (Object obj : mixedList) {\n    if (obj instanceof String) {\n        System.out.println(\"String: \" + obj);\n    } else if (obj instanceof Integer) {\n        System.out.println(\"Integer: \" + obj);\n    }\n}\n\nJAVA 16+ PATTERN MATCHING FOR instanceof (more concise):\nif (animal instanceof Dog dog) {  // declares dog variable automatically\n    dog.bark();  // no explicit cast needed\n}\n\n// Instead of:\nif (animal instanceof Dog) {\n    Dog dog = (Dog) animal;\n    dog.bark();\n}\n\nBEST PRACTICES:\n- Prefer polymorphism over instanceof — instanceof often indicates poor OOP design\n- Use instanceof primarily when working with legacy code or mixed-type collections\n- Always check with instanceof before downcasting to prevent ClassCastException\n- Pattern matching (Java 16+) is preferred over the traditional check-then-cast pattern",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Inheritance & Polymorphism",
+    "id": "TH-043",
+    "question": "What is constructor chaining in Java? How does super() and this() work together?",
+    "keywords": [
+      "constructor chaining",
+      "super",
+      "this",
+      "constructor call",
+      "initialization",
+      "first statement"
+    ],
+    "mainConcepts": [
+      "Constructor chaining is the process of calling one constructor from another constructor",
+      "this() calls another constructor in the SAME class",
+      "super() calls a constructor in the PARENT class",
+      "Both must be the FIRST statement in the constructor",
+      "If neither this() nor super() is specified, super() (no-arg) is inserted automatically",
+      "Cannot use both this() and super() in the same constructor"
+    ],
+    "referenceAnswer": "Constructor chaining is the process of calling one constructor from another constructor in Java. It ensures proper initialization of object state across the inheritance hierarchy.\n\nRULES:\n- this() calls another constructor in the SAME class\n- super() calls a constructor in the IMMEDIATE PARENT class\n- Both MUST be the FIRST statement in the constructor\n- You cannot use both this() and super() in the same constructor\n- If not specified, Java inserts super() (no-arg) automatically\n\nEXAMPLE 1: CHAINING WITH this() IN THE SAME CLASS:\npublic class Student {\n    String name;\n    int id;\n    String course;\n    \n    Student() {\n        this(\"Unknown\", 0, \"None\");  // calls the 3-param constructor\n    }\n    \n    Student(String name) {\n        this(name, 0, \"None\");  // calls the 3-param constructor\n    }\n    \n    Student(String name, int id) {\n        this(name, id, \"None\");  // calls the 3-param constructor\n    }\n    \n    Student(String name, int id, String course) {\n        this.name = name;\n        this.id = id;\n        this.course = course;\n    }\n}\n// All constructors eventually delegate to the most-specific constructor.\n\nEXAMPLE 2: CHAINING WITH super() IN AN INHERITANCE HIERARCHY:\nclass Person {\n    String name;\n    int age;\n    \n    Person() {\n        super();  // calls Object's constructor (implicitly)\n        this.name = \"Unknown\";\n        this.age = 0;\n    }\n    \n    Person(String name, int age) {\n        super();  // calls Object's constructor\n        this.name = name;\n        this.age = age;\n    }\n}\n\nclass Student extends Person {\n    String course;\n    \n    Student() {\n        super();  // calls Person()\n        this.course = \"None\";\n    }\n    \n    Student(String name, int age, String course) {\n        super(name, age);  // calls Person(String, int)\n        this.course = course;\n    }\n}\n\nEXECUTION ORDER:\nWhen new Student(\"Alice\", 20, \"CSC 282\") is called:\n1. Student(String, int, String) constructor starts\n2. super(name, age) — calls Person(String, int)\n3. Person constructor calls super() — calls Object()\n4. Object() executes\n5. Back to Person: name = \"Alice\", age = 20\n6. Back to Student: course = \"CSC 282\"\n\nSo initialization happens from TOP to BOTTOM of the hierarchy.\n\nWHY CHAINING MATTERS:\n- Ensures parent class fields are initialized before child class fields\n- Reduces code duplication (one main constructor, others delegate)\n- Makes object construction predictable and consistent\n- Required when parent class has no no-arg constructor (must use super(args))\n\nCOMPLETE EXAMPLE:\nclass Vehicle {\n    String type;\n    \n    Vehicle(String type) {\n        this.type = type;\n        System.out.println(\"Vehicle created: \" + type);\n    }\n}\n\nclass Car extends Vehicle {\n    String model;\n    \n    Car(String model) {\n        super(\"Car\");  // MUST call — Vehicle has no no-arg constructor\n        this.model = model;\n        System.out.println(\"Car model: \" + model);\n    }\n}\n\nnew Car(\"Toyota\");\n// Output:\n// Vehicle created: Car\n// Car model: Toyota",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-044",
+    "question": "What is the Java exception hierarchy? Explain Throwable, Exception, Error, and RuntimeException.",
+    "keywords": [
+      "Throwable",
+      "Exception",
+      "Error",
+      "RuntimeException",
+      "checked exception",
+      "unchecked exception",
+      "hierarchy"
+    ],
+    "mainConcepts": [
+      "Throwable is the root class of Java's exception hierarchy",
+      "Throwable has two main subclasses: Exception and Error",
+      "Exception represents conditions an application should handle (checked: must catch/declare)",
+      "RuntimeException is a subclass of Exception representing programming bugs (unchecked)",
+      "Error represents serious system problems that applications should NOT try to handle",
+      "Checked exceptions are everything under Exception except RuntimeException"
+    ],
+    "referenceAnswer": "Java's exception hierarchy is rooted at the Throwable class, which extends Object. It has two main branches: Exception and Error.\n\nEXCEPTION HIERARCHY:\n\nObject\n  +-- Throwable\n        +-- Exception (checked exceptions — must be handled)\n        |     +-- RuntimeException (unchecked — programming bugs)\n        |     |     +-- NullPointerException\n        |     |     +-- ArrayIndexOutOfBoundsException\n        |     |     +-- ArithmeticException\n        |     |     +-- IllegalArgumentException\n        |     |     +-- NumberFormatException\n        |     |     +-- ClassCastException\n        |     |     +-- IndexOutOfBoundsException\n        |     |\n        |     +-- IOException (checked)\n        |     |     +-- FileNotFoundException\n        |     |     +-- EOFException\n        |     |\n        |     +-- SQLException (checked)\n        |     +-- ClassNotFoundException (checked)\n        |     +-- InterruptedException (checked)\n        |\n        +-- Error (unchecked — serious system problems, NOT for handling)\n              +-- OutOfMemoryError\n              +-- StackOverflowError\n              +-- NoClassDefFoundError\n              +-- VirtualMachineError\n              +-- AssertionError\n\n1. THROWABLE (root class):\n- Provides common methods: getMessage(), printStackTrace(), toString(), getCause()\n- Only objects of Throwable or its subclasses can be thrown/caught\n\n2. EXCEPTION:\n- Represents conditions that a well-written application should anticipate and handle\n- Divided into checked and unchecked exceptions\n- CHECKED: Must be caught (try-catch) or declared (throws)\n  - IOException, SQLException, ClassNotFoundException, InterruptedException\n- UNCHECKED (RuntimeException): Need not be caught or declared\n  - NullPointerException, ArithmeticException, ArrayIndexOutOfBoundsException\n\n3. RUNTIMEEXCEPTION:\n- Subclass of Exception\n- Indicates programming bugs: null checks, division by zero, array overflow, invalid casts\n- The compiler does NOT require handling — fixing the bug is the proper approach\n- If a NullPointerException occurs, the fix is to check for null, not to wrap in try-catch\n\n4. ERROR:\n- Subclass of Throwable (NOT of Exception)\n- Indicates serious problems that normal applications should NOT try to catch\n- Examples: OutOfMemoryError, StackOverflowError, VirtualMachineError\n- These are external to the application and usually unrecoverable\n- Catching an Error is strongly discouraged\n\nCATCH-OR-DECLARE RULE:\nChecked exceptions (Exception and subclasses except RuntimeException):\n- Must be caught with try-catch OR declared with throws in method signature\n- Examples: FileNotFoundException, SQLException, IOException\n\nUnchecked exceptions (RuntimeException, Error):\n- No compile-time requirement to catch or declare\n- Can still be caught, but not required\n\nThis design ensures that recoverable errors are explicitly handled, while unrecoverable system problems and programming bugs are not forced to be caught.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Exception Handling",
+    "id": "TH-045",
+    "question": "Can you have a try block without a catch block? Explain the finally block behavior.",
+    "keywords": [
+      "try-finally",
+      "try-without-catch",
+      "finally",
+      "resource cleanup",
+      "exception propagation",
+      "always executes"
+    ],
+    "mainConcepts": [
+      "A try block can exist without a catch block, but it must have a finally block",
+      "A try block can have multiple catch blocks, a finally block, or both",
+      "The finally block ALWAYS executes (even if return, break, continue, or exception occurs)",
+      "Only System.exit() or JVM crash can prevent finally from executing",
+      "try-with-resources is a special form of try that ensures cleanup without explicit finally",
+      "Without a catch, exceptions propagate up the call stack; finally runs before propagation"
+    ],
+    "referenceAnswer": "Yes, a try block CAN exist without a catch block, but it MUST be followed by a finally block. You can have:\n- try + catch (no finally)\n- try + finally (no catch)\n- try + catch + finally\n- try-with-resources (auto-closes resources)\n\nTRY-FINALLY (without catch):\nUsed when you want to ensure cleanup but don't want to handle the exception locally. The exception propagates up the call stack, but the finally block runs first.\n\npublic void readFile(String path) throws IOException {\n    FileReader fr = null;\n    try {\n        fr = new FileReader(path);\n        // read file\n    } finally {\n        // Always executes, even if exception occurs\n        if (fr != null) {\n            fr.close();  // cleanup\n        }\n    }\n    // Exception propagates to caller — caller must handle IOException\n}\n\nFINALLY BLOCK EXECUTION GUARANTEE:\nThe finally block ALWAYS executes, EXCEPT when:\n- System.exit(0) is called\n- The JVM crashes\n- The thread dies (deprecated Thread.stop())\n\nFinally runs even:\n- When a return statement is in try or catch\n- When an exception is thrown\n- When break/continue is used\n\nDEMONSTRATION:\npublic static int testFinally() {\n    try {\n        System.out.println(\"In try\");\n        return 1;  // returns 1\n    } finally {\n        System.out.println(\"In finally — always runs!\");\n        // Runs BEFORE the value is returned\n    }\n}\n// Output:\n// In try\n// In finally — always runs!\n// Returns 1\n\nDEMONSTRATION WITH EXCEPTION:\npublic static void testException() {\n    try {\n        System.out.println(\"In try\");\n        int x = 10 / 0;  // ArithmeticException\n    } finally {\n        System.out.println(\"Finally runs before exception propagates\");\n    }\n    // Output:\n    // In try\n    // Finally runs before exception propagates\n    // Then exception propagates up (uncaught)\n}\n\nTRY-FINALLY WITH RETURN IN FINALLY (special case):\npublic static int confusingFinally() {\n    try {\n        return 10;\n    } finally {\n        return 20;  // This overrides the try's return!\n    }\n}\n// Returns 20, not 10!\n// This is considered bad practice and confusing — avoid returning from finally\n\nTRY-WITH-RESOURCES (Java 7+):\nAutomatically closes resources, effectively acting like try-finally for cleanup:\n\ntry (FileReader fr = new FileReader(\"file.txt\");\n     BufferedReader br = new BufferedReader(fr)) {\n    // use resources\n} catch (IOException e) {\n    // handle\n}\n// Resources are automatically closed (finally-like behavior built-in)\n\nBEST PRACTICE:\n- Use try-finally for cleanup when you don't want to handle the exception locally\n- Use try-with-resources when available (cleaner, less error-prone)\n- Never return from a finally block\n- Keep finally blocks simple — just cleanup logic",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-046",
+    "question": "What are wrapper classes in Java? Explain autoboxing and unboxing.",
+    "keywords": [
+      "wrapper class",
+      "Integer",
+      "Double",
+      "Boolean",
+      "autoboxing",
+      "unboxing",
+      "primitive to object",
+      "object to primitive"
+    ],
+    "mainConcepts": [
+      "Wrapper classes convert primitive types into objects (Integer, Double, Boolean, etc.)",
+      "Autoboxing is the automatic conversion of a primitive to its wrapper class",
+      "Unboxing is the automatic conversion of a wrapper object to its primitive type",
+      "Autoboxing/unboxing were introduced in Java 5",
+      "Wrapper classes are useful for collections (which only work with objects)",
+      "Each primitive type has a corresponding wrapper class with utility methods"
+    ],
+    "referenceAnswer": "Wrapper classes in Java are classes that encapsulate primitive data types into objects. Each primitive has a corresponding wrapper class in the java.lang package.\n\nPRIMITIVE TO WRAPPER MAPPING:\nPrimitive | Wrapper Class | Example\n----------|---------------|--------\nbyte      | Byte          | Byte b = 10;\nshort     | Short         | Short s = 100;\nint       | Integer       | Integer i = 1000;\nlong      | Long          | Long l = 10000L;\nfloat     | Float         | Float f = 3.14f;\ndouble    | Double        | Double d = 3.14;\nchar      | Character     | Character c = 'A';\nboolean   | Boolean       | Boolean bool = true;\n\nWHY WRAPPER CLASSES EXIST:\n1. Collections (ArrayList, HashMap, etc.) work only with objects, not primitives\n   ArrayList<Integer> list = new ArrayList<>();  // valid\n   ArrayList<int> list = new ArrayList<>();       // compile error\n\n2. Generic types require objects, not primitives\n\n3. Utility methods provided by wrapper classes:\n   Integer.parseInt(\"123\")      → 123 (int)\n   Double.parseDouble(\"3.14\")   → 3.14\n   Integer.toString(123)        → \"123\"\n   Integer.MAX_VALUE            → 2147483647\n   Character.isDigit('5')       → true\n   Character.isLetter('A')      → true\n\nAUTOBOXING (Java 5+):\nAutomatic conversion of a primitive to its wrapper class by the compiler.\n\n// Before Java 5 (manual boxing):\nInteger i = Integer.valueOf(100);\n\n// Java 5+ (autoboxing):\nInteger i = 100;  // compiler inserts Integer.valueOf(100) automatically\n\nAUTOBOXING EXAMPLES:\nInteger x = 42;                  // int → Integer\nDouble d = 3.14;                 // double → Double\nBoolean b = true;                // boolean → Boolean\n\nlist.add(42);                    // autoboxing: 42 → Integer.valueOf(42)\nMap<String, Integer> map = ...;\nmap.put(\"score\", 95);           // autoboxing: 95 → Integer.valueOf(95)\n\nUNBOXING (Java 5+):\nAutomatic conversion of a wrapper object to its primitive type.\n\n// Before Java 5 (manual unboxing):\nint n = i.intValue();\n\n// Java 5+ (autoboxing):\nint n = i;  // compiler inserts i.intValue() automatically\n\nUNBOXING EXAMPLES:\nInteger x = 42;\nint y = x;                        // unboxing: Integer → int\n\nint sum = list.get(0) + list.get(1);  // unboxing then addition\n\nif (b) { }                        // unboxing Boolean → boolean\n\nPERFORMANCE NOTE:\nInteger sum = 0;\nfor (int i = 0; i < 1000; i++) {\n    sum += i;  // autoboxing and unboxing on every iteration — inefficient!\n}\n// Each += does: sum = Integer.valueOf(sum.intValue() + i)\n// Creates 1000 unnecessary Integer objects!\n\n// Better:\nint primitiveSum = 0;\nfor (int i = 0; i < 1000; i++) {\n    primitiveSum += i;\n}\nInteger sum = primitiveSum;  // single boxing at the end\n\nNULL POINTER DANGER:\nInteger x = null;\nint y = x;  // NullPointerException — cannot unbox null to int\n\n// Always check for null before unboxing:\nif (x != null) {\n    int y = x;\n}\n\nCOMMON UTILITY METHODS:\nInteger.parseInt(\"123\");         // String → int\nInteger.valueOf(\"123\");          // String → Integer\nInteger.toString(123);            // int → String\ndouble d = Double.parseDouble(\"3.14\");\nString s = Double.toString(3.14);\nboolean bool = Boolean.parseBoolean(\"true\");\n\nThese methods handle the frequent task of converting between String and numeric types.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-047",
+    "question": "Explain the ArrayList class in Java. How is it different from an array?",
+    "keywords": [
+      "ArrayList",
+      "dynamic array",
+      "List",
+      "add",
+      "get",
+      "size",
+      "resizable",
+      "generics"
+    ],
+    "mainConcepts": [
+      "ArrayList is a resizable array implementation of the List interface (java.util)",
+      "Unlike arrays, ArrayList can grow and shrink dynamically",
+      "ArrayList stores objects only (not primitives — use wrapper classes)",
+      "Arrays have fixed size; ArrayList automatically resizes when needed",
+      "ArrayList provides built-in methods: add(), get(), remove(), size(), contains()",
+      "ArrayList can be declared with generics to ensure type safety"
+    ],
+    "referenceAnswer": "ArrayList is a class in the java.util package that implements the List interface using a dynamically resizable array. It is one of the most commonly used collection classes in Java.\n\nARRAY vs ARRAYLIST:\n\nFeature          | Array                           | ArrayList\n-----------------|---------------------------------|-------------------------\nSize             | Fixed (declared at creation)     | Dynamic (auto-resizes)\nType             | Can hold primitives and objects   | Only objects (use wrapper)\nDeclaring        | int[] arr = new int[10];        | ArrayList<Integer> list = new ArrayList<>();\nLength           | arr.length (field)              | list.size() (method)\nAccess           | arr[0] (bracket notation)       | list.get(0) (method)\nAssignment       | arr[0] = 5;                     | list.set(0, 5);\nAdding           | Not possible after creation      | list.add(5);\nRemoving         | Not possible                     | list.remove(0);\nSearch           | Manual loop                      | list.contains(5);\nPerformance      | Faster (direct memory access)    | Slightly slower (method calls, resizing)\nGenerics         | Not supported                    | Fully supported\n\nARRAYLIST EXAMPLES:\n\nCreating an ArrayList:\nArrayList<String> names = new ArrayList<>();           // empty list\nArrayList<Integer> numbers = new ArrayList<>(100);     // initial capacity 100\nArrayList<String> copy = new ArrayList<>(otherList);   // copy from another collection\n\nAdding elements:\nnames.add(\"Alice\");        // adds at end\nnames.add(\"Bob\");\nnames.add(1, \"Charlie\");   // adds at index 1, shifts elements right\n\nAccessing elements:\nString first = names.get(0);           // \"Alice\"\nString last = names.get(names.size() - 1);  // last element\n\nModifying elements:\nnames.set(1, \"David\");     // replace element at index 1\n\nRemoving elements:\nnames.remove(0);           // remove by index\nnames.remove(\"Bob\");       // remove by object (first occurrence)\nnames.clear();             // remove all elements\n\nSize and checking:\nint size = names.size();\nboolean empty = names.isEmpty();\nboolean containsAlice = names.contains(\"Alice\");\nint index = names.indexOf(\"Alice\");\n\nIteration:\n// For loop:\nfor (int i = 0; i < names.size(); i++) {\n    System.out.println(names.get(i));\n}\n\n// Enhanced for-each loop:\nfor (String name : names) {\n    System.out.println(name);\n}\n\n// ForEach with lambda (Java 8+):\nnames.forEach(name -> System.out.println(name));\n\n// Iterator:\nIterator<String> it = names.iterator();\nwhile (it.hasNext()) {\n    String name = it.next();\n    if (name.equals(\"Bob\")) it.remove();  // safe removal during iteration\n}\n\nCOMMON ARRAYLIST METHODS:\n- add(E element): append at end\n- add(int index, E element): insert at position\n- get(int index): return element at index\n- set(int index, E element): replace at index\n- remove(int index): remove by index, returns removed element\n- remove(Object o): remove first occurrence, returns boolean\n- size(): number of elements\n- isEmpty(): check if empty\n- contains(Object o): check if element exists\n- indexOf(Object o): first index of element (-1 if not found)\n- clear(): remove all elements\n- toArray(): convert to array\n- sort(Comparator): sort the list\n\nINTERNAL WORKING:\nArrayList internally uses an Object[] array. When the array is full, it:\n1. Creates a new array with ~50% larger capacity\n2. Copies all elements from old array to new array\n3. The old array becomes eligible for garbage collection\n\nThis makes add() O(1) amortized time, but occasional resizing is O(n).\n\nArrayList<String> list = new ArrayList<>();  // internal array size = 10 (default)\n// After adding 10 elements, next add triggers resize to 15, then 22, etc.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-048",
+    "question": "What is the NetBeans GUI Builder? How does it help in creating Swing applications?",
+    "keywords": [
+      "NetBeans",
+      "GUI Builder",
+      "Swing",
+      "drag and drop",
+      "code generation",
+      "Matisse",
+      "GroupLayout"
+    ],
+    "mainConcepts": [
+      "NetBeans GUI Builder (formerly Matisse) is a visual design tool for creating Swing GUIs",
+      "Allows drag-and-drop placement of Swing components on a design surface",
+      "Generates Java code automatically using GroupLayout",
+      "Provides property sheets for configuring component properties",
+      "Enables rapid prototyping and visual arrangement",
+      "Generated code is in a locked section; manual code goes in customizer methods"
+    ],
+    "referenceAnswer": "The NetBeans GUI Builder (originally called Matisse) is a visual design tool integrated into the NetBeans IDE that allows developers to create Swing-based graphical user interfaces using drag-and-drop, rather than writing layout code manually.\n\nKEY FEATURES:\n\n1. VISUAL DESIGN:\n- Drag Swing components (JButton, JLabel, JTextField, etc.) from a palette\n- Drop them onto a design surface (JFrame, JPanel, JDialog)\n- Visually position and resize components\n- See a real-time preview of the GUI appearance\n\n2. AUTOMATIC CODE GENERATION:\n- The GUI Builder generates the Java source code automatically\n- Generated code uses GroupLayout (but looks complex and is human-unfriendly)\n- Generated code is placed in a \"locked\" section — manually editing is discouraged\n- Instead, add code in customizer methods or event handlers\n\n3. PROPERTY SHEET:\n- Each selected component shows a property sheet\n- Properties like text, font, color, size, enabled state, tooltip can be set visually\n- Event handlers can be connected by double-clicking components\n\n4. EVENT HANDLING:\n- Double-click a button → NetBeans generates the event handler method skeleton\n- The developer adds the action logic inside the generated method\n- Avoids writing ActionListener boilerplate manually\n\n5. ADVANTAGES:\n- Rapid GUI development — minutes instead of hours\n- Accurate visual representation of the final UI\n- No manual layout manager math needed\n- Consistent look and feel\n- Easy component property editing\n\n6. DISADVANTAGES:\n- Generated code is verbose and hard to read manually\n- Merging changes in version control can be difficult\n- Fine-tuning layout sometimes requires understanding GroupLayout\n- Limited flexibility compared to hand-coded Swing\n\nTYPICAL WORKFLOW:\n1. Create a new JFrame Form in NetBeans\n2. Drag components from the Palette to the design area\n3. Arrange them visually using alignment guidelines\n4. Use the Property Sheet to set text, names, and other properties\n5. Right-click → Events → Add event handler (or double-click a button)\n6. Write the event-handling logic in the generated method\n7. Run the project to test the GUI\n\nWHEN TO USE:\n- Rapid prototyping\n- Simple to moderately complex GUIs\n- Teams where UI designers are not Java experts\n- Educational settings (beginners can create GUIs quickly)\n\nWHEN TO HAND-CODE:\n- Complex, dynamic layouts\n- Performance-critical UIs\n- Code that needs fine-grained control\n- When the code must be easily maintainable in version control\n\nNetBeans GUI Builder uses GroupLayout by default, which is complex to write manually but very powerful. The builder handles all the constraints automatically.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-049",
+    "question": "Explain how to use JTextArea, JScrollPane, and JList in Swing applications.",
+    "keywords": [
+      "JTextArea",
+      "JScrollPane",
+      "JList",
+      "scrollable",
+      "multi-line text",
+      "list selection",
+      "JScrollBar"
+    ],
+    "mainConcepts": [
+      "JTextArea displays/edits multi-line text",
+      "JScrollPane provides scrollable viewport for components like JTextArea and JList",
+      "JList displays a list of selectable items",
+      "JScrollPane is a container that wraps another component and adds scroll bars",
+      "JList uses a ListModel to manage data and ListSelectionListener for selection events",
+      "JTextArea and JList are often wrapped in JScrollPane for usability"
+    ],
+    "referenceAnswer": "JTextArea, JScrollPane, and JList are frequently used Swing components for text display and selection.\n\nJTEXTAREA (Multi-line Text):\nJTextArea is a Swing component that allows multi-line text display and editing.\n\n// Creating JTextArea\nJTextArea textArea = new JTextArea();\nJTextArea textArea2 = new JTextArea(\"Initial text\", 5, 30);  // 5 rows, 30 columns\n\n// Common methods:\ntextArea.setText(\"Hello World\");         // set text\ntextArea.append(\"\\nNew line\");           // append text\nString content = textArea.getText();       // get all text\ntextArea.setEditable(false);              // read-only mode\ntextArea.setLineWrap(true);               // wrap long lines\ntextArea.setWrapStyleWord(true);          // wrap at word boundaries\ntextArea.setFont(new Font(\"Monospaced\", Font.PLAIN, 12));\n\nJSCROLLPANE (Scrollable Viewport):\nJScrollPane provides scroll bars around a component. It is used with JTextArea, JList, JTable, or any component that may need scrolling.\n\n// Wrapping JTextArea in JScrollPane:\nJTextArea textArea = new JTextArea(20, 40);\nJScrollPane scrollPane = new JScrollPane(textArea);\n// Now textArea automatically gets scroll bars when content exceeds visible area\n\n// Adding to frame/frame instead of adding textArea directly:\nframe.add(scrollPane);  // NOT frame.add(textArea)\n\n// Scroll pane policies:\nJScrollPane sp = new JScrollPane(component,\n    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,    // default — show when needed\n    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);\n\n// Options:\n// ALWAYS, AS_NEEDED, NEVER\n\nJLIST (Selectable List):\nJList displays a list of items from which the user can select one or more items.\n\n// Creating with String array:\nString[] courses = {\"CSC 281\", \"CSC 282\", \"CSC 283\", \"CSC 284\"};\nJList<String> list = new JList<>(courses);\n\n// DefaultListModel (dynamic data):\nDefaultListModel<String> model = new DefaultListModel<>();\nmodel.addElement(\"Item 1\");\nmodel.addElement(\"Item 2\");\nJList<String> list = new JList<>(model);\nmodel.addElement(\"Item 3\");  // list updates automatically\n\n// Selection mode:\nlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);\n// Also: SINGLE_INTERVAL_SELECTION, MULTIPLE_INTERVAL_SELECTION\n\n// Getting selection:\nString selected = list.getSelectedValue();         // single selection\nint index = list.getSelectedIndex();\nList<String> selectedItems = list.getSelectedValuesList();  // multi-selection\n\n// Selection listener:\nlist.addListSelectionListener(e -> {\n    if (!e.getValueIsAdjusting()) {  // filter intermediate events\n        String value = list.getSelectedValue();\n        System.out.println(\"Selected: \" + value);\n    }\n});\n\nCOMPLETE EXAMPLE:\nimport javax.swing.*;\nimport java.awt.*;\n\npublic class StudentListApp {\n    public static void main(String[] args) {\n        JFrame frame = new JFrame(\"Student List\");\n        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\n        frame.setSize(400, 300);\n        \n        // List with model\n        DefaultListModel<String> model = new DefaultListModel<>();\n        model.addElement(\"Alice - CSC 282\");\n        model.addElement(\"Bob - CSC 281\");\n        model.addElement(\"Charlie - CSC 283\");\n        \n        JList<String> studentList = new JList<>(model);\n        studentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);\n        \n        // Scroll pane for the list\n        JScrollPane listScrollPane = new JScrollPane(studentList);\n        \n        // Text area for details\n        JTextArea detailsArea = new JTextArea(5, 30);\n        detailsArea.setEditable(false);\n        JScrollPane textScrollPane = new JScrollPane(detailsArea);\n        \n        // Event handling\n        studentList.addListSelectionListener(e -> {\n            if (!e.getValueIsAdjusting()) {\n                String selected = studentList.getSelectedValue();\n                detailsArea.setText(\"Selected: \" + selected);\n            }\n        });\n        \n        // Layout\n        frame.setLayout(new BorderLayout());\n        frame.add(listScrollPane, BorderLayout.CENTER);\n        frame.add(textScrollPane, BorderLayout.SOUTH);\n        \n        frame.setVisible(true);\n    }\n}",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-050",
+    "question": "What is the File class in Java? Explain common File operations.",
+    "keywords": [
+      "File",
+      "file path",
+      "exists",
+      "isDirectory",
+      "listFiles",
+      "createNewFile",
+      "mkdir",
+      "delete"
+    ],
+    "mainConcepts": [
+      "The File class (java.io) represents a file or directory path, not the file content",
+      "File objects are used to inspect, create, delete, and rename files and directories",
+      "Common methods: exists(), isFile(), isDirectory(), length(), getName(), getPath()",
+      "createNewFile() creates an empty file; mkdir() creates a directory",
+      "listFiles() returns an array of File objects for directory contents",
+      "The File class has constructors for different path formats"
+    ],
+    "referenceAnswer": "The File class in java.io represents a file or directory path in the file system. Important: it does NOT represent the file's content — it represents the path and provides methods to manage files and directories.\n\nCREATING FILE OBJECTS:\nFile f1 = new File(\"C:\\\\data\\\\students.txt\");    // absolute path (Windows)\nFile f2 = new File(\"/home/user/students.txt\");      // absolute path (Unix)\nFile f3 = new File(\"students.txt\");                 // relative path (current directory)\nFile f4 = new File(\"C:\\\\data\", \"students.txt\");     // parent path + child name\nFile f5 = new File(new File(\"C:\\\\data\"), \"students.txt\"); // File parent + child\n\nPATH SEPARATORS:\n- Windows: use \\ (escape to \\\\) or use File.separator\n- Better: use \"/\" — Java normalizes it to the platform separator\n\nCOMMON METHODS:\n\n1. EXISTENCE AND TYPE:\nf.exists()         // true if file/directory exists\nf.isFile()          // true if it's a file (not directory)\nf.isDirectory()     // true if it's a directory\nf.isHidden()        // true if hidden file\nf.canRead()         // true if readable\nf.canWrite()        // true if writable\n\n2. PATH INFORMATION:\nf.getName()         // \"students.txt\"\nf.getPath()         // path as specified in constructor\nf.getAbsolutePath() // full absolute path\nf.getParent()       // parent directory path (String)\nf.getParentFile()   // parent directory as File object\n\n3. FILE PROPERTIES:\nf.length()          // file size in bytes\nf.lastModified()    // last modification timestamp (long, epoch millis)\n\n4. NAVIGATING DIRECTORIES:\nFile[] files = dir.listFiles();       // all files/subdirs\nString[] names = dir.list();          // just names\nFileFilter filter = f -> f.getName().endsWith(\".txt\");\nFile[] textFiles = dir.listFiles(filter);  // filtered\n\n5. CREATING AND DELETING:\n// Create empty file:\nFile f = new File(\"newfile.txt\");\nboolean created = f.createNewFile();  // returns false if already exists\n\n// Create directory:\nFile dir = new File(\"data\");\ndir.mkdir();  // creates single directory, returns boolean\n\n// Create nested directories:\nFile nested = new File(\"data\\\\2024\\\\students\");\nnested.mkdirs();  // creates all nonexistent parent directories\n\n// Delete:\nf.delete();  // returns boolean — file must exist\n// For directories, must be empty first\n\n// Rename:\nFile old = new File(\"old.txt\");\nFile newName = new File(\"new.txt\");\nold.renameTo(newName);  // returns boolean\n\n6. TEMPORARY FILES:\nFile temp = File.createTempFile(\"prefix\", \".txt\");\ntemp.deleteOnExit();  // deleted when JVM exits\n\nCOMPLETE EXAMPLE:\npublic class FileDemo {\n    public static void main(String[] args) {\n        File dir = new File(\"C:\\\\students\");\n        \n        if (!dir.exists()) {\n            dir.mkdir();\n            System.out.println(\"Directory created\");\n        }\n        \n        File file = new File(dir, \"roster.txt\");\n        if (!file.exists()) {\n            try {\n                file.createNewFile();\n                System.out.println(\"File created: \" + file.getAbsolutePath());\n            } catch (IOException e) {\n                System.out.println(\"Error: \" + e.getMessage());\n            }\n        }\n        \n        System.out.println(\"Path: \" + file.getPath());\n        System.out.println(\"Size: \" + file.length() + \" bytes\");\n        System.out.println(\"Is file: \" + file.isFile());\n        \n        // List directory contents\n        if (dir.isDirectory()) {\n            System.out.println(\"\\nDirectory contents:\");\n            for (File f : dir.listFiles()) {\n                System.out.println(\"  \" + f.getName() + \" (\" + f.length() + \" bytes)\");\n            }\n        }\n    }\n}\n\nNOTE: In Java 7+, java.nio.file.Path and java.nio.file.Files were introduced as a modern replacement for File, with better error handling, symbolic link support, and more features.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-051",
+    "question": "Explain BufferedWriter and BufferedReader. Why do we wrap them around other streams?",
+    "keywords": [
+      "BufferedReader",
+      "BufferedWriter",
+      "readLine",
+      "buffering",
+      "performance",
+      "wrapping",
+      "FileReader",
+      "decorator pattern"
+    ],
+    "mainConcepts": [
+      "BufferedReader reads text from a character input stream, buffering for efficient reading",
+      "BufferedWriter writes text to a character output stream, buffering for efficient writing",
+      "They wrap underlying reader/writer streams to add buffering functionality (Decorator Pattern)",
+      "Buffering reduces the number of I/O operations by reading/writing larger chunks",
+      "BufferedReader provides readLine() for line-by-line reading",
+      "BufferedWriter provides newLine() for platform-independent line separator"
+    ],
+    "referenceAnswer": "BufferedReader and BufferedWriter are wrapper classes in java.io that add buffering to character streams, significantly improving I/O performance.\n\nWHY BUFFERING MATTERS:\nWithout buffering, each read/write operation goes directly to the underlying OS or device.\n- Without BufferedReader: calling read() 1000 times = 1000 OS system calls (slow!)\n- With BufferedReader: calling read() 1000 times = 1 OS system call for a buffer of 1000 chars, then 1000 reads from memory (fast!)\n\nDECORATOR PATTERN:\nBoth classes follow the Decorator pattern — they wrap around another Reader/Writer to add functionality:\n\nFileReader fr = new FileReader(\"file.txt\");       // basic file reader\nBufferedReader br = new BufferedReader(fr);         // adds buffering\n\nFileWriter fw = new FileWriter(\"output.txt\");      // basic file writer\nBufferedWriter bw = new BufferedWriter(fw);          // adds buffering\nPrintWriter pw = new PrintWriter(bw);               // adds print methods\n\nBUFFEREDREADER:\n- Wraps a Reader (like FileReader, InputStreamReader)\n- Default buffer size: 8192 characters (8KB)\n- Key method: readLine() — reads a full line, returns null at EOF\n\n// Reading line by line:\nBufferedReader br = new BufferedReader(new FileReader(\"students.txt\"));\nString line;\nwhile ((line = br.readLine()) != null) {\n    System.out.println(line);\n}\nbr.close();\n\n// Reading from keyboard (System.in):\nBufferedReader br = new BufferedReader(new InputStreamReader(System.in));\nSystem.out.print(\"Enter name: \");\nString name = br.readLine();\nSystem.out.println(\"Hello, \" + name);\n\n// Reading all lines into a List (Java 8+):\nList<String> lines = br.lines().collect(Collectors.toList());\n\nCommon methods:\n- read(): read single character (int)\n- read(char[] cbuf, int off, int len): read into array\n- readLine(): read a line of text (returns null at EOF)\n- lines(): stream of lines (Java 8+)\n- skip(long n): skip characters\n- close(): close and release resources\n\nBUFFEREDWRITER:\n- Wraps a Writer (like FileWriter, OutputStreamWriter)\n- Default buffer size: 8192 characters (8KB)\n- Key method: newLine() — writes platform-independent line separator (\\n on Unix, \\r\\n on Windows)\n\n// Writing with BufferedWriter:\nBufferedWriter bw = new BufferedWriter(new FileWriter(\"students.txt\"));\nbw.write(\"Student List\");\nbw.newLine();  // platform-independent line separator\nbw.write(\"===========\");\nbw.newLine();\nbw.write(\"Alice, 101, CSC 282\");\nbw.newLine();\nbw.write(\"Bob, 102, CSC 281\");\nbw.newLine();\nbw.close();\n\nCommon methods:\n- write(String s): write a string\n- write(char[] cbuf, int off, int len): write character array\n- newLine(): write line separator\n- flush(): force write buffer contents to underlying stream\n- close(): flush and close\n\nCOMPARISON WITHOUT BUFFERING:\n// SLOW — reads one character at a time from disk\nFileReader fr = new FileReader(\"large.txt\");\nint ch;\nwhile ((ch = fr.read()) != -1) {  // 1 OS call per character!\n    // process ch\n}\n\n// FAST — reads 8KB at a time from disk, then serves from memory\nBufferedReader br = new BufferedReader(new FileReader(\"large.txt\"));\nint ch;\nwhile ((ch = br.read()) != -1) {  // 1 OS call per 8192 characters!\n    // process ch\n}\n\n// COMBINING WITH TRY-WITH-RESOURCES:\ntry (BufferedReader br = new BufferedReader(new FileReader(\"file.txt\"));\n     BufferedWriter bw = new BufferedWriter(new FileWriter(\"copy.txt\"))) {\n    String line;\n    while ((line = br.readLine()) != null) {\n        bw.write(line);\n        bw.newLine();\n    }\n} catch (IOException e) {\n    System.out.println(\"Error: \" + e.getMessage());\n}\n// Both streams are automatically closed\n\nFLUSHING:\nBufferedWriter may hold data in its buffer. To ensure all data is written:\n- Call flush() periodically (especially before long pauses)\n- close() automatically flushes before closing",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-052",
+    "question": "What are SQL transactions? How do you manage transactions in JDBC?",
+    "keywords": [
+      "transaction",
+      "commit",
+      "rollback",
+      "setAutoCommit",
+      "ACID",
+      "atomicity",
+      "savepoint",
+      "database integrity"
+    ],
+    "mainConcepts": [
+      "A transaction is a group of SQL operations executed as a single unit — all succeed or all fail",
+      "ACID properties: Atomicity, Consistency, Isolation, Durability",
+      "setAutoCommit(false) starts a transaction; commit() confirms; rollback() undoes",
+      "JDBC uses auto-commit mode by default (each SQL is its own transaction)",
+      "Savepoints allow partial rollback within a transaction",
+      "Transactions maintain database integrity in multi-step operations"
+    ],
+    "referenceAnswer": "A transaction in SQL is a sequence of one or more SQL operations that are executed as a single unit of work. Either ALL operations succeed (commit) or NONE of them take effect (rollback).\n\nACID PROPERTIES:\n- Atomicity: All operations in the transaction complete or none do\n- Consistency: The database remains in a consistent state before and after the transaction\n- Isolation: Concurrent transactions don't interfere with each other\n- Durability: Once committed, changes persist even after system failure\n\nJDBC TRANSACTION MANAGEMENT:\n\nBy default, each SQL statement in JDBC is executed in auto-commit mode — each statement is its own transaction. To group multiple statements into a single transaction:\n\n1. DISABLE AUTO-COMMIT:\n   conn.setAutoCommit(false);\n\n2. EXECUTE SQL STATEMENTS:\n   // All operations between setAutoCommit(false) and commit/rollback\n\n3. COMMIT OR ROLLBACK:\n   conn.commit();   // make all changes permanent\n   // OR\n   conn.rollback(); // undo all changes\n\nEXAMPLE: BANK TRANSFER (classic transaction scenario):\nConnection conn = null;\ntry {\n    conn = DriverManager.getConnection(url, user, pass);\n    conn.setAutoCommit(false);  // start transaction\n    \n    // Step 1: Deduct from sender\n    String debitSQL = \"UPDATE accounts SET balance = balance - ? WHERE account_id = ?\";\n    PreparedStatement debitStmt = conn.prepareStatement(debitSQL);\n    debitStmt.setDouble(1, 500.00);\n    debitStmt.setInt(2, 1001);\n    int rows1 = debitStmt.executeUpdate();\n    \n    // Check if sender has sufficient funds\n    if (rows1 == 0) {\n        throw new SQLException(\"Account 1001 not found\");\n    }\n    \n    // Step 2: Credit to receiver\n    String creditSQL = \"UPDATE accounts SET balance = balance + ? WHERE account_id = ?\";\n    PreparedStatement creditStmt = conn.prepareStatement(creditSQL);\n    creditStmt.setDouble(1, 500.00);\n    creditStmt.setInt(2, 1002);\n    int rows2 = creditStmt.executeUpdate();\n    \n    if (rows2 == 0) {\n        throw new SQLException(\"Account 1002 not found\");\n    }\n    \n    // Both steps succeeded — commit\n    conn.commit();\n    System.out.println(\"Transfer successful\");\n    \n} catch (SQLException e) {\n    // Any error — rollback entire transaction\n    if (conn != null) {\n        try {\n            conn.rollback();\n            System.out.println(\"Transfer rolled back due to error\");\n        } catch (SQLException ex) {\n            System.out.println(\"Rollback failed: \" + ex.getMessage());\n        }\n    }\n    System.out.println(\"Error: \" + e.getMessage());\n} finally {\n    if (conn != null) {\n        conn.setAutoCommit(true);  // restore default\n        conn.close();\n    }\n}\n// Either both accounts are updated, or neither is — never just one!\n\nSAVEPOINTS (partial rollback):\nSavapoints allow rolling back to a specific point within a transaction, not all the way.\n\ntry {\n    conn.setAutoCommit(false);\n    \n    // First operation\n    stmt.executeUpdate(\"INSERT INTO students VALUES(101, 'Alice')\");\n    \n    Savepoint sp1 = conn.setSavepoint(\"after_insert\");\n    \n    // Second operation\n    stmt.executeUpdate(\"DELETE FROM students WHERE id = 999\");\n    \n    // Oops, we need to undo just the delete\n    conn.rollback(sp1);  // roll back to savepoint — insert is preserved!\n    \n    conn.commit();  // commit only the insert\n    \n} catch (SQLException e) {\n    conn.rollback();  // full rollback\n}\n\nCONNECTION ISOLATION LEVELS:\nconn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);\n- TRANSACTION_READ_UNCOMMITTED: lowest isolation, dirty reads possible\n- TRANSACTION_READ_COMMITTED: prevents dirty reads (most databases default)\n- TRANSACTION_REPEATABLE_READ: prevents dirty and non-repeatable reads\n- TRANSACTION_SERIALIZABLE: highest isolation, prevents phantom reads (slowest)\n\nBEST PRACTICES:\n- Keep transactions as short as possible (don't include user think time)\n- Always commit or rollback before closing the connection\n- Use try-catch-finally or try-with-resources for proper cleanup\n- Choose the appropriate isolation level (balance performance vs. data integrity)\n- Test rollback scenarios to ensure data consistency",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "Database Programming",
+    "id": "TH-053",
+    "question": "What is SQL injection? How does PreparedStatement prevent it?",
+    "keywords": [
+      "SQL injection",
+      "security",
+      "PreparedStatement",
+      "parameterized query",
+      "placeholder",
+      "escape",
+      "user input"
+    ],
+    "mainConcepts": [
+      "SQL injection is a security vulnerability where attackers inject malicious SQL into queries",
+      "It occurs when user input is concatenated directly into SQL strings",
+      "PreparedStatement uses parameterized queries with ? placeholders to separate SQL from data",
+      "The database driver escapes and sanitizes parameters automatically",
+      "Always use PreparedStatement for queries with user input",
+      "Never trust user input — validate and parameterize"
+    ],
+    "referenceAnswer": "SQL injection is a code injection technique where an attacker inserts malicious SQL statements into an application's query by exploiting unsanitized user input. It is one of the most common and dangerous web application vulnerabilities.\n\nHOW SQL INJECTION WORKS (VULNERABLE CODE):\n\nSuppose we have a login form:\nString user = request.getParameter(\"username\");   // user-provided input\nString pass = request.getParameter(\"password\");   // user-provided input\n\n// VULNERABLE - string concatenation:\nString sql = \"SELECT * FROM users WHERE username = '\" + user + \"' AND password = '\" + pass + \"'\";\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(sql);\n\nATTACK SCENARIOS:\n\n1. LOGIN BYPASS:\nUser enters: username = admin' -- \nResulting SQL: SELECT * FROM users WHERE username = 'admin' -- ' AND password = '...'\nThe -- comments out the password check. Attacker logs in as admin!\n\n2. DATA THEFT:\nUser enters: username = ' OR 1=1 --\nResulting SQL: SELECT * FROM users WHERE username = '' OR 1=1 -- ' AND password = '...'\nReturns ALL users. Attacker gets all usernames and hashed passwords.\n\n3. DATA DESTRUCTION:\nUser enters: username = '; DROP TABLE users; --\nResulting SQL: SELECT * FROM users WHERE username = ''; DROP TABLE users; -- ' ...'\nMultiple statements — deletes the entire users table!\n\n4. UNION-BASED DATA EXTRACTION:\nUser enters: ' UNION SELECT username, password FROM admin_users --\nAttacker extracts data from other tables.\n\nHOW PREPAREDSTATEMENT PREVENTS SQL INJECTION:\n\nPreparedStatement separates SQL structure from data using parameter placeholders (?):\n\nString sql = \"SELECT * FROM users WHERE username = ? AND password = ?\";\nPreparedStatement pstmt = conn.prepareStatement(sql);\npstmt.setString(1, user);   // user input is treated as DATA, not SQL\npstmt.setString(2, pass);\nResultSet rs = pstmt.executeQuery();\n\nEven if user enters: admin' OR 1=1 --\nThe database treats it as a literal string value for the username field, not as SQL code.\nThe query effectively searches for a user whose username is literally: admin' OR 1=1 --\n\nWHY PREPAREDSTATEMENT IS SAFE:\n\n1. PARAMETER SEPARATION:\nThe SQL statement is compiled FIRST (with ? placeholders). Then parameter values are sent SEPARATELY. The database's SQL parser never sees the user input as SQL code.\n\n2. AUTOMATIC ESCAPING:\nThe JDBC driver automatically escapes special characters. Quotes, semicolons, and SQL keywords in parameter values are escaped so they are treated as literal data.\n\n3. TYPE SAFETY:\nsetString(), setInt(), setDouble() enforce the expected data type. An attacker cannot inject SQL through an integer parameter.\n\nDEMONSTRATION OF SAFETY:\n// Even if user input contains malicious SQL:\nString userInput = \"' OR 1=1; DROP TABLE users; --\";\n\n// SAFE:\nPreparedStatement pstmt = conn.prepareStatement(\"SELECT * FROM users WHERE username = ?\");\npstmt.setString(1, userInput);\n// Executes as: SELECT * FROM users WHERE username = ''' OR 1=1; DROP TABLE users; --'\n// Just searches for a user with that weird username — NO SQL injection!\n\nADDITIONAL DEFENSES:\n1. Input validation: Validate that input matches expected format (email, phone, alphanumeric)\n2. Least privilege: Database user should have minimal necessary permissions (no DROP for app user)\n3. Stored procedures: Can also prevent injection if parameterized properly\n4. ORM frameworks: JPA/Hibernate use parameterized queries internally\n5. Never use Statement for queries with any user-provided data\n\nGOLDEN RULE:\nNEVER concatenate user input into SQL strings. ALWAYS use PreparedStatement (or equivalent parameterized query).",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-054",
+    "question": "What is the difference between equals() and == in Java?",
+    "keywords": [
+      "equals",
+      "==",
+      "reference comparison",
+      "value comparison",
+      "String comparison",
+      "object equality"
+    ],
+    "mainConcepts": [
+      "== compares primitive values or object REFERENCES (memory addresses)",
+      "equals() compares the actual CONTENT or STATE of objects",
+      "For primitives (int, double, etc.), use == (equals() doesn't apply)",
+      "For objects, == checks if two references point to the same object in memory",
+      "The default equals() in Object class uses == (same as reference check)",
+      "String, Integer, and other built-in classes override equals() to compare content"
+    ],
+    "referenceAnswer": "The == operator and the equals() method are both used for comparison in Java, but they work differently.\n\n== OPERATOR:\n- For PRIMITIVES: compares VALUES (int, double, boolean, char, etc.)\n- For OBJECTS: compares REFERENCES (memory addresses) — do they point to the SAME object?\n\nequals() METHOD:\n- Defined in the Object class\n- By default (in Object), it uses == — compares references\n- Many classes override equals() to compare CONTENT or STATE\n- String, Integer, Double, Boolean, Date, and all wrapper classes override equals()\n- Custom classes should override equals() (and hashCode()) for logical equality\n\nEXAMPLES:\n\nPRIMITIVES:\nint a = 5;\nint b = 5;\nSystem.out.println(a == b);  // true (values match)\n// equals() cannot be used with primitives\n\nSTRING COMPARISON (commonly confused):\nString s1 = \"Hello\";\nString s2 = \"Hello\";\nString s3 = new String(\"Hello\");\nString s4 = s1;\n\nSystem.out.println(s1 == s2);   // true (both reference the same String pool object)\nSystem.out.println(s1 == s3);   // false (s3 is a different object in heap memory)\nSystem.out.println(s1 == s4);   // true (same reference)\n\nSystem.out.println(s1.equals(s2));  // true (same content \"Hello\")\nSystem.out.println(s1.equals(s3));  // true (same content \"Hello\")\n\nOBJECT COMPARISON:\nStudent s1 = new Student(101, \"Alice\");\nStudent s2 = new Student(101, \"Alice\");\nStudent s3 = s1;\n\nSystem.out.println(s1 == s2);   // false (different objects in memory)\nSystem.out.println(s1 == s3);   // true (same reference)\nSystem.out.println(s1.equals(s2));  // depends on whether Student overrides equals()\n                                    // If not overridden: false (uses Object's ==)\n// Proper Student equals() override:\n// public boolean equals(Object o) {\n//     if (this == o) return true;\n//     if (!(o instanceof Student)) return false;\n//     Student s = (Student) o;\n//     return this.id == s.id && this.name.equals(s.name);\n// }\n\nWRAPPER CLASS CACHING:\nInteger x = 100;  // cached (-128 to 127)\nInteger y = 100;\nSystem.out.println(x == y);   // true (cached, same object)\n\nInteger a = 200;  // not cached\nInteger b = 200;\nSystem.out.println(a == b);   // false (different objects)\nSystem.out.println(a.equals(b));  // true (same value)\n\n// Moral: ALWAYS use .equals() for wrapper class comparison!\n\nSUMMARY TABLE:\nScenario                  | ==                    | .equals()\n--------------------------|-----------------------|--------------------------\nPrimitives (int, double) | Compares values       | N/A (cannot use)\nString (same literal)     | true (pool)           | true (content)\nString (new vs literal)   | false                 | true (content)\nCustom objects (same)     | false (refs differ)   | true if overridden\nCustom objects (not overridden) | false        | false (uses ==)\nnull vs object            | false                 | false (null.something = NPE)\n\nBEST PRACTICE:\n- Use == for primitives\n- Use equals() for String and wrapper class comparison\n- Override equals() in custom classes when logical equality is needed\n- Always override hashCode() when overriding equals()\n- Use Objects.equals(a, b) (Java 7+) for null-safe comparison",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "OO Design & Development",
+    "id": "TH-055",
+    "question": "What are the enhanced for loop (for-each) and varargs in Java?",
+    "keywords": [
+      "enhanced for loop",
+      "for-each",
+      "varargs",
+      "variable arguments",
+      "...",
+      "iterable",
+      "array",
+      "collection"
+    ],
+    "mainConcepts": [
+      "Enhanced for loop iterates over arrays and collections without using indexes",
+      "Syntax: for (Type item : iterable) { }",
+      "Simpler and less error-prone than traditional indexed loops",
+      "Varargs allows methods to accept variable number of arguments of the same type",
+      "Varargs syntax: Type... parameterName (internally treated as an array)",
+      "Varargs parameter must be the last parameter in the method"
+    ],
+    "referenceAnswer": "ENHANCED FOR LOOP (for-each):\nIntroduced in Java 5, the enhanced for loop simplifies iteration over arrays and collections.\n\nSYNTAX:\nfor (Type element : iterable) {\n    // use element\n}\n\nEXAMPLES:\n\n// Array iteration:\nint[] numbers = {1, 2, 3, 4, 5};\nfor (int num : numbers) {\n    System.out.println(num);\n}\n\n// ArrayList iteration:\nArrayList<String> names = new ArrayList<>();\nnames.add(\"Alice\");\nnames.add(\"Bob\");\nnames.add(\"Charlie\");\n\nfor (String name : names) {\n    System.out.println(\"Hello, \" + name);\n}\n\n// Iterating over a Set:\nSet<Integer> scores = new HashSet<>();\nfor (int score : scores) {\n    System.out.println(\"Score: \" + score);\n}\n\n// Iterating over a Map (entry set):\nMap<String, Integer> grades = new HashMap<>();\nfor (Map.Entry<String, Integer> entry : grades.entrySet()) {\n    System.out.println(entry.getKey() + \": \" + entry.getValue());\n}\n\nWHEN NOT TO USE for-each:\n- When you need the index/counter\n- When you need to remove elements during iteration (use iterator.remove())\n- When you need to modify the array elements\n- When iterating backwards\n\n// Index needed — use traditional for:\nfor (int i = 0; i < arr.length; i++) {\n    System.out.println(i + \": \" + arr[i]);\n}\n\nVARARGS (Variable Arguments):\nVarargs, introduced in Java 5, allows a method to accept zero or more arguments of the specified type.\n\nSYNTAX:\nreturnType methodName(Type... parameterName)\n\nInternally, varargs is treated as an array of the specified type.\n\nEXAMPLES:\n\n// Sum of any number of integers:\npublic static int sum(int... numbers) {\n    int total = 0;\n    for (int n : numbers) {\n        total += n;\n    }\n    return total;\n}\n\nSystem.out.println(sum(1, 2));          // 3\nSystem.out.println(sum(1, 2, 3, 4));    // 10\nSystem.out.println(sum());              // 0 (empty call allowed)\nSystem.out.println(sum(new int[]{1,2,3})); // can also pass array directly\n\n// Printing multiple items:\npublic static void printAll(String... items) {\n    for (String item : items) {\n        System.out.println(item);\n    }\n}\n\nprintAll(\"A\", \"B\", \"C\");\nprintAll();  // no arguments — prints nothing\n\n// Varargs with other parameters:\npublic static void format(String prefix, String... suffixes) {\n    System.out.print(prefix + \": \");\n    for (String s : suffixes) {\n        System.out.print(s + \" \");\n    }\n}\n// Varargs parameter MUST be the LAST parameter\n\n// format(\"Names\", \"Alice\", \"Bob\", \"Charlie\");  // OK\n// format(\"Names\");  // also OK (suffixes is empty)\n\n// String.format uses varargs:\nString result = String.format(\"Name: %s, Age: %d, GPA: %.2f\", \"Alice\", 20, 3.85);\n\nRULES:\n1. A method can have only ONE varargs parameter\n2. Varargs must be the LAST parameter in the method signature\n3. The caller can pass zero or more arguments, or an array directly\n4. Varargs can be overloaded, but ambiguity may occur\n\nAMBIGUITY EXAMPLE:\nvoid method(int... nums) { }\nvoid method(int a, int... nums) { }\n\nmethod(1, 2, 3);  // Which method? Both are candidates! (Compiler error)\n\nVARARGS BEST PRACTICES:\n- Use varargs for methods that logically accept zero or more items of the same type\n- Document the method clearly (can pass array or individual elements)\n- Be careful with overloading — avoid ambiguity\n- Common JDK examples: String.format(), printf(), Arrays.asList()\n\nArray.asList() uses varargs:\nList<String> list = Arrays.asList(\"A\", \"B\", \"C\");\nList<Integer> nums = Arrays.asList(1, 2, 3, 4, 5);",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "File I/O",
+    "id": "TH-056",
+    "question": "How do you copy a binary file using FileInputStream and FileOutputStream with buffering?",
+    "keywords": [
+      "file copy",
+      "FileInputStream",
+      "FileOutputStream",
+      "BufferedInputStream",
+      "BufferedOutputStream",
+      "buffer",
+      "byte array"
+    ],
+    "mainConcepts": [
+      "FileInputStream reads bytes from a file; FileOutputStream writes bytes to a file",
+      "BufferedInputStream/BufferedOutputStream add buffering for performance",
+      "Reading/writing byte arrays in chunks improves performance over single-byte operations",
+      "Use try-with-resources for automatic cleanup",
+      "A buffer size of 4KB–64KB is typical for file copy operations",
+      "File.copy() (java.nio.file) is simplest for basic file copy in modern Java"
+    ],
+    "referenceAnswer": "Copying binary files (images, audio, video, ZIP) requires byte stream I/O. The most efficient approach uses buffering with a byte array.\n\nBASIC APPROACH (single byte — slow, for illustration only):\npublic static void copySingleByte(File source, File dest) throws IOException {\n    try (FileInputStream fis = new FileInputStream(source);\n         FileOutputStream fos = new FileOutputStream(dest)) {\n        int b;\n        while ((b = fis.read()) != -1) {  // reads one byte at a time — SLOW\n            fos.write(b);                  // writes one byte at a time — SLOW\n        }\n    }\n}\n// Problem: For a 1MB file, this does 1 MILLION read/write calls!\n\nBUFFERED STREAMS (byte array chunk — fast):\nBest practice: read/write in chunks using a byte array buffer.\n\npublic static void copyWithBuffer(File source, File dest) throws IOException {\n    byte[] buffer = new byte[8192];  // 8KB buffer\n    int bytesRead;\n    \n    try (FileInputStream fis = new FileInputStream(source);\n         FileOutputStream fos = new FileOutputStream(dest)) {\n        \n        while ((bytesRead = fis.read(buffer)) != -1) {\n            fos.write(buffer, 0, bytesRead);  // write only the bytes actually read\n        }\n        System.out.println(\"File copied: \" + source.getAbsolutePath());\n    }\n}\n// For a 1MB file: ~128 read/write calls (8192 bytes each) vs 1 million!\n\nUSING BUFFERED STREAMS (alternative):\npublic static void copyBuffered(File source, File dest) throws IOException {\n    try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(source));\n         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(dest))) {\n        \n        byte[] buffer = new byte[4096];\n        int bytesRead;\n        while ((bytesRead = bis.read(buffer)) != -1) {\n            bos.write(buffer, 0, bytesRead);\n        }\n        bos.flush();  // ensure remaining data is written\n    }\n}\n\nCOMPLETE UTILITY METHOD:\nimport java.io.*;\n\npublic class FileCopyUtility {\n    \n    public static void copyFile(File source, File dest) throws IOException {\n        // Validation\n        if (!source.exists()) {\n            throw new FileNotFoundException(\"Source file not found: \" + source);\n        }\n        if (source.isDirectory()) {\n            throw new IOException(\"Source is a directory, not a file\");\n        }\n        \n        // Create parent directories if needed\n        File parentDir = dest.getParentFile();\n        if (parentDir != null && !parentDir.exists()) {\n            parentDir.mkdirs();\n        }\n        \n        // Copy with buffer\n        try (FileInputStream fis = new FileInputStream(source);\n             FileOutputStream fos = new FileOutputStream(dest)) {\n            byte[] buffer = new byte[8192];\n            int bytesRead;\n            while ((bytesRead = fis.read(buffer)) != -1) {\n                fos.write(buffer, 0, bytesRead);\n            }\n        }\n    }\n    \n    // Overload for String paths\n    public static void copyFile(String sourcePath, String destPath) throws IOException {\n        copyFile(new File(sourcePath), new File(destPath));\n    }\n    \n    public static void main(String[] args) {\n        try {\n            copyFile(\"C:\\\\photos\\\\vacation.jpg\", \"C:\\\\backup\\\\vacation.jpg\");\n            System.out.println(\"Copy successful\");\n        } catch (IOException e) {\n            System.out.println(\"Copy failed: \" + e.getMessage());\n        }\n    }\n}\n\nMODERN APPROACH (Java 7+ with Files class):\nimport java.nio.file.*;\n\npublic static void copyWithNIO(Path source, Path dest) throws IOException {\n    Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);\n}\n\n// One-liner:\nFiles.copy(Paths.get(\"source.jpg\"), Paths.get(\"dest.jpg\"),\n    StandardCopyOption.REPLACE_EXISTING);\n\nThe Files.copy() method uses the system's native file copy operation when possible (much faster for large files).\n\nCOMPARISON:\nMethod                          | Lines | Speed | Use Case\n--------------------------------|-------|-------|---------\nSingle byte read/write          | 7     | Slow  | Never use\nBuffered array (byte[] buffer)  | 12    | Fast  | General purpose\nBufferedInputStream/OutputStream| 10    | Fast  | When streams are chained\nFiles.copy() NIO                | 1     | Fastest | Modern Java projects",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "CSC 282",
+    "section": "GUI Basics",
+    "id": "TH-057",
+    "question": "Explain JComboBox and JCheckBox in Swing. When would you use each?",
+    "keywords": [
+      "JComboBox",
+      "JCheckBox",
+      "drop-down",
+      "checkbox",
+      "selection",
+      "item listener",
+      "multiple options",
+      "single selection"
+    ],
+    "mainConcepts": [
+      "JComboBox is a drop-down list for selecting ONE option from multiple choices",
+      "JCheckBox is a box that can be checked/unchecked for boolean/toggle options",
+      "JComboBox is space-efficient and good for many mutually exclusive options",
+      "JCheckBox is good for independent on/off options (multiple can be selected)",
+      "JComboBox uses ActionListener or ItemListener for selection events",
+      "JCheckBox uses ItemListener or ActionListener for state changes"
+    ],
+    "referenceAnswer": "JComboBox and JCheckBox are Swing components for user selection.\n\nJCOMBOBOX (Drop-down List):\nA JComboBox displays a drop-down list of items from which the user can select one.\n\n// Creating JComboBox:\nString[] courses = {\"CSC 281\", \"CSC 282\", \"CSC 283\", \"CSC 284\"};\nJComboBox<String> courseBox = new JComboBox<>(courses);\n\n// DefaultListModel (dynamic):\nDefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();\nmodel.addElement(\"Item 1\");\nmodel.addElement(\"Item 2\");\nJComboBox<String> box = new JComboBox<>(model);\n\n// Common methods:\ncourseBox.setSelectedIndex(0);     // select first item\ncourseBox.setSelectedItem(\"CSC 282\");  // select by value\nString selected = (String) courseBox.getSelectedItem();\nint index = courseBox.getSelectedIndex();\ncourseBox.addItem(\"CSC 299\");     // add item\ncourseBox.removeItem(\"CSC 281\");  // remove item\ncourseBox.removeAllItems();       // clear all\n\n// Editable combo box:\ncourseBox.setEditable(true);  // user can type custom value\nString typed = courseBox.getEditor().getItem().toString();\n\n// Event handling:\ncourseBox.addActionListener(e -> {\n    String selected = (String) courseBox.getSelectedItem();\n    System.out.println(\"Selected: \" + selected);\n});\n\n// Or ItemListener:\ncourseBox.addItemListener(e -> {\n    if (e.getStateChange() == ItemEvent.SELECTED) {\n        System.out.println(\"Selected: \" + e.getItem());\n    }\n});\n\nJCHECKBOX (Checkbox):\nA JCheckBox represents a boolean option that can be toggled on/off.\n\n// Creating JCheckBox:\nJCheckBox chkJava = new JCheckBox(\"Java\");\nJCheckBox chkPython = new JCheckBox(\"Python\", true);  // initially selected\nJCheckBox chkCpp = new JCheckBox(\"C++\", false);\n\n// Common methods:\nchkJava.setSelected(true);           // check it\nboolean isJava = chkJava.isSelected();  // true/false\nchkJava.setEnabled(false);           // disable (grayed out)\nchkJava.setText(\"Java Programming\"); // change label\n\n// Event handling:\nchkJava.addActionListener(e -> {\n    boolean selected = chkJava.isSelected();\n    System.out.println(\"Java: \" + (selected ? \"checked\" : \"unchecked\"));\n});\n\n// Or ItemListener:\nchkJava.addItemListener(e -> {\n    if (e.getStateChange() == ItemEvent.SELECTED) {\n        System.out.println(\"Java checked\");\n    } else if (e.getStateChange() == ItemEvent.DESELECTED) {\n        System.out.println(\"Java unchecked\");\n    }\n});\n\nWHEN TO USE EACH:\n\nUse JComboBox when:\n- There are MANY options (5+) — saves screen space\n- Only ONE selection is allowed (mutually exclusive choices)\n- You want a compact UI (e.g., selecting a semester, course, state, country)\n- The list of options might change dynamically\n\nUse JCheckBox when:\n- There are FEW options (1-5) — each visible without clicking\n- MULTIPLE selections are allowed (independent choices)\n- It represents a boolean (yes/no) setting\n- You want the user to see all options at a glance\n\nCOMPLETE EXAMPLE:\nJPanel panel = new JPanel(new GridBagLayout());\n\n// Course selection (single — JComboBox)\npanel.add(new JLabel(\"Course:\"));\nJComboBox<String> courseBox = new JComboBox<>(new String[]{\n    \"CSC 281\", \"CSC 282\", \"CSC 283\"\n});\npanel.add(courseBox);\n\n// Skill preferences (multiple — JCheckBox)\npanel.add(new JLabel(\"Skills:\"));\nJCheckBox chkJava = new JCheckBox(\"Java\");\nJCheckBox chkSQL = new JCheckBox(\"SQL\");\nJCheckBox chkGUI = new JCheckBox(\"Swing\");\npanel.add(chkJava);\npanel.add(chkSQL);\npanel.add(chkGUI);\n\n// Submit button\nJButton submitBtn = new JButton(\"Submit\");\nsubmitBtn.addActionListener(e -> {\n    String course = (String) courseBox.getSelectedItem();\n    StringBuilder skills = new StringBuilder();\n    if (chkJava.isSelected()) skills.append(\"Java \");\n    if (chkSQL.isSelected()) skills.append(\"SQL \");\n    if (chkGUI.isSelected()) skills.append(\"Swing \");\n    System.out.println(\"Course: \" + course + \", Skills: \" + skills);\n});\npanel.add(submitBtn);\n\nJRadioButton (alternative to JComboBox for few mutually exclusive options):\nJRadioButton male = new JRadioButton(\"Male\");\nJRadioButton female = new JRadioButton(\"Female\");\nButtonGroup genderGroup = new ButtonGroup();\ngenderGroup.add(male);\ngenderGroup.add(female);\n// Only one can be selected (ButtonGroup enforces mutual exclusivity)",
+    "difficulty": "medium",
     "maxPoints": 6
   }
 ]
