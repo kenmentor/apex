@@ -1,0 +1,1331 @@
+{
+  "course_code": "IFT 212",
+  "course_title": "Computer Architecture and Organization",
+  "study_guide_title": "Comprehensive Study Guide for IFT 212 Computer Architecture and Organization",
+  "sections": [
+    {
+      "section_title": "CPU Architecture Fundamentals",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "What is the main difference between Computer Architecture and Computer Organization?",
+          "options": {
+            "a": "Architecture defines what the system does; Organization defines how it is implemented",
+            "b": "Architecture deals with hardware; Organization deals with software",
+            "c": "Architecture is about performance; Organization is about cost",
+            "d": "Architecture refers to the physical layout; Organization refers to the ISA",
+            "e": "There is no difference between the two"
+          },
+          "correct_answer": "a",
+          "explanation": "Computer Architecture refers to the attributes of a system visible to the programmer (the ISA), while Computer Organization refers to the operational units and their interconnections that realize those specifications."
+        },
+        {
+          "id": "Q2",
+          "question": "Which of the following is NOT a component of the von Neumann architecture?",
+          "options": {
+            "a": "CPU (ALU + Control Unit)",
+            "b": "Memory Unit",
+            "c": "Input/Output",
+            "d": "Graphics Processing Unit (GPU)",
+            "e": "System Bus"
+          },
+          "correct_answer": "d",
+          "explanation": "The von Neumann architecture consists of: CPU (ALU + Control Unit), Memory Unit, Input/Output, and System Bus. GPU is a modern addition and not part of the original von Neumann design."
+        },
+        {
+          "id": "Q3",
+          "question": "What is the von Neumann bottleneck?",
+          "options": {
+            "a": "The CPU being slower than memory",
+            "b": "The limitation caused by sharing a single bus for both instructions and data",
+            "c": "The high cost of memory chips",
+            "d": "The limited number of registers in the CPU",
+            "e": "The inability of the CPU to process floating-point numbers"
+          },
+          "correct_answer": "b",
+          "explanation": "The von Neumann bottleneck is caused by the stored-program concept where instructions and data share the same bus, meaning they cannot be fetched simultaneously, creating a performance limitation."
+        },
+        {
+          "id": "Q4",
+          "question": "According to Amdahl's Law, if 80% of a program can be parallelized, what is the theoretical maximum speedup?",
+          "options": {
+            "a": "2x",
+            "b": "5x",
+            "c": "4x",
+            "d": "10x",
+            "e": "8x"
+          },
+          "correct_answer": "b",
+          "explanation": "Amdahl's Law: Max Speedup = 1/(1-F) where F is the parallelizable fraction. With F=0.80: Speedup = 1/(1-0.80) = 1/0.20 = 5x."
+        },
+        {
+          "id": "Q5",
+          "question": "What does Gustafson's Law emphasize that Amdahl's Law does not?",
+          "options": {
+            "a": "Fixed problem size",
+            "b": "Fixed execution time with scaled problem size",
+            "c": "The serial portion of a program",
+            "d": "The number of processors",
+            "e": "Memory access time"
+          },
+          "correct_answer": "b",
+          "explanation": "Gustafson's Law argues that as we add processors, we scale the problem size rather than keeping it fixed. Amdahl's Law assumes fixed problem size, which Gustafson argues is unrealistic."
+        },
+        {
+          "id": "Q6",
+          "question": "Which computer generation used vacuum tubes?",
+          "options": {
+            "a": "1st Generation",
+            "b": "2nd Generation",
+            "c": "3rd Generation",
+            "d": "4th Generation",
+            "e": "5th Generation"
+          },
+          "correct_answer": "a",
+          "explanation": "The 1st Generation (1940s-1950s) used vacuum tubes for logic circuits. Examples include ENIAC, EDVAC, and UNIVAC."
+        },
+        {
+          "id": "Q7",
+          "question": "What characterizes the 4th generation of computers?",
+          "options": {
+            "a": "Vacuum tubes",
+            "b": "Transistors",
+            "c": "Integrated Circuits (ICs)",
+            "d": "Microprocessors (VLSI)",
+            "e": "Quantum computing"
+          },
+          "correct_answer": "d",
+          "explanation": "The 4th Generation (1970s-present) is characterized by Very Large Scale Integration (VLSI) — placing an entire CPU on a single microprocessor chip. The Intel 4004 was the first commercial microprocessor."
+        },
+        {
+          "id": "Q8",
+          "question": "CPU time is calculated as:",
+          "options": {
+            "a": "Instruction Count + CPI + Clock Cycle Time",
+            "b": "Instruction Count × CPI × Clock Cycle Time",
+            "c": "Instruction Count / (CPI × Clock Rate)",
+            "d": "CPI × Clock Rate / Instruction Count",
+            "e": "Clock Rate / (Instruction Count × CPI)"
+          },
+          "correct_answer": "b",
+          "explanation": "CPU Time = Instruction Count × CPI × Clock Cycle Time. Equivalently: CPU Time = Instruction Count × CPI / Clock Rate."
+        },
+        {
+          "id": "Q9",
+          "question": "What does CPI stand for and what does it measure?",
+          "options": {
+            "a": "Clock Period Interval — time between clock edges",
+            "b": "Cycles Per Instruction — average clock cycles each instruction takes",
+            "c": "Computational Performance Index — overall performance rating",
+            "d": "Central Processing Interface — connection between CPU and memory",
+            "e": "Cache Performance Indicator — cache hit rate"
+          },
+          "correct_answer": "b",
+          "explanation": "CPI stands for Cycles Per Instruction. It measures the average number of clock cycles each instruction takes to execute. CPI = Total CPU Cycles / Instruction Count."
+        },
+        {
+          "id": "Q10",
+          "question": "A program has 500,000 instructions with an average CPI of 2 and a clock rate of 2 GHz. What is the CPU time?",
+          "options": {
+            "a": "0.25 ms",
+            "b": "0.5 ms",
+            "c": "1.0 ms",
+            "d": "2.0 ms",
+            "e": "0.1 ms"
+          },
+          "correct_answer": "b",
+          "explanation": "CPU Time = Instruction Count × CPI / Clock Rate = 500,000 × 2 / (2 × 10^9) = 1,000,000 / 2,000,000,000 = 0.5 × 10^-3 = 0.5 ms."
+        },
+        {
+          "id": "Q11",
+          "question": "Which of the following is the most direct measure of computer performance?",
+          "options": {
+            "a": "MIPS",
+            "b": "MFLOPS",
+            "c": "Clock rate",
+            "d": "CPU execution time",
+            "e": "Number of registers"
+          },
+          "correct_answer": "d",
+          "explanation": "CPU execution time is the most direct and meaningful measure of performance. MIPS can be misleading as it doesn't account for instruction complexity, and clock rate alone doesn't determine performance."
+        },
+        {
+          "id": "Q12",
+          "question": "In Big-Endian byte ordering, where is the most significant byte stored?",
+          "options": {
+            "a": "At the highest memory address",
+            "b": "At the lowest memory address",
+            "c": "In the middle of the word",
+            "d": "In a separate register",
+            "e": "It depends on the processor"
+          },
+          "correct_answer": "b",
+          "explanation": "In Big-Endian ordering, the most significant byte is stored at the lowest memory address. For example, 0x12345678 stored at 0x1000: 0x12 at 0x1000, 0x34 at 0x1001, etc."
+        },
+        {
+          "id": "Q13",
+          "question": "Which processor architecture uses Little-Endian byte ordering?",
+          "options": {
+            "a": "IBM Mainframes",
+            "b": "Network protocols (TCP/IP)",
+            "c": "Intel x86 processors",
+            "d": "Java Virtual Machine",
+            "e": "Motorola 68000"
+          },
+          "correct_answer": "c",
+          "explanation": "Intel x86 and x86-64 processors use Little-Endian byte ordering, where the least significant byte is stored at the lowest memory address."
+        },
+        {
+          "id": "Q14",
+          "question": "What is the key principle of the von Neumann architecture?",
+          "options": {
+            "a": "Separate memories for instructions and data",
+            "b": "Stored-program concept — instructions and data in the same memory",
+            "c": "Parallel processing of instructions",
+            "d": "Use of cache memory",
+            "e": "Pipeline instruction execution"
+          },
+          "correct_answer": "b",
+          "explanation": "The key principle is the stored-program concept: both instructions and data are stored in the same memory and use the same bus for transfer."
+        },
+        {
+          "id": "Q15",
+          "question": "Amdahl's Law shows that the maximum speedup is limited by:",
+          "options": {
+            "a": "The number of processors available",
+            "b": "The speed of the clock",
+            "c": "The serial (non-parallelizable) fraction of the program",
+            "d": "The size of the cache",
+            "e": "The memory bandwidth"
+          },
+          "correct_answer": "c",
+          "explanation": "Amdahl's Law shows that the serial fraction is the bottleneck. Even with infinite processors, speedup is bounded by 1/(1-F) where F is the parallelizable fraction."
+        },
+        {
+          "id": "Q16",
+          "question": "What is the primary purpose of the Control Unit?",
+          "options": {
+            "a": "Perform arithmetic calculations",
+            "b": "Store data temporarily during execution",
+            "c": "Direct the flow of data and instructions by generating control signals",
+            "d": "Manage input/output devices",
+            "e": "Convert analog signals to digital"
+          },
+          "correct_answer": "c",
+          "explanation": "The Control Unit directs the operation of the processor by generating control signals that coordinate the activities of the ALU, memory, and I/O devices."
+        },
+        {
+          "id": "Q17",
+          "question": "The 2nd generation of computers replaced vacuum tubes with:",
+          "options": {
+            "a": "Integrated Circuits",
+            "b": "Transistors",
+            "c": "Microprocessors",
+            "d": "Vacuum tube transistors",
+            "e": "Optical chips"
+          },
+          "correct_answer": "b",
+          "explanation": "The 2nd Generation (1950s-1960s) replaced vacuum tubes with transistors, which were smaller, faster, more reliable, and more energy-efficient."
+        },
+        {
+          "id": "Q18",
+          "question": "Which of the following is NOT a valid reason why MIPS can be misleading?",
+          "options": {
+            "a": "It doesn't account for instruction complexity",
+            "b": "Different ISAs have different instruction capabilities",
+            "c": "It is difficult to calculate",
+            "d": "A program with more instructions may execute faster than one with fewer"
+          },
+          "correct_answer": "c",
+          "explanation": "MIPS is actually easy to calculate. It is misleading because it doesn't account for instruction complexity, different ISAs, and a program with fewer but complex instructions may be faster than one with many simple instructions."
+        },
+        {
+          "id": "Q19",
+          "question": "What characterizes the 3rd generation of computers?",
+          "options": {
+            "a": "Vacuum tubes",
+            "b": "Transistors",
+            "c": "Integrated Circuits (ICs)",
+            "d": "Microprocessors",
+            "e": "Quantum computing"
+          },
+          "correct_answer": "c",
+          "explanation": "The 3rd Generation (1960s-1970s) used Integrated Circuits (ICs) — multiple transistors on a single silicon chip, enabling miniaturization and increased speed."
+        },
+        {
+          "id": "Q20",
+          "question": "MFLOPS measures:",
+          "options": {
+            "a": "Million Instructions Per Second",
+            "b": "Million Floating-Point Operations Per Second",
+            "c": "Memory File Operations Per Second",
+            "d": "Maximum Frequency Of Processor Speed",
+            "e": "Million Fetch Operations Per Second"
+          },
+          "correct_answer": "b",
+          "explanation": "MFLOPS stands for Million Floating-Point Operations Per Second. It measures computational throughput for scientific workloads that involve heavy floating-point arithmetic."
+        }
+      ]
+    },
+    {
+      "section_title": "Data Representation",
+      "questions": [
+        {
+          "id": "Q21",
+          "question": "What is the decimal value of the Two's Complement binary number 1111 1100?",
+          "options": {
+            "a": "252",
+            "b": "-4",
+            "c": "-3",
+            "d": "4",
+            "e": "-252"
+          },
+          "correct_answer": "b",
+          "explanation": "MSB is 1, so it's negative. Invert: 0000 0011, add 1: 0000 0100 = 4. So the value is -4."
+        },
+        {
+          "id": "Q22",
+          "question": "In IEEE 754 single-precision, what are the bit allocations for sign, exponent, and mantissa?",
+          "options": {
+            "a": "1 sign, 7 exponent, 24 mantissa",
+            "b": "1 sign, 8 exponent, 23 mantissa",
+            "c": "1 sign, 9 exponent, 22 mantissa",
+            "d": "2 sign, 8 exponent, 22 mantissa",
+            "e": "1 sign, 10 exponent, 21 mantissa"
+          },
+          "correct_answer": "b",
+          "explanation": "IEEE 754 single-precision uses 32 bits: 1 sign bit, 8 exponent bits (biased by 127), and 23 mantissa bits (with an implicit leading 1)."
+        },
+        {
+          "id": "Q23",
+          "question": "How many characters can be represented using ASCII?",
+          "options": {
+            "a": "64",
+            "b": "128",
+            "c": "256",
+            "d": "512",
+            "e": "1024"
+          },
+          "correct_answer": "b",
+          "explanation": "Standard ASCII uses 7 bits, which can represent 2^7 = 128 characters (0-127), including English letters, digits, punctuation, and control characters."
+        },
+        {
+          "id": "Q24",
+          "question": "What happens when an even number of bits are flipped in a single parity system?",
+          "options": {
+            "a": "The error is detected and corrected",
+            "b": "The error is detected but not corrected",
+            "c": "The error is NOT detected",
+            "d": "The system crashes",
+            "e": "The parity bit is automatically corrected"
+          },
+          "correct_answer": "c",
+          "explanation": "Parity can only detect odd numbers of bit errors. If an even number of bits are flipped, the parity remains the same and the error goes undetected."
+        },
+        {
+          "id": "Q25",
+          "question": "What is the main advantage of CRC over simple parity checking?",
+          "options": {
+            "a": "CRC is simpler to implement",
+            "b": "CRC can detect burst errors and multiple bit errors",
+            "c": "CRC requires fewer bits",
+            "d": "CRC can correct errors automatically",
+            "e": "CRC uses less memory"
+          },
+          "correct_answer": "b",
+          "explanation": "CRC (Cyclic Redundancy Check) uses polynomial division and can detect burst errors, multiple bit errors, and odd numbers of errors, making it much more robust than simple parity."
+        },
+        {
+          "id": "Q26",
+          "question": "What is the biased exponent in IEEE 754 single-precision for a number with exponent value 5?",
+          "options": {
+            "a": "5",
+            "b": "122",
+            "c": "127",
+            "d": "132",
+            "e": "255"
+          },
+          "correct_answer": "d",
+          "explanation": "IEEE 754 single-precision uses a bias of 127. Biased exponent = actual exponent + bias = 5 + 127 = 132."
+        },
+        {
+          "id": "Q27",
+          "question": "In Two's Complement, what is the range of values for an 8-bit number?",
+          "options": {
+            "a": "0 to 255",
+            "b": "-128 to 127",
+            "c": "-127 to 128",
+            "d": "-256 to 255",
+            "e": "-128 to 128"
+          },
+          "correct_answer": "b",
+          "explanation": "For n-bit Two's Complement, the range is -2^(n-1) to 2^(n-1)-1. For 8 bits: -2^7 to 2^7-1 = -128 to 127."
+        },
+        {
+          "id": "Q28",
+          "question": "Which encoding standard supports all writing systems worldwide?",
+          "options": {
+            "a": "ASCII",
+            "b": "Extended ASCII",
+            "c": "UTF-8",
+            "d": "EBCDIC",
+            "e": "BCD"
+          },
+          "correct_answer": "c",
+          "explanation": "UTF-8 is a variable-length encoding that can represent every character in the Unicode standard, supporting all writing systems worldwide."
+        },
+        {
+          "id": "Q29",
+          "question": "What is the stored-program concept?",
+          "options": {
+            "a": "Instructions are stored in ROM",
+            "b": "Instructions and data are stored in the same memory",
+            "c": "Only data is stored in memory",
+            "d": "Instructions are hardwired into the CPU",
+            "e": "Programs are stored on external devices"
+          },
+          "correct_answer": "b",
+          "explanation": "The stored-program concept, proposed by von Neumann, states that both instructions and data should be stored in the same read-write memory, allowing programs to be modified like data."
+        },
+        {
+          "id": "Q30",
+          "question": "Convert decimal 13 to 8-bit Two's Complement binary.",
+          "options": {
+            "a": "0000 1101",
+            "b": "1111 0011",
+            "c": "0000 1110",
+            "d": "1111 0101",
+            "e": "0000 1011"
+          },
+          "correct_answer": "a",
+          "explanation": "13 in binary = 1101. In 8-bit format: 0000 1101. Since it's positive, MSB is 0."
+        },
+        {
+          "id": "Q31",
+          "question": "In the ASCII table, what is the decimal value for the character 'A'?",
+          "options": {
+            "a": "97",
+            "b": "48",
+            "c": "65",
+            "d": "32",
+            "e": "90"
+          },
+          "correct_answer": "c",
+          "explanation": "In ASCII, uppercase 'A' has the decimal value 65. Lowercase 'a' is 97, and '0' (zero) is 48."
+        },
+        {
+          "id": "Q32",
+          "question": "What does the sign bit represent in IEEE 754 floating-point?",
+          "options": {
+            "a": "Whether the number is an integer or float",
+            "b": "Whether the number is positive (0) or negative (1)",
+            "c": "Whether the number is normalized or denormalized",
+            "d": "Whether the number is zero or non-zero",
+            "e": "The base of the number system"
+          },
+          "correct_answer": "b",
+          "explanation": "In IEEE 754, the sign bit is 0 for positive numbers and 1 for negative numbers."
+        },
+        {
+          "id": "Q33",
+          "question": "Which of the following is a special value in IEEE 754 when the exponent is all 1s and the mantissa is non-zero?",
+          "options": {
+            "a": "Zero",
+            "b": "Infinity",
+            "c": "Not a Number (NaN)",
+            "d": "Denormalized number",
+            "e": "Reserved"
+          },
+          "correct_answer": "c",
+          "explanation": "When the exponent is all 1s (255) and the mantissa is non-zero, the value represents NaN (Not a Number), which results from undefined operations like 0/0."
+        },
+        {
+          "id": "Q34",
+          "question": "What is the main purpose of error-detection codes?",
+          "options": {
+            "a": "To compress data for storage",
+            "b": "To detect if data has been corrupted during transmission or storage",
+            "c": "To encrypt data for security",
+            "d": "To convert data between formats",
+            "e": "To speed up data transfer"
+          },
+          "correct_answer": "b",
+          "explanation": "Error-detection codes like parity bits and CRC add redundant information to data so that corruption can be detected during transmission or storage."
+        },
+        {
+          "id": "Q35",
+          "question": "How many bits are needed to represent 256 different values?",
+          "options": {
+            "a": "7",
+            "b": "8",
+            "c": "9",
+            "d": "16",
+            "e": "256"
+          },
+          "correct_answer": "b",
+          "explanation": "2^n values can be represented with n bits. 2^8 = 256, so 8 bits are needed to represent 256 different values."
+        }
+      ]
+    },
+    {
+      "section_title": "Digital Logic and Microarchitecture",
+      "questions": [
+        {
+          "id": "Q36",
+          "question": "Which logic gate outputs 1 only when all inputs are 1?",
+          "options": {
+            "a": "OR",
+            "b": "AND",
+            "c": "NAND",
+            "d": "XOR",
+            "e": "NOR"
+          },
+          "correct_answer": "b",
+          "explanation": "The AND gate outputs 1 only when ALL inputs are 1. For a 2-input AND gate: output = A · B."
+        },
+        {
+          "id": "Q37",
+          "question": "Which gate is considered a universal gate?",
+          "options": {
+            "a": "AND",
+            "b": "OR",
+            "c": "XOR",
+            "d": "NAND",
+            "e": "NOT"
+          },
+          "correct_answer": "d",
+          "explanation": "NAND (and NOR) are universal gates — any Boolean function can be implemented using only NAND gates or only NOR gates."
+        },
+        {
+          "id": "Q38",
+          "question": "What does De Morgan's First Law state?",
+          "options": {
+            "a": "(A + B)̄ = Ā · B̄",
+            "b": "(A · B)̄ = Ā + B̄",
+            "c": "(A + B) = Ā · B̄",
+            "d": "(A · B) = Ā + B̄",
+            "e": "A + Ā = 1"
+          },
+          "correct_answer": "b",
+          "explanation": "De Morgan's First Law: (A · B)̄ = Ā + B̄. The complement of an AND operation equals the OR of the complements."
+        },
+        {
+          "id": "Q39",
+          "question": "In a Karnaugh Map, what is the minimum size group that can be formed?",
+          "options": {
+            "a": "1 cell",
+            "b": "2 cells",
+            "c": "4 cells",
+            "d": "8 cells",
+            "e": "16 cells"
+          },
+          "correct_answer": "a",
+          "explanation": "Groups in a K-Map can be of size 1, 2, 4, 8, 16, etc. (powers of 2). A single cell can form a group of 1 if it cannot be combined with any adjacent 1."
+        },
+        {
+          "id": "Q40",
+          "question": "In a K-Map, why can you group cells that wrap around the edges?",
+          "options": {
+            "a": "Because the edges are connected in the physical circuit",
+            "b": "Because cells that differ by one bit are adjacent, and the edges differ by one bit",
+            "c": "Because K-Maps are circular by design",
+            "d": "Because wrap-around groups always give the simplest expression",
+            "e": "Because the edges represent don't care conditions"
+          },
+          "correct_answer": "b",
+          "explanation": "In K-Maps, cells on opposite edges differ by exactly one bit (due to Gray code ordering), making them logically adjacent. This allows wrap-around grouping."
+        },
+        {
+          "id": "Q41",
+          "question": "What type of circuit has outputs that depend ONLY on current inputs?",
+          "options": {
+            "a": "Sequential circuit",
+            "b": "Combinational circuit",
+            "c": "Clock-driven circuit",
+            "d": "Memory circuit",
+            "e": "Feedback circuit"
+          },
+          "correct_answer": "b",
+          "explanation": "Combinational circuits produce outputs based solely on the current inputs, with no memory of past inputs. Examples include adders, multiplexers, and decoders."
+        },
+        {
+          "id": "Q42",
+          "question": "Which flip-flop has an invalid state?",
+          "options": {
+            "a": "D Flip-Flop",
+            "b": "JK Flip-Flop",
+            "c": "T Flip-Flop",
+            "d": "SR Flip-Flop",
+            "e": "All flip-flops have invalid states"
+          },
+          "correct_answer": "d",
+          "explanation": "The SR (Set-Reset) flip-flop has an invalid/forbidden state when both S=1 and R=1. The JK flip-flop was designed to eliminate this problem by toggling when J=K=1."
+        },
+        {
+          "id": "Q43",
+          "question": "What is the primary component of a sequential circuit that gives it memory?",
+          "options": {
+            "a": "AND gate",
+            "b": "OR gate",
+          "c": "Flip-flop",
+          "d": "Multiplexer",
+          "e": "Decoder"
+          },
+          "correct_answer": "c",
+          "explanation": "Flip-flops are the basic memory elements in sequential circuits. They can store one bit of information and retain it until explicitly changed."
+        },
+        {
+          "id": "Q44",
+          "question": "What does an ALU (Arithmetic Logic Unit) do?",
+          "options": {
+            "a": "Only performs arithmetic operations",
+            "b": "Only performs logical operations",
+            "c": "Performs both arithmetic and logical operations",
+            "d": "Stores data for the CPU",
+            "e": "Manages input/output operations"
+          },
+          "correct_answer": "c",
+          "explanation": "The ALU performs both arithmetic operations (ADD, SUB) and logical operations (AND, OR, XOR, NOT, shift) on binary data."
+        },
+        {
+          "id": "Q45",
+          "question": "What is the output of a 2-input NAND gate when both inputs are 1?",
+          "options": {
+            "a": "0",
+            "b": "1",
+            "c": "Undefined",
+            "d": "Depends on the gate delay",
+            "e": "Toggle"
+          },
+          "correct_answer": "a",
+          "explanation": "NAND = NOT(AND). When both inputs are 1: AND = 1, NOT(1) = 0. So NAND outputs 0 only when all inputs are 1."
+        },
+        {
+          "id": "Q46",
+          "question": "A multiplexer (MUX) is best described as:",
+          "options": {
+            "a": "A device that converts n inputs to 2^n outputs",
+            "b": "A device that selects one of many inputs and routes it to a single output",
+            "c": "A device that stores multiple bits of data",
+            "d": "A device that performs arithmetic operations",
+            "e": "A device that converts digital to analog signals"
+          },
+          "correct_answer": "b",
+          "explanation": "A multiplexer (data selector) selects one of 2^n input lines using n select lines and forwards it to a single output."
+        },
+        {
+          "id": "Q47",
+          "question": "What is a decoder used for?",
+          "options": {
+            "a": "Selecting one input from many",
+            "b": "Converting n-bit input to 2^n output lines",
+            "c": "Storing binary data",
+            "d": "Performing addition",
+            "e": "Generating clock signals"
+          },
+          "correct_answer": "b",
+          "explanation": "A decoder converts an n-bit input code to activate one of 2^n output lines. It is used in memory address decoding and instruction decoding."
+        },
+        {
+          "id": "Q48",
+          "question": "Which flip-flop is most commonly used for data storage in registers?",
+          "options": {
+            "a": "SR Flip-Flop",
+            "b": "JK Flip-Flop",
+            "c": "D Flip-Flop",
+            "d": "T Flip-Flop",
+            "e": "All are equally used"
+          },
+          "correct_answer": "c",
+          "explanation": "The D (Data) flip-flop is most widely used for data storage. It simply captures the input D on the clock edge, making it ideal for registers and data transfer."
+        },
+        {
+          "id": "Q49",
+          "question": "What is the difference between a latch and a flip-flop?",
+          "options": {
+            "a": "There is no difference",
+            "b": "A latch is level-triggered; a flip-flop is edge-triggered",
+            "c": "A latch is edge-triggered; a flip-flop is level-triggered",
+            "d": "A latch is sequential; a flip-flop is combinational",
+            "e": "A flip-flop can store more bits than a latch"
+          },
+          "correct_answer": "b",
+          "explanation": "A latch is level-triggered (transparent when clock is high), while a flip-flop is edge-triggered (captures data only on the rising or falling edge of the clock)."
+        },
+        {
+          "id": "Q50",
+          "question": "What does an ALU status flag indicate when the Zero flag is set?",
+          "options": {
+            "a": "The result is negative",
+            "b": "The result is zero",
+            "c": "There was a carry",
+            "d": "There was an overflow",
+            "e": "The operation is invalid"
+          },
+          "correct_answer": "b",
+          "explanation": "The Zero (Z) flag is set to 1 when the ALU result is zero. It is used for conditional branching (e.g., BEQ — branch if equal)."
+        },
+        {
+          "id": "Q51",
+          "question": "What is the Boolean expression for a 2-input XOR gate?",
+          "options": {
+            "a": "A · B",
+            "b": "A + B",
+            "c": "A ⊕ B = Ā·B + A·B̄",
+            "d": "(A · B)̄",
+            "e": "(A + B)̄"
+          },
+          "correct_answer": "c",
+          "explanation": "XOR outputs 1 when inputs are different: A ⊕ B = Ā·B + A·B̄. It can be implemented as (A+B) · (Ā+B̄)."
+        },
+        {
+          "id": "Q52",
+          "question": "How many select lines does a 8:1 multiplexer need?",
+          "options": {
+            "a": "1",
+            "b": "2",
+            "c": "3",
+            "d": "4",
+            "e": "8"
+          },
+          "correct_answer": "c",
+          "explanation": "A multiplexer with 2^n inputs requires n select lines. For 8 inputs: 2^3 = 8, so 3 select lines are needed."
+        },
+        {
+          "id": "Q53",
+          "question": "Which type of circuit is used to implement a Finite State Machine (FSM)?",
+          "options": {
+            "a": "Combinational circuit only",
+            "b": "Sequential circuit",
+            "c": "Analog circuit",
+            "d": "Mixed-signal circuit",
+            "e": "Optical circuit"
+          },
+          "correct_answer": "b",
+          "explanation": "FSMs require memory to track the current state, making them sequential circuits. They combine combinational logic (for next-state and output logic) with flip-flops (for state storage)."
+        },
+        {
+          "id": "Q54",
+          "question": "What is the output of a NOR gate when both inputs are 0?",
+          "options": {
+            "a": "0",
+            "b": "1",
+            "c": "Undefined",
+            "d": "Depends on the inputs",
+            "e": "Toggle"
+          },
+          "correct_answer": "b",
+          "explanation": "NOR = NOT(OR). When both inputs are 0: OR = 0, NOT(0) = 1. NOR outputs 1 only when ALL inputs are 0."
+        },
+        {
+          "id": "Q55",
+          "question": "What is ripple-carry adder?",
+          "options": {
+            "a": "An adder that adds floating-point numbers",
+            "b": "An adder where the carry output of each full adder is connected to the carry input of the next",
+            "c": "An adder that uses parallel carry computation",
+            "d": "An adder that only adds two bits at a time",
+            "e": "An adder used exclusively in GPUs"
+          },
+          "correct_answer": "b",
+          "explanation": "A ripple-carry adder chains full adders together where the carry output of one stage ripples to the carry input of the next stage. Simple but slow for large numbers due to carry propagation delay."
+        }
+      ]
+    },
+    {
+      "section_title": "Instruction Set Architecture",
+      "questions": [
+        {
+          "id": "Q56",
+          "question": "What does ISA stand for?",
+          "options": {
+            "a": "Integrated System Architecture",
+            "b": "Instruction Set Architecture",
+            "c": "Internal Storage Allocation",
+            "d": "Input/Output System Application",
+            "e": "Integer Signal Algorithm"
+          },
+          "correct_answer": "b",
+          "explanation": "ISA stands for Instruction Set Architecture — the abstract interface between hardware and software that defines the programmer-visible aspects of a computer."
+        },
+        {
+          "id": "Q57",
+          "question": "Which of the following is an example of RISC architecture?",
+          "options": {
+            "a": "x86",
+            "b": "VAX",
+            "c": "ARM",
+            "d": "Motorola 68000",
+            "e": "Intel 8086"
+          },
+          "correct_answer": "c",
+          "explanation": "ARM (Advanced RISC Machine) is a classic example of RISC architecture. x86, VAX, and Motorola 68000 are CISC architectures."
+        },
+        {
+          "id": "Q58",
+          "question": "What is the key characteristic of RISC instructions?",
+          "options": {
+            "a": "Variable-length instructions",
+            "b": "Memory operands in every instruction",
+            "c": "Fixed-length instructions (typically 32 bits)",
+            "d": "Complex addressing modes",
+            "e": "Microprogrammed control"
+          },
+          "correct_answer": "c",
+          "explanation": "RISC uses fixed-length instructions, which simplifies instruction fetching and decoding and makes pipelining more efficient."
+        },
+        {
+          "id": "Q59",
+          "question": "In addressing modes, what does 'immediate addressing' mean?",
+          "options": {
+            "a": "The operand is at a memory address specified in the instruction",
+            "b": "The operand value is included directly in the instruction",
+            "c": "The operand is in a register",
+            "d": "The operand address is in a register",
+            "e": "The operand is on the stack"
+          },
+          "correct_answer": "b",
+          "explanation": "In immediate addressing, the operand is part of the instruction itself. Example: ADD #5, R1 adds the literal value 5 to register R1."
+        },
+        {
+          "id": "Q60",
+          "question": "What addressing mode uses the value in a register as the memory address?",
+          "options": {
+            "a": "Immediate",
+            "b": "Direct",
+            "c": "Register",
+            "d": "Register Indirect",
+            "e": "Indexed"
+          },
+          "correct_answer": "d",
+          "explanation": "Register Indirect addressing uses the value stored in a register as the memory address. Example: LOAD (R2), R1 loads the value at the memory address contained in R2."
+        },
+        {
+          "id": "Q61",
+          "question": "What is the load-store architecture characteristic of RISC?",
+          "options": {
+            "a": "All instructions access memory",
+            "b": "Only LOAD and STORE instructions access memory; ALU operations work on registers only",
+            "c": "LOAD instructions are forbidden",
+            "d": "STORE instructions are always first",
+            "e": "Memory is accessed through the stack"
+          },
+          "correct_answer": "b",
+          "explanation": "In load-store architecture (RISC), only LOAD and STORE instructions can access memory. All other ALU operations work strictly on registers, simplifying the pipeline."
+        },
+        {
+          "id": "Q62",
+          "question": "How many addressing modes does a basic instruction format typically support?",
+          "options": {
+            "a": "1",
+            "b": "2",
+            "c": "3",
+            "d": "It varies — common ISAs support 5-12+ addressing modes",
+            "e": "Addressing modes are not part of ISA"
+          },
+          "correct_answer": "d",
+          "explanation": "Different ISAs support different numbers of addressing modes. Common modes include: immediate, direct, register, register indirect, indexed, base+offset, PC-relative, and stack addressing."
+        },
+        {
+          "id": "Q63",
+          "question": "What happens during the FETCH phase of the instruction cycle?",
+          "options": {
+            "a": "The instruction is executed by the ALU",
+            "b": "The instruction is decoded by the control unit",
+            "c": "The instruction is fetched from memory at the address in PC, and PC is incremented",
+            "d": "The result is written back to the register file",
+            "e": "An interrupt is checked"
+          },
+          "correct_answer": "c",
+          "explanation": "During FETCH: the PC value is sent to memory, the instruction is fetched and loaded into the IR (Instruction Register), and the PC is incremented to point to the next instruction."
+        },
+        {
+          "id": "Q64",
+          "question": "What does the DECODE phase of the instruction cycle determine?",
+          "options": {
+            "a": "The result of the operation",
+            "b": "The operation to perform and the operands to use",
+            "c": "Whether to branch or not",
+            "d": "The memory address to access",
+            "e": "The next instruction to fetch"
+          },
+          "correct_answer": "b",
+          "explanation": "The DECODE phase interprets the opcode in the Instruction Register to determine what operation to perform and identifies the source and destination operands."
+        },
+        {
+          "id": "Q65",
+          "question": "Which instruction format has the most compact code?",
+          "options": {
+            "a": "Three-address format",
+            "b": "Two-address format",
+            "c": "One-address format (accumulator-based)",
+            "d": "Zero-address format (stack-based)",
+            "e": "All formats produce the same code size"
+          },
+          "correct_answer": "c",
+          "explanation": "One-address format uses the smallest instructions since only one operand address needs to be specified (the other operand is implicitly the accumulator). Zero-address is even smaller but requires a stack."
+        },
+        {
+          "id": "Q66",
+          "question": "What is the role of the Program Counter (PC)?",
+          "options": {
+            "a": "Counts the number of instructions executed",
+            "b": "Holds the address of the currently executing instruction",
+            "c": "Holds the address of the NEXT instruction to be fetched",
+            "d": "Counts the number of cycles",
+            "e": "Stores the total program size"
+          },
+          "correct_answer": "c",
+          "explanation": "The Program Counter (PC) holds the memory address of the next instruction to be fetched. After each fetch, the PC is incremented (or modified by branch/jump instructions)."
+        },
+        {
+          "id": "Q67",
+          "question": "What is the Instruction Register (IR) used for?",
+          "options": {
+            "a": "Storing the address of the next instruction",
+            "b": "Holding the current instruction being decoded and executed",
+            "c": "Storing data values",
+            "d": "Counting clock cycles",
+            "e": "Managing interrupts"
+          },
+          "correct_answer": "b",
+          "explanation": "The Instruction Register (IR) holds the current instruction that has been fetched from memory and is being decoded and executed by the control unit."
+        },
+        {
+          "id": "Q68",
+          "question": "In addressing modes, what is 'indexed addressing' commonly used for?",
+          "options": {
+            "a": "Simple variable access",
+            "b": "Array element access",
+            "c": "Function calls",
+            "d": "Immediate data operations",
+            "e": "Stack operations"
+          },
+          "correct_answer": "b",
+          "explanation": "Indexed addressing (base + offset) is commonly used for array access. The base register holds the array base address and the index provides the offset to each element."
+        },
+        {
+          "id": "Q69",
+          "question": "What is the difference between Little-Endian and Big-Endian?",
+          "options": {
+            "a": "Little-Endian stores most significant byte first; Big-Endian stores least significant byte first",
+            "b": "Little-Endian stores least significant byte first; Big-Endian stores most significant byte first",
+            "c": "They both store data the same way",
+            "d": "Little-Endian is for integers; Big-Endian is for floating-point",
+            "e": "Little-Endian is faster; Big-Endian is slower"
+          },
+          "correct_answer": "b",
+          "explanation": "Little-Endian stores the least significant byte at the lowest address. Big-Endian stores the most significant byte at the lowest address."
+        },
+        {
+          "id": "Q70",
+          "question": "Why are RISC instructions easier to pipeline than CISC instructions?",
+          "options": {
+            "a": "RISC has fewer instructions",
+            "b": "RISC instructions are fixed-length and uniform, making fetch and decode predictable",
+            "c": "RISC doesn't need pipelining",
+            "d": "CISC instructions are too simple for pipelining",
+            "e": "RISC has more registers"
+          },
+          "correct_answer": "b",
+          "explanation": "RISC fixed-length instructions allow the pipeline to predict instruction boundaries easily. CISC variable-length instructions make it difficult to determine where the next instruction starts."
+        }
+      ]
+    },
+    {
+      "section_title": "CPU Design",
+      "questions": [
+        {
+          "id": "Q71",
+          "question": "What is the main advantage of CPU pipelining?",
+          "options": {
+            "a": "Reduces individual instruction execution time",
+            "b": "Increases throughput by overlapping instruction execution",
+            "c": "Eliminates all data hazards",
+            "d": "Reduces the number of registers needed",
+            "e": "Simplifies the control unit"
+          },
+          "correct_answer": "b",
+          "explanation": "Pipelining increases throughput by allowing multiple instructions to be in different stages simultaneously. Each instruction still takes the same time, but more complete per unit time."
+        },
+        {
+          "id": "Q72",
+          "question": "Which pipeline hazard occurs when an instruction depends on the result of a previous instruction?",
+          "options": {
+            "a": "Structural hazard",
+            "b": "Data hazard",
+            "c": "Control hazard",
+            "d": "Resource hazard",
+            "e": "Timing hazard"
+          },
+          "correct_answer": "b",
+          "explanation": "A data hazard occurs when an instruction needs data that hasn't been produced yet by a previous instruction (RAW dependency). Solutions include stalling and forwarding."
+        },
+        {
+          "id": "Q73",
+          "question": "What is forwarding (bypassing) in pipelining?",
+          "options": {
+            "a": "Skipping the instruction fetch stage",
+            "b": "Routing results directly from pipeline registers to ALU input, bypassing the register file",
+            "c": "Predicting the branch outcome",
+            "d": "Flushing the pipeline",
+            "e": "Adding more pipeline stages"
+          },
+          "correct_answer": "b",
+          "explanation": "Forwarding routes the result directly from the pipeline register (after EX or MEM stage) back to the ALU input, avoiding the need to wait for the result to be written to the register file."
+        },
+        {
+          "id": "Q74",
+          "question": "What is a structural hazard?",
+          "options": {
+            "a": "An instruction depends on a previous result",
+            "b": "Two instructions need the same hardware resource simultaneously",
+            "c": "A branch changes the instruction flow",
+            "d": "The clock speed is too slow",
+            "e": "The cache is full"
+          },
+          "correct_answer": "b",
+          "explanation": "A structural hazard occurs when two instructions in different pipeline stages need the same hardware resource at the same time (e.g., both need memory access)."
+        },
+        {
+          "id": "Q75",
+          "question": "How does a control hazard affect the pipeline?",
+          "options": {
+            "a": "It causes data corruption",
+            "b": "It causes wrong instructions to be fetched after a branch",
+            "c": "It causes the pipeline to stall indefinitely",
+            "d": "It causes overflow in the ALU",
+            "e": "It has no effect on the pipeline"
+          },
+          "correct_answer": "b",
+          "explanation": "A control hazard occurs when a branch instruction changes the PC. The pipeline may have already fetched wrong instructions before the branch outcome is known."
+        },
+        {
+          "id": "Q76",
+          "question": "What is the main disadvantage of a single-cycle implementation?",
+          "options": {
+            "a": "It has too many pipeline stages",
+            "b": "The clock cycle must be long enough for the slowest instruction (LOAD)",
+            "c": "It cannot execute LOAD instructions",
+            "d": "It requires a microprogrammed control unit",
+            "e": "It has lower CPI than multi-cycle"
+          },
+          "correct_answer": "b",
+          "explanation": "In single-cycle implementation, the clock cycle is determined by the slowest instruction (LOAD = memory + ALU + register write). All instructions must complete in this one cycle, wasting time for simpler instructions."
+        },
+        {
+          "id": "Q77",
+          "question": "In multi-cycle implementation, each instruction takes:",
+          "options": {
+            "a": "Exactly one clock cycle",
+            "b": "A different number of clock cycles depending on the instruction type",
+            "c": "Always 5 clock cycles",
+            "d": "Exactly 3 clock cycles",
+            "e": "The same number of cycles regardless of instruction type"
+          },
+          "correct_answer": "b",
+          "explanation": "In multi-cycle implementation, different instructions take different numbers of cycles. A simple ADD may take 4 cycles, while a LOAD takes 5 cycles."
+        },
+        {
+          "id": "Q78",
+          "question": "What is branch prediction?",
+          "options": {
+            "a": "Calculating the branch target address",
+            "b": "Guessing whether a branch will be taken or not-taken before it is resolved",
+            "c": "Storing branch instructions in cache",
+            "d": "Executing both branch paths simultaneously",
+            "e": "Removing branch instructions from the program"
+          },
+          "correct_answer": "b",
+          "explanation": "Branch prediction guesses the outcome of a branch instruction before it is resolved. If correct, the pipeline continues without interruption. If wrong, the pipeline is flushed."
+        },
+        {
+          "id": "Q79",
+          "question": "What is the memory hierarchy designed to achieve?",
+          "options": {
+            "a": "Make all memory equally fast",
+            "b": "Provide fast access to frequently used data while maintaining large capacity",
+            "c": "Eliminate the need for cache",
+            "d": "Make memory cheaper",
+            "e": "Reduce the number of memory chips"
+          },
+          "correct_answer": "b",
+          "explanation": "The memory hierarchy balances speed, cost, and capacity. Fast/expensive memory (registers, cache) holds frequently used data, while slow/cheap memory (RAM, disk) provides large capacity."
+        },
+        {
+          "id": "Q80",
+          "question": "What is the principle of locality that cache exploits?",
+          "options": {
+            "a": "Programs only access data near the program counter",
+            "b": "Recently accessed data and nearby data are likely to be accessed again soon",
+            "c": "All memory accesses are random",
+            "d": "Programs access all memory equally",
+            "e": "Memory access patterns are predictable only at compile time"
+          },
+          "correct_answer": "b",
+          "explanation": "Principle of locality: Temporal locality (recently accessed data will be accessed again) and Spatial locality (data near recently accessed data will be accessed soon). Cache leverages this to keep relevant data close to the CPU."
+        },
+        {
+          "id": "Q81",
+          "question": "Which cache mapping technique maps each memory block to exactly one cache line?",
+          "options": {
+            "a": "Fully associative",
+            "b": "Direct mapping",
+            "c": "Set associative",
+            "d": "Random mapping",
+            "e": "Block mapping"
+          },
+          "correct_answer": "b",
+          "explanation": "Direct mapping maps each main memory block to exactly one specific cache line. It's the simplest but can cause conflict misses when two blocks compete for the same line."
+        },
+        {
+          "id": "Q82",
+          "question": "What is the difference between hardwired and microprogrammed control units?",
+          "options": {
+            "a": "Hardwired uses microcode; microprogrammed uses logic gates",
+            "b": "Hardwired uses combinational logic gates; microprogrammed uses microcode stored in control memory",
+            "c": "Hardwired is more flexible; microprogrammed is faster",
+            "d": "Hardwired is used in CISC; microprogrammed is used in RISC",
+            "e": "There is no practical difference"
+          },
+          "correct_answer": "b",
+          "explanation": "Hardwired control units use combinational logic gates and are very fast but inflexible. Microprogrammed control units use microcode stored in control memory, which is more flexible but slower."
+        },
+        {
+          "id": "Q83",
+          "question": "Why is the clock cycle in a pipeline determined by the slowest stage?",
+          "options": {
+            "a": "Because the fastest stage sets the limit",
+            "b": "Because all stages must complete in one clock cycle, and the slowest stage determines the minimum cycle time",
+            "c": "Because clock cycles are independent of stages",
+            "d": "Because the ALU is always the slowest stage",
+            "e": "Because memory access is always the fastest"
+          },
+          "correct_answer": "b",
+          "explanation": "In a synchronous pipeline, each stage must complete within one clock cycle. The clock cycle time must be long enough for the slowest stage to finish, limiting overall performance."
+        },
+        {
+          "id": "Q84",
+          "question": "Which replacement policy evicts the cache line that was least recently accessed?",
+          "options": {
+            "a": "FIFO",
+            "b": "Random",
+            "c": "LRU (Least Recently Used)",
+            "d": "LFU (Least Frequently Used)",
+            "e": "Round Robin"
+          },
+          "correct_answer": "c",
+          "explanation": "LRU (Least Recently Used) evicts the cache line that has not been accessed for the longest time. It's based on the principle of temporal locality."
+        },
+        {
+          "id": "Q85",
+          "question": "What is the CPI of an ideal pipeline with k stages and n instructions?",
+          "options": {
+            "a": "k",
+            "b": "n",
+            "c": "1 (after pipeline is full)",
+            "d": "k × n",
+            "e": "k + n"
+          },
+          "correct_answer": "c",
+          "explanation": "In an ideal pipeline, once full, one instruction completes per clock cycle, giving a CPI of 1. The pipeline latency for the first instruction is k cycles, but after that, throughput is 1 instruction/cycle."
+        },
+        {
+          "id": "Q86",
+          "question": "What is a 'bubble' in pipelining?",
+          "options": {
+            "a": "A type of data hazard",
+            "b": "A NOP instruction inserted to stall the pipeline",
+            "c": "A branch prediction error",
+            "d": "A cache miss",
+            "e": "An arithmetic overflow"
+          },
+          "correct_answer": "b",
+          "explanation": "A bubble (or NOP — No Operation) is inserted into the pipeline to stall it, typically to resolve data hazards or structural hazards by creating a delay."
+        },
+        {
+          "id": "Q87",
+          "question": "What is the purpose of the MAR (Memory Address Register)?",
+          "options": {
+            "a": "Stores the current instruction",
+            "b": "Holds the address of the memory location being accessed",
+            "c": "Stores the data read from memory",
+            "d": "Holds the program counter value",
+            "e": "Stores the ALU result"
+          },
+          "correct_answer": "b",
+          "explanation": "The MAR (Memory Address Register) holds the address of the memory location that is about to be read from or written to."
+        },
+        {
+          "id": "Q88",
+          "question": "What is the purpose of the MDR (Memory Data Register)?",
+          "options": {
+            "a": "Stores the memory address",
+            "b": "Holds data being transferred to or from memory",
+            "c": "Stores the current instruction",
+            "d": "Holds the next PC value",
+            "e": "Stores the clock signal"
+          },
+          "correct_answer": "b",
+          "explanation": "The MDR (Memory Data Register), also called MBR (Memory Buffer Register), holds the data that has been read from or is about to be written to memory."
+        },
+        {
+          "id": "Q89",
+          "question": "What is the primary advantage of microprogrammed control over hardwired control?",
+          "options": {
+            "a": "It is faster",
+            "b": "It is more flexible and easier to modify or extend",
+            "c": "It uses less hardware",
+            "d": "It requires less power",
+            "e": "It supports more registers"
+          },
+          "correct_answer": "b",
+          "explanation": "Microprogrammed control is more flexible because new instructions can be added by updating the microcode in control memory, without redesigning hardware circuits."
+        },
+        {
+          "id": "Q90",
+          "question": "What is superscalar execution?",
+          "options": {
+            "a": "Executing instructions in a single pipeline",
+            "b": "Executing multiple instructions simultaneously using multiple execution units",
+            "c": "Executing instructions at a higher clock speed",
+            "d": "Executing instructions out of order only",
+            "e": "Executing floating-point instructions only"
+          },
+          "correct_answer": "b",
+          "explanation": "Superscalar execution uses multiple execution units (multiple ALUs, load/store units, etc.) to issue and execute more than one instruction per clock cycle, improving beyond CPI = 1."
+        },
+        {
+          "id": "Q91",
+          "question": "How does modern x86处理器 bridge the gap between CISC and RISC?",
+          "options": {
+            "a": "It eliminated all CISC instructions",
+            "b": "It translates CISC instructions into RISC-like micro-operations (μops) internally",
+            "c": "It uses only RISC instructions",
+            "d": "It runs two separate processors",
+            "e": "It doesn't — x86 is purely CISC"
+          },
+          "correct_answer": "b",
+          "explanation": "Modern x86 processors decode complex CISC instructions into simpler RISC-like micro-operations (μops) that can be pipelined efficiently, combining CISC compatibility with RISC performance."
+        },
+        {
+          "id": "Q92",
+          "question": "What happens when a cache miss occurs?",
+          "options": {
+            "a": "The program crashes",
+            "b": "The requested data is fetched from a lower level of the memory hierarchy (e.g., main memory)",
+            "c": "The CPU halts execution",
+            "d": "The cache is cleared",
+            "e": "The instruction is skipped"
+          },
+          "correct_answer": "b",
+          "explanation": "When a cache miss occurs, the requested data is not in the cache and must be fetched from a lower level (L2, L3, or main memory). The data is then brought into the cache for future access."
+        },
+        {
+          "id": "Q93",
+          "question": "What is the hit ratio in cache?",
+          "options": {
+            "a": "The ratio of cache misses to total accesses",
+            "b": "The ratio of cache hits to total memory accesses",
+            "c": "The ratio of total memory to cache size",
+            "d": "The speed of cache access",
+            "e": "The number of cache lines"
+          },
+          "correct_answer": "b",
+          "explanation": "Hit ratio = (Number of cache hits) / (Total memory accesses). A higher hit ratio means the cache is more effective. Typical L1 hit ratios are 90-95%."
+        },
+        {
+          "id": "Q94",
+          "question": "What is the purpose of the Branch Target Buffer (BTB)?",
+          "options": {
+            "a": "To store branch instructions",
+            "b": "To cache the target addresses of recently taken branches for faster prediction",
+            "c": "To prevent all branch hazards",
+            "d": "To store the entire program",
+            "e": "To replace the register file"
+          },
+          "correct_answer": "b",
+          "explanation": "The BTB caches the target addresses of recently taken branches. When a branch is encountered, the BTB provides the predicted target address immediately, reducing the branch penalty."
+        },
+        {
+          "id": "Q95",
+          "question": "In the MIPS single-cycle datapath, what component determines the next instruction address?",
+          "options": {
+            "a": "ALU",
+            "b": "Register File",
+            "c": "Program Counter (PC)",
+            "d": "Control Unit",
+            "e": "Data Memory"
+          },
+          "correct_answer": "c",
+          "explanation": "The Program Counter (PC) holds the address of the next instruction. For sequential execution, PC is incremented by 4. For branches/jumps, the PC is updated to the target address."
+        },
+        {
+          "id": "Q96",
+          "question": "What is the average memory access time (AMAT) formula?",
+          "options": {
+            "a": "AMAT = Hit Time + Miss Rate × Miss Penalty",
+            "b": "AMAT = Hit Time × Miss Rate",
+            "c": "AMAT = Miss Penalty / Hit Time",
+            "d": "AMAT = Hit Time + Miss Penalty",
+            "e": "AMAT = Hit Time × Miss Penalty"
+          },
+          "correct_answer": "a",
+          "explanation": "AMAT = Hit Time + Miss Rate × Miss Penalty. This accounts for both cache hits (hit time) and cache misses (miss rate × miss penalty)."
+        },
+        {
+          "id": "Q97",
+          "question": "Which type of pipelining hazard involves a branch instruction?",
+          "options": {
+            "a": "Data hazard",
+            "b": "Structural hazard",
+            "c": "Control hazard",
+            "d": "Resource hazard",
+            "e": "Memory hazard"
+          },
+          "correct_answer": "c",
+          "explanation": "Control hazards occur when branch instructions change the flow of execution. The pipeline doesn't know which instruction to fetch next until the branch is resolved."
+        },
+        {
+          "id": "Q98",
+          "question": "What is the purpose of the sign extender in the MIPS datapath?",
+          "options": {
+            "a": "To extend a 32-bit number to 64 bits",
+            "b": "To extend a 16-bit immediate value to 32 bits while preserving the sign",
+            "c": "To convert signed to unsigned numbers",
+            "d": "To perform sign multiplication",
+            "e": "To check for negative numbers"
+          },
+          "correct_answer": "b",
+          "explanation": "The sign extender takes a 16-bit immediate value (from instructions like ADDI, LOAD offset) and extends it to 32 bits by replicating the sign bit, preserving the numerical value."
+        },
+        {
+          "id": "Q99",
+          "question": "What is write-back (WB) in the instruction cycle?",
+          "options": {
+            "a": "Writing an instruction to memory",
+            "b": "Writing the result of an operation back to the register file or memory",
+            "c": "Writing the PC value to the MAR",
+            "d": "Writing data to the cache",
+            "e": "Writing the next microinstruction"
+          },
+          "correct_answer": "b",
+          "explanation": "Write-back (WB) is the final stage where the result of an instruction (from ALU or memory) is written to the destination register in the register file."
+        },
+        {
+          "id": "Q100",
+          "question": "What is the formula for Scaled Speedup in Gustafson's Law?",
+          "options": {
+            "a": "Speedup = 1 / ((1 - F) + F/S)",
+            "b": "Speedup = S × (1 - F) + F",
+            "c": "Speedup = F × S + (1 - F)",
+            "d": "Speedup = S / (1 - F)",
+            "e": "Speedup = (1 - F) × S"
+          },
+          "correct_answer": "b",
+          "explanation": "Gustafson's Law: Scaled Speedup = S × (1 - F) + F, where S is the number of processors and F is the parallelizable fraction. This assumes fixed execution time with scaled problem size."
+        }
+      ]
+    }
+  ]
+}

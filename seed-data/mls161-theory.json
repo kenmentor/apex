@@ -1,0 +1,295 @@
+[
+  {
+    "courseCode": "MLS 161",
+    "section": "Biorisk Management Fundamentals",
+    "id": "TH-001",
+    "question": "Define Biosafety, Laboratory Biosecurity, and Biorisk.",
+    "keywords": ["biosafety", "biosecurity", "biorisk", "containment", "pathogens", "toxins", "unauthorized access"],
+    "mainConcepts": [
+      "Biosafety is the containment principles, technologies and practices implemented to prevent unintentional exposure to pathogens and toxins or their accidental release",
+      "Laboratory Biosecurity is the protection, control and accountability for biological materials in laboratories to prevent unauthorized access, loss, theft, misuse, deviation or intentional release",
+      "Biorisk is the combination of Biosafety and Biosecurity",
+      "Biorisk = Biosafety + Biosecurity",
+      "Biosafety focuses on accidental exposure and release",
+      "Biosecurity focuses on intentional threats and accountability"
+    ],
+    "referenceAnswer": "BIOSAFETY (Laboratory Biosafety): The containment principles, technologies and practices implemented to prevent unintentional exposure to pathogens and toxins or their accidental/unintentional release. It focuses on preventing laboratory-acquired infections and environmental contamination.\n\nLABORATORY BIOSECURITY: The protection, control and accountability for biological materials in laboratories to prevent their unauthorized access, loss, theft, misuse, deviation or intentional release. It focuses on preventing deliberate misuse of biological agents.\n\nBIORISK: The combination of biosafety and biosecurity. Mathematically, Biorisk = Biosafety + Biosecurity. It encompasses all risks associated with working with biological materials in a laboratory setting.\n\nKey distinction: Biosafety deals with ACCIDENTAL exposure/release, while Biosecurity deals with INTENTIONAL threats, theft, or misuse.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Biorisk Management Fundamentals",
+    "id": "TH-002",
+    "question": "List and explain the controls of Laboratory Biosafety and Laboratory Biosecurity.",
+    "keywords": ["engineering controls", "good laboratory practices", "SOP", "PPE", "locks", "CCTV", "biometric"],
+    "mainConcepts": [
+      "Biosafety controls: Engineering Controls, Good Laboratory Work Practices, PPE, Practices and Procedures",
+      "Biosecurity controls: Doors with locks, Password/PIN, Card readers, Biometric/fingerprint, CCTV, Security guards, Fences, Bars on windows, Magnetic locks, Magnetic switches, Alarms",
+      "Controls common to both: Access Control, Personnel Management reliability, Inventory of biological hazard, Proper decontamination/disposal of waste, Proper shipping procedures",
+      "Engineering controls include Biosafety Cabinets and Directional Air Control"
+    ],
+    "referenceAnswer": "CONTROLS OF LABORATORY BIOSAFETY:\n1. Engineering Control: Biosafety Cabinets, Directional Air Control (UTO)\n2. Good Laboratory Work Practices: Standard Operating Procedures (SOP) including hand washing, spill clean up\n3. Personal Protective Equipment (PPE)\n4. Practices and Procedures\n\nCONTROLS OF LABORATORY BIOSECURITY:\n1. Doors with locks\n2. Password/PIN\n3. Card readers\n4. Biometric/fingerprint\n5. CCTV\n6. Security guards\n7. Fences\n8. Bars on windows\n9. Magnetic locks\n10. Magnetic switches and doors\n11. Alarms\n\nCONTROLS COMMON TO BOTH:\n1. Access Control\n2. Personnel Management reliability\n3. Inventory of biological hazard\n4. Proper decontamination and disposal of waste materials\n5. Proper shipping procedures",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Key Components of Biorisk Management",
+    "id": "TH-003",
+    "question": "Explain the three key components of Biorisk Management (A.M.P).",
+    "keywords": ["assessment", "mitigation", "performance", "hazard identification", "control measures", "continual improvement"],
+    "mainConcepts": [
+      "Biorisk Assessment is the process of identifying the hazard and evaluating the risk associated with the biological agent/toxin",
+      "Biorisk Mitigation is the action and control measures put into place to reduce or eliminate the risk",
+      "Biorisk Performance is the implementation of the entire biorisk management system including evaluating and assuring it works as designed",
+      "Performance also includes the process of continually improving the system"
+    ],
+    "referenceAnswer": "The three key components of Biorisk Management form the A.M.P framework:\n\n1. BIORISK ASSESSMENT: The process of identifying the hazard and evaluating the risk associated with the biological agent/toxin. This involves hazard identification, risk analysis and evaluation, and determining whether existing controls are adequate.\n\n2. BIORISK MITIGATION: The action and control measures put into place to reduce or eliminate the risk associated with biological agents and toxins. This includes implementing engineering controls, administrative controls, and PPE.\n\n3. BIORISK PERFORMANCE: The implementation of the entire biorisk management system including evaluating and assuring that the system is working the way it was designed. Another aspect of performance is the process of continually improving the system.\n\nTogether, A-M-P ensures that risks are identified, controlled, and the system continuously improves.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Risk Assessment Fundamentals",
+    "id": "TH-004",
+    "question": "Define Biorisk Assessment, Biorisk Management, and explain the difference between Hazard and Risk.",
+    "keywords": ["biorisk assessment", "biorisk management", "hazard", "risk", "probability", "severity", "potential harm"],
+    "mainConcepts": [
+      "Biorisk Assessment is the process of evaluating the biorisk arising from a hazard, taking account the adequacy of any existing controls and deciding whether or not the biorisk is acceptable",
+      "Biorisk Management is the effective management of risk constituted by working with infectious agents and toxins in the laboratory",
+      "A hazard is something with the potential to cause harm",
+      "A risk is the likelihood of that potential harm being realized"
+    ],
+    "referenceAnswer": "BIORISK ASSESSMENT: The process of evaluating the biorisk arising from a hazard, taking account the adequacy of any existing controls and deciding whether or not the biorisk is acceptable.\n\nBIORISK MANAGEMENT: The effective management of risk constituted by working with infectious agents and toxins in the laboratory. It involves the analysis of the methods and development of strategies put in place to minimize the likelihood of the occurrence of biorisk.\n\nHAZARD vs RISK (JACKPOT):\nA HAZARD is something with the potential to cause harm — it has the inherent ability to cause injury or damage.\nA RISK is the likelihood of that potential harm being realized — it is the probability that the hazard will actually cause harm.\n\nExample: A radioactive source is a HAZARD. The RISK is the probability that someone will be exposed to the radiation and harmed.\n\nKey: Every hazard has a risk, but not every risk results in harm. Risk = Probability × Consequence.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Risk Assessment Fundamentals",
+    "id": "TH-005",
+    "question": "What are the three questions of Risk Assessment according to Kaplan and Garrick?",
+    "keywords": ["Kaplan", "Garrick", "what can happen", "chance", "consequences", "risk assessment"],
+    "mainConcepts": [
+      "According to Kaplan and Garrick, risk assessment consists of answering 3 specific questions",
+      "Question 1: What can happen?",
+      "Question 2: What is the chance that it will happen?",
+      "Question 3: If it happens, what are the consequences?"
+    ],
+    "referenceAnswer": "According to Kaplan and Garrick, risk assessment consists of answering three specific questions:\n\n1. WHAT CAN HAPPEN? — This identifies the possible undesirable events or scenarios. It involves hazard identification and determining what types of incidents could occur in the laboratory.\n\n2. WHAT IS THE CHANCE THAT IT WILL HAPPEN? — This evaluates the probability or likelihood of each identified event occurring. It considers factors like frequency of procedures, human error rates, and environmental conditions.\n\n3. IF IT HAPPENS, WHAT ARE THE CONSEQUENCES? — This assesses the severity and impact of each event if it were to occur. It considers health effects, environmental damage, economic impact, and reputational damage.\n\nThese three questions form the foundation of quantitative risk analysis: Risk = f(Likelihood × Consequence). They guide the entire risk assessment process from identification through evaluation and control.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Risk Assessment Fundamentals",
+    "id": "TH-006",
+    "question": "What are the steps recommended for conducting a Biological Risk Assessment?",
+    "keywords": ["hazard identification", "who might be harmed", "control measures", "record findings", "review assessment", "eliminate or control"],
+    "mainConcepts": [
+      "Step 1: Identification of hazard",
+      "Step 2: Decide who might be harmed and how",
+      "Step 3: Evaluate the risks and decide on control measures",
+      "Step 4: Eliminate or control the hazard",
+      "Step 5: Record the findings and implement them",
+      "Step 6: Review the assessment and update when necessary"
+    ],
+    "referenceAnswer": "Steps recommended for conducting a Biological Risk Assessment:\n\n1. IDENTIFICATION OF HAZARD: Identify all potential biological, chemical, and physical hazards present in the laboratory and the procedures being performed.\n\n2. DECIDE WHO MIGHT BE HARMED AND HOW: Consider all personnel who could be affected — laboratory workers, maintenance staff, visitors, nearby communities. Determine the route of exposure.\n\n3. EVALUATE THE RISKS AND DECIDE ON CONTROL MEASURES: Assess the likelihood and severity of harm. Determine what controls are needed — engineering controls, administrative controls, or PPE.\n\n4. ELIMINATE OR CONTROL THE HAZARD: Implement the control measures identified. Use the hierarchy of controls (elimination > substitution > engineering controls > administrative controls > PPE).\n\n5. RECORD THE FINDINGS AND IMPLEMENT THEM: Document the assessment, findings, and control measures. Ensure all findings are implemented in practice.\n\n6. REVIEW THE ASSESSMENT AND UPDATE WHEN NECESSARY: Risk assessments should be reviewed at least annually or whenever there are changes in procedures, equipment, or personnel.\n\nAim of Risk Assessment:\n- Determine research and routine activities\n- Identify organisms and biological materials and their risks\n- Describe associated risks and controls\n- Evaluate staff experience and training\n- Ensure risk minimization measures are in SOPs",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Risk Assessment Fundamentals",
+    "id": "TH-007",
+    "question": "List and explain the seven factors essential in risk assessment (PR-SISCO).",
+    "keywords": ["pathogenicity", "route of transmission", "stability", "infectious dose", "susceptibility", "concentration", "origin", "PR-SISCO"],
+    "mainConcepts": [
+      "Pathogenicity: the ability of a microorganism to produce disease in a host organism",
+      "Route of Transmission: the way an agent spreads from source to host",
+      "Stability of Causative Agent: how the agent survives in the environment",
+      "Infectious Dose: the number of pathogens required to infect a host",
+      "Susceptibility: the host's immune status and resistance",
+      "Concentration and Volume: number of infectious organisms per unit volume",
+      "Origin: geographic location, host, or nature of source"
+    ],
+    "referenceAnswer": "The seven factors essential in risk assessment are remembered by the acronym PR-SISCO:\n\n1. PATHOGENICITY: The ability of a microorganism to produce disease in a host organism. The microbes express their pathogenicity by means of their virulence. Virulence is the degree of pathogenicity.\n\n2. ROUTE OF TRANSMISSION: The way the agent spreads from source to host. When working with an agent with uncertain mode of transmission, the potential for aerosol transmission must be considered due to higher risk.\n\n3. STABILITY OF CAUSATIVE AGENT: Desiccation, exposure to sunlight or ultraviolet light, exposure to chemical disinfectants and other factors can affect the agent's stability in the environment.\n\n4. INFECTIOUS DOSE: The number of pathogens required to infect a host. It varies across species and depends on the route of entry. Lower infectious dose = higher risk.\n\n5. SUSCEPTIBILITY: The laboratory worker's immune status is directly related to his/her susceptibility to disease when working with an infectious agent. Vaccination status and health conditions matter.\n\n6. CONCENTRATION AND VOLUME: Concentration is the number of infectious organisms per unit volume. Higher concentrations and larger volumes increase the risks.\n\n7. ORIGIN: May refer to geographic location (domestic or foreign), host (infected or uninfected human or animal), or nature of source (potential zoonotic or associated with a disease outbreak).",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Laboratory Hazards",
+    "id": "TH-008",
+    "question": "What are the different types of laboratory hazards? Describe physical hazards.",
+    "keywords": ["physical hazards", "fire", "heat", "cold", "cut", "radiation", "chemical", "biological", "electrical", "ergonomic"],
+    "mainConcepts": [
+      "Common laboratory hazards include: Airborne hazardous materials, Mechanical hazard, Electrical hazard, Ergonomic factors, Physical hazard, Radiation hazard",
+      "Physical hazards include: Fire, Heat, Cold, Cut, Radiation",
+      "Fire causes: Bunsen burners, explosive chemicals, inflammable chemicals, electric spark, leaking gas pipes",
+      "Heat causes: Exothermic reactions, heated liquids, Bunsen burner, micro-incinerator, autoclave",
+      "Cold causes: Solid CO2 (dry ice) at -75°C, Revco freezer at -115°C",
+      "Cut causes: Broken glassware (test tubes, slides, pipettes), sharp objects (knives, blades, needles)"
+    ],
+    "referenceAnswer": "COMMON LABORATORY HAZARDS:\nAirborne hazardous materials, Mechanical hazard, Electrical hazard, Ergonomic factors, Physical hazard, Radiation hazard\n\nPHYSICAL HAZARDS:\n\n1. FIRE:\nCauses: Bunsen burners, explosive chemicals, inflammable chemicals, electric spark, leaking gas pipe\nPreventive measures: Store inflammable chemicals in appropriate metal cabinets far from naked flame; keep large bulk inflammable chemicals separate from non-inflammable; use fire extinguishers; store inflammable liquids away from naked flame.\n\nTypes of Fire Extinguishers (FCS):\n- Foam-type: For non-aqueous liquids (Benzene, Xylene, Toluene)\n- Carbon dioxide type: For electrical origin fires\n- Soda-acid type: For solid materials and aqueous liquids (alcohol, ether, acetone)\n\n2. HEAT:\nCauses: Exothermic reactions, heated liquids, molten paraffin wax, Bunsen burner, micro-incinerator, autoclave, hot glassware\nPreventive measures: Use heat resistant gloves, use pads and safety tongs, keep heat-dependent objects separate.\n\n3. COLD:\nCauses: Solid CO2 (dry ice) at -75°C, Revco freezer at -115°C\nPreventive measures: Use cryogloves, use pads and safety tongs.\n\n4. CUT:\nCauses: Broken glassware (test tubes, slides, pipettes), sharp objects (knives, blades, needles)\nPreventive measures: Use gloves when handling glassware, handle and dispose broken glassware carefully, avoid catching falling sharp objects, never recap used needles.\n\n5. RADIATION:\nPreventive measures: Laboratories must provide radiation protection devices and badges.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Laboratory Hazards",
+    "id": "TH-009",
+    "question": "Describe the different types of chemical hazards in the laboratory and their preventive measures.",
+    "keywords": ["inflammable", "explosive", "corrosive", "poisonous", "fixatives", "picric acid", "cyanide", "sodium bicarbonate", "acetic acid"],
+    "mainConcepts": [
+      "Inflammable chemicals: acetone, ether, xylene, benzene, alcohol",
+      "Explosive chemicals: picric acid can undergo spontaneous explosion if not properly stored",
+      "Corrosive chemicals: corrosive acids (HCl, H2SO4, HNO3) and alkalis, fixatives",
+      "Poisonous chemicals: Cyanide and Arsenic",
+      "Fixatives denature proteins, inactivate enzymes and alter tissue chemistry",
+      "Acid exposure: wash with water followed by 5% sodium bicarbonate",
+      "Alkali exposure: wash with water followed by 1% acetic acid",
+      "Phenol exposure: wash with surgical spirit"
+    ],
+    "referenceAnswer": "CHEMICAL HAZARDS (IEPCC):\n\n1. INFLAMMABLE CHEMICALS: Acetone, ether, xylene, benzene, alcohol.\n- Store in appropriate metal cabinets far from naked flame\n- Keep separate from non-inflammable chemicals\n- Preferably in a separate room\n\n2. EXPLOSIVE CHEMICALS: Picric acid can undergo spontaneous explosion if not properly stored and allowed to become dry.\n\n3. CORROSIVE CHEMICALS: Corrosive acids (Hydrochloric, Sulphuric, Nitric acid) and alkalis, as well as fixatives. Solutions containing dichromate glass cleaning compounds are corrosive.\n\n4. FIXATIVES: Denature proteins, inactivate enzymes and alter tissue chemistry.\n- Prolonged skin contact causes dermatitis\n- Formaldehyde causes sinusitis if inhaled\n- Heidenhains and Zenker are very harmful to skin\n\n5. POISONOUS CHEMICALS: Cyanide and Arsenic — poisonous even if swallowed.\n\n6. CARCINOGENS: Propiolactone, naphthylamine, benzidine, orthotoluidine can cause cancer.\n\nPREVENTIVE MEASURES:\n1. Wash hands with soap and water before leaving laboratory\n2. Dispense reagents in crystal/powder form with spatula, not fingers\n3. No smoking, drinking, or eating in laboratory\n4. Accidental chemical contact:\n   - Acid: wash with water then 5% sodium bicarbonate\n   - Alkali: wash with water then 1% acetic acid\n   - Phenol: wash with surgical spirit\n5. Wear chemical resistant safety goggles when pouring acids, caustics and aromatic compounds\n6. Never pipette with mouth — use rubber teated pipettes and automatic dispensers\n7. Never pour water into concentrated acid — pour acid slowly into water",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Laboratory Hazards",
+    "id": "TH-010",
+    "question": "What is biological hazard? How can biological infections occur in the laboratory?",
+    "keywords": ["biological hazard", "needle prick", "specimen spillage", "open wound", "food contamination", "cross-contamination"],
+    "mainConcepts": [
+      "Biological hazards arise from interaction with specimens containing living organisms such as viruses, bacteria, fungi, spirochaetes, ova and parasites",
+      "Ways infections occur: accidental needle prick, spillage of unfixed cytology specimen, open wound on skin",
+      "Food and drinks kept in same refrigerator as specimens causes contamination",
+      "Eating and drinking in the laboratory is prohibited",
+      "Oral interaction with exposed fingers is dangerous",
+      "The most common laboratory injuries are cuts from sharps"
+    ],
+    "referenceAnswer": "BIOLOGICAL HAZARD: Biological hazards arise from interaction with specimens and materials containing living organisms such as viruses, bacteria, fungi, spirochaetes, ova and developmental stages of parasites.\n\nWAYS BIOLOGICAL INFECTIONS MAY OCCUR:\n1. Accidental puncture of the skin with a needle containing pathogenic organisms\n2. Spillage of unfixed cytology specimen on the workbench\n3. An open wound on the skin\n4. Food and drinks kept in the same refrigerator with specimens and reagents\n5. Eating and drinking in the laboratory\n6. Oral interaction with exposed fingers\n7. Use of unclean sanitary materials like hand towels\n\nJACKPOT: The most common laboratory injuries are cuts from sharps.\n\nTo control and curtail biological hazards:\n1. Identify and assess the hazard — conduct waste assessment annually\n2. Determine how waste is handled and disposed\n3. Evaluate the risks\n4. Record and review hazards at least annually\n5. Regularly educate and train waste handlers",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Hazard Control",
+    "id": "TH-011",
+    "question": "Explain the hierarchy of laboratory hazard controls in order of decreasing effectiveness (ESE-IAP).",
+    "keywords": ["elimination", "substitution", "engineering control", "administrative control", "PPE", "hierarchy", "effectiveness"],
+    "mainConcepts": [
+      "Elimination: complete removal of a material or process causing a hazard — most effective",
+      "Substitution: replacing something hazardous with something less hazardous",
+      "Engineering Control: implementing controls like fume hoods, glove boxes, biosafety cabinets",
+      "Administrative Controls: actions personnel must take to protect from misuse and theft",
+      "PPE: gloves, safety goggles, face shields, protective apron, respirators — least effective but always necessary"
+    ],
+    "referenceAnswer": "The hierarchy of laboratory hazard controls in order of DECREASING effectiveness (ESE-IAP):\n\n1. ELIMINATION (Most Effective): Complete removal of a material or process causing a hazard. This is the most effective method because the hazard no longer exists.\n\n2. SUBSTITUTION: Replacing something that causes a hazard with something that does not produce a hazard.\nExample: Replacing toxic chemical Orthotoluidine (carcinogenic) with less toxic 4-aminophenazone.\n\n3. ENGINEERING CONTROL: Implementation of engineering controls to reduce risk.\n- Chemical Fume Hood: Prevents harmful exposure when working with hazardous chemicals\n- Glove Box: A sealed container designed to allow handling materials in a defined atmosphere\n- Biological Safety Cabinet: An enclosed ventilated workplace for safely working with infectious biological materials\n\n4. ADMINISTRATIVE CONTROLS: Actions laboratory personnel must do to protect laboratory property from misuse and theft.\n- Labelling every chemical container\n- Medical biohazard signs and labels\n- Safety protocols and training\n\n5. PERSONAL PROTECTIVE EQUIPMENT (PPE) (Least Effective): Use of gloves, safety goggles, face shields, protective apron, respirators, etc.\n\nKey principle: Higher-level controls are more effective because they remove the hazard at the source. PPE is last because it only protects the individual worker and relies on correct use.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Safety Management",
+    "id": "TH-012",
+    "question": "What is a Safety Management System (SMS)? List important safety practices in the laboratory.",
+    "keywords": ["SMS", "safety management system", "safety practices", "no mouth pipetting", "hand washing", "decontaminate", "vaccinate"],
+    "mainConcepts": [
+      "SMS is a comprehensive and integrated system designed to ensure proper management of safety properties in the workplace",
+      "SMS includes policy, objectives, plans, procedures, organization, responsibilities",
+      "Key safety practices: No mouth pipetting, don't mix infectious material by bubbling air, wear barrier protection, frequent hand washing, decontaminate work surfaces",
+      "Treat all patient samples as potentially hazardous",
+      "Dispose all sharps appropriately",
+      "Vaccinate all employees at risk with hepatitis B vaccines"
+    ],
+    "referenceAnswer": "SAFETY MANAGEMENT SYSTEM (SMS): A comprehensive and integrated system designed to ensure proper management of safety properties in the workplace — all work at the facility is conducted safely. SMS includes policy, objectives, plans, procedures, organization, responsibilities and other resources.\n\nKEY SAFETY PRACTICES:\n1. No mouth pipetting\n2. Never mix potentially infectious material by bubbling air through the liquid\n3. Wear barrier protection (gloves, masks, eye shield)\n4. Perform frequent hand washing\n5. Keep gloved hands from mouth, eye and mucous membrane to avoid self-inoculation\n6. Decontaminate all work surfaces and reusable devices after use\n7. Treat all patient samples as potentially hazardous\n8. Avoid accidental injuries\n9. Dispose of all sharps appropriately\n10. Vaccinate all employees at risk with hepatitis B vaccines\n\nAdditional practices:\n- Clear understanding of emergency safety procedures and location of safety equipment\n- All accidents, breakage of glassware and damage of equipment must be reported to Biosafety Officer\n- Appropriate attire must be worn\n- Long hair must be tied back\n- Laboratory and work areas must be kept clean and uncluttered\n- Work with biohazardous samples in Biosafety Cabinets; hazardous chemicals in fume hoods",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Safety Management",
+    "id": "TH-013",
+    "question": "What are the safety precautions for chemical, electrical, and fire hazards in the laboratory?",
+    "keywords": ["chemical safety", "electrical safety", "fire safety", "extension cords", "3 prong plugs", "fire extinguishers", "acid into water"],
+    "mainConcepts": [
+      "Chemical safety: Handle bottles firmly around body not neck, pour acid into water not water into acid, label all bottles, wear chemical resistant safety goggles",
+      "Electrical safety: Use 3 prong plugs, avoid extension cords, don't make connections with wet hands, unplug by pulling plug not cord, unplug at end of day",
+      "Fire safety: Place fire extinguishers near every laboratory door, use water baths instead of hot plates/Bunsen burners"
+    ],
+    "referenceAnswer": "CHEMICAL SAFETY:\n1. Handle bottles of chemicals carefully — hold firmly around body (not neck), one or two hands depending on size\n2. NEVER pour water into concentrated acid — acid should be poured slowly into water\n3. Label all bottles containing chemicals properly and clearly\n4. Wear chemical resistant safety goggles when pouring acids, caustics and aromatic compounds\n\nELECTRICAL SAFETY:\n1. Ensure all electric equipment is grounded with 3 prong plugs\n2. Avoid the use of extension cords in the laboratory\n3. Never make electrical connections with wet hands\n4. If water spill on electrical equipment, avoid use until completely dry\n5. Avoid dangling of electrical cords so no one gets caught\n6. Unplug cords by pulling the plug and not the cord\n7. Unplug all electrical equipment at end of laboratory period or close of day\n\nFIRE SAFETY:\n1. Provide and place fire extinguishers near every laboratory door\n2. Use temperature-controlled heating devices such as water bath rather than hot plates, boiling ring or Bunsen burners\n3. When a burner is lighted, wait until match/striker is in place before gas is turned on\n4. In case of fire outbreak: sound alarm, leave the place, close doors; if fire is beyond control contact Federal Fire Service Department",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Post Exposure Management",
+    "id": "TH-014",
+    "question": "What is Post Exposure Prophylaxis (PEP)? Describe the procedures and eligibility criteria for PEP.",
+    "keywords": ["PEP", "post exposure prophylaxis", "HIV", "HBV", "HCV", "antiretroviral", "72 hours", "28 days"],
+    "mainConcepts": [
+      "PEP is the medical response provided to prevent infection in an individual accidentally exposed to blood borne pathogens (HIV, HBV, HCV)",
+      "PEP is short-term antiretroviral treatment to reduce likelihood of infection after potential exposure",
+      "PEP should be initiated within 1-2 hours and not later than 72 hours after exposure",
+      "ARV prophylaxis treatment continues for 28 days",
+      "Eligibility: exposure within past 72 hours, person not already infected, mucous membrane or non-intact skin exposed, source is HIV/BBP positive"
+    ],
+    "referenceAnswer": "POST EXPOSURE PROPHYLAXIS (PEP): A medical response or set of services provided to prevent infection in an individual accidentally exposed to blood borne pathogens (BBP) such as HIV, HBV and HCV. PEP is short-term antiretroviral treatment.\n\nPROCEDURES FOR PEP:\n1. Report incident immediately to supervisor who must document and seek medical treatment\n2. Identify the source of the infectious agent (HIV, HBV, HCV)\n3. HIV testing should always be offered as part of PEP after pretest counselling\n4. If source status unknown, rapid HIV test may help determine need for PEP\n5. If further testing shows source is uninfected, PEP is discontinued\n6. PEP should be initiated within 1-2 hours after exposure, NOT later than 72 hours\n7. If source patient has infection resistant to anti-retroviral medications, expert consultation must be sought\n8. ARV prophylaxis treatment continues for 28 days\n\nFive steps of PEP:\n1. First aid\n2. Pre and Post Counselling\n3. Assessment of risk\n4. Screening for suspected pathogens\n5. Treatment depending on screening test outcome\n\nELIGIBILITY FOR PEP:\nAn exposed individual is eligible for PEP if:\n1. Exposure occurred within the past 72 hours\n2. The potentially exposed person is not known to be infected with the pathogen\n3. Mucous membrane or non-intact skin was significantly exposed to potentially infected blood or body fluids\n4. The source is HIV or other BBP positive\n5. Exposure should penetrate the skin with spontaneous bleeding, deep puncture or mucous membrane\n6. The punctured skin was from a recently used hollow bore needle or other sharp object visibly contaminated with blood",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Hazard Communication",
+    "id": "TH-015",
+    "question": "What is Hazard Communication? Explain its components and methods.",
+    "keywords": ["hazard communication", "hazard classification", "labels", "safety data sheets", "training", "right to know"],
+    "mainConcepts": [
+      "Hazard Communication is a set of processes to effectively communicate hazards associated with chemicals during handling, shipping and exposure",
+      "Hazard Communication Standard gives workers the right to know and right to understand",
+      "Components: Hazard classification, Labels, Safety Data Sheets, Information and Training",
+      "Methods: Learn the standard, prepare written program, ensure containers labeled, maintain SDS, inform and train employees, evaluate and reassess"
+    ],
+    "referenceAnswer": "HAZARD COMMUNICATION: A set of processes and procedures that employers and importers must implement to effectively communicate hazards associated with chemicals during handling, shipping and any form of exposure and handling of samples in the laboratory.\n\nHAZARD COMMUNICATION STANDARD: The standard that gives workers the right to know and the right to understand chemical hazards in their workplace.\n\nCOMPONENTS OF HAZARD COMMUNICATION:\n1. Hazard Classification: Systematically categorizing chemicals based on their hazard properties\n2. Labels: Clear identification on all chemical containers and samples\n3. Safety Data Sheets (SDS): Detailed documents providing comprehensive information about each chemical\n4. Information and Training: Ensuring all employees understand chemical hazards\n\nMETHODS OF HAZARD COMMUNICATION:\n1. Learn the standard and identify responsible staff for activities such as trainings\n2. Prepare and implement a written hazard communication program\n3. Ensure that containers and samples are labeled\n4. Maintain safety data sheets\n5. Inform and train employees\n6. Evaluate and reassess\n\nIMPORTANCE: Without proper hazard communication, any incident that is not properly contained and handled can lead to a big problem causing system collapse.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Incident Response",
+    "id": "TH-016",
+    "question": "Explain the Incident Response Plan (PICERL). What are its phases and exercises?",
+    "keywords": ["PICERL", "preparation", "identification", "containment", "eradication", "recovery", "lessons learned", "table top", "functional", "CSIRT"],
+    "mainConcepts": [
+      "Incident Response is an organized approach to addressing and managing the aftermath of a security breach or attack",
+      "Goal: handle the situation to limit damage and reduce recovery time and costs",
+      "PICERL phases: Preparation, Identification, Containment, Eradication, Recovery, Lessons Learned",
+      "Exercises: Table top exercises, Functional exercises, Tests",
+      "CSIRT conducts incident response activities"
+    ],
+    "referenceAnswer": "INCIDENT RESPONSE: An organized approach to addressing and managing the aftermath of a security breach or cyber attack. The goal is to handle the situation to limit damage and reduce recovery time and costs.\n\nPICERL — Six Phases of Incident Response:\n1. PREPARATION: Developing policies, procedures, tools, and training before an incident occurs\n2. IDENTIFICATION: Detecting and determining the nature and scope of the incident\n3. CONTAINMENT: Limiting the spread and impact of the incident\n4. ERADICATION: Removing the threat and restoring affected systems\n5. RECOVERY: Returning systems to normal operation\n6. LESSONS LEARNED: Reviewing what happened and improving response for future incidents\n\nEXERCISES USED IN INCIDENT RESPONSE TESTING:\n\n1. TABLE TOP EXERCISES: Facilitated, discussion-based exercises where personnel meet to discuss roles, responsibilities, coordination and decision-making on a given scenario.\n\n2. FUNCTIONAL EXERCISES: Allow personnel to validate their readiness for emergencies by performing their duties in a simulated environment.\n\n3. TESTS: Evaluation tools that use quantifiable metrics to validate the operability of an IT system or system component in an operational environment.\n\nCSIRT: Computer Security Incident Response Team — a group previously selected to include information security, general IT and properly trained staff to conduct incident response activities.\n\nProcess of executing an Incident Response Plan:\n1. Event occurs\n2. Determine what to do\n3. Launch Incident Response plan\n4. Perform actions from plan\n5. Decide next step",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "MLS 161",
+    "section": "Good Medical Laboratory Practice",
+    "id": "TH-017",
+    "question": "What is Good Medical Laboratory Practice (GMLP)? Describe the roles and responsibilities of an MLS.",
+    "keywords": ["GMLP", "SOP", "reliable results", "MLS role", "specialization", "patient rights", "quality control"],
+    "mainConcepts": [
+      "GMLP is a series of policies and activities necessary for general operations and production of reliable results",
+      "GMLP ensures tests are performed according to SOP",
+      "Components: trained personnel, maintained equipment, stored chemicals, well performed tests, documented activity",
+      "MLS analyzes human/animal specimens for research and diagnosis",
+      "Areas of specialization: Histopathology, Chemical pathology, Virology, Hematology, Microbiology",
+      "MLS responsibilities to patient: privacy, physical integrity, consent, right to information, self-determination"
+    ],
+    "referenceAnswer": "GOOD MEDICAL LABORATORY PRACTICE (GMLP): A series of policies and activities of a medical laboratory necessary for its general operations and production of reliable results in a conducive environment.\n\nIMPORTANCE: Ensures tests are performed according to Standard Operating Procedures (SOP), ensuring:\n- Proper collection of specimens\n- Analysis, recording and release of results ensuring reliability and confidentiality\n- Use and monitoring of trained personnel\n- Safety of the laboratory\n\nCOMPONENTS OF GMLP:\n1. Well trained and certified personnel\n2. Well selected and maintained equipment\n3. Carefully procured and properly stored chemicals and reagents\n4. Well performed tests and production processes\n5. A well documented activity set in a safe and secure lab environment\n\nROLE OF MLS:\nAnalyzes human and animal specimens for research and diagnosis of diseases, production of biologicals and chemicals used for analysis.\n\nAREAS OF SPECIALIZATION:\n1. Histopathology (Cellular pathology)\n2. Chemical pathology / Clinical chemistry\n3. Virology\n4. Hematology and blood group serology\n5. Microbiology and Medical Microbiology and Parasitology\n\nMLS RESPONSIBILITIES:\n1. Analyzes specimen, interprets and reports results\n2. Assures quality of test results\n3. Compares and selects appropriate methods and instruments\n4. Supervises other laboratory staff\n5. Trains future personnel\n6. Conducts research\n7. Ensures quality control and continuous quality improvement\n\nRESPONSIBILITY TO PATIENT:\n1. Protection of privacy\n2. Physical Integrity\n3. Consent\n4. Right to Information\n5. Self-determination",
+    "difficulty": "medium",
+    "maxPoints": 6
+  }
+]

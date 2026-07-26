@@ -1,0 +1,541 @@
+[
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-001",
+    "question": "What is the difference between Computer Architecture and Computer Organization?",
+    "keywords": ["architecture", "organization", "ISA", "implementation", "hardware", "functional behavior"],
+    "mainConcepts": [
+      "Computer Architecture refers to the attributes of the system visible to the programmer (ISA, instruction sets, data types, addressing modes)",
+      "Computer Organization refers to the operational units and their interconnections that realize the architectural specifications",
+      "Architecture defines WHAT the system does; Organization defines HOW it is implemented",
+      "Example: Two computers can have the same architecture (same ISA) but different organizations (different pipeline depths, cache sizes)"
+    ],
+    "referenceAnswer": "Computer Architecture refers to the attributes of a system visible to a programmer — those attributes that have a direct impact on the logical execution of a program. It includes the ISA, instruction sets, data types, addressing modes, and register sets.\n\nComputer Organization refers to the operational units and their interconnections that realize the architectural specifications. It deals with how the hardware components are connected and how they work together.\n\nKey difference: Architecture defines WHAT the computer does (the contract between hardware and software), while Organization defines HOW it is implemented.\n\nExample: Intel Core i7 and AMD Ryzen may share the same x86-64 architecture but have completely different organizations (different pipeline structures, cache hierarchies, branch prediction strategies).",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-002",
+    "question": "List and briefly describe the six computer generations.",
+    "keywords": ["generations", "vacuum tubes", "transistors", "IC", "microprocessor", "VLSI", "AI"],
+    "mainConcepts": [
+      "1st Generation (1940s-1950s): Vacuum tubes — ENIAC, EDVAC, huge, unreliable, machine language only",
+      "2nd Generation (1950s-1960s): Transistors — smaller, faster, more reliable than vacuum tubes",
+      "3rd Generation (1960s-1970s): Integrated Circuits (ICs) — multiple transistors on a single chip",
+      "4th Generation (1970s-present): Microprocessors — VLSI, entire CPU on one chip (Intel 4004, 8080, x86)",
+      "5th Generation (1980s-present): ULSI, parallel processing, AI, Fifth Generation Computer project",
+      "6th Generation (present-future): Quantum computing, DNA computing, neuromorphic computing"
+    ],
+    "referenceAnswer": "1st Generation (1940s–1950s): Used vacuum tubes for logic circuits. Examples: ENIAC, EDVAC, UNIVAC. Characteristics: enormous size, high power consumption, unreliable, programmed in machine language.\n\n2nd Generation (1950s–1960s): Replaced vacuum tubes with transistors. Smaller, faster, more reliable, and more energy-efficient. Assembly language and early high-level languages (FORTRAN, COBOL) emerged.\n\n3rd Generation (1960s–1970s): Used Integrated Circuits (ICs) — multiple transistors on a single silicon chip. Enabled miniaturization, increased speed, and reduced cost. Operating systems and time-sharing became common.\n\n4th Generation (1970s–present): Very Large Scale Integration (VLSI) — entire CPU on a single chip (microprocessor). Intel 4004 (1971) was the first commercial microprocessor. Led to personal computers.\n\n5th Generation (1980s–present): Ultra Large Scale Integration (ULSI), parallel processing, artificial intelligence, and the Japanese Fifth Generation Computer project. Focus on knowledge processing and inference.\n\n6th Generation (emerging): Quantum computing, DNA/molecular computing, and neuromorphic architectures that mimic the human brain.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-003",
+    "question": "Explain Amdahl's Law and give a practical example.",
+    "keywords": ["Amdahl's Law", "speedup", "parallelizable", "serial", "fraction", "performance"],
+    "mainConcepts": [
+      "Amdahl's Law: Speedup = 1 / ((1 - F) + F/S) where F = fraction of work that can be parallelized, S = speedup factor for that fraction",
+      "The serial (non-parallelizable) portion limits the maximum possible speedup",
+      "Even with infinite processors, speedup is bounded by 1/(1-F)",
+      "Example: If 75% of a program is parallelizable (F=0.75), max speedup = 1/0.25 = 4x"
+    ],
+    "referenceAnswer": "Amdahl's Law describes the theoretical maximum speedup of a task when using multiple processors. It states that the speedup is limited by the serial (non-parallelizable) portion of the program.\n\nFormula: Speedup = 1 / ((1 - F) + F/S)\nWhere:\n- F = fraction of the program that can be parallelized\n- S = speedup factor for the parallelizable portion (number of processors)\n\nExample: If 75% of a program can be parallelized (F = 0.75) and we use 4 processors (S = 4):\nSpeedup = 1 / ((1 - 0.75) + 0.75/4) = 1 / (0.25 + 0.1875) = 1 / 0.4375 = 2.29x\n\nEven with infinite processors (S → ∞):\nMax Speedup = 1 / (1 - 0.75) = 1 / 0.25 = 4x\n\nKey insight: The serial portion of a program is the bottleneck. Adding more processors has diminishing returns because the serial fraction cannot be parallelized.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-004",
+    "question": "Explain Gustafson's Law and how it differs from Amdahl's Law.",
+    "keywords": ["Gustafson's Law", "scaled speedup", "problem size", "parallel", "Amdahl"],
+    "mainConcepts": [
+      "Gustafson's Law: Scaled Speedup = S × (1 - F) + F where S = processors, F = parallel fraction",
+      "Gustafson argues that as we add more processors, we scale the problem size rather than reducing execution time",
+      "Amdahl's Law assumes fixed problem size; Gustafson's Law assumes fixed execution time",
+      "Gustafson's is more optimistic — parallel speedup scales with the number of processors"
+    ],
+    "referenceAnswer": "Gustafson's Law (1988) addresses a limitation of Amdahl's Law by considering scaled speedup — the idea that as we add more processors, we also increase the problem size rather than keeping it fixed.\n\nFormula: Scaled Speedup = S × (1 - F) + F\nWhere:\n- S = number of processors\n- F = fraction of the program that is parallelizable\n\nKey difference from Amdahl's Law:\n- Amdahl's Law: Fixed problem size → speedup is limited by the serial fraction\n- Gustafson's Law: Fixed execution time → speedup grows linearly with the number of processors\n\nExample: With 8 processors and F = 0.75:\n- Amdahl's: Speedup = 1/(0.25 + 0.75/8) = 2.91x\n- Gustafson's: Scaled Speedup = 8 × 0.25 + 0.75 = 2.75x (but problem size is 8× larger)\n\nGustafson's Law is more realistic for scientific computing where larger problem sizes are common.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-005",
+    "question": "Define and calculate the key performance metrics: CPU time, CPI, MIPS, and MFLOPS.",
+    "keywords": ["CPU time", "CPI", "MIPS", "MFLOPS", "clock cycle", "instruction count", "performance"],
+    "mainConcepts": [
+      "CPU Time = Instruction Count × CPI × Clock Cycle Time = Instruction Count × CPI / Clock Rate",
+      "CPI (Cycles Per Instruction) = CPU Cycles / Instruction Count",
+      "MIPS = Instruction Count / (Execution Time × 10^6)",
+      "MFLOPS = Number of floating-point operations / (Execution Time × 10^6)",
+      "CPU time is the most direct measure of performance"
+    ],
+    "referenceAnswer": "CPU Time = Instruction Count × CPI × Clock Cycle Time\nor equivalently: CPU Time = Instruction Count × CPI / Clock Rate\n\nCPI (Cycles Per Instruction) = Total CPU Cycles / Instruction Count\nCPI measures the average number of clock cycles each instruction takes.\n\nMIPS (Million Instructions Per Second) = Instruction Count / (Execution Time in seconds × 10^6)\nMIPS is a raw throughput measure but can be misleading as it doesn't account for instruction complexity.\n\nMFLOPS (Million Floating-Point Operations Per Second) = Floating-point operations / (Execution Time × 10^6)\nMFLOPS measures computational throughput for scientific workloads.\n\nExample: A program has 10^6 instructions, average CPI = 2, clock rate = 4 GHz:\nCPU Time = 10^6 × 2 / (4 × 10^9) = 0.5 × 10^-3 = 0.5 ms\nMIPS = 10^6 / (0.5 × 10^-3 × 10^6) = 2000 MIPS",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-006",
+    "question": "What are the key components of a von Neumann architecture?",
+    "keywords": ["von Neumann", "stored program", "ALU", "control unit", "memory", "bottleneck"],
+    "mainConcepts": [
+      "Von Neumann architecture: stored-program concept — instructions and data stored in the same memory",
+      "Components: CPU (ALU + Control Unit), Memory, I/O, System Bus",
+      "Single shared bus for instructions and data creates the von Neumann bottleneck",
+      "Fetch-decode-execute cycle is the fundamental operation",
+      "All modern computers are based on this architecture with modifications"
+    ],
+    "referenceAnswer": "The von Neumann architecture (1945) is the fundamental design model for most modern computers. Key components:\n\n1. CPU (Central Processing Unit):\n   - ALU (Arithmetic Logic Unit): performs arithmetic and logical operations\n   - Control Unit (CU): directs the flow of data and instructions\n   - Registers: small, fast storage within the CPU\n\n2. Memory Unit: stores both instructions and data (stored-program concept)\n\n3. Input/Output: interfaces for external devices\n\n4. System Bus: connects all components (data bus, address bus, control bus)\n\nKey principle: Instructions and data are stored in the same memory and use the same bus — this is the stored-program concept.\n\nVon Neumann Bottleneck: Since instructions and data share the same bus, they cannot be fetched simultaneously, creating a performance limitation.",
+    "difficulty": "easy",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-007",
+    "question": "Compare Little-Endian vs Big-Endian byte ordering with examples.",
+    "keywords": ["endianness", "little-endian", "big-endian", "byte order", "memory"],
+    "mainConcepts": [
+      "Big-Endian: most significant byte stored at lowest memory address (e.g., network protocols, Java)",
+      "Little-Endian: least significant byte stored at lowest memory address (e.g., x86 processors)",
+      "For value 0x12345678 stored at address 0x1000: Big-Endian stores 0x12 at 0x1000; Little-Endian stores 0x78 at 0x1000",
+      "Both are valid; endianness matters for data serialization and cross-platform communication"
+    ],
+    "referenceAnswer": "Endianness refers to the order in which bytes of a multi-byte value are stored in memory.\n\nExample: Storing the 32-bit value 0x12345678 at memory address 0x1000:\n\nBig-Endian (most significant byte first):\n0x1000: 0x12\n0x1001: 0x34\n0x1002: 0x56\n0x1003: 0x78\n\nLittle-Endian (least significant byte first):\n0x1000: 0x78\n0x1001: 0x56\n0x1002: 0x34\n0x1003: 0x12\n\nBig-Endian systems: IBM mainframes, network protocols (TCP/IP), Java\nLittle-Endian systems: Intel x86/x86-64 processors, most modern PCs\n\nEndianness matters when:\n- Transferring data between systems with different endianness\n- Reading binary files across platforms\n- Network communication (network byte order is Big-Endian)",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Architecture Fundamentals",
+    "id": "TH-008",
+    "question": "What is the purpose of the control unit and what are the two main types?",
+    "keywords": ["control unit", "hardwired", "microprogrammed", "sequencing", "control signals"],
+    "mainConcepts": [
+      "Control Unit directs the operation of the processor by generating control signals",
+      "Hardwired CU: uses combinational logic gates — fast but inflexible",
+      "Microprogrammed CU: uses microcode stored in control memory — flexible but slower",
+      "The CU fetches instructions, decodes them, and coordinates execution"
+    ],
+    "referenceAnswer": "The Control Unit (CU) is the component of the CPU that directs the operation of the processor. It tells the computer's memory, ALU, and I/O devices how to respond to instructions.\n\nResponsibilities:\n- Fetching instructions from memory\n- Decoding instructions to determine what operation to perform\n- Generating control signals to orchestrate data movement\n- Managing the timing of operations\n\nTwo main types:\n\n1. Hardwired Control Unit:\n   - Uses combinational logic gates and flip-flops\n   - Very fast (signals propagate through gates)\n   - Difficult to modify or extend\n   - Used in RISC processors (MIPS, ARM)\n\n2. Microprogrammed Control Unit:\n   - Uses microcode stored in a special control memory (control store)\n   - Each machine instruction triggers a sequence of microinstructions\n   - More flexible — can be updated by changing microcode\n   - Slower than hardwired due to microcode fetch overhead\n   - Used in CISC processors (x86)",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Data Representation",
+    "id": "TH-009",
+    "question": "Explain how Two's Complement representation works for signed integers.",
+    "keywords": ["two's complement", "signed", "negative", "MSB", "sign bit", "overflow"],
+    "mainConcepts": [
+      "Two's Complement is the standard representation for signed integers in modern computers",
+      "MSB (bit 31 in 32-bit) is the sign bit: 0 = positive, 1 = negative",
+      "To negate: invert all bits (one's complement) then add 1",
+      "Range for n bits: -2^(n-1) to 2^(n-1)-1 (e.g., -2147483648 to 2147483647 for 32-bit)",
+      "Advantages: only one zero, simple addition/subtraction, hardware simplicity"
+    ],
+    "referenceAnswer": "Two's Complement is the most widely used method for representing signed integers in binary.\n\nHow to represent a negative number:\n1. Start with the positive binary representation\n2. Invert all bits (one's complement)\n3. Add 1\n\nExample: Represent -5 in 8-bit two's complement:\nStep 1: +5 = 0000 0101\nStep 2: Invert → 1111 1010\nStep 3: Add 1 → 1111 1011\nSo -5 = 1111 1011\n\nTo convert back: If MSB = 1, invert all bits and add 1 to get the magnitude.\n1111 1011 → invert → 0000 0100 → add 1 → 0000 0101 = 5\n\nAdvantages over Sign-Magnitude:\n- Only one representation of zero (0000 0000)\n- Addition and subtraction use the same hardware\n- No need for separate sign handling\n\nRange for n-bit two's complement:\n- Minimum: -2^(n-1)\n- Maximum: 2^(n-1) - 1\n- Example (8-bit): -128 to +127\n\nOverflow occurs when the result exceeds the representable range.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Data Representation",
+    "id": "TH-010",
+    "question": "Explain the IEEE 754 single-precision floating-point format.",
+    "keywords": ["IEEE 754", "floating point", "mantissa", "exponent", "bias", "single precision"],
+    "mainConcepts": [
+      "IEEE 754 single-precision: 32 bits — 1 sign bit, 8 exponent bits, 23 mantissa bits",
+      "Exponent uses biased representation with bias = 127",
+      "Implicit leading 1 in normalized form: 1.xxxx × 2^(exp-127)",
+      "Special values: ±0, ±infinity, NaN, denormalized numbers",
+      "Value = (-1)^sign × 1.mantissa × 2^(exponent-127)"
+    ],
+    "referenceAnswer": "IEEE 754 single-precision floating-point uses 32 bits:\n\nBits 31: Sign bit (S)\nBits 30-23: Exponent (8 bits, biased by 127)\nBits 22-0: Mantissa/Fraction (23 bits)\n\nFormula: Value = (-1)^S × 1.M × 2^(E-127)\n\nWhere M is the mantissa (with implicit leading 1), and E is the biased exponent.\n\nExample: Represent -6.75 in IEEE 754:\nStep 1: Convert to binary: 6.75 = 110.11₂ = 1.1011 × 2²\nStep 2: Sign = 1 (negative)\nStep 3: Exponent = 2 + 127 = 129 = 10000001₂\nStep 4: Mantissa = 1011000...000 (23 bits)\nResult: 1 10000001 10110000000000000000000\n\nSpecial values:\n- Exponent = 0, Mantissa = 0: ±0\n- Exponent = 255, Mantissa = 0: ±Infinity\n- Exponent = 255, Mantissa ≠ 0: NaN\n- Exponent = 0, Mantissa ≠ 0: Denormalized numbers (no implicit leading 1)",
+    "difficulty": "hard",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Data Representation",
+    "id": "TH-011",
+    "question": "What are parity bits and CRC? How do they detect errors?",
+    "keywords": ["parity", "CRC", "error detection", "even parity", "odd parity", "checksum"],
+    "mainConcepts": [
+      "Even parity: total number of 1-bits (including parity bit) must be even",
+      "Odd parity: total number of 1-bits (including parity bit) must be odd",
+      "Parity can detect single-bit errors only; cannot correct errors",
+      "CRC (Cyclic Redundancy Check) uses polynomial division for robust error detection",
+      "CRC can detect burst errors; widely used in networking and storage"
+    ],
+    "referenceAnswer": "Parity Bit:\n- A simple error detection method that adds one extra bit to each data unit\n- Even Parity: The parity bit is set so the total number of 1-bits is even\n- Odd Parity: The parity bit is set so the total number of 1-bits is odd\n- Can detect single-bit errors but cannot correct them\n- Example: Data 1011001 (four 1s) → Even parity bit = 0 → Transmitted: 10110010\n\nCRC (Cyclic Redundancy Check):\n- More robust error detection using polynomial division over GF(2)\n- Sender: Divide data by a predetermined generator polynomial; append remainder as CRC\n- Receiver: Divide received data (including CRC) by same polynomial; if remainder = 0, no error\n- Can detect burst errors, multiple bit errors, and odd numbers of errors\n- Widely used in Ethernet, Wi-Fi, USB, and disk storage\n- CRC-32 is common in networking (Ethernet frames)",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Data Representation",
+    "id": "TH-012",
+    "question": "Compare ASCII and Unicode character encoding.",
+    "keywords": ["ASCII", "Unicode", "UTF-8", "UTF-16", "character encoding", "code point"],
+    "mainConcepts": [
+      "ASCII: 7-bit encoding, 128 characters (0-127), English letters, digits, control characters",
+      "Extended ASCII: 8-bit, 256 characters, adds Western European characters",
+      "Unicode: Supports all writing systems worldwide, over 149,000 characters",
+      "UTF-8: Variable-length encoding (1-4 bytes), backward-compatible with ASCII, most widely used",
+      "UTF-16: Variable-length (2 or 4 bytes), used by Java and Windows internally",
+      "UTF-32: Fixed 4 bytes per character, simple but wasteful"
+    ],
+    "referenceAnswer": "ASCII (American Standard Code for Information Interchange):\n- 7-bit encoding representing 128 characters (0–127)\n- Includes: A-Z (65-90), a-z (97-122), 0-9 (48-57), punctuation, and control characters\n- Limited to English alphabet and basic symbols\n- Extended ASCII uses 8 bits (256 characters) for Western European characters\n\nUnicode:\n- Universal character encoding standard supporting all writing systems\n- Assigns a unique code point to every character\n- Over 149,000 characters across 154 scripts\n\nUTF-8 (most popular):\n- Variable-length: 1–4 bytes per character\n- ASCII characters use 1 byte (backward compatible)\n- Chinese/Japanese characters use 3 bytes\n- Most widely used on the web (~98% of websites)\n\nUTF-16:\n- Variable-length: 2 bytes (Basic Multilingual Plane) or 4 bytes (supplementary characters)\n- Used by Java, JavaScript, and Windows internally\n\nUTF-32:\n- Fixed 4 bytes per character\n- Simple but wastes memory for ASCII text",
+    "difficulty": "easy",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-013",
+    "question": "List the basic logic gates and their truth tables.",
+    "keywords": ["AND", "OR", "NOT", "NAND", "NOR", "XOR", "XNOR", "truth table"],
+    "mainConcepts": [
+      "AND: output is 1 only when ALL inputs are 1",
+      "OR: output is 1 when at least ONE input is 1",
+      "NOT: inverts the input",
+      "NAND: AND followed by NOT (universal gate)",
+      "NOR: OR followed by NOT (universal gate)",
+      "XOR: output is 1 when inputs are different",
+      "XNOR: output is 1 when inputs are the same"
+    ],
+    "referenceAnswer": "Basic Logic Gates:\n\nAND Gate (A · B):\nA B | Output\n0 0 | 0\n0 1 | 0\n1 0 | 0\n1 1 | 1\n\nOR Gate (A + B):\nA B | Output\n0 0 | 0\n0 1 | 1\n1 0 | 1\n1 1 | 1\n\nNOT Gate (Ā):\nA | Output\n0 | 1\n1 | 0\n\nNAND Gate (A · B)̄ — Universal Gate:\nA B | Output\n0 0 | 1\n0 1 | 1\n1 0 | 1\n1 1 | 0\n\nNOR Gate (A + B)̄ — Universal Gate:\nA B | Output\n0 0 | 1\n0 1 | 0\n1 0 | 0\n1 1 | 0\n\nXOR Gate (A ⊕ B):\nA B | Output\n0 0 | 0\n0 1 | 1\n1 0 | 1\n1 1 | 0\n\nXNOR Gate (A ⊕ B)̄:\nA B | Output\n0 0 | 1\n0 1 | 0\n1 0 | 0\n1 1 | 1\n\nNote: NAND and NOR are universal gates — any Boolean function can be implemented using only NAND or only NOR gates.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-014",
+    "question": "Explain De Morgan's Laws and their application in circuit simplification.",
+    "keywords": ["De Morgan", "NAND", "NOR", "complement", "simplification", "Boolean algebra"],
+    "mainConcepts": [
+      "De Morgan's 1st Law: (A · B)̄ = Ā + B̄ (NAND = OR of complements)",
+      "De Morgan's 2nd Law: (A + B)̄ = Ā · B̄ (NOR = AND of complements)",
+      "Used to convert between AND-OR and NAND/NOR implementations",
+      "Enables circuit simplification and implementation with universal gates"
+    ],
+    "referenceAnswer": "De Morgan's Laws are fundamental rules in Boolean algebra that relate AND, OR, and NOT operations:\n\n1st Law: (A · B)̄ = Ā + B̄\nThe complement of an AND operation equals the OR of the complements.\nExample: If A=1, B=0: (1·0)̄ = 0̄ = 1, and Ā+B̄ = 0+1 = 1 ✓\n\n2nd Law: (A + B)̄ = Ā · B̄\nThe complement of an OR operation equals the AND of the complements.\nExample: If A=1, B=0: (1+0)̄ = 1̄ = 0, and Ā·B̄ = 0·1 = 0 ✓\n\nApplication in circuit simplification:\n1. Convert AND-OR logic to NAND-only or NOR-only implementations\n2. Push complement signs through expressions\n3. Simplify complex Boolean expressions\n\nExample: Simplify F = (A + B) · (C + D)\nUsing De Morgan's: F̄ = (A+B)̄ + (C+D)̄ = Ā·B̄ + Ē·D̄\nSo F = (Ā·B̄ + Ē·D̄)̄ = (Ā·B̄)̄ · (Ē·D̄)̄ = (A+B) · (C+D) — verified!",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-015",
+    "question": "What is a Karnaugh Map (K-Map) and how is it used to simplify Boolean expressions?",
+    "keywords": ["K-Map", "Karnaugh", "simplification", "minterm", "grouping", "don't care"],
+    "mainConcepts": [
+      "K-Map is a graphical tool for simplifying Boolean expressions with up to 6 variables",
+      "Cells are arranged so adjacent cells differ by exactly one bit (Gray code ordering)",
+      "Group 1s in powers of 2 (1, 2, 4, 8, 16) — larger groups = simpler expression",
+      "Wrap-around grouping is allowed (edges are adjacent)",
+      "Don't care conditions (X) can be grouped with 1s to maximize group size"
+    ],
+    "referenceAnswer": "A Karnaugh Map (K-Map) is a visual method for simplifying Boolean expressions. It organizes truth table outputs in a grid where adjacent cells differ by exactly one variable.\n\nFor a 3-variable K-Map (variables A, B, C):\n        BC\nAB    00  01  11  10\n0  |  0   1   1   0\n1  |  0   1   1   0\n\nSteps to simplify:\n1. Plot 1s for each minterm in the truth table\n2. Group adjacent 1s in powers of 2 (1, 2, 4, 8)\n3. Groups can wrap around edges\n4. Write the simplified expression from the group\n5. Variables that change within a group are eliminated\n\nExample: F(A,B,C) = Σm(1,3,5,7)\nGrouping all four 1s: they form a single group → F = C\n\nDon't care conditions (X) can be treated as either 0 or 1 to create larger groups.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-016",
+    "question": "What are combinational vs sequential circuits? Give examples of each.",
+    "keywords": ["combinational", "sequential", "flip-flop", "memory", "state", "ALU", "register"],
+    "mainConcepts": [
+      "Combinational circuits: output depends only on current inputs (no memory) — e.g., adders, multiplexers, decoders, ALU",
+      "Sequential circuits: output depends on current inputs AND previous state (has memory) — e.g., flip-flops, counters, registers, FSMs",
+      "Sequential circuits use clock signals for synchronization",
+      "Flip-flops are the basic building blocks of sequential circuits"
+    ],
+    "referenceAnswer": "Combinational Circuits:\n- Output is determined solely by the current inputs\n- No memory elements — no feedback loops\n- Speed limited by propagation delay through gates\n- Examples: Adders, Multiplexers (MUX), Decoders, Encoders, ALU, Comparators\n\nSequential Circuits:\n- Output depends on current inputs AND the current state (previous inputs)\n- Contains memory elements (flip-flops, latches)\n- Uses clock signals for synchronization\n- Can store information\n- Examples: Flip-flops (SR, JK, D, T), Counters, Registers, Shift registers, Finite State Machines (FSMs)\n\nKey difference:\n- Combinational: Output = f(Inputs)\n- Sequential: Output = f(Inputs, Current State)\n\nA computer processor contains both:\n- Combinational: ALU (performs arithmetic/logic operations)\n- Sequential: Program Counter, Registers, Pipeline stages",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-017",
+    "question": "Describe the types of flip-flops and their characteristics.",
+    "keywords": ["SR", "JK", "D", "T", "flip-flop", "clock", "edge-triggered"],
+    "mainConcepts": [
+      "SR Flip-Flop: Set-Reset, has invalid state when S=R=1",
+      "JK Flip-Flop: Improved SR, toggles when J=K=1 (no invalid state)",
+      "D Flip-Flop: Data/Delay — captures input D on clock edge; most widely used",
+      "T Flip-Flop: Toggle — flips output when T=1 on clock edge",
+      "All are edge-triggered (rising or falling edge of clock)"
+    ],
+    "referenceAnswer": "Types of Flip-Flops:\n\n1. SR (Set-Reset) Flip-Flop:\n   - S=1, R=0: Set Q=1\n   - S=0, R=1: Reset Q=0\n   - S=0, R=0: Hold state\n   - S=1, R=1: INVALID (forbidden state)\n\n2. JK Flip-Flop:\n   - J=1, K=0: Set Q=1\n   - J=0, K=1: Reset Q=0\n   - J=0, K=0: Hold state\n   - J=1, K=1: Toggle Q (complement)\n   - Solves the invalid state problem of SR flip-flop\n\n3. D (Data) Flip-Flop:\n   - On clock edge: Q = D\n   - Simplest and most widely used\n   - Used in registers and data storage\n   - No invalid states\n\n4. T (Toggle) Flip-Flop:\n   - T=1: Toggle Q on clock edge\n   - T=0: Hold state\n   - Used in counters\n\nAll flip-flops are edge-triggered — they respond only to the rising or falling edge of the clock signal, not the level.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-018",
+    "question": "How does an ALU (Arithmetic Logic Unit) work?",
+    "keywords": ["ALU", "arithmetic", "logic", "adder", "shifter", "flags", "operation"],
+    "mainConcepts": [
+      "ALU performs arithmetic (ADD, SUB) and logic (AND, OR, XOR, NOT) operations",
+      "Contains adders, logic gates, shifters, and comparators",
+      "ALU operation is selected by control signals from the control unit",
+      "ALU sets status flags (Zero, Carry, Overflow, Negative) based on results",
+      "The ALU is the computational core of the CPU"
+    ],
+    "referenceAnswer": "The ALU (Arithmetic Logic Unit) is the combinational circuit in the CPU that performs all arithmetic and logical operations.\n\nOperations:\n- Arithmetic: ADD, SUB, increment, decrement\n- Logic: AND, OR, XOR, NOT, shift left, shift right\n- Comparison: Equal, greater than, less than\n\nStructure:\n- Input A, Input B (operands)\n- ALUOp (control signal selecting operation)\n- Output (result)\n- Flags (status output)\n\nStatus Flags:\n- Zero (Z): result is zero\n- Carry (C): unsigned overflow\n- Overflow (V): signed overflow\n- Negative (N): result is negative (MSB = 1)\n\nHow it works:\n1. Control unit sends ALUOp to select the operation\n2. ALU performs the selected operation on inputs\n3. Result is produced and flags are set\n4. Flags may be used for conditional branching\n\nExample: For ADD operation:\nALU receives two 32-bit numbers and the ADD control signal\nIt uses ripple-carry or carry-lookahead adders\nProduces the sum and sets Carry flag if result exceeds 32 bits",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Digital Logic and Microarchitecture",
+    "id": "TH-019",
+    "question": "Explain the difference between a multiplexer and a decoder.",
+    "keywords": ["multiplexer", "MUX", "decoder", "demultiplexer", "selector", "combinational"],
+    "mainConcepts": [
+      "Multiplexer (MUX): selects one of many inputs and forwards it to a single output (data selector)",
+      "Decoder: converts n-bit input to 2^n output lines (only one active at a time)",
+      "MUX is many-to-one; decoder is one-of-many",
+      "Demultiplexer: single input to one of many outputs (inverse of MUX)"
+    ],
+    "referenceAnswer": "Multiplexer (MUX) — Data Selector:\n- Selects one of 2^n input lines and routes it to a single output\n- Uses n select lines to choose which input to pass\n- Example: 4:1 MUX has 4 inputs, 2 select lines, 1 output\n- Applications: data routing, parallel-to-serial conversion, implementation of Boolean functions\n\nDecoder — Address Demultiplexer:\n- Converts n-bit input to 2^n output lines\n- Only one output is active (HIGH) at a time\n- Example: 3:8 decoder takes 3-bit input, activates one of 8 outputs\n- Applications: memory address decoding, instruction decoding, seven-segment display drivers\n\nDemultiplexer (DEMUX) — Data Distributor:\n- Routes a single input to one of 2^n outputs\n- Inverse operation of a MUX\n- Uses select lines to determine which output receives the input\n\nComparison:\nMUX: Many inputs → 1 output (selects input)\nDecoder: n inputs → 2^n outputs (activates one output)\nDEMUX: 1 input → many outputs (selects output)",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Instruction Set Architecture",
+    "id": "TH-020",
+    "question": "What is an Instruction Set Architecture (ISA)?",
+    "keywords": ["ISA", "instruction set", "architecture", "programmer", "contract", "RISC", "CISC"],
+    "mainConcepts": [
+      "ISA is the abstract interface between hardware and software — the contract",
+      "Defines: instruction formats, data types, registers, addressing modes, memory architecture",
+      "Programmer-visible: what the assembly programmer sees",
+      "Separates architecture from organization (same ISA, different implementations)",
+      "Examples: x86, ARM, MIPS, RISC-V"
+    ],
+    "referenceAnswer": "An Instruction Set Architecture (ISA) is the abstract model of a computer that defines the boundary between hardware and software. It is the programmer-visible interface.\n\nComponents of an ISA:\n1. Instruction set: the operations the CPU can perform (ADD, SUB, LOAD, STORE, etc.)\n2. Data types: supported data formats (integer, float, character, etc.)\n3. Registers: number, size, and purpose of registers\n4. Addressing modes: how memory addresses are computed\n5. Memory architecture: byte-addressable, word size, endianness\n6. Interrupt and exception handling\n\nThe ISA is independent of the implementation. Two processors can share the same ISA (e.g., x86) but have vastly different organizations (Intel vs AMD).\n\nExamples of ISAs:\n- x86/x86-64: CISC, used in PCs (Intel, AMD)\n- ARM: RISC, used in mobile devices and increasingly in laptops\n- MIPS: RISC, used in embedded systems and education\n- RISC-V: Open-source RISC ISA, gaining popularity",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Instruction Set Architecture",
+    "id": "TH-021",
+    "question": "Compare RISC and CISC architectures.",
+    "keywords": ["RISC", "CISC", "reduced", "complex", "instruction", "pipeline", "registers"],
+    "mainConcepts": [
+      "RISC: fixed-length instructions, load-store architecture, many registers, simple addressing modes, hardwired CU, pipelining friendly",
+      "CISC: variable-length instructions, memory operands in ALU ops, fewer registers, complex addressing modes, microprogrammed CU",
+      "RISC emphasizes hardware simplicity and compiler optimization",
+      "CISC emphasizes semantic richness per instruction (fewer instructions per program)",
+      "Modern trend: CISC processors use RISC-like internal micro-operations"
+    ],
+    "referenceAnswer": "RISC (Reduced Instruction Set Computer):\n- Fixed-length instructions (typically 32 bits)\n- Load-store architecture: only LOAD/STORE access memory; ALU ops work on registers only\n- Large register file (32+ general-purpose registers)\n- Simple, few addressing modes\n- Hardwired control unit (faster)\n- Pipeline-friendly due to uniform instruction format\n- Compiler must do more work to optimize instruction selection\n- Examples: ARM, MIPS, RISC-V, SPARC\n\nCISC (Complex Instruction Set Computer):\n- Variable-length instructions (1–15+ bytes)\n- Memory operands allowed in ALU instructions (e.g., ADD [mem], reg)\n- Smaller register file\n- Rich, complex addressing modes\n- Microprogrammed control unit\n- Fewer instructions per program but each instruction is more complex\n- Examples: x86, VAX, Motorola 68000\n\nModern reality: The line has blurred. Modern CISC processors (x86) internally translate complex instructions into RISC-like micro-operations (μops) and use RISC techniques like pipelining.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Instruction Set Architecture",
+    "id": "TH-022",
+    "question": "What are addressing modes? List the common ones.",
+    "keywords": ["addressing modes", "immediate", "direct", "indirect", "register", "indexed", "base"],
+    "mainConcepts": [
+      "Immediate: operand is part of the instruction (e.g., ADD #5, R1)",
+      "Direct/Address: operand address is in the instruction (e.g., LOAD 1000, R1)",
+      "Indirect: instruction contains address of address (e.g., LOAD @R2, R1)",
+      "Register: operand is in a register",
+      "Register Indirect: register contains the address (e.g., LOAD (R2), R1)",
+      "Indexed/Base+Offset: address = base register + offset (e.g., LOAD 100(R2), R1)"
+    ],
+    "referenceAnswer": "Addressing modes define how the CPU calculates the effective address of an operand.\n\n1. Immediate Mode: The operand value is included directly in the instruction.\n   Example: ADD #5, R1 (add literal 5 to R1)\n\n2. Direct (Absolute) Addressing: The instruction contains the memory address.\n   Example: LOAD 0x1000, R1 (load value at address 0x1000 into R1)\n\n3. Indirect Addressing: The instruction contains a pointer to the actual address.\n   Example: LOAD @R2, R1 (load value at the address stored in R2)\n\n4. Register Addressing: The operand is in a CPU register.\n   Example: ADD R2, R1 (add value in R2 to R1)\n\n5. Register Indirect: A register holds the memory address.\n   Example: LOAD (R2), R1 (load value at memory address in R2)\n\n6. Indexed/Base+Offset: Address = base register + constant offset.\n   Example: LOAD 16(R2), R1 (load value at address R2+16)\n   Used for array access and struct member access.\n\n7. PC-Relative: Address = PC + offset (used for branch instructions).\n   Example: BEQ -8 (branch to PC-8 if equal)\n\n8. Stack: Operands are implicitly on the stack.\n   Example: PUSH, POP, ADD (pops two, pushes result)",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Instruction Set Architecture",
+    "id": "TH-023",
+    "question": "What are the different instruction formats? Explain the fields.",
+    "keywords": ["instruction format", "opcode", "operand", "register", "address", "format"],
+    "mainConcepts": [
+      "Three-address format: Opcode + three operand addresses (e.g., ADD R1, R2, R3)",
+      "Two-address format: Opcode + two operands, result in one (e.g., ADD R1, R2 → R1 = R1+R2)",
+      "One-address format: Uses accumulator (e.g., ADD 1000 → AC = AC + [1000])",
+      "Zero-address format: Stack-based (e.g., ADD pops two, pushes result)",
+      "Fixed vs variable length: RISC uses fixed; CISC uses variable"
+    ],
+    "referenceAnswer": "Instruction formats define how the bits of an instruction are organized:\n\nThree-Address Format:\n[Opcode] [Dest] [Src1] [Src2]\nExample: ADD R1, R2, R3 → R1 = R2 + R3\nUsed in: RISC architectures (MIPS, ARM)\n\nTwo-Address Format:\n[Opcode] [Dest/Src1] [Src2]\nExample: ADD R1, R2 → R1 = R1 + R2\nOne operand serves as both source and destination\nUsed in: x86, many CISC architectures\n\nOne-Address Format (Accumulator-based):\n[Opcode] [Address]\nExample: ADD 1000 → AC = AC + [1000]\nImplicit use of accumulator register\nUsed in: Early processors, simple microcontrollers\n\nZero-Address Format (Stack-based):\n[Opcode] only\nExample: ADD → pops two values, adds, pushes result\nOperands are implicit on the stack\nUsed in: Stack machines, JVM\n\nRISC vs CISC instruction length:\n- RISC: Fixed-length instructions (all 32 bits) — simplifies decoding\n- CISC: Variable-length instructions (1–15 bytes) — more compact code",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "Instruction Set Architecture",
+    "id": "TH-024",
+    "question": "Explain the instruction cycle (Fetch-Decode-Execute).",
+    "keywords": ["instruction cycle", "fetch", "decode", "execute", "PC", "IR", "MAR", "MDR"],
+    "mainConcepts": [
+      "Fetch: PC sends address to MAR, instruction fetched from memory into IR, PC incremented",
+      "Decode: Control unit interprets the opcode in IR to determine operation and operands",
+      "Execute: ALU performs the operation, result stored back to register or memory",
+      "Store (Write-back): Result is written to destination register or memory",
+      "Interrupt check occurs after each instruction cycle"
+    ],
+    "referenceAnswer": "The instruction cycle is the process by which a CPU fetches, decodes, and executes instructions.\n\n1. FETCH:\n   - Program Counter (PC) holds the address of the next instruction\n   - PC value is copied to Memory Address Register (MAR)\n   - Control unit sends READ signal to memory\n   - Instruction is fetched from memory into Memory Data Register (MDR)\n   - MDR value is copied to Instruction Register (IR)\n   - PC is incremented to point to the next instruction\n\n2. DECODE:\n   - Control unit examines the opcode field of IR\n   - Determines the operation to perform\n   - Identifies the operands (source and destination)\n   - For multi-cycle execution, generates control signals\n\n3. EXECUTE:\n   - ALU performs the specified operation\n   - For memory operations: effective address calculation and memory access\n   - For arithmetic/logic: computation on operands\n   - Result is produced\n\n4. STORE (Write-Back):\n   - Result is written to the destination register or memory\n\n5. INTERRUPT CHECK:\n   - After each instruction cycle, check for pending interrupts\n   - If interrupt present, save context and jump to interrupt handler\n\nThis cycle repeats for every instruction the CPU processes.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-025",
+    "question": "What is CPU pipelining and what are its advantages?",
+    "keywords": ["pipelining", "pipeline", "throughput", "stages", "overlapping", "performance"],
+    "mainConcepts": [
+      "Pipelining overlaps instruction execution — multiple instructions are in different stages simultaneously",
+      "Like an assembly line: IF, ID, EX, MEM, WB stages",
+      "Advantage: increases throughput (instructions completed per unit time)",
+      "Ideal speedup = number of pipeline stages (k× speedup for k stages)",
+      "Does NOT reduce individual instruction latency — each instruction still takes the same time"
+    ],
+    "referenceAnswer": "CPU pipelining is a technique where multiple instructions are overlapped in execution, like an assembly line. Each instruction passes through multiple stages while the next instruction enters the pipeline.\n\nClassic 5-Stage Pipeline:\n1. IF (Instruction Fetch): Fetch instruction from memory\n2. ID (Instruction Decode): Decode instruction and read registers\n3. EX (Execute): ALU performs operation\n4. MEM (Memory Access): Read/write data memory\n5. WB (Write Back): Write result to register file\n\nAdvantages:\n- Increases throughput: multiple instructions complete per clock cycle\n- Ideal speedup: k stages → k× throughput improvement\n- Better hardware utilization: all stages active simultaneously\n\nWithout pipelining:\n4 instructions × 5 cycles each = 20 cycles total\n\nWith pipelining:\n4 instructions complete in 5 + 3 = 8 cycles (after pipeline is full)\n\nImportant: Pipelining does NOT reduce individual instruction latency — each instruction still takes 5 cycles. It improves throughput by having multiple instructions in progress simultaneously.\n\nLimitations:\n- Pipeline hazards (structural, data, control) reduce ideal speedup\n- Each stage must take the same time (limited by slowest stage)",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-026",
+    "question": "Explain the three types of pipeline hazards and their solutions.",
+    "keywords": ["hazard", "structural", "data", "control", "stall", "forwarding", "branch prediction"],
+    "mainConcepts": [
+      "Structural Hazard: hardware resource conflict — two instructions need same resource simultaneously",
+      "Data Hazard: instruction depends on result of previous instruction (RAW, WAR, WAW)",
+      "Control Hazard: branch instruction changes the flow — next instruction address unknown",
+      "Solutions: stalls (bubbles), forwarding/bypassing, branch prediction, delayed branch"
+    ],
+    "referenceAnswer": "1. STRUCTURAL HAZARD:\nProblem: Two instructions need the same hardware resource at the same time.\nExample: Both IF and MEM stages need memory access.\nSolutions:\n- Separate instruction and data memories (Harvard architecture)\n- Use separate caches for instructions and data\n- Stalling: insert bubble (NOP) until resource is free\n\n2. DATA HAZARD:\nProblem: An instruction depends on the result of a previous instruction that hasn't completed yet.\nTypes:\n- RAW (Read After Write): most common, true dependency\n- WAR (Write After Read): anti-dependency\n- WAW (Write After Write): output dependency\nSolutions:\n- Stalling: insert bubbles until data is available\n- Forwarding/Bypassing: route result directly from pipeline registers to ALU input (bypasses register file)\n- Compiler scheduling: reorder instructions to avoid dependencies\n\n3. CONTROL HAZARD:\nProblem: Branch instruction changes the PC; next instruction address is unknown until the branch resolves.\nImpact: pipeline may fetch wrong instructions (branch penalty).\nSolutions:\n- Flush: discard fetched instructions if branch is taken\n- Branch prediction: predict not-taken (static) or use history table (dynamic)\n- Delayed branch: always execute the instruction after the branch\n- Branch Target Buffer (BTB): cache target addresses",
+    "difficulty": "hard",
+    "maxPoints": 8
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-027",
+    "question": "Compare hardwired vs microprogrammed control unit in detail.",
+    "keywords": ["hardwired", "microprogrammed", "control unit", "microcode", "sequencer", "control store"],
+    "mainConcepts": [
+      "Hardwired: uses FSM + combinational logic, very fast, fixed instructions, used in RISC",
+      "Microprogrammed: uses control store + microsequencer, flexible, used in CISC",
+      "Microprogrammed CU stores microinstructions in control memory (control store)",
+      "Hardwired is faster but harder to modify; microprogrammed is slower but easier to extend",
+      "Modern x86 uses microprogrammed front-end that translates to RISC-like μops"
+    ],
+    "referenceAnswer": "Hardwired Control Unit:\n- Implementation: Combinational logic gates + FSM (Finite State Machine)\n- Speed: Very fast — signals propagate through gates in nanoseconds\n- Flexibility: Fixed — adding new instructions requires redesigning the circuit\n- Complexity: High for complex ISAs\n- Used in: RISC processors (MIPS, ARM, RISC-V)\n- Components: State register, decoder, logic gates, timing signals\n\nMicroprogrammed Control Unit:\n- Implementation: Control store (ROM/RAM) containing microinstructions\n- Speed: Slower — requires microcode fetch from control memory\n- Flexibility: High — new instructions can be added by updating microcode\n- Complexity: Easier to design for complex ISAs\n- Used in: CISC processors (x86, VAX)\n- Components: Control store, microsequencer, microinstruction register\n\nHow Microprogrammed Works:\n1. Machine instruction is fetched and placed in IR\n2. IR opcode → address in control store\n3. Microsequencer reads microinstruction from control store\n4. Microinstruction contains control signals for one clock cycle\n5. Sequencer increments or branches to next microinstruction\n6. Sequence of microinstructions implements the full machine instruction\n\nModern hybrid approach: x86 processors use microprogrammed front-end that decodes CISC instructions into RISC-like micro-operations (μops), which are then executed by a hardwired out-of-order engine.",
+    "difficulty": "hard",
+    "maxPoints": 7
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-028",
+    "question": "Describe the MIPS single-cycle datapath.",
+    "keywords": ["MIPS", "datapath", "single-cycle", "PC", "register file", "ALU", "memory", "control"],
+    "mainConcepts": [
+      "Single-cycle: each instruction completes in one clock cycle",
+      "Components: PC, Instruction Memory, Register File, ALU, Data Memory, Control Unit, Sign Extender",
+      "Instruction flows: PC → IF → ID → EX → MEM → WB all in one cycle",
+      "Clock cycle must be long enough for the slowest instruction (usually LOAD)"
+    ],
+    "referenceAnswer": "The MIPS single-cycle datapath implements all instructions in one clock cycle:\n\nComponents:\n1. PC (Program Counter): holds address of current instruction\n2. Instruction Memory: stores instructions (read-only in this design)\n3. Register File: 32 registers (32-bit each), 2 read ports + 1 write port\n4. ALU: performs arithmetic/logic operations\n5. Data Memory: reads/writes data (for LOAD/STORE)\n6. Control Unit: generates all control signals\n7. Sign Extender: extends 16-bit immediate to 32-bit\n8. MUXes: select between different inputs\n\nData flow for ADD R1, R2, R3:\n1. PC → Instruction Memory → fetch instruction\n2. Instruction[25:21] (rs) → Register File Read Port 1\n3. Instruction[20:16] (rt) → Register File Read Port 2\n4. Both register values → ALU inputs\n5. ALU performs ADD, result → Write Data input\n6. Instruction[15:11] (rd) → Write Register input\n7. RegWrite signal → Write enable\n\nData flow for LOAD R1, offset(R2):\n1. Fetch instruction\n2. Read R2 (base address) from Register File\n3. Sign-extend offset\n4. ALU adds base + offset = effective address\n5. Data Memory reads at effective address\n6. Result written to R1\n\nClock cycle must be long enough for the slowest instruction (LOAD = 5 gate delays + memory access).",
+    "difficulty": "hard",
+    "maxPoints": 7
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-029",
+    "question": "What is the difference between multi-cycle and single-cycle implementation?",
+    "keywords": ["single-cycle", "multi-cycle", "clock cycle", "CPI", "efficiency", "state machine"],
+    "mainConcepts": [
+      "Single-cycle: CPI = 1, clock cycle = slowest instruction time, waste cycles for simple instructions",
+      "Multi-cycle: variable CPI, each step = 1 clock cycle, clock = longest stage, more efficient",
+      "Multi-cycle uses a state machine to control execution steps",
+      "Multi-cycle allows shared hardware (e.g., one memory for instruction and data)",
+      "Most real processors use multi-cycle/pipelined approaches"
+    ],
+    "referenceAnswer": "Single-Cycle Implementation:\n- Each instruction completes in exactly one clock cycle\n- CPI = 1\n- Clock cycle must be long enough for the SLOWEST instruction (LOAD)\n- Simple instruction (ADD) waits for the same time as complex instruction (LOAD)\n- Wastes clock cycles for simple instructions\n- Requires separate instruction and data memories\n- No state machine needed\n\nMulti-Cycle Implementation:\n- Each instruction is broken into multiple steps (cycles)\n- Each step takes one clock cycle (the clock = longest step)\n- CPI varies: ADD takes 4 cycles, LOAD takes 5 cycles\n- Clock cycle is much shorter (based on slowest STAGE, not slowest instruction)\n- More efficient: uses shared memory for instructions and data\n- Requires a state machine (FSM) to track which step we're on\n- Supports microprogrammed control\n\nExample: LOAD instruction\nSingle-cycle: 1 cycle × 800ps = 800ps\nMulti-cycle: 5 cycles × 200ps = 1000ps\nBut ADD instruction: Single-cycle: 1 × 800ps = 800ps; Multi-cycle: 4 × 200ps = 800ps\n\nMulti-cycle is generally more efficient for programs with mixed instruction types.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-030",
+    "question": "Explain the different types of computer memory hierarchy.",
+    "keywords": ["memory hierarchy", "cache", "RAM", "registers", "disk", "latency", "capacity"],
+    "mainConcepts": [
+      "Registers → Cache (L1/L2/L3) → Main Memory (RAM) → Secondary Storage (SSD/HDD)",
+      "Smaller/faster/more expensive at top; larger/slower/cheaper at bottom",
+      "Cache stores copies of frequently used data from main memory",
+      "Memory hierarchy exploits locality of reference (temporal and spatial)",
+      "Registers: <1ns; L1 Cache: ~1ns; L2: ~3ns; L3: ~10ns; RAM: ~100ns; SSD: ~100μs; HDD: ~10ms"
+    ],
+    "referenceAnswer": "The memory hierarchy organizes storage by speed, cost, and capacity:\n\nLevel 0: Registers (inside CPU)\n- Size: 32–64 registers (typically 32 or 64 bits each)\n- Speed: < 1 ns\n- Most expensive per bit\n\nLevel 1: L1 Cache\n- Size: 16–64 KB\n- Speed: ~1–2 ns\n- Split: L1i (instructions) + L1d (data)\n\nLevel 2: L2 Cache\n- Size: 256 KB – 1 MB\n- Speed: ~3–10 ns\n- Unified (instructions + data)\n\nLevel 3: L3 Cache (shared)\n- Size: 2–64 MB\n- Speed: ~10–30 ns\n- Shared among all CPU cores\n\nLevel 4: Main Memory (RAM)\n- Size: 8–128 GB\n- Speed: ~50–100 ns\n- Volatile (loses data on power off)\n\nLevel 5: Secondary Storage\n- SSD: ~100 μs, GB–TB range\n- HDD: ~10 ms, TB range\n- Non-volatile\n\nPrinciple of Locality:\n- Temporal locality: recently accessed data will be accessed again soon\n- Spatial locality: data near recently accessed data will be accessed soon\n\nThe hierarchy exploits locality: keep frequently accessed data in faster, smaller memory.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-031",
+    "question": "How does cache memory work? Explain cache mapping techniques.",
+    "keywords": ["cache", "direct mapping", "associative", "set associative", "hit", "miss", "replacement"],
+    "mainConcepts": [
+      "Cache stores copies of frequently used main memory blocks",
+      "Direct mapping: each block maps to exactly one cache line (simplest)",
+      "Fully associative: block can go anywhere in cache (most flexible, most expensive)",
+      "N-way set associative: block maps to a set of N lines (compromise)",
+      "Replacement policies: LRU, FIFO, Random — used when cache line is full"
+    ],
+    "referenceAnswer": "Cache Memory:\n- Small, fast memory between CPU and main memory\n- Stores copies of frequently/recently used memory blocks\n- Reduces average memory access time\n- Uses principle of locality\n\nCache Mapping Techniques:\n\n1. Direct Mapping:\n   - Each main memory block maps to exactly ONE cache line\n   - Address divided: [Tag | Index | Offset]\n   - Index selects the cache line\n   - Tag is compared to check if data is valid\n   - Pros: Simple, fast lookup\n   - Cons: Conflict misses (two blocks competing for same line)\n\n2. Fully Associative:\n   - A block can be placed in ANY cache line\n   - No index field — only Tag + Offset\n   - Must search all lines simultaneously\n   - Pros: No conflict misses\n   - Cons: Expensive hardware (comparators for every line)\n\n3. N-Way Set Associative:\n   - Cache divided into sets, each containing N lines\n   - Block maps to a specific set (like direct mapping)\n   - But within the set, it can go in any line (like fully associative)\n   - Common: 2-way, 4-way, 8-way\n   - Pros: Balance of speed and flexibility\n\nReplacement Policies (when set is full):\n- LRU (Least Recently Used): evict the oldest accessed line\n- FIFO: evict the oldest inserted line\n- Random: evict randomly",
+    "difficulty": "hard",
+    "maxPoints": 7
+  },
+  {
+    "courseCode": "IFT 212",
+    "section": "CPU Design",
+    "id": "TH-032",
+    "question": "What is the difference between RISC and CISC in terms of instruction execution time and pipeline efficiency?",
+    "keywords": ["RISC", "CISC", "execution time", "pipeline", "CPI", "clock cycle"],
+    "mainConcepts": [
+      "RISC: fixed-length instructions → easy to decode, pipeline-friendly, low CPI (1-2)",
+      "CISC: variable-length instructions → hard to decode, pipeline challenges, higher CPI",
+      "RISC achieves higher clock rates due to simpler logic",
+      "CISC compensates with complex instructions doing more work per instruction",
+      "Modern CISC (x86) internally converts to RISC-like μops for pipelining"
+    ],
+    "referenceAnswer": "RISC Pipeline Efficiency:\n- Fixed instruction length: all instructions 32 bits → easy to fetch and decode\n- Single-cycle execution for most instructions → CPI ≈ 1\n- Simple decoding → short pipeline stages → higher clock rates\n- Load-store architecture: only LOAD/STORE access memory → fewer pipeline stalls\n- Uniform instruction format → predictable pipeline behavior\n- Ideal for deep pipelining and superscalar execution\n\nCISC Pipeline Challenges:\n- Variable instruction length (1–15 bytes) → complex fetch and decode\n- Complex instructions may take multiple cycles → higher CPI\n- Memory operands in ALU instructions → potential pipeline stalls\n- Irregular instruction format → harder to pipeline\n- Example: x86 string instructions can take hundreds of cycles\n\nHow CISC Compensates:\n- Each instruction does more work → fewer instructions per program\n- Complex addressing modes reduce instruction count\n- Modern x86 solution: decode complex instructions into RISC-like micro-operations (μops)\n  - Intel P6 architecture (Pentium Pro) introduced this\n  - μops are pipelined like RISC instructions\n  - Best of both worlds: x86 compatibility + RISC performance\n\nPerformance Comparison:\n- RISC: fewer cycles per instruction, more instructions per program\n- CISC: more cycles per instruction, fewer instructions per program\n- Performance = Instruction Count × CPI × Clock Cycle Time",
+    "difficulty": "hard",
+    "maxPoints": 7
+  }
+]

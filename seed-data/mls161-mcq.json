@@ -1,0 +1,759 @@
+{
+  "sections": [
+    {
+      "section_title": "Laboratory Hazards & Fire Safety",
+      "questions": [
+        {
+          "id": "MCQ-001",
+          "question": "What is defined as anything that may cause injury, harm, or damage in a laboratory environment?",
+          "options": ["Risk", "Hazard", "Bio-risk", "Accident"],
+          "correct_answer": 1,
+          "explanation": "A hazard is anything that may cause injury, harm, or damage. Risk is the likelihood of that potential harm being realized."
+        },
+        {
+          "id": "MCQ-002",
+          "question": "Which type of fire extinguisher is specifically recommended for fires caused by non-aqueous liquids such as Benzene, Xylene, and Toluene?",
+          "options": ["Carbon dioxide type", "Soda-acid type", "Foam-type", "Dry powder type"],
+          "correct_answer": 2,
+          "explanation": "Foam-type fire extinguishers are used for fires caused by non-aqueous liquids such as Benzene, Xylene, and Toluene."
+        },
+        {
+          "id": "MCQ-003",
+          "question": "A carbon dioxide type fire extinguisher is designated for use against fires of which origin?",
+          "options": ["Chemical origin", "Electrical origin", "Solid material origin", "Aqueous liquid origin"],
+          "correct_answer": 1,
+          "explanation": "Carbon dioxide type fire extinguishers are used for fires of electrical origin."
+        },
+        {
+          "id": "MCQ-004",
+          "question": "Which type of fire extinguisher should be utilized for fires caused by solid materials and aqueous liquids such as alcohol, ether, and acetone?",
+          "options": ["Foam-type", "Carbon dioxide type", "Soda-acid type", "Halon type"],
+          "correct_answer": 2,
+          "explanation": "Soda-acid type fire extinguishers are used for fires caused by solid materials and aqueous liquids such as alcohol, ether, and acetone."
+        },
+        {
+          "id": "MCQ-005",
+          "question": "What is the immediate first action a laboratory staff member must take in the case of an outbreak of fire?",
+          "options": ["Attack the fire with an extinguisher", "Sound an alarm", "Close all doors and windows", "Contact the Federal Fire Service Department"],
+          "correct_answer": 1,
+          "explanation": "The immediate first action in case of fire is to sound an alarm to alert all occupants."
+        },
+        {
+          "id": "MCQ-006",
+          "question": "If a laboratory fire escalates and goes completely beyond control, which external body should be contacted for assistance?",
+          "options": ["Biosafety Department", "Internal Security Guards", "Federal Fire Service Department", "Medical Response Team"],
+          "correct_answer": 2,
+          "explanation": "When a fire is beyond control, contact the Federal Fire Service Department for assistance."
+        },
+        {
+          "id": "MCQ-007",
+          "question": "Excessive exposure to heat within the laboratory can directly result in which type of physical injury?",
+          "options": ["Frostbite", "Dermatitis", "Burns", "Sinusitis"],
+          "correct_answer": 2,
+          "explanation": "Excessive heat exposure causes burns. Frostbite is caused by cold, dermatitis by chemical fixatives, and sinusitis by formaldehyde inhalation."
+        },
+        {
+          "id": "MCQ-008",
+          "question": "Which of the following pieces of laboratory equipment requires highly elevated temperatures for its operational effectiveness and poses a heat hazard?",
+          "options": ["Fume hood", "Autoclave", "Glove box", "Revco freezer"],
+          "correct_answer": 1,
+          "explanation": "Autoclaves require high temperatures for sterilization and pose heat hazards. Revco freezers are cold storage."
+        },
+        {
+          "id": "MCQ-009",
+          "question": "What specific protective equipment must be worn when handling extremely hot objects to prevent laboratory burns?",
+          "options": ["Cryogloves", "Heat resistant gloves", "Rubber gloves", "Surgical spirit pads"],
+          "correct_answer": 1,
+          "explanation": "Heat resistant gloves protect against burns from hot objects. Cryogloves are for cold objects."
+        },
+        {
+          "id": "MCQ-010",
+          "question": "Exposure to solid carbon dioxide (dry ice) or a Revco freezer can lead to which clinical condition?",
+          "options": ["Dermatitis", "Frostbite", "Burns", "Sinusitis"],
+          "correct_answer": 1,
+          "explanation": "Extremely cold substances like dry ice (-75°C) and Revco freezers (-115°C) can cause frostbite."
+        },
+        {
+          "id": "MCQ-011",
+          "question": "Solid carbon dioxide, commonly used as dry ice in laboratories, can reach temperature levels as low as:",
+          "options": ["-50 degrees Celsius", "-75 degrees Celsius", "-100 degrees Celsius", "-115 degrees Celsius"],
+          "correct_answer": 1,
+          "explanation": "Solid carbon dioxide (dry ice) can be as cold as -75°C."
+        },
+        {
+          "id": "MCQ-012",
+          "question": "A Revco freezer utilized for laboratory storage can achieve low temperature environments down to:",
+          "options": ["-20 degrees Celsius", "-70 degrees Celsius", "-75 degrees Celsius", "-115 degrees Celsius"],
+          "correct_answer": 3,
+          "explanation": "A Revco freezer can reach temperatures as low as -115°C."
+        },
+        {
+          "id": "MCQ-013",
+          "question": "What specialized personal protective equipment is required for handling materials at extremely low temperatures?",
+          "options": ["Heat resistant gloves", "Chemical resistant gloves", "Cryogloves", "Latex examination gloves"],
+          "correct_answer": 2,
+          "explanation": "Cryogloves are specialized PPE designed for handling materials at extremely low temperatures."
+        },
+        {
+          "id": "MCQ-014",
+          "question": "To prevent accidental puncture and inoculation, what action is strictly forbidden after using a syringe needle?",
+          "options": ["Detaching the needle", "Recapping the needle", "Placing the needle in a sharp container", "Disposing of the needle immediately"],
+          "correct_answer": 1,
+          "explanation": "Recapping used needles is strictly forbidden to avoid accidental needlestick injuries and potential infections."
+        },
+        {
+          "id": "MCQ-015",
+          "question": "What type of vessel should be used to transport clinical aspirate samples to the laboratory instead of using needles and syringes?",
+          "options": ["Universal container", "Beaker", "Open test tube", "Petri dish"],
+          "correct_answer": 0,
+          "explanation": "Aspirate should be sent in universal containers instead of needles and syringes to prevent needlestick injuries."
+        },
+        {
+          "id": "MCQ-016",
+          "question": "What must a laboratory facility provide to safeguard personnel against radiation hazards?",
+          "options": ["Chemical fume hoods", "Biological safety cabinets", "Radiation protection devices and badges", "Lead-lined waste containers"],
+          "correct_answer": 2,
+          "explanation": "Laboratories must provide radiation protection devices and badges to safeguard personnel against radiation hazards."
+        }
+      ]
+    },
+    {
+      "section_title": "Chemical Hazards",
+      "questions": [
+        {
+          "id": "MCQ-017",
+          "question": "Which class of chemical compounds is specifically highlighted as potentially hazardous and must always be properly labeled alongside heavy metals?",
+          "options": ["Alcohols", "Polyhydric aromatic amines", "Corrosive alkalis", "Fixatives"],
+          "correct_answer": 1,
+          "explanation": "Polyhydric aromatic amines are specifically highlighted as potentially hazardous alongside heavy metals and must be properly labeled."
+        },
+        {
+          "id": "MCQ-018",
+          "question": "Which of the following techniques is prohibited due to the high risk of chemical or biological ingestion?",
+          "options": ["Use of automatic dispensers", "Mouth pipetting", "Use of rubber teated pipettes", "Syringe aspiration"],
+          "correct_answer": 1,
+          "explanation": "Mouth pipetting is strictly prohibited. Rubber teated pipettes and automatic dispensers should be used instead."
+        },
+        {
+          "id": "MCQ-019",
+          "question": "Which of the following chemicals is identified as an explosive hazard that can undergo spontaneous explosion if allowed to become dry?",
+          "options": ["Acetone", "Benzene", "Picric Acid", "Xylene"],
+          "correct_answer": 2,
+          "explanation": "Picric acid can undergo spontaneous explosion if not properly stored and allowed to become dry."
+        },
+        {
+          "id": "MCQ-020",
+          "question": "Solutions containing dichromate glass cleaning compounds are classified under which chemical hazard category?",
+          "options": ["Inflammable chemicals", "Explosive chemicals", "Corrosive acids", "Poisonous chemicals"],
+          "correct_answer": 2,
+          "explanation": "Solutions containing dichromate glass cleaning compounds are corrosive acids and are corrosive to the skin."
+        },
+        {
+          "id": "MCQ-021",
+          "question": "What is the fundamental biological effect of chemical fixatives on tissue components?",
+          "options": ["They hydrolyze lipids and carbohydrates", "They denature proteins and inactivate enzymes", "They synthesize nucleic acids", "They dissolve cellular membranes"],
+          "correct_answer": 1,
+          "explanation": "Fixatives denature proteins, inactivate enzymes, and alter tissue chemistry."
+        },
+        {
+          "id": "MCQ-022",
+          "question": "Prolonged, unprotected occupational skin contact with chemical fixatives directly induces which medical condition?",
+          "options": ["Sinusitis", "Dermatitis", "Frostbite", "Cancer"],
+          "correct_answer": 1,
+          "explanation": "Prolonged skin contact with fixatives causes dermatitis and partial fixation of the affected body part."
+        },
+        {
+          "id": "MCQ-023",
+          "question": "Inhalation of formaldehyde gas vapors within a poorly ventilated laboratory space causes:",
+          "options": ["Dermatitis", "Sinusitis", "Immediate asphyxiation", "Spontaneous bleeding"],
+          "correct_answer": 1,
+          "explanation": "Formaldehyde causes sinusitis if inhaled in poorly ventilated areas."
+        },
+        {
+          "id": "MCQ-024",
+          "question": "Apart from formaldehyde, which of the following chemical fixative solutions are noted as being highly harmful to human skin?",
+          "options": ["Acetone and alcohol", "Xylene and benzene", "Heidenhains and Zenker", "Hydrochloric and nitric acid"],
+          "correct_answer": 2,
+          "explanation": "Heidenhains and Zenker fixatives are very harmful to the skin, in addition to formaldehyde."
+        },
+        {
+          "id": "MCQ-025",
+          "question": "Exposure to industrial chemical agents such as propiolactone, naphthylamine, benzidine, and orthotoluidine can result in:",
+          "options": ["Severe corrosion", "Acute poisoning", "Cancer", "Localized frostbite"],
+          "correct_answer": 2,
+          "explanation": "Propiolactone, naphthylamine, benzidine, and orthotoluidine are carcinogens that can cause cancer."
+        },
+        {
+          "id": "MCQ-026",
+          "question": "Cyanide and Arsenic are explicitly classified in the laboratory guidelines as:",
+          "options": ["Corrosive chemicals", "Poisonous chemicals", "Inflammable chemicals", "Explosive chemicals"],
+          "correct_answer": 1,
+          "explanation": "Cyanide and Arsenic are classified as poisonous chemicals — they are poisonous even if swallowed."
+        },
+        {
+          "id": "MCQ-027",
+          "question": "When dispensing solid reagents that are in crystal or powder form, laboratory staff should utilize:",
+          "options": ["Bare fingers", "A spatula", "Automatic dispensers", "Rubber teats"],
+          "correct_answer": 1,
+          "explanation": "Reagents in crystal or powder form should be dispensed with a spatula, not fingers, to prevent contamination and exposure."
+        },
+        {
+          "id": "MCQ-028",
+          "question": "Following an accidental laboratory skin exposure to a corrosive acid, the area must be washed with water followed immediately by:",
+          "options": ["1% acetic acid", "Surgical spirit", "5% sodium bicarbonate", "Concentrated alkali"],
+          "correct_answer": 2,
+          "explanation": "For acid exposure: wash with water first, then apply 5% sodium bicarbonate to neutralize."
+        },
+        {
+          "id": "MCQ-029",
+          "question": "If a laboratory technician accidentally splashes a corrosive alkali onto their skin, the neutralizer solution to apply after water washing is:",
+          "options": ["5% sodium bicarbonate", "1% acetic acid", "Surgical spirit", "Picric acid"],
+          "correct_answer": 1,
+          "explanation": "For alkali exposure: wash with water first, then apply 1% acetic acid to neutralize."
+        },
+        {
+          "id": "MCQ-030",
+          "question": "In the event of skin contamination with toxic phenol, the affected body part must be washed using:",
+          "options": ["5% sodium bicarbonate", "1% acetic acid", "Surgical spirit", "Soap and water only"],
+          "correct_answer": 2,
+          "explanation": "For phenol contamination, wash with surgical spirit to effectively remove the chemical."
+        },
+        {
+          "id": "MCQ-031",
+          "question": "What specific safety equipment must be worn to protect the eyes when actively pouring acids, caustics, and aromatic compounds?",
+          "options": ["Face shields", "Chemical resistant safety goggles", "Radiation protection badges", "Tinted glasses"],
+          "correct_answer": 1,
+          "explanation": "Chemical resistant safety goggles must be worn when pouring acids, caustics, and aromatic compounds to protect the eyes."
+        }
+      ]
+    },
+    {
+      "section_title": "Biological Hazards & Waste",
+      "questions": [
+        {
+          "id": "MCQ-032",
+          "question": "Biological hazards in the medical laboratory arise from direct interaction with specimens containing which of the following?",
+          "options": ["Heavy metals", "Living organisms such as viruses, bacteria, and fungi", "Polyhydric aromatic amines", "Volatile organic solvents"],
+          "correct_answer": 1,
+          "explanation": "Biological hazards arise from interaction with specimens containing living organisms such as viruses, bacteria, fungi, spirochaetes, ova, and parasites."
+        },
+        {
+          "id": "MCQ-033",
+          "question": "Which of the following is identified as an operational error that leads to biological cross-contamination and laboratory infection?",
+          "options": ["Cleaning the workbench with disinfectant", "Storing food and drinks in the same refrigerator with specimens and reagents", "Using automatic pipetting systems", "Wearing personal protective clothing"],
+          "correct_answer": 1,
+          "explanation": "Storing food and drinks in the same refrigerator with specimens and reagents leads to cross-contamination and potential infection."
+        },
+        {
+          "id": "MCQ-034",
+          "question": "How frequently should a comprehensive waste assessment be conducted in the laboratory to refresh safety awareness and update storage inventories?",
+          "options": ["Every month", "Twice a year", "Every year", "Every five years"],
+          "correct_answer": 2,
+          "explanation": "A comprehensive waste assessment should be conducted every year to refresh laboratory staff awareness and update inventories."
+        },
+        {
+          "id": "MCQ-035",
+          "question": "According to documented statistical records, what constitutes the single most common injury sustained by laboratory personnel?",
+          "options": ["Chemical burns from strong acids", "Frostbite from liquid nitrogen storage", "Cuts from sharps", "Chronic sinusitis from fixatives"],
+          "correct_answer": 2,
+          "explanation": "The most common laboratory injuries are cuts from sharps (needles, blades, broken glassware)."
+        },
+        {
+          "id": "MCQ-056",
+          "question": "Laboratory waste contaminated by blood or other body fluids that poses a risk of transmitting infections is called:",
+          "options": ["Carcinogenic waste", "Chemical hazard waste", "Infectious waste", "Corrosive acid waste"],
+          "correct_answer": 2,
+          "explanation": "Infectious waste is waste that might have been contaminated by blood, body fluids or other potentially infectious materials, thereby posing a risk of transmitting infection."
+        }
+      ]
+    },
+    {
+      "section_title": "Hierarchy of Hazard Controls",
+      "questions": [
+        {
+          "id": "MCQ-036",
+          "question": "Under the hierarchy of laboratory hazard controls, which method represents the most effective measure?",
+          "options": ["Personal Protective Equipment", "Administrative Controls", "Substitution", "Elimination"],
+          "correct_answer": 3,
+          "explanation": "Elimination is the most effective control measure as it completely removes the hazard. The hierarchy in decreasing effectiveness is: Elimination > Substitution > Engineering Controls > Administrative Controls > PPE."
+        },
+        {
+          "id": "MCQ-037",
+          "question": "Replacing a highly carcinogenic chemical such as orthotoluidine with a safer chemical alternative like 4-aminophenazone is an example of:",
+          "options": ["Elimination", "Substitution", "Engineering Control", "Administrative Control"],
+          "correct_answer": 1,
+          "explanation": "Substitution involves replacing something hazardous with something less hazardous. Replacing orthotoluidine (carcinogenic) with 4-aminophenazone is substitution."
+        },
+        {
+          "id": "MCQ-038",
+          "question": "Which engineering control device provides a ventilated containment space to prevent harmful vapor exposure when manipulating hazardous chemicals?",
+          "options": ["Biological Safety Cabinet", "Glove box", "Chemical Fume hood", "Autoclave"],
+          "correct_answer": 2,
+          "explanation": "Chemical Fume hoods prevent harmful exposure when working with hazardous chemicals in the laboratory."
+        },
+        {
+          "id": "MCQ-039",
+          "question": "What is a sealed container designed to allow the manipulation of sensitive materials inside a completely defined, isolated atmosphere?",
+          "options": ["Chemical Fume hood", "Glove box", "Biological Safety Cabinet", "Universal container"],
+          "correct_answer": 1,
+          "explanation": "A glove box is a sealed container designed to allow handling of materials in a defined, isolated atmosphere."
+        },
+        {
+          "id": "MCQ-040",
+          "question": "What type of enclosed, ventilated workplace structure is required for safely processing infectious or purportedly infectious biological materials?",
+          "options": ["Chemical Fume hood", "Biological Safety Cabinet", "Glove box", "Open workbench"],
+          "correct_answer": 1,
+          "explanation": "Biological Safety Cabinets are enclosed ventilated laboratory workplaces for safely working with infectious and purportedly infectious biological materials."
+        }
+      ]
+    },
+    {
+      "section_title": "Laboratory Safety Practices & SMS",
+      "questions": [
+        {
+          "id": "MCQ-041",
+          "question": "To whom must all professional laboratory personnel immediately report incidents of glass breakage, equipment damage, or personal accidents?",
+          "options": ["Principal Investigator", "Laboratory Director", "Biosafety officer", "Federal Fire Service Officer"],
+          "correct_answer": 2,
+          "explanation": "All accidents, breakage of glassware, and damage of equipment must be reported to the Biosafety Officer."
+        },
+        {
+          "id": "MCQ-042",
+          "question": "What is the physical requirement for laboratory personnel with long hair (chin length or longer) while inside the workspace?",
+          "options": ["It must be cut short", "It must be tied back", "It must be covered with a plastic visor", "No specific restrictions apply"],
+          "correct_answer": 1,
+          "explanation": "Long hair (chin length or longer) must be tied back in the laboratory to prevent contamination and safety hazards."
+        },
+        {
+          "id": "MCQ-043",
+          "question": "A Safety Management System (SMS) is defined in laboratory policy as a comprehensive and integrated workplace system designed to ensure:",
+          "options": ["All specimens are processed within an hour", "Proper management of safety properties so that all works are conducted safely", "Complete elimination of chemical inventory costs", "Automated generation of clinical test results"],
+          "correct_answer": 1,
+          "explanation": "SMS is a comprehensive and integrated system designed to ensure proper management of safety properties in the workplace so all works are conducted safely."
+        },
+        {
+          "id": "MCQ-044",
+          "question": "When handling infectious liquids, which of the following actions is prohibited to prevent aerosol formation?",
+          "options": ["Vortexing the liquid sample", "Mixing potentially infectious material by bubbling air through the liquid", "Aspirating liquid with a rubber teat pipette", "Dispensing liquid into a universal container"],
+          "correct_answer": 1,
+          "explanation": "Never mix potentially infectious material by bubbling air through the liquid, as this creates aerosols that can spread infection."
+        },
+        {
+          "id": "MCQ-045",
+          "question": "What operational policy should be applied to clinical patient samples received by laboratory personnel?",
+          "options": ["Treat them as completely sterile until tested", "Treat all patient samples as potentially hazardous", "Discard them immediately if unfixed without gloves"],
+          "correct_answer": 1,
+          "explanation": "All patient samples should be treated as potentially hazardous regardless of diagnosis."
+        },
+        {
+          "id": "MCQ-046",
+          "question": "To safeguard employees at high risk of occupational blood-borne exposure, the facility must offer vaccinations against:",
+          "options": ["Formaldehyde toxicity", "Carcinogenic chemicals", "Hepatitis B", "Tetanus"],
+          "correct_answer": 2,
+          "explanation": "All employees at risk of accidental exposure to blood-borne pathogens should be vaccinated with hepatitis B vaccines."
+        },
+        {
+          "id": "MCQ-047",
+          "question": "What is the correct protocol for holding large chemical containers or reagent bottles?",
+          "options": ["Hold them securely by the neck part only", "Hold the bottle containers firmly around the body using one or two hands", "Hold them by the cap mechanism", "Carry them using extension tools"],
+          "correct_answer": 1,
+          "explanation": "Hold bottles firmly around the body (not the neck) using one or two hands depending on the size of the bottle."
+        },
+        {
+          "id": "MCQ-048",
+          "question": "What is the correct method for preparing a diluted acid solution from a concentrated stock?",
+          "options": ["Pour water rapidly into the concentrated acid", "Pour water slowly down the sides of the acid bottle", "Acid should be poured slowly into water", "Mix equal parts simultaneously in an open beaker"],
+          "correct_answer": 2,
+          "explanation": "Never pour water into concentrated acid. Acid should be poured slowly into water to prevent violent exothermic reactions."
+        },
+        {
+          "id": "MCQ-049",
+          "question": "Laboratory electrical equipment must be structurally grounded using:",
+          "options": ["Two-prong plugs", "Extension cords", "3 prong plugs", "Rubber adapters"],
+          "correct_answer": 2,
+          "explanation": "All electric equipment must be grounded with 3 prong plugs for electrical safety."
+        },
+        {
+          "id": "MCQ-050",
+          "question": "What is the safety policy regarding the use of power extension cords in the professional medical laboratory?",
+          "options": ["They should be chained together for longer reach", "Avoid the use of extension cords in the laboratory", "They can be handled with wet hands", "Use them only for high-voltage equipment"],
+          "correct_answer": 1,
+          "explanation": "The use of extension cords in the laboratory should be avoided to prevent electrical hazards."
+        },
+        {
+          "id": "MCQ-051",
+          "question": "If a liquid spill occurs directly onto an active electrical equipment unit, what is the protocol?",
+          "options": ["Wipe it with a wet hand towel immediately", "Avoid its use until it is completely dry", "Disconnect it by pulling the cord hard", "Continue operations under a fume hood"],
+          "correct_answer": 1,
+          "explanation": "If water spills on electrical equipment, avoid its use until it is completely dry to prevent electrical shock."
+        },
+        {
+          "id": "MCQ-052",
+          "question": "What is the correct technique for disconnecting an electrical appliance from a wall power outlet?",
+          "options": ["Pull the electrical cord from a distance", "Unplug cords by pulling the plug and not the cord", "Turn off the main switch while unplugging", "Dampen the plug before removal"],
+          "correct_answer": 1,
+          "explanation": "Always unplug cords by pulling the plug and not the cord to prevent damage to the cord and potential electrical hazards."
+        },
+        {
+          "id": "MCQ-053",
+          "question": "When must all non-essential laboratory electrical equipment be systematically unplugged?",
+          "options": ["During a fire outbreak emergency", "At the end of the labor period or close of day", "Only during routine waste assessments", "When cleaning the chemical fume hood"],
+          "correct_answer": 1,
+          "explanation": "All electrical equipment should be unplugged at the end of the laboratory period or close of day."
+        },
+        {
+          "id": "MCQ-054",
+          "question": "To optimize emergency fire response access, where should fire extinguishers be strategically located?",
+          "options": ["In the basement storage room", "Near every laboratory door", "Inside the chemical safety cabinet", "Outside the main facility perimeter fence"],
+          "correct_answer": 1,
+          "explanation": "Fire extinguishers should be placed near every laboratory door for easy access during emergencies."
+        },
+        {
+          "id": "MCQ-055",
+          "question": "What type of safe heating device is preferred over hot plates, boiling rings, or naked Bunsen burners?",
+          "options": ["Micro-incinerators", "Temperature-controlled heating devices such as water baths", "Open gas pipes", "High temperature autoclaves"],
+          "correct_answer": 1,
+          "explanation": "Temperature-controlled heating devices such as water baths are preferred as they are safer than hot plates, boiling rings, or Bunsen burners."
+        }
+      ]
+    },
+    {
+      "section_title": "Post Exposure Prophylaxis (PEP)",
+      "questions": [
+        {
+          "id": "MCQ-057",
+          "question": "Post Exposure Prophylaxis (PEP) is a medical intervention provided to prevent infection in an individual after accidental exposure to:",
+          "options": ["Corrosive alkalis and fixatives", "Blood borne pathogens such as HIV, HBV, and HCV", "Carcinogenic aromatic amines", "Toxic levels of formaldehyde gas"],
+          "correct_answer": 1,
+          "explanation": "PEP is the medical response provided to prevent infection after accidental exposure to blood borne pathogens (BBP) such as HIV, HBV, and HCV."
+        },
+        {
+          "id": "MCQ-058",
+          "question": "Clinically, Post Exposure Prophylaxis (PEP) is described as a short term treatment utilizing:",
+          "options": ["Broad spectrum antibiotics", "Anti-retroviral medications", "5% sodium bicarbonate solution", "Dermatitis topical ointments"],
+          "correct_answer": 1,
+          "explanation": "PEP is short-term anti-retroviral (ARV) treatment to reduce the likelihood of infection after potential exposure."
+        },
+        {
+          "id": "MCQ-059",
+          "question": "Following a potential occupational exposure, Post Exposure Prophylaxis should be initiated within what maximum time limit?",
+          "options": ["Within 1 to 2 hours, and not later than 72 hours", "Between 24 to 48 hours later", "Exactly 7 days after the incident occurred", "Anytime within 28 days of exposure"],
+          "correct_answer": 0,
+          "explanation": "PEP should be initiated as soon as possible, within 1-2 hours after exposure and not later than 72 hours."
+        },
+        {
+          "id": "MCQ-060",
+          "question": "For what specific duration must an anti-retroviral prophylaxis treatment regimen be continuously maintained?",
+          "options": ["7 days", "14 days", "28 days", "72 hours"],
+          "correct_answer": 2,
+          "explanation": "ARV prophylaxis treatment should continue for 28 days."
+        },
+        {
+          "id": "MCQ-061",
+          "question": "Under what clinical condition should an exposed individual's Post Exposure Prophylaxis be discontinued?",
+          "options": ["If the source patient cannot be found", "If further testing determines the source patient is uninfected", "If 24 hours have elapsed without evaluation", "If the laboratory worker has received a Hepatitis B vaccine"],
+          "correct_answer": 1,
+          "explanation": "If upon further testing the source patient is determined to be uninfected with any of the suspected infections, PEP is discontinued."
+        },
+        {
+          "id": "MCQ-062",
+          "question": "An individual is deemed eligible for Post Exposure Prophylaxis only if the significant exposure incident occurred within the past:",
+          "options": ["12 hours", "24 hours", "48 hours", "72 hours"],
+          "correct_answer": 3,
+          "explanation": "An exposed individual is eligible for PEP only if the exposure occurred within the past 72 hours."
+        },
+        {
+          "id": "MCQ-063",
+          "question": "What structural feature of an injuring instrument poses a significant risk factor for skin penetration according to eligibility criteria?",
+          "options": ["A solid micro-loop wire", "A recently used hollow bore needle contaminated with blood", "A clean glass microscope slide", "A blunt metal spatula tool"],
+          "correct_answer": 1,
+          "explanation": "A recently used hollow bore needle or other sharp object visibly contaminated with blood poses a significant risk for skin penetration and infection."
+        }
+      ]
+    },
+    {
+      "section_title": "Biorisk Management Fundamentals",
+      "questions": [
+        {
+          "id": "MCQ-064",
+          "question": "The combination of the probability of occurrence of harm and the severity of that harm where the source is a biological agent is called:",
+          "options": ["Biorisk", "Hazard", "Risk analysis", "Biohazard sign"],
+          "correct_answer": 0,
+          "explanation": "Biorisk is the combination of the probability of occurrence of harm and the severity of that harm where the source of harm is a biological agent or toxin."
+        },
+        {
+          "id": "MCQ-065",
+          "question": "What term defines the process of evaluating biorisks, accounting for existing controls, and deciding if the risk is acceptable?",
+          "options": ["Biorisk management", "Bio-risk assessment", "Biorisk mitigation", "Biorisk performance"],
+          "correct_answer": 1,
+          "explanation": "Bio-risk assessment is the process of evaluating the biorisk arising from a hazard, taking account the adequacy of any existing controls and deciding whether or not the biorisk is acceptable."
+        },
+        {
+          "id": "MCQ-066",
+          "question": "The strategic development of methods to minimize the likelihood of occurrence of a biological risk in the laboratory is a function of:",
+          "options": ["Incident Response Planning", "Biorisk Management", "Laboratory Biosafety", "Table top exercises"],
+          "correct_answer": 1,
+          "explanation": "Biorisk management involves the analysis of methods and development of strategies to minimize the likelihood of occurrence of bio-risk."
+        },
+        {
+          "id": "MCQ-085",
+          "question": "Containment principles, technologies, and practices implemented to prevent unintentional exposure or accidental release of pathogens are called:",
+          "options": ["Laboratory Biosecurity", "Laboratory Biosafety", "Biorisk Mitigation", "Hazard Communication"],
+          "correct_answer": 1,
+          "explanation": "Laboratory Biosafety refers to containment principles, technologies, and practices to prevent unintentional exposure to pathogens or their accidental release."
+        },
+        {
+          "id": "MCQ-086",
+          "question": "The protection, control, and accountability for biological materials to prevent unauthorized access, theft, loss, or intentional release is termed:",
+          "options": ["Laboratory Biosafety", "Laboratory Biosecurity", "Risk Assessment", "Administrative Control"],
+          "correct_answer": 1,
+          "explanation": "Laboratory Biosecurity is the protection, control, and accountability for biological materials to prevent unauthorized access, loss, theft, misuse, deviation, or intentional release."
+        },
+        {
+          "id": "MCQ-087",
+          "question": "Which of the following choices represents a physical control measure specific to Laboratory Biosecurity?",
+          "options": ["Chemical fume hoods", "Biological Safety Cabinets", "Doors with locks", "Routine hand washing practices"],
+          "correct_answer": 2,
+          "explanation": "Doors with locks are a physical control measure for Laboratory Biosecurity. Fume hoods and BSCs are biosafety controls."
+        },
+        {
+          "id": "MCQ-088",
+          "question": "Which control measure is common to both Laboratory Biosafety and Laboratory Biosecurity protocols?",
+          "options": ["Magnetic switches and doors", "Fences and window bars", "Personnel Management reliability and Access Control", "Chemical fume hoods"],
+          "correct_answer": 2,
+          "explanation": "Access Control, Personnel Management reliability, Inventory of biological hazard, Proper decontamination/disposal, and Proper shipping procedures are common to both."
+        },
+        {
+          "id": "MCQ-089",
+          "question": "Mathematically, Biorisk is expressed as the structural sum of:",
+          "options": ["Physical hazards and chemical hazards", "Biosafety risk and Biosecurity risk", "Assessment data and performance metrics", "Probability estimates and consequence costs"],
+          "correct_answer": 1,
+          "explanation": "Mathematically, Biorisk = Biosafety risk + Biosecurity risk."
+        },
+        {
+          "id": "MCQ-090",
+          "question": "The action and control measures put into place to reduce or eliminate risks associated with biological agents and toxins is:",
+          "options": ["Biorisk Assessment", "Biorisk Mitigation", "Biorisk Performance", "Biorisk Identification"],
+          "correct_answer": 1,
+          "explanation": "Biorisk Mitigation is the action and control measures put into place to reduce or eliminate the risk associated with biological agents and toxins."
+        },
+        {
+          "id": "MCQ-091",
+          "question": "Biorisk Performance is defined as the phase of management that involves:",
+          "options": ["Calculating the exact infectious dose", "Implementing and evaluating the entire system to ensure it works as designed", "Installing physical locks on laboratory doors", "Documenting the patient's history"],
+          "correct_answer": 1,
+          "explanation": "Biorisk Performance is the implementation of the entire biorisk management system including evaluating and assuring that the system works as designed, plus continual improvement."
+        }
+      ]
+    },
+    {
+      "section_title": "Risk Assessment",
+      "questions": [
+        {
+          "id": "MCQ-067",
+          "question": "As formulated by Kaplan and Garrick, a comprehensive risk assessment must answer three questions. Which of the following is one of those questions?",
+          "options": ["Who is the designated Biosafety Officer?", "What is the chance that it will happen?", "Which fire extinguisher is available?", "How is the hazardous waste tracked?"],
+          "correct_answer": 1,
+          "explanation": "Kaplan and Garrick's three questions are: (1) What can happen? (2) What is the chance that it will happen? (3) If it happens, what are the consequences?"
+        },
+        {
+          "id": "MCQ-068",
+          "question": "Biosafety risks are defined primarily as a mathematical or operational function of:",
+          "options": ["The concentration and total volume of reagents", "The likelihood of infection by the agent and the likelihood of exposure through an infectious route", "Engineering controls and administrative signages", "Personal protective equipment and medical history tracking"],
+          "correct_answer": 1,
+          "explanation": "Biosafety risks are defined as a function of the likelihood of infection by the agent and the likelihood of exposure through an infectious route."
+        },
+        {
+          "id": "MCQ-069",
+          "question": "What are the four core components comprising a formal Process of Risk Analysis?",
+          "options": ["Preparation, Identification, Containment, Eradication", "Assessment, Mitigation, Performance, Review", "Hazard Identification, Risk Assessment, Risk Evaluation, Risk Management", "Labelling, Signage, Fencing, Guarding"],
+          "correct_answer": 2,
+          "explanation": "The four core components of Risk Analysis are: Hazard Identification, Risk Assessment, Risk Evaluation, and Risk Management."
+        },
+        {
+          "id": "MCQ-070",
+          "question": "What is the defining difference between a laboratory hazard and a laboratory risk?",
+          "options": ["Hazard is biological, while risk is chemical", "Hazard has the potential to cause harm; risk is the likelihood of that potential harm being realized", "Hazard is manageable, while risk cannot be controlled", "There is no operational difference between the two terms"],
+          "correct_answer": 1,
+          "explanation": "A hazard is something with the potential to cause harm, and a risk is the likelihood of that potential harm being realized."
+        },
+        {
+          "id": "MCQ-071",
+          "question": "Institutional responsibility for conducting risk assessments within a laboratory facility rests with:",
+          "options": ["The Security Guard", "The Laboratory Director or Principal Investigator", "The Waste Handler", "The Federal Fire Service Inspector"],
+          "correct_answer": 1,
+          "explanation": "It is the responsibility of the Laboratory Director or the Principal Investigator to conduct a risk assessment with the support of the Biosafety Officer."
+        },
+        {
+          "id": "MCQ-072",
+          "question": "Who provides direct operational support to the Laboratory Director during the execution of a laboratory risk assessment?",
+          "options": ["The Supervisor", "The Biosafety Officer", "The Patient", "The Attending Physician"],
+          "correct_answer": 1,
+          "explanation": "The Biosafety Officer provides direct support to the Laboratory Director during risk assessments."
+        },
+        {
+          "id": "MCQ-073",
+          "question": "What is defined as the inherent ability of a microorganism to produce disease in a host organism?",
+          "options": ["Virulence", "Stability", "Pathogenicity", "Susceptibility"],
+          "correct_answer": 2,
+          "explanation": "Pathogenicity is the ability of a microorganism to produce disease in a host organism. Virulence is the degree of pathogenicity."
+        },
+        {
+          "id": "MCQ-074",
+          "question": "The specific degree or relative severity of pathogenicity possessed by a microbe is termed its:",
+          "options": ["Infectious dose", "Stability", "Virulence", "Volume threshold"],
+          "correct_answer": 2,
+          "explanation": "Virulence is the degree of pathogenicity of a microbe."
+        },
+        {
+          "id": "MCQ-075",
+          "question": "When working with an unknown biological agent of uncertain transmission mode, what route must be proactively assumed due to higher risks?",
+          "options": ["Oral transmission", "Percutaneous puncture", "Aerosol transmission", "Direct skin contact"],
+          "correct_answer": 2,
+          "explanation": "When working with an agent with uncertain mode of transmission, the potential for aerosol transmission must be considered due to the higher risk."
+        },
+        {
+          "id": "MCQ-076",
+          "question": "Environmental factors such as desiccation, sunlight exposure, ultraviolet light, and disinfectants directly alter a pathogen's:",
+          "options": ["Pathogenicity", "Susceptibility", "Stability", "Virulence"],
+          "correct_answer": 2,
+          "explanation": "Desiccation, sunlight, UV light, and chemical disinfectants affect the agent's stability in the environment."
+        },
+        {
+          "id": "MCQ-077",
+          "question": "What term describes the exact number of individual pathogens required to successfully infect a susceptible host organism?",
+          "options": ["Virulence level", "Concentration", "Infectious dose", "Stability"],
+          "correct_answer": 2,
+          "explanation": "Infectious dose is the number of pathogens required to infect a host. It varies across species and depends on the route of entry."
+        },
+        {
+          "id": "MCQ-078",
+          "question": "A laboratory worker's individual immune status is directly related to their level of:",
+          "options": ["Virulence", "Susceptibility", "Stability", "Pathogenicity"],
+          "correct_answer": 1,
+          "explanation": "A laboratory worker's immune status is directly related to his/her susceptibility to disease when working with an infectious agent."
+        },
+        {
+          "id": "MCQ-079",
+          "question": "In biological risk factors, what is the definition of concentration?",
+          "options": ["The total quantity of fluid inside a container", "The number of infectious organisms per unit volume", "The stability of an agent over time", "The geographic source of the biological sample"],
+          "correct_answer": 1,
+          "explanation": "Concentration is the number of infectious organisms per unit volume. Higher concentrations increase the risks."
+        },
+        {
+          "id": "MCQ-080",
+          "question": "Under risk assessment criteria, what does the term 'origin' refer to regarding a biological specimen?",
+          "options": ["Route of transmission", "Stability", "Geographic location, host type, or zoonotic nature", "Susceptibility"],
+          "correct_answer": 2,
+          "explanation": "Origin may refer to geographic location (domestic or foreign), host (infected or uninfected human or animal), or nature of source (potential zoonotic or associated with a disease outbreak)."
+        }
+      ]
+    },
+    {
+      "section_title": "GMLP & MLS Responsibilities",
+      "questions": [
+        {
+          "id": "MCQ-081",
+          "question": "Good Medical Laboratory Practice (GMLP) ensures that all analytical testing procedures are systematically performed according to:",
+          "options": ["The Safety Management System policy", "The Standard Operating Procedures (SOP)", "The Incident Response Plan phases", "Verbal instructions from supervisors"],
+          "correct_answer": 1,
+          "explanation": "GMLP ensures that laboratory tests are performed according to Standard Operating Procedures (SOP)."
+        },
+        {
+          "id": "MCQ-082",
+          "question": "Which of the following is classified as one of the specific sub-specialization areas for a Medical Laboratory Scientist?",
+          "options": ["Industrial Toxicology", "Histopathology", "Nuclear Physics", "Environmental Architecture"],
+          "correct_answer": 1,
+          "explanation": "MLS specialization areas include Histopathology, Chemical Pathology, Virology, Hematology, and Microbiology."
+        },
+        {
+          "id": "MCQ-083",
+          "question": "Protection of privacy, physical integrity, consent, right to information, and self-determination represent the scientist's responsibility to:",
+          "options": ["The Biosafety Officer", "The Laboratory Director", "The Patient", "The Requesting Physician"],
+          "correct_answer": 2,
+          "explanation": "MLS responsibilities to the patient include: protection of privacy, physical integrity, consent, right to information, and self-determination."
+        },
+        {
+          "id": "MCQ-084",
+          "question": "What type of approved document outlines an approved method of carrying out an investigation within the laboratory?",
+          "options": ["Safety Data Sheet", "Standard Operating Procedure (SOP)", "Incident Response Plan", "Hazard Communication program"],
+          "correct_answer": 1,
+          "explanation": "A Standard Operating Procedure (SOP) is an approved method of carrying out an investigation in the laboratory."
+        }
+      ]
+    },
+    {
+      "section_title": "Incident Response",
+      "questions": [
+        {
+          "id": "MCQ-092",
+          "question": "What type of incident response exercise involves facilitated, discussion-based scenarios where personnel meet to discuss roles and decision-making?",
+          "options": ["Functional exercise", "Table top exercise", "Quantifiable metric test", "Security drill"],
+          "correct_answer": 1,
+          "explanation": "Table top exercises are facilitated, discussion-based exercises where personnel meet to discuss roles, responsibilities, coordination and decision making on a given scenario."
+        },
+        {
+          "id": "MCQ-093",
+          "question": "What emergency training tool allows laboratory personnel to validate readiness by performing duties in a simulated environment?",
+          "options": ["Table top exercise", "Functional exercise", "Written program review", "Hazard classification"],
+          "correct_answer": 1,
+          "explanation": "Functional exercises allow personnel to validate their readiness for emergencies by performing their duties in a simulated environment."
+        },
+        {
+          "id": "MCQ-094",
+          "question": "What is the standard operational acronym that outlines the six consecutive phases of an active Incident Response Plan?",
+          "options": ["IEPCC", "PR-SISCO", "PICERL", "ESE-IAP"],
+          "correct_answer": 2,
+          "explanation": "PICERL stands for: Preparation, Identification, Containment, Eradication, Recovery, Lessons Learned."
+        },
+        {
+          "id": "MCQ-095",
+          "question": "In the structured execution of an incident response plan, what phase immediately follows the Identification step?",
+          "options": ["Eradication", "Containment", "Recovery", "Lessons learned"],
+          "correct_answer": 1,
+          "explanation": "In PICERL, Containment immediately follows Identification. The order is: Preparation → Identification → Containment → Eradication → Recovery → Lessons Learned."
+        },
+        {
+          "id": "MCQ-096",
+          "question": "What specific professional group is organized within an institution to conduct incident response activities following a security breach?",
+          "options": ["Federal Fire Service Department", "Computer Security Incident Response Team (CSIRT)", "Safety Management System Board", "Public Health Risk Communication Unit"],
+          "correct_answer": 1,
+          "explanation": "CSIRT (Computer Security Incident Response Team) is the group previously selected to conduct incident response activities."
+        }
+      ]
+    },
+    {
+      "section_title": "Hazard Communication & Effective Biorisk Management",
+      "questions": [
+        {
+          "id": "MCQ-097",
+          "question": "The Hazard Communication Standard establishes regulatory mandates that guarantee all facility workers the:",
+          "options": ["Right to refuse specimen processing", "Right to know and right to understand", "Authority to alter Standard Operating Procedures", "Access to personal patient medical charts"],
+          "correct_answer": 1,
+          "explanation": "The Hazard Communication Standard gives workers the right to know and the right to understand chemical hazards in their workplace."
+        },
+        {
+          "id": "MCQ-098",
+          "question": "Which document must be actively maintained in the workplace as a core component of the Hazard Communication Standard?",
+          "options": ["Universal request form", "Safety Data Sheets", "Incident Response logbook", "Biometric data sheet"],
+          "correct_answer": 1,
+          "explanation": "Safety Data Sheets (SDS) must be actively maintained as a core component of the Hazard Communication Standard."
+        },
+        {
+          "id": "MCQ-099",
+          "question": "Which of the following is an operational requirement for ensuring an effective long-term biorisk management system?",
+          "options": ["Eliminating all chemical fume hoods", "Continuous monitoring, supervision, and review meetings", "Discontinuing administrative control signs", "Utilizing paper-based client records exclusively"],
+          "correct_answer": 1,
+          "explanation": "Effective biorisk management requires continuous monitoring, supervision, review meetings, drills, and data collection."
+        },
+        {
+          "id": "MCQ-100",
+          "question": "Carrying out routine safety audits, taking history of agents, and maintaining alert or alarm systems are primary methods used to:",
+          "options": ["Eliminate physical sharps completely", "Identify biorisks within the laboratory", "Neutralize concentrated alkaline spills", "Vacuum-seal biological safety cabinets"],
+          "correct_answer": 1,
+          "explanation": "These are primary methods used to identify biorisks within the laboratory, as part of the biorisk identification process."
+        }
+      ]
+    }
+  ]
+}
