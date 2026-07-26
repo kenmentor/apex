@@ -24,7 +24,7 @@ export const DEPARTMENTS_DATA = [
     title: 'Information Technology',
     levels: {
       '100 Level': [ 'MTH 101', 'COS 101', 'COS 102', 'GSS 101', 'GSS 102'],
-      '200 Level': ['IFT 201', 'IFT 202', 'COS 201', 'GSS 212', 'GSS 201'],
+      '200 Level': ['IFT 201', 'IFT 202', 'IFT 212', 'COS 201', 'GSS 212', 'GSS 201'],
       '300 Level': ['IFT 301', 'IFT 302', 'IFT 303'],
       '400 Level': ['IFT 401', 'IFT 402'],
     },

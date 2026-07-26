@@ -34,6 +34,7 @@ export default function FlashCardsPage() {
       headers: { Authorization: `Bearer ${getToken()}` },
     })
       .then(r => {
+        if (r.status === 401) throw new Error('SESSION_EXPIRED')
         if (!r.ok) throw new Error('Failed to load flash cards')
         return r.json()
       })
@@ -42,8 +43,12 @@ export default function FlashCardsPage() {
         setCards(items)
         setLoading(false)
       })
-      .catch(() => {
-        setError('Failed to load flash cards. Please try again.')
+      .catch(e => {
+        if (e.message === 'SESSION_EXPIRED') {
+          setError('Your session has expired. Please sign in again to view flash cards.')
+        } else {
+          setError('Failed to load flash cards. Please try again.')
+        }
         setLoading(false)
       })
   }, [formattedCode])
@@ -83,8 +88,14 @@ export default function FlashCardsPage() {
             </div>
             <h2 className="text-lg font-bold">Unable to Load</h2>
             <p className="text-sm text-muted-foreground">{error}</p>
-            <Button className="mt-2" onClick={() => router.push(`/courses/${paramCode.toLowerCase()}`)}>
-              Back to Course
+            <Button className="mt-2" onClick={() => {
+              if (error.includes('expired')) {
+                window.location.href = '/auth'
+              } else {
+                router.push(`/courses/${paramCode.toLowerCase()}`)
+              }
+            }}>
+              {error.includes('expired') ? 'Sign In' : 'Back to Course'}
             </Button>
           </div>
         </Card>
