@@ -160,6 +160,16 @@ export const DEPARTMENTS_DATA = [
     },
   },
   {
+    code: 'ENT',
+    title: 'Entrepreneurship',
+    levels: {
+      '100 Level': ['ENT 111', 'GSS 101'],
+      '200 Level': ['ENT 211', 'ENT 212', 'GSS 212'],
+      '300 Level': ['ENT 311', 'ENT 312'],
+      '400 Level': ['ENT 411'],
+    },
+  },
+  {
     code: 'ECO',
     title: 'Economics',
     levels: {

@@ -1,0 +1,514 @@
+[
+  {
+    "courseCode": "ENT 211",
+    "section": "1.1 Concept of Entrepreneurship",
+    "id": "ENT-M1-TH001",
+    "question": "Define entrepreneurship and explain why it is regarded as a dynamic economic process.",
+    "keywords": ["entrepreneurship", "economic activity", "dynamic", "value creation", "risk", "opportunity"],
+    "mainConcepts": [
+      "Entrepreneurship is the process of identifying opportunities, creating value, and bearing the associated risks to launch and grow a business",
+      "It is an economic activity involving the creation and distribution of value in exchange for financial gain",
+      "It is dynamic because entrepreneurs must continuously adapt, learn, and respond to changing environments",
+      "Joseph Schumpeter linked entrepreneurship to innovation and 'creative destruction'",
+      "Entrepreneurship combines innovation, risk-bearing, and resource mobilization"
+    ],
+    "referenceAnswer": "Entrepreneurship is the process of identifying business opportunities, creating value, and accepting the associated risks in order to establish and grow a venture.\n\nIt is an economic activity because it mobilizes resources (land, labour, capital) to produce goods and services exchanged for profit. It is dynamic because markets, technology, and customer needs constantly change, requiring the entrepreneur to adapt, innovate, and keep learning.\n\nJoseph Schumpeter described the entrepreneur as an innovator who carries out 'new combinations' and drives 'creative destruction' - the process by which innovations replace outdated products, firms, and industries.\n\nThe essence of entrepreneurship lies in the combination of innovation, value creation, and calculated risk-taking. It applies across agriculture, trade, services, technology, and social ventures, and it is a key engine of job creation and economic growth.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.2 Meaning of an Entrepreneur",
+    "id": "ENT-M1-TH002",
+    "question": "Define an entrepreneur and describe the views of Cantillon, Say, and Schumpeter on the entrepreneur.",
+    "keywords": ["entrepreneur", "Cantillon", "Say", "Schumpeter", "risk", "innovation", "resources"],
+    "mainConcepts": [
+      "An entrepreneur identifies opportunities, mobilizes resources, and assumes risk to establish and run a business",
+      "Richard Cantillon: the entrepreneur is a risk-taker who buys at a known price and sells at an uncertain one",
+      "Jean-Baptiste Say: the entrepreneur shifts resources from lower to higher productivity",
+      "Joseph Schumpeter: the entrepreneur is the innovator who introduces new combinations",
+      "The entrepreneur's reward for successful risk-bearing is profit"
+    ],
+    "referenceAnswer": "An entrepreneur is a person who identifies business opportunities, mobilizes resources, and assumes financial risk to establish and run a profitable venture.\n\nRichard Cantillon (early 18th century) was among the first to describe the entrepreneur as a risk-taker - one who buys at a certain price and sells at an uncertain one.\n\nJean-Baptiste Say defined the entrepreneur as one who 'shifts economic resources out of an area of lower productivity into an area of higher productivity and greater yield.'\n\nJoseph Schumpeter emphasized the entrepreneur as an innovator who introduces new products, processes, markets, or organizational forms - driving 'creative destruction.'\n\nIn economic theory, the entrepreneur's reward is profit, which is the return for successfully bearing risk and organizing production.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.2 Meaning of an Entrepreneur",
+    "id": "ENT-M1-TH003",
+    "question": "Differentiate between an entrepreneur, an inventor, and a small business owner.",
+    "keywords": ["entrepreneur", "inventor", "small business owner", "commercialize", "innovation", "growth"],
+    "mainConcepts": [
+      "An inventor creates something new but may not commercialize it",
+      "An entrepreneur converts ideas and inventions into marketable, profitable ventures",
+      "Entrepreneurship emphasizes innovation, opportunity, and growth",
+      "Small business ownership may be replicative with limited innovation",
+      "Not all small business owners are entrepreneurs, and vice versa"
+    ],
+    "referenceAnswer": "An inventor is a person who creates something new - a product, process, or idea - but may not bring it to market.\n\nAn entrepreneur is the person who takes that invention or idea and converts it into a commercially viable business, organizing resources and bearing risk.\n\nA small business owner may run a business that simply replicates existing models with little innovation, while an entrepreneur typically emphasizes innovation, opportunity recognition, and growth. However, the categories overlap: a small business owner can be an entrepreneur if the venture is innovative and growth-oriented.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.3 Key Characteristics of an Entrepreneur",
+    "id": "ENT-M1-TH004",
+    "question": "List and explain six key characteristics of a successful entrepreneur.",
+    "keywords": ["characteristics", "self-confidence", "risk", "persistence", "innovation", "leadership"],
+    "mainConcepts": [
+      "Self-confidence: belief in one's ability to succeed",
+      "Calculated risk-taking: weighing potential gains against losses",
+      "Persistence and determination: continuing despite setbacks",
+      "Innovation and creativity: seeing problems as opportunities",
+      "High need for achievement (McClelland)",
+      "Vision, leadership, and resilience"
+    ],
+    "referenceAnswer": "Key characteristics of successful entrepreneurs include:\n\n1. Self-confidence - belief in their own abilities to succeed despite uncertainty.\n2. Calculated risk-taking - they take informed risks, weighing potential gains against losses.\n3. Persistence and determination - they continue pushing forward after setbacks.\n4. Innovation and creativity - they see problems as opportunities and seek new solutions.\n5. High need for achievement - David McClelland identified a strong drive to achieve as a distinguishing entrepreneurial trait.\n6. Vision and leadership - they clearly picture the future direction of the business and inspire others to follow.\n\nOther important traits include internal locus of control, adaptability, resilience, goal orientation, and a willingness to work long hours and make sacrifices.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.3 Key Characteristics of an Entrepreneur",
+    "id": "ENT-M1-TH005",
+    "question": "Explain the concepts of 'locus of control' and 'need for achievement' in relation to entrepreneurship.",
+    "keywords": ["locus of control", "need for achievement", "McClelland", "internal", "motivation"],
+    "mainConcepts": [
+      "Internal locus of control: belief that one controls one's own destiny through effort",
+      "External locus of control: belief that outcomes depend on luck or others",
+      "Entrepreneurs typically have an internal locus of control",
+      "Need for achievement: a strong drive to accomplish challenging goals",
+      "McClelland linked high need for achievement to entrepreneurial behaviour"
+    ],
+    "referenceAnswer": "Locus of control refers to how people perceive the cause of events in their lives. People with an internal locus of control believe their success depends on their own efforts and decisions, while those with an external locus of control attribute outcomes to fate, luck, or other people.\n\nEntrepreneurs typically display an internal locus of control - they take responsibility for outcomes and believe their actions shape results.\n\nThe 'need for achievement' (nAch), popularized by psychologist David McClelland, is a strong desire to accomplish challenging goals and excel. McClelland's research found that people with a high need for achievement are more likely to become successful entrepreneurs, since they set challenging goals and persist until they are met.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.4 Functions of an Entrepreneur",
+    "id": "ENT-M1-TH006",
+    "question": "Explain the core functions of an entrepreneur.",
+    "keywords": ["functions", "risk", "innovation", "resources", "management", "job creation"],
+    "mainConcepts": [
+      "Combining and organizing the factors of production",
+      "Bearing risk and uncertainty",
+      "Innovation - introducing new products, processes, or markets",
+      "Decision-making and management",
+      "Job creation, marketing, and capital formation"
+    ],
+    "referenceAnswer": "The core functions of an entrepreneur include:\n\n1. Organization: combining land, labour, and capital into a productive enterprise.\n2. Risk-bearing: accepting the financial uncertainty of the venture, including uninsurable uncertainty.\n3. Innovation: introducing new products, processes, markets, or ways of doing business.\n4. Decision-making: making key strategic choices about what, how, and where to produce.\n5. Management: planning, organizing, directing, and controlling operations.\n6. Resource mobilization: raising capital, acquiring equipment, and hiring staff.\n7. Marketing and distribution: getting products to customers efficiently.\n8. Job creation and capital formation: employing workers and reinvesting profits for growth.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.5 Types of Entrepreneurs",
+    "id": "ENT-M1-TH007",
+    "question": "Classify entrepreneurs and describe each type.",
+    "keywords": ["types", "innovating", "imitating", "fabian", "drone", "laggard", "necessity", "opportunity"],
+    "mainConcepts": [
+      "By innovation: innovating, imitating, fabian, drone, laggard",
+      "By motivation: necessity-driven, opportunity-driven",
+      "By ownership: first-generation, second-generation",
+      "By approach: serial, lifestyle, high-growth, social",
+      "By source: spontaneous, induced, technical, pure"
+    ],
+    "referenceAnswer": "Entrepreneurs can be classified in several ways:\n\nBy innovation: Innovating entrepreneurs introduce original products or processes; imitating entrepreneurs copy and adapt innovations; fabian entrepreneurs are cautious and adopt change slowly; drone entrepreneurs refuse all change; laggards are the last to accept innovation.\n\nBy motivation: Necessity-driven entrepreneurs start businesses for survival; opportunity-driven entrepreneurs are motivated by attractive market opportunities.\n\nBy ownership: First-generation entrepreneurs build ventures without a family business background; second-generation entrepreneurs inherit or continue family businesses.\n\nBy approach: Serial entrepreneurs launch multiple ventures; lifestyle entrepreneurs build businesses around a desired lifestyle; high-growth entrepreneurs pursue scalable ventures; social entrepreneurs solve social or environmental problems.\n\nBy source: Spontaneous entrepreneurs act from inner drive; induced entrepreneurs respond to government incentives; technical entrepreneurs use technical expertise; pure entrepreneurs own and run the venture personally.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.6 The Entrepreneurial Mindset",
+    "id": "ENT-M1-TH008",
+    "question": "What is the entrepreneurial mindset and what are its key components?",
+    "keywords": ["mindset", "opportunity", "growth", "resilience", "proactive", "effectuation"],
+    "mainConcepts": [
+      "A way of thinking that seeks opportunities and solves problems",
+      "Growth mindset (Carol Dweck): abilities can be developed through effort",
+      "Proactivity, resourcefulness, comfort with ambiguity",
+      "Self-efficacy, adaptive resilience, continuous learning",
+      "Effectuation: building from available means"
+    ],
+    "referenceAnswer": "The entrepreneurial mindset is a way of thinking characterized by opportunity focus, problem-solving, and a willingness to embrace calculated risks.\n\nKey components include:\n1. Growth mindset (Carol Dweck) - the belief that abilities can be developed through effort and learning.\n2. Opportunity recognition - the ability to identify unmet needs and market gaps.\n3. Proactivity - acting on opportunities before being forced to react.\n4. Resourcefulness - achieving goals with limited resources.\n5. Comfort with ambiguity - operating in uncertain conditions.\n6. Self-efficacy - belief in one's ability to accomplish tasks.\n7. Adaptive resilience - recovering and growing after setbacks.\n8. Continuous learning and curiosity.\n9. Effectuation - building a venture from the means at hand.\n\nThe mindset is not fixed at birth; it can be developed through education, experience, and deliberate practice.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.7 Entrepreneur vs Manager",
+    "id": "ENT-M1-TH009",
+    "question": "Differentiate between an entrepreneur and a manager.",
+    "keywords": ["entrepreneur", "manager", "ownership", "risk", "profit", "salary"],
+    "mainConcepts": [
+      "Entrepreneur owns the venture and bears risk; manager is a salaried employee",
+      "Entrepreneur earns profit; manager earns a fixed salary",
+      "Entrepreneur creates the venture; manager operates it",
+      "Entrepreneur sets vision; manager executes",
+      "Both perform planning, organizing, leading, controlling"
+    ],
+    "referenceAnswer": "The entrepreneur and manager differ in several ways:\n\n1. Ownership: The entrepreneur owns the venture; the manager is a salaried employee.\n2. Risk: The entrepreneur personally bears financial risk; the manager generally does not.\n3. Reward: The entrepreneur earns profit (which may be negative); the manager earns a fixed salary.\n4. Orientation: The entrepreneur is opportunity- and innovation-driven; the manager focuses on efficiently administering existing operations.\n5. Decision autonomy: The entrepreneur has full autonomy and sets the vision; the manager works within an established framework.\n6. Time orientation: Entrepreneurs plan for long-term growth; managers often focus on short-term targets.\n\nDespite these differences, both perform the management functions of planning, organizing, leading, and controlling.",
+    "difficulty": "easy",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.8 Entrepreneur vs Intrapreneur",
+    "id": "ENT-M1-TH010",
+    "question": "Differentiate between an entrepreneur and an intrapreneur.",
+    "keywords": ["intrapreneur", "entrepreneur", "organization", "risk", "ownership", "innovation"],
+    "mainConcepts": [
+      "Intrapreneur is an employee who acts like an entrepreneur within an organization",
+      "Entrepreneur operates independently at personal financial risk",
+      "Employer bears financial risk for intrapreneurs",
+      "Intrapreneur does not own the venture; company does",
+      "Intrapreneurship popularized by Gifford Pinchot III"
+    ],
+    "referenceAnswer": "An intrapreneur is an employee who behaves like an entrepreneur - innovating and building new products or ventures - within an existing organization.\n\nThe key differences from an entrepreneur:\n\n1. Independence: The entrepreneur operates independently; the intrapreneur works within a company's structure.\n2. Risk: The entrepreneur bears personal financial risk; in intrapreneurship, the employer absorbs the financial risk.\n3. Ownership: The entrepreneur owns the venture; intrapreneurial projects belong to the company.\n4. Reward: The entrepreneur earns profit and equity; the intrapreneur earns salary, bonuses, and recognition.\n5. Autonomy: The entrepreneur has full decision-making autonomy; the intrapreneur needs management approval.\n6. Challenges: Intrapreneurs face corporate politics and bureaucracy; entrepreneurs face market challenges.\n\nBoth share entrepreneurial traits such as creativity, initiative, and calculated risk-taking. The term 'intrapreneur' was popularized by Gifford Pinchot III.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.9 Constraints to Entrepreneurship",
+    "id": "ENT-M1-TH011",
+    "question": "Explain the major constraints to entrepreneurship in developing economies.",
+    "keywords": ["constraints", "finance", "infrastructure", "bureaucracy", "policy", "culture", "skills"],
+    "mainConcepts": [
+      "Financial constraints: lack of collateral, high interest rates",
+      "Infrastructural constraints: poor power, roads, telecom",
+      "Bureaucratic constraints: slow registration and licensing",
+      "Policy constraints: political instability, inconsistent policies",
+      "Social/cultural constraints: fear of failure, stigma",
+      "Educational/skill constraints: theoretical curricula, skill gaps"
+    ],
+    "referenceAnswer": "Major constraints to entrepreneurship in developing economies include:\n\n1. Financial constraints: difficulty accessing finance due to lack of collateral, high interest rates, and limited credit.\n2. Infrastructural constraints: unreliable power, poor roads, and limited telecom raise operating costs.\n3. Bureaucratic constraints: complex, slow, and costly registration and licensing procedures.\n4. Policy constraints: political instability and inconsistent government policies create uncertainty.\n5. Social and cultural constraints: attitudes that stigmatize failure or discourage risk-taking.\n6. Educational constraints: curricula focused on theory without practical entrepreneurial skills.\n7. Psychological constraints: fear of failure and low self-confidence.\n8. Corruption and weak legal protection of property and contracts.\n9. Limited access to market information, technology, skilled manpower, and affordable workspace.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.10 Factors Stimulating Entrepreneurship",
+    "id": "ENT-M1-TH012",
+    "question": "Explain the factors that stimulate entrepreneurship in an economy.",
+    "keywords": ["factors", "economic", "social", "psychological", "government", "technology"],
+    "mainConcepts": [
+      "Economic: availability of capital, market demand, infrastructure",
+      "Social: role models, entrepreneurial culture, family traditions",
+      "Psychological: need for achievement, self-confidence",
+      "Government support: incentives, SME schemes, stable policies",
+      "Technological: digital tools, internet access"
+    ],
+    "referenceAnswer": "Factors that stimulate entrepreneurship include:\n\n1. Economic factors: availability of capital and credit, growing markets, expanding incomes, financial inclusion, and good infrastructure.\n2. Social factors: a culture that celebrates success and tolerates failure, successful role models, and family business traditions.\n3. Psychological factors: high need for achievement, self-confidence, and an internal locus of control.\n4. Government factors: tax incentives, SME loan schemes, privatization, streamlined registration, and political stability.\n5. Educational factors: entrepreneurship education, vocational training, and incubators.\n6. Technological factors: access to digital tools, the internet, and modern technology.\n7. Market factors: market liberalization, trade openness, and diaspora remittances.\n\nThese factors together create an enabling environment in which entrepreneurship can flourish.",
+    "difficulty": "medium",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.11 How to Become an Entrepreneur",
+    "id": "ENT-M1-TH013",
+    "question": "Outline the steps required to become a successful entrepreneur.",
+    "keywords": ["steps", "skills", "opportunity", "business plan", "funding", "launch", "growth"],
+    "mainConcepts": [
+      "Develop relevant skills and knowledge",
+      "Identify a viable business opportunity",
+      "Conduct market research and validate the idea",
+      "Write a business plan with financial projections",
+      "Raise funds, register, launch, and grow"
+    ],
+    "referenceAnswer": "Steps to becoming a successful entrepreneur:\n\n1. Develop skills and knowledge through education, training, and industry experience.\n2. Identify a viable opportunity that matches your skills, interests, and market demand.\n3. Conduct market research to understand customers, competition, and demand.\n4. Validate the idea by testing it with real potential customers.\n5. Write a business plan covering the concept, strategy, marketing, and financial projections.\n6. Choose an appropriate business structure and register the business.\n7. Raise capital from personal savings, family, or small business loans.\n8. Launch, starting small to limit risk, and use a pilot to test operations.\n9. Build a network of mentors, customers, and partners.\n10. Learn continuously, adapt, and grow the business gradually.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.12 Role of Entrepreneurship in Economic Development",
+    "id": "ENT-M1-TH014",
+    "question": "Explain the role of entrepreneurship in economic development.",
+    "keywords": ["economic development", "jobs", "innovation", "wealth", "industrialization", "poverty"],
+    "mainConcepts": [
+      "Job creation and unemployment reduction",
+      "Wealth creation and tax revenue",
+      "Industrialization and import substitution",
+      "Innovation and technological progress",
+      "Balanced regional development and poverty reduction"
+    ],
+    "referenceAnswer": "Entrepreneurship plays a central role in economic development:\n\n1. Job creation: ventures employ workers, reducing unemployment.\n2. Wealth creation: enterprises generate income and profit, raising living standards.\n3. Tax revenue: profitable firms pay taxes that fund public services.\n4. Industrialization: local manufacturing substitutes for imports and saves foreign exchange.\n5. Innovation and technology: entrepreneurs introduce and spread new technologies.\n6. Balanced regional development: ventures in rural areas reduce urban-rural imbalances.\n7. Poverty reduction: entrepreneurship creates income opportunities for the poor.\n8. Self-reliance: local production reduces dependence on imports and foreign aid.\n9. Multiplier effect: entrepreneurial spending generates further economic activity.\n10. Human capital development: entrepreneurs train and develop the workforce.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.5 Types of Entrepreneurs",
+    "id": "ENT-M1-TH015",
+    "question": "Distinguish between necessity-driven and opportunity-driven entrepreneurs.",
+    "keywords": ["necessity", "opportunity", "push", "pull", "motivation"],
+    "mainConcepts": [
+      "Necessity-driven: started for survival due to unemployment or low income",
+      "Opportunity-driven: started to pursue an attractive market opportunity",
+      "Push factors drive necessity entrepreneurship",
+      "Pull factors drive opportunity entrepreneurship",
+      "Opportunity-driven firms tend to have higher growth potential"
+    ],
+    "referenceAnswer": "Necessity-driven entrepreneurs start businesses mainly to earn income for survival - often because they are unemployed, underemployed, or dissatisfied with paid work. They are pushed into entrepreneurship by negative pressures (push factors).\n\nOpportunity-driven entrepreneurs start businesses because they have spotted an attractive market opportunity and want to pursue it - motivated by positive attractions (pull factors) such as independence, achievement, and profit.\n\nGenerally, opportunity-driven entrepreneurs are associated with better planning and higher growth potential, while necessity-driven ventures are often survival-oriented. However, both are important to the economy.",
+    "difficulty": "easy",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.6 The Entrepreneurial Mindset",
+    "id": "ENT-M1-TH016",
+    "question": "Explain the concept of 'effectuation' and how it differs from 'causation' in entrepreneurship.",
+    "keywords": ["effectuation", "causation", "means", "goals", "Sarasvathy"],
+    "mainConcepts": [
+      "Effectuation: start with available means and build from there",
+      "Causation: start with a goal and find the means to achieve it",
+      "Effectuation is associated with Saras Sarasvathy",
+      "Entrepreneurs often use effectual reasoning in uncertainty",
+      "Means include who you are, what you know, and whom you know"
+    ],
+    "referenceAnswer": "Causation reasoning begins with a predefined goal and works backward to identify the means needed to achieve it - like a manager executing a plan.\n\nEffectuation (associated with Saras Sarasvathy) starts with the means at hand - who you are, what you know, and whom you know - and uses them creatively to create new goals and opportunities.\n\nEntrepreneurs facing high uncertainty often use effectual reasoning: they take small affordable actions, partner with willing stakeholders, and remain flexible about the end result. Effectuation emphasizes what you can create with available resources, while causation emphasizes predicting and controlling to reach a fixed goal.",
+    "difficulty": "hard",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.1 Concept of Entrepreneurship",
+    "id": "ENT-M1-TH017",
+    "question": "Explain Schumpeter's theory of 'creative destruction' and its relevance to entrepreneurship.",
+    "keywords": ["Schumpeter", "creative destruction", "innovation", "new combinations", "disruption"],
+    "mainConcepts": [
+      "Entrepreneurs introduce new combinations that disrupt existing industries",
+      "Innovation replaces outdated products, firms, and industries",
+      "Creative destruction drives economic progress",
+      "Examples: streaming replacing video rental, mobile phones replacing landlines",
+      "The entrepreneur is the agent of this change"
+    ],
+    "referenceAnswer": "Creative destruction is a concept developed by Joseph Schumpeter. It describes the process by which entrepreneurial innovation continuously revolutionizes the economic structure, destroying the old and creating the new.\n\nEntrepreneurs introduce 'new combinations' - new products, processes, markets, sources of supply, or organizational forms. These innovations disrupt existing industries and firms, replacing them with more efficient alternatives.\n\nExamples include streaming services replacing video rental stores, and mobile phones replacing landlines.\n\nRelevance: creative destruction explains why innovation-driven entrepreneurship is the engine of long-term economic growth and why markets are never static.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.2 Meaning of an Entrepreneur",
+    "id": "ENT-M1-TH018",
+    "question": "Explain the difference between 'pure entrepreneurs', 'induced entrepreneurs', and 'spontaneous entrepreneurs'.",
+    "keywords": ["pure", "induced", "spontaneous", "classification", "motivation"],
+    "mainConcepts": [
+      "Pure entrepreneur: personally owns and runs the enterprise",
+      "Induced entrepreneur: encouraged by government incentives",
+      "Spontaneous entrepreneur: driven by inner urge and ambition",
+      "The classification is based on how entrepreneurship is triggered",
+      "Government incentives induce entrepreneurship in certain sectors"
+    ],
+    "referenceAnswer": "These classifications describe how entrepreneurial activity is triggered:\n\nA pure entrepreneur is one who personally owns, operates, and bears the risk of an enterprise - the classic independent entrepreneur.\n\nAn induced entrepreneur is one who is encouraged or induced by government incentives such as grants, subsidies, or support schemes to establish a venture in a targeted sector.\n\nA spontaneous entrepreneur is one who is motivated primarily by inner drive and personal ambition, starting a business without external inducement.\n\nThe distinction matters because governments can promote development by designing incentives that 'induce' entrepreneurship in priority industries, while spontaneous entrepreneurship tends to arise naturally from individual motivation.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.3 Key Characteristics of an Entrepreneur",
+    "id": "ENT-M1-TH019",
+    "question": "Explain the difference between internal and external locus of control and its significance for entrepreneurs.",
+    "keywords": ["locus of control", "internal", "external", "self-efficacy", "attribution"],
+    "mainConcepts": [
+      "Internal locus of control: outcomes depend on one's own actions",
+      "External locus of control: outcomes depend on fate, luck, or others",
+      "Entrepreneurs typically have an internal locus of control",
+      "It supports persistence and personal responsibility",
+      "Related to self-efficacy - belief in one's capabilities"
+    ],
+    "referenceAnswer": "Locus of control is a psychological concept describing how much people believe they control their own outcomes.\n\nInternal locus of control: a person believes their success or failure results from their own efforts, decisions, and abilities. Such people take personal responsibility for outcomes.\n\nExternal locus of control: a person attributes outcomes to luck, fate, or powerful others, feeling they have little control over their lives.\n\nSignificance: entrepreneurs typically have an internal locus of control, which supports persistence, proactive behaviour, and accountability. It is closely related to self-efficacy - the belief that one can perform the tasks needed to succeed.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.7 Entrepreneur vs Manager",
+    "id": "ENT-M1-TH020",
+    "question": "Explain how an owner-manager combines the roles of entrepreneur and manager.",
+    "keywords": ["owner-manager", "entrepreneur", "manager", "ownership", "operations"],
+    "mainConcepts": [
+      "An owner-manager both owns and operates the venture",
+      "Combines entrepreneurial risk-bearing with managerial functions",
+      "Common in small and medium enterprises",
+      "Delegation allows owners to focus on strategy",
+      "The roles are not mutually exclusive"
+    ],
+    "referenceAnswer": "An owner-manager is a person who both owns the business and manages its day-to-day operations - combining the entrepreneurial role (ownership, risk-bearing, setting vision) with the managerial role (planning, organizing, directing, controlling).\n\nThis arrangement is common in small and medium enterprises where the founder handles both roles, especially in the early stages.\n\nAs the business grows, owner-managers often hire professional managers to run daily operations while retaining ownership, strategy, and overall risk. The example shows that the boundary between entrepreneur and manager is not rigid - one person can perform both functions.",
+    "difficulty": "easy",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.9 Constraints to Entrepreneurship",
+    "id": "ENT-M1-TH021",
+    "question": "Explain how infrastructural constraints (power, roads, and telecom) hinder entrepreneurship.",
+    "keywords": ["infrastructure", "power", "roads", "telecom", "costs", "constraints"],
+    "mainConcepts": [
+      "Unreliable power forces generator use and raises costs",
+      "Poor roads raise logistics and distribution costs",
+      "Limited telecom restricts market access",
+      "Infrastructure gaps hurt all business operations",
+      "Affordable infrastructure enables entrepreneurship"
+    ],
+    "referenceAnswer": "Infrastructural constraints significantly hinder entrepreneurship:\n\n1. Unreliable power supply forces businesses to buy generators and fuel, raising operating costs, disrupting production, and shrinking profit margins.\n2. Poor road and transport networks raise the cost of moving raw materials and finished goods, delay deliveries, and damage perishable products.\n3. Limited and expensive telecommunications restrict access to customers, suppliers, and market information, especially for small businesses.\n\nTogether, poor infrastructure raises the cost of doing business, reduces competitiveness, and discourages investment in production. Improving infrastructure lowers operating costs and expands market access, thereby stimulating entrepreneurship.",
+    "difficulty": "easy",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.10 Factors Stimulating Entrepreneurship",
+    "id": "ENT-M1-TH022",
+    "question": "Explain how the government can stimulate entrepreneurship through policy.",
+    "keywords": ["government", "policy", "incentives", "finance", "regulation", "infrastructure"],
+    "mainConcepts": [
+      "Provide credit facilities and loan guarantee schemes",
+      "Offer tax incentives and holidays",
+      "Simplify registration and reduce bureaucracy",
+      "Ensure political and policy stability",
+      "Invest in infrastructure and entrepreneurship education"
+    ],
+    "referenceAnswer": "Governments can stimulate entrepreneurship through:\n\n1. Access to finance: establishing SME loan schemes, microfinance, and loan guarantee programmes.\n2. Tax incentives: offering tax holidays, reliefs, and reduced rates for new or small businesses.\n3. Streamlined regulation: simplifying business registration, licensing, and compliance procedures.\n4. Policy stability: maintaining consistent, predictable economic and trade policies.\n5. Infrastructure investment: providing reliable power, roads, and telecommunications.\n6. Education and support: funding entrepreneurship education, incubators, mentorship, and advisory services.\n7. Market opening: liberalizing markets, privatizing state enterprises, and encouraging investment.\n\nTogether these policies create an enabling environment that lowers barriers and encourages venture creation.",
+    "difficulty": "easy",
+    "maxPoints": 6
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.11 How to Become an Entrepreneur",
+    "id": "ENT-M1-TH023",
+    "question": "Explain the purpose and key components of a business plan.",
+    "keywords": ["business plan", "purpose", "components", "executive summary", "marketing", "financials"],
+    "mainConcepts": [
+      "A business plan defines the venture's concept, strategy, and financials",
+      "It guides operations and attracts investors",
+      "Key parts: executive summary, market analysis, marketing plan, operations, financial projections",
+      "It forces systematic thinking about the business",
+      "It is not a guarantee of funding but a tool for planning"
+    ],
+    "referenceAnswer": "A business plan is a written document that defines what the business will do, how it will do it, and the expected financial results.\n\nIts purpose is to guide the entrepreneur's decisions and operations, and to convince investors or lenders to provide funding.\n\nKey components include:\n1. Executive summary - overview of the venture.\n2. Company description - the business concept and structure.\n3. Market analysis - customers, competition, and demand.\n4. Marketing plan - how the product will reach customers.\n5. Operations plan - production, location, and staffing.\n6. Financial plan - start-up costs, revenue forecasts, cash flow, and break-even analysis.\n\nA business plan does not guarantee funding, but it demonstrates that the entrepreneur has thought carefully about the venture.",
+    "difficulty": "easy",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.1 Concept of Entrepreneurship",
+    "id": "ENT-M1-TH024",
+    "question": "Explain the difference between commercial entrepreneurship and social entrepreneurship.",
+    "keywords": ["commercial", "social", "profit", "social impact", "sustainability"],
+    "mainConcepts": [
+      "Commercial entrepreneurship focuses on profit maximization",
+      "Social entrepreneurship focuses on solving social/environmental problems",
+      "Social enterprises use sustainable business models",
+      "Both create value and require sustainability",
+      "Social entrepreneurs may reinvest profits in the mission"
+    ],
+    "referenceAnswer": "Commercial entrepreneurship focuses on creating a profitable business - identifying opportunities, mobilizing resources, and generating profit for the owner.\n\nSocial entrepreneurship also involves creating a sustainable venture, but its primary goal is to solve a social or environmental problem - such as clean water, education, or affordable healthcare - rather than maximizing profit.\n\nSocial enterprises use sustainable business models (they must cover costs) and often reinvest surplus in their social mission. While the profit motive dominates commercial entrepreneurship, social entrepreneurs measure success by both impact and sustainability. Both forms create value for society.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.4 Functions of an Entrepreneur",
+    "id": "ENT-M1-TH025",
+    "question": "Distinguish between 'risk' and 'uncertainty' in entrepreneurship, referring to Frank Knight.",
+    "keywords": ["risk", "uncertainty", "Knight", "insurable", "unmeasurable"],
+    "mainConcepts": [
+      "Risk can be estimated or insured; uncertainty cannot",
+      "Frank Knight associated the entrepreneur with bearing uncertainty",
+      "Risk has known probabilities from past data",
+      "Uncertainty has no calculable probabilities",
+      "Entrepreneurial profit is the reward for bearing uncertainty"
+    ],
+    "referenceAnswer": "Risk, as defined by economist Frank Knight, refers to situations where outcomes are uncertain but probabilities can be estimated from past data - such as the risk of fire or theft, which can be insured.\n\nUncertainty refers to situations where outcomes cannot be predicted and probabilities cannot be calculated - such as the success of a brand-new product in an unknown market. Uncertainty cannot be insured because it is unmeasurable.\n\nKnight argued that the entrepreneur's essential function is bearing this uninsurable uncertainty, and entrepreneurial profit is the reward for doing so. This distinguishes entrepreneurial income from wages, interest, and rent.",
+    "difficulty": "hard",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.5 Types of Entrepreneurs",
+    "id": "ENT-M1-TH026",
+    "question": "Explain the characteristics and significance of the 'serial entrepreneur'.",
+    "keywords": ["serial entrepreneur", "ventures", "experience", "repeat", "innovation"],
+    "mainConcepts": [
+      "A serial entrepreneur repeatedly launches new ventures",
+      "Often exits one venture to start another",
+      "Brings accumulated experience and networks",
+      "Higher success rates in later ventures",
+      "Important source of innovation and growth"
+    ],
+    "referenceAnswer": "A serial entrepreneur is someone who repeatedly starts new business ventures, often selling or exiting one before launching another.\n\nCharacteristics: they accumulate experience, skills, and networks across ventures; they are comfortable with risk and adaptation; and they learn from each business - including failures.\n\nSignificance: serial entrepreneurs are important sources of innovation and economic dynamism. Research suggests their later ventures tend to be more successful because they build on lessons and contacts from earlier ones. They are distinct from portfolio entrepreneurs (who run several ventures at once) and from one-time founders who start a single business and stay with it.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.3 Key Characteristics of an Entrepreneur",
+    "id": "ENT-M1-TH027",
+    "question": "Explain what 'calculated risk-taking' means in entrepreneurship and why it differs from gambling.",
+    "keywords": ["calculated risk", "gambling", "analysis", "information", "risk management"],
+    "mainConcepts": [
+      "Calculated risk involves analysis and information",
+      "Gambling relies on chance without information",
+      "Entrepreneurs assess probabilities and potential returns",
+      "They manage and mitigate risks",
+      "Risk-taking is deliberate and informed"
+    ],
+    "referenceAnswer": "Calculated risk-taking means making informed decisions that involve uncertainty after analyzing the potential gains, losses, and probabilities.\n\nUnlike gambling, where outcomes depend on pure chance and no amount of information improves the odds, calculated risk in entrepreneurship involves:\n1. Gathering information about the market and competition.\n2. Estimating the likelihood of success and failure.\n3. Weighing potential returns against potential losses.\n4. Taking steps to manage and reduce risk (insurance, diversification, partnerships, phased launches).\n\nEntrepreneurs do not avoid risk, but they take it deliberately and strategically. This distinguishes their risk behaviour from reckless gambling.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.12 Role of Entrepreneurship in Economic Development",
+    "id": "ENT-M1-TH028",
+    "question": "Explain the concept of the 'multiplier effect' as it relates to entrepreneurship and economic development.",
+    "keywords": ["multiplier effect", "spending", "income", "employment", "economic activity"],
+    "mainConcepts": [
+      "Entrepreneurial spending circulates through the economy",
+      "Employee incomes are spent on other goods and services",
+      "Each unit of spending generates further economic activity",
+      "Suppliers and local businesses benefit",
+      "Multiplier effect amplifies the impact of entrepreneurship"
+    ],
+    "referenceAnswer": "The multiplier effect describes how an initial injection of spending generates further economic activity beyond its initial amount.\n\nWhen an entrepreneur invests and employs workers, those wages are spent on goods and services, creating income for other businesses and their employees. Those people then spend again, and the cycle continues - each round becoming smaller until it fades.\n\nFor example, a new factory's wages support local shops, transport providers, and suppliers, whose owners then spend in the community. The total income generated is a multiple of the original spending.\n\nThis is why entrepreneurship has a powerful impact on economic development: new ventures do not only create direct jobs, they also stimulate wider income, employment, and growth across the economy.",
+    "difficulty": "medium",
+    "maxPoints": 5
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.6 The Entrepreneurial Mindset",
+    "id": "ENT-M1-TH029",
+    "question": "Explain what it means for an entrepreneur to 'pivot' and why pivoting is important.",
+    "keywords": ["pivot", "strategy", "change", "feedback", "startup"],
+    "mainConcepts": [
+      "Pivoting means changing strategy based on feedback",
+      "It is not giving up - it is adapting",
+      "Driven by evidence about what does not work",
+      "Common in the lean startup approach",
+      "Keeps the venture aligned with the market"
+    ],
+    "referenceAnswer": "Pivoting means deliberately changing a key part of the business strategy - such as the product, target market, pricing, or business model - in response to feedback and evidence.\n\nPivoting is not abandoning the venture; it is adapting it. It happens when the current approach is not working and data (customer feedback, sales, testing) suggests a better direction.\n\nThe term is central to the lean-startup approach: build a minimum product, test it with customers, learn from the results, and pivot or persevere accordingly.\n\nPivoting is important because it keeps the venture aligned with real market demand, avoids wasting resources on failing strategies, and reflects the entrepreneurial mindset of flexibility and learning.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  },
+  {
+    "courseCode": "ENT 211",
+    "section": "1.2 Meaning of an Entrepreneur",
+    "id": "ENT-M1-TH030",
+    "question": "Explain why profit is described as the entrepreneur's reward and distinguish it from wages, interest, and rent.",
+    "keywords": ["profit", "reward", "risk", "wages", "interest", "rent"],
+    "mainConcepts": [
+      "Wages reward labour; interest rewards capital; rent rewards land",
+      "Profit rewards the entrepreneur for risk-bearing and innovation",
+      "Profit may be negative - a loss",
+      "It is residual income after paying all other factors",
+      "Profit motivates entrepreneurial activity"
+    ],
+    "referenceAnswer": "In economic theory, each factor of production earns a reward: labour earns wages, capital earns interest, and land earns rent.\n\nProfit is the residual income that remains after all costs - including wages, interest, rent, and other expenses - have been paid. It is the entrepreneur's reward for bearing risk and uncertainty, organizing production, and innovating.\n\nUnlike wages, interest, or rent, profit is not guaranteed: it can be negative, in which case the entrepreneur suffers a loss. The possibility of profit motivates entrepreneurs to bear risk and create value, while the possibility of loss disciplines poor decisions.\n\nFrank Knight emphasized that profit is the reward for bearing uninsurable uncertainty.",
+    "difficulty": "medium",
+    "maxPoints": 4
+  }
+]

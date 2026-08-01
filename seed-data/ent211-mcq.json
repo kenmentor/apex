@@ -1,0 +1,3967 @@
+{
+  "course_code": "ENT 211",
+  "course_title": "Entrepreneurship and Innovation",
+  "study_guide_title": "Module One: Concept of Entrepreneurship - Comprehensive Question Bank (300 Questions)",
+  "sections": [
+    {
+      "section_title": "1.1 Concept of Entrepreneurship",
+      "questions": [
+        {
+          "id": "ENT-M1-Q001",
+          "question": "Entrepreneurship is BEST described as the process of:",
+          "options": {
+            "a": "Running an established government agency efficiently",
+            "b": "Identifying opportunities, creating value, and bearing the associated risks to launch and grow a business",
+            "c": "Investing surplus funds in the stock market without any management role",
+            "d": "Taking over an existing company and making minor changes",
+            "e": "Working as a paid employee in a multinational corporation"
+          },
+          "correct_answer": "b",
+          "explanation": "Entrepreneurship is fundamentally about spotting opportunities, creating value through innovation, and accepting the risk of launching and sustaining a business."
+        },
+        {
+          "id": "ENT-M1-Q002",
+          "question": "Which of the following is a CORE component of entrepreneurship?",
+          "options": {
+            "a": "Guaranteed salary and job security",
+            "b": "Innovation, risk-taking, and value creation",
+            "c": "Fixed working hours and routine tasks",
+            "d": "Avoiding all forms of uncertainty",
+            "e": "Working without a business plan"
+          },
+          "correct_answer": "b",
+          "explanation": "Innovation, willingness to take risks, and the creation of value are the defining components of entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q003",
+          "question": "The term 'entrepreneur' is derived from the French word 'entreprendre', which means to:",
+          "options": {
+            "a": "Employ or hire",
+            "b": "Undertake or begin",
+            "c": "Finance or fund",
+            "d": "Manage or supervise",
+            "e": "Sell or trade"
+          },
+          "correct_answer": "b",
+          "explanation": "'Entreprendre' means to undertake or begin something, reflecting the entrepreneur's role in initiating business ventures."
+        },
+        {
+          "id": "ENT-M1-Q004",
+          "question": "Which economist is widely credited with formally introducing the concept of the entrepreneur and linking it to innovation?",
+          "options": {
+            "a": "Adam Smith",
+            "b": "John Maynard Keynes",
+            "c": "Joseph Schumpeter",
+            "d": "Karl Marx",
+            "e": "Alfred Marshall"
+          },
+          "correct_answer": "c",
+          "explanation": "Joseph Schumpeter introduced the entrepreneur as an innovator who carries out new combinations and drives 'creative destruction'."
+        },
+        {
+          "id": "ENT-M1-Q005",
+          "question": "Schumpeter's concept of 'creative destruction' refers to:",
+          "options": {
+            "a": "The demolition of old buildings to build new offices",
+            "b": "The process by which innovations disrupt and replace outdated products, firms, and industries",
+            "c": "Government policies that destroy small businesses",
+            "d": "The decline of manufacturing in developed economies",
+            "e": "Bankruptcy caused by poor management"
+          },
+          "correct_answer": "b",
+          "explanation": "Creative destruction describes how entrepreneurial innovation continually transforms the economic structure by replacing the old with the new."
+        },
+        {
+          "id": "ENT-M1-Q006",
+          "question": "Which of the following is NOT a primary function typically associated with entrepreneurship?",
+          "options": {
+            "a": "Innovation",
+            "b": "Risk-bearing",
+            "c": "Organization of resources",
+            "d": "Guaranteed elimination of all business losses",
+            "e": "Creation of employment opportunities"
+          },
+          "correct_answer": "d",
+          "explanation": "Entrepreneurship involves risk-bearing; no entrepreneur can guarantee the elimination of all losses. The other options are genuine functions."
+        },
+        {
+          "id": "ENT-M1-Q007",
+          "question": "Entrepreneurship is often described as an economic activity because it:",
+          "options": {
+            "a": "Involves only charitable and non-profit efforts",
+            "b": "Involves the creation and distribution of value in exchange for financial gain",
+            "c": "Is restricted to the manufacturing sector alone",
+            "d": "Occurs only within government ministries",
+            "e": "Has no connection to market demand"
+          },
+          "correct_answer": "b",
+          "explanation": "As an economic activity, entrepreneurship involves mobilizing resources to create goods and services that are exchanged for profit."
+        },
+        {
+          "id": "ENT-M1-Q008",
+          "question": "The process of entrepreneurship typically begins with:",
+          "options": {
+            "a": "Securing a bank loan",
+            "b": "Recruiting a large workforce",
+            "c": "Identifying a business opportunity or unmet need",
+            "d": "Registering a company name",
+            "e": "Purchasing expensive machinery"
+          },
+          "correct_answer": "c",
+          "explanation": "Entrepreneurship starts with opportunity recognition - identifying a gap, problem, or unmet need that can be turned into a viable venture."
+        },
+        {
+          "id": "ENT-M1-Q009",
+          "question": "Which of the following BEST describes the relationship between entrepreneurship and innovation?",
+          "options": {
+            "a": "They are the same thing with no difference",
+            "b": "Innovation is the process of creating something new or doing things differently, while entrepreneurship applies it commercially",
+            "c": "Entrepreneurship is only about copying existing businesses",
+            "d": "Innovation only applies to technology companies",
+            "e": "Entrepreneurship is impossible without inventing a new product"
+          },
+          "correct_answer": "b",
+          "explanation": "Innovation is the creative act of introducing something new; entrepreneurship is the process of converting that innovation into a viable, value-creating venture."
+        },
+        {
+          "id": "ENT-M1-Q010",
+          "question": "A major reason why entrepreneurship is encouraged in developing economies like Nigeria is that it:",
+          "options": {
+            "a": "Increases dependence on imported goods",
+            "b": "Reduces the size of the public sector",
+            "c": "Helps create jobs, reduce poverty, and drive economic growth",
+            "d": "Encourages rural-urban migration",
+            "e": "Limits the number of small businesses"
+          },
+          "correct_answer": "c",
+          "explanation": "Entrepreneurship is a key engine of job creation, poverty reduction, and economic growth, which is why governments promote it actively."
+        },
+        {
+          "id": "ENT-M1-Q011",
+          "question": "Which of the following activities BEST exemplifies entrepreneurship?",
+          "options": {
+            "a": "A bank teller processing daily transactions",
+            "b": "A graduate starting a poultry farm after studying the local market and managing the risks",
+            "c": "A teacher marking examination scripts",
+            "d": "A driver delivering goods for a fixed salary",
+            "e": "An accountant auditing company records"
+          },
+          "correct_answer": "b",
+          "explanation": "Starting a poultry farm after market study involves opportunity recognition, resource mobilization, and risk-bearing - the essence of entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q012",
+          "question": "Entrepreneurship is considered a dynamic process because it:",
+          "options": {
+            "a": "Remains constant regardless of market conditions",
+            "b": "Involves continuous adaptation, learning, and response to changing environments",
+            "c": "Focuses only on past performance",
+            "d": "Avoids competition altogether",
+            "e": "Is limited to a single industry"
+          },
+          "correct_answer": "b",
+          "explanation": "The entrepreneurial process is dynamic - it evolves with market forces, technology, and customer needs, requiring constant adaptation."
+        },
+        {
+          "id": "ENT-M1-Q013",
+          "question": "The main difference between entrepreneurship and a regular salaried job is that entrepreneurship:",
+          "options": {
+            "a": "Provides a guaranteed monthly income",
+            "b": "Involves assuming financial risk in exchange for potential profit and control",
+            "c": "Requires no personal investment",
+            "d": "Offers fixed retirement benefits",
+            "e": "Excludes any form of decision-making"
+          },
+          "correct_answer": "b",
+          "explanation": "Unlike salaried employment, entrepreneurship requires the owner to bear financial risk with the expectation of earning profit and exercising control."
+        },
+        {
+          "id": "ENT-M1-Q014",
+          "question": "Which of the following is TRUE about the scope of entrepreneurship?",
+          "options": {
+            "a": "It is limited to manufacturing businesses",
+            "b": "It applies across agriculture, trade, services, technology, and social ventures",
+            "c": "It only applies to large corporations",
+            "d": "It is restricted to profit-making ventures only",
+            "e": "It cannot be practiced online"
+          },
+          "correct_answer": "b",
+          "explanation": "Entrepreneurship spans all sectors - agriculture, commerce, services, technology, and even social enterprises."
+        },
+        {
+          "id": "ENT-M1-Q015",
+          "question": "Social entrepreneurship differs from commercial entrepreneurship primarily because it:",
+          "options": {
+            "a": "Aims at solving social problems while still seeking sustainability",
+            "b": "Avoids generating any income",
+            "c": "Is illegal in most countries",
+            "d": "Has no beneficiaries",
+            "e": "Requires government ownership"
+          },
+          "correct_answer": "a",
+          "explanation": "Social entrepreneurs prioritize addressing social or environmental problems, using sustainable business models rather than profit maximization alone."
+        },
+        {
+          "id": "ENT-M1-Q016",
+          "question": "Which of the following is an example of an entrepreneurial opportunity?",
+          "options": {
+            "a": "A community lacking affordable, clean drinking water and a firm setting up a water purification business",
+            "b": "A supermarket selling imported goods at fixed prices",
+            "c": "A government collecting taxes",
+            "d": "A school offering only theory-based lessons",
+            "e": "A company reducing its workforce to cut costs"
+          },
+          "correct_answer": "a",
+          "explanation": "An unmet community need (clean water) that a firm converts into a business solution represents a classic entrepreneurial opportunity."
+        },
+        {
+          "id": "ENT-M1-Q017",
+          "question": "One key outcome of successful entrepreneurship in an economy is:",
+          "options": {
+            "a": "Higher unemployment rates",
+            "b": "Increased concentration of wealth in few hands",
+            "c": "Wealth creation, job generation, and improved standards of living",
+            "d": "Reduced availability of goods and services",
+            "e": "Higher dependence on foreign aid"
+          },
+          "correct_answer": "c",
+          "explanation": "Successful entrepreneurship generates wealth, creates jobs, and improves living standards across the economy."
+        },
+        {
+          "id": "ENT-M1-Q018",
+          "question": "The entrepreneurial process is BEST summarized by which sequence?",
+          "options": {
+            "a": "Raise capital, hire staff, then look for customers",
+            "b": "Identify opportunity, develop business concept, acquire resources, launch, and grow",
+            "c": "Copy competitors, reduce prices, and dominate the market",
+            "d": "Register the business, then decide what to sell",
+            "e": "Spend profits first, then plan the business"
+          },
+          "correct_answer": "b",
+          "explanation": "The entrepreneurial process flows logically: opportunity recognition, concept development, resource acquisition, launch, and growth."
+        },
+        {
+          "id": "ENT-M1-Q019",
+          "question": "Which statement about entrepreneurship and small business ownership is MOST accurate?",
+          "options": {
+            "a": "All small business owners are entrepreneurs",
+            "b": "All entrepreneurs are small business owners",
+            "c": "Entrepreneurship emphasizes innovation and growth, while small business ownership may not involve significant innovation",
+            "d": "They are identical concepts with no difference",
+            "e": "Small business owners never take any risk"
+          },
+          "correct_answer": "c",
+          "explanation": "While overlapping, entrepreneurship emphasizes innovation, opportunity, and growth, whereas many small businesses are replicative and less innovative."
+        },
+        {
+          "id": "ENT-M1-Q020",
+          "question": "An economy that actively promotes entrepreneurship is likely to experience:",
+          "options": {
+            "a": "A decline in technological advancement",
+            "b": "Increased innovation, competition, and productivity",
+            "c": "Reduction in consumer choices",
+            "d": "Stagnation of the informal sector",
+            "e": "Heavier reliance on state-owned enterprises"
+          },
+          "correct_answer": "b",
+          "explanation": "Entrepreneurship drives innovation, healthy competition, and productivity gains that benefit the whole economy."
+        },
+        {
+          "id": "ENT-M1-Q021",
+          "question": "Which of the following is NOT a benefit of entrepreneurship to society?",
+          "options": {
+            "a": "Provision of goods and services",
+            "b": "Employment generation",
+            "c": "Contribution to tax revenue",
+            "d": "Complete elimination of economic inequality",
+            "e": "Stimulation of innovation"
+          },
+          "correct_answer": "d",
+          "explanation": "Entrepreneurship reduces inequality but cannot completely eliminate it; all the other options are genuine societal benefits."
+        },
+        {
+          "id": "ENT-M1-Q022",
+          "question": "The statement that entrepreneurship is a 'factor of production' means that it:",
+          "options": {
+            "a": "Is only found in developed countries",
+            "b": "Organizes land, labour, and capital into productive ventures",
+            "c": "Replaces the need for capital",
+            "d": "Exists independently of markets",
+            "e": "Is provided free by the government"
+          },
+          "correct_answer": "b",
+          "explanation": "As a factor of production, entrepreneurship combines and coordinates land, labour, and capital to produce goods and services."
+        },
+        {
+          "id": "ENT-M1-Q023",
+          "question": "Which of the following scenarios shows the entrepreneurial function of innovation most clearly?",
+          "options": {
+            "a": "A trader reselling the same imported clothes at a higher price",
+            "b": "A company introducing a solar-powered irrigation system for small-scale farmers",
+            "c": "An employee photocopying documents for a salary",
+            "d": "A landlord collecting monthly rent",
+            "e": "A driver following the same delivery route daily"
+          },
+          "correct_answer": "b",
+          "explanation": "Introducing a new solar-powered solution is a clear act of innovation - applying new ideas to solve problems and create value."
+        },
+        {
+          "id": "ENT-M1-Q024",
+          "question": "Which of the following is a common misconception about entrepreneurship?",
+          "options": {
+            "a": "Entrepreneurs must be willing to take calculated risks",
+            "b": "Entrepreneurship requires opportunity identification",
+            "c": "Entrepreneurship is only for people born with special talents",
+            "d": "Entrepreneurship creates jobs for others",
+            "e": "Entrepreneurs organize resources productively"
+          },
+          "correct_answer": "c",
+          "explanation": "The belief that entrepreneurship is only for the 'born talented' is a misconception - entrepreneurial skills can be learned and developed."
+        },
+        {
+          "id": "ENT-M1-Q025",
+          "question": "Which combination BEST captures the essence of entrepreneurship?",
+          "options": {
+            "a": "Innovation, value creation, and calculated risk-taking",
+            "b": "Salaries, bonuses, and pension schemes",
+            "c": "Titles, offices, and organizational hierarchy",
+            "d": "Rules, regulations, and bureaucracy",
+            "e": "Routine, repetition, and stability"
+          },
+          "correct_answer": "a",
+          "explanation": "Innovation, value creation, and calculated risk-taking form the core essence that distinguishes entrepreneurship from other economic activities."
+        }
+      ]
+    },
+    {
+      "section_title": "1.2 Meaning of an Entrepreneur",
+      "questions": [
+        {
+          "id": "ENT-M1-Q026",
+          "question": "An entrepreneur is BEST defined as a person who:",
+          "options": {
+            "a": "Works for a government agency as a senior official",
+            "b": "Identifies business opportunities, mobilizes resources, and assumes risks to establish and run a business",
+            "c": "Buys shares in companies without any involvement in operations",
+            "d": "Supervises workers in a large corporation",
+            "e": "Provides loans to small businesses at high interest"
+          },
+          "correct_answer": "b",
+          "explanation": "An entrepreneur is fundamentally an opportunity-identifier who mobilizes resources, assumes risks, and establishes and runs a venture."
+        },
+        {
+          "id": "ENT-M1-Q027",
+          "question": "Which of the following is a defining characteristic of an entrepreneur as opposed to a mere business owner?",
+          "options": {
+            "a": "Innovation and the pursuit of growth opportunities",
+            "b": "Owning a single retail shop with no expansion plans",
+            "c": "Working fixed hours every day",
+            "d": "Avoiding all forms of borrowing",
+            "e": "Operating only in the informal sector"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs stand out through innovation and active pursuit of growth opportunities rather than mere business ownership."
+        },
+        {
+          "id": "ENT-M1-Q028",
+          "question": "Who is known as the 'father of modern entrepreneurship' for describing the entrepreneur as an innovator?",
+          "options": {
+            "a": "Adam Smith",
+            "b": "Joseph Schumpeter",
+            "c": "Milton Friedman",
+            "d": "Paul Samuelson",
+            "e": "David Ricardo"
+          },
+          "correct_answer": "b",
+          "explanation": "Joseph Schumpeter is regarded as the father of modern entrepreneurship for emphasizing innovation and creative destruction."
+        },
+        {
+          "id": "ENT-M1-Q029",
+          "question": "According to Schumpeter, which of the following is the primary role of the entrepreneur?",
+          "options": {
+            "a": "To invest in government bonds",
+            "b": "To introduce new combinations and innovations",
+            "c": "To manage day-to-day office routines",
+            "d": "To enforce tax regulations",
+            "e": "To accumulate personal wealth only"
+          },
+          "correct_answer": "b",
+          "explanation": "Schumpeter saw the entrepreneur as the agent of innovation, introducing new products, processes, markets, and organizational forms."
+        },
+        {
+          "id": "ENT-M1-Q030",
+          "question": "Which French economist distinguished the entrepreneur from the capitalist by noting the entrepreneur's risk-bearing function?",
+          "options": {
+            "a": "Richard Cantillon",
+            "b": "Jean-Baptiste Say",
+            "c": "Francois Quesnay",
+            "d": "Pierre Dupont",
+            "e": "Charles Fourier"
+          },
+          "correct_answer": "a",
+          "explanation": "Richard Cantillon is credited with early recognition of the entrepreneur as a risk-taker who buys at a certain price and sells at an uncertain one."
+        },
+        {
+          "id": "ENT-M1-Q031",
+          "question": "Jean-Baptiste Say's famous definition describes the entrepreneur as one who:",
+          "options": {
+            "a": "Moves economic resources from an area of lower productivity to an area of higher productivity and yield",
+            "b": "Lends money to businesses for interest",
+            "c": "Consumes resources without producing anything",
+            "d": "Manages public utilities on behalf of the state",
+            "e": "Trades in foreign currencies only"
+          },
+          "correct_answer": "a",
+          "explanation": "Jean-Baptiste Say emphasized that the entrepreneur shifts resources toward more productive uses, creating greater value and yield."
+        },
+        {
+          "id": "ENT-M1-Q032",
+          "question": "Which of the following statements about entrepreneurs is TRUE?",
+          "options": {
+            "a": "Entrepreneurs are always born with innate genius and never learn",
+            "b": "Entrepreneurs come from any background and can develop skills through learning and experience",
+            "c": "Entrepreneurs must always be university graduates",
+            "d": "Entrepreneurs only exist in developed countries",
+            "e": "Entrepreneurs never experience failure"
+          },
+          "correct_answer": "b",
+          "explanation": "Entrepreneurs come from diverse backgrounds, and entrepreneurial skills are learnable through education, training, and experience."
+        },
+        {
+          "id": "ENT-M1-Q033",
+          "question": "Which of the following BEST distinguishes an entrepreneur from an inventor?",
+          "options": {
+            "a": "The inventor commercializes while the entrepreneur invents",
+            "b": "The entrepreneur converts an invention into a marketable and profitable business",
+            "c": "Both are identical in every way",
+            "d": "The inventor takes financial risks while the entrepreneur does not",
+            "e": "Entrepreneurs never use inventions"
+          },
+          "correct_answer": "b",
+          "explanation": "An inventor creates something new; an entrepreneur takes that creation and turns it into a commercially successful venture."
+        },
+        {
+          "id": "ENT-M1-Q034",
+          "question": "An entrepreneur who starts a business primarily because she noticed a gap in the local market is demonstrating the function of:",
+          "options": {
+            "a": "Opportunity identification",
+            "b": "Tax compliance",
+            "c": "Staff training",
+            "d": "Inventory management",
+            "e": "Financial auditing"
+          },
+          "correct_answer": "a",
+          "explanation": "Spotting and acting on an unmet market need is opportunity identification - the starting point of the entrepreneurial role."
+        },
+        {
+          "id": "ENT-M1-Q035",
+          "question": "Which of the following is an example of an 'entrepreneur'?",
+          "options": {
+            "a": "A nurse working a night shift in a public hospital",
+            "b": "A graduate who founded a mobile payment startup and manages its growth",
+            "c": "A civil servant processing passport applications",
+            "d": "A lecturer marking examination scripts",
+            "e": "A security guard monitoring a building entrance"
+          },
+          "correct_answer": "b",
+          "explanation": "Founding and growing a mobile payment startup clearly fits the entrepreneur's role of innovation, risk-taking, and value creation."
+        },
+        {
+          "id": "ENT-M1-Q036",
+          "question": "The entrepreneur's role as a 'risk-bearer' means that he or she:",
+          "options": {
+            "a": "Avoids every form of uncertainty",
+            "b": "Accepts the financial uncertainty of the business and the possibility of loss",
+            "c": "Transfers all risks to the government",
+            "d": "Insures the business against every possible event",
+            "e": "Only invests other people's money"
+          },
+          "correct_answer": "b",
+          "explanation": "Risk-bearing means accepting the genuine possibility of loss that comes with business uncertainty - a core entrepreneurial function."
+        },
+        {
+          "id": "ENT-M1-Q037",
+          "question": "Which scholar described the entrepreneur as a 'gap-filler' and 'input-completer' in production?",
+          "options": {
+            "a": "Harvey Leibenstein",
+            "b": "Frank Knight",
+            "c": "Israel Kirzner",
+            "d": "Peter Drucker",
+            "e": "George Gilder"
+          },
+          "correct_answer": "a",
+          "explanation": "Harvey Leibenstein introduced the concepts of the entrepreneur as a 'gap-filler' who completes missing inputs in the production process."
+        },
+        {
+          "id": "ENT-M1-Q038",
+          "question": "Israel Kirzner viewed the entrepreneur primarily as:",
+          "options": {
+            "a": "A large-scale manufacturer",
+            "b": "An alert individual who discovers profit opportunities in market disequilibria",
+            "c": "A government-appointed manager",
+            "d": "A passive investor",
+            "e": "A professional consultant"
+          },
+          "correct_answer": "b",
+          "explanation": "Kirzner emphasized entrepreneurial alertness - the ability to notice and act upon profit opportunities that others overlook."
+        },
+        {
+          "id": "ENT-M1-Q039",
+          "question": "Frank Knight associated the entrepreneur with:",
+          "options": {
+            "a": "Handling uninsurable uncertainty",
+            "b": "Guaranteed returns on investment",
+            "c": "Performing routine clerical work",
+            "d": "Implementing government policies",
+            "e": "Avoiding competition"
+          },
+          "correct_answer": "a",
+          "explanation": "Frank Knight linked the entrepreneur to bearing uncertainty that cannot be insured or measured, which justifies entrepreneurial profit."
+        },
+        {
+          "id": "ENT-M1-Q040",
+          "question": "Which of the following is NOT typically a role performed by an entrepreneur?",
+          "options": {
+            "a": "Mobilizing financial resources",
+            "b": "Identifying market opportunities",
+            "c": "Bearing business risks",
+            "d": "Guaranteeing profits for investors",
+            "e": "Combining factors of production"
+          },
+          "correct_answer": "d",
+          "explanation": "No entrepreneur can guarantee profits; profit is a return for successful risk-bearing, never a guaranteed outcome."
+        },
+        {
+          "id": "ENT-M1-Q041",
+          "question": "An entrepreneur who buys raw palm oil, processes it into high-quality cooking oil, and sells it at a profit is primarily demonstrating:",
+          "options": {
+            "a": "Value addition through processing",
+            "b": "Pure speculation",
+            "c": "Tax avoidance",
+            "d": "Waste of resources",
+            "e": "Government policy implementation"
+          },
+          "correct_answer": "a",
+          "explanation": "Converting raw materials into a higher-value finished product demonstrates value addition - a key entrepreneurial contribution."
+        },
+        {
+          "id": "ENT-M1-Q042",
+          "question": "Which of the following qualities is MOST important for an entrepreneur to sustain a business during hard times?",
+          "options": {
+            "a": "Resilience and persistence",
+            "b": "Perfectionism in everything",
+            "c": "Reliance on luck",
+            "d": "Avoidance of all advice",
+            "e": "Quick profit-taking and exit"
+          },
+          "correct_answer": "a",
+          "explanation": "Resilience and persistence enable entrepreneurs to withstand setbacks and keep going when conditions are difficult."
+        },
+        {
+          "id": "ENT-M1-Q043",
+          "question": "The term 'serial entrepreneur' refers to someone who:",
+          "options": {
+            "a": "Starts one business and retires permanently",
+            "b": "Repeatedly starts new ventures, often moving from one to another",
+            "c": "Manages a single family business for generations",
+            "d": "Works in a serial number factory",
+            "e": "Only invests in government projects"
+          },
+          "correct_answer": "b",
+          "explanation": "A serial entrepreneur repeatedly launches new ventures, typically selling or exiting one to start another."
+        },
+        {
+          "id": "ENT-M1-Q044",
+          "question": "Which statement correctly distinguishes an entrepreneur from a manager?",
+          "options": {
+            "a": "Both have identical roles and responsibilities",
+            "b": "The entrepreneur creates and owns the venture and bears risk, while the manager operates within an existing framework for a salary",
+            "c": "The manager owns the business while the entrepreneur is hired",
+            "d": "Managers take all the financial risk",
+            "e": "Entrepreneurs never make decisions"
+          },
+          "correct_answer": "b",
+          "explanation": "Entrepreneurs conceive and own ventures and bear risks, whereas managers are salaried employees who run operations within established structures."
+        },
+        {
+          "id": "ENT-M1-Q045",
+          "question": "Which of the following is a common motivation that drives people to become entrepreneurs?",
+          "options": {
+            "a": "Desire for financial independence and self-fulfilment",
+            "b": "Fear of responsibility",
+            "c": "Reluctance to make decisions",
+            "d": "Preference for a fixed monthly salary",
+            "e": "Desire to avoid hard work"
+          },
+          "correct_answer": "a",
+          "explanation": "The desire for independence, self-fulfilment, and the opportunity to build wealth are among the strongest entrepreneurial motivations."
+        },
+        {
+          "id": "ENT-M1-Q046",
+          "question": "Which of the following is TRUE about entrepreneurs and failure?",
+          "options": {
+            "a": "Successful entrepreneurs never fail",
+            "b": "Many successful entrepreneurs have failed before and learned from it",
+            "c": "Failure permanently disqualifies someone from being an entrepreneur",
+            "d": "Failure only happens to uneducated people",
+            "e": "Entrepreneurs avoid risk entirely to prevent failure"
+          },
+          "correct_answer": "b",
+          "explanation": "Failure is part of the entrepreneurial journey; many successful entrepreneurs learned valuable lessons from earlier failures."
+        },
+        {
+          "id": "ENT-M1-Q047",
+          "question": "An entrepreneur who leaves a well-paid corporate job to launch a startup is motivated primarily by:",
+          "options": {
+            "a": "The desire for independence and the pursuit of an opportunity",
+            "b": "A desire to reduce working hours",
+            "c": "Avoidance of all responsibilities",
+            "d": "Guaranteed job security",
+            "e": "The absence of any financial need"
+          },
+          "correct_answer": "a",
+          "explanation": "Leaving secure employment to pursue a startup reflects the pull of opportunity and the desire for independence and self-direction."
+        },
+        {
+          "id": "ENT-M1-Q048",
+          "question": "In the context of economic theory, the entrepreneur's reward for successful risk-bearing is:",
+          "options": {
+            "a": "Salary",
+            "b": "Profit",
+            "c": "Interest",
+            "d": "Rent",
+            "e": "Pension"
+          },
+          "correct_answer": "b",
+          "explanation": "Profit is the entrepreneur's reward for successfully bearing risk and organizing production - unlike salary, interest, or rent."
+        },
+        {
+          "id": "ENT-M1-Q049",
+          "question": "Which of the following is an example of 'opportunity-driven' entrepreneurship?",
+          "options": {
+            "a": "Starting a business because a profitable market niche was discovered",
+            "b": "Starting a business solely to escape an existing job",
+            "c": "Copying a neighbour's shop without market research",
+            "d": "Starting a venture with no plan",
+            "e": "Launching a business because of peer pressure"
+          },
+          "correct_answer": "a",
+          "explanation": "Opportunity-driven entrepreneurship is motivated by the genuine discovery of a profitable market need or niche."
+        },
+        {
+          "id": "ENT-M1-Q050",
+          "question": "The BEST summary of the entrepreneur's contribution to an economy is that the entrepreneur:",
+          "options": {
+            "a": "Combines innovation, risk-taking, and resource mobilization to create wealth and jobs",
+            "b": "Increases the country's import bill",
+            "c": "Reduces competition in the market",
+            "d": "Depends entirely on government funding",
+            "e": "Works only for personal fame"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs create wealth and jobs by combining innovation, risk-bearing, and the efficient mobilization of resources."
+        }
+      ]
+    },
+    {
+      "section_title": "1.3 Key Characteristics of an Entrepreneur",
+      "questions": [
+        {
+          "id": "ENT-M1-Q051",
+          "question": "Which of the following is a key characteristic of a successful entrepreneur?",
+          "options": {
+            "a": "Reluctance to take any risk",
+            "b": "Self-confidence and belief in one's abilities",
+            "c": "Avoidance of all responsibility",
+            "d": "Preference for routine tasks",
+            "e": "Dependence on others for every decision"
+          },
+          "correct_answer": "b",
+          "explanation": "Self-confidence is essential; entrepreneurs believe in themselves and their ability to succeed despite uncertainty."
+        },
+        {
+          "id": "ENT-M1-Q052",
+          "question": "A successful entrepreneur is one who is willing to take:",
+          "options": {
+            "a": "Reckless, uncalculated risks",
+            "b": "Calculated risks based on careful analysis",
+            "c": "No risks at all",
+            "d": "Only government-approved risks",
+            "e": "Risks that others are forced to bear"
+          },
+          "correct_answer": "b",
+          "explanation": "Successful entrepreneurs take calculated risks - weighing potential gains against losses after careful analysis."
+        },
+        {
+          "id": "ENT-M1-Q053",
+          "question": "Which characteristic enables an entrepreneur to keep pushing forward even after facing setbacks?",
+          "options": {
+            "a": "Persistence and determination",
+            "b": "Indecisiveness",
+            "c": "Passivity",
+            "d": "Overcautiousness",
+            "e": "Complacency"
+          },
+          "correct_answer": "a",
+          "explanation": "Persistence and determination help entrepreneurs overcome obstacles and continue despite repeated challenges."
+        },
+        {
+          "id": "ENT-M1-Q054",
+          "question": "The ability of an entrepreneur to see problems as opportunities is a sign of:",
+          "options": {
+            "a": "Creative thinking",
+            "b": "Imitation",
+            "c": "Routine behaviour",
+            "d": "Bureaucracy",
+            "e": "Risk aversion"
+          },
+          "correct_answer": "a",
+          "explanation": "Creative thinking allows entrepreneurs to reframe problems as opportunities - a hallmark of the entrepreneurial mindset."
+        },
+        {
+          "id": "ENT-M1-Q055",
+          "question": "Which of the following is a key characteristic of entrepreneurs?",
+          "options": {
+            "a": "High need for achievement",
+            "b": "Contentment with average performance",
+            "c": "Avoidance of new ideas",
+            "d": "Dependence on instructions",
+            "e": "Preference for routine"
+          },
+          "correct_answer": "a",
+          "explanation": "Psychologist David McClelland identified a high need for achievement as a distinguishing trait of entrepreneurs."
+        },
+        {
+          "id": "ENT-M1-Q056",
+          "question": "Which psychologist linked the 'need for achievement' to entrepreneurial behaviour?",
+          "options": {
+            "a": "David McClelland",
+            "b": "Sigmund Freud",
+            "c": "B.F. Skinner",
+            "d": "Carl Jung",
+            "e": "Ivan Pavlov"
+          },
+          "correct_answer": "a",
+          "explanation": "David McClelland's achievement motivation theory connects a strong need for achievement with entrepreneurial success."
+        },
+        {
+          "id": "ENT-M1-Q057",
+          "question": "An entrepreneur who welcomes feedback and learns from it demonstrates:",
+          "options": {
+            "a": "Open-mindedness and adaptability",
+            "b": "Stubbornness",
+            "c": "Rigidity",
+            "d": "Lack of direction",
+            "e": "Fear of change"
+          },
+          "correct_answer": "a",
+          "explanation": "Open-mindedness and adaptability let entrepreneurs accept feedback, learn, and adjust their strategies accordingly."
+        },
+        {
+          "id": "ENT-M1-Q058",
+          "question": "Which characteristic BEST describes an entrepreneur's attitude toward market changes?",
+          "options": {
+            "a": "Adaptability and responsiveness",
+            "b": "Total resistance to change",
+            "c": "Indifference",
+            "d": "Blind imitation of others",
+            "e": "Procrastination"
+          },
+          "correct_answer": "a",
+          "explanation": "Successful entrepreneurs adapt quickly to market changes, seeing them as opportunities rather than threats."
+        },
+        {
+          "id": "ENT-M1-Q059",
+          "question": "The entrepreneur's ability to set challenging but realistic goals is known as:",
+          "options": {
+            "a": "Goal orientation",
+            "b": "Procrastination",
+            "c": "Daydreaming",
+            "d": "Complacency",
+            "e": "Imitation"
+          },
+          "correct_answer": "a",
+          "explanation": "Goal orientation means setting challenging yet achievable targets and working systematically to accomplish them."
+        },
+        {
+          "id": "ENT-M1-Q060",
+          "question": "Which of the following characteristics is commonly found in successful entrepreneurs?",
+          "options": {
+            "a": "Internal locus of control",
+            "b": "Heavy reliance on luck",
+            "c": "External attribution of all outcomes",
+            "d": "Avoidance of decision-making",
+            "e": "Passivity in the face of challenges"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs typically have an internal locus of control - believing they control their own destiny through their actions."
+        },
+        {
+          "id": "ENT-M1-Q061",
+          "question": "A person with an internal locus of control believes that:",
+          "options": {
+            "a": "Their success depends mainly on their own efforts and decisions",
+            "b": "Fate and luck determine everything",
+            "c": "Other people control their destiny",
+            "d": "Success is purely random",
+            "e": "Government should decide their career"
+          },
+          "correct_answer": "a",
+          "explanation": "Internal locus of control means believing that outcomes are largely the result of one's own behaviour and effort."
+        },
+        {
+          "id": "ENT-M1-Q062",
+          "question": "Which of the following is a characteristic of an entrepreneur's approach to decision-making?",
+          "options": {
+            "a": "Making timely decisions with available information",
+            "b": "Delaying every decision indefinitely",
+            "c": "Delegating all decisions to others",
+            "d": "Avoiding decisions that carry any risk",
+            "e": "Relying only on guesswork"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs are decisive - they gather what information they can and make timely decisions to keep the venture moving."
+        },
+        {
+          "id": "ENT-M1-Q063",
+          "question": "Which characteristic helps an entrepreneur attract and retain talented employees?",
+          "options": {
+            "a": "Effective leadership and communication",
+            "b": "Secrecy and mistrust",
+            "c": "Micromanagement of every task",
+            "d": "Refusal to share information",
+            "e": "Ignoring employee contributions"
+          },
+          "correct_answer": "a",
+          "explanation": "Strong leadership and clear communication inspire trust and motivate employees to contribute to the venture's success."
+        },
+        {
+          "id": "ENT-M1-Q064",
+          "question": "The entrepreneur's willingness to work long hours and make personal sacrifices reflects:",
+          "options": {
+            "a": "High commitment and dedication",
+            "b": "Poor time management",
+            "c": "Lack of priorities",
+            "d": "Inefficiency",
+            "e": "Disorganization"
+          },
+          "correct_answer": "a",
+          "explanation": "High commitment and dedication show in the willingness to invest long hours and make sacrifices for the business."
+        },
+        {
+          "id": "ENT-M1-Q065",
+          "question": "Which characteristic allows an entrepreneur to bounce back quickly after a business failure?",
+          "options": {
+            "a": "Resilience",
+            "b": "Perfectionism",
+            "c": "Rigidity",
+            "d": "Apathy",
+            "e": "Overconfidence"
+          },
+          "correct_answer": "a",
+          "explanation": "Resilience enables entrepreneurs to recover from setbacks, learn lessons, and try again with renewed energy."
+        },
+        {
+          "id": "ENT-M1-Q066",
+          "question": "An entrepreneur who constantly searches for new ideas and improvements is demonstrating:",
+          "options": {
+            "a": "Proactiveness and innovation",
+            "b": "Complacency",
+            "c": "Resistance to change",
+            "d": "Bureaucratic thinking",
+            "e": "Reactive behaviour"
+          },
+          "correct_answer": "a",
+          "explanation": "Proactive entrepreneurs continuously search for new ideas and improvements rather than waiting for change to happen."
+        },
+        {
+          "id": "ENT-M1-Q067",
+          "question": "Which of the following is NOT a typical characteristic of a successful entrepreneur?",
+          "options": {
+            "a": "Self-discipline",
+            "b": "Procrastination",
+            "c": "Risk management",
+            "d": "Vision",
+            "e": "Opportunity recognition"
+          },
+          "correct_answer": "b",
+          "explanation": "Procrastination is the opposite of the decisiveness and action orientation that successful entrepreneurs exhibit."
+        },
+        {
+          "id": "ENT-M1-Q068",
+          "question": "The ability of an entrepreneur to clearly picture the future direction of the business is called:",
+          "options": {
+            "a": "Vision",
+            "b": "Auditing",
+            "c": "Bookkeeping",
+            "d": "Recruitment",
+            "e": "Inventory control"
+          },
+          "correct_answer": "a",
+          "explanation": "Vision is the entrepreneur's ability to see where the business should go and to articulate that direction clearly."
+        },
+        {
+          "id": "ENT-M1-Q069",
+          "question": "Which characteristic enables an entrepreneur to persist with a business idea that others doubt?",
+          "options": {
+            "a": "Conviction and self-belief",
+            "b": "Indifference to feedback",
+            "c": "Total isolation",
+            "d": "Avoidance of mentors",
+            "e": "Distrust of the market"
+          },
+          "correct_answer": "a",
+          "explanation": "Conviction and self-belief allow entrepreneurs to stay the course on promising ideas even when others are skeptical."
+        },
+        {
+          "id": "ENT-M1-Q070",
+          "question": "Which of the following BEST describes entrepreneurs' relationship with money?",
+          "options": {
+            "a": "They treat money as a resource for growth, not just a personal goal",
+            "b": "They spend profits immediately on luxuries",
+            "c": "They avoid all financial planning",
+            "d": "They ignore cash flow",
+            "e": "They depend entirely on credit"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs generally view money as a means to build and grow the business, reinvesting rather than merely consuming."
+        },
+        {
+          "id": "ENT-M1-Q071",
+          "question": "A characteristic common to entrepreneurs is the ability to:",
+          "options": {
+            "a": "Build networks and relationships that support the business",
+            "b": "Operate in total isolation",
+            "c": "Refuse all partnerships",
+            "d": "Avoid customers",
+            "e": "Discourage feedback"
+          },
+          "correct_answer": "a",
+          "explanation": "Successful entrepreneurs build strong networks - with customers, suppliers, mentors, and financiers - that support growth."
+        },
+        {
+          "id": "ENT-M1-Q072",
+          "question": "Which of the following is an example of an entrepreneur demonstrating self-discipline?",
+          "options": {
+            "a": "Following a strict savings and reinvestment plan",
+            "b": "Spending all profits on entertainment",
+            "c": "Ignoring business records",
+            "d": "Making impulsive purchases",
+            "e": "Deferring all decisions"
+          },
+          "correct_answer": "a",
+          "explanation": "Self-discipline shows in consistent habits like systematic savings, record-keeping, and disciplined reinvestment."
+        },
+        {
+          "id": "ENT-M1-Q073",
+          "question": "Which characteristic is essential for entrepreneurs operating in a rapidly changing technological environment?",
+          "options": {
+            "a": "Continuous learning",
+            "b": "Fixed thinking",
+            "c": "Resistance to new tools",
+            "d": "Avoidance of digital platforms",
+            "e": "Rigid routines"
+          },
+          "correct_answer": "a",
+          "explanation": "Continuous learning keeps entrepreneurs relevant as technology and markets evolve rapidly."
+        },
+        {
+          "id": "ENT-M1-Q074",
+          "question": "An entrepreneur who shares credit with team members and acknowledges their contributions shows:",
+          "options": {
+            "a": "Humility and good teamwork",
+            "b": "Weakness",
+            "c": "Indecisiveness",
+            "d": "Lack of authority",
+            "e": "Poor leadership"
+          },
+          "correct_answer": "a",
+          "explanation": "Humility and teamwork - sharing credit and recognizing contributions - strengthen loyalty and performance."
+        },
+        {
+          "id": "ENT-M1-Q075",
+          "question": "The MOST important combination of characteristics for an entrepreneur to succeed is:",
+          "options": {
+            "a": "Innovation, risk management, perseverance, and leadership",
+            "b": "Luck, inheritance, and connections only",
+            "c": "Perfectionism, secrecy, and rigidity",
+            "d": "Speed, guesswork, and luck",
+            "e": "Formal education alone"
+          },
+          "correct_answer": "a",
+          "explanation": "Innovation, measured risk-taking, perseverance, and leadership together form the foundation of entrepreneurial success."
+        }
+      ]
+    },
+    {
+      "section_title": "1.4 Functions of an Entrepreneur",
+      "questions": [
+        {
+          "id": "ENT-M1-Q076",
+          "question": "Which of the following is a core function of the entrepreneur?",
+          "options": {
+            "a": "Combining and organizing the factors of production",
+            "b": "Guaranteeing profits for shareholders",
+            "c": "Implementing government policies",
+            "d": "Collecting taxes from citizens",
+            "e": "Regulating market prices"
+          },
+          "correct_answer": "a",
+          "explanation": "A fundamental entrepreneurial function is combining land, labour, and capital into a productive enterprise."
+        },
+        {
+          "id": "ENT-M1-Q077",
+          "question": "The entrepreneur's function of 'risk-bearing' involves:",
+          "options": {
+            "a": "Absorbing the financial uncertainty of the venture",
+            "b": "Transferring all risk to employees",
+            "c": "Insuring against every possible loss",
+            "d": "Avoiding all risky decisions",
+            "e": "Guaranteeing against loss"
+          },
+          "correct_answer": "a",
+          "explanation": "Risk-bearing is the entrepreneur's acceptance of financial uncertainty as an inherent part of running a venture."
+        },
+        {
+          "id": "ENT-M1-Q078",
+          "question": "Which entrepreneurial function involves introducing new products, processes, or markets?",
+          "options": {
+            "a": "Innovation",
+            "b": "Bookkeeping",
+            "c": "Compliance",
+            "d": "Auditing",
+            "e": "Recruitment only"
+          },
+          "correct_answer": "a",
+          "explanation": "Innovation is the entrepreneurial function of introducing novelties - new products, processes, or ways of serving markets."
+        },
+        {
+          "id": "ENT-M1-Q079",
+          "question": "The entrepreneurial function of 'decision-making' refers to:",
+          "options": {
+            "a": "Making key strategic choices for the business",
+            "b": "Delegating every choice to employees",
+            "c": "Following orders from the government",
+            "d": "Avoiding all major decisions",
+            "e": "Making decisions only once a year"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs make the strategic decisions - what to produce, how to produce, where, and for whom."
+        },
+        {
+          "id": "ENT-M1-Q080",
+          "question": "Which function of the entrepreneur directly contributes to reducing unemployment?",
+          "options": {
+            "a": "Job creation",
+            "b": "Tax planning",
+            "c": "Inventory counting",
+            "d": "Vehicle maintenance",
+            "e": "Office cleaning"
+          },
+          "correct_answer": "a",
+          "explanation": "By establishing ventures, entrepreneurs create direct employment, reducing unemployment in the economy."
+        },
+        {
+          "id": "ENT-M1-Q081",
+          "question": "An entrepreneur who raises capital, acquires equipment, and hires staff is performing the function of:",
+          "options": {
+            "a": "Resource mobilization",
+            "b": "Product imitation",
+            "c": "Price regulation",
+            "d": "Tax evasion",
+            "e": "Consumer protection"
+          },
+          "correct_answer": "a",
+          "explanation": "Resource mobilization is assembling the money, equipment, and people needed to run the venture."
+        },
+        {
+          "id": "ENT-M1-Q082",
+          "question": "Which entrepreneurial function involves distributing products to consumers efficiently?",
+          "options": {
+            "a": "Marketing and distribution",
+            "b": "Only record keeping",
+            "c": "Only tax filing",
+            "d": "Only facility cleaning",
+            "e": "Only staff recruitment"
+          },
+          "correct_answer": "a",
+          "explanation": "Marketing and distribution ensure products reach target consumers efficiently and profitably."
+        },
+        {
+          "id": "ENT-M1-Q083",
+          "question": "The entrepreneur's function of 'management' primarily involves:",
+          "options": {
+            "a": "Planning, organizing, directing, and controlling the business",
+            "b": "Avoiding employee supervision",
+            "c": "Disregarding quality standards",
+            "d": "Ignoring customer needs",
+            "e": "Abandoning financial control"
+          },
+          "correct_answer": "a",
+          "explanation": "Management is a core entrepreneurial function covering planning, organizing, directing, and controlling operations."
+        },
+        {
+          "id": "ENT-M1-Q084",
+          "question": "Which function does an entrepreneur perform when she identifies a rising demand for organic food in her community?",
+          "options": {
+            "a": "Opportunity identification",
+            "b": "Debt collection",
+            "c": "Tax remittance",
+            "d": "Building maintenance",
+            "e": "Clerical filing"
+          },
+          "correct_answer": "a",
+          "explanation": "Spotting a rising market demand is opportunity identification - a central entrepreneurial function."
+        },
+        {
+          "id": "ENT-M1-Q085",
+          "question": "Which entrepreneurial function helps the business adapt to new market conditions?",
+          "options": {
+            "a": "Strategic adjustment and innovation",
+            "b": "Total resistance to change",
+            "c": "Ignoring market signals",
+            "d": "Rigid adherence to old methods",
+            "e": "Avoidance of competition"
+          },
+          "correct_answer": "a",
+          "explanation": "Strategic adjustment and innovation let entrepreneurs respond to evolving market conditions and stay competitive."
+        },
+        {
+          "id": "ENT-M1-Q086",
+          "question": "The function of the entrepreneur that generates tax revenue for the government is:",
+          "options": {
+            "a": "Creating profitable enterprises",
+            "b": "Hiding business income",
+            "c": "Reducing sales",
+            "d": "Discouraging investment",
+            "e": "Closing businesses"
+          },
+          "correct_answer": "a",
+          "explanation": "Profitable enterprises generate taxable income, contributing to government revenue and public services."
+        },
+        {
+          "id": "ENT-M1-Q087",
+          "question": "Which of the following is an example of the entrepreneur's 'mentor and developer' function?",
+          "options": {
+            "a": "Training young staff and developing their skills",
+            "b": "Hoarding information from employees",
+            "c": "Discouraging staff development",
+            "d": "Keeping apprentices idle",
+            "e": "Refusing to delegate tasks"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs develop people by training staff and apprentices, building a skilled workforce."
+        },
+        {
+          "id": "ENT-M1-Q088",
+          "question": "The entrepreneur's function of 'bearing uncertainty' is different from 'bearing risk' because uncertainty:",
+          "options": {
+            "a": "Cannot be quantified or insured, unlike insurable risk",
+            "b": "Is easier to manage than risk",
+            "c": "Affects only employees",
+            "d": "Never leads to losses",
+            "e": "Is guaranteed by the government"
+          },
+          "correct_answer": "a",
+          "explanation": "Risk can often be estimated or insured; uncertainty is unquantifiable and cannot be insured, making it the entrepreneur's burden."
+        },
+        {
+          "id": "ENT-M1-Q089",
+          "question": "Which entrepreneurial function involves continuously improving the quality of goods and services?",
+          "options": {
+            "a": "Quality assurance",
+            "b": "Deliberate quality reduction",
+            "c": "Ignoring customer complaints",
+            "d": "Cutting corners on materials",
+            "e": "Avoiding quality checks"
+          },
+          "correct_answer": "a",
+          "explanation": "Quality assurance - continuously improving goods and services - sustains customer satisfaction and competitiveness."
+        },
+        {
+          "id": "ENT-M1-Q090",
+          "question": "An entrepreneur who reinvests profits into expanding production is performing the function of:",
+          "options": {
+            "a": "Capital formation and growth",
+            "b": "Consumption",
+            "c": "Wealth distribution",
+            "d": "Charity only",
+            "e": "Savings withdrawal"
+          },
+          "correct_answer": "a",
+          "explanation": "Reinvesting profits to expand production drives capital formation and business growth - a key entrepreneurial function."
+        },
+        {
+          "id": "ENT-M1-Q091",
+          "question": "Which of the following is NOT a typical function of the entrepreneur?",
+          "options": {
+            "a": "Mobilizing financial resources",
+            "b": "Bearing business risk",
+            "c": "Organizing production",
+            "d": "Guaranteeing all loans for employees",
+            "e": "Creating employment"
+          },
+          "correct_answer": "d",
+          "explanation": "Guaranteeing employee loans is not an entrepreneurial function; the core functions revolve around organizing, risk, and value creation."
+        },
+        {
+          "id": "ENT-M1-Q092",
+          "question": "The entrepreneurial function of 'coordination' means:",
+          "options": {
+            "a": "Harmonizing the activities of different departments and resources",
+            "b": "Working in isolation",
+            "c": "Ignoring supplier relationships",
+            "d": "Discouraging teamwork",
+            "e": "Delegating all coordination to competitors"
+          },
+          "correct_answer": "a",
+          "explanation": "Coordination harmonizes the efforts of departments, people, and resources toward common business goals."
+        },
+        {
+          "id": "ENT-M1-Q093",
+          "question": "When an entrepreneur uses locally available raw materials instead of expensive imports, she is performing the function of:",
+          "options": {
+            "a": "Resource substitution and cost efficiency",
+            "b": "Wastefulness",
+            "c": "Reducing quality intentionally",
+            "d": "Ignoring production",
+            "e": "Avoiding innovation"
+          },
+          "correct_answer": "a",
+          "explanation": "Substituting local inputs for imports lowers costs and boosts efficiency - a practical entrepreneurial function."
+        },
+        {
+          "id": "ENT-M1-Q094",
+          "question": "The entrepreneur's role in the community that involves supporting schools, clinics, and infrastructure is best described as:",
+          "options": {
+            "a": "Corporate social responsibility",
+            "b": "Tax evasion",
+            "c": "Profit hoarding",
+            "d": "Market domination",
+            "e": "Price fixing"
+          },
+          "correct_answer": "a",
+          "explanation": "Corporate social responsibility is when businesses contribute to community development beyond their commercial operations."
+        },
+        {
+          "id": "ENT-M1-Q095",
+          "question": "Which function of the entrepreneur is demonstrated when a business quickly changes its product line in response to customer feedback?",
+          "options": {
+            "a": "Responsiveness to market signals",
+            "b": "Rigidity",
+            "c": "Indifference to customers",
+            "d": "Resistance to change",
+            "e": "Disregard for feedback"
+          },
+          "correct_answer": "a",
+          "explanation": "Responding quickly to customer feedback shows market responsiveness - an essential entrepreneurial function."
+        },
+        {
+          "id": "ENT-M1-Q096",
+          "question": "An entrepreneur who designs a unique packaging that reduces waste is performing the function of:",
+          "options": {
+            "a": "Innovation in processes",
+            "b": "Pure imitation",
+            "c": "Bureaucratic compliance",
+            "d": "Financial speculation",
+            "e": "Passive observation"
+          },
+          "correct_answer": "a",
+          "explanation": "Improving processes - like smarter packaging - is a form of innovation that adds value and reduces costs."
+        },
+        {
+          "id": "ENT-M1-Q097",
+          "question": "The function of the entrepreneur that ensures the business has adequate funds at the right time is:",
+          "options": {
+            "a": "Financial management",
+            "b": "Product disposal",
+            "c": "Premises decoration",
+            "d": "Uniform design",
+            "e": "Transport booking"
+          },
+          "correct_answer": "a",
+          "explanation": "Financial management ensures funds are available when needed - through budgeting, funding, and cash-flow control."
+        },
+        {
+          "id": "ENT-M1-Q098",
+          "question": "Which of the following correctly lists the sequence of an entrepreneur's core functions?",
+          "options": {
+            "a": "Identify opportunity, mobilize resources, organize production, market products, and grow",
+            "b": "Spend profits, close business, then identify opportunity",
+            "c": "Hire managers, then never monitor the business",
+            "d": "Copy competitors, cut quality, then raise prices",
+            "e": "Borrow money, buy assets, then go bankrupt"
+          },
+          "correct_answer": "a",
+          "explanation": "The entrepreneurial functions follow a logical sequence from opportunity identification through resource mobilization, production, marketing, and growth."
+        },
+        {
+          "id": "ENT-M1-Q099",
+          "question": "An entrepreneur performing the function of 'industry development' does so by:",
+          "options": {
+            "a": "Investing in new capacity that strengthens an entire industry",
+            "b": "Closing down all related businesses",
+            "c": "Discouraging new entrants",
+            "d": "Hoarding raw materials",
+            "e": "Reducing product quality"
+          },
+          "correct_answer": "a",
+          "explanation": "Investing in new capacity and technology strengthens the whole industry, benefiting suppliers, customers, and competitors."
+        },
+        {
+          "id": "ENT-M1-Q100",
+          "question": "The entrepreneur's MOST fundamental function, upon which all others depend, is:",
+          "options": {
+            "a": "Identifying viable opportunities",
+            "b": "Decorating the office",
+            "c": "Attending social events",
+            "d": "Writing personal memoirs",
+            "e": "Organizing office parties"
+          },
+          "correct_answer": "a",
+          "explanation": "All other entrepreneurial functions flow from identifying a viable opportunity worth pursuing."
+        }
+      ]
+    },
+    {
+      "section_title": "1.5 Types of Entrepreneurs",
+      "questions": [
+        {
+          "id": "ENT-M1-Q101",
+          "question": "An entrepreneur who establishes a business based on a completely new invention or unique idea is BEST described as:",
+          "options": {
+            "a": "An innovating entrepreneur",
+            "b": "An imitating entrepreneur",
+            "c": "A drone entrepreneur",
+            "d": "A fabian entrepreneur",
+            "e": "A laggard"
+          },
+          "correct_answer": "a",
+          "explanation": "Innovating entrepreneurs introduce new products, processes, or technologies that are genuinely original."
+        },
+        {
+          "id": "ENT-M1-Q102",
+          "question": "An entrepreneur who copies or adapts innovations developed elsewhere is called an:",
+          "options": {
+            "a": "Imitating entrepreneur",
+            "b": "Innovating entrepreneur",
+            "c": "Drone entrepreneur",
+            "d": "Rigid entrepreneur",
+            "e": "Passive entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Imitating entrepreneurs adopt and adapt innovations from other regions or industries rather than creating originals."
+        },
+        {
+          "id": "ENT-M1-Q103",
+          "question": "A 'drone entrepreneur' is one who:",
+          "options": {
+            "a": "Refuses to adopt changes, sticking stubbornly to old methods",
+            "b": "Constantly invents new products",
+            "c": "Copies competitors frequently",
+            "d": "Sells new technology abroad",
+            "e": "Starts multiple ventures quickly"
+          },
+          "correct_answer": "a",
+          "explanation": "Drone entrepreneurs refuse change, maintaining outdated methods even when the environment demands adaptation."
+        },
+        {
+          "id": "ENT-M1-Q104",
+          "question": "A 'fabian entrepreneur' is characterized by:",
+          "options": {
+            "a": "Great caution and hesitation before adopting changes",
+            "b": "Instant imitation of every innovation",
+            "c": "Complete rejection of all new ideas",
+            "d": "Bold invention of radical products",
+            "e": "Rapid business expansion"
+          },
+          "correct_answer": "a",
+          "explanation": "Fabian entrepreneurs are cautious and skeptical, adopting changes only after others have demonstrated success."
+        },
+        {
+          "id": "ENT-M1-Q105",
+          "question": "An entrepreneur who refuses to change even when all competitors have adopted a new method is called a:",
+          "options": {
+            "a": "Laggard",
+            "b": "Pioneer",
+            "c": "Innovator",
+            "d": "Transformer",
+            "e": "Intrapreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Laggards resist innovation entirely and are the last to accept change, often to their business's detriment."
+        },
+        {
+          "id": "ENT-M1-Q106",
+          "question": "An entrepreneur who starts a business primarily to meet basic survival needs is classified as:",
+          "options": {
+            "a": "A necessity-driven entrepreneur",
+            "b": "An opportunity-driven entrepreneur",
+            "c": "A drone entrepreneur",
+            "d": "A serial entrepreneur",
+            "e": "A social entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Necessity-driven entrepreneurs start businesses mainly to earn income for survival rather than to pursue a big opportunity."
+        },
+        {
+          "id": "ENT-M1-Q107",
+          "question": "An entrepreneur who launches a business because she has spotted a promising market gap is:",
+          "options": {
+            "a": "Opportunity-driven",
+            "b": "Necessity-driven",
+            "c": "Laggard",
+            "d": "Drone",
+            "e": "Fabian"
+          },
+          "correct_answer": "a",
+          "explanation": "Opportunity-driven entrepreneurs are motivated by attractive market opportunities rather than mere survival."
+        },
+        {
+          "id": "ENT-M1-Q108",
+          "question": "A 'first-generation entrepreneur' is someone who:",
+          "options": {
+            "a": "Starts a business without the backing of a family business background",
+            "b": "Inherits a fully established empire",
+            "c": "Works only for the government",
+            "d": "Takes over a relative's business",
+            "e": "Buys shares in a public company"
+          },
+          "correct_answer": "a",
+          "explanation": "First-generation entrepreneurs build ventures from scratch without inheriting a family business or tradition."
+        },
+        {
+          "id": "ENT-M1-Q109",
+          "question": "A 'second-generation entrepreneur' is one who:",
+          "options": {
+            "a": "Inherits or continues a family business",
+            "b": "Has never run a business",
+            "c": "Starts entirely unrelated ventures",
+            "d": "Sells family assets",
+            "e": "Avoids all family ties"
+          },
+          "correct_answer": "a",
+          "explanation": "Second-generation entrepreneurs take over and continue businesses established by their parents or family."
+        },
+        {
+          "id": "ENT-M1-Q110",
+          "question": "An entrepreneur who keeps launching new ventures one after another is known as a:",
+          "options": {
+            "a": "Serial entrepreneur",
+            "b": "Single-business entrepreneur",
+            "c": "Fabian entrepreneur",
+            "d": "Drone entrepreneur",
+            "e": "Necessity entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Serial entrepreneurs repeatedly create new businesses, often exiting one to start another."
+        },
+        {
+          "id": "ENT-M1-Q111",
+          "question": "A 'social entrepreneur' primarily aims to:",
+          "options": {
+            "a": "Solve social or environmental problems using sustainable business models",
+            "b": "Maximize short-term profit only",
+            "c": "Avoid all contact with communities",
+            "d": "Replicate government services exactly",
+            "e": "Discourage partnerships"
+          },
+          "correct_answer": "a",
+          "explanation": "Social entrepreneurs use business approaches to create lasting social or environmental impact while remaining sustainable."
+        },
+        {
+          "id": "ENT-M1-Q112",
+          "question": "An entrepreneur who focuses on high-growth ventures with the potential to scale globally is a:",
+          "options": {
+            "a": "High-growth / ambitious entrepreneur",
+            "b": "Lifestyle entrepreneur",
+            "c": "Drone entrepreneur",
+            "d": "Laggard",
+            "e": "Fabian entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "High-growth entrepreneurs deliberately build scalable businesses targeting large markets, often attracting venture capital."
+        },
+        {
+          "id": "ENT-M1-Q113",
+          "question": "A 'lifestyle entrepreneur' builds a business primarily to:",
+          "options": {
+            "a": "Support a particular personal lifestyle rather than maximize growth",
+            "b": "Dominate global markets",
+            "c": "Achieve maximum scale at all costs",
+            "d": "Reject any personal income",
+            "e": "Avoid all customers"
+          },
+          "correct_answer": "a",
+          "explanation": "Lifestyle entrepreneurs prioritize personal freedom and a preferred way of living over aggressive growth."
+        },
+        {
+          "id": "ENT-M1-Q114",
+          "question": "An entrepreneur who buys an existing business and improves its operations is best called a/an:",
+          "options": {
+            "a": "Acquiring entrepreneur",
+            "b": "Drone entrepreneur",
+            "c": "Laggard",
+            "d": "Necessity entrepreneur",
+            "e": "Imitation entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Acquiring entrepreneurs purchase existing businesses and improve or turn them around rather than starting fresh."
+        },
+        {
+          "id": "ENT-M1-Q115",
+          "question": "In the classification based on motivation, an entrepreneur driven by 'pull factors' is motivated by:",
+          "options": {
+            "a": "Attractive opportunities and the desire for achievement",
+            "b": "Survival and escape from unemployment",
+            "c": "Fear of failure",
+            "d": "Compulsion from family",
+            "e": "Government directives"
+          },
+          "correct_answer": "a",
+          "explanation": "Pull factors are positive attractions such as opportunity, independence, and achievement that draw people into entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q116",
+          "question": "An entrepreneur pushed into business by 'push factors' is typically motivated by:",
+          "options": {
+            "a": "Unemployment, low income, or dissatisfaction with paid employment",
+            "b": "A brilliant market opportunity",
+            "c": "Desire to achieve great wealth quickly",
+            "d": "Interest in innovation",
+            "e": "Personal independence"
+          },
+          "correct_answer": "a",
+          "explanation": "Push factors are negative pressures like unemployment or job dissatisfaction that push people into self-employment."
+        },
+        {
+          "id": "ENT-M1-Q117",
+          "question": "Which of the following is an example of a 'push factor' toward entrepreneurship?",
+          "options": {
+            "a": "Losing one's job and starting a small trade to earn income",
+            "b": "Spotting a fast-growing demand for solar energy",
+            "c": "Wanting to invent new technology",
+            "d": "Desiring to lead a big organization",
+            "e": "Seeking international expansion"
+          },
+          "correct_answer": "a",
+          "explanation": "Job loss pushing someone into trade is a classic push factor - entrepreneurship from necessity."
+        },
+        {
+          "id": "ENT-M1-Q118",
+          "question": "A 'technical entrepreneur' is someone who:",
+          "options": {
+            "a": "Uses scientific and technical expertise to develop products",
+            "b": "Avoids all use of technology",
+            "c": "Only trades imported goods",
+            "d": "Ignores research",
+            "e": "Depends entirely on manual labour"
+          },
+          "correct_answer": "a",
+          "explanation": "Technical entrepreneurs leverage scientific or engineering knowledge to develop innovative products and solutions."
+        },
+        {
+          "id": "ENT-M1-Q119",
+          "question": "A 'pure entrepreneur' is one who:",
+          "options": {
+            "a": "Personally owns and runs the enterprise, bearing the risk himself",
+            "b": "Only invests money without any involvement",
+            "c": "Runs businesses on behalf of the government",
+            "d": "Manages for a fixed salary",
+            "e": "Avoids ownership entirely"
+          },
+          "correct_answer": "a",
+          "explanation": "Pure entrepreneurs personally own, operate, and bear the risk of their ventures - the classic entrepreneurial form."
+        },
+        {
+          "id": "ENT-M1-Q120",
+          "question": "An 'induced entrepreneur' is someone who:",
+          "options": {
+            "a": "Is encouraged or induced by government incentives to start a business",
+            "b": "Starts a business purely from inner urge",
+            "c": "Copies every business idea",
+            "d": "Refuses government support",
+            "e": "Works only for foreign firms"
+          },
+          "correct_answer": "a",
+          "explanation": "Induced entrepreneurs respond to government incentives like grants, subsidies, or support schemes to establish ventures."
+        },
+        {
+          "id": "ENT-M1-Q121",
+          "question": "A 'spontaneous entrepreneur' is motivated primarily by:",
+          "options": {
+            "a": "Inner drive and personal ambition",
+            "b": "External government incentives",
+            "c": "Pressure from creditors",
+            "d": "Threat of legal action",
+            "e": "Family inheritance rules"
+          },
+          "correct_answer": "a",
+          "explanation": "Spontaneous entrepreneurs are driven by their own inner ambition and initiative, not external inducement."
+        },
+        {
+          "id": "ENT-M1-Q122",
+          "question": "Which type of entrepreneur is MOST likely to trigger 'creative destruction' as described by Schumpeter?",
+          "options": {
+            "a": "The innovating entrepreneur",
+            "b": "The drone entrepreneur",
+            "c": "The laggard",
+            "d": "The fabian entrepreneur",
+            "e": "The imitating entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Innovating entrepreneurs introduce radical new combinations that disrupt existing industries - Schumpeter's creative destruction."
+        },
+        {
+          "id": "ENT-M1-Q123",
+          "question": "An entrepreneur who builds a business using an idea originally developed by someone else in another country is a:",
+          "options": {
+            "a": "Copycat / imitating entrepreneur",
+            "b": "Innovating entrepreneur",
+            "c": "Drone entrepreneur",
+            "d": "Laggard",
+            "e": "Technical entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "Adopting and localizing innovations from elsewhere is the defining behaviour of the imitating entrepreneur."
+        },
+        {
+          "id": "ENT-M1-Q124",
+          "question": "An entrepreneur who runs a small family bakery aimed at providing a comfortable living is BEST classified as a:",
+          "options": {
+            "a": "Lifestyle entrepreneur",
+            "b": "High-growth entrepreneur",
+            "c": "Serial entrepreneur",
+            "d": "Social entrepreneur",
+            "e": "Drone entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "A business built for a comfortable personal lifestyle rather than aggressive scaling is a lifestyle venture."
+        },
+        {
+          "id": "ENT-M1-Q125",
+          "question": "Which of the following BEST describes the relationship between entrepreneurship type and business strategy?",
+          "options": {
+            "a": "The entrepreneur's type influences strategy - innovators pursue novelty, imitators pursue proven models, and drones resist change",
+            "b": "Type has no effect on strategy",
+            "c": "All entrepreneurs use identical strategies",
+            "d": "Strategy is fixed by law",
+            "e": "Only drones have strategies"
+          },
+          "correct_answer": "a",
+          "explanation": "An entrepreneur's classification shapes strategic choices: innovators chase novelty, imitators replicate proven models, and drones avoid change."
+        }
+      ]
+    },
+    {
+      "section_title": "1.6 The Entrepreneurial Mindset",
+      "questions": [
+        {
+          "id": "ENT-M1-Q126",
+          "question": "The 'entrepreneurial mindset' refers to:",
+          "options": {
+            "a": "A way of thinking that seeks opportunities, solves problems, and embraces calculated risks",
+            "b": "A mindset that avoids all risks and changes",
+            "c": "The belief that success depends only on luck",
+            "d": "A preference for routine, predictable work",
+            "e": "Complete dependence on others for ideas"
+          },
+          "correct_answer": "a",
+          "explanation": "The entrepreneurial mindset is an opportunity-focused, problem-solving, growth-oriented way of thinking."
+        },
+        {
+          "id": "ENT-M1-Q127",
+          "question": "Which of the following is a hallmark of the entrepreneurial mindset?",
+          "options": {
+            "a": "Focusing on possibilities rather than limitations",
+            "b": "Focusing only on problems",
+            "c": "Avoiding all uncertainty",
+            "d": "Waiting for permission",
+            "e": "Preferring to blame others"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers concentrate on what is possible and how to make it happen, rather than dwelling on constraints."
+        },
+        {
+          "id": "ENT-M1-Q128",
+          "question": "A growth mindset, as popularized by Carol Dweck, involves the belief that:",
+          "options": {
+            "a": "Abilities can be developed through effort and learning",
+            "b": "Abilities are fixed at birth",
+            "c": "Success is purely genetic",
+            "d": "Failure proves permanent incapacity",
+            "e": "Learning stops after school"
+          },
+          "correct_answer": "a",
+          "explanation": "A growth mindset holds that skills and abilities can be improved through effort, learning, and persistence."
+        },
+        {
+          "id": "ENT-M1-Q129",
+          "question": "Which of the following is a sign of an entrepreneurial mindset?",
+          "options": {
+            "a": "Treating failure as a learning opportunity",
+            "b": "Avoiding any situation that might fail",
+            "c": "Blaming customers for problems",
+            "d": "Resisting all feedback",
+            "e": "Sticking rigidly to one method"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers reframe failure as feedback and learning, which fuels continuous improvement."
+        },
+        {
+          "id": "ENT-M1-Q130",
+          "question": "The entrepreneurial mindset emphasizes 'proactivity' meaning:",
+          "options": {
+            "a": "Acting on opportunities before being forced to react",
+            "b": "Waiting for problems to become crises",
+            "c": "Reacting only after competitors act",
+            "d": "Avoiding initiative",
+            "e": "Deferring all action"
+          },
+          "correct_answer": "a",
+          "explanation": "Proactivity means taking initiative and acting on opportunities ahead of events rather than merely reacting."
+        },
+        {
+          "id": "ENT-M1-Q131",
+          "question": "Which attitude BEST reflects the entrepreneurial mindset toward risk?",
+          "options": {
+            "a": "Taking calculated, informed risks while managing downsides",
+            "b": "Avoiding risk completely",
+            "c": "Gambling recklessly",
+            "d": "Forcing others to bear all risk",
+            "e": "Ignoring risk entirely"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs embrace calculated risks - informed gambles where potential returns justify the exposure."
+        },
+        {
+          "id": "ENT-M1-Q132",
+          "question": "A key component of the entrepreneurial mindset is 'opportunity recognition,' which is:",
+          "options": {
+            "a": "The ability to identify unmet needs and viable market gaps",
+            "b": "The habit of ignoring market signals",
+            "c": "Copying whatever competitors do",
+            "d": "Reducing prices to match rivals",
+            "e": "Waiting for ideas to be handed over"
+          },
+          "correct_answer": "a",
+          "explanation": "Opportunity recognition is spotting and evaluating unmet needs and market gaps that can become profitable ventures."
+        },
+        {
+          "id": "ENT-M1-Q133",
+          "question": "Entrepreneurial thinkers demonstrate 'resourcefulness' by:",
+          "options": {
+            "a": "Doing more with limited resources",
+            "b": "Requiring unlimited funds before starting",
+            "c": "Giving up when resources are scarce",
+            "d": "Blaming a lack of capital for inaction",
+            "e": "Refusing to improvise"
+          },
+          "correct_answer": "a",
+          "explanation": "Resourcefulness is finding creative ways to accomplish goals with whatever resources are available."
+        },
+        {
+          "id": "ENT-M1-Q134",
+          "question": "The entrepreneurial mindset views problems as:",
+          "options": {
+            "a": "Opportunities in disguise",
+            "b": "Reasons to quit",
+            "c": "Permanent barriers",
+            "d": "Someone else's business",
+            "e": "Random misfortunes"
+          },
+          "correct_answer": "a",
+          "explanation": "For entrepreneurs, every problem signals an unmet need that can be turned into an opportunity."
+        },
+        {
+          "id": "ENT-M1-Q135",
+          "question": "Which behaviour reflects an entrepreneurial mindset during a business downturn?",
+          "options": {
+            "a": "Searching for new ways to serve customers and cut costs",
+            "b": "Shutting down and blaming the economy",
+            "c": "Panicking and abandoning the business",
+            "d": "Blaming employees publicly",
+            "e": "Ignoring the situation entirely"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers respond to downturns with adaptation and innovation rather than despair."
+        },
+        {
+          "id": "ENT-M1-Q136",
+          "question": "A person with an entrepreneurial mindset is LEAST likely to:",
+          "options": {
+            "a": "Depend on others to solve every problem",
+            "b": "Seek self-improvement",
+            "c": "Build a support network",
+            "d": "Learn from setbacks",
+            "e": "Take ownership of outcomes"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers take personal ownership of problems instead of depending on others to solve them."
+        },
+        {
+          "id": "ENT-M1-Q137",
+          "question": "The concept of 'effectuation' in entrepreneurship means:",
+          "options": {
+            "a": "Starting with available means and building from there",
+            "b": "Requiring a perfect prediction before acting",
+            "c": "Avoiding action without guarantees",
+            "d": "Relying on luck",
+            "e": "Copying successful firms exactly"
+          },
+          "correct_answer": "a",
+          "explanation": "Effectuation is building ventures from the means at hand - who you are, what you know, and whom you know."
+        },
+        {
+          "id": "ENT-M1-Q138",
+          "question": "In an entrepreneurial mindset, 'adaptive resilience' is the ability to:",
+          "options": {
+            "a": "Recover and grow stronger after setbacks",
+            "b": "Prevent all setbacks permanently",
+            "c": "Ignore setbacks",
+            "d": "Blame setbacks on others",
+            "e": "Avoid situations that could fail"
+          },
+          "correct_answer": "a",
+          "explanation": "Adaptive resilience means bouncing back from difficulties and emerging stronger and wiser."
+        },
+        {
+          "id": "ENT-M1-Q139",
+          "question": "Entrepreneurial mindset includes 'comfort with ambiguity' because entrepreneurs must:",
+          "options": {
+            "a": "Operate in uncertain environments with incomplete information",
+            "b": "Eliminate all uncertainty before acting",
+            "c": "Require absolute certainty",
+            "d": "Avoid every unpredictable market",
+            "e": "Wait for complete data"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurship is inherently uncertain; entrepreneurs must act despite ambiguity and incomplete information."
+        },
+        {
+          "id": "ENT-M1-Q140",
+          "question": "Which of the following BEST demonstrates an entrepreneurial mindset toward competition?",
+          "options": {
+            "a": "Studying competitors to find unmet customer needs and differentiate",
+            "b": "Avoiding any market with competition",
+            "c": "Copying competitors exactly",
+            "d": "Complaining about competitors",
+            "e": "Ignoring competitors entirely"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers study competitors to find gaps and differentiate their own offerings."
+        },
+        {
+          "id": "ENT-M1-Q141",
+          "question": "A defining trait of the entrepreneurial mindset is 'self-efficacy,' which is:",
+          "options": {
+            "a": "Belief in one's ability to accomplish tasks and goals",
+            "b": "Doubt in one's capabilities",
+            "c": "Reliance on others' confidence",
+            "d": "Avoidance of challenges",
+            "e": "Dependence on external validation"
+          },
+          "correct_answer": "a",
+          "explanation": "Self-efficacy is the confident belief that one can successfully perform the tasks needed to achieve goals."
+        },
+        {
+          "id": "ENT-M1-Q142",
+          "question": "The entrepreneurial mindset of 'noticing details' helps entrepreneurs:",
+          "options": {
+            "a": "Spot subtle customer needs and market shifts",
+            "b": "Overlook small problems",
+            "c": "Ignore feedback",
+            "d": "Skip market research",
+            "e": "Avoid data"
+          },
+          "correct_answer": "a",
+          "explanation": "Attention to detail lets entrepreneurs detect subtle needs and changes that others miss."
+        },
+        {
+          "id": "ENT-M1-Q143",
+          "question": "Which statement is TRUE about the entrepreneurial mindset?",
+          "options": {
+            "a": "It can be developed and strengthened through learning and practice",
+            "b": "It is entirely fixed at birth",
+            "c": "Only business graduates can have it",
+            "d": "It cannot be influenced by experience",
+            "e": "It applies only to wealthy people"
+          },
+          "correct_answer": "a",
+          "explanation": "The entrepreneurial mindset is learnable - education, experience, and deliberate practice develop it."
+        },
+        {
+          "id": "ENT-M1-Q144",
+          "question": "An entrepreneur with an entrepreneurial mindset views money primarily as:",
+          "options": {
+            "a": "A tool for creating value and growth",
+            "b": "The only measure of success",
+            "c": "An end in itself",
+            "d": "Something to hoard",
+            "e": "Unrelated to business"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers treat money as a resource to create value and enable growth, not merely a personal end."
+        },
+        {
+          "id": "ENT-M1-Q145",
+          "question": "The willingness of entrepreneurs to 'pivot' means they are willing to:",
+          "options": {
+            "a": "Change strategy or direction when evidence shows the current path is not working",
+            "b": "Never change their approach",
+            "c": "Abandon the business at the first setback",
+            "d": "Ignore market feedback",
+            "e": "Stick to original plans blindly"
+          },
+          "correct_answer": "a",
+          "explanation": "Pivoting is the entrepreneurial ability to change direction based on learning and feedback rather than persisting stubbornly."
+        },
+        {
+          "id": "ENT-M1-Q146",
+          "question": "Which habit is most characteristic of an entrepreneurial mind?",
+          "options": {
+            "a": "Continuous learning and curiosity",
+            "b": "Complacency after first success",
+            "c": "Avoidance of new information",
+            "d": "Rigid adherence to routines",
+            "e": "Distrust of customers"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial minds stay curious and continuously learn, adapting to new information and trends."
+        },
+        {
+          "id": "ENT-M1-Q147",
+          "question": "An entrepreneur who constantly asks 'what if' and 'how might we' is demonstrating:",
+          "options": {
+            "a": "Curiosity-driven opportunity exploration",
+            "b": "Aversion to change",
+            "c": "Resistance to innovation",
+            "d": "Routine thinking",
+            "e": "Risk-free speculation"
+          },
+          "correct_answer": "a",
+          "explanation": "Questioning 'what if' drives exploration of new possibilities - core to the entrepreneurial mindset."
+        },
+        {
+          "id": "ENT-M1-Q148",
+          "question": "The entrepreneurial mindset treats 'constraints' as:",
+          "options": {
+            "a": "Challenges to be creatively overcome",
+            "b": "Reasons to quit",
+            "c": "Permanent obstacles",
+            "d": "Excuses for inaction",
+            "e": "Someone else's problem"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial thinkers treat constraints as creative challenges, often finding innovative solutions within limits."
+        },
+        {
+          "id": "ENT-M1-Q149",
+          "question": "Which of the following is an example of an entrepreneurial mindset in daily life?",
+          "options": {
+            "a": "Noticing that students lack affordable transport and starting a campus shuttle service",
+            "b": "Complaining about transport without action",
+            "c": "Waiting for the government to provide transport",
+            "d": "Avoiding the problem entirely",
+            "e": "Blaming students for the transport problem"
+          },
+          "correct_answer": "a",
+          "explanation": "Converting an observed need into a practical venture is entrepreneurship in action."
+        },
+        {
+          "id": "ENT-M1-Q150",
+          "question": "The MOST accurate summary of the entrepreneurial mindset is:",
+          "options": {
+            "a": "An opportunity-focused, growth-oriented, resilient way of thinking that turns ideas into value",
+            "b": "A cautious, change-averse approach to business",
+            "c": "A mindset dependent on luck and external help",
+            "d": "A preference for routine and predictability",
+            "e": "An avoidance of all risk and competition"
+          },
+          "correct_answer": "a",
+          "explanation": "The entrepreneurial mindset is fundamentally opportunity-focused, growth-oriented, and resilient, converting ideas into value."
+        }
+      ]
+    },
+    {
+      "section_title": "1.7 Entrepreneur vs Manager",
+      "questions": [
+        {
+          "id": "ENT-M1-Q151",
+          "question": "The MAIN difference between an entrepreneur and a manager is that the entrepreneur:",
+          "options": {
+            "a": "Owns the venture and bears its risk, while the manager is a salaried employee",
+            "b": "Works fewer hours than the manager",
+            "c": "Has no financial interest in the business",
+            "d": "Avoids all decisions while the manager decides",
+            "e": "Is always less qualified than the manager"
+          },
+          "correct_answer": "a",
+          "explanation": "Ownership and risk-bearing distinguish the entrepreneur, whereas the manager works within the venture for a salary."
+        },
+        {
+          "id": "ENT-M1-Q152",
+          "question": "Which of the following BEST describes the entrepreneur's motivation compared with a manager's?",
+          "options": {
+            "a": "Entrepreneurs seek independence and profit; managers seek promotion and salary",
+            "b": "Entrepreneurs seek a fixed salary",
+            "c": "Managers seek to own the business",
+            "d": "Both have identical motivations",
+            "e": "Entrepreneurs avoid profit"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs are motivated by independence, achievement, and profit; managers by salary, security, and promotion."
+        },
+        {
+          "id": "ENT-M1-Q153",
+          "question": "Which statement about the entrepreneur's approach to risk compared to a manager is correct?",
+          "options": {
+            "a": "Entrepreneurs personally bear financial risk; managers generally do not",
+            "b": "Managers bear all the personal financial risk",
+            "c": "Both bear identical financial risk",
+            "d": "Entrepreneurs never face risk",
+            "e": "Managers own the risks"
+          },
+          "correct_answer": "a",
+          "explanation": "The entrepreneur personally bears the financial uncertainty of the venture, while managers receive fixed remuneration."
+        },
+        {
+          "id": "ENT-M1-Q154",
+          "question": "A manager typically works within a framework set by others, while the entrepreneur:",
+          "options": {
+            "a": "Creates the framework and sets the vision himself",
+            "b": "Follows the same rules without question",
+            "c": "Avoids setting any direction",
+            "d": "Works without any purpose",
+            "e": "Delegates vision-setting entirely"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs establish the vision and framework of the venture; managers operate within that established framework."
+        },
+        {
+          "id": "ENT-M1-Q155",
+          "question": "Which of the following is a characteristic of a manager but NOT of an entrepreneur?",
+          "options": {
+            "a": "Salaried employment with fixed rewards",
+            "b": "Personal ownership of the venture",
+            "c": "Bearing personal financial loss",
+            "d": "Setting the business vision",
+            "e": "Initiating the business venture"
+          },
+          "correct_answer": "a",
+          "explanation": "Managers are salaried employees; ownership, loss-bearing, vision-setting, and venture initiation belong to entrepreneurs."
+        },
+        {
+          "id": "ENT-M1-Q156",
+          "question": "In terms of status and hierarchy, an entrepreneur is typically:",
+          "options": {
+            "a": "The owner and principal risk-bearer of the business",
+            "b": "An employee reporting to a board",
+            "c": "A middle-level supervisor",
+            "d": "A government-appointed official",
+            "e": "A contract worker"
+          },
+          "correct_answer": "a",
+          "explanation": "The entrepreneur holds the highest position as owner and principal risk-bearer of the enterprise."
+        },
+        {
+          "id": "ENT-M1-Q157",
+          "question": "Which of the following is TRUE about the entrepreneur's and manager's rewards?",
+          "options": {
+            "a": "The entrepreneur earns profit (which may be negative); the manager earns a fixed salary",
+            "b": "The entrepreneur earns a fixed salary; the manager earns profit",
+            "c": "Both earn identical guaranteed incomes",
+            "d": "The manager earns dividends while the entrepreneur earns wages",
+            "e": "Neither receives any compensation"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial reward is profit that fluctuates with success; managerial reward is a relatively fixed salary."
+        },
+        {
+          "id": "ENT-M1-Q158",
+          "question": "A manager's primary orientation is usually toward:",
+          "options": {
+            "a": "Efficiently administering existing operations",
+            "b": "Creating new ventures from scratch",
+            "c": "Bearing personal financial risk",
+            "d": "Inventing radical products",
+            "e": "Owning the enterprise"
+          },
+          "correct_answer": "a",
+          "explanation": "Managers focus on running and optimizing existing operations efficiently, not on creating ventures."
+        },
+        {
+          "id": "ENT-M1-Q159",
+          "question": "An entrepreneur's orientation is BEST described as:",
+          "options": {
+            "a": "Opportunity-driven and innovation-focused",
+            "b": "Routine-driven and stability-focused",
+            "c": "Avoidance of change",
+            "d": "Dependence on instructions",
+            "e": "Risk-free operations"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs are oriented toward opportunities and innovation, whereas managers focus on stability and routine."
+        },
+        {
+          "id": "ENT-M1-Q160",
+          "question": "Which of the following is a similarity between an entrepreneur and a manager?",
+          "options": {
+            "a": "Both perform planning, organizing, leading, and controlling functions",
+            "b": "Both personally own the business",
+            "c": "Both always earn profit",
+            "d": "Both avoid decision-making",
+            "e": "Both work without goals"
+          },
+          "correct_answer": "a",
+          "explanation": "Despite differences, both entrepreneurs and managers exercise core management functions like planning and controlling."
+        },
+        {
+          "id": "ENT-M1-Q161",
+          "question": "In decision-making, an entrepreneur is more likely than a manager to:",
+          "options": {
+            "a": "Make high-stakes, irreversible strategic decisions",
+            "b": "Avoid all major decisions",
+            "c": "Follow fixed procedures mechanically",
+            "d": "Delegate all choices",
+            "e": "Delay decisions indefinitely"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs make high-stakes strategic decisions that shape the venture; managers typically implement within policy."
+        },
+        {
+          "id": "ENT-M1-Q162",
+          "question": "The entrepreneur's relationship with capital differs from a manager's in that the entrepreneur:",
+          "options": {
+            "a": "Raises and commits his own capital at personal risk",
+            "b": "Never handles capital",
+            "c": "Is given capital as a gift",
+            "d": "Avoids all investment",
+            "e": "Spends without planning"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs source and commit capital to the venture, bearing personal financial risk."
+        },
+        {
+          "id": "ENT-M1-Q163",
+          "question": "Which of the following statements about entrepreneurs and managers is MOST accurate?",
+          "options": {
+            "a": "A manager can become an entrepreneur by starting a venture and bearing its risk",
+            "b": "A manager can never become an entrepreneur",
+            "c": "Entrepreneurs can never become managers",
+            "d": "The two roles are completely interchangeable without change",
+            "e": "Both roles always exist in every company"
+          },
+          "correct_answer": "a",
+          "explanation": "The boundary is not rigid; a salaried manager who starts a venture and bears its risk becomes an entrepreneur."
+        },
+        {
+          "id": "ENT-M1-Q164",
+          "question": "Which person is functioning as a manager rather than an entrepreneur?",
+          "options": {
+            "a": "A hired operations director running a company for the owner",
+            "b": "A founder who started the company with personal funds",
+            "c": "A person who invented a new product and markets it",
+            "d": "A founder bearing the risk of the venture",
+            "e": "An owner who sets the company vision"
+          },
+          "correct_answer": "a",
+          "explanation": "A hired operations director runs the business for a salary - the classic manager role, not entrepreneur."
+        },
+        {
+          "id": "ENT-M1-Q165",
+          "question": "Entrepreneurs differ from managers in their approach to uncertainty because entrepreneurs:",
+          "options": {
+            "a": "Embrace and manage uncertainty, while managers prefer predictable environments",
+            "b": "Avoid uncertainty completely",
+            "c": "Are indifferent to uncertainty",
+            "d": "Transfer uncertainty to employees",
+            "e": "Deny the existence of uncertainty"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs thrive on and manage uncertainty; managers generally prefer stable, predictable operating conditions."
+        },
+        {
+          "id": "ENT-M1-Q166",
+          "question": "Which of the following BEST describes the entrepreneur's focus relative to the manager's?",
+          "options": {
+            "a": "Entrepreneurs focus on 'why and what if'; managers focus on 'how' to execute",
+            "b": "Entrepreneurs focus only on 'how'; managers on 'why'",
+            "c": "Both focus exclusively on 'what if'",
+            "d": "Entrepreneurs ignore execution entirely",
+            "e": "Managers never think about execution"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs ask why things could change and what opportunities exist; managers focus on how to execute the current plan."
+        },
+        {
+          "id": "ENT-M1-Q167",
+          "question": "The manager's accountability is primarily to the entrepreneur/owner, whereas the entrepreneur's accountability is mainly to:",
+          "options": {
+            "a": "The market, customers, and investors, as well as himself",
+            "b": "A single government official",
+            "c": "No one at all",
+            "d": "The trade union",
+            "e": "Competitors"
+          },
+          "correct_answer": "a",
+          "explanation": "Managers answer to owners; entrepreneurs answer to the market, customers, investors, and ultimately themselves."
+        },
+        {
+          "id": "ENT-M1-Q168",
+          "question": "Which of the following correctly pairs the person with the appropriate role?",
+          "options": {
+            "a": "Entrepreneur - creates the venture; Manager - operates the venture efficiently",
+            "b": "Entrepreneur - operates the venture; Manager - creates the venture",
+            "c": "Entrepreneur - takes a salary; Manager - takes profit",
+            "d": "Entrepreneur - avoids risk; Manager - bears risk",
+            "e": "Entrepreneur - executes; Manager - innovates"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs create ventures; managers operate them efficiently. The other pairings are reversed."
+        },
+        {
+          "id": "ENT-M1-Q169",
+          "question": "An entrepreneur who hires a professional to run daily operations while he focuses on strategy is demonstrating:",
+          "options": {
+            "a": "Effective delegation of management while retaining ownership",
+            "b": "Abandonment of the business",
+            "c": "Loss of control permanently",
+            "d": "Confusion of roles",
+            "e": "Ineffective leadership"
+          },
+          "correct_answer": "a",
+          "explanation": "Owners often delegate management to professionals while retaining ownership, strategy, and risk."
+        },
+        {
+          "id": "ENT-M1-Q170",
+          "question": "Which statement about the risk profiles of entrepreneurs and managers is TRUE?",
+          "options": {
+            "a": "Entrepreneurs take calculated entrepreneurial risks; managers take limited operational risks within policy",
+            "b": "Managers take unlimited personal risks",
+            "c": "Entrepreneurs take no risks",
+            "d": "Both take identical unlimited risks",
+            "e": "Managers bear the entrepreneur's financial risk"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs assume venture-level financial risk; managers accept only bounded operational risks within their roles."
+        },
+        {
+          "id": "ENT-M1-Q171",
+          "question": "A manager is BEST described as someone who:",
+          "options": {
+            "a": "Uses existing resources efficiently to achieve organizational goals",
+            "b": "Creates markets from scratch",
+            "c": "Personally guarantees business loans",
+            "d": "Owns all business assets",
+            "e": "Invents new technologies"
+          },
+          "correct_answer": "a",
+          "explanation": "The manager's job is efficient use of existing resources to achieve the organization's goals."
+        },
+        {
+          "id": "ENT-M1-Q172",
+          "question": "Which of the following is a difference in time orientation between entrepreneurs and managers?",
+          "options": {
+            "a": "Entrepreneurs plan for long-term growth and opportunity; managers focus on meeting short-term targets",
+            "b": "Entrepreneurs only think short-term; managers think long-term",
+            "c": "Both ignore time frames",
+            "d": "Managers plan for generations; entrepreneurs for weeks",
+            "e": "Time orientation is identical"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs typically hold a long-term, growth-oriented view, while managers often work toward immediate targets and budgets."
+        },
+        {
+          "id": "ENT-M1-Q173",
+          "question": "Which of the following BEST captures the essential contrast between entrepreneur and manager?",
+          "options": {
+            "a": "Entrepreneur: owner, risk-bearer, innovator; Manager: employee, executor, administrator",
+            "b": "Entrepreneur: employee; Manager: owner",
+            "c": "Entrepreneur: risk-averse; Manager: risk-taking",
+            "d": "Entrepreneur: salaried; Manager: profit-earning",
+            "e": "Entrepreneur: executor; Manager: innovator"
+          },
+          "correct_answer": "a",
+          "explanation": "The essential contrast: entrepreneurs own, bear risk, and innovate; managers are employees who execute and administer."
+        },
+        {
+          "id": "ENT-M1-Q174",
+          "question": "Which of the following is NOT a difference between an entrepreneur and a manager?",
+          "options": {
+            "a": "Both must always bear the venture's financial losses personally",
+            "b": "Ownership of the venture",
+            "c": "Personal risk-bearing",
+            "d": "Reward structure (profit vs salary)",
+            "e": "Orientation toward innovation"
+          },
+          "correct_answer": "a",
+          "explanation": "Managers do NOT bear the venture's financial losses personally - so this is not a valid difference; the others are real differences."
+        },
+        {
+          "id": "ENT-M1-Q175",
+          "question": "When a manager also co-founds and co-owns a startup, he or she is best described as:",
+          "options": {
+            "a": "An owner-manager combining both roles",
+            "b": "A pure entrepreneur only",
+            "c": "A pure manager only",
+            "d": "A bureaucrat",
+            "e": "An external consultant"
+          },
+          "correct_answer": "a",
+          "explanation": "Owner-managers combine entrepreneurial ownership with managerial responsibilities in the same person."
+        }
+      ]
+    },
+    {
+      "section_title": "1.8 Entrepreneur vs Intrapreneur",
+      "questions": [
+        {
+          "id": "ENT-M1-Q176",
+          "question": "An intrapreneur is BEST described as:",
+          "options": {
+            "a": "An employee who behaves like an entrepreneur within an existing organization",
+            "b": "A person who owns a small retail shop",
+            "c": "An external consultant to a company",
+            "d": "A government regulator of businesses",
+            "e": "A passive shareholder"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs are employees who drive innovation and new ventures from inside an established organization."
+        },
+        {
+          "id": "ENT-M1-Q177",
+          "question": "The MAIN difference between an entrepreneur and an intrapreneur is that the entrepreneur:",
+          "options": {
+            "a": "Operates independently and bears personal financial risk, while the intrapreneur works within a company's structure",
+            "b": "Never takes any risk",
+            "c": "Works for a salary like the intrapreneur",
+            "d": "Has no access to company resources",
+            "e": "Is always less innovative"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs run independent ventures at personal financial risk; intrapreneurs innovate within the safety of an employer's structure."
+        },
+        {
+          "id": "ENT-M1-Q178",
+          "question": "Which of the following is a characteristic of an intrapreneur?",
+          "options": {
+            "a": "Driving innovation using the resources and platform of the employer",
+            "b": "Bearing all the financial risk personally",
+            "c": "Owning the organization outright",
+            "d": "Operating entirely outside any organization",
+            "e": "Avoiding all innovation"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs leverage employer resources to innovate, without personally bearing the venture's financial risk."
+        },
+        {
+          "id": "ENT-M1-Q179",
+          "question": "The term 'intrapreneurship' refers to:",
+          "options": {
+            "a": "Entrepreneurship practised within an existing organization",
+            "b": "Entrepreneurship practised by the government",
+            "c": "Selling a business to foreigners",
+            "d": "Starting a business alone outside a company",
+            "e": "Buying shares in a firm"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurship is entrepreneurial behaviour inside an organization - creating new products, services, or ventures internally."
+        },
+        {
+          "id": "ENT-M1-Q180",
+          "question": "Which of the following is TRUE about the risk-bearing of an intrapreneur?",
+          "options": {
+            "a": "The employer generally bears the financial risk, not the intrapreneur personally",
+            "b": "The intrapreneur bears all personal financial risk",
+            "c": "Intrapreneurs bear unlimited personal liability",
+            "d": "Intrapreneurs insure every project personally",
+            "e": "Intrapreneurs avoid all projects with risk"
+          },
+          "correct_answer": "a",
+          "explanation": "In intrapreneurship, the organization absorbs the financial risk, whereas an independent entrepreneur bears it personally."
+        },
+        {
+          "id": "ENT-M1-Q181",
+          "question": "Which of the following is an example of an intrapreneur?",
+          "options": {
+            "a": "A staff member of a bank who develops and pitches a new mobile banking product internally",
+            "b": "A trader who owns a market stall",
+            "c": "A farmer who rents land to grow cassava",
+            "d": "A graduate who starts a clothing line",
+            "e": "A taxi driver who owns his car"
+          },
+          "correct_answer": "a",
+          "explanation": "An employee innovating new products within the employer's organization is practising intrapreneurship."
+        },
+        {
+          "id": "ENT-M1-Q182",
+          "question": "Which of the following is a key advantage of intrapreneurship over independent entrepreneurship?",
+          "options": {
+            "a": "Access to the organization's resources, brand, and distribution channels",
+            "b": "Complete independence from any rules",
+            "c": "Freedom from all accountability",
+            "d": "Guaranteed personal profits",
+            "e": "No need for any skills"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs can draw on company resources, reputation, and distribution - advantages independent entrepreneurs often lack."
+        },
+        {
+          "id": "ENT-M1-Q183",
+          "question": "Which of the following is a potential disadvantage of intrapreneurship compared with independent entrepreneurship?",
+          "options": {
+            "a": "Limited autonomy due to corporate bureaucracy and approval processes",
+            "b": "Guaranteed personal ownership of all results",
+            "c": "No access to any resources",
+            "d": "Total freedom from oversight",
+            "e": "Unlimited personal risk"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs face corporate constraints - approvals, budgets, and bureaucracy - that limit their autonomy."
+        },
+        {
+          "id": "ENT-M1-Q184",
+          "question": "In terms of ownership, the intrapreneur:",
+          "options": {
+            "a": "Does not own the venture; the company does",
+            "b": "Owns the venture outright",
+            "c": "Owns the entire company",
+            "d": "Shares equal ownership with all employees",
+            "e": "Never receives any recognition"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurial projects belong to the employer; the intrapreneur gains rewards, recognition, and career growth instead of ownership."
+        },
+        {
+          "id": "ENT-M1-Q185",
+          "question": "Which of the following BEST describes the reward of an intrapreneur compared with an entrepreneur?",
+          "options": {
+            "a": "Intrapreneurs earn salary, bonuses, and recognition; entrepreneurs earn profits and equity",
+            "b": "Intrapreneurs earn the full profits of the venture",
+            "c": "Entrepreneurs earn fixed salaries",
+            "d": "Both earn identical rewards",
+            "e": "Intrapreneurs earn no income at all"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs are compensated through salary, bonuses, and recognition; entrepreneurs earn profit and own the equity."
+        },
+        {
+          "id": "ENT-M1-Q186",
+          "question": "Which organization is most likely to encourage intrapreneurship?",
+          "options": {
+            "a": "A company that gives employees time and resources to develop new ideas",
+            "b": "A company that punishes employees for suggesting change",
+            "c": "A company with rigid, unchanging procedures",
+            "d": "A company that dismisses new ideas immediately",
+            "e": "A company that forbids employees from collaborating"
+          },
+          "correct_answer": "a",
+          "explanation": "Supportive policies - time, resources, and openness to ideas - enable intrapreneurship to flourish."
+        },
+        {
+          "id": "ENT-M1-Q187",
+          "question": "The concept of intrapreneurship was popularized by which management author?",
+          "options": {
+            "a": "Gifford Pinchot III",
+            "b": "Frederick Taylor",
+            "c": "Henry Fayol",
+            "d": "Max Weber",
+            "e": "Douglas McGregor"
+          },
+          "correct_answer": "a",
+          "explanation": "Gifford Pinchot III popularized the term 'intrapreneur' in his 1985 book 'Intrapreneuring'."
+        },
+        {
+          "id": "ENT-M1-Q188",
+          "question": "Which of the following is a difference between an entrepreneur and an intrapreneur in relation to decision-making autonomy?",
+          "options": {
+            "a": "Entrepreneurs have full autonomy; intrapreneurs must gain approval from management",
+            "b": "Intrapreneurs have full autonomy; entrepreneurs need approval",
+            "c": "Both have equal autonomy",
+            "d": "Neither has any autonomy",
+            "e": "Autonomy is decided by the government"
+          },
+          "correct_answer": "a",
+          "explanation": "Independent entrepreneurs control decisions; intrapreneurs must work within corporate approval structures."
+        },
+        {
+          "id": "ENT-M1-Q189",
+          "question": "A company encouraging employees to pitch internal startup ideas is promoting:",
+          "options": {
+            "a": "Intrapreneurship",
+            "b": "Mergers",
+            "c": "Outsourcing",
+            "d": "Liquidation",
+            "e": "Nationalization"
+          },
+          "correct_answer": "a",
+          "explanation": "Internal startup pitching is a classic intrapreneurship initiative - innovation inside the organization."
+        },
+        {
+          "id": "ENT-M1-Q190",
+          "question": "Which statement about the entrepreneurial spirit of intrapreneurs is TRUE?",
+          "options": {
+            "a": "Intrapreneurs display creativity, initiative, and risk-willingness similar to entrepreneurs",
+            "b": "Intrapreneurs never show initiative",
+            "c": "Intrapreneurs avoid all creativity",
+            "d": "Intrapreneurs lack entrepreneurial traits",
+            "e": "Intrapreneurship requires no innovation"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs exhibit the same creativity, initiative, and calculated risk-taking as entrepreneurs - but within an organization."
+        },
+        {
+          "id": "ENT-M1-Q191",
+          "question": "Which of the following is a typical challenge an intrapreneur faces that an entrepreneur does NOT?",
+          "options": {
+            "a": "Corporate politics and internal resistance to change",
+            "b": "Personal financial loss",
+            "c": "Lack of any organizational resources",
+            "d": "Owning all the equity",
+            "e": "Complete absence of competitors"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs must navigate corporate politics and internal resistance; independent entrepreneurs face market challenges instead."
+        },
+        {
+          "id": "ENT-M1-Q192",
+          "question": "The relationship between intrapreneurship and innovation in established companies is that intrapreneurship:",
+          "options": {
+            "a": "Helps large firms stay innovative and adapt to change",
+            "b": "Discourages all new ideas",
+            "c": "Applies only to small businesses",
+            "d": "Reduces company profitability",
+            "e": "Prevents product development"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurship enables established companies to remain innovative and competitive in changing markets."
+        },
+        {
+          "id": "ENT-M1-Q193",
+          "question": "Which of the following BEST distinguishes intrapreneurship from a regular employee role?",
+          "options": {
+            "a": "Intrapreneurs proactively create new value; regular employees typically perform assigned tasks",
+            "b": "Regular employees innovate daily; intrapreneurs never do",
+            "c": "Intrapreneurs avoid risk; regular employees take risks",
+            "d": "There is no difference",
+            "e": "Regular employees own the business"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs go beyond assigned tasks to proactively build new products, services, or ventures."
+        },
+        {
+          "id": "ENT-M1-Q194",
+          "question": "Which of the following scenarios is an example of intrapreneurship?",
+          "options": {
+            "a": "A telecom staffer develops a new data service and gets company backing to launch it",
+            "b": "A retiree opens a bakery",
+            "c": "A student sells shoes online",
+            "d": "A farmer expands his poultry farm",
+            "e": "A doctor starts a private clinic"
+          },
+          "correct_answer": "a",
+          "explanation": "Developing a new service with company backing is intrapreneurship; the others are independent entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q195",
+          "question": "A major benefit of intrapreneurship to the employee is:",
+          "options": {
+            "a": "Career growth, skill development, and recognition without full financial risk",
+            "b": "Immediate ownership of the entire company",
+            "c": "Total independence from managers",
+            "d": "Guaranteed personal profit",
+            "e": "Freedom from performance evaluation"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurs develop skills, gain recognition, and advance careers while the employer absorbs the financial risk."
+        },
+        {
+          "id": "ENT-M1-Q196",
+          "question": "Which of the following is a way companies promote intrapreneurship?",
+          "options": {
+            "a": "Allowing employees dedicated time for new projects and rewarding successful ideas",
+            "b": "Punishing employees for new ideas",
+            "c": "Keeping all decision-making at the top only",
+            "d": "Discouraging collaboration",
+            "e": "Ignoring market trends"
+          },
+          "correct_answer": "a",
+          "explanation": "Dedicated innovation time, resources, and rewards for successful ideas are proven intrapreneurship enablers."
+        },
+        {
+          "id": "ENT-M1-Q197",
+          "question": "An employee who identifies a customer problem and independently develops a new solution within the company is acting as a/an:",
+          "options": {
+            "a": "Intrapreneur",
+            "b": "Shareholder",
+            "c": "External auditor",
+            "d": "Regulator",
+            "e": "Supplier"
+          },
+          "correct_answer": "a",
+          "explanation": "Proactively solving customer problems with new solutions inside an organization is intrapreneurial behaviour."
+        },
+        {
+          "id": "ENT-M1-Q198",
+          "question": "Which statement about entrepreneurs and intrapreneurs is MOST accurate?",
+          "options": {
+            "a": "Both share entrepreneurial traits like creativity and initiative but differ in ownership and risk-bearing",
+            "b": "They share no common traits",
+            "c": "Intrapreneurs own and entrepreneurs work",
+            "d": "Both always bear personal financial risk",
+            "e": "Entrepreneurs never show initiative"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs and intrapreneurs share traits of creativity and initiative, but differ on ownership, risk, and independence."
+        },
+        {
+          "id": "ENT-M1-Q199",
+          "question": "Which of the following is an advantage of intrapreneurship to an established company?",
+          "options": {
+            "a": "Continuous innovation that sustains competitiveness",
+            "b": "Guaranteed avoidance of change",
+            "c": "Reduction of all risks to zero",
+            "d": "Elimination of employee creativity",
+            "e": "Stagnation of product lines"
+          },
+          "correct_answer": "a",
+          "explanation": "Intrapreneurship fuels continuous innovation, keeping established firms competitive against startups."
+        },
+        {
+          "id": "ENT-M1-Q200",
+          "question": "The key contrast between an entrepreneur and an intrapreneur in one sentence is:",
+          "options": {
+            "a": "An entrepreneur builds an independent venture at personal risk; an intrapreneur innovates within an organization that bears the risk",
+            "b": "An entrepreneur works for a salary; an intrapreneur owns the company",
+            "c": "They are exactly the same",
+            "d": "An intrapreneur starts ventures outside any organization",
+            "e": "An entrepreneur never innovates"
+          },
+          "correct_answer": "a",
+          "explanation": "The core contrast: independence and personal risk for entrepreneurs, versus in-house innovation with organizational support for intrapreneurs."
+        }
+      ]
+    },
+    {
+      "section_title": "1.9 Constraints to Entrepreneurship",
+      "questions": [
+        {
+          "id": "ENT-M1-Q201",
+          "question": "Which of the following is a common constraint to entrepreneurship in developing economies?",
+          "options": {
+            "a": "Difficulty accessing finance",
+            "b": "Abundant, low-cost credit",
+            "c": "Simple registration procedures",
+            "d": "Efficient infrastructure",
+            "e": "Oversupply of skilled labour"
+          },
+          "correct_answer": "a",
+          "explanation": "Difficulty accessing finance is a major barrier, as many aspiring entrepreneurs lack collateral and credit history."
+        },
+        {
+          "id": "ENT-M1-Q202",
+          "question": "The lack of reliable power supply in many developing countries is a constraint to entrepreneurship because it:",
+          "options": {
+            "a": "Raises operating costs and disrupts production",
+            "b": "Lowers business costs",
+            "c": "Improves product quality",
+            "d": "Increases profit margins",
+            "e": "Simplifies business planning"
+          },
+          "correct_answer": "a",
+          "explanation": "Unreliable power forces businesses to buy generators and fuel, raising costs and disrupting output."
+        },
+        {
+          "id": "ENT-M1-Q203",
+          "question": "Which of the following is a social constraint to entrepreneurship?",
+          "options": {
+            "a": "Cultural attitudes that discourage risk-taking or stigmatize failure",
+            "b": "High access to market information",
+            "c": "Supportive family structures",
+            "d": "Abundant business mentorship",
+            "e": "Strong entrepreneurial culture"
+          },
+          "correct_answer": "a",
+          "explanation": "Societal norms that stigmatize failure or discourage risk-taking deter people from starting businesses."
+        },
+        {
+          "id": "ENT-M1-Q204",
+          "question": "Bureaucratic bottlenecks in business registration and licensing act as a constraint because they:",
+          "options": {
+            "a": "Increase the time and cost of starting a business",
+            "b": "Speed up venture creation",
+            "c": "Reduce start-up costs",
+            "d": "Simplify compliance",
+            "e": "Guarantee business success"
+          },
+          "correct_answer": "a",
+          "explanation": "Complex, slow, and costly registration procedures raise the barriers to legitimate venture creation."
+        },
+        {
+          "id": "ENT-M1-Q205",
+          "question": "High interest rates on loans constrain entrepreneurship because they:",
+          "options": {
+            "a": "Increase the cost of capital and reduce the viability of ventures",
+            "b": "Encourage more borrowing",
+            "c": "Increase profit margins",
+            "d": "Reduce business risk",
+            "e": "Improve cash flow"
+          },
+          "correct_answer": "a",
+          "explanation": "Expensive credit eats into margins, making many otherwise viable business ideas unprofitable."
+        },
+        {
+          "id": "ENT-M1-Q206",
+          "question": "Which of the following is an educational constraint to entrepreneurship?",
+          "options": {
+            "a": "Curricula that focus on theory without practical entrepreneurial skills",
+            "b": "Abundant vocational training",
+            "c": "Widespread business mentorship",
+            "d": "Practical apprenticeship systems",
+            "e": "Supportive innovation hubs"
+          },
+          "correct_answer": "a",
+          "explanation": "Education systems that emphasize theory over practical skills leave graduates unprepared for business."
+        },
+        {
+          "id": "ENT-M1-Q207",
+          "question": "Poor road and transport infrastructure constrains entrepreneurship by:",
+          "options": {
+            "a": "Raising the cost of moving goods and inputs",
+            "b": "Reducing distribution costs",
+            "c": "Improving access to markets",
+            "d": "Increasing product shelf life",
+            "e": "Lowering logistics expenses"
+          },
+          "correct_answer": "a",
+          "explanation": "Bad roads and transport raise logistics costs, delay deliveries, and damage perishable goods."
+        },
+        {
+          "id": "ENT-M1-Q208",
+          "question": "Which of the following is a psychological constraint to entrepreneurship?",
+          "options": {
+            "a": "Fear of failure",
+            "b": "Access to mentors",
+            "c": "Self-confidence",
+            "d": "Risk appetite",
+            "e": "Opportunity awareness"
+          },
+          "correct_answer": "a",
+          "explanation": "Fear of failure is a psychological barrier that stops many capable people from ever starting."
+        },
+        {
+          "id": "ENT-M1-Q209",
+          "question": "Political instability constrains entrepreneurship because it:",
+          "options": {
+            "a": "Creates uncertainty that discourages investment",
+            "b": "Stabilizes business planning",
+            "c": "Reduces business risks",
+            "d": "Encourages long-term capital investment",
+            "e": "Lowers insurance costs"
+          },
+          "correct_answer": "a",
+          "explanation": "Political instability and policy uncertainty make future returns unpredictable, deterring investment."
+        },
+        {
+          "id": "ENT-M1-Q210",
+          "question": "Inconsistent government policies constrain entrepreneurship by:",
+          "options": {
+            "a": "Creating an unpredictable business environment",
+            "b": "Providing clear long-term direction",
+            "c": "Reducing compliance burdens",
+            "d": "Encouraging stable planning",
+            "e": "Guaranteeing market access"
+          },
+          "correct_answer": "a",
+          "explanation": "Frequent policy reversals make it hard for entrepreneurs to plan and invest with confidence."
+        },
+        {
+          "id": "ENT-M1-Q211",
+          "question": "Inadequate access to market information is a constraint because entrepreneurs:",
+          "options": {
+            "a": "Cannot identify opportunities or price products accurately",
+            "b": "Have too much data to handle",
+            "c": "Always know exactly what customers want",
+            "d": "Never need market research",
+            "e": "Can predict demand perfectly"
+          },
+          "correct_answer": "a",
+          "explanation": "Without market intelligence, entrepreneurs struggle to spot opportunities and set appropriate prices."
+        },
+        {
+          "id": "ENT-M1-Q212",
+          "question": "Which of the following is an example of a financial constraint to entrepreneurship?",
+          "options": {
+            "a": "Lack of collateral to secure business loans",
+            "b": "Access to venture capital",
+            "c": "Generous grants",
+            "d": "Low start-up costs",
+            "e": "Abundant microfinance"
+          },
+          "correct_answer": "a",
+          "explanation": "Lack of collateral and credit history blocks access to loans - a fundamental financial barrier."
+        },
+        {
+          "id": "ENT-M1-Q213",
+          "question": "The absence of a strong entrepreneurial culture in a society constrains entrepreneurship because:",
+          "options": {
+            "a": "There are few role models and little encouragement to start ventures",
+            "b": "Everyone is naturally entrepreneurial",
+            "c": "Risk-taking is always rewarded",
+            "d": "Failure is celebrated",
+            "e": "Education emphasizes business skills"
+          },
+          "correct_answer": "a",
+          "explanation": "Without role models and cultural encouragement, fewer people are inspired to pursue entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q214",
+          "question": "A lack of skilled manpower constrains entrepreneurship because:",
+          "options": {
+            "a": "Firms struggle to hire competent staff for operations",
+            "b": "Skilled workers are too cheap",
+            "c": "Training is unnecessary",
+            "d": "Unskilled labour is abundant and reliable",
+            "e": "Productivity is unaffected by skills"
+          },
+          "correct_answer": "a",
+          "explanation": "Shortages of skilled labour raise recruitment costs and limit operational quality and growth."
+        },
+        {
+          "id": "ENT-M1-Q215",
+          "question": "Corruption constrains entrepreneurship primarily by:",
+          "options": {
+            "a": "Adding informal costs and unfair competition for honest businesses",
+            "b": "Reducing business costs",
+            "c": "Speeding up licensing",
+            "d": "Leveling the playing field",
+            "e": "Improving transparency"
+          },
+          "correct_answer": "a",
+          "explanation": "Corruption imposes bribes and costs on law-abiding firms and distorts competition."
+        },
+        {
+          "id": "ENT-M1-Q216",
+          "question": "Weak legal protection of property and contracts constrains entrepreneurship because:",
+          "options": {
+            "a": "Entrepreneurs cannot reliably enforce agreements or protect assets",
+            "b": "Contracts always work in favour of small firms",
+            "c": "Disputes are always resolved fairly",
+            "d": "Assets are automatically protected",
+            "e": "Legal costs are negligible"
+          },
+          "correct_answer": "a",
+          "explanation": "Without strong legal enforcement, businesses face breach of contract and asset losses they cannot recover."
+        },
+        {
+          "id": "ENT-M1-Q217",
+          "question": "Which of the following is a technological constraint to entrepreneurship?",
+          "options": {
+            "a": "Limited access to modern technology and the internet",
+            "b": "Affordable high-speed internet",
+            "c": "Widespread digital literacy",
+            "d": "Abundant technical support",
+            "e": "Cheap modern equipment"
+          },
+          "correct_answer": "a",
+          "explanation": "Limited access to technology and connectivity excludes many entrepreneurs from modern markets and tools."
+        },
+        {
+          "id": "ENT-M1-Q218",
+          "question": "High tax burdens constrain entrepreneurship by:",
+          "options": {
+            "a": "Reducing the profits available for reinvestment",
+            "b": "Increasing investable funds",
+            "c": "Encouraging business expansion",
+            "d": "Lowering operating costs",
+            "e": "Improving cash flow"
+          },
+          "correct_answer": "a",
+          "explanation": "Excessive taxation leaves businesses with less profit to reinvest, slowing growth."
+        },
+        {
+          "id": "ENT-M1-Q219",
+          "question": "Family and communal expectations can constrain entrepreneurship when they:",
+          "options": {
+            "a": "Pressure entrepreneurs to distribute scarce resources beyond what the business can bear",
+            "b": "Encourage careful reinvestment",
+            "c": "Support long-term business planning",
+            "d": "Protect business capital",
+            "e": "Provide free professional advice"
+          },
+          "correct_answer": "a",
+          "explanation": "In many communities, pressure to support extended family drains business capital and constrains growth."
+        },
+        {
+          "id": "ENT-M1-Q220",
+          "question": "Which of the following is NOT a constraint to entrepreneurship?",
+          "options": {
+            "a": "Access to affordable finance",
+            "b": "Poor infrastructure",
+            "c": "Unstable government policies",
+            "d": "Fear of failure",
+            "e": "Corruption"
+          },
+          "correct_answer": "a",
+          "explanation": "Access to affordable finance is an enabler, not a constraint; the other options are genuine barriers."
+        },
+        {
+          "id": "ENT-M1-Q221",
+          "question": "A weak local market demand constrains entrepreneurship because:",
+          "options": {
+            "a": "Low purchasing power limits the ability to sell goods and services",
+            "b": "Products always sell themselves",
+            "c": "Demand is irrelevant to business",
+            "d": "Low demand lowers production costs",
+            "e": "Small markets increase profit margins"
+          },
+          "correct_answer": "a",
+          "explanation": "When customers have low purchasing power, businesses struggle to sell enough to survive."
+        },
+        {
+          "id": "ENT-M1-Q222",
+          "question": "Which constraint is created when a business owner lacks bookkeeping and financial management skills?",
+          "options": {
+            "a": "Managerial and skill constraints",
+            "b": "Political constraints",
+            "c": "Cultural constraints",
+            "d": "Legal constraints",
+            "e": "Infrastructural constraints"
+          },
+          "correct_answer": "a",
+          "explanation": "Poor financial and managerial skills hamper planning, record-keeping, and business growth - a skill constraint."
+        },
+        {
+          "id": "ENT-M1-Q223",
+          "question": "Limited availability of affordable workspace and land constrains entrepreneurship by:",
+          "options": {
+            "a": "Raising start-up and operating costs",
+            "b": "Lowering premises costs",
+            "c": "Providing cheap facilities",
+            "d": "Reducing overheads",
+            "e": "Simplifying compliance"
+          },
+          "correct_answer": "a",
+          "explanation": "Scarce, expensive premises raise fixed costs and block many aspiring entrepreneurs."
+        },
+        {
+          "id": "ENT-M1-Q224",
+          "question": "Which of the following BEST describes how fear of failure constrains entrepreneurship?",
+          "options": {
+            "a": "It prevents capable people from starting ventures due to anticipated social and financial costs",
+            "b": "It encourages more business start-ups",
+            "c": "It reduces business risk",
+            "d": "It increases venture profitability",
+            "e": "It has no effect on behaviour"
+          },
+          "correct_answer": "a",
+          "explanation": "The fear of failure - financial loss and social shame - deters people from launching ventures."
+        },
+        {
+          "id": "ENT-M1-Q225",
+          "question": "Which combination BEST captures the major constraints to entrepreneurship in developing economies?",
+          "options": {
+            "a": "Finance, infrastructure, bureaucracy, policy instability, and skills gaps",
+            "b": "Excess capital, perfect roads, and simple regulations",
+            "c": "Cheap power, abundant skills, and stable policies",
+            "d": "Low taxes, easy credit, and strong courts",
+            "e": "None of the above; there are no constraints"
+          },
+          "correct_answer": "a",
+          "explanation": "Finance, infrastructure, bureaucracy, policy instability, and skills gaps are the recurring barriers in developing economies."
+        }
+      ]
+    },
+    {
+      "section_title": "1.10 Factors Stimulating Entrepreneurship",
+      "questions": [
+        {
+          "id": "ENT-M1-Q226",
+          "question": "Which of the following is an economic factor that stimulates entrepreneurship?",
+          "options": {
+            "a": "Availability of capital and credit",
+            "b": "Prohibition of private enterprise",
+            "c": "Restrictive trade policies",
+            "d": "Heavy regulation",
+            "e": "Unstable currency"
+          },
+          "correct_answer": "a",
+          "explanation": "Access to capital and credit enables people to convert ideas into ventures, stimulating entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q227",
+          "question": "Government tax incentives for new businesses stimulate entrepreneurship by:",
+          "options": {
+            "a": "Reducing the initial cost burden of starting a venture",
+            "b": "Increasing the cost of doing business",
+            "c": "Discouraging new entrants",
+            "d": "Removing all profits",
+            "e": "Forcing businesses to close"
+          },
+          "correct_answer": "a",
+          "explanation": "Tax holidays and reliefs lower start-up costs, encouraging new business formation."
+        },
+        {
+          "id": "ENT-M1-Q228",
+          "question": "Which of the following is a social factor that stimulates entrepreneurship?",
+          "options": {
+            "a": "A culture that celebrates success and tolerates failure",
+            "b": "A culture that punishes risk-takers",
+            "c": "Social stigma attached to business",
+            "d": "Discouragement of independent work",
+            "e": "Shame attached to wealth creation"
+          },
+          "correct_answer": "a",
+          "explanation": "Societies that honour entrepreneurs and accept failure create fertile ground for venture creation."
+        },
+        {
+          "id": "ENT-M1-Q229",
+          "question": "The presence of successful role models stimulates entrepreneurship because:",
+          "options": {
+            "a": "They inspire others and demonstrate that success is attainable",
+            "b": "They discourage competition",
+            "c": "They monopolize all markets",
+            "d": "They hide all opportunities",
+            "e": "They prevent others from learning"
+          },
+          "correct_answer": "a",
+          "explanation": "Visible success stories motivate aspiring entrepreneurs and provide living proof of what is possible."
+        },
+        {
+          "id": "ENT-M1-Q230",
+          "question": "Which of the following is a psychological factor that stimulates entrepreneurship?",
+          "options": {
+            "a": "High need for achievement and self-confidence",
+            "b": "Fear of failure",
+            "c": "Low self-esteem",
+            "d": "Avoidance of responsibility",
+            "e": "Dependence on others"
+          },
+          "correct_answer": "a",
+          "explanation": "A strong need for achievement and confidence in one's abilities are powerful internal drivers toward entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q231",
+          "question": "Entrepreneurship education in schools stimulates entrepreneurship by:",
+          "options": {
+            "a": "Building knowledge, skills, and confidence for venture creation",
+            "b": "Teaching students to avoid business",
+            "c": "Discouraging creativity",
+            "d": "Focusing only on theory",
+            "e": "Preventing skill development"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurship education equips learners with practical skills and confidence to start ventures."
+        },
+        {
+          "id": "ENT-M1-Q232",
+          "question": "A stable political environment stimulates entrepreneurship because it:",
+          "options": {
+            "a": "Provides the certainty needed for long-term investment",
+            "b": "Creates unpredictable business conditions",
+            "c": "Discourages capital investment",
+            "d": "Increases business risks",
+            "e": "Reduces investor confidence"
+          },
+          "correct_answer": "a",
+          "explanation": "Political stability reduces uncertainty, encouraging investment in long-term ventures."
+        },
+        {
+          "id": "ENT-M1-Q233",
+          "question": "Which of the following stimulates entrepreneurship by expanding the potential customer base?",
+          "options": {
+            "a": "Market liberalization and trade openness",
+            "b": "Trade restrictions",
+            "c": "Small domestic markets",
+            "d": "Import bans",
+            "e": "Closed economies"
+          },
+          "correct_answer": "a",
+          "explanation": "Open markets and trade liberalization expand demand and opportunities for entrepreneurs."
+        },
+        {
+          "id": "ENT-M1-Q234",
+          "question": "Access to incubators and innovation hubs stimulates entrepreneurship by:",
+          "options": {
+            "a": "Providing support, mentorship, and shared resources for startups",
+            "b": "Increasing start-up costs",
+            "c": "Discouraging collaboration",
+            "d": "Limiting access to advice",
+            "e": "Isolating new businesses"
+          },
+          "correct_answer": "a",
+          "explanation": "Incubators lower start-up barriers through mentorship, resources, and networking."
+        },
+        {
+          "id": "ENT-M1-Q235",
+          "question": "The availability of modern technology and the internet stimulates entrepreneurship by:",
+          "options": {
+            "a": "Reducing costs and expanding reach for new ventures",
+            "b": "Increasing business costs",
+            "c": "Limiting market access",
+            "d": "Slowing down communication",
+            "e": "Preventing innovation"
+          },
+          "correct_answer": "a",
+          "explanation": "Technology lowers operating costs and lets startups reach national and global customers."
+        },
+        {
+          "id": "ENT-M1-Q236",
+          "question": "Which factor stimulates entrepreneurship when banks and microfinance institutions make funds accessible?",
+          "options": {
+            "a": "Financial inclusion",
+            "b": "Credit rationing",
+            "c": "High collateral demands",
+            "d": "Limited lending",
+            "e": "Restrictive banking"
+          },
+          "correct_answer": "a",
+          "explanation": "Financial inclusion - accessible credit - enables aspiring entrepreneurs to fund their ventures."
+        },
+        {
+          "id": "ENT-M1-Q237",
+          "question": "Government programmes that support small businesses stimulate entrepreneurship through:",
+          "options": {
+            "a": "Grants, loans, training, and advisory services",
+            "b": "Discouraging private enterprise",
+            "c": "Increasing bureaucratic hurdles",
+            "d": "Restricting market entry",
+            "e": "Removing all incentives"
+          },
+          "correct_answer": "a",
+          "explanation": "Support programmes lower barriers and provide the resources entrepreneurs need to start and grow."
+        },
+        {
+          "id": "ENT-M1-Q238",
+          "question": "A growing population with rising incomes stimulates entrepreneurship because it:",
+          "options": {
+            "a": "Expands market demand for goods and services",
+            "b": "Shrinks the customer base",
+            "c": "Reduces purchasing power",
+            "d": "Limits market opportunities",
+            "e": "Decreases consumption"
+          },
+          "correct_answer": "a",
+          "explanation": "More people with higher incomes mean larger markets and more opportunities for new ventures."
+        },
+        {
+          "id": "ENT-M1-Q239",
+          "question": "Privatization of state-owned enterprises stimulates entrepreneurship by:",
+          "options": {
+            "a": "Opening sectors to private investment and management",
+            "b": "Closing all private firms",
+            "c": "Restricting private ownership",
+            "d": "Concentrating all business in government",
+            "e": "Banning competition"
+          },
+          "correct_answer": "a",
+          "explanation": "Privatization creates space for private entrepreneurs to invest and manage enterprises."
+        },
+        {
+          "id": "ENT-M1-Q240",
+          "question": "Which of the following is a technological factor that stimulates entrepreneurship?",
+          "options": {
+            "a": "Rapid advancement and diffusion of digital tools",
+            "b": "Banning digital platforms",
+            "c": "Limiting internet access",
+            "d": "Restricting mobile payments",
+            "e": "Outlawing e-commerce"
+          },
+          "correct_answer": "a",
+          "explanation": "Digital tools and platforms open new, low-cost ways to start and run businesses."
+        },
+        {
+          "id": "ENT-M1-Q241",
+          "question": "Diaspora remittances and foreign investment stimulate entrepreneurship by:",
+          "options": {
+            "a": "Providing capital and market connections for local ventures",
+            "b": "Reducing available funds",
+            "c": "Blocking market access",
+            "d": "Discouraging local investment",
+            "e": "Restricting business growth"
+          },
+          "correct_answer": "a",
+          "explanation": "Remittances and foreign investment inject capital and links that fund and connect local enterprises."
+        },
+        {
+          "id": "ENT-M1-Q242",
+          "question": "Which factor stimulates entrepreneurship when individuals are freed from a 'job-for-life' mindset?",
+          "options": {
+            "a": "A shift in attitudes that values self-employment",
+            "b": "Preference for guaranteed government jobs",
+            "c": "Reluctance to take responsibility",
+            "d": "Dependence on the state",
+            "e": "Avoidance of risk"
+          },
+          "correct_answer": "a",
+          "explanation": "When society values self-employment, more people choose entrepreneurship over salaried work."
+        },
+        {
+          "id": "ENT-M1-Q243",
+          "question": "Improved infrastructure (roads, power, telecom) stimulates entrepreneurship by:",
+          "options": {
+            "a": "Lowering operating costs and improving market access",
+            "b": "Raising business expenses",
+            "c": "Disrupting production",
+            "d": "Limiting customer reach",
+            "e": "Increasing logistics costs"
+          },
+          "correct_answer": "a",
+          "explanation": "Good infrastructure reduces costs and connects businesses efficiently to markets."
+        },
+        {
+          "id": "ENT-M1-Q244",
+          "question": "A favourable regulatory environment that simplifies business registration stimulates entrepreneurship by:",
+          "options": {
+            "a": "Reducing the time, cost, and hassle of starting a business",
+            "b": "Adding bureaucratic delays",
+            "c": "Increasing registration fees",
+            "d": "Complicating compliance",
+            "e": "Discouraging new entrants"
+          },
+          "correct_answer": "a",
+          "explanation": "Streamlined registration procedures make it faster and cheaper to legitimize new ventures."
+        },
+        {
+          "id": "ENT-M1-Q245",
+          "question": "Which of the following is an example of a government policy that stimulates entrepreneurship?",
+          "options": {
+            "a": "Establishing SME loan guarantee schemes",
+            "b": "Banning private business",
+            "c": "Imposing arbitrary levies",
+            "d": "Restricting foreign exchange",
+            "e": "Discouraging exports"
+          },
+          "correct_answer": "a",
+          "explanation": "SME loan guarantees help entrepreneurs access credit they could not otherwise obtain."
+        },
+        {
+          "id": "ENT-M1-Q246",
+          "question": "The presence of strong professional associations and business networks stimulates entrepreneurship by:",
+          "options": {
+            "a": "Providing mentoring, advocacy, and collaboration opportunities",
+            "b": "Isolating individual businesses",
+            "c": "Blocking information sharing",
+            "d": "Discouraging partnerships",
+            "e": "Restricting market entry"
+          },
+          "correct_answer": "a",
+          "explanation": "Business networks share knowledge, advocate for members, and enable collaboration."
+        },
+        {
+          "id": "ENT-M1-Q247",
+          "question": "Unemployment and lack of formal jobs stimulate entrepreneurship in what way?",
+          "options": {
+            "a": "They push people into self-employment out of necessity",
+            "b": "They discourage all business activity",
+            "c": "They reduce the labour force",
+            "d": "They increase job security",
+            "e": "They eliminate the need for skills"
+          },
+          "correct_answer": "a",
+          "explanation": "Scarce formal jobs compel people to create their own income through enterprise - necessity-driven entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-Q248",
+          "question": "Which of the following is a cultural factor that stimulates entrepreneurship?",
+          "options": {
+            "a": "Family traditions of trade and enterprise",
+            "b": "Social rejection of business",
+            "c": "Stigma on wealth",
+            "d": "Discouragement of competition",
+            "e": "Punishment of initiative"
+          },
+          "correct_answer": "a",
+          "explanation": "Family business traditions socialize people into entrepreneurship and pass down skills."
+        },
+        {
+          "id": "ENT-M1-Q249",
+          "question": "Which factor stimulates entrepreneurship by protecting inventors' rights and encouraging innovation?",
+          "options": {
+            "a": "Strong intellectual property protection",
+            "b": "Weak patent enforcement",
+            "c": "Piracy and counterfeiting",
+            "d": "Confiscation of inventions",
+            "e": "Banning new products"
+          },
+          "correct_answer": "a",
+          "explanation": "Intellectual property protection rewards innovation, encouraging entrepreneurs to invest in new ideas."
+        },
+        {
+          "id": "ENT-M1-Q250",
+          "question": "The combination of factors that MOST effectively stimulates entrepreneurship includes:",
+          "options": {
+            "a": "Access to finance, stable policy, entrepreneurial education, technology, and a supportive culture",
+            "b": "High taxes, unstable politics, and restrictive regulation",
+            "c": "Poor infrastructure and limited markets",
+            "d": "Cultural stigma and fear of failure",
+            "e": "Bureaucracy and corruption"
+          },
+          "correct_answer": "a",
+          "explanation": "Finance, policy stability, education, technology, and supportive culture together create a thriving entrepreneurial environment."
+        }
+      ]
+    },
+    {
+      "section_title": "1.11 How to Become an Entrepreneur",
+      "questions": [
+        {
+          "id": "ENT-M1-Q251",
+          "question": "The FIRST step toward becoming an entrepreneur is typically:",
+          "options": {
+            "a": "Identifying a viable business opportunity",
+            "b": "Registering a company before any idea",
+            "c": "Buying expensive equipment",
+            "d": "Hiring a large workforce",
+            "e": "Taking a bank loan"
+          },
+          "correct_answer": "a",
+          "explanation": "Everything begins with recognizing a genuine opportunity or unmet need that can become a business."
+        },
+        {
+          "id": "ENT-M1-Q252",
+          "question": "Which of the following is a recommended first step for someone aspiring to become an entrepreneur?",
+          "options": {
+            "a": "Developing relevant skills and knowledge",
+            "b": "Waiting for a miracle",
+            "c": "Avoiding all training",
+            "d": "Copying without research",
+            "e": "Spending without planning"
+          },
+          "correct_answer": "a",
+          "explanation": "Building skills and knowledge prepares an aspiring entrepreneur to run a business successfully."
+        },
+        {
+          "id": "ENT-M1-Q253",
+          "question": "Why is conducting market research important before starting a business?",
+          "options": {
+            "a": "It reveals customer needs, competition, and demand",
+            "b": "It guarantees profits",
+            "c": "It replaces the need for a plan",
+            "d": "It removes all risks",
+            "e": "It is only a legal formality"
+          },
+          "correct_answer": "a",
+          "explanation": "Market research provides evidence about demand, customers, and competition that shapes the business concept."
+        },
+        {
+          "id": "ENT-M1-Q254",
+          "question": "A business plan is important because it:",
+          "options": {
+            "a": "Defines the business concept, strategy, and financial projections",
+            "b": "Guarantees investor funding",
+            "c": "Eliminates competitors",
+            "d": "Replaces the need for management",
+            "e": "Is only useful for large companies"
+          },
+          "correct_answer": "a",
+          "explanation": "A business plan articulates what the business will do, how, and with what financial expectations."
+        },
+        {
+          "id": "ENT-M1-Q255",
+          "question": "Which of the following is a practical way to gain entrepreneurial experience before starting a business?",
+          "options": {
+            "a": "Working or apprenticing in a related industry",
+            "b": "Avoiding any business exposure",
+            "c": "Studying only in theory",
+            "d": "Copying others' plans",
+            "e": "Jumping in without preparation"
+          },
+          "correct_answer": "a",
+          "explanation": "Industry experience and apprenticeships teach the practical realities of running a business."
+        },
+        {
+          "id": "ENT-M1-Q256",
+          "question": "An aspiring entrepreneur should first select a business idea that:",
+          "options": {
+            "a": "Matches her skills, interests, and market demand",
+            "b": "Is trendy regardless of fit",
+            "c": "Someone else tells her to copy",
+            "d": "Requires no effort",
+            "e": "Has no customers"
+          },
+          "correct_answer": "a",
+          "explanation": "The best ideas align personal skills and passion with genuine market demand."
+        },
+        {
+          "id": "ENT-M1-Q257",
+          "question": "Why is it advisable to start small when becoming an entrepreneur?",
+          "options": {
+            "a": "It limits initial risk and allows learning with less capital",
+            "b": "It guarantees quick wealth",
+            "c": "It avoids all challenges",
+            "d": "It requires no planning",
+            "e": "It eliminates competition"
+          },
+          "correct_answer": "a",
+          "explanation": "Starting small keeps initial risk manageable and lets entrepreneurs learn and refine before scaling."
+        },
+        {
+          "id": "ENT-M1-Q258",
+          "question": "Which of the following is an important step in preparing to become an entrepreneur?",
+          "options": {
+            "a": "Building a network of mentors, customers, and partners",
+            "b": "Isolating from everyone",
+            "c": "Avoiding advice",
+            "d": "Distrusting all suppliers",
+            "e": "Working in secrecy"
+          },
+          "correct_answer": "a",
+          "explanation": "A supportive network provides advice, customers, and collaboration opportunities."
+        },
+        {
+          "id": "ENT-M1-Q259",
+          "question": "Before launching, an entrepreneur should assess her 'readiness' by evaluating:",
+          "options": {
+            "a": "Her skills, resources, risk appetite, and personal goals",
+            "b": "Only the weather",
+            "c": "What competitors wear",
+            "d": "The latest social media trends",
+            "e": "Other people's opinions alone"
+          },
+          "correct_answer": "a",
+          "explanation": "Readiness assessment covers skills, resources, risk tolerance, and whether entrepreneurship fits personal goals."
+        },
+        {
+          "id": "ENT-M1-Q260",
+          "question": "Which of the following is a common financing option for a new entrepreneur?",
+          "options": {
+            "a": "Personal savings, family support, and small business loans",
+            "b": "Only large foreign grants",
+            "c": "Guaranteed government handouts",
+            "d": "Borrowing from loan sharks at any rate",
+            "e": "Waiting for an inheritance"
+          },
+          "correct_answer": "a",
+          "explanation": "Bootstrapping with savings, family support, and small loans is the standard path for new ventures."
+        },
+        {
+          "id": "ENT-M1-Q261",
+          "question": "The best way for an aspiring entrepreneur to validate a business idea is to:",
+          "options": {
+            "a": "Test it with real potential customers",
+            "b": "Keep it a secret forever",
+            "c": "Assume it will work",
+            "d": "Ignore customer feedback",
+            "e": "Invest heavily before testing"
+          },
+          "correct_answer": "a",
+          "explanation": "Testing the idea with real customers provides genuine evidence of demand before heavy investment."
+        },
+        {
+          "id": "ENT-M1-Q262",
+          "question": "Which of the following steps involves understanding who will buy the product and how to reach them?",
+          "options": {
+            "a": "Defining the target market and marketing strategy",
+            "b": "Choosing office furniture",
+            "c": "Naming the business randomly",
+            "d": "Printing business cards only",
+            "e": "Decorating the premises"
+          },
+          "correct_answer": "a",
+          "explanation": "Identifying the target market and how to reach it is essential for effective marketing."
+        },
+        {
+          "id": "ENT-M1-Q263",
+          "question": "An entrepreneur who learns about bookkeeping and cash-flow management is preparing to:",
+          "options": {
+            "a": "Manage the finances of the business properly",
+            "b": "Avoid all record-keeping",
+            "c": "Ignore expenses",
+            "d": "Spend recklessly",
+            "e": "Hide income from everyone"
+          },
+          "correct_answer": "a",
+          "explanation": "Financial literacy lets entrepreneurs track income, costs, and cash flow accurately."
+        },
+        {
+          "id": "ENT-M1-Q264",
+          "question": "Why is choosing a suitable business structure (sole proprietorship, partnership, company) important?",
+          "options": {
+            "a": "It affects liability, taxation, and ownership arrangements",
+            "b": "It determines the colour of the logo",
+            "c": "It has no legal consequences",
+            "d": "It only matters for foreign firms",
+            "e": "It is purely decorative"
+          },
+          "correct_answer": "a",
+          "explanation": "The legal structure determines personal liability, tax treatment, and how ownership and control are arranged."
+        },
+        {
+          "id": "ENT-M1-Q265",
+          "question": "Which of the following is a recommended step when starting a business?",
+          "options": {
+            "a": "Register the business and obtain the necessary licences",
+            "b": "Operate illegally to save costs",
+            "c": "Avoid all paperwork",
+            "d": "Skip permits",
+            "e": "Ignore tax obligations"
+          },
+          "correct_answer": "a",
+          "explanation": "Legitimate registration and licensing protect the entrepreneur and the business legally."
+        },
+        {
+          "id": "ENT-M1-Q266",
+          "question": "An aspiring entrepreneur should study successful businesses in the same industry in order to:",
+          "options": {
+            "a": "Learn what works and identify gaps",
+            "b": "Copy them exactly and avoid thinking",
+            "c": "Discourage new competition",
+            "d": "Ignore customer needs",
+            "e": "Avoid all innovation"
+          },
+          "correct_answer": "a",
+          "explanation": "Studying successful models reveals best practices and unmet gaps an entrepreneur can exploit."
+        },
+        {
+          "id": "ENT-M1-Q267",
+          "question": "A 'pilot' or 'test run' of a new product is useful because it:",
+          "options": {
+            "a": "Reveals demand, pricing, and operational issues before full launch",
+            "b": "Wastes all capital",
+            "c": "Guarantees instant success",
+            "d": "Replaces market research",
+            "e": "Eliminates all risks"
+          },
+          "correct_answer": "a",
+          "explanation": "A pilot run provides real-world feedback on demand, pricing, and operations with limited exposure."
+        },
+        {
+          "id": "ENT-M1-Q268",
+          "question": "Which of the following is the correct order of steps to becoming an entrepreneur?",
+          "options": {
+            "a": "Develop skills, identify opportunity, research the market, plan, raise funds, launch, and grow",
+            "b": "Launch, plan, identify opportunity, research, and learn",
+            "c": "Raise funds, launch, then identify opportunity",
+            "d": "Copy competitors, launch, then learn",
+            "e": "Spend, borrow, then hope"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurship follows a logical progression from skill-building and opportunity identification through planning, funding, launching, and growth."
+        },
+        {
+          "id": "ENT-M1-Q269",
+          "question": "Seeking mentorship from an experienced entrepreneur is beneficial because a mentor can:",
+          "options": {
+            "a": "Provide guidance, avoid pitfalls, and open networks",
+            "b": "Run the business for free",
+            "c": "Guarantee profits",
+            "d": "Remove all risks",
+            "e": "Do the work instead"
+          },
+          "correct_answer": "a",
+          "explanation": "Mentors share experience, warn against common mistakes, and connect entrepreneurs to useful networks."
+        },
+        {
+          "id": "ENT-M1-Q270",
+          "question": "Which trait is essential for someone who wants to become an entrepreneur?",
+          "options": {
+            "a": "Willingness to learn continuously",
+            "b": "Avoidance of new skills",
+            "c": "Fear of failure",
+            "d": "Dependence on luck",
+            "e": "Procrastination"
+          },
+          "correct_answer": "a",
+          "explanation": "Continuous learning keeps entrepreneurs adaptable and capable as their ventures evolve."
+        },
+        {
+          "id": "ENT-M1-Q271",
+          "question": "When developing a business plan, the financial projections section should include:",
+          "options": {
+            "a": "Start-up costs, revenue forecasts, and break-even analysis",
+            "b": "Only employee names",
+            "c": "A list of favourite foods",
+            "d": "Personal hobbies",
+            "e": "Random expenses"
+          },
+          "correct_answer": "a",
+          "explanation": "Financial projections show expected costs, revenues, and when the business will break even."
+        },
+        {
+          "id": "ENT-M1-Q272",
+          "question": "An aspiring entrepreneur who starts a side business while employed is practising:",
+          "options": {
+            "a": "Phased entry that limits financial risk",
+            "b": "Reckless gambling",
+            "c": "Avoidance of learning",
+            "d": "Instant all-in investment",
+            "e": "Irresponsible borrowing"
+          },
+          "correct_answer": "a",
+          "explanation": "Starting a side venture while employed reduces risk and provides income while the business grows."
+        },
+        {
+          "id": "ENT-M1-Q273",
+          "question": "Which of the following is a sign that an idea is worth pursuing as a business?",
+          "options": {
+            "a": "Clear customer pain, willingness to pay, and a sustainable advantage",
+            "b": "Complete absence of customers",
+            "c": "Unwillingness to pay",
+            "d": "No competition at all because nobody cares",
+            "e": "A one-time fad with no repeat demand"
+          },
+          "correct_answer": "a",
+          "explanation": "Viable ideas solve a real pain customers will pay for, with an advantage that can be sustained."
+        },
+        {
+          "id": "ENT-M1-Q274",
+          "question": "Which of the following is a common mistake made by aspiring entrepreneurs?",
+          "options": {
+            "a": "Quitting a stable income without a plan or capital",
+            "b": "Doing market research",
+            "c": "Writing a business plan",
+            "d": "Seeking mentorship",
+            "e": "Starting small and testing"
+          },
+          "correct_answer": "a",
+          "explanation": "Abandoning income without planning or capital is risky; the other options are good practices."
+        },
+        {
+          "id": "ENT-M1-Q275",
+          "question": "The BEST summary of how to become a successful entrepreneur is:",
+          "options": {
+            "a": "Prepare with skills and research, plan carefully, start small, learn from feedback, and grow steadily",
+            "b": "Wait for luck and perfect conditions",
+            "c": "Copy others and hope for the best",
+            "d": "Invest everything without a plan",
+            "e": "Avoid all learning and planning"
+          },
+          "correct_answer": "a",
+          "explanation": "Success comes from preparation, planning, measured risk, learning, and gradual growth - not luck or recklessness."
+        }
+      ]
+    },
+    {
+      "section_title": "1.12 Role of Entrepreneurship in Economic Development",
+      "questions": [
+        {
+          "id": "ENT-M1-Q276",
+          "question": "Entrepreneurship contributes to economic development primarily through:",
+          "options": {
+            "a": "Job creation, wealth generation, and innovation",
+            "b": "Increasing imports",
+            "c": "Reducing domestic production",
+            "d": "Discouraging investment",
+            "e": "Concentrating wealth in the state"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs drive development by creating jobs, generating wealth, and innovating."
+        },
+        {
+          "id": "ENT-M1-Q277",
+          "question": "How does entrepreneurship help reduce unemployment in an economy?",
+          "options": {
+            "a": "Entrepreneurs establish ventures that hire workers",
+            "b": "Entrepreneurs fire workers from other firms",
+            "c": "Entrepreneurs rely solely on machines",
+            "d": "Entrepreneurs discourage labour",
+            "e": "Entrepreneurs only employ family"
+          },
+          "correct_answer": "a",
+          "explanation": "New ventures create direct employment opportunities, absorbing labour and reducing unemployment."
+        },
+        {
+          "id": "ENT-M1-Q278",
+          "question": "The role of entrepreneurs in generating government revenue is through:",
+          "options": {
+            "a": "Taxes paid on profitable enterprises",
+            "b": "Tax evasion",
+            "c": "Avoiding registration",
+            "d": "Operating in the shadows",
+            "e": "Smuggling goods"
+          },
+          "correct_answer": "a",
+          "explanation": "Profitable businesses pay company and income taxes that fund public services and development."
+        },
+        {
+          "id": "ENT-M1-Q279",
+          "question": "Entrepreneurs stimulate industrialization by:",
+          "options": {
+            "a": "Establishing manufacturing firms that produce goods locally",
+            "b": "Importing all finished goods",
+            "c": "Closing down factories",
+            "d": "Discouraging local production",
+            "e": "Banning new industries"
+          },
+          "correct_answer": "a",
+          "explanation": "Local manufacturing by entrepreneurs builds industries and reduces dependence on imports."
+        },
+        {
+          "id": "ENT-M1-Q280",
+          "question": "How do entrepreneurs help conserve foreign exchange?",
+          "options": {
+            "a": "By producing goods locally that would otherwise be imported",
+            "b": "By increasing imports",
+            "c": "By exporting foreign currency",
+            "d": "By discouraging exports",
+            "e": "By avoiding local production"
+          },
+          "correct_answer": "a",
+          "explanation": "Local production substitutes for imports, saving scarce foreign exchange."
+        },
+        {
+          "id": "ENT-M1-Q281",
+          "question": "Entrepreneurship improves the standard of living by:",
+          "options": {
+            "a": "Providing better products, jobs, and income opportunities",
+            "b": "Reducing consumer choice",
+            "c": "Raising prices artificially",
+            "d": "Limiting employment",
+            "e": "Restricting access to goods"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs expand choices, create incomes, and improve product quality - all raising living standards."
+        },
+        {
+          "id": "ENT-M1-Q282",
+          "question": "Entrepreneurs promote balanced regional development when they:",
+          "options": {
+            "a": "Establish enterprises in rural and underdeveloped areas",
+            "b": "Concentrate everything in one city",
+            "c": "Abandon rural areas",
+            "d": "Discourage rural investment",
+            "e": "Migrate all operations abroad"
+          },
+          "correct_answer": "a",
+          "explanation": "Investing in less-developed regions spreads growth and reduces urban-rural imbalances."
+        },
+        {
+          "id": "ENT-M1-Q283",
+          "question": "The role of entrepreneurs in technological development is to:",
+          "options": {
+            "a": "Introduce and spread new technologies through their ventures",
+            "b": "Resist all new technology",
+            "c": "Prevent innovation",
+            "d": "Discourage research",
+            "e": "Ban digital tools"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs adopt and diffuse technology, accelerating national technological progress."
+        },
+        {
+          "id": "ENT-M1-Q284",
+          "question": "Entrepreneurs contribute to the development of infrastructure by:",
+          "options": {
+            "a": "Investing in facilities and services that support their operations and communities",
+            "b": "Avoiding all community investment",
+            "c": "Discouraging development",
+            "d": "Blocking new facilities",
+            "e": "Opposing public projects"
+          },
+          "correct_answer": "a",
+          "explanation": "Businesses often fund or support infrastructure - power, roads, water - benefiting entire communities."
+        },
+        {
+          "id": "ENT-M1-Q285",
+          "question": "Entrepreneurship helps in poverty reduction by:",
+          "options": {
+            "a": "Creating income-earning opportunities for the poor",
+            "b": "Concentrating all income in the state",
+            "c": "Discouraging self-employment",
+            "d": "Reducing job opportunities",
+            "e": "Raising the cost of living"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurship creates incomes and self-employment, lifting people out of poverty."
+        },
+        {
+          "id": "ENT-M1-Q286",
+          "question": "Which of the following is a role of entrepreneurship in national development?",
+          "options": {
+            "a": "Mobilizing and efficiently allocating savings and capital",
+            "b": "Hoarding capital",
+            "c": "Discouraging investment",
+            "d": "Wasting resources",
+            "e": "Avoiding productive use of funds"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs channel savings into productive ventures, improving capital allocation."
+        },
+        {
+          "id": "ENT-M1-Q287",
+          "question": "Entrepreneurs promote competition in the market, which leads to:",
+          "options": {
+            "a": "Better quality goods at lower prices for consumers",
+            "b": "Higher prices and lower quality",
+            "c": "Fewer choices for consumers",
+            "d": "Monopoly control of markets",
+            "e": "Restricted market entry"
+          },
+          "correct_answer": "a",
+          "explanation": "Competition pushes firms to improve quality and lower prices, benefiting consumers."
+        },
+        {
+          "id": "ENT-M1-Q288",
+          "question": "The 'multiplier effect' of entrepreneurship means that:",
+          "options": {
+            "a": "Spending by entrepreneurs and employees generates further income and activity in the economy",
+            "b": "Entrepreneurs reduce total economic activity",
+            "c": "Business spending has no impact",
+            "d": "Entrepreneurship only benefits the owner",
+            "e": "Ventures shrink the economy"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial spending circulates through the economy, generating additional income and jobs."
+        },
+        {
+          "id": "ENT-M1-Q289",
+          "question": "How does entrepreneurship help reduce rural-urban migration?",
+          "options": {
+            "a": "Rural enterprises create local jobs, reducing the need to move to cities",
+            "b": "Rural enterprises push people to cities",
+            "c": "Entrepreneurship discourages rural work",
+            "d": "All enterprises are located in cities",
+            "e": "Rural businesses offer no opportunities"
+          },
+          "correct_answer": "a",
+          "explanation": "Viable rural businesses provide local livelihoods, easing pressure to migrate to cities."
+        },
+        {
+          "id": "ENT-M1-Q290",
+          "question": "Entrepreneurship contributes to self-reliance in an economy by:",
+          "options": {
+            "a": "Reducing dependence on imports and foreign aid",
+            "b": "Increasing reliance on foreign goods",
+            "c": "Discouraging local production",
+            "d": "Encouraging foreign dependency",
+            "e": "Banning local industries"
+          },
+          "correct_answer": "a",
+          "explanation": "Local ventures satisfy domestic needs, reducing dependence on imports and foreign assistance."
+        },
+        {
+          "id": "ENT-M1-Q291",
+          "question": "Entrepreneurs promote human capital development by:",
+          "options": {
+            "a": "Training employees and building skills in the workforce",
+            "b": "Ignoring employee development",
+            "c": "Discouraging training",
+            "d": "Outsourcing all skills abroad",
+            "e": "Avoiding investment in people"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs train and develop workers, raising the skills of the national workforce."
+        },
+        {
+          "id": "ENT-M1-Q292",
+          "question": "Which of the following is a way entrepreneurship stimulates economic growth?",
+          "options": {
+            "a": "Increasing output, income, and productivity across the economy",
+            "b": "Reducing total output",
+            "c": "Lowering productivity",
+            "d": "Discouraging investment",
+            "e": "Shrinking national income"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial ventures raise total output, incomes, and productivity - the basis of economic growth."
+        },
+        {
+          "id": "ENT-M1-Q293",
+          "question": "Entrepreneurs help develop the informal-to-formal transition of an economy by:",
+          "options": {
+            "a": "Registering businesses and integrating them into the formal sector",
+            "b": "Operating entirely in the shadows",
+            "c": "Avoiding all registration",
+            "d": "Discouraging formalization",
+            "e": "Refusing to pay taxes"
+          },
+          "correct_answer": "a",
+          "explanation": "Formalized enterprises expand the tax base and integrate the economy into regulated structures."
+        },
+        {
+          "id": "ENT-M1-Q294",
+          "question": "Entrepreneurship contributes to the development of support industries because:",
+          "options": {
+            "a": "Each new venture creates demand for suppliers, services, and logistics",
+            "b": "New ventures eliminate suppliers",
+            "c": "Businesses avoid all partnerships",
+            "d": "Ventures reduce the service sector",
+            "e": "Entrepreneurs need no support services"
+          },
+          "correct_answer": "a",
+          "explanation": "Every business stimulates demand for upstream and downstream industries, building an industrial ecosystem."
+        },
+        {
+          "id": "ENT-M1-Q295",
+          "question": "The role of entrepreneurship in developing local technology is to:",
+          "options": {
+            "a": "Encourage research, adaptation, and local innovation",
+            "b": "Discourage all research",
+            "c": "Import every technology unchanged",
+            "d": "Prevent local innovation",
+            "e": "Ban new products"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurs drive local research and adaptation of technology, building indigenous capability."
+        },
+        {
+          "id": "ENT-M1-Q296",
+          "question": "How does entrepreneurship contribute to a country's export earnings?",
+          "options": {
+            "a": "Local firms produce and export goods and services",
+            "b": "Entrepreneurs increase imports",
+            "c": "Firms avoid foreign markets",
+            "d": "Businesses discourage exports",
+            "e": "Entrepreneurs only serve local consumers"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurial firms earn foreign exchange by exporting competitive products."
+        },
+        {
+          "id": "ENT-M1-Q297",
+          "question": "Entrepreneurship empowers individuals and communities by:",
+          "options": {
+            "a": "Providing income, independence, and control over one's economic life",
+            "b": "Creating dependence on the state",
+            "c": "Discouraging self-reliance",
+            "d": "Restricting individual initiative",
+            "e": "Limiting economic freedom"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurship gives people income and independence, empowering them and their communities."
+        },
+        {
+          "id": "ENT-M1-Q298",
+          "question": "Which of the following is a role of entrepreneurship in economic development?",
+          "options": {
+            "a": "Stimulating demand for education, training, and skills",
+            "b": "Discouraging education",
+            "c": "Reducing skill demand",
+            "d": "Preventing training",
+            "e": "Avoiding human development"
+          },
+          "correct_answer": "a",
+          "explanation": "Thriving ventures raise demand for skilled labour, stimulating education and training systems."
+        },
+        {
+          "id": "ENT-M1-Q299",
+          "question": "Entrepreneurs promote sustainable development when they:",
+          "options": {
+            "a": "Adopt environmentally responsible practices in their ventures",
+            "b": "Pollute without consequences",
+            "c": "Waste resources",
+            "d": "Ignore environmental impact",
+            "e": "Deplete resources recklessly"
+          },
+          "correct_answer": "a",
+          "explanation": "Sustainable entrepreneurs balance profit with environmental and social responsibility."
+        },
+        {
+          "id": "ENT-M1-Q300",
+          "question": "The OVERALL role of entrepreneurship in economic development is BEST summarized as:",
+          "options": {
+            "a": "Driving job creation, innovation, wealth, and balanced growth that transforms the economy",
+            "b": "Concentrating wealth and restricting opportunity",
+            "c": "Increasing dependency and stagnation",
+            "d": "Limiting growth and innovation",
+            "e": "Reducing employment and output"
+          },
+          "correct_answer": "a",
+          "explanation": "Entrepreneurship is a core engine of development - creating jobs, innovating, building wealth, and spreading balanced growth."
+        }
+      ]
+    }
+  ]
+}
