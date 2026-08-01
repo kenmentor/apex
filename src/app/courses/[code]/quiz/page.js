@@ -12,7 +12,7 @@ import { trackAnswerSubmitted, trackSessionTerminated, trackExplanationViewed, t
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import CodeBlock from '@/components/CodeBlock';
-import { ChevronLeft, Clock, Check, AlertTriangle } from 'lucide-react';
+import { ChevronLeft, Clock, Check, AlertTriangle, Flame } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
 
@@ -124,6 +124,7 @@ export default function QuizPage() {
   const [playerSchool, setPlayerSchool] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [streakInfo, setStreakInfo] = useState(null);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [restoredProgress, setRestoredProgress] = useState(null);
   const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false });
@@ -674,6 +675,10 @@ export default function QuizPage() {
         console.warn('Score save failed:', data)
         return;
       }
+      const data = await res.json()
+      if (data && (data.streak != null || data.pointsEarned > 0)) {
+        setStreakInfo(data)
+      }
       clearProgress();
       setSaved(true);
     } catch { setSaved(true) }
@@ -740,6 +745,22 @@ export default function QuizPage() {
             <div className="flex items-center justify-center gap-2 rounded-xl bg-yellow-100 p-3 text-sm text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
               <AlertTriangle className="size-4 shrink-0" />
               {cheatWarning}
+            </div>
+          )}
+
+          {streakInfo?.pointsEarned > 0 && (
+            <div className="space-y-2">
+              {streakInfo.bonuses?.map((b, i) => (
+                <div key={i} className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500/15 to-pink-500/15 p-3 text-sm font-semibold text-orange-600 dark:text-orange-400">
+                  <Flame className="size-4 shrink-0" />
+                  {b.message} +{b.points} points added!
+                </div>
+              ))}
+              {streakInfo.streak > 0 && (
+                <div className="text-center text-xs font-medium text-muted-foreground">
+                  Current streak: <span className="font-bold text-orange-500">{streakInfo.streak} days</span> · Total points: {streakInfo.points}
+                </div>
+              )}
             </div>
           )}
 

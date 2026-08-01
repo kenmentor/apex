@@ -22,6 +22,9 @@ export async function GET(request) {
       avatar: user.avatar || '',
       verified: !!user.verified,
       admin: !!user.admin,
+      points: user.points || 0,
+      streak: user.streak || 0,
+      bestStreak: user.bestStreak || 0,
       createdAt: user.createdAt,
     })
   } catch (error) {

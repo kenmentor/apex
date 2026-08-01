@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Search, Bell, BookOpen, ArrowRight, Trophy, Users, Sparkles } from 'lucide-react';
+import { Search, Bell, BookOpen, ArrowRight, Trophy, Users, Sparkles, Flame, Coins } from 'lucide-react';
 import { getUser, getToken } from '@/lib/auth';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -233,6 +233,42 @@ export default function HomePage() {
         ) : (
           <Link href="/auth" className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shrink-0">
             Sign In
+          </Link>
+        )}
+      </div>
+
+      {/* Streak Banner */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-pink-600 p-4 text-white shadow-lg shadow-orange-500/20">
+        <div className="absolute -right-6 -top-6 size-28 rounded-full bg-white/10" />
+        <div className="absolute -bottom-8 right-8 size-24 rounded-full bg-white/10" />
+        {user ? (
+          <div className="relative flex items-center gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/20">
+              <Flame className="size-7" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-bold">{profile?.streak > 0 ? `${profile.streak} day streak! 🔥` : 'Start your streak!'}</div>
+              <p className="text-xs text-white/80">
+                {profile?.points > 0
+                  ? `${profile.points} points earned · keep going for 10-streak rewards`
+                  : 'Answer quizzes daily — reach a 10-day streak to earn points!'}
+              </p>
+            </div>
+            <div className="flex shrink-0 items-center gap-1 rounded-lg bg-white/15 px-2.5 py-1.5 text-sm font-bold">
+              <Coins className="size-4" />
+              {profile?.points || 0}
+            </div>
+          </div>
+        ) : (
+          <Link href="/auth" className="relative flex items-center gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/20">
+              <Flame className="size-7" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-bold">Build a Streak, Earn Points!</div>
+              <p className="text-xs text-white/80">Quiz daily → 10-day streak = +10 pts · first 2-day streak = +20 pts bonus</p>
+            </div>
+            <ArrowRight className="size-4 shrink-0" />
           </Link>
         )}
       </div>

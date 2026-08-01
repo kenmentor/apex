@@ -8,6 +8,7 @@ import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import TelemetryProvider from '@/components/TelemetryProvider';
 import ProfileCompletePrompt from '@/components/ProfileCompletePrompt';
+import ConnectionStatus from '@/components/ConnectionStatus';
 
 function getBaseUrl() {
   const url = process.env.NEXT_PUBLIC_BASE_URL || process.env.FRONTEND_URL
@@ -66,6 +67,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
           <NavWrapper />
+          <ConnectionStatus />
           <AlexChat />
           <VisitorTracker />
           <InstallPrompt />

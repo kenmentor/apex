@@ -187,6 +187,20 @@ export async function GET(request) {
     // --- Sort by priority descending ---
     feedItems.sort((a, b) => b.priority - a.priority)
 
+    // --- User points & streak ---
+    let points = 0
+    let streak = 0
+    let bestStreak = 0
+    try {
+      const usersCol = await getCollection('users')
+      const userDoc = await usersCol.findOne({ email: email.toLowerCase().trim() })
+      if (userDoc) {
+        points = userDoc.points || 0
+        streak = userDoc.streak || 0
+        bestStreak = userDoc.bestStreak || 0
+      }
+    } catch {}
+
     return NextResponse.json({
       items: feedItems,
       profile: {
@@ -194,6 +208,9 @@ export async function GET(request) {
         quizCount,
         bestPct,
         courseCount: seenCourses.size,
+        points,
+        streak,
+        bestStreak,
       },
     })
   } catch (error) {

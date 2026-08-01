@@ -84,6 +84,63 @@ export async function POST(request) {
 
     const result = await scoresCol.insertOne(doc)
 
+    // ─── Streak & points ───
+    let streakInfo = { streak: 0, bestStreak: 0, points: 0, pointsEarned: 0, bonuses: [] }
+    if (email) {
+      try {
+        const users = await getCollection('users')
+        const userDoc = await users.findOne({ email: email.toLowerCase().trim() })
+        if (userDoc) {
+          const today = new Date().toISOString().slice(0, 10)
+          const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
+          const lastQuizDate = userDoc.lastQuizDate || ''
+          const currentStreak = userDoc.streak || 0
+
+          let streak
+          if (lastQuizDate === today) {
+            streak = currentStreak
+          } else if (lastQuizDate === yesterday) {
+            streak = currentStreak + 1
+          } else {
+            streak = 1
+          }
+
+          let pointsEarned = 0
+          const bonuses = []
+
+          if (streak >= 2 && !userDoc.streakBonusClaimed) {
+            pointsEarned += 20
+            bonuses.push({ type: 'first_streak', streak: 2, points: 20, message: 'First 2-day streak bonus!' })
+          }
+          if (streak >= 10 && streak % 10 === 0 && streak > (userDoc.lastMilestoneAwarded || 0)) {
+            pointsEarned += 10
+            bonuses.push({ type: 'streak_milestone', streak, points: 10, message: `${streak}-day streak!` })
+          }
+
+          const points = (userDoc.points || 0) + pointsEarned
+          const bestStreak = Math.max(userDoc.bestStreak || 0, streak)
+
+          await users.updateOne(
+            { _id: userDoc._id },
+            {
+              $set: {
+                streak,
+                bestStreak,
+                points,
+                lastQuizDate: today,
+                ...(streak >= 2 ? { streakBonusClaimed: true } : {}),
+                ...(streak >= 10 && streak % 10 === 0 ? { lastMilestoneAwarded: streak } : {}),
+              },
+            }
+          )
+
+          streakInfo = { streak, bestStreak, points, pointsEarned, bonuses }
+        }
+      } catch (e) {
+        console.error('Streak update error:', e)
+      }
+    }
+
     if (email) {
       try {
         const notifCol = await getCollection('notifications')
@@ -146,7 +203,7 @@ export async function POST(request) {
       } catch {}
     }
 
-    return NextResponse.json({ success: true, id: result.insertedId.toString(), percentage }, { status: 201 })
+    return NextResponse.json({ success: true, id: result.insertedId.toString(), percentage, ...streakInfo }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to save score: ' + error.message }, { status: 500 })
   }
