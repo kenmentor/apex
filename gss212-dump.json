@@ -1,0 +1,1455 @@
+[
+ {
+  "_id": "6a55fe6f1989088a641746d4",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q1",
+  "question": "Which period of philosophy is described as Golden era?",
+  "options": {
+   "a": "Ancient",
+   "b": "Medieval",
+   "c": "Modern",
+   "d": "Contemporary",
+   "e": "None of the above"
+  },
+  "correctAnswer": "a",
+  "explanation": "The classical Greek period featuring Socrates, Plato, and Aristotle represents the peak of foundational Western philosophy, often referred to as the Golden Era."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746d6",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q3",
+  "question": "Spinoza was called a \"God-intoxicated philosopher\" because?",
+  "options": {
+   "a": "God has no existence",
+   "b": "Everything was manifestation of God",
+   "c": "God never created the world",
+   "d": "All of the above"
+  },
+  "correctAnswer": "b",
+  "explanation": "Spinoza was a pantheist who argued that God and the physical universe are the exact same substance (Deus sive Natura)."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746d9",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q6",
+  "question": "Who is the father of western philosophy?",
+  "options": {
+   "a": "Socrates",
+   "b": "Aristotle",
+   "c": "Thales",
+   "d": "Pythagoras"
+  },
+  "correctAnswer": "c",
+  "explanation": "Thales of Miletus is traditionally honored as the father of Western philosophy because he was the first to explain natural phenomena without resorting to mythology."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746db",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q8",
+  "question": "What event marked the first scientific breakthrough?",
+  "options": {
+   "a": "The discovery of west indies",
+   "b": "Planetary discovery",
+   "c": "Eclipse of 585BC",
+   "d": "None of the above."
+  },
+  "correctAnswer": "c",
+  "explanation": "Thales's astronomical prediction of the 585 BC eclipse is celebrated as the first major triumph of rational, scientific inquiry."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746dc",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q9",
+  "question": "Aristotle defines philosophy as:",
+  "options": {
+   "a": "The knowledge of truth",
+   "b": "Love of wisdom",
+   "c": "Love of Knowledge",
+   "d": "All of the above"
+  },
+  "correctAnswer": "a",
+  "explanation": "In his Metaphysics, Aristotle formally defines philosophy as 'the science of truth' or 'knowledge of truth.'"
+ },
+ {
+  "_id": "6a55fe6f1989088a641746de",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q11",
+  "question": "The various philosophies of [science, law, education, etc.] are under which branch of philosophy?",
+  "options": {
+   "a": "ethics",
+   "b": "metaphysics",
+   "c": "Epistemology",
+   "d": "New dimensions"
+  },
+  "correctAnswer": "d",
+  "explanation": "Modern applied fields of philosophical study are classified under 'New Dimensions' of philosophy in your course."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e2",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q15",
+  "question": "An unexamined life is not worth living is a diction of:",
+  "options": {
+   "a": "Abraham Lincoln",
+   "b": "Aristotle",
+   "c": "Macauley",
+   "d": "Socrates",
+   "e": "Plato"
+  },
+  "correctAnswer": "d",
+  "explanation": "Socrates famously declared this during his trial in Athens, as recorded in Plato's Apology."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e8",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q21",
+  "question": "African philosophy can only be studied by Africans:",
+  "options": {
+   "a": "True",
+   "b": "False"
+  },
+  "correctAnswer": "b",
+  "explanation": "Like any field of academic philosophy, African philosophy is a universal human science accessible to students and scholars globally."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746ee",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q27",
+  "question": "Which of these systems is concerned with the nature of ultimate reality:",
+  "options": {
+   "a": "Realism",
+   "b": "Idealism",
+   "c": "Theology",
+   "d": "Metaphysics"
+  },
+  "correctAnswer": "d",
+  "explanation": "Metaphysics is the foundational branch of philosophy that systematically investigates the nature of ultimate reality, being, and existence."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746fa",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q39",
+  "question": "Aristotle's principle of moderation is called:",
+  "options": {
+   "a": "Median",
+   "b": "Virtue",
+   "c": "Mean",
+   "d": "Justice"
+  },
+  "correctAnswer": "c",
+  "explanation": "Aristotle's ethical principle is the 'Golden Mean'-the idea that moral virtue consists of a middle state between extremes of excess and deficiency."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746fb",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q40",
+  "question": "The sophists philosophy was rejected by:",
+  "options": {
+   "a": "Plato",
+   "b": "Socrates",
+   "c": "Zeno",
+   "d": "Parmenides"
+  },
+  "correctAnswer": "b",
+  "explanation": "Socrates was the earliest and most fierce opponent of the Sophists, rejecting their moral relativism and rhetoric for profit."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746fd",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q42",
+  "question": "The Christian faith and reason came together when:",
+  "options": {
+   "a": "ancient period",
+   "b": "medieval period",
+   "c": "Both a and d",
+   "d": "None of the above"
+  },
+  "correctAnswer": "b",
+  "explanation": "The integration of Christian dogma and philosophical reason reached its peak during the medieval period under Scholasticism."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174703",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q48",
+  "question": "The origin of philosophy:",
+  "options": {
+   "a": "not a problem",
+   "b": "Accepted by all that it is of Greek origin",
+   "c": "controversial",
+   "d": "All of the above"
+  },
+  "correctAnswer": "c",
+  "explanation": "The origin remains a subject of academic debate, particularly concerning Greek reliance on earlier Egyptian and Eastern thought."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174706",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q1",
+  "question": "Symbolize this statement: 'Okon will not investigate unless Ekaete lodges a complaint'",
+  "options": {
+   "a": "~O v E",
+   "b": "~O . ~E",
+   "c": "~O v ~E",
+   "d": "O > ~E"
+  },
+  "correctAnswer": "a",
+  "explanation": "In propositional logic, 'P unless Q' is equivalent to '~P > Q' or 'P v Q'. Here, '~O unless E' translates to '~~O > E' (which is 'O > E') or '~O v E'. Both are logically equivalent."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174709",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q4",
+  "question": "The basic element of an argument is:",
+  "options": {
+   "a": "premise",
+   "b": "Conclusion",
+   "c": "The word",
+   "d": "Reasoning"
+  },
+  "correctAnswer": "a",
+  "explanation": "An argument consists structurally of premises and a conclusion, which are propositions (statements). In this multiple-choice structure, 'premise' is the correct foundational block."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417470f",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q10",
+  "question": "In categorical propositions, the word that serves the function of a bridge and indicates class inclusion or exclusion is:",
+  "options": {
+   "a": "Predicate term",
+   "b": "Subject term",
+   "c": "Copula",
+   "d": "Quantifier"
+  },
+  "correctAnswer": "c",
+  "explanation": "The copula (usually 'is' or 'are') acts as a semantic bridge, linking the subject term and the predicate term and establishing class inclusion/exclusion."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174712",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q13",
+  "question": "The word 'logic' etymologically means:",
+  "options": {
+   "a": "Reality",
+   "b": "Ideas",
+   "c": "Speech",
+   "d": "Communication"
+  },
+  "correctAnswer": "c",
+  "explanation": "'Logic' is derived from the Greek word 'logos', which translates to speech, word, reason, study, or discourse."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417471c",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q23",
+  "question": "A sequence of statements in which one is alleged to follow from the others is:",
+  "options": {
+   "a": "Propositions",
+   "b": "Arguments",
+   "c": "Propositions (Duplicate Option)",
+   "d": "Arguments (Duplicate Option)"
+  },
+  "correctAnswer": "b",
+  "explanation": "A series of propositions where one is asserted to be derived from the others constitutes an argument."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174720",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q27",
+  "question": "Which of these was a period in the development of logic?",
+  "options": {
+   "a": "period of logic",
+   "b": "Roman",
+   "c": "Modern thinking",
+   "d": "Post-modern thoughts"
+  },
+  "correctAnswer": "b",
+  "explanation": "The Stoic developments during the Roman period played a major role in propositional logic, bridging classical Greek logic and medieval scholasticism."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174722",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q29",
+  "question": "'Some human beings are not wicked' is an example of what proposition?",
+  "options": {
+   "a": "E",
+   "b": "A",
+   "c": "O",
+   "d": "I"
+  },
+  "correctAnswer": "c",
+  "explanation": "This is a Particular Negative categorical proposition of the form 'Some S are not P', represented by the letter O."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174724",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q31",
+  "question": "A biconditional is true when both components:",
+  "options": {
+   "a": "Are True",
+   "b": "Are False",
+   "c": "Have the same value",
+   "d": "None of the above"
+  },
+  "correctAnswer": "c",
+  "explanation": "A biconditional (P ≡ Q) is true if and only if both components have the same truth-value (both True or both False)."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174725",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q32",
+  "question": "Which of the following is not a logical connective?",
+  "options": {
+   "a": "Disjunction",
+   "b": "Conjunction",
+   "c": "Conditional",
+   "d": "Proposition"
+  },
+  "correctAnswer": "d",
+  "explanation": "A proposition is a declarative statement being connected, whereas disjunction, conjunction, and conditional are the connectives themselves."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174729",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q36",
+  "question": "One of these is NOT a logical constant:",
+  "options": {
+   "a": "Negation",
+   "b": "Conjunction",
+   "c": "Disjunction",
+   "d": "Biconditional",
+   "e": "None of the above"
+  },
+  "correctAnswer": "e",
+  "explanation": "Negation, conjunction, disjunction, and biconditional are all logical constants. Thus, 'None of the above' is the correct choice."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417472e",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q41",
+  "question": "Another name for stipulative definition is:",
+  "options": {
+   "a": "Precising",
+   "b": "Connotative",
+   "c": "Demonstrative",
+   "d": "Nominant"
+  },
+  "correctAnswer": "d",
+  "explanation": "Stipulative definitions are also called nominal definitions (closely matching the test option 'Nominant' or being a typographical error for 'Nominal')."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174731",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q44",
+  "question": "An artificial logical arrangement of a deductive argumentation is:",
+  "options": {
+   "a": "coherent argument",
+   "b": "deductivism",
+   "c": "syllogism"
+  },
+  "correctAnswer": "c",
+  "explanation": "A syllogism is a highly structured, formal deductive argument consisting of exactly two premises and a conclusion."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746d5",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q2",
+  "question": "The diction \"faith without reason is blind and reason without faith is empty\" was popular in which period of philosophy?",
+  "options": {
+   "a": "Ancient",
+   "b": "Medieval",
+   "c": "Modern",
+   "d": "Contemporary"
+  },
+  "correctAnswer": "b",
+  "explanation": "Medieval philosophy was characterized by Scholasticism, which sought to harmonize religious faith with rational philosophical inquiry."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746d7",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q4",
+  "question": "Which of this ancient philosophers made the first map?",
+  "options": {
+   "a": "Thales",
+   "b": "Anaximander",
+   "c": "Anaximenes",
+   "d": "Zeno"
+  },
+  "correctAnswer": "b",
+  "explanation": "Anaximander of Miletus is credited by historians with constructing the first map of the known world."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746d8",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q5",
+  "question": "Who is often called the \"prophet of change\"?",
+  "options": {
+   "a": "Bhari",
+   "b": "Parmenides",
+   "c": "Heraclitus",
+   "d": "Anaximander"
+  },
+  "correctAnswer": "c",
+  "explanation": "Heraclitus is famous for his doctrine of universal change/flux (pantha rhei) and identifying fire as the primordial substance representing this change."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e0",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q13",
+  "question": "Injustice pays better than justice is associated with:",
+  "options": {
+   "a": "Thrasymacus",
+   "b": "Zeno",
+   "c": "Protagoras",
+   "d": "Gorgias"
+  },
+  "correctAnswer": "a",
+  "explanation": "In Plato's Republic, the Sophist Thrasymacus argues that justice is merely 'the interest of the stronger' and that the unjust man benefits more than the just man."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e4",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q17",
+  "question": "Existence precedes essence is related to:",
+  "options": {
+   "a": "Essentialism",
+   "b": "Existentialism",
+   "c": "Pragmatism",
+   "d": "Phenomenology"
+  },
+  "correctAnswer": "b",
+  "explanation": "This is the core tenet formulated by Jean-Paul Sartre, stating that humans exist first and define their essence/nature second."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e6",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q19",
+  "question": "The most popular existentialist is:",
+  "options": {
+   "a": "Kierkegaard",
+   "b": "Camus",
+   "c": "J. P. Sartre",
+   "d": "Karl Jaspers"
+  },
+  "correctAnswer": "c",
+  "explanation": "Jean-Paul Sartre remains the most widely known and influential champion of existentialist philosophy."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e7",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q20",
+  "question": "One of these is not part of contemporary philosophy:",
+  "options": {
+   "a": "Essencism",
+   "b": "Existentialism",
+   "c": "Pragmatism",
+   "d": "Phenomenology"
+  },
+  "correctAnswer": "a",
+  "explanation": "'Essencism' is not a recognized school of philosophy. The others are major 20th-century contemporary movements."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746eb",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q24",
+  "question": "Who is associated with innatism:",
+  "options": {
+   "a": "Aristotle",
+   "b": "Socrates",
+   "c": "Plato",
+   "d": "All of the above"
+  },
+  "correctAnswer": "c",
+  "explanation": "Plato is the classic champion of innatism, arguing that all knowledge is innate and recalled through recollection (anamnesis)."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746ec",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q25",
+  "question": "Philosophy as rational and human science first began in:",
+  "options": {
+   "a": "Egypt",
+   "b": "Greece",
+   "c": "Asia",
+   "d": "Every culture"
+  },
+  "correctAnswer": "b",
+  "explanation": "While other ancient cultures had deep wisdom systems, systematic rational philosophy as a rigorous human science first emerged in Greece (specifically in Ionia)."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f2",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q31",
+  "question": "For Rene Descartes the foundation of knowledge is:",
+  "options": {
+   "a": "Sense",
+   "b": "Brain",
+   "c": "Mind",
+   "d": "Heart"
+  },
+  "correctAnswer": "c",
+  "explanation": "As a Continental Rationalist, Descartes argued that the ultimate, indubitable foundation of knowledge is the mind (the cogito or intellect)."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f7",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q36",
+  "question": "Select the odd one:",
+  "options": {
+   "a": "Socrates",
+   "b": "Anaximander",
+   "c": "Thales",
+   "d": "Anaximenes"
+  },
+  "correctAnswer": "a",
+  "explanation": "Thales, Anaximander, and Anaximenes are all Pre-Socratic Milesian philosophers of cosmology, while Socrates focuses on human ethics."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f8",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q37",
+  "question": "Pick the wrong person (Continental Rationalists):",
+  "options": {
+   "a": "Rene Descartes",
+   "b": "Spinoza",
+   "c": "Berkeley",
+   "d": "Leibniz"
+  },
+  "correctAnswer": "c",
+  "explanation": "Descartes, Spinoza, and Leibniz are the three major Rationalists, whereas George Berkeley is a classic British Empiricist."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746fc",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q41",
+  "question": "The school of thought which negates man's freedom is:",
+  "options": {
+   "a": "modernism",
+   "b": "Freewillisn",
+   "c": "Dualism",
+   "d": "Determinism"
+  },
+  "correctAnswer": "d",
+  "explanation": "Determinism argues that all events, including human decisions, are strictly determined by prior causes, denying the existence of free will."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174700",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q45",
+  "question": "The view that mind is real and matter is a byproduct is associated with:",
+  "options": {
+   "a": "Rationalism",
+   "b": "Empiricism",
+   "c": "Realism",
+   "d": "Idealism",
+   "e": "All of the above"
+  },
+  "correctAnswer": "d",
+  "explanation": "Idealism teaches that mental entities (minds, ideas, spirits) are the primary reality, whereas physical matter is secondary."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174701",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q46",
+  "question": "The doctrine of creation ex-nihilo is associated with who:",
+  "options": {
+   "a": "St. Augustine",
+   "b": "St. Anselm",
+   "c": "St. Aquinas",
+   "d": "Bona Venture"
+  },
+  "correctAnswer": "a",
+  "explanation": "St. Augustine was a foundational Christian philosopher who defended 'creation out of nothing' (ex nihilo)."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174705",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q50",
+  "question": "The foundation of modern science was laid by:",
+  "options": {
+   "a": "Greek philosophers",
+   "b": "Western philosophers",
+   "c": "Medieval thinkers",
+   "d": "Ionian philosophers"
+  },
+  "correctAnswer": "d",
+  "explanation": "The Milesian/Ionian school laid the foundation of modern science by replacing supernatural myths with natural, observation-based explanations."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174708",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q3",
+  "question": "Which of these contains Aristotle's mature thoughts?",
+  "options": {
+   "a": "Prior analytics and De-interpretation",
+   "b": "The topics",
+   "c": "The categories",
+   "d": "Sophistices Elenchus"
+  },
+  "correctAnswer": "a",
+  "explanation": "Aristotle's Prior Analytics introduces his famous theory of the syllogism, and De Interpretatione covers propositions and the square of opposition, representing his mature logical theories."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417470d",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q8",
+  "question": "Select the odd one:",
+  "options": {
+   "a": "Argument",
+   "b": "Premise",
+   "c": "Conclusion",
+   "d": "Inference",
+   "e": "Proposition"
+  },
+  "correctAnswer": "d",
+  "explanation": "Argument, premise, conclusion, and proposition are objective, structural elements of written or spoken logic. Inference, on the other hand, is the dynamic mental process of moving from premises to a conclusion."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174710",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q11",
+  "question": "The formula for constructing a truth table is:",
+  "options": {
+   "a": "L = 2^n",
+   "b": "n = L",
+   "c": "L = 2n",
+   "d": "n = 2n"
+  },
+  "correctAnswer": "a",
+  "explanation": "To construct a truth table, the formula is 2^n (or L = 2^n), where n is the number of simple propositions (statement-variables) and L is the number of rows/lines required."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174714",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q15",
+  "question": "Logic was founded by:",
+  "options": {
+   "a": "Plato",
+   "b": "Aristotle",
+   "c": "Socrates the wise one",
+   "d": "None of the above"
+  },
+  "correctAnswer": "b",
+  "explanation": "Aristotle is universally acknowledged as the founder of formal logic, having compiled his groundbreaking work in the Organon."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417471e",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q25",
+  "question": "A categorical syllogism contains exactly:",
+  "options": {
+   "a": "4 terms",
+   "b": "3 terms",
+   "c": "5 terms",
+   "d": "2 terms"
+  },
+  "correctAnswer": "b",
+  "explanation": "A valid standard categorical syllogism contains exactly three terms: the major term, the minor term, and the middle term."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417471f",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q26",
+  "question": "Argumentum ad Baculum is a fallacy that resorts to:",
+  "options": {
+   "a": "False",
+   "b": "Force",
+   "c": "Abuse",
+   "d": "Double talk"
+  },
+  "correctAnswer": "b",
+  "explanation": "Argumentum ad Baculum is an appeal to the 'stick'—using force, threats, or coercion to compel acceptance of a conclusion."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174721",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q28",
+  "question": "One of these is not a variety of argumentum ad Hominem:",
+  "options": {
+   "a": "Abusive",
+   "b": "Tu Quoque",
+   "c": "Circumstantial",
+   "d": "None of the above"
+  },
+  "correctAnswer": "d",
+  "explanation": "The three standard varieties of ad Hominem are: Abusive (personal attack), Circumstantial (attacking motives), and Tu Quoque (hypocrisy). Thus, none of the options are excluded."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746dd",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q10",
+  "question": "Who took existentialism to its peak?",
+  "options": {
+   "a": "Kierkegaard",
+   "b": "Albert Camus",
+   "c": "Karl Jaspers",
+   "d": "Jean Paul Sartre"
+  },
+  "correctAnswer": "d",
+  "explanation": "Jean-Paul Sartre was the most prominent figure of 20th-century existentialism, popularizing it globally."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746df",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q12",
+  "question": "We study philosophy because:",
+  "options": {
+   "a": "it brings us closer to God",
+   "b": "makes us richer",
+   "c": "it eliminates dogmatism",
+   "d": "makes one argumentative."
+  },
+  "correctAnswer": "c",
+  "explanation": "Philosophy frees the mind from uncritical, dogmatic acceptance of ideas by training students in critical analysis."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e5",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q18",
+  "question": "The sophists shifted the focus of philosophy from ______ to ______.",
+  "options": {
+   "a": "Man to nature",
+   "b": "Nature to man",
+   "c": "Metaphysics to aesthetics",
+   "d": "Existence to non-existence"
+  },
+  "correctAnswer": "b",
+  "explanation": "The Pre-Socratics focused on cosmology (nature), but the Sophists redirected philosophy toward human affairs, politics, and rhetoric (man)."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746ea",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q23",
+  "question": "For Heraclitus, the ultimate stuff is:",
+  "options": {
+   "a": "Fire",
+   "b": "Water",
+   "c": "Air",
+   "d": "Change"
+  },
+  "correctAnswer": "a",
+  "explanation": "Heraclitus identified fire as the primary element because it is a physical process that perfectly symbolizes constant change and transformation."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746ef",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q28",
+  "question": "Philosophy can be arranged to have a uniform definition:",
+  "options": {
+   "a": "True",
+   "b": "False"
+  },
+  "correctAnswer": "b",
+  "explanation": "Philosophy is characterized by ongoing debate and questioning, making a single, universally accepted uniform definition impossible."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f4",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q33",
+  "question": "Cosmological problems were the concern of which period of philosophy:",
+  "options": {
+   "a": "Ancient",
+   "b": "Modern",
+   "c": "Contemporary",
+   "d": "Medieval"
+  },
+  "correctAnswer": "a",
+  "explanation": "The Pre-Socratic physical philosophers of ancient Greece were primarily concerned with cosmology and identifying the primary physical substance of the universe."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f5",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q34",
+  "question": "The history of philosophy is divided into how many historical epochs:",
+  "options": {
+   "a": "5",
+   "b": "4",
+   "c": "3",
+   "d": "2"
+  },
+  "correctAnswer": "b",
+  "explanation": "The standard epochs are: (1) Ancient, (2) Medieval, (3) Modern, and (4) Contemporary/Postmodern."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f6",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q35",
+  "question": "The first man who used the word 'philosopher' to mean lover of wisdom was Protagoras:",
+  "options": {
+   "a": "True",
+   "b": "False"
+  },
+  "correctAnswer": "b",
+  "explanation": "It was Pythagoras who first coined the term 'philosopher' to mean a lover of wisdom, not the Sophist Protagoras."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174702",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q47",
+  "question": "Philosophy began in:",
+  "options": {
+   "a": "Greece",
+   "b": "Athens",
+   "c": "Asian mind",
+   "d": "Miletus"
+  },
+  "correctAnswer": "d",
+  "explanation": "While 'Greece' is correct generally, 'Miletus' is the precise ancient Greek city-state in Ionia where Thales, Anaximander, and Anaximenes lived and began Western philosophy."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417470b",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q6",
+  "question": "The validity of an argument does not guarantee the truth of its conclusion:",
+  "options": {
+   "a": "True",
+   "b": "False"
+  },
+  "correctAnswer": "a",
+  "explanation": "Validity is purely structural: if the premises are true, the conclusion must be true. An argument can be valid but have false premises and a false conclusion (e.g., 'All dogs are reptiles; all reptiles bark; therefore all dogs bark')."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174711",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q12",
+  "question": "The relationship between A and O in the traditional square of opposition is called:",
+  "options": {
+   "a": "Contraries",
+   "b": "Contradictories",
+   "c": "Subcontraries",
+   "d": "Subalternation"
+  },
+  "correctAnswer": "b",
+  "explanation": "A (All S are P) and O (Some S are not P) are contradictories. If one is true, the other must be false, and vice versa."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174716",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q17",
+  "question": "One of the following contributed to the development of symbolic logic:",
+  "options": {
+   "a": "De-Morgan",
+   "b": "Aristotle",
+   "c": "Plato",
+   "d": "Descartes"
+  },
+  "correctAnswer": "a",
+  "explanation": "Augustus De Morgan was a major pioneer of modern mathematical/symbolic logic, famous for De Morgan's Laws."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174717",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q18",
+  "question": "Lexical definition is the same as:",
+  "options": {
+   "a": "Research definition",
+   "b": "Reportive definition",
+   "c": "practical definition",
+   "d": "Dictionary definition"
+  },
+  "correctAnswer": "d",
+  "explanation": "A lexical definition reports the established meaning of a term as historically used in a language, which is exactly what a dictionary definition does. It is also known as a reportive definition."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174718",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q19",
+  "question": "Inference is a process of arriving at:",
+  "options": {
+   "a": "Conclusion",
+   "b": "Argument",
+   "c": "Premises",
+   "d": "Conflict"
+  },
+  "correctAnswer": "a",
+  "explanation": "Inference is the psychological and logical process of reasoning from established premises to a new conclusion."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417471b",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q22",
+  "question": "'The boy is either stupid or foolish' indicates which law of thought?",
+  "options": {
+   "a": "Contradiction",
+   "b": "Identity",
+   "c": "Excluded middle",
+   "d": "Nature of thought"
+  },
+  "correctAnswer": "c",
+  "explanation": "The Law of Excluded Middle states that a proposition is either true or its negation is true. This 'either/or' structure leaves no middle ground."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417471d",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q24",
+  "question": "A symbol to be defined is called:",
+  "options": {
+   "a": "Definiendum",
+   "b": "Definiens",
+   "c": "Definitors",
+   "d": "Defining term"
+  },
+  "correctAnswer": "a",
+  "explanation": "In any definition, the word or symbol being defined is the 'definiendum', while the defining words make up the 'definiens'."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174726",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q33",
+  "question": "If two conjuncts of a conjunction are false, what is the truth value?",
+  "options": {
+   "a": "False",
+   "b": "True",
+   "c": "Inordinate",
+   "d": "None of the above"
+  },
+  "correctAnswer": "a",
+  "explanation": "A conjunction (P . Q) is only true if both components are true. If both are false, the conjunction is False."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174728",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q35",
+  "question": "In propositional calculus, which of these plays a dual function?",
+  "options": {
+   "a": "Negation",
+   "b": "Conjunction",
+   "c": "Disjunction",
+   "d": "Place holders"
+  },
+  "correctAnswer": "a",
+  "explanation": "Negation has a dual function because it can serve as a unary operator to negate a single variable (~P) or distribute across a compound proposition (~(P . Q))."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417472a",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q37",
+  "question": "The name of Aristotle's editor is:",
+  "options": {
+   "a": "Ankaran",
+   "b": "Andony",
+   "c": "Andronicus",
+   "d": "Andromacus"
+  },
+  "correctAnswer": "c",
+  "explanation": "Andronicus of Rhodes compiled and edited Aristotle's logical treaties into the collection known as the Organon."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174732",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q45",
+  "question": "Select the odd person from these:",
+  "options": {
+   "a": "William of Ockham",
+   "b": "Jean Buridan",
+   "c": "Pseudo Scotus",
+   "d": "George Boole"
+  },
+  "correctAnswer": "d",
+  "explanation": "Ockham, Buridan, and Pseudo-Scotus are all major figures of medieval scholastic logic. George Boole is a modern 19th-century symbolic logician."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174733",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q46",
+  "question": "Who took over Aristotle's school after his death?",
+  "options": {
+   "a": "Andronicus",
+   "b": "Theophrastus",
+   "c": "Plato",
+   "d": "Socrates"
+  },
+  "correctAnswer": "b",
+  "explanation": "Theophrastus succeeded Aristotle as the head of the Peripatetic school (the Lyceum) in Athens."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174734",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q47",
+  "question": "Another name for Aristotelian logic is:",
+  "options": {
+   "a": "Classical logic",
+   "b": "Ancient logic",
+   "c": "Medieval logic",
+   "d": "A and b only"
+  },
+  "correctAnswer": "a",
+  "explanation": "Aristotelian logic is universally referred to as classical logic."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746da",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q7",
+  "question": "Who predicted the eclipse of 585BC?",
+  "options": {
+   "a": "Albert Einstein",
+   "b": "Thomas Kuhn",
+   "c": "Thales",
+   "d": "Socrates"
+  },
+  "correctAnswer": "c",
+  "explanation": "Thales of Miletus famously and accurately predicted the solar eclipse of May 28, 585 BC."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e1",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q14",
+  "question": "Which of these is not a professional African philosopher?",
+  "options": {
+   "a": "Julius Nyerere",
+   "b": "Kwame Nkrumah",
+   "c": "Obafemi Awolowo",
+   "d": "Wole Soyinka"
+  },
+  "correctAnswer": "d",
+  "explanation": "Wole Soyinka is a Nobel-winning playwright and novelist, whereas Nyerere, Nkrumah, and Awolowo are classified as 'Nationalist-Ideological' African political philosophers."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e3",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q16",
+  "question": "Human life is 'absurd and meaningless' is associated with:",
+  "options": {
+   "a": "Socrates",
+   "b": "Existentialism",
+   "c": "Dogmatism",
+   "d": "Pragmatism",
+   "e": "Jean Paul Sartre"
+  },
+  "correctAnswer": "b",
+  "explanation": "The fundamental premise of existentialism is that human existence is inherently absurd, and individuals must create their own meaning."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746e9",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q22",
+  "question": "______ according to John Locke is blind at birth:",
+  "options": {
+   "a": "The heart",
+   "b": "Mind",
+   "c": "Head",
+   "d": "Spirit"
+  },
+  "correctAnswer": "b",
+  "explanation": "John Locke asserted that the mind at birth is a blank slate (tabula rasa) or 'empty room' devoid of innate ideas, which can be described metaphorically as 'blind' until sense experience occurs."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746ed",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q26",
+  "question": "Only the mind and ideas exist is associated with:",
+  "options": {
+   "a": "Realism",
+   "b": "Idealism",
+   "c": "Rationalism",
+   "d": "Empiricism"
+  },
+  "correctAnswer": "b",
+  "explanation": "Idealism is the metaphysical doctrine that reality is fundamentally mental, spiritual, or immaterial, consisting of minds and their ideas."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f0",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q29",
+  "question": "David Hume divided knowledge into:",
+  "options": {
+   "a": "Impression/ideas",
+   "b": "Sensation/reflection",
+   "c": "Simple/complex",
+   "d": "None of the above"
+  },
+  "correctAnswer": "a",
+  "explanation": "Hume divided the perceptions of the human mind into two categories: 'impressions' (direct sensations) and 'ideas' (copied thoughts/memories)."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f1",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q30",
+  "question": "Spinoza is Pantheistic because:",
+  "options": {
+   "a": "God created the world",
+   "b": "God pervades everything",
+   "c": "God creates himself",
+   "d": "God is found only certain things"
+  },
+  "correctAnswer": "b",
+  "explanation": "Pantheism equates God with the natural universe; for Spinoza, God does not stand outside the world but pervades all things as the singular substance."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f3",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q32",
+  "question": "For John Locke substance is a ______ entity:",
+  "options": {
+   "a": "Physical",
+   "b": "Transcendental",
+   "c": "Mystical",
+   "d": "Divine"
+  },
+  "correctAnswer": "a",
+  "explanation": "Locke maintained that material substances are physical substrates supporting primary qualities, though our knowledge of their inner essence remains incomplete."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746f9",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q38",
+  "question": "The philosophy of negritude is associated with who:",
+  "options": {
+   "a": "Nkrumah",
+   "b": "Julius Nyerere",
+   "c": "Leopold Senghor",
+   "d": "Dr. Nnamdi Azikiwe"
+  },
+  "correctAnswer": "c",
+  "explanation": "Léopold Sédar Senghor, the poet-politician of Senegal, was the main theorist of Negritude."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746fe",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q43",
+  "question": "The question about the primordial substance was the concern of which period of philosophy:",
+  "options": {
+   "a": "Ancient",
+   "b": "Medieval",
+   "c": "Ancient & medieval",
+   "d": "Roman and medieval"
+  },
+  "correctAnswer": "a",
+  "explanation": "This cosmological search for the arché (primordial substance) was the central focus of the Pre-Socratics in the Ancient era."
+ },
+ {
+  "_id": "6a55fe6f1989088a641746ff",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q44",
+  "question": "According to ______ the state is an individual writ-large:",
+  "options": {
+   "a": "Aristotle",
+   "b": "Plato",
+   "c": "Heraclitus",
+   "d": "Parmenides"
+  },
+  "correctAnswer": "b",
+  "explanation": "In the Republic, Plato compares the structure of the ideal state to the individual soul, declaring the state is 'the individual writ large.'"
+ },
+ {
+  "_id": "6a55fe6f1989088a64174704",
+  "courseCode": "GSS 212",
+  "section": "PART 1: PHILOSOPHY SECTION 1 (MULTIPLE CHOICE)",
+  "id": "Q49",
+  "question": "Socrates was executed because he was:",
+  "options": {
+   "a": "Drank the hemlock",
+   "b": "Opposed the Athenian politicians",
+   "c": "Accused of indoctrinating the youths",
+   "d": "All of the above"
+  },
+  "correctAnswer": "c",
+  "explanation": "Drinking hemlock was the *method* of execution, but the official legal charge that led to his sentence was corrupting/indoctrinating the youth."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174707",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q2",
+  "question": "Symbolize: 'If Odu lodges a complaint, then Tony will investigate and Mark will be disqualified'",
+  "options": {
+   "a": "O . T > M",
+   "b": "O . T > (O v T)",
+   "c": "O > (T . M)",
+   "d": "O > (T . ~M)"
+  },
+  "correctAnswer": "c",
+  "explanation": "Let O = 'Odu lodges a complaint', T = 'Tony will investigate', and M = 'Mark will be disqualified'. The sentence is a conditional with a conjunction in the consequent: O > (T . M)."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417470a",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q5",
+  "question": "Select the odd one:",
+  "options": {
+   "a": "Plato",
+   "b": "Aristotle",
+   "c": "Frege",
+   "d": "Copi"
+  },
+  "correctAnswer": "a",
+  "explanation": "Aristotle, Gottlob Frege, and Irving Copi are all giants in the historical development of formal logic. Plato, though a legendary philosopher, did not construct systems of formal logic."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417470c",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q7",
+  "question": "The history of logic is divided into:",
+  "options": {
+   "a": "5",
+   "b": "3",
+   "c": "4",
+   "d": "None of the above"
+  },
+  "correctAnswer": "b",
+  "explanation": "The history of logic is traditionally divided into three major epochs: (1) Classical/Aristotelian logic, (2) Medieval Scholastic logic, and (3) Modern Symbolic/Mathematical logic."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417470e",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q9",
+  "question": "How many standard forms of categorical propositions are there?",
+  "options": {
+   "a": "5",
+   "b": "3",
+   "c": "4",
+   "d": "3"
+  },
+  "correctAnswer": "c",
+  "explanation": "The four standard forms are: A (Universal Affirmative), E (Universal Negative), I (Particular Affirmative), and O (Particular Negative)."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174713",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q14",
+  "question": "A statement that can be appraised as either true or false is called:",
+  "options": {
+   "a": "statement",
+   "b": "Sentence",
+   "c": "Fallacy",
+   "d": "Proposition",
+   "e": "All of the above"
+  },
+  "correctAnswer": "d",
+  "explanation": "In formal logic, a proposition is defined as a declarative sentence that is either true or false (possesses a truth-value)."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174715",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q16",
+  "question": "A network of propositions linked together by logical relations is called:",
+  "options": {
+   "a": "statement",
+   "b": "Sentence",
+   "c": "Fallacy",
+   "d": "Argument"
+  },
+  "correctAnswer": "d",
+  "explanation": "An argument is defined as a systematic collection of propositions where one proposition (the conclusion) is claimed to follow from the others (the premises)."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174719",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q20",
+  "question": "________ is the science of correct reasoning:",
+  "options": {
+   "a": "Psychology",
+   "b": "Psychoanalysis",
+   "c": "Logic",
+   "d": "Logos"
+  },
+  "correctAnswer": "c",
+  "explanation": "Logic is classically defined as the science and art of correct reasoning."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417471a",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q21",
+  "question": "Psychology is concerned with thought processes while logic is concerned with:",
+  "options": {
+   "a": "Truth",
+   "b": "Facts",
+   "c": "Justification",
+   "d": "Creation of doubts"
+  },
+  "correctAnswer": "c",
+  "explanation": "Psychology describes how humans think. Logic, however, is a normative/prescriptive science concerned with the objective justification and validity of arguments."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174723",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q30",
+  "question": "A truth-functional statement formed by the symbol 'V' is called:",
+  "options": {
+   "a": "Conjunction",
+   "b": "Negation",
+   "c": "Disjunction",
+   "d": "Conditional"
+  },
+  "correctAnswer": "c",
+  "explanation": "The wedge symbol 'v' (vel) represents a disjunction, translating to 'or' in propositional logic."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174727",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q34",
+  "question": "What is the name of the first component of an implication (conditional)?",
+  "options": {
+   "a": "Consequent",
+   "b": "Antecedent",
+   "c": "Conditional",
+   "d": "Conjunct"
+  },
+  "correctAnswer": "b",
+  "explanation": "In an implication (P > Q), the first component (P) is called the antecedent, and the second component (Q) is called the consequent."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417472b",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q38",
+  "question": "One of these is a recognized purpose for definition:",
+  "options": {
+   "a": "To make people intelligent",
+   "b": "To increase vocabulary",
+   "c": "To increase familiarity of words",
+   "d": "to support the argument"
+  },
+  "correctAnswer": "b",
+  "explanation": "One of the five core logicians' purposes of definition is to enrich vocabulary, alongside eliminating ambiguity and reducing vagueness."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417472c",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q39",
+  "question": "One of these quantifiers has a dual function:",
+  "options": {
+   "a": "All",
+   "b": "Some",
+   "c": "No",
+   "d": "None of the above"
+  },
+  "correctAnswer": "c",
+  "explanation": "The quantifier 'No' indicates both universal quantity (all of a class) and negative quality (excluded from another class), giving it a dual logical function."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417472d",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q40",
+  "question": "In propositional calculus, the truth functor that has a dual function is called:",
+  "options": {
+   "a": "Conjunction",
+   "b": "Disjunction",
+   "c": "Conditional",
+   "d": "Negation"
+  },
+  "correctAnswer": "d",
+  "explanation": "Negation reverses the truth-value of a statement and can serve to deny individual variables or entire compound logical expressions."
+ },
+ {
+  "_id": "6a55fe6f1989088a6417472f",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q42",
+  "question": "Petitio principii refers to:",
+  "options": {
+   "a": "Fallacy of accent",
+   "b": "Appeal to force",
+   "c": "Appeal to pity",
+   "d": "Circular argument"
+  },
+  "correctAnswer": "d",
+  "explanation": "Petitio principii is the Latin term for 'begging the question', which is a circular argument where the premises assume the conclusion."
+ },
+ {
+  "_id": "6a55fe6f1989088a64174730",
+  "courseCode": "GSS 212",
+  "section": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+  "id": "Q43",
+  "question": "The initial process of argument is characterized by:",
+  "options": {
+   "a": "inference",
+   "b": "premises and conclusion",
+   "c": "premises",
+   "d": "premises and propositions"
+  },
+  "correctAnswer": "c",
+  "explanation": "Constructing an argument begins by setting forth the initial propositions or 'premises' from which a conclusion is drawn."
+ }
+]

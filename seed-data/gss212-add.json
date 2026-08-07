@@ -1,0 +1,1265 @@
+{
+  "sections": [
+    {
+      "section_title": "PART 2: LOGIC SECTION 1 (MULTIPLE CHOICE & TRUE/FALSE)",
+      "questions": [
+        {
+          "id": "Q48",
+          "question": "A definition that points out (ostends) the thing being defined is called:",
+          "options": {
+            "a": "Ostensive",
+            "b": "Stipulative",
+            "c": "Lexical",
+            "d": "Intentional"
+          },
+          "correct_answer": "a",
+          "explanation": "An ostensive definition defines a term by pointing to or exhibiting examples of what it denotes (from Latin 'ostendere', to show). The printed source text is garbled here, but the supplied answer key gives (a) ostensive."
+        },
+        {
+          "id": "Q49",
+          "question": "The word 'logic' is etymologically derived from:",
+          "options": {
+            "a": "Greece",
+            "b": "Logos",
+            "c": "Aristotle",
+            "d": "Word"
+          },
+          "correct_answer": "b",
+          "explanation": "'Logic' derives from the Greek word 'logos', which means reasoned discourse, speech or word."
+        },
+        {
+          "id": "Q50",
+          "question": "___ defines logic as the science that appraises reasoning as correct or incorrect.",
+          "options": {
+            "a": "Copi",
+            "b": "Nancy",
+            "c": "Hurley",
+            "d": "Purtill"
+          },
+          "correct_answer": "b",
+          "explanation": "The course text attributes this exact definition to Nancy (1990). Copi, by contrast, defines logic as the study of the methods and principles used to distinguish correct from incorrect reasoning."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 3: PHILOSOPHY SECTION 2 (MULTIPLE CHOICE & TRUE/FALSE)",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "The two Greek words that aptly define philosophy are ___ and ___.",
+          "options": {
+            "a": "Philia and Sophia",
+            "b": "Philos and Sophia",
+            "c": "Logos and Mythos",
+            "d": "Eros and Doxa"
+          },
+          "correct_answer": "a",
+          "explanation": "Philosophy comes from the Greek 'philia' (love) and 'sophia' (wisdom) — literally 'love of wisdom'."
+        },
+        {
+          "id": "Q2",
+          "question": "Thales is said to be the father of western philosophy.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Thales of Miletus is traditionally regarded as the first Western philosopher and the founder of the Milesian (Ionian) school."
+        },
+        {
+          "id": "Q3",
+          "question": "Thales predicted the eclipse of the sun on 28 May ___ BC.",
+          "options": {
+            "a": "585",
+            "b": "285",
+            "c": "485",
+            "d": "685"
+          },
+          "correct_answer": "a",
+          "explanation": "Thales predicted the solar eclipse of 28 May 585 BC."
+        },
+        {
+          "id": "Q4",
+          "question": "The medieval era is often described as the dark age of philosophy.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "The medieval period is frequently described as the 'Dark Ages' because philosophic thought was largely subordinated to Christian theology."
+        },
+        {
+          "id": "Q5",
+          "question": "Aristotle is a realist as ___ is idealist.",
+          "options": {
+            "a": "Plato",
+            "b": "Socrates",
+            "c": "Kant",
+            "d": "Descartes"
+          },
+          "correct_answer": "a",
+          "explanation": "Plato is the arch-idealist (world of Forms), while Aristotle is the realist who grounds knowledge in the sensible world."
+        },
+        {
+          "id": "Q6",
+          "question": "Tabula rasa is to empiricist as ___ is to rationalist.",
+          "options": {
+            "a": "Innate ideas",
+            "b": "Sense experience",
+            "c": "Blank slate",
+            "d": "Impressions"
+          },
+          "correct_answer": "a",
+          "explanation": "Empiricists (Locke) hold that the mind is a tabula rasa (blank slate) at birth; rationalists believe the mind contains innate ideas."
+        },
+        {
+          "id": "Q7",
+          "question": "___ is 'apostle of change'.",
+          "options": {
+            "a": "Heraclitus",
+            "b": "Parmenides",
+            "c": "Thales",
+            "d": "Anaximander"
+          },
+          "correct_answer": "a",
+          "explanation": "Heraclitus, who taught that everything is in flux, is known as the 'apostle of change'."
+        },
+        {
+          "id": "Q8",
+          "question": "Ancient and medieval periods are epochs in the history of philosophy.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "The history of philosophy is divided into ancient, medieval, modern and contemporary periods; ancient and medieval are among them."
+        },
+        {
+          "id": "Q9",
+          "question": "Lyceum is to Plato as the Academy is to Aristotle.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "b",
+          "explanation": "The pairing is reversed — the Academy was Plato's school while the Lyceum was Aristotle's."
+        },
+        {
+          "id": "Q10",
+          "question": "Descartes and Spinoza are rationalist philosophers.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Both Descartes and Spinoza are continental rationalists who held that reason (not experience) is the primary source of knowledge."
+        },
+        {
+          "id": "Q11",
+          "question": "___ defined philosophy as an inquiry into the first causes of things.",
+          "options": {
+            "a": "Aristotle",
+            "b": "Kant",
+            "c": "Socrates",
+            "d": "Berkeley"
+          },
+          "correct_answer": "a",
+          "explanation": "Aristotle defined philosophy (first philosophy/metaphysics) as the inquiry into the first principles and causes of things."
+        },
+        {
+          "id": "Q12",
+          "question": "___ and ___ are the philosophical systems you have studied.",
+          "options": {
+            "a": "Idealism",
+            "b": "Skepticism and pragmatism",
+            "c": "Educationism and criticism",
+            "d": "Sciencism and subjectivism"
+          },
+          "correct_answer": "b",
+          "explanation": "Among the options, skepticism and pragmatism are recognized philosophical systems covered in the course."
+        },
+        {
+          "id": "Q13",
+          "question": "State the major concern of the ancient philosophers.",
+          "options": {
+            "a": "The ultimate stuff (arche) of reality",
+            "b": "Human knowledge",
+            "c": "Moral values",
+            "d": "Religion and faith"
+          },
+          "correct_answer": "a",
+          "explanation": "The pre-Socratic (ancient Ionian) philosophers sought the ultimate stuff (arche) that underlies all reality."
+        },
+        {
+          "id": "Q14",
+          "question": "___ was the ancient philosopher who first predicted an eclipse and said that ___ was the ultimate stuff of reality.",
+          "options": {
+            "a": "Parmenides, logos",
+            "b": "Anaximenes, air",
+            "c": "Thales, water",
+            "d": "Heraclitus, fire"
+          },
+          "correct_answer": "c",
+          "explanation": "Thales predicted the 585 BC eclipse and held that water is the ultimate stuff (arche) of reality."
+        },
+        {
+          "id": "Q15",
+          "question": "Differentiate the responses of Anaximander and Anaximenes concerning the ultimate stuff (U-stuff) of reality:",
+          "options": {
+            "a": "Anaximander (Apeiron) x Anaximenes (air)",
+            "b": "Anaximenes (fire) x Anaximander (water)",
+            "c": "Anaximander (logos) x Anaximenes (reason)"
+          },
+          "correct_answer": "a",
+          "explanation": "Anaximander proposed the apeiron (indeterminate boundless) while Anaximenes proposed air as the arche."
+        },
+        {
+          "id": "Q16",
+          "question": "The shift in the focus of philosophy from ___ to anthropology was done by a group called ___.",
+          "options": {
+            "a": "Cosmology, sophists",
+            "b": "Religion, socraticians",
+            "c": "Epistemology, skeptics",
+            "d": "Axiology, Kantian scholars"
+          },
+          "correct_answer": "a",
+          "explanation": "The Sophists shifted philosophical attention from nature (cosmology) to man (anthropology)."
+        },
+        {
+          "id": "Q17",
+          "question": "___ is known for the saying that 'injustice pays better than justice'.",
+          "options": {
+            "a": "Plato",
+            "b": "Pythagoras",
+            "c": "Thrasymachus",
+            "d": "Socrates"
+          },
+          "correct_answer": "c",
+          "explanation": "Thrasymachus, in Plato's Republic, argues that injustice pays better than justice."
+        },
+        {
+          "id": "Q18",
+          "question": "The ancient philosopher who lived and died for his moral convictions was ___.",
+          "options": {
+            "a": "Aristotle",
+            "b": "Socrates",
+            "c": "Plato",
+            "d": "Thales"
+          },
+          "correct_answer": "b",
+          "explanation": "Socrates lived and died for his moral convictions, accepting the hemlock at his trial."
+        },
+        {
+          "id": "Q19",
+          "question": "The first man who used the word 'philosopher' to mean 'lover of wisdom' was ___.",
+          "options": {
+            "a": "Protagoras",
+            "b": "Pythagoras",
+            "c": "Anaxagoras",
+            "d": "Parmenides"
+          },
+          "correct_answer": "b",
+          "explanation": "Pythagoras was the first to call himself a philosopher (lover of wisdom)."
+        },
+        {
+          "id": "Q20",
+          "question": "The branch of philosophy that inquires into the nature of existence and ultimate reality is called ___.",
+          "options": {
+            "a": "Epistemology",
+            "b": "Metaphysics",
+            "c": "Axiology",
+            "d": "Realism"
+          },
+          "correct_answer": "b",
+          "explanation": "Metaphysics deals with the nature of existence and ultimate reality; epistemology deals with knowledge."
+        },
+        {
+          "id": "Q21",
+          "question": "Rationalism believes in ___.",
+          "options": {
+            "a": "Innate knowledge",
+            "b": "Tabula rasa",
+            "c": "Experiential knowledge",
+            "d": "Nomadic knowledge"
+          },
+          "correct_answer": "a",
+          "explanation": "Rationalism holds that knowledge comes from reason and innate ideas, not from experience."
+        },
+        {
+          "id": "Q22",
+          "question": "___ is the father of empiricism.",
+          "options": {
+            "a": "David Hume",
+            "b": "George Berkeley",
+            "c": "John Locke",
+            "d": "Rene Descartes"
+          },
+          "correct_answer": "c",
+          "explanation": "John Locke is regarded as the father of empiricism, arguing that all knowledge derives from experience."
+        },
+        {
+          "id": "Q23",
+          "question": "___ reconciles empiricism and rationalism.",
+          "options": {
+            "a": "Albert Einstein",
+            "b": "Plato",
+            "c": "Kant",
+            "d": "Hume"
+          },
+          "correct_answer": "c",
+          "explanation": "Kant's transcendental philosophy reconciles empiricism (experience) and rationalism (a priori reason)."
+        },
+        {
+          "id": "Q24",
+          "question": "Thales predicted the eclipse of ___.",
+          "options": {
+            "a": "585 BC",
+            "b": "285 BC",
+            "c": "485 BC",
+            "d": "685 BC"
+          },
+          "correct_answer": "a",
+          "explanation": "Thales predicted the eclipse of 585 BC."
+        },
+        {
+          "id": "Q25",
+          "question": "The ultimate reality according to Anaximenes is ___.",
+          "options": {
+            "a": "air",
+            "b": "water",
+            "c": "earth",
+            "d": "indeterminate boundless"
+          },
+          "correct_answer": "a",
+          "explanation": "Anaximenes held that air is the ultimate stuff of reality."
+        },
+        {
+          "id": "Q26",
+          "question": "'Man know thyself' is a statement credited to ___.",
+          "options": {
+            "a": "Aristotle",
+            "b": "Plato",
+            "c": "Thales",
+            "d": "Socrates"
+          },
+          "correct_answer": "d",
+          "explanation": "The dictum 'Know thyself' is credited to Socrates."
+        },
+        {
+          "id": "Q27",
+          "question": "There are two cities according to St. Augustine:",
+          "options": {
+            "a": "city of heaven and earth",
+            "b": "city of human and animal",
+            "c": "city of living and non-living beings",
+            "d": "city of God and city of man"
+          },
+          "correct_answer": "d",
+          "explanation": "St. Augustine's City of God contrasts the city of God (Civitas Dei) with the city of man (Civitas Terrena)."
+        },
+        {
+          "id": "Q28",
+          "question": "The main theme of existentialism is ___.",
+          "options": {
+            "a": "existence precedes essence",
+            "b": "essence precedes existence",
+            "c": "essence and existence go together",
+            "d": "essence is formed by God"
+          },
+          "correct_answer": "a",
+          "explanation": "Existentialism's central thesis is that existence precedes essence — we first exist, then define ourselves."
+        },
+        {
+          "id": "Q29",
+          "question": "Ionian philosophers include:",
+          "options": {
+            "a": "Thales, Anaximander and Anaximenes",
+            "b": "Socrates, Plato and Aristotle",
+            "c": "Locke, Berkeley and Hume",
+            "d": "Descartes, Spinoza and Leibniz"
+          },
+          "correct_answer": "a",
+          "explanation": "Thales, Anaximander and Anaximenes were the Milesian (Ionian) philosophers."
+        },
+        {
+          "id": "Q30",
+          "question": "The world for Plato is divided into two:",
+          "options": {
+            "a": "heaven and earth",
+            "b": "world of Forms and world of sensible experience",
+            "c": "hell and heaven",
+            "d": "world of spirits and world of humans"
+          },
+          "correct_answer": "b",
+          "explanation": "Plato divides reality into the world of Forms (intelligible) and the world of sensible experience (perceptible)."
+        },
+        {
+          "id": "Q31",
+          "question": "Philosophy is the mother of disciplines.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Philosophy is called the mother of all disciplines because all sciences originated from it."
+        },
+        {
+          "id": "Q32",
+          "question": "Philosophy began in ___.",
+          "options": {
+            "a": "Egypt",
+            "b": "Ionia",
+            "c": "Rome",
+            "d": "all cultures"
+          },
+          "correct_answer": "b",
+          "explanation": "Philosophy began in Ionia (Miletus), where the first Greek philosophers taught."
+        },
+        {
+          "id": "Q33",
+          "question": "___ is the first Ionian philosopher.",
+          "options": {
+            "a": "Anaxagoras",
+            "b": "Thrasymachus",
+            "c": "Thales",
+            "d": "Pythagoras"
+          },
+          "correct_answer": "c",
+          "explanation": "Thales of Miletus is the first Ionian philosopher and the first Western philosopher."
+        },
+        {
+          "id": "Q34",
+          "question": "Medievalism is a product of ___.",
+          "options": {
+            "a": "classical Greek philosophy",
+            "b": "dark age",
+            "c": "Christian philosophy",
+            "d": "modern period"
+          },
+          "correct_answer": "c",
+          "explanation": "Medieval philosophy is essentially Christian philosophy, uniting faith and reason."
+        },
+        {
+          "id": "Q35",
+          "question": "Innatism is a philosophy of ___.",
+          "options": {
+            "a": "skepticism",
+            "b": "empiricism",
+            "c": "rationalism",
+            "d": "determinism"
+          },
+          "correct_answer": "c",
+          "explanation": "Innatism (the doctrine of innate ideas) is central to rationalism."
+        },
+        {
+          "id": "Q36",
+          "question": "'Might is right' is the philosophy of ___.",
+          "options": {
+            "a": "Jaspers",
+            "b": "Gabriel Marcel",
+            "c": "Plato",
+            "d": "Thrasymachus"
+          },
+          "correct_answer": "d",
+          "explanation": "Thrasymachus held that justice is the interest of the stronger — 'might is right'."
+        },
+        {
+          "id": "Q37",
+          "question": "___ is the father of the modern period.",
+          "options": {
+            "a": "Francis Bacon",
+            "b": "Socrates",
+            "c": "Aristotle",
+            "d": "Rene Descartes"
+          },
+          "correct_answer": "d",
+          "explanation": "Descartes is regarded as the father of modern philosophy."
+        },
+        {
+          "id": "Q38",
+          "question": "___ gave an ontological proof of the existence of God.",
+          "options": {
+            "a": "St. Anselm",
+            "b": "Timothy",
+            "c": "St. Augustine",
+            "d": "St. Bonaventure"
+          },
+          "correct_answer": "a",
+          "explanation": "St. Anselm's ontological argument argues for God's existence from the very concept of God."
+        },
+        {
+          "id": "Q39",
+          "question": "Another name for the modern period is ___.",
+          "options": {
+            "a": "Encouragement",
+            "b": "Pessimism",
+            "c": "Enlightenment",
+            "d": "Holism"
+          },
+          "correct_answer": "c",
+          "explanation": "The modern period of philosophy is also called the Enlightenment (Age of Reason)."
+        },
+        {
+          "id": "Q40",
+          "question": "Professional teachers in philosophy were first called ___.",
+          "options": {
+            "a": "philosophers",
+            "b": "logicians",
+            "c": "idealists",
+            "d": "sophists"
+          },
+          "correct_answer": "d",
+          "explanation": "The Sophists were the first professional teachers of philosophy who taught for fees."
+        },
+        {
+          "id": "Q41",
+          "question": "The ancient era of philosophy studies the ultimate stuff of the universe, just as the medieval era studies:",
+          "options": {
+            "a": "the existence of God",
+            "b": "the relationship between faith and reason",
+            "c": "the existence of the world",
+            "d": "A, B and C",
+            "e": "None of the above"
+          },
+          "correct_answer": "d",
+          "explanation": "Medieval philosophy studied God, the world, and the relation between faith and reason — A, B and C."
+        },
+        {
+          "id": "Q42",
+          "question": "Epistemology as a branch of philosophy studies knowledge and its sources.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Epistemology is the branch of philosophy that studies the nature, scope and sources of knowledge."
+        },
+        {
+          "id": "Q43",
+          "question": "Choose the wrong person amongst them:",
+          "options": {
+            "a": "Aristotle",
+            "b": "Plato",
+            "c": "Heraclitus",
+            "d": "Thales",
+            "e": "Anselm"
+          },
+          "correct_answer": "e",
+          "explanation": "Anselm is a medieval philosopher; Aristotle, Plato, Heraclitus and Thales are ancient Greek philosophers."
+        },
+        {
+          "id": "Q44",
+          "question": "___ is to Heraclitus as permanence is to Parmenides.",
+          "options": {
+            "a": "Change",
+            "b": "Freedom",
+            "c": "Constant",
+            "d": "Golden mean",
+            "e": "Number"
+          },
+          "correct_answer": "a",
+          "explanation": "Change is associated with Heraclitus just as permanence is with Parmenides."
+        },
+        {
+          "id": "Q45",
+          "question": "The Socratic method, which implies the art of debate by means of questions and answers, is referred to as:",
+          "options": {
+            "a": "Dialectics",
+            "b": "Deduction",
+            "c": "Induction",
+            "d": "Education",
+            "e": "Enquiry"
+          },
+          "correct_answer": "a",
+          "explanation": "The Socratic method of question-and-answer debate is dialectics."
+        },
+        {
+          "id": "Q46",
+          "question": "The inductive method leads to the fallacy of:",
+          "options": {
+            "a": "Hasty marginalization",
+            "b": "Hasty generalization",
+            "c": "Argumentum ad Baculum",
+            "d": "Equivocation",
+            "e": "None of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "Induction from insufficient samples leads to the fallacy of hasty generalization."
+        },
+        {
+          "id": "Q47",
+          "question": "The itinerant teachers are the ___.",
+          "options": {
+            "a": "Socratic teachers",
+            "b": "Sophists",
+            "c": "Philosophers",
+            "d": "Empiricists",
+            "e": "All of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "The Sophists were itinerant (traveling) teachers who moved from city to city teaching for fees."
+        },
+        {
+          "id": "Q48",
+          "question": "Socrates was accused of corrupting the youths.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Socrates was tried and condemned for corrupting the youth and impiety."
+        },
+        {
+          "id": "Q49",
+          "question": "'I think, therefore I am' is related to ___.",
+          "options": {
+            "a": "Aristotle",
+            "b": "Descartes",
+            "c": "the modern philosophers",
+            "d": "A and B",
+            "e": "the Rationalists"
+          },
+          "correct_answer": "b",
+          "explanation": "The cogito 'I think, therefore I am' (cogito ergo sum) is Descartes' foundational insight."
+        },
+        {
+          "id": "Q50",
+          "question": "One of the following is not a philosopher of the medieval era:",
+          "options": {
+            "a": "Aristotle",
+            "b": "Plato",
+            "c": "Descartes",
+            "d": "John Locke",
+            "e": "All of the above"
+          },
+          "correct_answer": "e",
+          "explanation": "Aristotle and Plato are ancient philosophers while Descartes and Locke are modern — none is medieval."
+        },
+        {
+          "id": "Q51",
+          "question": "The assertion 'man know thyself' is connected to ___.",
+          "options": {
+            "a": "Aristotle",
+            "b": "Socrates",
+            "c": "Plato",
+            "d": "None of the above",
+            "e": "All of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "'Know thyself' is the famous Socratic dictum."
+        },
+        {
+          "id": "Q52",
+          "question": "When Plato speaks of the 'golden mean', he is referring to:",
+          "options": {
+            "a": "virtue that moderates two extremes",
+            "b": "ethics",
+            "c": "commands",
+            "d": "Plato did not say anything about the golden mean",
+            "e": "modification"
+          },
+          "correct_answer": "d",
+          "explanation": "The doctrine of the golden mean belongs to Aristotle, not Plato."
+        },
+        {
+          "id": "Q53",
+          "question": "Empiricism is opposed to ___ as ___ is opposed to freewill.",
+          "options": {
+            "a": "Rationalism, Determinism",
+            "b": "Determinism, Rationalism",
+            "c": "A and B",
+            "d": "Rationalism, Formalism",
+            "e": "None of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Empiricism opposes rationalism, just as determinism opposes freewill."
+        }
+      ]
+    },
+    {
+      "section_title": "PART 4: LOGIC SECTION 2 (MULTIPLE CHOICE & TRUE/FALSE)",
+      "questions": [
+        {
+          "id": "Q1",
+          "question": "'If ___ then ___' represents a ___.",
+          "options": {
+            "a": "conditional statement",
+            "b": "the imperatives",
+            "c": "disjunction",
+            "d": "biconditional",
+            "e": "none of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "'If...then...' is the conditional (material implication)."
+        },
+        {
+          "id": "Q2",
+          "question": "What is the truth value of a disjunction? It is true:",
+          "options": {
+            "a": "when at least one disjunct is false",
+            "b": "when at least one conjunct is true",
+            "c": "when both disjuncts are true",
+            "d": "when both disjuncts are false",
+            "e": "when at least one disjunct is true"
+          },
+          "correct_answer": "e",
+          "explanation": "An (inclusive) disjunction is true when at least one disjunct is true."
+        },
+        {
+          "id": "Q3",
+          "question": "Argumentum ad Hominem is the fallacy of:",
+          "options": {
+            "a": "name calling",
+            "b": "abuse of power",
+            "c": "appeal to pity",
+            "d": "appeal to force",
+            "e": "appeal to authority"
+          },
+          "correct_answer": "a",
+          "explanation": "Ad hominem attacks the person (name calling) instead of the argument."
+        },
+        {
+          "id": "Q4",
+          "question": "In a truth table, T v T gives what result?",
+          "options": {
+            "a": "T",
+            "b": "F",
+            "c": "T.T",
+            "d": "F.F",
+            "e": "FT"
+          },
+          "correct_answer": "a",
+          "explanation": "A disjunction is false only when both disjuncts are false, so T v T = T."
+        },
+        {
+          "id": "Q5",
+          "question": "'All men are mortal' is an example of what proposition?",
+          "options": {
+            "a": "O",
+            "b": "E",
+            "c": "A",
+            "d": "I",
+            "e": "F"
+          },
+          "correct_answer": "c",
+          "explanation": "It is a universal affirmative (A) proposition."
+        },
+        {
+          "id": "Q6",
+          "question": "An argument comprises of:",
+          "options": {
+            "a": "true and false premises",
+            "b": "the premises and the conclusion",
+            "c": "only true premises",
+            "d": "only false premises",
+            "e": "true and false premises with a true conclusion"
+          },
+          "correct_answer": "b",
+          "explanation": "An argument consists of premises and a conclusion."
+        },
+        {
+          "id": "Q7",
+          "question": "Logic is important because:",
+          "options": {
+            "a": "it helps to detect fallacies in reasoning",
+            "b": "it helps to nourish the soul and body",
+            "c": "it helps one in stealing intelligently",
+            "d": "it is not important to study logic",
+            "e": "it helps to build study capacity"
+          },
+          "correct_answer": "a",
+          "explanation": "Logic equips us to detect fallacies and to reason correctly."
+        },
+        {
+          "id": "Q8",
+          "question": "Argumentum ad Baculum is ___.",
+          "options": {
+            "a": "appeal to authority",
+            "b": "appeal to force",
+            "c": "appeal to pity",
+            "d": "appeal to reason"
+          },
+          "correct_answer": "b",
+          "explanation": "Ad baculum is the appeal to force (the 'stick'). The printed options were defective; the standard answer is appeal to force."
+        },
+        {
+          "id": "Q9",
+          "question": "Logic is the study of:",
+          "options": {
+            "a": "thought patterns",
+            "b": "correct reasoning",
+            "c": "wise sayings",
+            "d": "the meaningfulness of statements"
+          },
+          "correct_answer": "b",
+          "explanation": "Logic is the science of correct reasoning."
+        },
+        {
+          "id": "Q10",
+          "question": "Fallacy refers to:",
+          "options": {
+            "a": "error in reasoning",
+            "b": "invalid speech",
+            "c": "incorrect statement",
+            "d": "false conclusion"
+          },
+          "correct_answer": "a",
+          "explanation": "A fallacy is an error in reasoning."
+        },
+        {
+          "id": "Q11",
+          "question": "Deductive reasoning:",
+          "options": {
+            "a": "is reasoning from general to particular",
+            "b": "is reasoning from particular to general",
+            "c": "is reasoning that arrives at a sound conclusion",
+            "d": "none of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Deduction moves from the general to the particular; induction moves from particular to general."
+        },
+        {
+          "id": "Q12",
+          "question": "How do you symbolize 'Okon or Atim'?",
+          "options": {
+            "a": "O . A",
+            "b": "O & A",
+            "c": "O v A",
+            "d": "O < A"
+          },
+          "correct_answer": "c",
+          "explanation": "'Or' is the disjunction, symbolized by 'v'."
+        },
+        {
+          "id": "Q13",
+          "question": "'Okon has 3 children and thus should be pitied' is an example of:",
+          "options": {
+            "a": "Argumentum ad misericordiam",
+            "b": "ad baculum",
+            "c": "hasty generalization",
+            "d": "Argumentum ad populum"
+          },
+          "correct_answer": "a",
+          "explanation": "Appealing to pity is the fallacy of ad misericordiam."
+        },
+        {
+          "id": "Q14",
+          "question": "'All Unical students are thieves' is an example of:",
+          "options": {
+            "a": "hasty generalization",
+            "b": "ad baculum",
+            "c": "ad populum",
+            "d": "none of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Generalizing from an insufficient sample is hasty generalization. (The printed options were garbled; reconstructed.)"
+        },
+        {
+          "id": "Q15",
+          "question": "A valid argument is an argument whose conclusion:",
+          "options": {
+            "a": "is correct",
+            "b": "is drawn from the premises",
+            "c": "has true premises",
+            "d": "none of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "Validity means the conclusion follows necessarily from (is drawn from) the premises."
+        },
+        {
+          "id": "Q16",
+          "question": "A proposition is a statement that:",
+          "options": {
+            "a": "asks questions",
+            "b": "contains subject and predicate",
+            "c": "corrects wrong arguments",
+            "d": "none of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "A proposition is a statement containing a subject and a predicate that can be appraised as true or false."
+        },
+        {
+          "id": "Q17",
+          "question": "'And' in logic is symbolized as:",
+          "options": {
+            "a": "∧ (wedge)",
+            "b": "· (dot)",
+            "c": "v (vee)",
+            "d": "~ (tilde)"
+          },
+          "correct_answer": "b",
+          "explanation": "Conjunction ('and') is symbolized by the dot (·) in the course's Copi-based notation; the wedge (∧) is an alternative."
+        },
+        {
+          "id": "Q18",
+          "question": "___ are the group of words used to explain the meaning of a term.",
+          "options": {
+            "a": "Definiendum",
+            "b": "Definition",
+            "c": "Definiens",
+            "d": "Definienses"
+          },
+          "correct_answer": "c",
+          "explanation": "The definiens is the group of words used to explain a term; the definiendum is the term being defined."
+        },
+        {
+          "id": "Q19",
+          "question": "The general concern of logic is ___.",
+          "options": {
+            "a": "validity",
+            "b": "statements",
+            "c": "arguments",
+            "d": "premises"
+          },
+          "correct_answer": "a",
+          "explanation": "The general concern of logic is the validity of arguments."
+        },
+        {
+          "id": "Q20",
+          "question": "The context of logic is justification and ___ while that of psychology is discovery and ___.",
+          "options": {
+            "a": "description and prescriptive",
+            "b": "subjective and objective",
+            "c": "analytic and pragmatic",
+            "d": "prescriptive and descriptive"
+          },
+          "correct_answer": "d",
+          "explanation": "Logic is prescriptive (how we ought to reason) while psychology is descriptive (how people actually reason)."
+        },
+        {
+          "id": "Q21",
+          "question": "The specific concern of logic is ___.",
+          "options": {
+            "a": "correctness of arguments",
+            "b": "argumentation",
+            "c": "propositions",
+            "d": "conclusions"
+          },
+          "correct_answer": "a",
+          "explanation": "The specific concern of logic is the correctness (validity) of arguments."
+        },
+        {
+          "id": "Q22",
+          "question": "___ are the fundamental logical principles to which human reasoning must conform for it to be correct.",
+          "options": {
+            "a": "rules of inference",
+            "b": "laws of nature",
+            "c": "rules of logic",
+            "d": "laws of thought"
+          },
+          "correct_answer": "d",
+          "explanation": "The laws of thought (identity, non-contradiction, excluded middle) govern correct reasoning."
+        },
+        {
+          "id": "Q23",
+          "question": "___ states that we either give a thing some particular attribute or its opposite.",
+          "options": {
+            "a": "law of identity",
+            "b": "law of inference",
+            "c": "law of excluded middle",
+            "d": "law of contradiction"
+          },
+          "correct_answer": "c",
+          "explanation": "The law of excluded middle: either a thing has an attribute or its opposite — no middle ground."
+        },
+        {
+          "id": "Q24",
+          "question": "The dominant figure in the ancient history of logic is ___.",
+          "options": {
+            "a": "Frege",
+            "b": "Abelard",
+            "c": "Aristotle",
+            "d": "the Stoics"
+          },
+          "correct_answer": "c",
+          "explanation": "Aristotle is the dominant figure in ancient logic (syllogistic)."
+        },
+        {
+          "id": "Q25",
+          "question": "___ are errors in reasoning that occur as a result of not paying attention to the content or matter of an argument.",
+          "options": {
+            "a": "fallacies",
+            "b": "formal fallacies",
+            "c": "informal fallacies",
+            "d": "real fallacies"
+          },
+          "correct_answer": "c",
+          "explanation": "Informal fallacies arise from the content/matter of an argument; formal fallacies arise from its form."
+        },
+        {
+          "id": "Q26",
+          "question": "___ systematized and formalized the study of logic in the modern era.",
+          "options": {
+            "a": "Frege",
+            "b": "Kant",
+            "c": "Berkeley",
+            "d": "Locke"
+          },
+          "correct_answer": "a",
+          "explanation": "Gottlob Frege systematized and formalized the study of logic in the modern era."
+        },
+        {
+          "id": "Q27",
+          "question": "The logic book by Russell and Whitehead is titled ___.",
+          "options": {
+            "a": "Dialectics",
+            "b": "Organon",
+            "c": "Principia Mathematica",
+            "d": "Prior Analytics"
+          },
+          "correct_answer": "c",
+          "explanation": "Russell and Whitehead co-authored 'Principia Mathematica'."
+        },
+        {
+          "id": "Q28",
+          "question": "Logic is the science of correct reasoning.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Logic is indeed defined as the science of correct reasoning."
+        },
+        {
+          "id": "Q29",
+          "question": "Inductive arguments can be valid but not sound.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "b",
+          "explanation": "Validity and soundness apply to deductive arguments; inductive arguments are evaluated as strong/weak (cogent/uncogent)."
+        },
+        {
+          "id": "Q30",
+          "question": "Argumentum ad ignorantiam is a fallacy based on ignorance.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Ad ignorantiam appeals to ignorance — arguing that something is true because it has not been proven false."
+        },
+        {
+          "id": "Q31",
+          "question": "Deductive and inductive arguments are the two types of arguments.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "The two main types of arguments are deductive and inductive."
+        },
+        {
+          "id": "Q32",
+          "question": "Fallacy is defined as error in reasoning.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "A fallacy is an error in reasoning."
+        },
+        {
+          "id": "Q33",
+          "question": "'A is A and nothing else' is an example of ___.",
+          "options": {
+            "a": "law of identity",
+            "b": "law of contradiction",
+            "c": "law of excluded middle",
+            "d": "law of non-contradiction"
+          },
+          "correct_answer": "a",
+          "explanation": "'A is A' states the law of identity."
+        },
+        {
+          "id": "Q34",
+          "question": "A fallacy that deploys force to extract obedience is known as ___.",
+          "options": {
+            "a": "Argumentum ad Baculum",
+            "b": "Argumentum ad Hominem",
+            "c": "Argumentum ad Populum",
+            "d": "Argumentum ad Ignorantiam"
+          },
+          "correct_answer": "a",
+          "explanation": "Ad baculum (appeal to force) uses threats or force to compel acceptance."
+        },
+        {
+          "id": "Q35",
+          "question": "In conjunction, it is true when both conjuncts are true.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "A conjunction (P . Q) is true only when both conjuncts are true."
+        },
+        {
+          "id": "Q36",
+          "question": "In material implication, it is only false when the antecedent is true and the consequent is false.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "Material implication (P > Q) is false only when the antecedent is true and the consequent is false."
+        },
+        {
+          "id": "Q37",
+          "question": "In disjunction, it is true when either of the disjuncts is true.",
+          "options": {
+            "a": "True",
+            "b": "False"
+          },
+          "correct_answer": "a",
+          "explanation": "An inclusive disjunction is true when at least one disjunct is true."
+        },
+        {
+          "id": "Q38",
+          "question": "In logic, arguments are classified into how many types?",
+          "options": {
+            "a": "5",
+            "b": "2",
+            "c": "3",
+            "d": "4",
+            "e": "none of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "Arguments are classified into two types: deductive and inductive."
+        },
+        {
+          "id": "Q39",
+          "question": "In which of these arguments do we have a logical correspondence between the premises and the conclusion?",
+          "options": {
+            "a": "deductive",
+            "b": "inductive",
+            "c": "invalid argument",
+            "d": "cogent argument"
+          },
+          "correct_answer": "a",
+          "explanation": "In deductive arguments the conclusion follows necessarily (corresponds logically) from the premises."
+        },
+        {
+          "id": "Q40",
+          "question": "An erroneous transference of an attribute from the parts to the whole commits the fallacy of:",
+          "options": {
+            "a": "division",
+            "b": "composition",
+            "c": "incompatibility",
+            "d": "equivocation"
+          },
+          "correct_answer": "b",
+          "explanation": "Composition transfers an attribute from the parts to the whole; division moves from the whole to the parts."
+        },
+        {
+          "id": "Q41",
+          "question": "'Hi baby, you look good today' commits the fallacy of:",
+          "options": {
+            "a": "petitio principii",
+            "b": "accent",
+            "c": "ad hominem",
+            "d": "tu quoque"
+          },
+          "correct_answer": "b",
+          "explanation": "The fallacy of accent — the meaning of the statement changes with the word emphasized."
+        },
+        {
+          "id": "Q42",
+          "question": "'Post hoc ergo propter hoc' is another name for which fallacy?",
+          "options": {
+            "a": "accident",
+            "b": "false cause",
+            "c": "hasty conclusion",
+            "d": "complex question"
+          },
+          "correct_answer": "b",
+          "explanation": "'After this, therefore because of this' is the fallacy of false cause."
+        },
+        {
+          "id": "Q43",
+          "question": "The negation of a true statement is:",
+          "options": {
+            "a": "false",
+            "b": "true",
+            "c": "both A and B",
+            "d": "none of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Negating a true statement yields a false statement. (Printed as 'negotiation of a time statement'; reconstructed.)"
+        },
+        {
+          "id": "Q44",
+          "question": "An inclusive disjunction is true if at least one of its disjuncts is:",
+          "options": {
+            "a": "false",
+            "b": "true",
+            "c": "both true and false",
+            "d": "all of the above"
+          },
+          "correct_answer": "b",
+          "explanation": "An inclusive disjunction is true when at least one disjunct is true."
+        },
+        {
+          "id": "Q46",
+          "question": "Who is the greatest logician of the modern period?",
+          "options": {
+            "a": "De Morgan",
+            "b": "Bertrand Russell",
+            "c": "Gottlob Frege",
+            "d": "Aristotle"
+          },
+          "correct_answer": "c",
+          "explanation": "Gottlob Frege is generally regarded as the greatest logician of the modern period. (The printed options omitted (b); reconstructed.)"
+        },
+        {
+          "id": "Q47",
+          "question": "The logic of terms is to ___ while that of propositions is to ___.",
+          "options": {
+            "a": "Aristotle and the Stoics",
+            "b": "Aristotle and Plato",
+            "c": "Frege and Abelard",
+            "d": "None of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Aristotle developed term logic (syllogistic) while the Stoics developed propositional logic."
+        },
+        {
+          "id": "Q48",
+          "question": "A cogent argument is an argument that has:",
+          "options": {
+            "a": "false premises but is valid",
+            "b": "an inductive argument",
+            "c": "a deductive argument that is valid",
+            "d": "an inductive argument that is valid"
+          },
+          "correct_answer": "d",
+          "explanation": "A cogent argument is a strong inductive argument with all true premises; (d) is the closest option."
+        },
+        {
+          "id": "Q49",
+          "question": "The validity of a deductive argument is determined by:",
+          "options": {
+            "a": "the form of the argument",
+            "b": "the length of the argument",
+            "c": "the contents of the argument",
+            "d": "all of the above"
+          },
+          "correct_answer": "a",
+          "explanation": "Validity depends only on the form (structure) of the argument."
+        },
+        {
+          "id": "Q50",
+          "question": "How many logical operators do we have?",
+          "options": {
+            "a": "5",
+            "b": "4",
+            "c": "6",
+            "d": "7"
+          },
+          "correct_answer": "a",
+          "explanation": "There are five logical operators: negation, conjunction, disjunction, conditional and biconditional."
+        }
+      ]
+    }
+  ]
+}
