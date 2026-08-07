@@ -56,3 +56,25 @@ export function playWrong() {
     osc.stop(ctx.currentTime + 0.3);
   } catch (e) {}
 }
+
+export function playStreak() {
+  try {
+    const ctx = getCtx();
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    const start = ctx.currentTime;
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      const t = start + i * 0.09;
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.18, t + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      osc.start(t);
+      osc.stop(t + 0.45);
+    });
+  } catch (e) {}
+}

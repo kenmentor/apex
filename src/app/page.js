@@ -21,6 +21,49 @@ function getTimeAgo(dateStr) {
   return `${days}d ago`;
 }
 
+const WEEK_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+function WeekStrip({ activeSet, todayKey }) {
+  const today = new Date();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    days.push({ key: `${y}-${m}-${day}`, label: WEEK_LABELS[i] });
+  }
+  return (
+    <div className="relative mt-3 flex items-center justify-between gap-1">
+      {days.map(d => {
+        const active = activeSet.has(d.key);
+        const isToday = d.key === todayKey;
+        return (
+          <div key={d.key} className="flex flex-col items-center gap-1">
+            <div
+              className={`flex size-7 items-center justify-center rounded-lg text-[10px] font-bold transition-all ${
+                active
+                  ? 'bg-white text-orange-600 shadow-sm'
+                  : isToday
+                    ? 'border-2 border-white/70 text-white'
+                    : 'bg-white/10 text-white/60'
+              }`}
+            >
+              {d.label}
+            </div>
+            <span className={`text-[8px] font-semibold ${active ? 'text-white' : isToday ? 'text-white/80' : 'text-white/40'}`}>
+              {active ? '🔥' : '·'}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function FeedItem({ item }) {
   const router = useRouter();
   const d = item.data;
@@ -120,6 +163,7 @@ export default function HomePage() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [feed, setFeed] = useState([]);
   const [profile, setProfile] = useState(null);
+  const [streakData, setStreakData] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -144,12 +188,18 @@ export default function HomePage() {
           headers: { Authorization: `Bearer ${getToken()}` },
         }).then(r => r.json()).catch(() => ({ items: [] }))
       );
+      fetches.push(
+        fetch(`/api/streak?email=${encodeURIComponent(u.email)}`, {
+          cache: 'no-store',
+        }).then(r => r.json()).catch(() => ({}))
+      );
     }
 
     Promise.all(fetches)
-      .then(([catsData, notifData, feedData]) => {
+      .then(([catsData, notifData, feedData, streak]) => {
         setCategories(catsData.docs || []);
         if (notifData) setUnreadCount(notifData.unreadCount || 0);
+        if (streak) setStreakData(streak.email ? streak : null);
         if (feedData?.items) {
           const twoDaysAgo = Date.now() - 48 * 60 * 60 * 1000;
           const filtered = feedData.items.filter(i => {
@@ -242,23 +292,28 @@ export default function HomePage() {
         <div className="absolute -right-6 -top-6 size-28 rounded-full bg-white/10" />
         <div className="absolute -bottom-8 right-8 size-24 rounded-full bg-white/10" />
         {user ? (
-          <div className="relative flex items-center gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/20">
-              <Flame className="size-7" />
+          <Link href="/streak" className="relative block">
+            <div className="relative flex items-center gap-4">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/20">
+                <Flame className="size-7" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-bold">{profile?.streak > 0 ? `${profile.streak} day streak! 🔥` : 'Start your streak!'}</div>
+                <p className="text-xs text-white/80">
+                  {profile?.points > 0
+                    ? `${profile.points} points earned · keep going for 10-streak rewards`
+                    : 'Answer quizzes daily — reach a 10-day streak to earn points!'}
+                </p>
+              </div>
+              <div className="flex shrink-0 items-center gap-1 rounded-lg bg-white/15 px-2.5 py-1.5 text-sm font-bold">
+                <Coins className="size-4" />
+                {profile?.points || 0}
+              </div>
             </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-sm font-bold">{profile?.streak > 0 ? `${profile.streak} day streak! 🔥` : 'Start your streak!'}</div>
-              <p className="text-xs text-white/80">
-                {profile?.points > 0
-                  ? `${profile.points} points earned · keep going for 10-streak rewards`
-                  : 'Answer quizzes daily — reach a 10-day streak to earn points!'}
-              </p>
-            </div>
-            <div className="flex shrink-0 items-center gap-1 rounded-lg bg-white/15 px-2.5 py-1.5 text-sm font-bold">
-              <Coins className="size-4" />
-              {profile?.points || 0}
-            </div>
-          </div>
+            {streakData && (
+              <WeekStrip activeSet={new Set(streakData.days || [])} todayKey={streakData.today || ''} />
+            )}
+          </Link>
         ) : (
           <Link href="/auth" className="relative flex items-center gap-4">
             <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/20">

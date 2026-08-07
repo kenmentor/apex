@@ -12,6 +12,7 @@ import { trackAnswerSubmitted, trackSessionTerminated, trackExplanationViewed, t
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import CodeBlock from '@/components/CodeBlock';
+import StreakModal from '@/components/StreakModal';
 import { ChevronLeft, Clock, Check, AlertTriangle, Flame } from 'lucide-react';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E'];
@@ -125,6 +126,7 @@ export default function QuizPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [streakInfo, setStreakInfo] = useState(null);
+  const [showStreakModal, setShowStreakModal] = useState(false);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [restoredProgress, setRestoredProgress] = useState(null);
   const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false });
@@ -652,6 +654,23 @@ export default function QuizPage() {
     }
   }
 
+  const STREAK_MODAL_KEY = 'apex_streak_modal_last_shown'
+
+  function shouldShowStreakModal(data) {
+    try {
+      if (!data || !data.streak || data.streak < 2) return false
+      const now = Date.now()
+      const last = Number(localStorage.getItem(STREAK_MODAL_KEY) || 0)
+      if (data.pointsEarned > 0 || now - last > 24 * 60 * 60 * 1000) {
+        localStorage.setItem(STREAK_MODAL_KEY, String(now))
+        return true
+      }
+      return false
+    } catch {
+      return data?.pointsEarned > 0
+    }
+  }
+
   async function handleAutoSave(scoreOverride, totalOverride) {
     const elapsedSecs = Math.floor((Date.now() - startTime.current) / 1000);
     const user = getUser();
@@ -678,6 +697,9 @@ export default function QuizPage() {
       const data = await res.json()
       if (data && (data.streak != null || data.pointsEarned > 0)) {
         setStreakInfo(data)
+        if (shouldShowStreakModal(data)) {
+          setShowStreakModal(true)
+        }
       }
       clearProgress();
       setSaved(true);
@@ -763,6 +785,8 @@ export default function QuizPage() {
               )}
             </div>
           )}
+
+          <StreakModal open={showStreakModal} streakInfo={streakInfo} onClose={() => setShowStreakModal(false)} />
 
           <Card className="py-10 text-center">
             <div className="space-y-4">

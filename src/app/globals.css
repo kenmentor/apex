@@ -296,6 +296,23 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
+@keyframes streakModalIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes streakFlamePulse {
+  0%, 100% { transform: scale(1) rotate(-3deg); }
+  50% { transform: scale(1.12) rotate(3deg); }
+}
+@keyframes streakConfetti {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.6); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(70px) scale(1.1); }
+}
+.animate-streak-in { animation: streakModalIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-flame-pulse { animation: streakFlamePulse 1s ease-in-out infinite; }
+.animate-confetti { animation: streakConfetti 1.4s ease-out infinite; }
+
 .segment-control-wrapper { margin: 0 -32px 20px -32px; padding: 4px 32px; overflow-x: auto; display: flex; gap: 8px; }
 .segment-control-wrapper::-webkit-scrollbar { height: 0; }
 .segment-btn {
