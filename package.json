@@ -21,7 +21,8 @@
     "db:query": "node scripts/query.mjs",
     "db:dump-gss212": "node scripts/dump-gss212.mjs",
     "db:promote": "node scripts/promote.mjs",
-    "db:test": "node scripts/test-mongo.mjs"
+    "db:test": "node scripts/test-mongo.mjs",
+    "db:indexes": "node scripts/ensure-search-indexes.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -31,6 +32,7 @@
     "@uiw/react-codemirror": "^4.25.11",
     "@vercel/og": "^0.11.1",
     "bcryptjs": "^3.0.3",
+    "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",
@@ -38,8 +40,10 @@
     "formidable": "^3.5.4",
     "google-auth-library": "^11.3.1",
     "jsonwebtoken": "^9.0.3",
+    "kaplay": "^3001.0.19",
     "lucide-react": "^0.460.0",
     "mongodb": "^7.5.0",
+    "motion": "^14.6.0",
     "next": "^15.4.11",
     "next-themes": "^0.4.6",
     "nodemailer": "^9.0.3",

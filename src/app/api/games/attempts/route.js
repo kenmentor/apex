@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
-import { scoreOrder, scoreSprint, scorePairs, scoreCloze } from '@/lib/games'
+import { scoreOrder, scoreSprint, scorePairs, scoreCloze, scoreBlitz, scoreOdd, scoreBoss, scoreTyping } from '@/lib/games'
 import { checkTiming } from '@/lib/antifarm'
 
-const FORMATS = ['chunk', 'sprint', 'pairs', 'cloze']
+const FORMATS = ['chunk', 'sprint', 'pairs', 'cloze', 'blitz', 'odd', 'boss', 'typing']
 
 export async function POST(request) {
   try {
@@ -34,6 +34,26 @@ export async function POST(request) {
       const { cleared = 0, total = 0, mistakes = 0 } = body
       if (!total) return NextResponse.json({ error: 'pairs needs cleared, total' }, { status: 400 })
       accuracy = scorePairs(cleared, total, mistakes)
+      items = total
+    } else if (format === 'blitz') {
+      const { correct = 0, total = 0 } = body
+      if (!total) return NextResponse.json({ error: 'blitz needs correct, total' }, { status: 400 })
+      accuracy = scoreBlitz(correct, total)
+      items = total
+    } else if (format === 'odd') {
+      const { correct = 0, total = 0 } = body
+      if (!total) return NextResponse.json({ error: 'odd needs correct, total' }, { status: 400 })
+      accuracy = scoreOdd(correct, total)
+      items = total
+    } else if (format === 'boss') {
+      const { correct = 0, total = 0 } = body
+      if (!total) return NextResponse.json({ error: 'boss needs correct, total' }, { status: 400 })
+      accuracy = scoreBoss(correct, total)
+      items = total
+    } else if (format === 'typing') {
+      const { correct = 0, total = 0 } = body
+      if (!total) return NextResponse.json({ error: 'typing needs correct, total' }, { status: 400 })
+      accuracy = scoreTyping(correct, total)
       items = total
     } else {
       const { correct = 0, total = 0 } = body

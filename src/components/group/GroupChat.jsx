@@ -24,6 +24,7 @@ export default function GroupChat({ groupId, user }) {
   const [sending, setSending] = useState(false)
   const [panel, setPanel] = useState(null) // null | 'attach' | 'voice' | 'tag'
   const [tagTab, setTagTab] = useState('course')
+  const [tagQuery, setTagQuery] = useState('')
   const [attachMenu, setAttachMenu] = useState(false)
   const [courseList, setCourseList] = useState([])
   const [groupPosts, setGroupPosts] = useState([])

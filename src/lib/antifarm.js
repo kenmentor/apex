@@ -3,7 +3,7 @@ export const STAKE_CAP = 50
 export const MIN_SECONDS_PER_ITEM = 3
 // Per-format floors (seconds per item): sprint is recognition-fast,
 // pairs/cloze need reading + production time, chunk sits in the middle.
-export const MIN_SECONDS_PER_FORMAT = { chunk: 3, sprint: 5, pairs: 4, cloze: 6 }
+export const MIN_SECONDS_PER_FORMAT = { chunk: 3, sprint: 5, pairs: 4, cloze: 6, blitz: 5, odd: 4, boss: 5, typing: 6 }
 
 export function timingFloor(format) {
   return MIN_SECONDS_PER_FORMAT[format] || MIN_SECONDS_PER_ITEM

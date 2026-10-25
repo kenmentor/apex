@@ -15,14 +15,15 @@ const routeMap = {
   '/groups': '/groups',
   '/spaces': '/groups',
   '/search': '/search',
-  '/messages': '/messages',
-  '/notifications': '/messages',
+  '/messages': '/groups',
+  '/notifications': '/groups',
   '/courses': '/courses',
   '/departments': '/departments',
   '/alex': '/alex',
   '/leaderboard': '/leaderboard',
   '/profile': '/profile',
   '/games': '/games',
+  '/dm': '/groups',
   '/races': '/races',
   '/wallet': '/wallet',
   '/streak': '/streak',
@@ -68,8 +69,8 @@ export default function NavWrapper() {
   // Inside a group (detail + settings) and the plan flow: fullscreen mode,
   // no global top bar — each page brings its own slim header.
   const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan');
-  // Inside a group detail/settings: no bottom tabs either (chat typer takes the room).
-  const hideNav = /^\/groups\/[^/]+/.test(pathname || '');
+  // Inside a group detail/settings or a DM thread: no bottom tabs either (typer takes the room).
+  const hideNav = /^\/groups\/[^/]+/.test(pathname || '') || (pathname || '').startsWith('/dm/');
 
   return (
     <>

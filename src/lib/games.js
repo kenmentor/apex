@@ -164,6 +164,75 @@ export function scoreCloze(correct, total) {
   return Math.round((correct / total) * 100)
 }
 
+// ─── Survival Blitz ───
+// Streak-until-hearts-out over MCQ banks. Accuracy is correct/answered
+// (same scale as sprint); the streak is the glory stat and feeds race
+// difficulty so long survivors rank above quick quitters.
+export function scoreBlitz(correct, answered) {
+  if (!answered) return 0
+  return Math.round((correct / answered) * 100)
+}
+
+// Race difficulty from a blitz run: longer best streak, harder lobby.
+export function blitzDifficulty(bestStreak) {
+  return Math.min(5, 1 + Math.floor((bestStreak || 0) / 4))
+}
+
+// ─── Odd One Out ───
+// groups: [{ name, terms[] }]. Each round takes 3 terms from a host
+// group plus 1 intruder term from a different group, options shuffled
+// deterministically per seed. Returns [{ host, options, answer }].
+export function deriveOdd(groups, { rounds = 8, seed = 'odd' } = {}) {
+  const clean = (groups || [])
+    .map(g => ({ name: g.name, terms: [...new Set((g.terms || []).map(t => String(t || '').trim()).filter(t => t.length > 1))] }))
+    .filter(g => g.terms.length >= 3)
+  if (clean.length < 2) return []
+  const out = []
+  for (let r = 0; r < rounds; r++) {
+    const rs = seededShuffle(clean, `${seed}:host:${r}`)
+    const host = rs[0]
+    const others = rs.slice(1).flatMap(g => g.terms.map(t => ({ t, g: g.name })))
+    const hostTerms = seededShuffle(host.terms, `${seed}:terms:${r}`).filter(
+      t => !others.some(o => o.t.toLowerCase() === t.toLowerCase())
+    )
+    const intruders = seededShuffle(
+      others.filter(o => !host.terms.some(t => t.toLowerCase() === o.t.toLowerCase())),
+      `${seed}:intruder:${r}`
+    )
+    if (hostTerms.length < 3 || !intruders.length) continue
+    const picked = hostTerms.slice(0, 3)
+    const intruder = intruders[0].t
+    const options = seededShuffle([...picked, intruder], `${seed}:opts:${r}`)
+    out.push({ host: host.name, options, answer: options.indexOf(intruder) })
+  }
+  return out
+}
+
+export function scoreOdd(correct, total) {
+  if (!total) return 0
+  return Math.round((correct / total) * 100)
+}
+
+// ─── Boss Battle ───
+// Same MCQ scale for the logs; the drama (HP, crits) is presentation.
+// critEvery: every Nth consecutive correct hit deals double damage.
+export function scoreBoss(correct, answered) {
+  if (!answered) return 0
+  return Math.round((correct / answered) * 100)
+}
+
+export function bossDamage(streak, critEvery = 3, base = 10) {
+  const crit = streak > 0 && streak % critEvery === 0
+  return { dmg: (base + Math.min(streak, 8) * 2) * (crit ? 2 : 1), crit }
+}
+
+// ─── Typing Rush ───
+// Production speed: definitions prompt, typed terms answer.
+export function scoreTyping(correct, shown) {
+  if (!shown) return 0
+  return Math.round((correct / shown) * 100)
+}
+
 export function pauseState(session, now = Date.now()) {
   if (!session || session.mode !== 'live') return { paused: false }
   const since = session.pausedAt ? now - new Date(session.pausedAt).getTime() : 0

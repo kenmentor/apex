@@ -29,7 +29,7 @@ export default function TopBar({ user, unread = 0, onAvatar, hideTitle = false }
           GSS Banger
         </Link>
       )}
-      <Link href="/notifications" aria-label="Notifications" className="relative flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+      <Link href="/groups?tab=inbox" aria-label="Notifications" className="relative flex size-9 items-center justify-center rounded-lg hover:bg-muted">
         <Bell className="size-5" />
         {unread > 0 && (
           <span className="absolute -right-0.5 -top-0.5 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
