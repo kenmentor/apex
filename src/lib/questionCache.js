@@ -1,6 +1,6 @@
 const DB_NAME = 'gss-quiz-cache'
 const STORE = 'questions'
-const DB_VERSION = 2
+const DB_VERSION = 4
 
 function openDB() {
   return new Promise((resolve, reject) => {

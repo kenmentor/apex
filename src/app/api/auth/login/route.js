@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
+import bcrypt from 'bcryptjs'
 import { getCollection } from '@/lib/db'
 import { signToken } from '@/lib/auth-server'
 
 export async function POST(request) {
   try {
-    const { email, school, department, level } = await request.json()
+    const { email, school, department, level, password } = await request.json()
     if (!email || !email.includes('@')) {
       return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
     }
@@ -14,6 +15,12 @@ export async function POST(request) {
     const existing = await users.findOne({ email: normalizedEmail })
 
     if (existing) {
+      // Password accounts must prove it. Legacy passwordless accounts keep working.
+      if (existing.passwordHash) {
+        if (!password) return NextResponse.json({ error: 'Enter your password.', needsPassword: true }, { status: 401 })
+        const ok = await bcrypt.compare(password, existing.passwordHash)
+        if (!ok) return NextResponse.json({ error: 'Wrong email or password.' }, { status: 401 })
+      }
       const hasSchool = !!(existing.school && existing.school.trim())
       const hasDept = !!(existing.department && existing.department.trim())
       const hasLevel = !!(existing.level && existing.level.trim())
@@ -40,10 +47,12 @@ export async function POST(request) {
         verified: !!existing.verified,
         name: existing.name || '',
         avatar: existing.avatar || '',
+        avatarConfig: existing.avatarConfig || null,
         token,
         isNewUser: false,
         needsSchool,
         needsDeptOrLevel: needsSchool ? false : needsDeptOrLevel,
+        hasPassword: !!existing.passwordHash,
       })
     }
 
@@ -52,11 +61,14 @@ export async function POST(request) {
       school: school?.trim() || '',
       department: department?.trim() || '',
       level: level?.trim() || '',
+      role: 'student',
+      university: '',
       createdAt: new Date(),
       admin: false,
       verified: false,
       name: '',
       avatar: '',
+      avatarConfig: null,
     })
 
     const token = signToken({ email: normalizedEmail, admin: false })
@@ -70,6 +82,7 @@ export async function POST(request) {
       verified: false,
       name: '',
       avatar: '',
+      avatarConfig: null,
       token,
       isNewUser: true,
       needsSchool: !school,

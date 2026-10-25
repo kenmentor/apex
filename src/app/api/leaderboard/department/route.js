@@ -20,7 +20,7 @@ export async function GET() {
 
     // Department rankings
     const deptAgg = await scoresCol.aggregate([
-      { $match: { department: { $ne: null, $ne: '' } } },
+      { $match: { department: { $nin: [null, ''] } } },
       {
         $group: {
           _id: '$department',
@@ -45,7 +45,7 @@ export async function GET() {
 
     // Top user per department
     const topUsers = await scoresCol.aggregate([
-      { $match: { department: { $ne: null, $ne: '' } } },
+      { $match: { department: { $nin: [null, ''] } } },
       {
         $group: {
           _id: { dept: '$department', email: '$email', name: '$name' },

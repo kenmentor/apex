@@ -20,13 +20,13 @@ const COURSES = {
   'COS 202': { title: 'Computer Science' },
   'INS 202': { title: 'Insurance' },
   'ENT 211': { title: 'Entrepreneurship & Innovation' },
+  'CLP 211': { title: 'Chemical Pathology' },
 }
 
+import { getBaseUrl } from '@/lib/base-url'
+
 function getOrigin() {
-  const u = process.env.NEXT_PUBLIC_BASE_URL || process.env.FRONTEND_URL
-  if (u) return u.replace(/\/$/, '')
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return 'https://apex-tau-gules.vercel.app'
+  return getBaseUrl()
 }
 
 export async function generateMetadata({ params }) {

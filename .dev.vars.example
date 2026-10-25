@@ -1,0 +1,24 @@
+# Copy this file to `.dev.vars` and fill in real values for local `npm run cf:preview`.
+# For production, set these in the Cloudflare dashboard (Worker > Settings > Variables & Secrets)
+# or run: npx wrangler secret put <NAME>
+
+MONGODB_URI=mongodb+srv://user:pass@cluster.example.mongodb.net/gss-quiz
+JWT_API_KEY=your-jwt-secret
+NEXT_PUBLIC_BASE_URL=https://gss-quiz.<your-subdomain>.workers.dev
+FRONTEND_URL=https://gss-quiz.<your-subdomain>.workers.dev
+
+ADMIN_SECRET_KEY=your-admin-secret
+
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-cloudinary-key
+CLOUDINARY_API_SECRET=your-cloudinary-secret
+
+OPENROUTER_API_KEY=your-openrouter-key
+OPENROUTER_MODEL=google/gemini-2.5-flash
+
+RESEND_API_KEY=re_xxxx
+SENDER_EMAIL=onboarding@resend.dev
+SENDER_NAME=Apex
+
+VAPID_PUBLIC_KEY=your-vapid-public-key
+VAPID_PRIVATE_KEY=your-vapid-private-key

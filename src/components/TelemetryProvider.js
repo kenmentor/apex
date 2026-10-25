@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { trackRageClick, trackNetworkTransaction, trackRuntimeError } from '@/lib/telemetry'
+import { trackRageClick, trackRuntimeError } from '@/lib/telemetry'
 
 export default function TelemetryProvider() {
   const rageRef = useRef({ x: 0, y: 0, count: 0, lastTime: 0, element: null })
@@ -31,33 +31,9 @@ export default function TelemetryProvider() {
       }
     }
 
-    // ── 2. API Roundtrip Latency ──
-    const originalFetch = window.fetch
-    window.fetch = async (...args) => {
-      const start = performance.now()
-      try {
-        const response = await originalFetch(...args)
-        const duration = performance.now() - start
-        if (duration > 1500) {
-          const url = typeof args[0] === 'string' ? args[0] : args[0]?.url || 'unknown'
-          trackNetworkTransaction({
-            endpoint_url: url,
-            duration_ms: Math.round(duration),
-            http_status: response.status,
-          })
-        }
-        return response
-      } catch (err) {
-        const duration = performance.now() - start
-        const url = typeof args[0] === 'string' ? args[0] : args[0]?.url || 'unknown'
-        trackNetworkTransaction({
-          endpoint_url: url,
-          duration_ms: Math.round(duration),
-          http_status: 0,
-        })
-        throw err
-      }
-    }
+    // NOTE: no global fetch wrapper by design — wrapping window.fetch adds
+    // overhead to every request app-wide. Beacon tracking (sendBeacon)
+    // in lib/tracking.js stays as-is; it never blocks rendering.
 
     // ── 3. Unhandled Runtime Crashes ──
     const handleError = (msg, source, lineno, colno, error) => {
@@ -84,7 +60,6 @@ export default function TelemetryProvider() {
       window.removeEventListener('pointerdown', handlePointerDown, { capture: true })
       window.onerror = null
       window.removeEventListener('unhandledrejection', handleRejection)
-      window.fetch = originalFetch
     }
   }, [])
 

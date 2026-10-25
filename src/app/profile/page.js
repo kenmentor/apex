@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { getUser, getToken } from '@/lib/auth'
 import { ArrowLeft, Medal, Clock, Target, GraduationCap, Settings, User } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { UserAvatar, UserAvatarImage } from '@/components/UserAvatar'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -57,7 +58,7 @@ function ProfileContent() {
         <Link href="/leaderboard" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
           <ArrowLeft className="size-4" />
         </Link>
-        <h1 className="flex-1 text-base font-bold truncate">{user?.name || 'Profile'}</h1>
+        <h1 className="flex-1 truncate text-base font-bold">Profile</h1>
         <Link href="/settings" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
           <Settings className="size-4" />
         </Link>
@@ -88,16 +89,14 @@ function ProfileContent() {
           <>
             <Card>
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <Avatar className="size-16">
-                  <AvatarImage src={user.avatar} />
-                  <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
-                    {user.email[0].toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <h2 className="text-lg font-bold">{user.name || 'Anonymous'}</h2>
-                  <p className="text-xs text-muted-foreground">{user.email}</p>
+                <UserAvatar user={user} className="size-20" />
+                <div className="min-w-0">
+                  <h2 className="truncate text-lg font-bold">{user.name || 'Anonymous'}</h2>
+                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
                 </div>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/settings">Change avatar</Link>
+                </Button>
                 {user.school && (
                   <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
                     <GraduationCap className="size-3.5 shrink-0" />

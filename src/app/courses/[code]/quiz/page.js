@@ -26,6 +26,23 @@ function shuffleArray(arr) {
   return a;
 }
 
+function getCorrectKeys(correctAnswer) {
+  if (Array.isArray(correctAnswer)) return correctAnswer.map(v => String(v).toLowerCase());
+  if (correctAnswer == null) return [];
+  return [String(correctAnswer).toLowerCase()];
+}
+
+function isAnswerCorrect(selectedKey, correctAnswer) {
+  if (selectedKey == null || correctAnswer == null) return false;
+  if (Array.isArray(selectedKey)) {
+    if (!Array.isArray(correctAnswer)) return false;
+    const a = selectedKey.map(v => String(v).toLowerCase()).sort().join('|');
+    const b = correctAnswer.map(v => String(v).toLowerCase()).sort().join('|');
+    return a === b;
+  }
+  return getCorrectKeys(correctAnswer).includes(String(selectedKey).toLowerCase());
+}
+
 const SEEN_KEY_PREFIX = 'apex_seen_'
 
 const FUNNY_COMMENTS = {
@@ -129,7 +146,7 @@ export default function QuizPage() {
   const [showStreakModal, setShowStreakModal] = useState(false);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [restoredProgress, setRestoredProgress] = useState(null);
-  const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false });
+  const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false, year: 'mix' });
   const [cheatWarning, setCheatWarning] = useState('')
   const [shareCardUrl, setShareCardUrl] = useState('')
   const [showShareOptions, setShowShareOptions] = useState(false)
@@ -230,6 +247,9 @@ export default function QuizPage() {
   function handleStartQuiz() {
     setRevealAnswer(false);
     let available = allQuestions;
+    if (settings.year && settings.year !== 'mix') {
+      available = allQuestions.filter(q => q.year && String(q.year) === settings.year);
+    }
     const seen = getSeenIds(code);
     let unseen = available.filter((q, idx) => !seen.includes(idx));
     if (unseen.length === 0) {
@@ -537,6 +557,35 @@ export default function QuizPage() {
               </button>
             </div>
 
+            {(() => {
+              const yearSet = [...new Set(allQuestions.map(q => q.year).filter(Boolean))].sort();
+              if (yearSet.length <= 1) return null;
+              return (
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold">Question Year</label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant={settings.year === 'mix' ? 'default' : 'outline'}
+                      className="min-w-[60px] flex-1 text-sm"
+                      onClick={() => setSettings(s => ({ ...s, year: 'mix' }))}
+                    >
+                      Mix
+                    </Button>
+                    {yearSet.map((y) => (
+                      <Button
+                        key={y}
+                        variant={settings.year === String(y) ? 'default' : 'outline'}
+                        className="min-w-[60px] flex-1 text-sm"
+                        onClick={() => setSettings(s => ({ ...s, year: String(y) }))}
+                      >
+                        {y}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
             <Button onClick={handleStartQuiz} className="w-full py-6 text-base font-bold tracking-wide">
               START QUIZ
             </Button>
@@ -549,11 +598,11 @@ export default function QuizPage() {
   const total = questions.length;
   const question = questions[currentIndex];
   const optionKeys = Object.keys(question?.options || {});
-  const correctKey = question?.correct_answer;
+  const correctKeys = getCorrectKeys(question?.correct_answer);
   const totalAnswered = answers.length;
   const correctCount = answers.reduce((count, a) => {
     const q = questions[a.questionIndex];
-    return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
+    return count + (isAnswerCorrect(a.selected, q?.correct_answer) ? 1 : 0);
   }, 0);
   const elapsedSeconds = Math.floor((Date.now() - startTime.current) / 1000);
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
@@ -579,7 +628,7 @@ export default function QuizPage() {
     setAnswers(newAnswers);
     const finalCorrectCount = newAnswers.reduce((count, a) => {
       const q = questions[a.questionIndex];
-      return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
+      return count + (isAnswerCorrect(a.selected, q?.correct_answer) ? 1 : 0);
     }, 0);
 
     if (currentIndex + 1 < total) {
@@ -620,7 +669,7 @@ export default function QuizPage() {
       const timeSpent = settings.timePerQuestion - timeLeft;
       trackAnswerSubmitted({
         question_id: question._id || question.id || `${question.question?.slice(0, 30)}`,
-        is_correct: selectedOpt === correctAns,
+        is_correct: isAnswerCorrect(answered, question.correct_answer),
         time_spent_sec: Math.max(1, timeSpent),
         selected_option_index: selectedIndex,
         correct_option_index: correctIndex,
@@ -630,7 +679,7 @@ export default function QuizPage() {
 
     const finalCorrectCount = newAnswers.reduce((count, a) => {
       const q = questions[a.questionIndex];
-      return count + (a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase() ? 1 : 0);
+      return count + (isAnswerCorrect(a.selected, q?.correct_answer) ? 1 : 0);
     }, 0);
 
     if (currentIndex + 1 < total) {
@@ -835,7 +884,7 @@ export default function QuizPage() {
             onClick={() => {
               const reviewAnswers = answers.map((a) => {
                 const q = questions[a.questionIndex];
-                const isCorrect = a.selected != null && String(a.selected).toLowerCase() === String(q?.correct_answer).toLowerCase();
+                const isCorrect = isAnswerCorrect(a.selected, q?.correct_answer);
                 return { ...a, correctKey: q?.correct_answer, isCorrect };
               });
               sessionStorage.setItem('apex_review', JSON.stringify({ answers: reviewAnswers, questions, code }))
@@ -974,7 +1023,7 @@ export default function QuizPage() {
         {/* Options */}
         <div className="mb-6 space-y-3">
           {optionKeys.map((key, idx) => {
-            const isCorrect = key === correctKey;
+            const isCorrect = correctKeys.includes(String(key).toLowerCase());
             const isRevealedCorrect = revealAnswer && isCorrect;
             const isSelected = selected === key;
 

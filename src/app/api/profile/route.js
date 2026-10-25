@@ -20,6 +20,7 @@ export async function GET(request) {
       department: user.department || '',
       level: user.level || '',
       avatar: user.avatar || '',
+      avatarConfig: user.avatarConfig || null,
       verified: !!user.verified,
       admin: !!user.admin,
       points: user.points || 0,
@@ -37,17 +38,24 @@ export async function PUT(request) {
     const user = await getUserFromToken(request)
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { name, school, avatar, department, level } = await request.json()
+    const { name, school, avatar, avatarConfig, department, level } = await request.json()
     const update = {}
     if (name !== undefined) update.name = name.trim()
     if (school !== undefined) update.school = school.trim()
     if (department !== undefined) update.department = department.trim()
     if (level !== undefined) update.level = level.trim()
     if (avatar !== undefined) {
-      if (avatar && !avatar.startsWith('https://res.cloudinary.com/')) {
-        return NextResponse.json({ error: 'Invalid avatar URL' }, { status: 400 })
+      const okHost = !avatar || avatar.startsWith('https://res.cloudinary.com/') || avatar.startsWith('https://api.dicebear.com/');
+      if (!okHost) {
+        return NextResponse.json({ error: 'Invalid avatar URL' }, { status: 400 });
       }
       update.avatar = avatar
+    }
+    if (avatarConfig !== undefined) {
+      if (avatarConfig !== null && (typeof avatarConfig !== 'object' || Array.isArray(avatarConfig))) {
+        return NextResponse.json({ error: 'Invalid avatar config' }, { status: 400 });
+      }
+      update.avatarConfig = avatarConfig
     }
 
     const users = await getCollection('users')
@@ -64,6 +72,7 @@ export async function PUT(request) {
       verified: !!updated.verified,
       name: updated.name || '',
       avatar: updated.avatar || '',
+      avatarConfig: updated.avatarConfig || null,
     })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

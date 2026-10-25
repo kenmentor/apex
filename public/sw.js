@@ -1,11 +1,13 @@
-const CACHE = 'apex-cache-v5'
+const CACHE = 'apex-cache-v6'
 const PRECACHE = [
   '/',
+  '/plan',
+  '/spaces',
+  '/search',
+  '/messages',
   '/courses',
   '/leaderboard',
-  '/profile',
   '/auth',
-  '/spaces',
   '/notifications',
   '/manifest.json',
   '/icon-192.png',
@@ -76,6 +78,13 @@ self.addEventListener('fetch', (e) => {
 
   // API: network first, fallback to cache
   if (request.url.includes('/api/')) {
+    e.respondWith(networkFirst(request))
+    return
+  }
+
+  // Dev/HMR + versioned build assets: always network first.
+  // Dev chunk URLs have no content hash, so cache-first would pin stale code.
+  if (request.url.includes('/_next/')) {
     e.respondWith(networkFirst(request))
     return
   }

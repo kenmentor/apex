@@ -5,7 +5,8 @@ import { use } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, UserPlus, UserCheck, Medal, Clock, Target, GraduationCap, User } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { UserAvatarImage } from '@/components/UserAvatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -88,7 +89,7 @@ export default function PublicProfilePage({ params }) {
             <Card>
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
                 <Avatar className="size-16">
-                  <AvatarImage src={profile.avatar} />
+                  <UserAvatarImage user={profile} />
                   <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
                     {profile.name?.[0]?.toUpperCase() || decodedEmail[0].toUpperCase()}
                   </AvatarFallback>

@@ -1,8 +1,6 @@
 import { ImageResponse } from 'next/og'
 import React from 'react'
 
-export const runtime = 'edge'
-
 const el = (tag, style, ...children) =>
   React.createElement(tag, style ? { style } : null, ...children.flat(Infinity).filter(Boolean))
 
@@ -31,6 +29,7 @@ function getCourse(code) {
     'COS 202': 'Computer Science',
     'INS 202': 'Insurance',
     'ENT 211': 'Entrepreneurship & Innovation',
+    'CLP 211': 'Chemical Pathology',
   }
   return known[code] || ''
 }
@@ -58,6 +57,7 @@ const ACCENTS = {
   'COS 202': '#D8B4FE',
   'INS 202': '#A3E635',
   'ENT 211': '#C7F800',
+  'CLP 211': '#F43F5E',
 }
 
 function hexToRgba(hex, alpha) {

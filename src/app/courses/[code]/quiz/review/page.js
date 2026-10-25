@@ -75,16 +75,21 @@ export default function ReviewPage() {
                     <p className="text-sm font-semibold leading-relaxed">Q{i + 1}. {q.question}</p>
                     <div className="space-y-1.5">
                       {optKeys.map((k) => {
+                        const correctKeys = Array.isArray(a.correctKey)
+                          ? a.correctKey.map(v => String(v).toLowerCase())
+                          : [String(a.correctKey).toLowerCase()];
+                        const isCorrectKey = a.correctKey != null && correctKeys.includes(String(k).toLowerCase());
+                        const isSelected = String(a.selected).toLowerCase() === String(k).toLowerCase();
                         let styles = 'border bg-transparent';
-                        if (k === a.correctKey) styles = 'border border-green-500/30 bg-green-500/10';
-                        else if (k === a.selected && !a.isCorrect) styles = 'border border-red-500/30 bg-red-500/10';
+                        if (isCorrectKey) styles = 'border border-green-500/30 bg-green-500/10';
+                        else if (isSelected && !a.isCorrect) styles = 'border border-red-500/30 bg-red-500/10';
                         return (
                           <div key={k} className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm ${styles}`}>
                             <span>
                               <strong>{k.toUpperCase()}.</strong> {q.options[k]}
                             </span>
                             <span className="text-sm">
-                              {k === a.correctKey ? '✓' : k === a.selected && !a.isCorrect ? '✗' : ''}
+                              {isCorrectKey ? '✓' : isSelected && !a.isCorrect ? '✗' : ''}
                             </span>
                           </div>
                         );

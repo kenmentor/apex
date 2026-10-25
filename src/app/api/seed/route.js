@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server'
 import { getDB, getCollection } from '@/lib/db'
 import { sendToAll } from '@/lib/push'
-import fs from 'fs'
-import path from 'path'
+
+async function readProjectFile(relPath) {
+  try {
+    const [{ readFileSync }, { join }] = await Promise.all([import('node:fs'), import('node:path')])
+    // Canonical data lives in quiz-app/<relPath>, e.g. data/courses/gss212.json
+    return readFileSync(join(process.cwd(), relPath), 'utf-8')
+  } catch {
+    return null
+  }
+}
 
 const CATEGORIES = [
   { title: 'General Studies', code: 'GSS', color: '#130f40', courseCount: 1 },
@@ -31,25 +39,26 @@ export async function POST() {
 
     await db.collection('categories').insertMany(CATEGORIES)
 
-    const jsonPath = path.join(process.cwd(), '..', 'gss212.json')
-    const raw = fs.readFileSync(jsonPath, 'utf-8')
-    const data = JSON.parse(raw)
-
-    const questionDocs = []
-    for (const section of data.sections) {
-      for (const q of section.questions) {
-        questionDocs.push({
-          courseCode: data.course_code,
-          section: section.section_title,
-          id: q.id,
-          question: q.question,
-          options: q.options,
-          correctAnswer: q.correct_answer,
-          explanation: q.explanation || '',
-        })
+    const raw = await readProjectFile('data/courses/gss212.json')
+    let data = null
+    let questionDocs = []
+    if (raw) {
+      data = JSON.parse(raw)
+      for (const section of data.sections) {
+        for (const q of section.questions) {
+          questionDocs.push({
+            courseCode: data.course_code,
+            section: section.section_title,
+            id: q.id,
+            question: q.question,
+            options: q.options,
+            correctAnswer: q.correct_answer,
+            explanation: q.explanation || '',
+          })
+        }
       }
+      await db.collection('questions').insertMany(questionDocs)
     }
-    await db.collection('questions').insertMany(questionDocs)
 
     const videos = [
       { courseCode: 'GSS 212', title: 'Introduction to Philosophy', url: 'https://youtu.be/1A_CAkYt3GY', order: 1, description: 'Overview of Western philosophy from ancient to modern.' },
@@ -61,24 +70,25 @@ export async function POST() {
     ]
     await db.collection('videos').insertMany(videos)
 
-    const storyPath = path.join(process.cwd(), '..', 'read.html')
-    const storyHtml = fs.readFileSync(storyPath, 'utf-8')
-    const bodyMatch = storyHtml.match(/<body>([\s\S]*)<\/body>/i)
-    if (bodyMatch) {
-      const sections = bodyMatch[1].split(/(?=<h[12]>Chapter\s+\w+)/).filter(s => s.trim())
-      const readings = []
-      for (const section of sections) {
-        const chapterMatch = section.match(/<h[12]>(Chapter\s+\w+[^<]*)<\/h[12]>/i)
-        if (chapterMatch) {
-          readings.push({
-            courseCode: 'GSS 212',
-            title: chapterMatch[1].trim(),
-            order: readings.length + 1,
-            content: section.trim(),
-          })
+    const storyHtml = await readProjectFile('data/courses/read.html')
+    if (storyHtml) {
+      const bodyMatch = storyHtml.match(/<body>([\s\S]*)<\/body>/i)
+      if (bodyMatch) {
+        const sections = bodyMatch[1].split(/(?=<h[12]>Chapter\s+\w+)/).filter(s => s.trim())
+        const readings = []
+        for (const section of sections) {
+          const chapterMatch = section.match(/<h[12]>(Chapter\s+\w+[^<]*)<\/h[12]>/i)
+          if (chapterMatch) {
+            readings.push({
+              courseCode: 'GSS 212',
+              title: chapterMatch[1].trim(),
+              order: readings.length + 1,
+              content: section.trim(),
+            })
+          }
         }
+        await db.collection('readings').insertMany(readings)
       }
-      await db.collection('readings').insertMany(readings)
     }
 
     // Push notification about new course
@@ -92,8 +102,8 @@ export async function POST() {
             userEmail: sub.userEmail,
             type: 'new_course',
             title: '📚 New Course Available!',
-            message: `${data.course_code} — ${data.course_title || 'A new course'} has been added. Start practicing now!`,
-            link: `/courses/${data.course_code.toLowerCase().replace(/\s+/g, '')}`,
+            message: `${data?.course_code || 'A new course'} — ${data?.course_title || 'A new course'} has been added. Start practicing now!`,
+            link: `/courses/${(data?.course_code || '').toLowerCase().replace(/\s+/g, '')}`,
             read: false,
             createdAt: new Date().toISOString(),
           })
@@ -101,18 +111,19 @@ export async function POST() {
       }
       sendToAll(
         '📚 New Course Available!',
-        `${data.course_code} — ${data.course_title || 'A new course'} has been added. Start practicing now!`,
-        `/courses/${data.course_code.toLowerCase().replace(/\s+/g, '')}`,
+        `${data?.course_code || 'A new course'} — ${data?.course_title || 'A new course'} has been added. Start practicing now!`,
+        `/courses/${(data?.course_code || '').toLowerCase().replace(/\s+/g, '')}`,
         getCollection
       )
     } catch {}
 
     return NextResponse.json({
       success: true,
-      course: data.course_code,
+      course: data?.course_code || null,
       categories: CATEGORIES.length,
       questions: questionDocs.length,
       videos: videos.length,
+      warning: raw ? undefined : 'Skipped question/reading seeding: source files (data/courses/gss212.json) are not readable on the Workers filesystem. Run `npm run seed:gss212` locally instead.',
     })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to seed: ' + error.message }, { status: 500 })

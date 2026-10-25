@@ -48,7 +48,7 @@ const COURSES = [
 async function seedCourse(db, course) {
   console.log(`\n=== ${course.code}: ${course.title} ===`)
 
-  const data = JSON.parse(readFileSync(join(__dirname, '..', course.file), 'utf-8'))
+  const data = JSON.parse(readFileSync(join(__dirname, '..', 'data', 'courses', course.file), 'utf-8'))
   let theory = []
   try { theory = JSON.parse(readFileSync(join(__dirname, course.theory), 'utf-8')) } catch { }
 

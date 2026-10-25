@@ -9,7 +9,7 @@ const URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/gss-quiz'
 const COURSE_CODE = 'INS 202'
 
 async function main() {
-  const data = JSON.parse(readFileSync(join(__dirname, '..', 'INS202.json'), 'utf-8'))
+  const data = JSON.parse(readFileSync(join(__dirname, '..', 'data', 'courses', 'INS202.json'), 'utf-8'))
   const client = new MongoClient(URI, { connectTimeoutMS: 10000, serverSelectionTimeoutMS: 10000 })
   await client.connect()
   const db = client.db()

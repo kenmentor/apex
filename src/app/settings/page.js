@@ -1,12 +1,15 @@
 'use client'
 
-import { Suspense, useState, useEffect } from 'react'
+import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
-import { ArrowLeft, User, Camera, LogOut, Shield, CheckCircle, Sun, Moon } from 'lucide-react'
+import { ArrowLeft, Camera, LogOut, Shield, CheckCircle, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
+import { Drawer } from 'vaul'
 import { Card, CardContent } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { UserAvatar } from '@/components/UserAvatar'
+import AvatarCustomizer from '@/components/AvatarCustomizer'
+import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
@@ -24,6 +27,16 @@ function SettingsContent() {
   const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState('')
   const [sendingVerify, setSendingVerify] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [sheetView, setSheetView] = useState('choose') // choose | avatar
+  const [avatarConfig, setAvatarConfig] = useState(null)
+  const [savingAvatar, setSavingAvatar] = useState(false)
+  const fileRef = useRef(null)
+
+  function openSheet() {
+    setSheetView('choose')
+    setSheetOpen(true)
+  }
 
   useEffect(() => {
     const u = getUser()
@@ -32,6 +45,7 @@ function SettingsContent() {
     setSchool(u?.school || '')
     setDepartment(u?.department || '')
     setLevel(u?.level || '')
+    setAvatarConfig(normalizeAvatarConfig(u?.avatarConfig) || defaultDiceConfig())
   }, [])
 
   async function handleSave(e) {
@@ -84,8 +98,32 @@ function SettingsContent() {
       setUser({ ...u, avatar: url })
       setUserState({ ...u, avatar: url })
       setMessage('Avatar updated!')
+      setSheetOpen(false)
+      e.target.value = ''
     } catch (err) { setMessage(err.message) }
     setUploading(false)
+  }
+
+  async function handleSaveAvatarConfig() {
+    if (!avatarConfig) return
+    setSavingAvatar(true)
+    setMessage('')
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ avatarConfig }),
+      })
+      if (!res.ok) throw new Error('Avatar save failed')
+      const data = await res.json()
+      const u = getUser()
+      const updated = { ...u, avatarConfig: data.avatarConfig || avatarConfig }
+      setUser(updated)
+      setUserState(updated)
+      setMessage('Avatar updated!')
+      setSheetOpen(false)
+    } catch (err) { setMessage(err.message) }
+    setSavingAvatar(false)
   }
 
   async function handleSendVerification() {
@@ -140,20 +178,15 @@ function SettingsContent() {
 
       <div className="mx-auto w-full max-w-lg space-y-3 px-3 pt-3">
         <Card>
-          <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-            <div className="relative">
-              <Avatar className="size-16">
-                <AvatarImage src={user.avatar} />
-                <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
-                  {user.email[0].toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <label className="absolute -bottom-1 -right-1 flex size-7 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+          <CardContent className="flex flex-col items-center gap-2 p-6 text-center">
+            <button type="button" onClick={openSheet} aria-label="Change profile photo" className="relative rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <UserAvatar user={user} className="size-20" />
+              <span className="absolute -bottom-1 -right-1 flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
                 <Camera className="size-3.5" />
-                <input type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" disabled={uploading} />
-              </label>
-            </div>
-            {uploading && <span className="text-xs text-muted-foreground">Uploading...</span>}
+              </span>
+            </button>
+            <p className="text-xs font-medium text-muted-foreground">Tap photo to change</p>
+            {(uploading || savingAvatar) && <span className="text-xs text-muted-foreground">Saving...</span>}
             <p className="text-xs text-muted-foreground">{user.email}</p>
           </CardContent>
         </Card>
@@ -235,6 +268,68 @@ function SettingsContent() {
           </CardContent>
         </Card>
       </div>
+
+      <input ref={fileRef} type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" disabled={uploading} />
+
+      <Drawer.Root open={sheetOpen} onOpenChange={(o) => { setSheetOpen(o); if (o) setSheetView('choose') }}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 z-[70] bg-black/50" />
+          <Drawer.Content className="fixed inset-x-0 bottom-0 z-[70] mx-auto flex max-h-[88dvh] w-full max-w-md flex-col rounded-t-3xl bg-background outline-none">
+            <div className="mx-auto mb-1 mt-3 h-1 w-10 shrink-0 rounded-full bg-muted" />
+            {sheetView === 'choose' ? (
+              <div className="p-5 pb-8">
+                <h2 className="text-center text-base font-bold">Change profile photo</h2>
+                <p className="mt-1 text-center text-xs text-muted-foreground">Use a photo or build an avatar</p>
+                <div className="mt-4 space-y-2">
+                  <button
+                    onClick={() => fileRef.current?.click()}
+                    disabled={uploading}
+                    className="flex w-full items-center gap-3 rounded-2xl border p-4 text-left hover:bg-muted disabled:opacity-50"
+                  >
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
+                      <ImagePlus className="size-5 text-primary" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold">Upload a photo</span>
+                      <span className="block text-xs text-muted-foreground">{uploading ? 'Uploading...' : 'From your gallery or camera'}</span>
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setSheetView('avatar')}
+                    className="flex w-full items-center gap-3 rounded-2xl border p-4 text-left hover:bg-muted"
+                  >
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
+                      <Smile className="size-5 text-primary" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold">Create an avatar</span>
+                      <span className="block text-xs text-muted-foreground">Hair, skin, eyes, outfit and more</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex min-h-0 flex-col">
+                <div className="flex shrink-0 items-center gap-2 px-4 pt-2">
+                  <button onClick={() => setSheetView('choose')} aria-label="Back" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+                    <ChevronLeft className="size-5" />
+                  </button>
+                  <h2 className="flex-1 text-center text-base font-bold">Create an avatar</h2>
+                  <span className="w-9" />
+                </div>
+                <div className="min-h-0 overflow-y-auto px-4 pb-2">
+                  <AvatarCustomizer value={avatarConfig || normalizeAvatarConfig(user.avatarConfig) || defaultDiceConfig()} onChange={setAvatarConfig} size={96} />
+                </div>
+                <div className="shrink-0 p-4 pt-2">
+                  <Button onClick={handleSaveAvatarConfig} disabled={savingAvatar} className="h-12 w-full text-base">
+                    {savingAvatar ? 'Saving...' : 'Save avatar'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
     </div>
   )
 }

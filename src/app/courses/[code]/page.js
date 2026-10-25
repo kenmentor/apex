@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { fetchJson } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function CourseDetailPage() {
@@ -21,6 +22,8 @@ export default function CourseDetailPage() {
   const [questionCount, setQuestionCount] = useState(0);
   const [videos, setVideos] = useState([]);
   const [readings, setReadings] = useState([]);
+  const [curriculum, setCurriculum] = useState(null);
+  const [currTopics, setCurrTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('quizzes');
   const [showFeedback, setShowFeedback] = useState(false);
@@ -35,23 +38,25 @@ export default function CourseDetailPage() {
   const codeForUrl = code.toLowerCase().replace(/\s+/g, '');
 
   useEffect(() => {
-    fetch(`/api/courses?limit=20`)
-      .then((r) => r.json())
-      .then((data) => {
+    // One parallel batch: courses list + videos + readings + CCMAS curriculum + topics.
+    Promise.all([
+      fetchJson(`/api/courses?limit=20`).catch(() => ({})),
+      fetchJson(`/api/videos?course=${encodeURIComponent(formattedCode)}`).catch(() => []),
+      fetchJson(`/api/readings?course=${encodeURIComponent(formattedCode)}`).catch(() => []),
+      fetchJson(`/api/curriculum/courses?code=${encodeURIComponent(formattedCode)}`).catch(() => []),
+      fetchJson(`/api/curriculum/topics?course=${encodeURIComponent(formattedCode)}`).catch(() => []),
+    ])
+      .then(([data, vids, reads, currDocs, currTops]) => {
         const docs = data.docs || [];
         const found = docs.find((c) => c.code.replace(/\s+/g, '').toUpperCase() === paramCode);
         if (found) {
           setCourse(found);
           setQuestionCount(found.questionCount || 0);
         }
-        fetch(`/api/videos?course=${encodeURIComponent(formattedCode)}`)
-          .then((r) => r.json())
-          .then(setVideos)
-          .catch(() => {});
-        fetch(`/api/readings?course=${encodeURIComponent(formattedCode)}`)
-          .then((r) => r.json())
-          .then(setReadings)
-          .catch(() => {});
+        setVideos(Array.isArray(vids) ? vids : []);
+        setReadings(Array.isArray(reads) ? reads : []);
+        if (Array.isArray(currDocs) && currDocs.length) setCurriculum(currDocs[0]);
+        if (Array.isArray(currTops)) setCurrTopics(currTops);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -180,6 +185,10 @@ export default function CourseDetailPage() {
             <TabsTrigger value="videos" className="flex-1">
               <PlayCircle className="mr-1 size-3" />
               Videos
+            </TabsTrigger>
+            <TabsTrigger value="curriculum" className="flex-1">
+              <ClipboardList className="mr-1 size-3" />
+              Curriculum
             </TabsTrigger>
           </TabsList>
 
@@ -319,6 +328,51 @@ export default function CourseDetailPage() {
                 </div>
               )}
             </ScrollArea>
+          </TabsContent>
+          <TabsContent value="curriculum" className="mt-4">
+            {!curriculum ? (
+              <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
+                <ClipboardList className="size-12 opacity-40" />
+                <p className="text-sm">No CCMAS record for {code} yet.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <Card>
+                  <CardContent className="flex flex-wrap gap-2 p-4 text-xs">
+                    <Badge>{curriculum.units} units</Badge>
+                    <Badge variant="outline">{curriculum.status === 'C' ? 'Compulsory' : curriculum.status === 'R' ? 'Required' : 'Elective'}</Badge>
+                    <Badge variant="outline">LH {curriculum.LH}</Badge>
+                    {curriculum.PH > 0 && <Badge variant="outline">PH {curriculum.PH}</Badge>}
+                    {curriculum.semester ? <Badge variant="outline">Semester {curriculum.semester}</Badge> : <Badge variant="outline">Semester TBA</Badge>}
+                  </CardContent>
+                </Card>
+                {!!(curriculum.outcomes || []).length && (
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="mb-2 text-sm font-bold">By the end, you should be able to…</h3>
+                      <ol className="list-decimal space-y-1.5 pl-5 text-sm text-muted-foreground">
+                        {(curriculum.outcomes || []).map((o, i) => <li key={i}>{o}</li>)}
+                      </ol>
+                    </CardContent>
+                  </Card>
+                )}
+                {!!currTopics.length && (
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="mb-2 text-sm font-bold">Topics ({currTopics.length})</h3>
+                      <ol className="space-y-1.5">
+                        {currTopics.map((t, i) => (
+                          <li key={t.id || i} className="flex items-start gap-2 text-sm">
+                            <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">{i + 1}</span>
+                            <span className="text-muted-foreground">{t.title}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </div>

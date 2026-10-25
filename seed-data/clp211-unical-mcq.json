@@ -1,0 +1,1537 @@
+{
+  "sections": [
+    {
+      "section_title": "Medical Student",
+      "year": "all",
+      "questions": [
+        {
+          "id": "CLP-U094",
+          "year": "2025",
+          "question": "Hypernatremia associated with following conditions except:",
+          "options": [
+            "Conn's syndrome",
+            "Cushing syndrome",
+            "None of the above",
+            "Sodium bicarbonate infusion"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "All three listed conditions genuinely tend to raise plasma sodium: Conn's syndrome (aldosterone-driven sodium retention), Cushing's syndrome (cortisol with mineralocorticoid activity) and sodium-bicarbonate infusion (an exogenous sodium load). Because none of them is an exception, the keyed answer is 'None of the above'."
+        },
+        {
+          "id": "CLP-U070",
+          "year": "2025",
+          "question": "Bilirubin from non-haemoglobin sources is:",
+          "options": [
+            "Delta bilirubin",
+            "Indirect bilirubin",
+            "Shunt bilirubin",
+            "Gamma bilirubin"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Shunt (early-labelled) bilirubin arises from non-haemoglobin sources - premature destruction of immature RBC precursors in the bone marrow and rapid turnover of haem-containing proteins such as catalase, myoglobin and cytochromes. It accounts for roughly 10-20% of total bilirubin production. Delta bilirubin is conjugated bilirubin covalently bound to albumin; 'gamma bilirubin' is not a recognised physiological fraction."
+        },
+        {
+          "id": "CLP-U042",
+          "year": "2025",
+          "question": "Patient results: Na=118 mmol/L, K=5.9 mmol/L, early morning cortisol=89 umol/L, buccal mucosa pigmentation present. What is the most likely diagnosis?",
+          "options": [
+            "Addison's disease",
+            "Adrenal crisis",
+            "Conn's syndrome",
+            "Cushing's syndrome"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "This is the classic biochemical picture of primary adrenal insufficiency (Addison's disease): hyponatraemia, hyperkalaemia and a low early-morning cortisol, with buccal mucosal hyperpigmentation caused by the compensatory excess of ACTH (with MSH). Cushing's syndrome (hypercortisolism) and Conn's syndrome (aldosterone excess) do not fit a low cortisol with hyperpigmentation."
+        },
+        {
+          "id": "CLP-U036",
+          "year": "2025",
+          "question": "Causes of raised cortisol levels include:",
+          "options": [
+            "Severe alcohol intake",
+            "Obesity",
+            "Endogenous depression",
+            "Addison's diseases"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Endogenous (major) depression is classically associated with overactivation of the hypothalamic-pituitary-adrenal axis and raised cortisol (the basis of the dexamethasone-suppression test in psychiatry). Addison's disease causes low cortisol. Alcohol abuse and obesity are also linked to elevated cortisol (pseudo-Cushing's), so the keyed answer is endogenous depression."
+        },
+        {
+          "id": "CLP-U086",
+          "year": "2025",
+          "question": "Low BNP levels with CCF include all except:",
+          "options": [
+            "Stable NYHA class 1 patient with high EF",
+            "Obesity",
+            "CCF secondary to upstream causes",
+            "Flash pulmonary oedema"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "BNP is elevated in proportion to ventricular wall stress. It is relatively low in stable, compensated heart failure (NYHA class I with preserved/high ejection fraction), in obesity, and in CCF secondary to 'upstream' causes, whereas flash pulmonary oedema gives markedly elevated BNP. The keyed answer is the stable NYHA class I patient; note the 'except' reading of this question is ambiguous and should be checked against the course material."
+        },
+        {
+          "id": "CLP-U082",
+          "year": "2025",
+          "question": "Metabolic changes in pregnancy:",
+          "options": [
+            "Glycosuria is not clinically significant",
+            "Low density cholesterol",
+            "Plasma aldosterone concentration increase 10-15 fold",
+            "Cholesterol and triglyceride levels increase"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "In pregnancy the lowered renal threshold for glucose commonly causes benign (renal) glycosuria, which in itself is not clinically significant unless accompanied by the metabolic features of diabetes. Total cholesterol and triglycerides increase in later pregnancy and plasma aldosterone rises several-fold (oestrogen effect) - the keyed statement is the benign nature of pregnancy glycosuria."
+        },
+        {
+          "id": "CLP-U010",
+          "year": "2025",
+          "question": "Which of these drugs can cause nephrogenic diabetes insipidus?",
+          "options": [
+            "Gentamycin",
+            "Erythromycin",
+            "Lithium",
+            "Ciprofloxacin"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Lithium therapy is the classic drug causing nephrogenic diabetes insipidus: it impairs the ability of the renal collecting-duct cells to respond to ADH, producing polyuria with dilute urine that is poorly responsive to desmopressin. Gentamicin, erythromycin and ciprofloxacin are not typical causes of nephrogenic DI."
+        },
+        {
+          "id": "CLP-U057",
+          "year": "2025",
+          "question": "Which of the following is likely to cause hyponatraemia?",
+          "options": [
+            "Failure to drink",
+            "Diuretic therapy",
+            "Diabetes insipidus",
+            "Cushing's syndrome"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Thiazide diuretics are a classic cause of hyponatraemia: they increase sodium and water loss and impair urinary dilution in the distal tubule. Failure to drink and diabetes insipidus cause hypernatraemia (water deficit), and Cushing's syndrome causes sodium retention with normal or high sodium."
+        },
+        {
+          "id": "CLP-U012",
+          "year": "2025",
+          "question": "Which of these cannot cause Pancreatitis?",
+          "options": [
+            "Severe diarrhoea",
+            "Alcohol",
+            "Hypercalcaemia",
+            "Gall stone"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Acute pancreatitis is classically precipitated by gallstones, alcohol excess and hypercalcaemia (and hypertriglyceridaemia). Severe (watery) diarrhoea is not a recognised cause of pancreatitis - hence it is the exception."
+        },
+        {
+          "id": "CLP-U099",
+          "year": "2025",
+          "question": "Concerning lipids:",
+          "options": [
+            "Phospholipids contain two fatty acid residues 14-24 C long and are amphipathic",
+            "Cholesterol converted in adrenals and testes",
+            "Poly-unsaturated fatty acid double bonds",
+            "Triglycerides derived from animals"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Concerning lipids, the correct statement is that phospholipids contain two fatty-acid residues (14-24 carbons long) esterified to a glycerol backbone plus a phosphate-containing head group, making them amphipathic. Cholesterol is converted into steroid hormones in the adrenal cortex and gonads, polyunsaturated fatty acids have methylene-separated double bonds, and triglycerides are not derived only from animals."
+        },
+        {
+          "id": "CLP-U023",
+          "year": "2025",
+          "question": "Which of these is found in stomach?",
+          "options": [
+            "Ghrelin",
+            "Gastrin",
+            "Preline",
+            "Statin"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Ghrelin is the orexigenic ('hunger-stimulating') hormone synthesised chiefly by the stomach mucosa (and also the pancreas), hence it is the agent found in the stomach among these options. Gastrin is also produced by gastric G-cells, but the keyed answer here is ghrelin; 'preline' and 'statin' are not gastric hormones."
+        },
+        {
+          "id": "CLP-U083",
+          "year": "2025",
+          "question": "Biochemical markers of cardiac disease:",
+          "options": [
+            "50-70% total CK as CK-MB",
+            "Myoglobin short half-life",
+            "Highly sensitive methods detect troponins",
+            "Elevated troponin levels suggestive of IHD"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "High-sensitivity (hs-cTn) assays detect very low concentrations of circulating troponin, allowing earlier detection and rapid rule-out of myocardial necrosis - the keyed statement. CK-MB normally forms only up to about 5-6% of total CK (not 50-70%), myoglobin has a short half-life but is non-specific, and troponin can also rise in non-ischaemic myocardial injury, so 'suggestive of IHD' is less precise."
+        },
+        {
+          "id": "CLP-U045",
+          "year": "2025",
+          "question": "Microvascular complications of diabetes mellitus include:",
+          "options": [
+            "Coronary artery disease",
+            "Stroke",
+            "Lactic acidosis",
+            "Retinopathy"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Microvascular complications of diabetes mellitus are retinopathy, nephropathy and neuropathy. Coronary artery disease and stroke are macrovascular complications, and lactic acidosis is an acute metabolic complication (e.g., metformin accumulation in renal failure) - not a microvascular complication."
+        },
+        {
+          "id": "CLP-U025",
+          "year": "2025",
+          "question": "Which of these complement proteins are involved in Classical pathway?",
+          "options": [
+            "2a, 3a and 5a",
+            "3a, 5a and 5b form membrane attack complex",
+            "C5, 6, 7, 8, 9",
+            "Complements C1, C2, C3, C4"
+          ],
+          "correct_answer": [
+            0,
+            3
+          ],
+          "xmulti": true,
+          "explanation": "In the classical (antibody-dependent) complement pathway, activation proceeds through C1 (C1q,r,s), C4 and C2 - consuming C1, C2, C3 and C4 (option D) - to form the C3 convertase C4b2a and C5 convertase C4b2a3b; the fragments C2a, C3a and C5a are generated en route (option A). The membrane attack complex is separately assembled from C5b, C6-C9. Hence both keyed options (A and D) are correct."
+        },
+        {
+          "id": "CLP-U048",
+          "year": "2025",
+          "question": "One of the following is not a marker of ovarian reserve:",
+          "options": [
+            "Antimullerian hormone",
+            "Basal serum oestradiol",
+            "Basal serum follicle stimulating hormone",
+            "Thyroid stimulating hormone"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Markers of ovarian reserve are anti-Müllerian hormone (AMH), basal (day 2-3) serum oestradiol and basal follicle-stimulating hormone (FSH). Thyroid-stimulating hormone (TSH) assesses thyroid function and is not a marker of ovarian reserve - hence the exception."
+        },
+        {
+          "id": "CLP-U087",
+          "year": "2025",
+          "question": "Gastrin has a stimulatory effect on:",
+          "options": [
+            "Gastric acid secretion by G-cells",
+            "Gastric motility and bowel mucosa growth",
+            "Gastric pepsinogen",
+            "Pancreatic bicarbonate"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Gastrin's principal action is to stimulate gastric acid secretion through enterochromaffin-like cells and parietal cells (via cholecystokinin-2 receptors). It is the G-cells that PRODUCE gastrin; they are not the target of its stimulatory effect. The keyed statement therefore concerns gastrin's stimulation of acid secretion."
+        },
+        {
+          "id": "CLP-U035",
+          "year": "2025",
+          "question": "In adults, the auto antibodies used for assessing patients with type 1DM all except include:",
+          "options": [
+            "Glutamic acid decarboxylase 65",
+            "Zinc transporter 8 autoantibody",
+            "Islet cell cytoplasmic autoantibodies",
+            "Insulinoma associated auto antibody"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "The recognised autoantibodies used to assess type 1 diabetes in adults are glutamic acid decarboxylase-65 (GAD-65), zinc transporter-8 (ZnT8), islet-cell cytoplasmic (ICA) and insulinoma-associated (IA-2) antibodies. The keyed answer treats IA-2 as the exception here, although IA-2 is in fact a well-recognised type 1 marker - this key should be reviewed."
+        },
+        {
+          "id": "CLP-U017",
+          "year": "2025",
+          "question": "Which of these functions of the kidney is homeostatic?",
+          "options": [
+            "Metabolism",
+            "Acid-base balance",
+            "Excretion",
+            "Endocrine"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "The kidney is the major homeostatic regulator of acid-base balance, excreting hydrogen ions and regenerating bicarbonate, in addition to its excretory, endocrine and metabolic functions. Among the options, acid-base balance is the classic homeostatic function signalled here."
+        },
+        {
+          "id": "CLP-U004",
+          "year": "2025",
+          "question": "Which of these is a pre-analytical factor that can cause factitiously elevated protein?",
+          "options": [
+            "The use of EDTA bottle",
+            "Patient's posture in phlebotomy",
+            "Tourniquet time",
+            "Size of blood collection needle"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Total protein can be factitiously elevated by haemoconcentration (prolonged tourniquet, standing posture) and by haemolysis from an inappropriately small/aggressive needle (release of intracellular protein and haemoglobin with colour interference). Among the options the needle size is keyed as the factor that can spuriously raise protein; the EDTA bottle and posture dilute/alter rather than elevate protein."
+        },
+        {
+          "id": "CLP-U021",
+          "year": "2025",
+          "question": "Which of these disease conditions is associated with hypocalcaemia?",
+          "options": [
+            "Paget's disease of the bone",
+            "Osteitis fibrosa cystica",
+            "Osteomalacia",
+            "Osteoporosis"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Osteomalacia (and rickets) due to vitamin D deficiency impairs intestinal calcium absorption, producing a low or low-normal calcium with low phosphate and raised alkaline phosphatase. Paget's disease and osteoporosis are not hypocalcaemic states, and osteitis fibrosa cystica (hyperparathyroidism) typically RAISES calcium."
+        },
+        {
+          "id": "CLP-U098",
+          "year": "2025",
+          "question": "Low density lipoprotein:",
+          "options": [
+            "May be low in severe haemolysis due to dilutional effect",
+            "Levels same in males and females",
+            "Grossly affected by fasting",
+            "All of the above"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "LDL-cholesterol shows genuine sex- and age-related differences: it is lower in premenopausal women than in men and rises after the menopause, so the keyed statement that levels are 'same in males and females' is scientifically incorrect. LDL is also not grossly affected by fasting and is not lowered by haemolysis. This key should be reviewed."
+        },
+        {
+          "id": "CLP-U068",
+          "year": "2025",
+          "question": "Which of the following can be demonstrated in faecal sample?",
+          "options": [
+            "Uroporphyrin",
+            "Protoporphyrin",
+            "Corproporphyrinogen oxidase",
+            "Congenital erythropoietic porphyria"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Porphyrins are excreted in stool or urine depending on their water solubility. Protoporphyrin (poorly water-soluble, 2 carboxyl groups) is demonstrated mainly in faeces, while uroporphyrin (8 carboxyls, very water-soluble) is mainly urinary; coproporphyrin appears in both. Enzyme names (coproporphyrinogen oxidase) and disease names (congenital erythropoietic porphyria) are not analytes demonstrated in stool."
+        },
+        {
+          "id": "CLP-U066",
+          "year": "2025",
+          "question": "Coproporphyrin and protoporphyrin can be used to differentiate between:",
+          "options": [
+            "Variegate porphyria and hereditary coproporphyria",
+            "Porphyria variegata and congenital erythropoietic porphyria",
+            "Porphobilinogen and amino levulonic acid",
+            "Porphyria cutanae tarda and Gunther's disease"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Faecal porphyrin profiles help differentiate the two related acute porphyrias: variegate porphyria typically shows raised faecal protoporphyrin with coproporphyrin, whereas hereditary coproporphyria shows predominant (proportionately greater) faecal coproporphyrin with little protoporphyrin rise. Both can present with acute neurovisceral attacks."
+        },
+        {
+          "id": "CLP-U074",
+          "year": "2025",
+          "question": "Physiological jaundice:",
+          "options": [
+            "Appears within 24 hours",
+            "Appears within 28 days",
+            "Appears within 48 hours",
+            "Appears after 48 days"
+          ],
+          "correct_answer": [
+            2,
+            3
+          ],
+          "xmulti": true,
+          "explanation": "Physiological (neonatal) jaundice appears after 24 hours, typically on days 2-4 (i.e., usually after 48 hours), and resolves within about 2 weeks, reflecting immature hepatic UDP-glucuronosyltransferase and increased bilirubin load from red-cell breakdown. Jaundice appearing within the first 24 hours or persisting beyond 2-4 weeks is pathological. The keyed options (appearing within 48 hours / after 48 days) overlap oddly - this key should be checked."
+        },
+        {
+          "id": "CLP-U061",
+          "year": "2025",
+          "question": "Sample collected in the following container will not cause pseudohypernatraemia:",
+          "options": [
+            "Sodium heparin bottle",
+            "Sodium citrate bottle",
+            "Lithium heparin bottle",
+            "Heparinized sodium bottle"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "A lithium heparin bottle contains no sodium, so it does not contaminate the sample or spuriously alter the measured sodium - it therefore does not cause pseudohypernatraemia. Sodium-based anticoagulant bottles (sodium heparin, sodium citrate, 'heparinised sodium') add sodium and can falsely raise the measured sodium."
+        },
+        {
+          "id": "CLP-U049",
+          "year": "2025",
+          "question": "Concerning fertility, which statement below is wrong?",
+          "options": [
+            "Sperm count expected to enhance fertility in men is >=20million",
+            "Oncofertility enables cancer patients to still have their own children after cancer survival following treatment",
+            "A hormonal test of LH/FSH ratio greater than 3 can cause infertility in women of child bearing age",
+            "Severe hyperthyroidism can lead to hyperprolactinemia"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The wrong statement is the LH/FSH ratio claim: a raised LH/FSH ratio (>2-3) is a biochemical PATTERN seen in polycystic ovary syndrome, not itself the cause of infertility. Sperm concentration of at least 20 million/mL is the accepted normal threshold enhancing fertility, oncofertility preserves the fertility of cancer patients after treatment, and severe hyperthyroidism can indeed be associated with hyperprolactinaemia."
+        },
+        {
+          "id": "CLP-U073",
+          "year": "2025",
+          "question": "Accessioning is:",
+          "options": [
+            "Pre-collection pre-analytical variable",
+            "Post-collection pre-analytical variable",
+            "Post-analytical pre-collection variable",
+            "Collection pre-analytical variable"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Accessioning - receiving and registering the laboratory request, verifying it and assigning an accession/identifier number - is carried out before the specimen is collected, so it is classified as a pre-collection, pre-analytical variable."
+        },
+        {
+          "id": "CLP-U100",
+          "year": "2025",
+          "question": "Obesity:",
+          "options": [
+            "Up to 20% subcutaneous adipose tissue needed",
+            "BMR accounts for 60-65% daily energy expenditure",
+            "About 0.2 kg liver fat required for insulin resistance",
+            "ob gene mutation"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "In nutrition and obesity, basal metabolic rate (BMR) accounts for about 60-65% of total daily energy expenditure - the keyed correct statement. Obesity is associated with increasing fat mass, insulin resistance (including liver/ectopic fat) and relevant genetic factors such as the ob (leptin) gene."
+        },
+        {
+          "id": "CLP-U059",
+          "year": "2025",
+          "question": "De Ritis ratio is:",
+          "options": [
+            "The relationship of AST and ALT in the cytosol",
+            "The relationship of AST and ALP in the cytosol",
+            "The relationship of AST and ALT in the mitochondria",
+            "Relevant in the discrimination of chronic liver cirrhosis from chronic hepatitis"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "The De Ritis ratio is the AST:ALT ratio. It is clinically useful in discriminating chronic liver disease: an AST/ALT ratio >1 is characteristically seen in alcoholic liver disease and cirrhosis, whereas a ratio <1 (ALT > AST) is typical of acute viral hepatitis. The keyed statement concerns this discrimination between chronic cirrhosis and chronic hepatitis."
+        },
+        {
+          "id": "CLP-U102",
+          "year": "2024",
+          "question": "Concerning Diabetes Mellitus, one of these methods is used to measure glucose routinely in UCTH:",
+          "options": [
+            "Glucose oxidase method",
+            "Glucose dehydrogenase method",
+            "Glucose pyruvate method",
+            "Glucose Hexokinase method"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "The routine method used to measure plasma glucose at this centre (UCTH) is the glucose oxidase method - cheap, specific and automated on most analysers. The hexokinase method is the reference (gold-standard) method, and glucose dehydrogenase is used in some POCT/WHO contexts; 'glucose pyruvate' is not a standard method."
+        },
+        {
+          "id": "CLP-U053",
+          "year": "2025",
+          "question": "An effective physiologic buffer is:",
+          "options": [
+            "Buffer with pKa closer to the pH of plasma",
+            "Buffer with high pKa",
+            "Buffer with low pKa",
+            "All of the above"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "A buffer is most effective when its pKa is close to the pH of the fluid it must buffer, because buffering capacity is maximal within about ±1 pH unit of the pKa. The bicarbonate system, whose effective pKa is near 7.4 in the open physiological system, is therefore the major extracellular physiological buffer."
+        },
+        {
+          "id": "CLP-U011",
+          "year": "2025",
+          "question": "Which of these parameters cannot be applied in decision making for a patient with diabetes mellitus?",
+          "options": [
+            "Critical value",
+            "Diagnostic principle",
+            "Reference interval",
+            "Diagnostic criteria"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "In the decision-making for a diabetic patient, critical values (action limits), reference intervals and diagnostic criteria are all applied as parameters. 'Diagnostic principle' is not a formal parameter used in laboratory-based clinical decision-making - hence the exception."
+        },
+        {
+          "id": "CLP-U069",
+          "year": "2025",
+          "question": "Conjugated hyperbilirubinaemia is present in one of the following conditions:",
+          "options": [
+            "Lucey Driscoll disease",
+            "Gilbert's syndrome",
+            "Criggler Najjar syndrome type 2",
+            "Dubin Johnson syndrome"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Dubin-Johnson syndrome is an inherited defect of hepatic excretion of conjugated bilirubin, producing conjugated (direct) hyperbilirubinaemia (with dark melanin-like pigment in hepatocytes). Lucey-Driscoll disease, Gilbert's syndrome and Crigler-Najjar syndrome all cause unconjugated hyperbilirubinaemia."
+        },
+        {
+          "id": "CLP-U034",
+          "year": "2025",
+          "question": "The causes of hyperprolactinemia include all except:",
+          "options": [
+            "Polycystic ovarian syndrome",
+            "Dopamine agonist",
+            "Hypothyroidism",
+            "Chronic kidney disease"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Hyperprolactinaemia is caused by oestrogen-dominant states such as PCOS, by hypothyroidism (TRH stimulates prolactin release) and by chronic kidney disease (reduced prolactin clearance). Dopamine agonists (bromocriptine, cabergoline) LOWER prolactin - they are the treatment for hyperprolactinaemia and do not cause it."
+        },
+        {
+          "id": "CLP-U043",
+          "year": "2025",
+          "question": "Which of the following is not a point of care testing device?",
+          "options": [
+            "i-stat",
+            "Alere epoch",
+            "Weighing scale",
+            "Ovulation test kit"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Point-of-care testing devices include handheld analysers such as the i-STAT, the Alere epoc, and simple near-patient kits such as ovulation test kits. A weighing scale is a general measurement instrument, not a point-of-care diagnostic testing device - hence the exception."
+        },
+        {
+          "id": "CLP-U041",
+          "year": "2025",
+          "question": "The aetiology of Cushing's syndrome is associated with all except:",
+          "options": [
+            "Cushing's diseases",
+            "Idiopathic cause",
+            "Iatrogenic Steroid use",
+            "Ectopic ACTH production"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Cushing's syndrome is due to ACTH-dependent causes (Cushing's disease - pituitary adenoma; ectopic ACTH production) or ACTH-independent causes (adrenal adenoma/hyperplasia; iatrogenic steroid administration). 'Idiopathic cause' is not a recognised aetiology - hence the exception."
+        },
+        {
+          "id": "CLP-U058",
+          "year": "2025",
+          "question": "One of these represents post-collection analytical variables:",
+          "options": [
+            "Blood samples for bilirubin assay require transport in an ice slurry to avoid haemolysis",
+            "Centrifuge performance should be checked periodically",
+            "Specimen should be stored at 2-8°C if analysis is delayed",
+            "Choosing the appropriate sample bottle is critical"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The keyed answer is specimen storage at 2-8 C for delayed analysis, treated here as a post-collection consideration affecting analyte stability. The other options concern transport (ice slurry to avoid bilirubin photodegradation), equipment performance (centrifuge check) and collection (bottle choice). Note the framing of storage as a 'post-collection analytical variable' is loose - conventionally storage is a pre-analytical/handling variable, so this key should be checked."
+        },
+        {
+          "id": "CLP-U016",
+          "year": "2025",
+          "question": "All of these except one is involved in innate immunity:",
+          "options": [
+            "Natural killer cell",
+            "Dendritic cell",
+            "Cytotoxic T cell",
+            "Neutrophil"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Innate (non-specific) immunity is mediated by natural killer cells, dendritic cells, neutrophils, macrophages and complement. The cytotoxic T cell is a component of the ADAPTIVE (specific, antigen-dependent) immune system - hence it is the exception."
+        },
+        {
+          "id": "CLP-U067",
+          "year": "2025",
+          "question": "Concerning heme biosynthesis:",
+          "options": [
+            "Porphobilinogen is synthesized in the mitochondria",
+            "Condensation of SCoA and glycine is necessary",
+            "Heme synthesis is regulated by positive feedback inhibition",
+            "Protoporphyrinogen is the oxidized form of protoporphyrin"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "In haem biosynthesis, the first step is the condensation of succinyl-CoA and glycine in the mitochondria (catalysed by ALA synthase) to form delta-aminolevulinic acid - the keyed correct statement. Porphobilinogen is formed in the cytosol by ALA dehydratase; haem synthesis is regulated by NEGATIVE (not positive) feedback (haem inhibits ALA synthase); and protoporphyrin is the oxidised form of protoporphyrinogen, not the reverse."
+        },
+        {
+          "id": "CLP-U039",
+          "year": "2025",
+          "question": "Concerning diabetes mellitus, which option below is false?",
+          "options": [
+            "HLA DR2 is protective against diabetes mellitus",
+            "HLA DR3/DR4 are associated with type 1DM",
+            "Hereditary spherocytosis patients with well controlled glucose can have glycated hemoglobin assay done",
+            "Type 1DM is less common than Type 2 DM"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The false statement is about hereditary spherocytosis: spherocytes have a shortened red-cell lifespan, which disturbs the steady-state relationship between glucose and glycated haemoglobin, so the HbA1c assay is unreliable/not appropriate for assessing glucose control in these patients. The other statements are true: HLA DR2 is protective, HLA DR3/DR4 associate with type 1 DM, and type 1 is less common than type 2."
+        },
+        {
+          "id": "CLP-U103",
+          "year": "2024",
+          "question": "Concerning complications of Diabetes Mellitus:",
+          "options": [
+            "Hypoglycemia is a concern following treatment",
+            "Glucose is decreased in hyperosmolar hyperglycemic state",
+            "Plasma glucose in DKA is greater than in hyperglycemic hypoglycemic state",
+            "Prolactin levels are moderately high"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Hypoglycaemia is a genuine concern following treatment of diabetes, especially with insulin and insulin secretagogues (sulphonylureas) - the keyed correct statement. In hyperosmolar hyperglycaemic state the glucose is markedly elevated (not decreased), plasma glucose in HHS is typically even higher than in DKA, and prolactin is not a recognised complication axis."
+        },
+        {
+          "id": "CLP-U008",
+          "year": "2025",
+          "question": "Which of the following is not a component of pharmacokinetics?",
+          "options": [
+            "Half life of the drug",
+            "Sublingual route of administration",
+            "First pass effect",
+            "Drug elimination"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Pharmacokinetics concerns what the body does to a drug - absorption, distribution, metabolism and excretion. Sublingual administration (an absorption route), the first-pass effect (hepatic metabolism) and drug elimination are pharmacokinetic processes. The keyed exception is half-life, although half-life is itself conventionally regarded as a pharmacokinetic parameter - this key should be reviewed."
+        },
+        {
+          "id": "CLP-U078",
+          "year": "2025",
+          "question": "Concerning transcellular fluid:",
+          "options": [
+            "Interstitial fluid compartments exchange freely",
+            "CSF glucose timing after LP",
+            "In newborns CSF protein is 3 times adult level",
+            "Ascitic fluid is an example of transcellular fluid"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "In newborns the normal CSF protein is about 3 times the adult level (often up to ~1.0-1.5 g/L), reflecting immaturity of the blood-CSF barrier - the keyed correct statement. Interstitial fluid is not classified as transcellular fluid, and ascitic fluid IS an example of transcellular (third-space) fluid, so this question's key should be checked."
+        },
+        {
+          "id": "CLP-U080",
+          "year": "2025",
+          "question": "Ascitic fluid examination:",
+          "options": [
+            "SAAG sensitivity",
+            "Primary bacterial peritonitis ALP",
+            "Ascetic fluid/serum LDH ratio >0.6",
+            "Lactate levels in hepatic/malignant ascites"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Ascitic fluid examination: an ascitic-fluid-to-serum LDH ratio above 0.6 supports an exudate (e.g., malignant ascites or peritonitis), in line with the Light's-criteria principle. A high SAAG (serum-ascites albumin gradient >=11 g/L, i.e., 1.1) indicates portal-hypertensive transudate, and lactate is raised in both hepatic and malignant ascites."
+        },
+        {
+          "id": "CLP-U022",
+          "year": "2025",
+          "question": "Which of these does not affect laboratory results?",
+          "options": [
+            "Male gender",
+            "Routine night duty",
+            "Patient's height",
+            "Patient's age"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Laboratory results are influenced by gender, age, biological rhythms and pre-analytical factors. A patient's HEIGHT does not materially affect laboratory results among these options - hence the exception."
+        },
+        {
+          "id": "CLP-U032",
+          "year": "2025",
+          "question": "Which of the following investigations cannot be used to differentiate between type 1DM and Type 2 DM?",
+          "options": [
+            "C-peptide",
+            "Fasting insulin assay",
+            "Insulin autoantibodies",
+            "Oral glucose tolerance test"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Type 1 and type 2 diabetes are differentiated by C-peptide (low/absent in type 1 with absolute insulin deficiency), fasting insulin (low in type 1) and insulin autoantibodies (present in autoimmune type 1). The oral glucose tolerance test assesses glucose handling only and does not distinguish the type of diabetes."
+        },
+        {
+          "id": "CLP-U046",
+          "year": "2025",
+          "question": "The following facts about diabetes mellitus holds true:",
+          "options": [
+            "Insulinopenia is a constant feature of type 2 DM",
+            "Cellular mediated immunity by CD8 T-cells and macrophages underlies the pathophysiology of Type 1 DM",
+            "Type 2DM is accelerated by environmental factors more than genetic factors",
+            "Latent autoimmune diabetes in adults (LADA) is a form of type 2 DM"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "The correct ('holds true') statement is that cell-mediated immunity involving CD8+ cytotoxic T-cells and macrophages underlies the autoimmune destruction of beta cells in type 1 diabetes. Insulinopenia is not a constant feature of type 2 (insulin is often normal/high early), type 2 is not driven more by environmental than genetic factors, and LADA is a slowly progressive form of type 1, not type 2."
+        },
+        {
+          "id": "CLP-U101",
+          "year": "2024",
+          "question": "Low density lipoprotein (LDL):",
+          "options": [
+            "It is more cholesterol rich than other apo B-containing lipoproteins",
+            "Metabolism through receptor-dependent pathway results in formation of foam cells",
+            "They can scatter light and are responsible for turbidity of post prandial plasma",
+            "Small dense LDL are relatively triglyceride poor"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "LDL is the most cholesterol-rich of the apoB-containing lipoproteins, carrying the majority of the plasma cholesterol - the keyed correct statement. Foam-cell formation follows uptake of OXIDISED/modified LDL by scavenger receptors (not the classic receptor-dependent pathway per se), chylomicrons cause the turbidity of postprandial plasma, and small-dense LDL are relatively triglyceride-rich."
+        },
+        {
+          "id": "CLP-U013",
+          "year": "2025",
+          "question": "Which of these is not needed in the calculation of Creatinine clearance?",
+          "options": [
+            "Time of the day",
+            "Urine volume",
+            "Patient age",
+            "Plasma Creatinine"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Creatinine clearance (measured clearance = UV/P, or estimated by Cockcroft-Gault) requires urine volume, plasma creatinine and patient factors (age, weight, sex). The time of day is not a component needed in the calculation - hence the exception."
+        },
+        {
+          "id": "CLP-U092",
+          "year": "2025",
+          "question": "Presence of substances in high concentration resulting in high osmolal gap except:",
+          "options": [
+            "Glucose",
+            "Ethanol",
+            "Lactate",
+            "Mannitol"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "A high osmolal gap indicates the presence of UNMEASURED osmotically active solutes such as ethanol, methanol, ethylene glycol, lactate or mannitol. Glucose is a routinely measured solute whose contribution is already included in the calculated osmolarity, so hyperglycaemia does not cause a high osmolal gap - the keyed exception."
+        },
+        {
+          "id": "CLP-U001",
+          "year": "2025",
+          "question": "Which of the following is a cause of hospital acquired acute kidney injury?",
+          "options": [
+            "Acute post-operative haemorrhage",
+            "Indomethacin",
+            "Diabetes mellitus",
+            "HIV infection"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Hospital-acquired acute kidney injury commonly results from renal hypoperfusion - for example acute postoperative haemorrhage (hypovolaemia) and sepsis or hypotension. Indomethacin (NSAID) causes drug-induced AKI, while diabetes mellitus and HIV are risk factors rather than acute hospital-acquired precipitating causes. Keyed answer: postoperative haemorrhage."
+        },
+        {
+          "id": "CLP-U009",
+          "year": "2025",
+          "question": "Which of these supports absorption of calcium in GIT?",
+          "options": [
+            "Cortisol",
+            "Gluten intake",
+            "Calcitriol",
+            "Calcitonin"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Calcitriol (1,25-dihydroxyvitamin D) is the hormone that promotes intestinal absorption of calcium (and phosphate) - the principal GIT regulator of calcium absorption. Calcitonin lowers calcium, cortisol does not promote (indeed impairs) calcium absorption, and gluten is irrelevant to calcium absorption."
+        },
+        {
+          "id": "CLP-U030",
+          "year": "2025",
+          "question": "Regarding insulin:",
+          "options": [
+            "Increased levels are seen in insulinoma",
+            "Increased C-peptide are seen in insulinoma",
+            "C-peptide levels are low in exogenous insulin administration",
+            "Elevated C-peptide levels are seen in hypoglycemia"
+          ],
+          "correct_answer": [
+            0,
+            2
+          ],
+          "xmulti": true,
+          "explanation": "Regarding insulin: in insulinoma the endogenous secretion of insulin (with its connecting peptide) is increased (option 0 true). With EXOGENOUS insulin administration, endogenous secretion is suppressed, so insulin levels are high while C-peptide is LOW (option 2 true). Caveat: C-peptide is also raised in insulinoma (option 1), so although it is true it is not keyed here."
+        },
+        {
+          "id": "CLP-U071",
+          "year": "2025",
+          "question": "The most water soluble porphyrin is:",
+          "options": [
+            "Uroporphyrin",
+            "Corproporphyrin",
+            "Protoporhyrin",
+            "Erythroporphyrin"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Uroporphyrin has the most carboxylic-acid side-chains (8 carboxyl groups), making it the most water-soluble porphyrin; it is excreted predominantly in urine. Coproporphyrin (4 carboxyls) and protoporphyrin (2 carboxyls, water-insoluble) are progressively less water-soluble and appear in bile/faecal material."
+        },
+        {
+          "id": "CLP-U064",
+          "year": "2025",
+          "question": "All acute porphyrias are not autosomal recessive except:",
+          "options": [
+            "Acute intermittent porphyria",
+            "Hereditary coproporphyria",
+            "Amino levulonic acid dehydratase deficiency porphyria",
+            "Porphyria variegata"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The acute porphyrias - acute intermittent porphyria, hereditary coproporphyria and variegate porphyria - are autosomal DOMINANT. The exception that is autosomal RECESSIVE is ALA-dehydratase deficiency porphyria (plumboporphyria), hence the keyed answer."
+        },
+        {
+          "id": "CLP-U093",
+          "year": "2025",
+          "question": "Hyponatremia:",
+          "options": [
+            "Associated with low osmolality",
+            "Caused by diarrhea with hypokalemic acidosis",
+            "Pseudohyponatremia with hypoglycemia",
+            "SIADH mechanism"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Diarrhoea causes hyponatraemia together with hypokalaemia and metabolic acidosis because intestinal secretions rich in sodium, potassium and bicarbonate are lost (the keyed association). SIADH is a common cause of euvolemic (dilutional) hyponatraemia and true hyponatraemia is usually hypo-osmolar, whereas pseudohyponatraemia is due to hyperlipidaemia/hyperproteinaemia - not hypoglycaemia."
+        },
+        {
+          "id": "CLP-U104",
+          "year": "2024",
+          "question": "Concerning drug management of diabetes mellitus:",
+          "options": [
+            "High C-peptide levels are seen in exogenous insulin administration",
+            "Lente insulin administration leads to hyperinsulinemic hyperglycemia",
+            "Growth hormone excess are usually seen in some forms of diabetes",
+            "MEN syndrome type 2 is a distinct complication"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Growth-hormone excess (acromegaly) is an endocrine cause of diabetes mellitus through GH's counter-regulatory, insulin-antagonising action - the keyed correct statement. Exogenous insulin administration actually SUPPRESSES endogenous secretion (so C-peptide is low, not high), 'hyperinsulinaemic hyperglycaemia' is not a recognised Lente-insulin effect, and MEN-type syndromes are distinct genetic conditions, not complications of diabetes."
+        },
+        {
+          "id": "CLP-U072",
+          "year": "2025",
+          "question": "Acute porphyrias have neurovisceral symptoms and are commoner in:",
+          "options": [
+            "Adults",
+            "Boys",
+            "Women",
+            "Men"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The acute porphyrias - especially acute intermittent porphyria - are commoner in women, particularly in the reproductive years, reflecting hormonal (oestrogen/progesterone) influences that induce hepatic ALA synthase and precipitate attacks."
+        },
+        {
+          "id": "CLP-U055",
+          "year": "2025",
+          "question": "Conjugated hyperbilirubinaemia is seen in a congenital disorder such as:",
+          "options": [
+            "Lucey Driscoll disease",
+            "Rotor syndrome",
+            "Crigler Najjar syndrome",
+            "Gilbert's disease"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Rotor syndrome (like Dubin-Johnson syndrome) is an inherited defect of hepatic excretion of conjugated bilirubin, producing conjugated (direct) hyperbilirubinaemia. Gilbert's syndrome, Crigler-Najjar syndrome and Lucey-Driscoll syndrome all cause unconjugated (indirect) hyperbilirubinaemia."
+        },
+        {
+          "id": "CLP-U062",
+          "year": "2025",
+          "question": "Lesch Nyhan syndrome is:",
+          "options": [
+            "X-link recessive",
+            "Autosomal dominant",
+            "Autosomal recessive",
+            "X-link dormant"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Lesch-Nyhan syndrome is caused by deficiency of hypoxanthine-guanine phosphoribosyltransferase (HGPRT) in the purine salvage pathway and is inherited as an X-linked recessive trait, affecting boys with hyperuricaemia, gout, choreoathetosis, intellectual disability and self-mutilation."
+        },
+        {
+          "id": "CLP-U085",
+          "year": "2025",
+          "question": "High BNP levels in absence of CCF except:",
+          "options": [
+            "Age",
+            "Sex",
+            "Myocardial infarction",
+            "Lung disease"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "BNP can be elevated in the absence of left-heart failure due to advancing age, female sex and myocardial injury (infarction). Primary lung disease is keyed as the exception, although severe pulmonary hypertension/cor pulmonale can also raise BNP - this key should be reviewed."
+        },
+        {
+          "id": "CLP-U095",
+          "year": "2025",
+          "question": "Hyperkalemia is likely to result from following conditions except:",
+          "options": [
+            "Patients taking non-steroidal anti-inflammatory drugs (NSAID)",
+            "Burns",
+            "Hyperglycemia",
+            "Addison's disease"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Potassium tends to rise with NSAIDs (functional hypoaldosteronism, especially in CKD), hyperglycaemia (osmotic shift of K out of cells, prominent in DKA) and Addison's disease (aldosterone deficiency). Burns also cause hyperkalaemia through cell/tissue lysis, so the keyed exception (burns) is scientifically questionable - this key should be reviewed."
+        },
+        {
+          "id": "CLP-U091",
+          "year": "2025",
+          "question": "Analytical factors improving quality in chemical pathology lab except:",
+          "options": [
+            "Reagent storage at 2-8°C",
+            "Frequent equipment maintenance",
+            "Appropriate QC materials",
+            "Freezer storage at -20°C for unanalyzed samples"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Quality in the analytical phase is improved by proper reagent storage (2-8 C), frequent equipment maintenance and appropriate quality-control materials. Freezer storage at -20 C for indefinitely-delayed unanalysed samples is a sample-handling (pre-analytical/the specimen-stability) matter, not an analytical-phase quality measure - the exception."
+        },
+        {
+          "id": "CLP-U108",
+          "year": "2024",
+          "question": "Laboratory findings seen in diabetic ketoacidosis include:",
+          "options": [
+            "Hypoglycaemia",
+            "Stress",
+            "Trauma",
+            "Ketonuria"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Laboratory findings in diabetic ketoacidosis include marked hyperglycaemia, ketonaemia/ketonuria, metabolic (keto)acidosis and electrolyte/osmolality disturbances - the keyed answer is ketonuria. Hypoglycaemia is not a feature of DKA (glucose is high), and 'stress'/'trauma' are precipitating factors, not laboratory findings."
+        },
+        {
+          "id": "CLP-U079",
+          "year": "2025",
+          "question": "Light's criteria for exudate except:",
+          "options": [
+            "Pleural fluid LDH >200 IU/L",
+            "Pleural fluid LDL > 200 mg/dL",
+            "Pleural fluid plasma protein ratio >0.5",
+            "Pleural fluid:plasma LDH ratio > 0.6"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Light's criteria classify a pleural effusion as an exudate when any of the following is met: pleural-fluid LDH > 200 IU/L (or > two-thirds the upper reference limit of serum LDH), pleural-fluid/serum protein ratio > 0.5, or pleural-fluid/serum LDH ratio > 0.6. 'Pleural fluid LDL > 200 mg/dL' is not part of Light's criteria - the exception."
+        },
+        {
+          "id": "CLP-U097",
+          "year": "2025",
+          "question": "Very low density lipoprotein:",
+          "options": [
+            "Synthesized in liver",
+            "Assayed from plasma by routine methods",
+            "Reflect light and account for turbidity",
+            "Contain apo B-100 as major lipoprotein"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "VLDL is synthesised in the liver and contains one molecule of apoB-100 as its major characteristic apolipoprotein - the keyed statement. VLDL scatters light and contributes to plasma turbidity, but it is not assayed directly from plasma by routine methods (it requires ultracentrifugation or estimation)."
+        },
+        {
+          "id": "CLP-U063",
+          "year": "2025",
+          "question": "In hyperuricaemia:",
+          "options": [
+            "Xanthine oxidase activity is defective",
+            "Xanthine reductase is impaired",
+            "The salvage pathway is not affected",
+            "Uricase activity is low"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "The stored key for this question answers 'xanthine oxidase activity is defective'. Note that defective xanthine oxidase actually LOWERS urate (it is the enzyme that produces uric acid; its failure causes xanthinuria), so this key is difficult to defend - the identical question in the other paper is keyed 'the salvage pathway is not affected'. Hyperuricaemia normally arises from purine overproduction and/or reduced renal excretion. This key should be reviewed."
+        },
+        {
+          "id": "CLP-U047",
+          "year": "2025",
+          "question": "One of the following assesses ovulation in the luteal phase of the menstrual cycle:",
+          "options": [
+            "Day 21 progesterone",
+            "Follicle stimulating hormone",
+            "Antimullerian hormone",
+            "Gonadal assay"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Ovulation is confirmed biochemically by a mid-luteal serum progesterone measurement - day 21 of a regular 28-day cycle (day 28 minus 7). FSH and AMH are markers of ovarian reserve, not ovulation."
+        },
+        {
+          "id": "CLP-U089",
+          "year": "2025",
+          "question": "Characteristics that will NOT enhance Immunogenicity:",
+          "options": [
+            "Molecular Size",
+            "Shape",
+            "Conformation and accessibility",
+            "Complexity"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Immunogenicity is enhanced by large molecular size, structural complexity and foreignness (conformation/accessibility of epitopes). 'Shape' per se is not among the recognised determinants that enhance immunogenicity - hence the exception."
+        },
+        {
+          "id": "CLP-U014",
+          "year": "2025",
+          "question": "What is Cockroff and Gault formula used for?",
+          "options": [
+            "Creatinine clearance",
+            "Creatinine estimation",
+            "Measurement of Glomerular filtration rate",
+            "Estimated glomerular filtration rate"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "The Cockcroft-Gault formula estimates creatinine clearance from serum creatinine, age, sex and body weight, and is used clinically as an estimate of glomerular filtration rate (eGFR), mainly for drug dosing. The keyed answer expresses it as an estimated GFR; strictly it is a creatinine-clearance estimate."
+        },
+        {
+          "id": "CLP-U027",
+          "year": "2025",
+          "question": "Regarding OGTT curves, flat curve can be found in:",
+          "options": [
+            "Gastrectomy",
+            "Malabsorption syndrome",
+            "Late Pregnancy",
+            "Diabetes mellitus"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "A flat (flatlined) glucose curve during an OGTT - minimal glucose rise - is characteristic of malabsorption syndrome, because little glucose reaches the circulation from the gut. Gastrectomy gives a steep early (dumping) curve, and diabetes or late pregnancy give elevated/high curves."
+        },
+        {
+          "id": "CLP-U107",
+          "year": "2024",
+          "question": "One of the following conditions predisposes to hypoglycaemia:",
+          "options": [
+            "Acanthosis nigricans",
+            "Polycystic ovarian syndrome",
+            "Phaeochromocytoma",
+            "Insulinoma"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Insulinoma - an endogenous insulin-secreting tumour - causes (fasting) hypoglycaemia through insulin excess with inappropriately high C-peptide. Acanthosis nigricans and PCOS are insulin-resistance/hyperinsulinaemic states (not hypoglycaemic), and phaeochromocytoma causes hyperglycaemia."
+        },
+        {
+          "id": "CLP-U084",
+          "year": "2025",
+          "question": "Novel markers of acute coronary syndrome include the following except:",
+          "options": [
+            "Apolipoprotein B-100",
+            "Lipoprotein(a)",
+            "Coronary artery calcium",
+            "Fibrinogen"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Novel/emerging biochemical markers related to coronary risk include apolipoprotein B-100, lipoprotein(a) and fibrinogen. Coronary artery calcium is an IMAGING finding (CT calcium score), not a serum biochemical marker - hence the exception."
+        },
+        {
+          "id": "CLP-U052",
+          "year": "2025",
+          "question": "Types of automation do not include:",
+          "options": [
+            "Total laboratory automation",
+            "Modular integrated system",
+            "Mid-end automation",
+            "Stand-alone automation"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The recognised categories of laboratory automation are total (full) laboratory automation, modular integrated systems and stand-alone (discrete) analysers. 'Mid-end automation' is not an established classification of laboratory automation."
+        },
+        {
+          "id": "CLP-U031",
+          "year": "2025",
+          "question": "Endocrine conditions associated with the etiology of diabetes mellitus include all except:",
+          "options": [
+            "Glucagonoma",
+            "Conn's syndrome",
+            "Hypothyroidism",
+            "Phaeochromocytoma"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Endocrine conditions causing secondary diabetes mellitus include glucagonoma (glucagon excess), Conn's syndrome (aldosterone excess with hypokalaemia impairing insulin secretion) and phaeochromocytoma (catecholamine excess). Hypothyroidism is the exception - it is not a recognised endocrine cause of diabetes mellitus."
+        },
+        {
+          "id": "CLP-U050",
+          "year": "2025",
+          "question": "Which of the following statements holds true?",
+          "options": [
+            "Normal fasting plasma glucose is 3.5-5.0mmol/L",
+            "Insulin resistance is a complication of diabetes mellitus",
+            "The most useful tool in the diagnosis of hyper- and hypothyroidism is free T4",
+            "Whipple's triad is diagnostic of hypoglycemia"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Whipple's triad - symptoms of hypoglycaemia plus documented low plasma glucose plus relief on glucose administration - is used in the diagnosis of hypoglycaemia, the keyed correct statement. Note some of the other options are individually defensible (normal fasting glucose is ~3.5-5.0 mmol/L, and TSH is the usual first-line thyroid test), so this key should be checked."
+        },
+        {
+          "id": "CLP-U020",
+          "year": "2025",
+          "question": "Which of these hormones does not have cholesterol branch chain?",
+          "options": [
+            "Testosterone",
+            "Cortisol",
+            "Progesterone",
+            "Thyroxine"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Testosterone, cortisol and progesterone are steroid hormones built on the cyclopentanoperhydrophenanthrene (cholesterol-derived) ring structure. Thyroxine (T4) is derived from the amino acid tyrosine, so it does not have a cholesterol branch-chain/ring structure - hence the exception."
+        },
+        {
+          "id": "CLP-U105",
+          "year": "2024",
+          "question": "A 40-year-old female with anterior neck mass has TSH 100 IU/L, fT4 20 pmol/L, fT3 25 pmol/L. The most accurate diagnosis is:",
+          "options": [
+            "Sick euthyroid syndrome",
+            "Subclinical hypothyroidism",
+            "Thyroid hormone resistance",
+            "Primary hypothyroidism"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "A markedly raised TSH (100 IU/L) together with HIGH free T4 and free T3 indicates thyroid-hormone resistance: the pituitary remains insensitive to feedback and continues secreting TSH despite elevated circulating hormone. Primary hypothyroidism would show LOW free hormones with high TSH; subclinical hypothyroidism has normal free T4/T3; and sick euthyroid syndrome shows low T3 with variable TSH."
+        },
+        {
+          "id": "CLP-U076",
+          "year": "2025",
+          "question": "The most soluble purine metabolite is:",
+          "options": [
+            "Uric acid",
+            "Urate",
+            "Allantoin",
+            "Monosodium urate"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Allantoin - the product of urate oxidation by uricase found in most mammals - is the most soluble purine metabolite. Urate/monosodium urate and uric acid are relatively insoluble, which is the basis of gout. Humans lack uricase, so human purine metabolism ends at urate."
+        },
+        {
+          "id": "CLP-U003",
+          "year": "2025",
+          "question": "Which of these is not applicable to hormones?",
+          "options": [
+            "Hormones are synthesized by ductless glands.",
+            "They act on target organs",
+            "All hormones need second messenger",
+            "Tetraiodothyronine is amino acid derived"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "The false statement is that all hormones need a second messenger. While peptide/amine hormones act via membrane receptors and second messengers, steroid and thyroid hormones act through intracellular nuclear receptors on gene transcription (genomic effects). Hormones are synthesized by ductless glands, act on target organs, and T4 is amino-acid (tyrosine)-derived."
+        },
+        {
+          "id": "CLP-U007",
+          "year": "2025",
+          "question": "Which of these methods is suitable treatment of aspirin toxicity?",
+          "options": [
+            "Use of antidotes",
+            "Alkalinization of urine",
+            "Activated charcoal",
+            "Peritoneal dialysis"
+          ],
+          "correct_answer": [
+            1,
+            2
+          ],
+          "xmulti": true,
+          "explanation": "Salicylate (aspirin) toxicity is treated with urinary alkalinization (IV sodium bicarbonate enhances renal excretion of salicylate) and activated charcoal (gastric decontamination in recent overdose). There is no specific antidote, and peritoneal dialysis is inadequate - severe toxicity requires haemodialysis. Both keyed options (alkalinization and activated charcoal) are correct."
+        },
+        {
+          "id": "CLP-U056",
+          "year": "2025",
+          "question": "Investigations that are helpful in the management of diabetic patients include all except:",
+          "options": [
+            "Fasting lipid profile",
+            "Glycated hemoglobin",
+            "Microalbuminuria",
+            "Heparin assay"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Diabetic patients are monitored with fasting lipid profile (dyslipidaemia), glycated haemoglobin (long-term glycaemic control) and microalbuminuria (early diabetic nephropathy). A heparin assay is used to monitor anticoagulant (unfractionated/LMWH) therapy and has no place in diabetic management - the exception."
+        },
+        {
+          "id": "CLP-U106",
+          "year": "2024",
+          "question": "Cholesterol:",
+          "options": [
+            "Cholesterol esters do not contain polar groups making them hydrophobic",
+            "They are synthesized by all cells of the body",
+            "Insulin inhibits HMG-CoA reductase activity",
+            "It is a very good source of fuel"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Esterification of cholesterol with a fatty acid removes the free polar hydroxyl (-OH) group, so cholesterol esters become hydrophobic and form the non-polar core of lipoproteins (where they are transported). Insulin actually ACTIVATES (does not inhibit) HMG-CoA reductase, and cholesterol is not a fuel source."
+        },
+        {
+          "id": "CLP-U026",
+          "year": "2025",
+          "question": "Concerning Oral glucose tolerance test, impaired glucose tolerance is a feature of all except:",
+          "options": [
+            "Use of combined oral contraceptives",
+            "Acromegaly",
+            "Adrenal hyperfunction",
+            "Thyrotoxicosis"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "The keyed exception is thyrotoxicosis - although hyperthyroidism can affect carbohydrate metabolism, among these options impaired glucose tolerance is classically attributed to combined oral contraceptives (oestrogen-associated insulin resistance), acromegaly (GH excess) and adrenal hyperfunction (cortisol excess). This key could be reviewed, as thyrotoxicosis is also reported to impair glucose tolerance."
+        },
+        {
+          "id": "CLP-U077",
+          "year": "2025",
+          "question": "One of these is a uricosuric agent:",
+          "options": [
+            "Allantoin",
+            "Probenecid",
+            "Allopurinol",
+            "Hydrochlorothiazide"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Probenecid is a uricosuric agent - it increases the renal excretion of uric acid and is used in the treatment of gout. Allopurinol REDUCES urate production (xanthine oxidase inhibitor), allantoin is a urate metabolite, and thiazide diuretics RAISE urate."
+        },
+        {
+          "id": "CLP-U081",
+          "year": "2025",
+          "question": "Changes in renal function in pregnancy:",
+          "options": [
+            "Serum creatinine is significantly (70%) lower during pregnancy",
+            "eGFR usually increased",
+            "Urate levels pattern",
+            "Urea levels remain same"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "In pregnancy the kidneys hyperfiltrate: serum creatinine falls significantly (commonly by ~30-40%; some texts cite figures around 35-70%), eGFR rises, and plasma urate falls in early pregnancy then trends upward. The keyed statement is the substantial fall in serum creatinine (the exact magnitude is course-dependent)."
+        },
+        {
+          "id": "CLP-U029",
+          "year": "2025",
+          "question": "Insulin independent glucose uptake cells include all except:",
+          "options": [
+            "Brain",
+            "Liver cells",
+            "Kidney",
+            "Muscle"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Insulin-INDEPENDENT glucose uptake occurs in brain, liver and kidney (through GLUT1/GLUT2/GLUT3 transporters that do not require insulin). Muscle uses insulin-dependent GLUT4 translocation - so muscle is the exception and IS insulin-dependent."
+        },
+        {
+          "id": "CLP-U033",
+          "year": "2025",
+          "question": "Medications capable of enhancing hyperglycemia include all except:",
+          "options": [
+            "Propanolol",
+            "Thiazides",
+            "Dexamethasone",
+            "Saxagliptin"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Drugs that enhance hyperglycaemia include propranolol (beta-blockers suppress insulin secretion and blunt hypoglycaemic awareness), thiazides and corticosteroids (dexamethasone). Saxagliptin is a DPP-4 inhibitor - it LOWERS glucose and is used to treat diabetes, hence the exception."
+        },
+        {
+          "id": "CLP-U018",
+          "year": "2025",
+          "question": "Which of these cells plays a pivotal role in antigen presentation?",
+          "options": [
+            "Dendritic cells",
+            "B lymphocytes",
+            "Helper T cells",
+            "Macrophages"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Dendritic cells are the most potent professional antigen-presenting cells: they capture antigen, migrate to lymph nodes and present processed peptides on MHC molecules to T cells, thereby initiating adaptive immune responses - the pivotal antigen-presenting role."
+        },
+        {
+          "id": "CLP-U024",
+          "year": "2025",
+          "question": "Which of these urine preservatives is specific for uric acid?",
+          "options": [
+            "Thymol",
+            "20% formal saline",
+            "Boric acid",
+            "Concentrated hydrochloric acid"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Concentrated hydrochloric acid is the specific urine preservative for uric acid measurement - it keeps urate in solution and prevents its precipitation. Thymol, boric acid and formol-saline serve general or alternative preservation purposes, not specific uric-acid preservation."
+        },
+        {
+          "id": "CLP-U075",
+          "year": "2025",
+          "question": "Pathological jaundice may result from one of the following:",
+          "options": [
+            "ABO compatibility",
+            "Rhesus compatibility",
+            "Congenital hepatitis",
+            "Breast milk effect"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Pathological neonatal jaundice may result from congenital hepatitis (perinatal liver infection). The 'ABO/Rhesus compatibility' options refer to compatible (non-haemolytic) states, and 'breast milk effect' describes non-pathological breast-milk jaundice - so congenital hepatitis is the pathological cause."
+        },
+        {
+          "id": "CLP-U044",
+          "year": "2025",
+          "question": "Neuroglycopenic symptoms of hypoglycemia include:",
+          "options": [
+            "Tremor",
+            "Pallor",
+            "Convulsion",
+            "Tachycardia"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Neuroglycopenic symptoms of hypoglycaemia - caused by brain glucose deprivation - include confusion, convulsions, behavioural change and coma. Tremor, pallor and tachycardia are AUTONOMIC (adrenergic, catecholamine-mediated) symptoms and are not neuroglycopenic."
+        },
+        {
+          "id": "CLP-U060",
+          "year": "2025",
+          "question": "Chain of custody:",
+          "options": [
+            "Is important in tracing results outcome",
+            "Is important in forensic samples",
+            "Is the collection of evidence for medicolegal reasons",
+            "Is the ability to safeguard samples"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Chain of custody is the documented, auditable chronological record of a specimen - its collection, handling, storage and transfer - designed to preserve the integrity of evidence for medicolegal/forensic purposes. The keyed answer is the collection/documentation of evidence for medicolegal reasons; note the sibling-format question in the other paper keys 'important in forensic samples' - the two concepts overlap."
+        },
+        {
+          "id": "CLP-U096",
+          "year": "2025",
+          "question": "Hypokalemia is likely to result from following conditions except:",
+          "options": [
+            "Diarrhea",
+            "Primary aldosteronism (Conn's syndrome)",
+            "Oral contraceptive therapy",
+            "Periodic paralysis"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Hypokalaemia is caused by diarrhoea (GI potassium loss), primary aldosteronism/Conn's syndrome (aldosterone-driven renal potassium wasting) and periodic paralysis (potassium shifts into cells). Keyed exception: oral contraceptive therapy, which is not a classic cause of hypokalaemia (drospirenone-containing COCs are even associated with potassium retention)."
+        },
+        {
+          "id": "CLP-U088",
+          "year": "2025",
+          "question": "Raised gastrin level associated with all except:",
+          "options": [
+            "Hypercalcaemia",
+            "Achlohydria",
+            "Treatment with H2 agonist",
+            "Zollinger-Ellison syndrome"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Raised gastrin is classically seen in Zollinger-Ellison syndrome (gastrinoma), with hypercalcaemia (calcium stimulates gastrin), and after H2-antagonist/PPI therapy (loss of acid-feedback). Achlorhydria also stimulates gastrin by removing acid feedback, so the keyed exception is questionable - this key should be reviewed."
+        },
+        {
+          "id": "CLP-U054",
+          "year": "2025",
+          "question": "A goal of automation is to:",
+          "options": [
+            "Prolong turnaround time",
+            "Shortened turnaround time",
+            "Eliminate turnaround time",
+            "Increase turnaround time"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "A principal goal of laboratory automation is to SHORTEN turnaround time (reduce the interval from sample receipt to result), along with improving throughput, precision, traceability and operator safety. Automation reduces but cannot eliminate TAT."
+        },
+        {
+          "id": "CLP-U028",
+          "year": "2025",
+          "question": "Anthropometric measurements adopted for the management of diabetes mellitus include all except:",
+          "options": [
+            "Waist circumference",
+            "Waist-hip ratio",
+            "Body Surface Area",
+            "Hip circumference"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Anthropometric measurements used in the management of diabetes mellitus/obesity include waist circumference, waist-hip ratio and hip circumference (for central obesity assessment). Body surface area (BSA) is used for dose calculations and normalising parameters (e.g., eGFR/BSA) and is not an anthropometric measure of obesity - the keyed exception."
+        },
+        {
+          "id": "CLP-U090",
+          "year": "2025",
+          "question": "Positive criteria for diagnosis of metabolic syndrome except:",
+          "options": [
+            "Low HDL-C <40 mg/dL M, <50 mg/dL F",
+            "Patient on insulin",
+            "BMI >30 kg/m2 or WC >102 M, >88 F",
+            "Patient of fibrates"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Positive (diagnostic) criteria for the metabolic syndrome include low HDL-C (<40 mg/dL in men, <50 mg/dL in women), central obesity (BMI >30 kg/m2 or waist >102 cm men / >88 cm women) and elevated triglycerides, blood pressure and fasting glucose. 'Patient on insulin' is a treatment fact, not a diagnostic criterion - the keyed exception (the fibrates option similarly reflects treated dyslipidaemia)."
+        },
+        {
+          "id": "CLP-U051",
+          "year": "2025",
+          "question": "Metabolic acidosis is primarily a problem of:",
+          "options": [
+            "Excess bicarbonate",
+            "Base deficit",
+            "Excess hydrogen ions",
+            "Acid deficit"
+          ],
+          "correct_answer": [
+            1,
+            2
+          ],
+          "xmulti": true,
+          "explanation": "Metabolic acidosis is characterised by a PRIMARY base (bicarbonate) deficit - from bicarbonate loss or its consumption buffering retained acid - together with an EXCESS of hydrogen ions that overwhelms the buffers, causing a fall in plasma bicarbonate and pH. Hence the multi-answer key records both 'base deficit' and 'excess hydrogen ions'."
+        },
+        {
+          "id": "CLP-U015",
+          "year": "2025",
+          "question": "Anaemia is a condition resulting from:",
+          "options": [
+            "Stage 2 chronic kidney disease",
+            "Stage 3a chronic kidney disease",
+            "Stage 3b chronic kidney disease",
+            "Stage 4 chronic kidney disease"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Anaemia of chronic kidney disease develops as renal function declines, typically becoming significant from stage 3b CKD (eGFR 30-44 ml/min/1.73m2) onward, due to falling erythropoietin production. In stages 2 and 3a the anaemia is not usually the hallmark feature - hence the keyed stage 3b."
+        },
+        {
+          "id": "CLP-U037",
+          "year": "2025",
+          "question": "Findings that are usually seen in diabetic ketoacidosis include all except:",
+          "options": [
+            "Hyperglycemia",
+            "Hyponatremia",
+            "Increased osmolality",
+            "Hypophosphatemia"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Laboratory findings in DKA include hyperglycaemia, ketonaemia/ketonuria, increased plasma osmolality and (commonly) hypophosphataemia. Measured sodium is often spuriously LOW (pseudohyponatraemia from hyperglycaemia/lipids), but the corrected sodium is usually normal or high, so true hyponatraemia is the keyed exception."
+        },
+        {
+          "id": "CLP-U005",
+          "year": "2025",
+          "question": "The following is not a product of phenylalanine hydroxylase deficiency:",
+          "options": [
+            "Phenyllactic acid",
+            "Phenylacetic acid",
+            "Phenylpyruvic acid",
+            "Phenyluric acid"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "In phenylketonuria (phenylalanine hydroxylase deficiency), excess phenylalanine is transaminated to phenylpyruvate, which is further metabolised to phenyllactate and phenylacetate - all appear in the blood/urine. 'Phenyluric acid' is not a metabolite of phenylalanine."
+        },
+        {
+          "id": "CLP-U019",
+          "year": "2025",
+          "question": "Which of these is a benefit of passive natural immunization before birth?",
+          "options": [
+            "Prevention of Tetanus in pregnancy",
+            "Prevention of Rhesus incompatibility in pregnancy",
+            "Prevention of autoimmune disease in pregnancy",
+            "Prevention of poisoning from scorpion bite in pregnancy"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "Passive natural immunization before birth refers to the transplacental transfer of maternal IgG antibodies that protect the newborn. Maternal tetanus toxoid immunization passes on anti-tetanus IgG, preventing neonatal tetanus - the classic example (keyed). Rhesus incompatibility is prevented by antenatal anti-D (also passive), but the keyed 'benefit' here is tetanus prevention."
+        },
+        {
+          "id": "CLP-U002",
+          "year": "2025",
+          "question": "Which of these parameters of clinical diagnostic performance is used for screening?",
+          "options": [
+            "Clinical sensitivity",
+            "Clinical Specificity",
+            "Positive predictive value",
+            "Negative predictive value"
+          ],
+          "correct_answer": 0,
+          "xmulti": false,
+          "explanation": "For a SCREENING test, CLINICAL SENSITIVITY (the ability to correctly detect disease when it is present, i.e., low false-negative rate) is the priority - a screening test must not miss cases. Specificity and predictive values are more relevant in confirmatory work, though all matter clinically."
+        },
+        {
+          "id": "CLP-U040",
+          "year": "2025",
+          "question": "Findings associated with primary aldosteronism include:",
+          "options": [
+            "Hyperkalemia",
+            "Kaliuria",
+            "Hyponatremia",
+            "Metabolic acidosis"
+          ],
+          "correct_answer": 1,
+          "xmulti": false,
+          "explanation": "Primary aldosteronism (Conn's syndrome) is characterised by aldosterone excess: renal potassium wasting (kaliuria) with consequent hypokalaemia, metabolic ALKALOSIS, sodium retention and hypertension. Hyperkalaemia, hyponatraemia and metabolic acidosis are not features - the keyed finding is kaliuria."
+        },
+        {
+          "id": "CLP-U006",
+          "year": "2025",
+          "question": "Which of these drugs is not indicated for Therapeutic Drug Monitoring?",
+          "options": [
+            "Digoxin",
+            "Carbamazepine",
+            "Piroxicam",
+            "Salbutamol"
+          ],
+          "correct_answer": 2,
+          "xmulti": false,
+          "explanation": "Therapeutic drug monitoring is indicated for drugs with a narrow therapeutic index and a defined concentration-response relationship - e.g., digoxin, carbamazepine (and aminoglycosides, theophylline, lithium). Piroxicam (an NSAID) is not monitored therapeutically - the keyed exception (salbutamol is also not routinely monitored)."
+        },
+        {
+          "id": "CLP-U065",
+          "year": "2025",
+          "question": "The following is autosomal recessive:",
+          "options": [
+            "ALA dehydratase deficiency porphyria",
+            "Porphyria cutanae tarda",
+            "Protoporphyria",
+            "Congenital erythropoietic porphyria"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Congenital erythropoietic porphyria (Günther's disease) is inherited as an autosomal RECESSIVE trait - the keyed answer. (Caveat: ALA-dehydratase deficiency porphyria is also autosomal recessive, while porphyria cutanea tarda type II and protoporphyria are autosomal dominant - this key should be reviewed.)"
+        },
+        {
+          "id": "CLP-U038",
+          "year": "2025",
+          "question": "Risk factors for gestational diabetes mellitus (GDM):",
+          "options": [
+            "Macrosomia",
+            "A previous GDM",
+            "Body mass index greater than 30kg/m2",
+            "Positive family history of gestational diabetes mellitus"
+          ],
+          "correct_answer": 3,
+          "xmulti": false,
+          "explanation": "Risk factors for gestational diabetes mellitus include a previous history of GDM, macrosomia, body mass index above 30 kg/m2 and a positive family history of diabetes/GDM - the keyed answer is the positive family history of gestational diabetes."
+        }
+      ]
+    }
+  ]
+}

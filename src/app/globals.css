@@ -420,3 +420,8 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   .cat-card-large { height: 140px; }
   .course-grid { grid-template-columns: 1fr; }
 }
+
+/* Page-enter glide on tab navigation */
+.page-enter { animation: pageIn 0.22s ease-out; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .page-enter { animation: none; } }

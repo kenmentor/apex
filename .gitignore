@@ -2,4 +2,11 @@ node_modules
 .next
 .env
 .env.local
+dev-*.txt
 .dev-*.txt
+*.log
+.open-next
+.wrangler
+.dev.vars
+.vercel
+

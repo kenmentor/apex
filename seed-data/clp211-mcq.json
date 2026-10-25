@@ -1,0 +1,389 @@
+{
+  "sections": [
+    {
+      "section_title": "Diabetes Mellitus",
+      "questions": [
+        {
+          "id": "CLP-001",
+          "question": "Concerning Diabetes Mellitus, one of these methods is used to measure glucose routinely in UCTH",
+          "options": ["Glucose oxidase method", "Glucose dehydrogenase method", "Glucose pyruvate method", "Glucose Hexokinase method"],
+          "correct_answer": 3,
+          "explanation": "The hexokinase method is used for routine glucose measurement in the laboratory (UCTH standard), as it is more specific and accurate than oxidase-based methods in many settings."
+        },
+        {
+          "id": "CLP-002",
+          "question": "Concerning complications of Diabetes Mellitus",
+          "options": ["Hypoglycemia is a concern following treatment", "Glucose is decreased in hyperosmolar hyperglycemic state", "Plasma glucose in DKA is greater than in hyperosmolar hyperglycemic state", "Prolactin levels are moderately high"],
+          "correct_answer": 0,
+          "explanation": "Hypoglycemia is a major concern following treatment of diabetes, especially with insulin and sulfonylureas. In hyperosmolar hyperglycemic state (HHS), glucose is markedly elevated, and DKA glucose is lower than HHS."
+        },
+        {
+          "id": "CLP-003",
+          "question": "Concerning drug management of diabetes mellitus",
+          "options": ["High C-peptide levels are seen in exogenous insulin administration", "Lente insulin administration leads to hyperinsulinemic hyperglycemia with consequent proinsulin release", "Growth hormone excess is usually seen in some forms of diabetes", "MEN syndrome type 2 is a distinct complication of some forms of type 2 diabetes"],
+          "correct_answer": 2,
+          "explanation": "Growth hormone excess is seen in some secondary forms of diabetes (e.g., acromegaly). C-peptide is LOW with exogenous insulin; MEN type 2 is associated with pheochromocytoma/medullary thyroid cancer, not a complication of type 2 DM."
+        },
+        {
+          "id": "CLP-006",
+          "question": "Laboratory findings seen in diabetic ketoacidosis include",
+          "options": ["Hyperkalaemia", "Hyperphosphatemia", "Increased urinary amylase", "Increased lipoprotein lipase activity"],
+          "correct_answer": 0,
+          "explanation": "DKA is associated with hyperkalaemia due to extracellular shift of potassium from acidosis and insulin deficiency. Phosphate is often normal/low, and urinary amylase/lipoprotein lipase are not typical DKA findings."
+        },
+        {
+          "id": "CLP-008",
+          "question": "Clinical usefulness of C-peptide include all except",
+          "options": ["To measure beta cell function in patients treated with insulin", "To determine the type of diabetes mellitus being managed", "To assess the degree of insulin resistance in PCOS patients", "To make a diagnosis of hypoglycemia due to insulinoma"],
+          "correct_answer": 3,
+          "explanation": "C-peptide is used to measure endogenous beta cell function and distinguish diabetes type. It is NOT useful for diagnosing hypoglycemia due to insulinoma, where the discriminating parameter is the insulin/glucose relationship itself."
+        },
+        {
+          "id": "CLP-011",
+          "question": "Concerning glucose metabolism",
+          "options": ["Plasma glucose is maintained by hepatic gluconeogenesis", "In starvation, nonketotic hypoglycemia is a major finding", "Increased lactate levels are seen in the spleen in congenital diabetes", "Patients with CMV infection usually have elevated T-peptides"],
+          "correct_answer": 0,
+          "explanation": "During fasting, plasma glucose is maintained mainly by hepatic gluconeogenesis. Starvation is associated with ketosis, not nonketotic hypoglycemia."
+        },
+        {
+          "id": "CLP-027",
+          "question": "Concerning Type 2 Diabetes Mellitus",
+          "options": ["A major determining factor is genetic factor", "Concordance rate among twins is 40%", "Renal complications in Type 2 Diabetes Mellitus are more aggressive than in Type 1 Diabetes Mellitus", "There is relative insulin deficiency"],
+          "correct_answer": 0,
+          "explanation": "Genetic factors are a major determining factor in type 2 DM. It is characterized by insulin resistance and relative (not absolute) insulin deficiency; twin concordance is high (~90% in monozygotic twins)."
+        },
+        {
+          "id": "CLP-028",
+          "question": "A major gene implicated in Type 2 Diabetes Mellitus is",
+          "options": ["TCF7L2", "Caspian 10 (CAPN10)", "Zinc transporter", "Gene in chromosome 6"],
+          "correct_answer": 0,
+          "explanation": "TCF7L2 is the strongest and most consistently replicated gene associated with type 2 diabetes susceptibility."
+        },
+        {
+          "id": "CLP-029",
+          "question": "Concerning Prediabetes",
+          "options": ["HbA1C value of 5% in sickle cell patients is diagnostic", "Impaired fasting tolerance is a cause", "Gestational diabetes mellitus can lead to prediabetes", "GAD65 is an early marker"],
+          "correct_answer": 2,
+          "explanation": "Women with gestational diabetes mellitus are at increased risk of developing prediabetes and later type 2 DM. HbA1c is unreliable in sickle cell disease, and GAD65 is a marker of type 1 autoimmunity."
+        },
+        {
+          "id": "CLP-031",
+          "question": "Laboratory findings in adult Type 1 Diabetes Mellitus include",
+          "options": ["Increased C-peptide levels", "HLA-antibodies", "High levels of Bicarbonate", "Insulin autoantibodies"],
+          "correct_answer": 2,
+          "explanation": "Per the provided answer key, high levels of bicarbonate is the stated answer. Note: classically, type 1 DM shows low C-peptide and autoimmune markers with acidosis (low bicarbonate) in DKA; verify this key."
+        },
+        {
+          "id": "CLP-032",
+          "question": "Not an example of glycated proteins is",
+          "options": ["HbA1C", "Fructosamine", "Sorbitol", "Advanced glycation end products (AGEs)"],
+          "correct_answer": 2,
+          "explanation": "Sorbitol is a polyol produced by the aldose reductase pathway in diabetes, NOT a glycated protein. HbA1c, fructosamine and AGEs are glycated products reflecting hyperglycemia."
+        },
+        {
+          "id": "CLP-033",
+          "question": "A feature of Von Gierke's disease is",
+          "options": ["Spleen enlargement", "Hypoglycemia", "Metabolic acidosis", "Hyperlipidemia"],
+          "correct_answer": 1,
+          "explanation": "Von Gierke's disease (glycogen storage disease type I) is due to glucose-6-phosphatase deficiency and presents with severe fasting hypoglycemia, lactic acidosis, hyperlipidemia and hepatomegaly."
+        },
+        {
+          "id": "CLP-034",
+          "question": "Macrovascular complication of diabetes is",
+          "options": ["Coronary artery disease", "Intermittent claudication", "Angiopathy disease", "Neuropathy"],
+          "correct_answer": 0,
+          "explanation": "Coronary artery disease is a macrovascular complication of diabetes. Neuropathy is microvascular; intermittent claudication is also macrovascular (peripheral arterial disease) but answer key indicates coronary artery disease."
+        },
+        {
+          "id": "CLP-035",
+          "question": "Drugs used in the management of Diabetes Mellitus include all of the following EXCEPT",
+          "options": ["Metformin", "Sulphonylureas", "Insulin", "Zinc transporter"],
+          "correct_answer": 3,
+          "explanation": "Reconstructed from garbled text (answer key 'D except'). Zinc transporter (SLC30A8) is a beta-cell protein, not an antidiabetic drug. Metformin, sulphonylureas and insulin are all used in diabetes management."
+        }
+      ]
+    },
+    {
+      "section_title": "Endocrine & Infertility",
+      "questions": [
+        {
+          "id": "CLP-004",
+          "question": "A 40-year-old female with anterior neck mass has TSH 34 (20-43) IU/L, FT4 25 (25-45) IU/L, fT3 12 (34-55) ng/L. The most accurate diagnosis is",
+          "options": ["Sick euthyroid syndrome", "Subclinical hypothyroidism", "Thyroid hormone resistance", "Autonomous thyroid state"],
+          "correct_answer": 0,
+          "explanation": "TSH and FT4 are within (or near) their reference ranges while FT3 is low — the pattern of sick euthyroid (non-thyroidal illness / low T3) syndrome seen in acute illness."
+        },
+        {
+          "id": "CLP-005",
+          "question": "Consequence of hyperinsulinemia does not include",
+          "options": ["Acanthosis nigricans", "Polycystic ovarian syndrome", "Hyperandrogenism", "Hyponatremia"],
+          "correct_answer": 3,
+          "explanation": "Hyperinsulinemia is linked to acanthosis nigricans, PCOS and hyperandrogenism. Hyponatremia is NOT a recognized consequence of hyperinsulinemia."
+        },
+        {
+          "id": "CLP-007",
+          "question": "Concerning infertility",
+          "options": ["FSH is not important", "Urine prolactin levels are highly diagnostic", "Sorbitol values are needed to make a diagnosis", "Male factor is an important variable"],
+          "correct_answer": 1,
+          "explanation": "Per the provided answer key, urine prolactin levels are stated as highly diagnostic for infertility. Note: male factor is also an important variable in infertility evaluation; verify this key."
+        },
+        {
+          "id": "CLP-010",
+          "question": "The following is a feature of protracted adrenal hypofunction",
+          "options": ["Elevated cortisol", "Hyperglycemia", "Elevated androgens", "Hypoglycaemia"],
+          "correct_answer": 3,
+          "explanation": "Adrenal hypofunction (Addison's disease) causes low cortisol, so hypoglycaemia and hypotension result; cortisol, glucose and androgens are reduced."
+        },
+        {
+          "id": "CLP-030",
+          "question": "Consequence of hyperinsulinemia include except",
+          "options": ["Acanthosis nigricans", "Polycystic ovarian syndrome", "Hyperandrogenism", "Hyponatremia"],
+          "correct_answer": 3,
+          "explanation": "This question repeats CLP-005; the exception answer is hyponatremia. The paper key shows 'A' but acanthosis nigricans, PCOS and hyperandrogenism are all consequences of hyperinsulinemia, so D has been applied for consistency."
+        }
+      ]
+    },
+    {
+      "section_title": "Lipids & Lipoproteins",
+      "questions": [
+        {
+          "id": "CLP-012",
+          "question": "Fatty acids",
+          "options": ["Non-essential fatty acids are endogenous fatty acids that are synthesised in the human body", "Their length varies and are classified according to the number of hydrogen ions present", "Those important in human nutrition and metabolism are of the medium and long chain class", "The double bonds of both plants and animals' origin are usually 2 carbon atoms"],
+          "correct_answer": 0,
+          "explanation": "Non-essential fatty acids are synthesized endogenously in the human body (the liver and adipose tissue); essential fatty acids must be obtained from diet."
+        },
+        {
+          "id": "CLP-013",
+          "question": "Triglyceride",
+          "options": ["They are produced in the small intestines, liver and adipose tissue", "They are neutral fats, however, can interact with water during transport", "They are triesters of glycerol and amino acids", "In human nutrition, TG constitute 70% of tissue storage fat and are the predominant form of glyceryl ester found in plasma"],
+          "correct_answer": 0,
+          "explanation": "Triglycerides are produced in the small intestine (during lipid absorption), the liver and adipose tissue, and are the main form of stored energy."
+        },
+        {
+          "id": "CLP-014",
+          "question": "Phospholipids",
+          "options": ["They are lipids that have phosphorus as a backbone", "They contain three (3) long chain fatty acids of 14 to 24 carbon atoms long", "They are amphipathic", "Plasma concentration is high in kwashiorkor, marasmus and other forms of malnutrition"],
+          "correct_answer": 2,
+          "explanation": "Phospholipids are amphipathic — they contain both a polar (hydrophilic) head and non-polar (hydrophobic) fatty acid tails, which is essential for membrane and lipoprotein structure."
+        },
+        {
+          "id": "CLP-015",
+          "question": "Cholesterol",
+          "options": ["About 75% is in the unesterified form (free cholesterol)", "It is the only sterol in the human body", "It is a saturated steroid alcohol with 27 carbon atoms containing 4 rings (A, B, C and D)", "The only hydrophilic part of cholesterol is the hydroxyl group in the A-ring making it an amphipathic lipid"],
+          "correct_answer": 3,
+          "explanation": "Cholesterol has only one hydrophilic group — the hydroxyl group on the A-ring — making it amphipathic; the rest of the molecule is hydrophobic."
+        },
+        {
+          "id": "CLP-016",
+          "question": "Cholesterol",
+          "options": ["Cholesterol esters do not contain polar groups making them hydrophobic", "They are synthesized by all cells of the body", "Insulin inhibits β-hydroxy-β-methyl CoA (HMG CoA) reductase activity", "It is a very good source of fuel"],
+          "correct_answer": 0,
+          "explanation": "Cholesterol esters are formed by esterification of the polar hydroxyl group, leaving a fully non-polar (hydrophobic) molecule. HMG CoA reductase is inhibited by cholesterol/insulin, and cholesterol is not used as a fuel."
+        },
+        {
+          "id": "CLP-017",
+          "question": "Plasma lipoproteins",
+          "options": ["They are micromolecular substances found in plasma used to transport lipids", "Their core is made up of triglycerides and cholesterol esters", "They contain lipids and proteins held together by covalent bonds", "They are involved in the transport of fatty acids in the plasma complexed"],
+          "correct_answer": 1,
+          "explanation": "The hydrophobic core of lipoproteins contains triglycerides and cholesterol esters, with a hydrophilic surface of apolipoproteins, phospholipids and free cholesterol."
+        },
+        {
+          "id": "CLP-018",
+          "question": "Plasma lipoproteins",
+          "options": ["Lipoprotein (a) is pro-plasminogen and promotes clot lysis", "Very low-density lipoprotein (VLDL) accounts for most of the turbidity of postprandial plasma", "Chylomicrons contain apoB100 as the major lipoprotein", "VLDL share the same fate as chylomicrons where their triglyceride is being stripped off by the action of lipoprotein lipase to form intermediate density lipoprotein (IDL)"],
+          "correct_answer": 3,
+          "explanation": "VLDL, like chylomicrons, lose triglycerides via lipoprotein lipase to form IDL. Turbidity of postprandial plasma is mainly due to chylomicrons, and chylomicrons carry apoB48 (not apoB100)."
+        },
+        {
+          "id": "CLP-019",
+          "question": "Apolipoproteins",
+          "options": ["Apo A-I and C-1 are cofactors for lipolytic enzymes such as Lecithin cholesterol acyl transferase (LCAT)", "They play a role in the transport of triglyceride from mucosal cells of the large intestine (chylomicrons) and liver (VLDL)", "They are made up of proteins and lipid and are found in lipoproteins", "Apo A, B, C, D and E are good examples"],
+          "correct_answer": 0,
+          "explanation": "Apo A-I (and C-I) are cofactors for LCAT. They are proteins (not protein-lipid complexes) on lipoprotein surfaces; examples include Apo A, B, C, D and E."
+        },
+        {
+          "id": "CLP-020",
+          "question": "Low density lipoprotein (LDL)",
+          "options": ["More cholesterol rich than other lipoproteins containing apo B-100", "Metabolism through the receptor-dependent pathway results in formation of foam cells the predominant cell type of fatty streak, an early precursor of atherosclerotic plaques", "They can scatter light and are responsible for turbidity of postprandial plasma", "Small dense LDL are relatively triglyceride poor"],
+          "correct_answer": 0,
+          "explanation": "LDL is the most cholesterol-rich lipoprotein and carries apo B-100. Foam cells arise from LDL uptake via the scavenger/receptor-independent pathway; postprandial turbidity is due to chylomicrons."
+        },
+        {
+          "id": "CLP-021",
+          "question": "Lipid electrophoresis",
+          "options": ["The α band corresponds to LDL", "The pre-β band corresponds to VLDL", "The β band corresponds to HDL", "Chylomicrons migrate to the y band"],
+          "correct_answer": 1,
+          "explanation": "On lipid electrophoresis, the pre-β band corresponds to VLDL. The α band is HDL and the β band is LDL."
+        },
+        {
+          "id": "CLP-022",
+          "question": "Lipid profile",
+          "options": ["LDL-C value can be derived from the Frederickson's formula", "Total cholesterol concentration is largely unaffected by time of last meal", "Fasting for at least 15 hours is a major requirement", "Chylomicron is a component"],
+          "correct_answer": 1,
+          "explanation": "Total cholesterol is largely unaffected by the time of the last meal. LDL-C is derived from the Friedewald (not Frederickson) formula and fasting of 8-12 hours is typically required; chylomicrons appear only postprandially."
+        }
+      ]
+    },
+    {
+      "section_title": "Nutrition & Metabolic Syndrome",
+      "questions": [
+        {
+          "id": "CLP-023",
+          "question": "Insulin and leptin are peripheral appetite-suppressing signals",
+          "options": ["The ob gene is found on chromosome 9 and produces a 16 kDa protein called leptin", "Extra calories are produced majorly by fatty diet", "Basal metabolic rate (BMR) accounts for 25-30% of daily energy expenditure whereas active physical activity contributes 60-65%"],
+          "correct_answer": 2,
+          "explanation": "Per the answer key, the BMR/physical activity energy distribution statement is the stated answer. Note: the ob (leptin) gene is actually on chromosome 7 (human) and BMR typically accounts for the largest share of daily energy expenditure; verify this key."
+        },
+        {
+          "id": "CLP-024",
+          "question": "The metabolic syndrome",
+          "options": ["Elevated triglyceride ≥170 mg/dl is a diagnostic criterion", "Insulin resistance and a body mass index (BMI) ≥30kg/m² are two significant factors implicated in the aetiology", "The presence of type 2 diabetes mellitus is a compulsory criterion in the diagnosis", "A proinflammatory state is a possible risk factor"],
+          "correct_answer": 3,
+          "explanation": "A proinflammatory (and prothrombotic) state is a possible risk factor/component of the metabolic syndrome. Triglyceride cut-off is usually ≥150 mg/dl, and diabetes is not compulsory."
+        }
+      ]
+    },
+    {
+      "section_title": "Fluids, Electrolytes & Acid-Base",
+      "questions": [
+        {
+          "id": "CLP-009",
+          "question": "Causes of hyperkalemia include",
+          "options": ["Tumour lysis syndrome", "Steroid therapy", "Prolonged catecholamines administration", "Hypomagnesemia"],
+          "correct_answer": 0,
+          "explanation": "Tumour lysis syndrome releases intracellular potassium causing hyperkalemia. Corticosteroids and catecholamines tend to lower potassium, and hypomagnesemia usually accompanies hypokalaemia."
+        },
+        {
+          "id": "CLP-025",
+          "question": "Chloride responsive metabolic alkalosis is due to",
+          "options": ["Volume expansion", "Volume contraction", "Morbidity", "Rehydration"],
+          "correct_answer": 1,
+          "explanation": "Chloride-responsive metabolic alkalosis occurs with volume contraction and chloride depletion (e.g., vomiting, diuretics)."
+        },
+        {
+          "id": "CLP-044",
+          "question": "pH is defined as",
+          "options": ["The negative log of a weak acid and its conjugate base", "The negative of a strong acid and its conjugate acid", "The negative log of a weak base and its conjugate base pair", "The negative log of its pKa and the buffer solution"],
+          "correct_answer": 0,
+          "explanation": "Per the provided answer key, pH is described via the weak acid/conjugate base (buffering) relationship. Note: strictly, pH is the negative logarithm of hydrogen ion concentration; verify this key."
+        },
+        {
+          "id": "CLP-045",
+          "question": "A buffer works best",
+          "options": ["when the pKa is close to the pH", "when the pH is close to its buffer", "when the buffer and the acid are in equal volume", "when the pKa has a pH of 6.1"],
+          "correct_answer": 0,
+          "explanation": "A buffer is most effective when the pKa of the buffering system is close to the pH of the solution (within ±1 pH unit)."
+        },
+        {
+          "id": "CLP-046",
+          "question": "Acids are",
+          "options": ["Electron acceptors", "Proton donors", "Proton acceptors", "Electron donors"],
+          "correct_answer": 1,
+          "explanation": "Acids are proton (H+) donors (Brønsted-Lowry) or electron-pair acceptors (Lewis). Set to 'proton donors' because the paper key 'D' (electron donors) conflicts with standard definition; verify this key."
+        },
+        {
+          "id": "CLP-047",
+          "question": "Fixed acids",
+          "options": ["Can easily be exhaled", "Are metabolised and buffered", "Are not from dietary sources", "Cannot be buffered"],
+          "correct_answer": 1,
+          "explanation": "Fixed (non-volatile) acids can only be eliminated by metabolism and renal buffering; they cannot be exhaled like volatile acids (CO2). Paper key showed 'B/C'; B is the standard answer."
+        },
+        {
+          "id": "CLP-048",
+          "question": "Arterial blood pH is",
+          "options": ["Lower than pH of venous blood", "Higher than pH of venous blood", "The same as pH of venous blood", "7.45-8.35"],
+          "correct_answer": 1,
+          "explanation": "Arterial pH (7.35-7.45) is slightly higher than venous pH because venous blood carries more CO2 (carbonic acid)."
+        }
+      ]
+    },
+    {
+      "section_title": "Bilirubin & Jaundice",
+      "questions": [
+        {
+          "id": "CLP-026",
+          "question": "'BIND' is synonymous with",
+          "options": ["Opisthotonus", "Conjugated hyperbilirubinemia", "Delta bilirubin", "Water soluble urobilinogen"],
+          "correct_answer": 1,
+          "explanation": "Per the provided answer key, BIND (bilirubin-induced neurological dysfunction/kernicterus) is here paired with conjugated hyperbilirubinemia. Note: BIND classically results from severe UNCONJUGATED hyperbilirubinemia; verify this key."
+        },
+        {
+          "id": "CLP-049",
+          "question": "In prehepatic jaundice",
+          "options": ["There's conjugated hyperbilirubinemia", "Urobilinogen is high in urine", "Bilirubin is seen in urine", "Acholic urine is a prominent feature"],
+          "correct_answer": 1,
+          "explanation": "In prehepatic (haemolytic) jaundice, unconjugated bilirubin rises, urobilinogen is increased in urine, bilirubin is NOT seen in urine, and stools are not acholic."
+        },
+        {
+          "id": "CLP-050",
+          "question": "Concerning Crigler Najjar Syndrome",
+          "options": ["Type I is autosomal dominant", "Type II is autosomal recessive", "It causes conjugated hyperbilirubinemia", "Is due to defective UDPGT 1 enzyme"],
+          "correct_answer": 3,
+          "explanation": "Crigler-Najjar syndrome is due to defective UDP-glucuronosyltransferase (UDPGT/UGT1A1) enzyme activity, causing severe unconjugated hyperbilirubinemia. Type I is autosomal recessive; Type II is milder."
+        }
+      ]
+    },
+    {
+      "section_title": "Laboratory Quality Management",
+      "questions": [
+        {
+          "id": "CLP-036",
+          "question": "In the laboratory management of an unconscious patient the following test is not necessary in emergency room side-lab",
+          "options": ["Cerebrospinal fluid chemistry", "Urinalysis", "Glucose estimation", "Plasma protein"],
+          "correct_answer": 1,
+          "explanation": "Per the provided answer key, urinalysis is the test stated as not necessary in the emergency-room side laboratory. Note: plasma protein is also not typically urgent; glucose estimation is essential. Verify this key."
+        },
+        {
+          "id": "CLP-037",
+          "question": "Which of these is a controllable variable that affects laboratory results",
+          "options": ["Age", "Sex", "Blindness", "Malnutrition"],
+          "correct_answer": 3,
+          "explanation": "Malnutrition is a controllable variable (can be modified by diet/nutrition), whereas age, sex and blindness are uncontrollable."
+        },
+        {
+          "id": "CLP-038",
+          "question": "Which of these analytes is affected by age?",
+          "options": ["Potassium", "Sodium", "Estradiol", "Cholesterol"],
+          "correct_answer": 3,
+          "explanation": "Cholesterol levels increase with age, so age-adjusted reference ranges are needed. Estradiol is age-related in reproductive life but cholesterol is the analyte with well-known age effect."
+        },
+        {
+          "id": "CLP-039",
+          "question": "The ability of a test method to specifically identify analyte of interest in the presence of interfering factors is known as:",
+          "options": ["Analytical specificity", "Clinical specificity", "Bias", "Positive predictive value"],
+          "correct_answer": 0,
+          "explanation": "Analytical specificity is the ability of a method to measure only the analyte of interest in the presence of interfering substances."
+        },
+        {
+          "id": "CLP-040",
+          "question": "The ability of a test to show that a disease is present in the presence of the disease is termed",
+          "options": ["Analytical goal", "Qualitative method", "Specificity", "Sensitivity"],
+          "correct_answer": 3,
+          "explanation": "Sensitivity is the ability of a test to detect disease when it is present (true positive rate)."
+        },
+        {
+          "id": "CLP-041",
+          "question": "When a screening test for a disease in a population shows true negative the test is said to be",
+          "options": ["Specific", "Sensitive", "Efficient", "Diagnostic"],
+          "correct_answer": 0,
+          "explanation": "True negatives reflect specificity — the ability to correctly identify individuals without the disease."
+        },
+        {
+          "id": "CLP-042",
+          "question": "To minimise false positive results:",
+          "options": ["High predictive value is applicable", "High negative predictive value is applicable", "High positive predictive value is applicable", "Likelihood ratio of a laboratory is applicable"],
+          "correct_answer": 3,
+          "explanation": "Per the provided answer key, the laboratory likelihood ratio is stated as the approach to minimise false positives. Note: high specificity / high positive predictive value is the more standard answer; verify this key."
+        },
+        {
+          "id": "CLP-043",
+          "question": "Which pre-analytical factor causes hypercalcaemia?",
+          "options": ["Tourniquet application", "Fisting", "Use of EDTA bottle for the collection of specimens for calcium analysis", "Sample storage at -20°C"],
+          "correct_answer": 0,
+          "explanation": "Prolonged tourniquet application (stasis) causes haemoconcentration and falsely elevated calcium. EDTA chelates calcium and would falsely LOWER it."
+        }
+      ]
+    }
+  ]
+}

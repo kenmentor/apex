@@ -140,8 +140,11 @@ function StreakContent() {
                   ? `Unstoppable! You're on fire 🔥`
                   : data?.currentStreak > 0
                     ? 'Keep it going — every day counts!'
-                    : 'Take a quiz today to start your streak!'}
+                    : 'Complete a plan item at 80%+ to start your streak!'}
               </p>
+              {data && !data.gated && (
+                <p className="mt-1 text-[11px] text-white/70">Legacy display: visit-based. Complete a plan prove-item to move to completion-gated streaks.</p>
+              )}
             </div>
             <div className="flex shrink-0 items-center gap-1.5 rounded-lg bg-white/15 px-2.5 py-1.5 text-sm font-bold">
               <Coins className="size-4" />

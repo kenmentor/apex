@@ -1,0 +1,3037 @@
+{
+  "course_code": "ENT 211",
+  "course_title": "Entrepreneurship and Innovation",
+  "study_guide_title": "ENT 211 Comprehensive Question Bank (All Six Modules)",
+  "sections": [
+    {
+      "section_title": "1. Concept of Entrepreneurship",
+      "questions": [
+        {
+          "id": "ENT-M1-B001",
+          "question": "Entrepreneurship is best described in the lecture note as",
+          "options": {
+            "a": "the process of simply working for a salary",
+            "b": "the process of managing an already established business",
+            "c": "the process of designing, launching, and managing a new business venture to generate profits",
+            "d": "the act of buying and selling goods in a market"
+          },
+          "correct_answer": "c",
+          "explanation": "The lecture note defines entrepreneurship as the process of designing, launching, and managing a new business venture to generate profits. The other options describe earning a salary or routine trading, which are not entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-B002",
+          "question": "Which of the following is NOT listed among the key elements of entrepreneurship in the note?",
+          "options": {
+            "a": "Profit-making",
+            "b": "Risk-taking",
+            "c": "Innovation",
+            "d": "Clerical work"
+          },
+          "correct_answer": "d",
+          "explanation": "The note lists innovation, risk-taking, and profit-making among the key elements of entrepreneurship. Clerical work is not part of the elements."
+        },
+        {
+          "id": "ENT-M1-B003",
+          "question": "An entrepreneur, according to the lecture note, is described as",
+          "options": {
+            "a": "a person who only invests money in government bonds",
+            "b": "a person who manages a branch of a company",
+            "c": "a person who works for wages in an organization",
+            "d": "a person who identifies opportunities, gathers resources, and takes the risk to create and grow a business"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes an entrepreneur as one who identifies opportunities, gathers resources, and takes the risk to create and grow a business. The other options describe wage earners or mere investors."
+        },
+        {
+          "id": "ENT-M1-B004",
+          "question": "Which of the following is NOT listed as a key characteristic of an entrepreneur in the note?",
+          "options": {
+            "a": "Risk-taking",
+            "b": "Creativity and Innovation",
+            "c": "Laziness",
+            "d": "Self-confidence"
+          },
+          "correct_answer": "c",
+          "explanation": "The note lists risk-taking, creativity and innovation, and self-confidence among the characteristics of an entrepreneur. Laziness is not a characteristic."
+        },
+        {
+          "id": "ENT-M1-B005",
+          "question": "Contrariness, as an entrepreneurial trait discussed in the note, refers to",
+          "options": {
+            "a": "the willingness to go against the crowd and conventional wisdom",
+            "b": "the tendency to follow the majority",
+            "c": "the inability to make decisions",
+            "d": "the act of disagreeing with employees always"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes contrariness as the willingness to go against the crowd and conventional wisdom. The other options suggest indecision, conformity, or constant disagreement, which are not the trait described."
+        },
+        {
+          "id": "ENT-M1-B006",
+          "question": "The note lists the top five functions of an entrepreneur. Which of these is one of them?",
+          "options": {
+            "a": "Decision Making",
+            "b": "Filing of documents",
+            "c": "Typing of letters",
+            "d": "Clerical Work"
+          },
+          "correct_answer": "a",
+          "explanation": "Decision making is listed among the top five functions of the entrepreneur in the note. The other options are routine clerical duties, not entrepreneurial functions."
+        },
+        {
+          "id": "ENT-M1-B007",
+          "question": "According to the note, which function of the entrepreneur has declined in importance over time?",
+          "options": {
+            "a": "The undertaking of risks",
+            "b": "The financing function",
+            "c": "Innovation",
+            "d": "Decision making"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that the undertaking of risks, formerly a key function of the entrepreneur, has declined in importance over time. The other functions remain prominent."
+        },
+        {
+          "id": "ENT-M1-B008",
+          "question": "Risks such as competitive risk, management risk and market risk are classified under which type of risk discussed in the note?",
+          "options": {
+            "a": "Unsystematic risk",
+            "b": "Systematic risk",
+            "c": "Political risk",
+            "d": "Pure risk"
+          },
+          "correct_answer": "b",
+          "explanation": "Competitive, management, and market risks affect a particular business or industry and are classified in the note as unsystematic risk. Systematic risk affects the whole market, while pure and political risks are different categories."
+        },
+        {
+          "id": "ENT-M1-B009",
+          "question": "According to the lecture note, which scholar is credited with popularising the idea of the entrepreneur as an innovator?",
+          "options": {
+            "a": "David Ricardo",
+            "b": "Joseph Schumpeter",
+            "c": "Karl Marx",
+            "d": "Adam Smith"
+          },
+          "correct_answer": "b",
+          "explanation": "The note credits Joseph Schumpeter with popularising the idea of the entrepreneur as an innovator. The other scholars are associated with different economic ideas."
+        },
+        {
+          "id": "ENT-M1-B010",
+          "question": "The entrepreneur who notices the gap between market demand and supply and works to fill it is classified in the note as",
+          "options": {
+            "a": "The Imitator Entrepreneur",
+            "b": "The Drone Entrepreneur",
+            "c": "The Classic Entrepreneur",
+            "d": "The Fabian Entrepreneur"
+          },
+          "correct_answer": "c",
+          "explanation": "The note classifies the entrepreneur who notices the gap between demand and supply as the Classic Entrepreneur. The other types do not innovate in this way."
+        },
+        {
+          "id": "ENT-M1-B011",
+          "question": "An entrepreneur who is known for starting new businesses repeatedly, even after selling or closing previous ones, is referred to in the note as",
+          "options": {
+            "a": "A One-time Entrepreneur",
+            "b": "A Serial Entrepreneur",
+            "c": "A Corporate Entrepreneur",
+            "d": "A Novice Entrepreneur"
+          },
+          "correct_answer": "b",
+          "explanation": "The note refers to an entrepreneur who repeatedly starts new businesses as a Serial Entrepreneur. The other options describe different entrepreneurial classifications."
+        },
+        {
+          "id": "ENT-M1-B012",
+          "question": "Which of these is described in the note as an entrepreneur who incorporates social causes into their business model?",
+          "options": {
+            "a": "A Social Entrepreneur",
+            "b": "A Silent Entrepreneur",
+            "c": "A For-profit Entrepreneur",
+            "d": "A Passive Entrepreneur"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the entrepreneur who incorporates social causes into the business model as a Social Entrepreneur. The other options are not the term used in the note."
+        },
+        {
+          "id": "ENT-M1-B013",
+          "question": "Which of the following is NOT listed under the entrepreneurial mindset in the note?",
+          "options": {
+            "a": "A fixed mindset that resists change",
+            "b": "Growth mindset",
+            "c": "Resilience",
+            "d": "Opportunity recognition"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists growth mindset, opportunity recognition, and resilience under the entrepreneurial mindset. A fixed mindset that resists change is the opposite of the entrepreneurial mindset and is not listed."
+        },
+        {
+          "id": "ENT-M1-B014",
+          "question": "In the Entrepreneur vs Manager comparison table in the note, the entrepreneur's primary motivation is",
+          "options": {
+            "a": "Salary and security",
+            "b": "Promotion and titles",
+            "c": "Achievement and profit",
+            "d": "Comfort and stability"
+          },
+          "correct_answer": "c",
+          "explanation": "The comparison table shows that the entrepreneur is primarily motivated by achievement and profit, while the manager is motivated by salary and security."
+        },
+        {
+          "id": "ENT-M1-B015",
+          "question": "According to the Entrepreneur vs Manager table, decision making by the entrepreneur is usually",
+          "options": {
+            "a": "Based only on precedent",
+            "b": "Intuitive and daring",
+            "c": "Delegated to the board",
+            "d": "Slow and cautious"
+          },
+          "correct_answer": "b",
+          "explanation": "The table describes the entrepreneur's decision making as intuitive and daring, while the manager's is more cautious and rule-based."
+        },
+        {
+          "id": "ENT-M1-B016",
+          "question": "In the comparison table, the risk orientation of the entrepreneur is described as",
+          "options": {
+            "a": "Risk-taker",
+            "b": "Risk-averse",
+            "c": "Risk-neutral",
+            "d": "Risk-transferring"
+          },
+          "correct_answer": "a",
+          "explanation": "The comparison table describes the entrepreneur as a risk-taker, whereas the manager is risk-averse."
+        },
+        {
+          "id": "ENT-M1-B017",
+          "question": "In the Entrepreneur vs Intrapreneur comparison table, who is described as using the resources of an existing organisation?",
+          "options": {
+            "a": "Manager",
+            "b": "Entrepreneur",
+            "c": "Intrapreneur",
+            "d": "Investor"
+          },
+          "correct_answer": "c",
+          "explanation": "The table shows the intrapreneur as one who uses the resources of an existing organisation, while the entrepreneur sets up his own enterprise."
+        },
+        {
+          "id": "ENT-M1-B018",
+          "question": "In the Entrepreneur vs Intrapreneur table, whose risk is described as 'borne by the entrepreneur himself'?",
+          "options": {
+            "a": "The investor",
+            "b": "The intrapreneur",
+            "c": "The entrepreneur",
+            "d": "The government"
+          },
+          "correct_answer": "c",
+          "explanation": "The table shows that the risk in entrepreneurship is borne by the entrepreneur himself, while in intrapreneurship the risk is borne by the employing organisation."
+        },
+        {
+          "id": "ENT-M1-B019",
+          "question": "Which of the following is NOT listed among the detailed aspects of entrepreneurial constraints discussed in the note?",
+          "options": {
+            "a": "Limited access to capital",
+            "b": "Lack of infrastructure",
+            "c": "Unlimited access to cheap credit",
+            "d": "Lack of entrepreneurial culture"
+          },
+          "correct_answer": "c",
+          "explanation": "The note discusses limited access to capital, lack of infrastructure, and lack of entrepreneurial culture among the constraints. Unlimited access to cheap credit is not a constraint and does not feature in the note."
+        },
+        {
+          "id": "ENT-M1-B020",
+          "question": "Financial risk, as discussed under entrepreneurial constraints in the note, mainly relates to",
+          "options": {
+            "a": "the risk of losing customers",
+            "b": "the risk of government policy changes",
+            "c": "the risk of employee turnover",
+            "d": "the pressure to repay loans and the fear of losing invested money"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes financial risk in entrepreneurship as the pressure to repay loans and the fear of losing invested money. The other options are different risk types."
+        },
+        {
+          "id": "ENT-M1-B021",
+          "question": "According to the note, 'Decision Fatigue' is discussed under which entrepreneurial constraint?",
+          "options": {
+            "a": "Political instability",
+            "b": "Entrepreneurial stress",
+            "c": "Lack of capital",
+            "d": "Lack of infrastructure"
+          },
+          "correct_answer": "b",
+          "explanation": "The note discusses Decision Fatigue under entrepreneurial stress, one of the constraints entrepreneurs face. The other options are different constraint categories."
+        },
+        {
+          "id": "ENT-M1-B022",
+          "question": "Which of the following is NOT listed among the factors stimulating entrepreneurship in the note?",
+          "options": {
+            "a": "Government Apathy",
+            "b": "Independence and Autonomy",
+            "c": "Self-fulfilment",
+            "d": "Financial Rewards"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists financial rewards, independence and autonomy, and self-fulfilment as factors stimulating entrepreneurship. Government apathy discourages rather than stimulates entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-B023",
+          "question": "Under section 1.11 of the note (Qualities of a Successful Entrepreneur), which quality is described as involving 'control of sentiments'?",
+          "options": {
+            "a": "Steadfastness",
+            "b": "Emotional stability",
+            "c": "Self-confidence",
+            "d": "Firmness"
+          },
+          "correct_answer": "b",
+          "explanation": "Section 1.11 describes emotional stability as involving the control of sentiments. The other qualities relate to other aspects of the entrepreneur's behaviour."
+        },
+        {
+          "id": "ENT-M1-B024",
+          "question": "According to the note, goals (unlike vision) should be",
+          "options": {
+            "a": "Specific and measurable",
+            "b": "Long term only",
+            "c": "Written by consultants",
+            "d": "Vague and aspirational"
+          },
+          "correct_answer": "a",
+          "explanation": "The note distinguishes goals from vision by stating that goals should be specific and measurable. Vision is long-term and aspirational."
+        },
+        {
+          "id": "ENT-M1-B025",
+          "question": "Which entrepreneurial quality is described in the note as 'sticking to decisions taken and not vacillating'?",
+          "options": {
+            "a": "Compromise",
+            "b": "Procrastination",
+            "c": "Flexibility",
+            "d": "Firmness"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes firmness as sticking to decisions taken and not vacillating. The other options do not match that description."
+        },
+        {
+          "id": "ENT-M1-B026",
+          "question": "The quality described in the note as 'consistency in firmness' is",
+          "options": {
+            "a": "Conformity",
+            "b": "Steadfastness",
+            "c": "Indecision",
+            "d": "Impulsiveness"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes steadfastness as consistency in firmness. The other options are not the quality described."
+        },
+        {
+          "id": "ENT-M1-B027",
+          "question": "According to section 1.12 of the note, entrepreneurs contribute to government revenue mainly by",
+          "options": {
+            "a": "paying taxes on their profits and creating employment",
+            "b": "receiving government grants",
+            "c": "importing goods duty-free",
+            "d": "avoiding all forms of taxation"
+          },
+          "correct_answer": "a",
+          "explanation": "Section 1.12 states that entrepreneurs contribute to government revenue mainly by paying taxes on their profits and creating employment. The other options are contrary to the note."
+        },
+        {
+          "id": "ENT-M1-B028",
+          "question": "Which of the following is listed in the note as one of the roles of entrepreneurship in a developing society?",
+          "options": {
+            "a": "Discouraging innovation",
+            "b": "Reducing the tax base",
+            "c": "Increasing unemployment",
+            "d": "Creation of employment opportunities"
+          },
+          "correct_answer": "d",
+          "explanation": "The note lists creation of employment opportunities among the roles of entrepreneurship in a developing society. The other options describe negative effects that the note does not attribute to entrepreneurship."
+        },
+        {
+          "id": "ENT-M1-B029",
+          "question": "In the Entrepreneur vs Manager comparison table, under 'Approach to task', the entrepreneur is described as",
+          "options": {
+            "a": "Rigid",
+            "b": "Direct and involved",
+            "c": "Delegating and detached",
+            "d": "Indifferent"
+          },
+          "correct_answer": "b",
+          "explanation": "The comparison table describes the entrepreneur's approach to task as direct and involved, whereas the manager delegates and stays detached."
+        },
+        {
+          "id": "ENT-M1-B030",
+          "question": "In the Entrepreneur vs Manager table, the 'Status' of the entrepreneur is described as",
+          "options": {
+            "a": "Employee",
+            "b": "Consultant",
+            "c": "Agent",
+            "d": "Founder/Owner"
+          },
+          "correct_answer": "d",
+          "explanation": "The table shows the entrepreneur's status as Founder/Owner, while the manager is an employee of the firm."
+        },
+        {
+          "id": "ENT-M1-B031",
+          "question": "According to the Entrepreneur vs Manager table, the reward of the entrepreneur is",
+          "options": {
+            "a": "Bonus",
+            "b": "Commission",
+            "c": "Profit",
+            "d": "Salary"
+          },
+          "correct_answer": "c",
+          "explanation": "The table shows that the reward of the entrepreneur is profit, while the manager earns a salary."
+        },
+        {
+          "id": "ENT-M1-B032",
+          "question": "'He is to determine what to produce, how to produce, and for whom to produce.' This describes which function of the entrepreneur in the note?",
+          "options": {
+            "a": "Decision Making",
+            "b": "Innovation",
+            "c": "Risk Taking",
+            "d": "Division of Income"
+          },
+          "correct_answer": "a",
+          "explanation": "Determining what, how, and for whom to produce is described in the note as the Decision Making function of the entrepreneur."
+        },
+        {
+          "id": "ENT-M1-B033",
+          "question": "According to the note, 'making necessary arrangements for the division of total income among shareholders, employees, and himself' describes which function?",
+          "options": {
+            "a": "Division of Income",
+            "b": "Marketing",
+            "c": "Production",
+            "d": "Decision Making"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the arrangement for dividing total income among shareholders, employees, and the entrepreneur as the Division of Income function."
+        },
+        {
+          "id": "ENT-M1-B034",
+          "question": "Which constraint category is described in the note as: 'Entrepreneurship can be a lonely journey; the entrepreneur often works alone and cannot easily share his plans'?",
+          "options": {
+            "a": "Social/Isolation constraints",
+            "b": "Financial constraints",
+            "c": "Legal constraints",
+            "d": "Infrastructural constraints"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the lonely nature of entrepreneurship under social/isolation constraints. The other options are different constraint categories."
+        },
+        {
+          "id": "ENT-M1-B035",
+          "question": "According to the note, being willing to risk time, money, and reputation for the business describes which characteristic of an entrepreneur?",
+          "options": {
+            "a": "Innovation",
+            "b": "Punctuality",
+            "c": "Loyalty",
+            "d": "Risk-taking"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the willingness to risk time, money, and reputation as the risk-taking characteristic of an entrepreneur."
+        },
+        {
+          "id": "ENT-M1-B036",
+          "question": "The characteristic described in the note as the ability to cultivate trust, motivate, and support others toward the achievement of the business goal is",
+          "options": {
+            "a": "Compliance",
+            "b": "Resignation",
+            "c": "Leadership",
+            "d": "Bookkeeping"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the ability to cultivate trust, motivate, and support others as the leadership characteristic of an entrepreneur."
+        },
+        {
+          "id": "ENT-M1-B037",
+          "question": "According to the module, an entrepreneur is fundamentally responsible for",
+          "options": {
+            "a": "teaching entrepreneurship courses",
+            "b": "working as an employee in a firm",
+            "c": "managing a government ministry",
+            "d": "combining the factors of production to produce goods and services"
+          },
+          "correct_answer": "d",
+          "explanation": "The note states that the entrepreneur is fundamentally responsible for combining the factors of production to produce goods and services. The other options describe unrelated roles."
+        },
+        {
+          "id": "ENT-M1-B038",
+          "question": "Which of the following best distinguishes an intrapreneur from an entrepreneur according to the note?",
+          "options": {
+            "a": "The intrapreneur bears all the risk alone",
+            "b": "The entrepreneur works for a salary",
+            "c": "The intrapreneur uses the resources of an existing organisation while the entrepreneur sets up his own enterprise",
+            "d": "There is no difference at all"
+          },
+          "correct_answer": "c",
+          "explanation": "The note distinguishes them by stating that the intrapreneur uses the resources of an existing organisation while the entrepreneur sets up his own enterprise. The other options are incorrect."
+        },
+        {
+          "id": "ENT-M1-B039",
+          "question": "Which factor stimulating entrepreneurship is described in the note as 'the potential for high financial returns or profit'?",
+          "options": {
+            "a": "Government Support",
+            "b": "Self-fulfilment",
+            "c": "Financial Rewards",
+            "d": "Independence and Autonomy"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the potential for high financial returns as the financial rewards factor stimulating entrepreneurship. The other options are different factors."
+        },
+        {
+          "id": "ENT-M1-B040",
+          "question": "Which factor stimulating entrepreneurship is illustrated in the note by 'many entrepreneurs are motivated by the freedom to make their own decisions'?",
+          "options": {
+            "a": "Independence and Autonomy",
+            "b": "Peer pressure",
+            "c": "Family tradition",
+            "d": "Financial Rewards"
+          },
+          "correct_answer": "a",
+          "explanation": "The note illustrates independence and autonomy with the freedom to make one's own decisions. The other options are different factors."
+        },
+        {
+          "id": "ENT-M1-B041",
+          "question": "According to Module 1's learning objectives, students should be able to differentiate between entrepreneurs, managers, and",
+          "options": {
+            "a": "Employees",
+            "b": "Intrapreneurs",
+            "c": "Politicians",
+            "d": "Civil servants"
+          },
+          "correct_answer": "b",
+          "explanation": "Module 1's learning objectives require students to differentiate between entrepreneurs, managers, and intrapreneurs. The other options are not part of the objective."
+        },
+        {
+          "id": "ENT-M1-B042",
+          "question": "Which of the following best captures the difference in 'Driving force' between the entrepreneur and the manager as shown in the note's table?",
+          "options": {
+            "a": "The entrepreneur is driven by salary while the manager is driven by profit",
+            "b": "The entrepreneur is driven by achievement and profit while the manager is driven by salary and security",
+            "c": "Both are driven by the same forces",
+            "d": "The manager is driven by achievement"
+          },
+          "correct_answer": "b",
+          "explanation": "The table shows that the entrepreneur is driven by achievement and profit while the manager is driven by salary and security. The other options contradict the table."
+        }
+      ]
+    },
+    {
+      "section_title": "2. Innovation and Entrepreneurship",
+      "questions": [
+        {
+          "id": "ENT-M2-B043",
+          "question": "According to the note, innovation is defined as",
+          "options": {
+            "a": "the same as invention",
+            "b": "the act of copying existing products",
+            "c": "simply the discovery of a new scientific fact",
+            "d": "the process of translating an idea or invention into a good or service that creates value"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines innovation as the process of translating an idea or invention into a good or service that creates value. It is not the same as invention, which is only the first-time creation."
+        },
+        {
+          "id": "ENT-M2-B044",
+          "question": "In the note, invention is defined as",
+          "options": {
+            "a": "the commercialisation of a product",
+            "b": "the improvement of an existing product",
+            "c": "the creation of a new product or process for the first time",
+            "d": "the marketing of a new idea"
+          },
+          "correct_answer": "c",
+          "explanation": "The note defines invention as the creation of a new product or process for the first time, while innovation is its commercialisation. The other options describe later stages."
+        },
+        {
+          "id": "ENT-M2-B045",
+          "question": "Which of the following is given in the note as an example of an INNOVATION (as opposed to an invention)?",
+          "options": {
+            "a": "Smartphones",
+            "b": "The discovery of fire",
+            "c": "The discovery of gravity",
+            "d": "The very first computer ever built"
+          },
+          "correct_answer": "a",
+          "explanation": "The note gives smartphones as an example of innovation, since they are improvements on earlier inventions. The other options are first-time discoveries or inventions."
+        },
+        {
+          "id": "ENT-M2-B046",
+          "question": "According to the note, the type of innovation is dependent on two factors: Technology and",
+          "options": {
+            "a": "Market",
+            "b": "Weather",
+            "c": "Language",
+            "d": "Culture"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that the type of innovation depends on technology and the market. The other options are not the factors given."
+        },
+        {
+          "id": "ENT-M2-B047",
+          "question": "Incremental innovation occurs when",
+          "options": {
+            "a": "a new market is created",
+            "b": "an existing product is abandoned",
+            "c": "a completely new product is created",
+            "d": "small improvements are made to existing products or services"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines incremental innovation as small improvements made to existing products or services. The other options describe more radical changes."
+        },
+        {
+          "id": "ENT-M2-B048",
+          "question": "According to the note, each new version of Apple's iPhone is an example of",
+          "options": {
+            "a": "Architectural innovation",
+            "b": "Disruptive innovation",
+            "c": "Radical innovation",
+            "d": "Incremental innovation"
+          },
+          "correct_answer": "d",
+          "explanation": "The note gives successive iPhone versions as an example of incremental innovation because each version introduces small improvements to the existing product."
+        },
+        {
+          "id": "ENT-M2-B049",
+          "question": "Disruptive innovation occurs when",
+          "options": {
+            "a": "a new entrant creates a product or service that displaces the existing market leaders",
+            "b": "a product is made cheaper without changing its features",
+            "c": "the entire architecture of a product is changed",
+            "d": "small improvements are made to existing products"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines disruptive innovation as a new entrant creating a product or service that displaces the existing market leaders. The other options describe other types of innovation."
+        },
+        {
+          "id": "ENT-M2-B050",
+          "question": "Which product is given in the note as an example of disruptive innovation, as it displaced traditional cameras?",
+          "options": {
+            "a": "The iPad",
+            "b": "The Radio",
+            "c": "The iPhone",
+            "d": "The Landline phone"
+          },
+          "correct_answer": "a",
+          "explanation": "The note gives the iPad as an example of disruptive innovation, as it displaced traditional cameras. The other options are not the example used in the note."
+        },
+        {
+          "id": "ENT-M2-B051",
+          "question": "Architectural innovation occurs when",
+          "options": {
+            "a": "the overall architecture of a product is changed while keeping the components the same",
+            "b": "an entirely new technology is introduced",
+            "c": "small improvements are made to components",
+            "d": "a product is discontinued"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines architectural innovation as changing the overall architecture of a product while keeping the components the same. The other options describe other innovation types."
+        },
+        {
+          "id": "ENT-M2-B052",
+          "question": "Which product is given in the note as an example of architectural innovation (combining existing components in a new architecture)?",
+          "options": {
+            "a": "The printing press",
+            "b": "The smart watch",
+            "c": "The steam engine",
+            "d": "The first telephone"
+          },
+          "correct_answer": "b",
+          "explanation": "The note gives the smart watch as an example of architectural innovation because it combines existing components in a new architecture. The other options are not the example used."
+        },
+        {
+          "id": "ENT-M2-B053",
+          "question": "Radical innovation occurs when",
+          "options": {
+            "a": "small incremental changes are made",
+            "b": "a completely new product or technology replaces an existing one",
+            "c": "only the design of a product is changed",
+            "d": "the price of a product is reduced"
+          },
+          "correct_answer": "b",
+          "explanation": "The note defines radical innovation as a completely new product or technology replacing an existing one. The other options describe incremental or design changes."
+        },
+        {
+          "id": "ENT-M2-B054",
+          "question": "Which invention is given in the note as an example of radical innovation, as it replaced ships as a primary mode of long-distance travel?",
+          "options": {
+            "a": "The bicycle",
+            "b": "The motor car",
+            "c": "The airplane",
+            "d": "The train"
+          },
+          "correct_answer": "c",
+          "explanation": "The note gives the airplane as an example of radical innovation because it replaced ships for long-distance travel. The other options are not the example used."
+        },
+        {
+          "id": "ENT-M2-B055",
+          "question": "Which of the following is NOT listed among the sources of innovation within an organisation in section 2.4 of the note?",
+          "options": {
+            "a": "Process needs",
+            "b": "Unexpected occurrences",
+            "c": "Incongruities",
+            "d": "Following competitors blindly"
+          },
+          "correct_answer": "d",
+          "explanation": "Section 2.4 lists unexpected occurrences, incongruities, and process needs among the sources of innovation within an organisation. Following competitors blindly is not a source listed in the note."
+        },
+        {
+          "id": "ENT-M2-B056",
+          "question": "'Having surplus resources that can be invested in exploring new ideas' describes which source of innovation within an organisation?",
+          "options": {
+            "a": "Slack resources",
+            "b": "Process needs",
+            "c": "Incongruities",
+            "d": "Industry and market changes"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes having surplus resources for exploring new ideas as slack resources. The other options are different sources of innovation."
+        },
+        {
+          "id": "ENT-M2-B057",
+          "question": "According to the note, which theorist proposed the 'Theory of Creative Destruction' in 1934?",
+          "options": {
+            "a": "Clayton Christensen",
+            "b": "Joseph Schumpeter",
+            "c": "Peter Drucker",
+            "d": "Henry Chesbrough"
+          },
+          "correct_answer": "b",
+          "explanation": "The note credits Joseph Schumpeter with the Theory of Creative Destruction in 1934. The other theorists proposed different theories."
+        },
+        {
+          "id": "ENT-M2-B058",
+          "question": "According to Schumpeter's Theory of Creative Destruction, innovation",
+          "options": {
+            "a": "has nothing to do with the market",
+            "b": "destroys old products and replaces them with new, better ones",
+            "c": "protects old products from change",
+            "d": "only improves old products gradually"
+          },
+          "correct_answer": "b",
+          "explanation": "Schumpeter's theory holds that innovation destroys old products and replaces them with new, better ones. The other options contradict the theory."
+        },
+        {
+          "id": "ENT-M2-B059",
+          "question": "Which of the following is given in the note as an example of Schumpeter's Theory of Creative Destruction in action?",
+          "options": {
+            "a": "The iPhone replacing the Blackberry",
+            "b": "Newspapers replacing the internet",
+            "c": "The horse and cart replacing the car",
+            "d": "The radio replacing the television"
+          },
+          "correct_answer": "a",
+          "explanation": "The note gives the iPhone replacing the Blackberry as an example of creative destruction. The other options reverse the direction of replacement."
+        },
+        {
+          "id": "ENT-M2-B060",
+          "question": "According to the note, which theorist proposed the 'Diffusion of Innovations' theory in 1962?",
+          "options": {
+            "a": "Joseph Schumpeter",
+            "b": "Albert Einstein",
+            "c": "Adam Smith",
+            "d": "Everett Rogers"
+          },
+          "correct_answer": "d",
+          "explanation": "The note credits Everett Rogers with the Diffusion of Innovations theory in 1962. The other options are not the theorist."
+        },
+        {
+          "id": "ENT-M2-B061",
+          "question": "According to Rogers' Diffusion of Innovations theory, which group is the smallest and represents about 2.5% of the population?",
+          "options": {
+            "a": "Early Majority",
+            "b": "Laggards",
+            "c": "Early Adopters",
+            "d": "Innovators"
+          },
+          "correct_answer": "d",
+          "explanation": "Rogers' theory assigns the smallest group, about 2.5%, to the Innovators. The other groups are larger."
+        },
+        {
+          "id": "ENT-M2-B062",
+          "question": "In Rogers' theory, the group described as 'trendsetters' who adopt innovations early but carefully represents about 13.5% of the population. They are the",
+          "options": {
+            "a": "Early Majority",
+            "b": "Innovators",
+            "c": "Early Adopters",
+            "d": "Laggards"
+          },
+          "correct_answer": "c",
+          "explanation": "Rogers' theory describes the Early Adopters (about 13.5%) as trendsetters who adopt innovations early but carefully. The other groups fit other descriptions."
+        },
+        {
+          "id": "ENT-M2-B063",
+          "question": "In Rogers' theory, the group that adopts an innovation 'when its benefits become clear' and represents about 34% of the population is the",
+          "options": {
+            "a": "Laggards",
+            "b": "Early Majority",
+            "c": "Innovators",
+            "d": "Early Adopters"
+          },
+          "correct_answer": "b",
+          "explanation": "Rogers' theory describes the Early Majority (about 34%) as adopting when benefits become clear. The other options are different adopter categories."
+        },
+        {
+          "id": "ENT-M2-B064",
+          "question": "In Rogers' theory, the group described as 'resistant to change' and representing about 16% of the population is the",
+          "options": {
+            "a": "Innovators",
+            "b": "Laggards",
+            "c": "Early Majority",
+            "d": "Early Adopters"
+          },
+          "correct_answer": "b",
+          "explanation": "Rogers' theory describes the Laggards (about 16%) as resistant to change. The other options adopt earlier."
+        },
+        {
+          "id": "ENT-M2-B065",
+          "question": "According to the note, which theorist proposed the 'Disruptive Innovation' theory in 1997?",
+          "options": {
+            "a": "Everett Rogers",
+            "b": "Peter Drucker",
+            "c": "Joseph Schumpeter",
+            "d": "Clayton Christensen"
+          },
+          "correct_answer": "d",
+          "explanation": "The note credits Clayton Christensen with the Disruptive Innovation theory in 1997. The other theorists proposed different theories."
+        },
+        {
+          "id": "ENT-M2-B066",
+          "question": "According to Clayton Christensen's theory, disruptive innovations typically",
+          "options": {
+            "a": "immediately replace the market leaders",
+            "b": "start small and gradually replace the established players",
+            "c": "are expensive and complex",
+            "d": "are only for large corporations"
+          },
+          "correct_answer": "b",
+          "explanation": "Christensen's theory holds that disruptive innovations start small and gradually replace the established players. The other options contradict the theory."
+        },
+        {
+          "id": "ENT-M2-B067",
+          "question": "According to the note, which theorist proposed the 'Open Innovation' theory in 2003?",
+          "options": {
+            "a": "Henry Chesbrough",
+            "b": "Joseph Schumpeter",
+            "c": "Everett Rogers",
+            "d": "Clayton Christensen"
+          },
+          "correct_answer": "a",
+          "explanation": "The note credits Henry Chesbrough with the Open Innovation theory in 2003. The other options are not the theorist."
+        },
+        {
+          "id": "ENT-M2-B068",
+          "question": "The key idea of Open Innovation, according to Chesbrough, is that",
+          "options": {
+            "a": "companies should use both internal and external ideas to advance their technology",
+            "b": "companies should keep all ideas strictly internal",
+            "c": "ideas should never be shared",
+            "d": "only external ideas should be used"
+          },
+          "correct_answer": "a",
+          "explanation": "Chesbrough's Open Innovation holds that companies should use both internal and external ideas to advance their technology. The other options contradict the theory."
+        },
+        {
+          "id": "ENT-M2-B069",
+          "question": "According to the note, which two theorists proposed 'The Blue Ocean Strategy' in 2005?",
+          "options": {
+            "a": "Henry Chesbrough and Clayton Christensen",
+            "b": "W. Chan Kim and Renee Mauborgne",
+            "c": "Peter Drucker and Michael Porter",
+            "d": "Everett Rogers and Joseph Schumpeter"
+          },
+          "correct_answer": "b",
+          "explanation": "The note credits W. Chan Kim and Renee Mauborgne with The Blue Ocean Strategy in 2005. The other pairs are not the authors."
+        },
+        {
+          "id": "ENT-M2-B070",
+          "question": "The Blue Ocean Strategy encourages businesses to",
+          "options": {
+            "a": "copy competitors exactly",
+            "b": "avoid all forms of innovation",
+            "c": "create uncontested market space by creating and capturing new demand",
+            "d": "fight for market share in existing markets"
+          },
+          "correct_answer": "c",
+          "explanation": "The Blue Ocean Strategy encourages creating uncontested market space by creating and capturing new demand. The other options describe competing in existing red-ocean markets."
+        },
+        {
+          "id": "ENT-M2-B071",
+          "question": "According to the note, which organisation is credited with the '10 Types of Innovation' framework published in 2013?",
+          "options": {
+            "a": "BCG",
+            "b": "Accenture",
+            "c": "Doblin",
+            "d": "McKinsey"
+          },
+          "correct_answer": "c",
+          "explanation": "The note credits Doblin with the 10 Types of Innovation framework published in 2013. The other firms are not credited."
+        },
+        {
+          "id": "ENT-M2-B072",
+          "question": "In Doblin's 10 Types of Innovation framework, Spotify's freemium model (offering free basic service and charging for premium features) is an example of innovation in",
+          "options": {
+            "a": "Profit Model",
+            "b": "Structure",
+            "c": "Process",
+            "d": "Network"
+          },
+          "correct_answer": "a",
+          "explanation": "Spotify's freemium model changes how the company makes money, so it is an innovation in the Profit Model. The other types are not the fit."
+        },
+        {
+          "id": "ENT-M2-B073",
+          "question": "In Doblin's framework, AWS (Amazon Web Services) selling its infrastructure as a service is an example of innovation in",
+          "options": {
+            "a": "Product Performance",
+            "b": "Service",
+            "c": "Network",
+            "d": "Profit Model"
+          },
+          "correct_answer": "c",
+          "explanation": "AWS selling its infrastructure as a service changes how the firm connects and uses external resources, which is an innovation in Network. The other types do not fit."
+        },
+        {
+          "id": "ENT-M2-B074",
+          "question": "In Doblin's framework, GitLab's remote-first approach is an example of innovation in",
+          "options": {
+            "a": "Structure",
+            "b": "Channel",
+            "c": "Network",
+            "d": "Process"
+          },
+          "correct_answer": "a",
+          "explanation": "GitLab's remote-first approach changes how the company is organised, making it an innovation in Structure. The other types do not fit."
+        },
+        {
+          "id": "ENT-M2-B075",
+          "question": "In Doblin's framework, Toyota's Lean Manufacturing is an example of innovation in",
+          "options": {
+            "a": "Product Performance",
+            "b": "Structure",
+            "c": "Network",
+            "d": "Process"
+          },
+          "correct_answer": "d",
+          "explanation": "Toyota's Lean Manufacturing changes how products are made, making it an innovation in Process. The other types do not fit."
+        },
+        {
+          "id": "ENT-M2-B076",
+          "question": "In Doblin's framework, Zappos' exceptional customer service is an example of innovation in",
+          "options": {
+            "a": "Brand",
+            "b": "Service",
+            "c": "Product Performance",
+            "d": "Channel"
+          },
+          "correct_answer": "b",
+          "explanation": "Zappos' outstanding customer service is an innovation in Service. The other types are not the fit."
+        },
+        {
+          "id": "ENT-M2-B077",
+          "question": "In Doblin's framework, Tesla's direct-to-consumer sales model is an example of innovation in",
+          "options": {
+            "a": "Process",
+            "b": "Service",
+            "c": "Channel",
+            "d": "Structure"
+          },
+          "correct_answer": "c",
+          "explanation": "Tesla selling directly to consumers changes how the product reaches customers, making it an innovation in Channel. The other types do not fit."
+        },
+        {
+          "id": "ENT-M2-B078",
+          "question": "In Doblin's framework, Netflix's recommendation engine is an example of innovation in",
+          "options": {
+            "a": "Network",
+            "b": "Profit Model",
+            "c": "Structure",
+            "d": "Customer Engagement"
+          },
+          "correct_answer": "d",
+          "explanation": "Netflix's recommendation engine is an innovation in Customer Engagement because it changes how customers interact with the service. The other types do not fit."
+        },
+        {
+          "id": "ENT-M2-B079",
+          "question": "The four key phases of innovation described in the note are Ideation, Experimentation, Implementation, and",
+          "options": {
+            "a": "Evaluation",
+            "b": "Scaling",
+            "c": "Planning",
+            "d": "Funding"
+          },
+          "correct_answer": "b",
+          "explanation": "The note lists the four key phases of innovation as Ideation, Experimentation, Implementation, and Scaling. The other options are not among the phases."
+        },
+        {
+          "id": "ENT-M2-B080",
+          "question": "According to the note, which phase of innovation is described as 'the birth of innovative ideas'?",
+          "options": {
+            "a": "Ideation",
+            "b": "Experimentation",
+            "c": "Implementation",
+            "d": "Scaling"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes Ideation as the birth of innovative ideas. The other options are later phases."
+        },
+        {
+          "id": "ENT-M2-B081",
+          "question": "Which phase of innovation involves testing ideas and developing prototypes according to the note?",
+          "options": {
+            "a": "Implementation",
+            "b": "Ideation",
+            "c": "Experimentation",
+            "d": "Scaling"
+          },
+          "correct_answer": "c",
+          "explanation": "The note assigns testing ideas and developing prototypes to the Experimentation phase. The other options are other phases."
+        },
+        {
+          "id": "ENT-M2-B082",
+          "question": "In the note, Dropbox creating a simple explainer video to test market interest before building the product is given as an example of which phase?",
+          "options": {
+            "a": "Implementation",
+            "b": "Experimentation",
+            "c": "Ideation",
+            "d": "Scaling"
+          },
+          "correct_answer": "b",
+          "explanation": "Dropbox's explainer video tested market interest cheaply before building the product, which the note gives as an example of the Experimentation phase."
+        },
+        {
+          "id": "ENT-M2-B083",
+          "question": "Which phase of innovation is described in the note as focusing on expanding the reach of a successful innovation?",
+          "options": {
+            "a": "Implementation",
+            "b": "Ideation",
+            "c": "Experimentation",
+            "d": "Scaling"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes expanding the reach of a successful innovation as the Scaling phase. The other options are earlier phases."
+        },
+        {
+          "id": "ENT-M2-B084",
+          "question": "According to the note's distinction table, creativity adds ___ value while innovation adds ___ value.",
+          "options": {
+            "a": "financial value; social value",
+            "b": "social value; financial value",
+            "c": "practical value; potential value",
+            "d": "potential value; practical value"
+          },
+          "correct_answer": "d",
+          "explanation": "The note's distinction table states that creativity adds potential value while innovation adds practical value. The other pairings are incorrect."
+        },
+        {
+          "id": "ENT-M2-B085",
+          "question": "Which of the following is NOT one of the ways innovation manifests in entrepreneurship, as listed in section 2.8 of the note?",
+          "options": {
+            "a": "Product innovation",
+            "b": "Selling the business immediately",
+            "c": "Business model innovation",
+            "d": "Process innovation"
+          },
+          "correct_answer": "b",
+          "explanation": "Section 2.8 lists product, process, and business model innovation as ways innovation manifests. Selling the business immediately is not a way innovation manifests."
+        },
+        {
+          "id": "ENT-M2-B086",
+          "question": "According to the note, Business Model Innovation involves changing the way a business",
+          "options": {
+            "a": "markets to only one customer",
+            "b": "records its accounting entries",
+            "c": "creates, delivers, and captures value",
+            "d": "hires its employees"
+          },
+          "correct_answer": "c",
+          "explanation": "The note defines business model innovation as changing the way a business creates, delivers, and captures value. The other options are unrelated activities."
+        },
+        {
+          "id": "ENT-M2-B087",
+          "question": "According to Module 2's learning objectives, students should be able to differentiate between invention and",
+          "options": {
+            "a": "Copyright",
+            "b": "Discovery",
+            "c": "Innovation",
+            "d": "Patent"
+          },
+          "correct_answer": "c",
+          "explanation": "Module 2's learning objectives require students to differentiate between invention and innovation. The other options are not part of the objective."
+        }
+      ]
+    },
+    {
+      "section_title": "3. Discovering Business Opportunities",
+      "questions": [
+        {
+          "id": "ENT-M3-B088",
+          "question": "According to the note, Barringer and Ireland (2012) define an opportunity as",
+          "options": {
+            "a": "a favourable set of circumstances that creates a need for a new product, service, or business",
+            "b": "any business idea that comes to mind",
+            "c": "a product that is already on the market",
+            "d": "a fully developed business plan"
+          },
+          "correct_answer": "a",
+          "explanation": "The note cites Barringer and Ireland (2012) defining an opportunity as a favourable set of circumstances that creates a need for a new product, service, or business. The other options are not their definition."
+        },
+        {
+          "id": "ENT-M3-B089",
+          "question": "In an 'externally stimulated' business venture, the entrepreneur",
+          "options": {
+            "a": "recognises a market gap and decides to fill it",
+            "b": "waits for the government to start the business",
+            "c": "has no reason for starting the business",
+            "d": "starts a business out of personal interest first"
+          },
+          "correct_answer": "a",
+          "explanation": "In an externally stimulated venture, the entrepreneur recognises a market gap and decides to fill it. The other options describe internal stimulation or other situations."
+        },
+        {
+          "id": "ENT-M3-B090",
+          "question": "In an 'internally stimulated' business venture, the entrepreneur",
+          "options": {
+            "a": "inherits the business from a relative",
+            "b": "starts the business out of personal passion or interest and then looks for a market",
+            "c": "copies a competitor's business",
+            "d": "first finds a market gap before acting"
+          },
+          "correct_answer": "b",
+          "explanation": "In an internally stimulated venture, the entrepreneur starts out of personal passion or interest and then looks for a market. The other options describe external stimulation."
+        },
+        {
+          "id": "ENT-M3-B091",
+          "question": "According to the note, an opportunity has four important qualities: attractive, durable, timely, and",
+          "options": {
+            "a": "only for large firms",
+            "b": "anchored in a product/service that creates value",
+            "c": "impossible to copy",
+            "d": "cheap to start"
+          },
+          "correct_answer": "b",
+          "explanation": "The note lists attractive, durable, timely, and anchored in a product/service that creates value as the four qualities of an opportunity. The other options are not the qualities."
+        },
+        {
+          "id": "ENT-M3-B092",
+          "question": "The 'window of opportunity' described in the note refers to",
+          "options": {
+            "a": "the time an entrepreneur takes to sleep",
+            "b": "the period during which an opportunity is available before competition closes in",
+            "c": "a physical window in the office",
+            "d": "the opening hours of the business"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes the window of opportunity as the period during which an opportunity is available before competition closes in. The other options are literal or unrelated meanings."
+        },
+        {
+          "id": "ENT-M3-B093",
+          "question": "In the input-transformation-output analogy used in the note, the business idea represents the",
+          "options": {
+            "a": "Feedback",
+            "b": "Output",
+            "c": "Input",
+            "d": "Transformation"
+          },
+          "correct_answer": "c",
+          "explanation": "In the analogy, the business idea is the input that is transformed into an opportunity (the output). The other options are the wrong stages."
+        },
+        {
+          "id": "ENT-M3-B094",
+          "question": "Barringer and Ireland (2012), as cited in the note, define an idea as",
+          "options": {
+            "a": "a thought, impression, or notion that may or may not meet the criteria of an opportunity",
+            "b": "a legally protected invention",
+            "c": "the same as an opportunity",
+            "d": "a proven business opportunity"
+          },
+          "correct_answer": "a",
+          "explanation": "The note cites Barringer and Ireland defining an idea as a thought, impression, or notion that may or may not meet the criteria of an opportunity. The other options equate an idea with an opportunity."
+        },
+        {
+          "id": "ENT-M3-B095",
+          "question": "According to the note, which of the following is described as 'the commonest source' of business ideas?",
+          "options": {
+            "a": "Reading science fiction",
+            "b": "Copying an existing successful business",
+            "c": "Waiting for inspiration",
+            "d": "Watching movies"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes copying an existing successful business as the commonest source of business ideas. The other options are not described as such."
+        },
+        {
+          "id": "ENT-M3-B096",
+          "question": "According to the note, copying an existing successful business is a good source of business ideas only if",
+          "options": {
+            "a": "you underprice the original business",
+            "b": "you copy it exactly without any changes",
+            "c": "the original business is small",
+            "d": "there is a market gap or room for improvement in the existing model"
+          },
+          "correct_answer": "d",
+          "explanation": "The note states that copying works only if there is a market gap or room for improvement in the existing model. Blind copying without any change is not advised."
+        },
+        {
+          "id": "ENT-M3-B097",
+          "question": "Which source of business opportunity, described in the note, involves a license granted by a government or company to operate or sell a product?",
+          "options": {
+            "a": "Franchising",
+            "b": "Observation",
+            "c": "Government publications",
+            "d": "Hobbies"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes franchising as a source of business opportunity involving a license to operate or sell a product. The other options are not defined that way."
+        },
+        {
+          "id": "ENT-M3-B098",
+          "question": "According to the note, possession of vocational or professional skills such as plumbing, catering, or web design is a source of business opportunity called",
+          "options": {
+            "a": "Vocation",
+            "b": "Inheritance",
+            "c": "Windfall",
+            "d": "Franchising"
+          },
+          "correct_answer": "a",
+          "explanation": "The note calls possession of vocational or professional skills a source of business opportunity known as vocation. The other options are different sources."
+        },
+        {
+          "id": "ENT-M3-B099",
+          "question": "'Two good brains work better than one' is used in the note to illustrate which source of business opportunity?",
+          "options": {
+            "a": "Franchising",
+            "b": "Joint Effort",
+            "c": "Inheritance",
+            "d": "Observation"
+          },
+          "correct_answer": "b",
+          "explanation": "The note uses the phrase to illustrate joint effort as a source of business opportunity. The other options are not illustrated by the phrase."
+        },
+        {
+          "id": "ENT-M3-B100",
+          "question": "In the note, the example of street food buyers who buy from street vendors because it is cheaper than restaurants illustrates which source of business opportunity?",
+          "options": {
+            "a": "Vocation",
+            "b": "Observation",
+            "c": "Franchising",
+            "d": "Hobbies"
+          },
+          "correct_answer": "b",
+          "explanation": "The note uses the street food example to illustrate observation as a source of business opportunity. The other options are different sources."
+        },
+        {
+          "id": "ENT-M3-B101",
+          "question": "According to the note, becoming conversant with problems associated with existing products and filling the gap is a source of business opportunity known as",
+          "options": {
+            "a": "Franchising",
+            "b": "Work Experience",
+            "c": "Inheritance",
+            "d": "Hobbies"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes becoming conversant with problems of existing products and filling the gap as work experience as a source of business opportunity. The other options are different sources."
+        },
+        {
+          "id": "ENT-M3-B102",
+          "question": "Converting a leisure-time activity into a commercial venture is described in the note as which source of business opportunity?",
+          "options": {
+            "a": "Franchising",
+            "b": "Hobbies",
+            "c": "Observation",
+            "d": "Vocation"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes converting a leisure-time activity into a commercial venture as hobbies as a source of business opportunity. The other options are different sources."
+        },
+        {
+          "id": "ENT-M3-B103",
+          "question": "In the note, market survey (or market research) is described as a systematic way of",
+          "options": {
+            "a": "gathering, analysing, and interpreting information about a market, product, or service",
+            "b": "setting the price of a product",
+            "c": "selling products door to door",
+            "d": "advertising a business"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes a market survey as a systematic way of gathering, analysing, and interpreting information about a market, product, or service. The other options are narrower activities."
+        },
+        {
+          "id": "ENT-M3-B104",
+          "question": "According to the note, a market survey provides answers to two main sets of questions: the Market Question and the",
+          "options": {
+            "a": "Weather Question",
+            "b": "Personnel Question",
+            "c": "Competition Question",
+            "d": "Religion Question"
+          },
+          "correct_answer": "c",
+          "explanation": "The note states that a market survey answers the Market Question and the Competition Question. The other options are not the categories."
+        },
+        {
+          "id": "ENT-M3-B105",
+          "question": "Which of the following questions belongs to the 'Market Question' category in the note's market survey framework?",
+          "options": {
+            "a": "What are competitors' strengths?",
+            "b": "What is the competitors' pricing?",
+            "c": "Who are the likely customers?",
+            "d": "Who are the existing competitors?"
+          },
+          "correct_answer": "c",
+          "explanation": "The note puts 'Who are the likely customers?' under the Market Question. The other options belong to the Competition Question category."
+        },
+        {
+          "id": "ENT-M3-B106",
+          "question": "Which of the following questions belongs to the 'Competition Question' category in the note's market survey framework?",
+          "options": {
+            "a": "What are the customers' needs?",
+            "b": "Who are the existing competitors and how strong are they?",
+            "c": "Who are the likely customers?",
+            "d": "How much can customers pay?"
+          },
+          "correct_answer": "b",
+          "explanation": "The note puts questions about existing competitors and their strength under the Competition Question. The other options belong to the Market Question category."
+        },
+        {
+          "id": "ENT-M3-B107",
+          "question": "In the note, 'Environmental scanning' is defined as",
+          "options": {
+            "a": "the process of cleaning the business environment",
+            "b": "a government environmental regulation",
+            "c": "the study of soil conditions",
+            "d": "the process of gathering information about events and relationships in the environment that will help management plan for the future"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines environmental scanning as gathering information about events and relationships in the environment to help management plan for the future. The other options are literal or unrelated meanings."
+        },
+        {
+          "id": "ENT-M3-B108",
+          "question": "In the note, market research is described as one of the tools of",
+          "options": {
+            "a": "Recruitment",
+            "b": "Accounting",
+            "c": "Tax planning",
+            "d": "Environmental scanning"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes market research as one of the tools of environmental scanning. The other options are not where market research is placed."
+        },
+        {
+          "id": "ENT-M3-B109",
+          "question": "The five elements ('5 Ps') of the marketing mix listed in the note are Product, Price, Place, Promotion, and",
+          "options": {
+            "a": "People",
+            "b": "Packaging",
+            "c": "Profit",
+            "d": "Plan"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists the 5 Ps of the marketing mix as Product, Price, Place, Promotion, and People. The other options are not among the 5 Ps."
+        },
+        {
+          "id": "ENT-M3-B110",
+          "question": "In the note's 5 Ps framework, 'What logistics are needed to deliver the product to the customer?' relates to which element?",
+          "options": {
+            "a": "Promotion",
+            "b": "Price",
+            "c": "Place",
+            "d": "Product"
+          },
+          "correct_answer": "c",
+          "explanation": "Logistics for delivering the product to the customer relate to Place (distribution) in the 5 Ps framework. The other options are different elements."
+        },
+        {
+          "id": "ENT-M3-B111",
+          "question": "In the note's 5 Ps framework, 'What efforts are needed to bring awareness and persuade customers to buy?' relates to which element?",
+          "options": {
+            "a": "Promotion",
+            "b": "Product",
+            "c": "Price",
+            "d": "Place"
+          },
+          "correct_answer": "a",
+          "explanation": "Efforts to bring awareness and persuade customers to buy relate to Promotion in the 5 Ps framework. The other options are different elements."
+        },
+        {
+          "id": "ENT-M3-B112",
+          "question": "According to the note, the promotional mix includes advertising, sales promotion, publicity, and",
+          "options": {
+            "a": "personal selling",
+            "b": "transportation",
+            "c": "packaging",
+            "d": "warehousing"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists the promotional mix as advertising, sales promotion, publicity, and personal selling. The other options are logistics or product functions."
+        },
+        {
+          "id": "ENT-M3-B113",
+          "question": "Which element of the promotional mix is described in the note as 'a non-personal form of promotion that is paid for by the sponsor'?",
+          "options": {
+            "a": "Advertising",
+            "b": "Publicity",
+            "c": "Personal selling",
+            "d": "Sales promotion"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines advertising as a non-personal form of promotion that is paid for by the sponsor. The other options differ in being personal or not paid."
+        },
+        {
+          "id": "ENT-M3-B114",
+          "question": "Which element of the promotional mix is described in the note as aiming 'to marry specific products with specific customers'?",
+          "options": {
+            "a": "Advertising",
+            "b": "Sales promotion",
+            "c": "Personal selling",
+            "d": "Publicity"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes personal selling as aiming to marry specific products with specific customers. The other options are not described that way."
+        },
+        {
+          "id": "ENT-M3-B115",
+          "question": "Which element of the promotional mix is described in the note as being 'concerned with the presentation of the firm's image'?",
+          "options": {
+            "a": "Sales promotion",
+            "b": "Personal selling",
+            "c": "Publicity",
+            "d": "Advertising"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes publicity as being concerned with the presentation of the firm's image. The other options are different elements of the promotional mix."
+        },
+        {
+          "id": "ENT-M3-B116",
+          "question": "According to the note, which element of the promotional mix includes exhibitions, point-of-sale displays, and discounts?",
+          "options": {
+            "a": "Personal selling",
+            "b": "Sales promotion",
+            "c": "Publicity",
+            "d": "Advertising"
+          },
+          "correct_answer": "b",
+          "explanation": "The note lists exhibitions, point-of-sale displays, and discounts under sales promotion. The other options are different elements."
+        },
+        {
+          "id": "ENT-M3-B117",
+          "question": "Which of the following is NOT listed among the considerations for choosing a business opportunity in section 3.4 of the note?",
+          "options": {
+            "a": "Cost of the opportunity",
+            "b": "Revenue potential",
+            "c": "The colour of the office furniture",
+            "d": "Match with personal goals"
+          },
+          "correct_answer": "c",
+          "explanation": "Section 3.4 lists cost of the opportunity, revenue potential, and match with personal goals among the considerations. The colour of office furniture is not a consideration."
+        },
+        {
+          "id": "ENT-M3-B118",
+          "question": "In the note, the requirement for a minimum professional license before an opportunity can be exploited falls under which consideration for choosing a business opportunity?",
+          "options": {
+            "a": "Cost of the opportunity",
+            "b": "Revenue potential",
+            "c": "Legal or Regulatory Constraints",
+            "d": "Market size"
+          },
+          "correct_answer": "c",
+          "explanation": "The note places licensing requirements under legal or regulatory constraints when choosing a business opportunity. The other options are different considerations."
+        },
+        {
+          "id": "ENT-M3-B119",
+          "question": "According to section 3.1 of the note, entrepreneurs commonly make the mistake of building a business around",
+          "options": {
+            "a": "an idea without first confirming it is a viable opportunity",
+            "b": "the needs of the market",
+            "c": "a proven market opportunity",
+            "d": "available financing"
+          },
+          "correct_answer": "a",
+          "explanation": "Section 3.1 states that entrepreneurs commonly build a business around an idea without first confirming it is a viable opportunity. The other options describe correct approaches."
+        },
+        {
+          "id": "ENT-M3-B120",
+          "question": "According to the note, the best approach to opportunity recognition is to",
+          "options": {
+            "a": "copy any trending product",
+            "b": "identify a product or service that the market needs and that matches your skills",
+            "c": "wait for a guaranteed profit",
+            "d": "start any business quickly"
+          },
+          "correct_answer": "b",
+          "explanation": "The note advises identifying a product or service that the market needs and that matches your skills. The other options describe hasty or passive approaches."
+        },
+        {
+          "id": "ENT-M3-B121",
+          "question": "According to the note, a business idea, no matter how novel, cannot become a business opportunity if",
+          "options": {
+            "a": "it is promoted on social media",
+            "b": "it has many competitors",
+            "c": "it does not meet the test of the market (nobody needs it)",
+            "d": "it is new"
+          },
+          "correct_answer": "c",
+          "explanation": "The note states that an idea cannot become an opportunity if it does not meet the test of the market, that is, nobody needs it. The other options are not the condition."
+        },
+        {
+          "id": "ENT-M3-B122",
+          "question": "Which of the following is listed in the note among the 'possible business ideas' in section 3.3.1?",
+          "options": {
+            "a": "Baby-sitting services",
+            "b": "Running a zoo",
+            "c": "Teaching astro-physics only",
+            "d": "Building a rocket"
+          },
+          "correct_answer": "a",
+          "explanation": "Section 3.3.1 lists baby-sitting services among possible business ideas. The other options are not the examples given."
+        },
+        {
+          "id": "ENT-M3-B123",
+          "question": "According to the note, 'Consultants' are described as a major source of business ideas because of their",
+          "options": {
+            "a": "ability to lend money",
+            "b": "specialised knowledge and exposure",
+            "c": "government positions",
+            "d": "political connections"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes consultants as a major source of business ideas because of their specialised knowledge and exposure. The other options are not the reasons given."
+        },
+        {
+          "id": "ENT-M3-B124",
+          "question": "Which of Module 3's learning objectives specifically mentions the ability to conduct a market survey to identify business opportunities?",
+          "options": {
+            "a": "The objective on registering a company",
+            "b": "The objective on conducting market surveys",
+            "c": "The objective on preparing financial statements",
+            "d": "The objective on hiring staff"
+          },
+          "correct_answer": "b",
+          "explanation": "Module 3's objective on conducting market surveys specifically requires the ability to identify business opportunities through market surveys. The other options are not among the objectives."
+        },
+        {
+          "id": "ENT-M3-B125",
+          "question": "According to the note, for an opportunity's window to be available, what condition is required?",
+          "options": {
+            "a": "The market must not already be fully served by competitors",
+            "b": "The product must be imported",
+            "c": "The business must be in a big city",
+            "d": "The entrepreneur must be rich"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that the window is available only when the market is not already fully served by competitors. The other options are not the condition given."
+        },
+        {
+          "id": "ENT-M3-B126",
+          "question": "The note describes the ability to spot business opportunities that others miss as",
+          "options": {
+            "a": "a key entrepreneurial skill",
+            "b": "only for government employees",
+            "c": "a matter of luck only",
+            "d": "impossible to develop"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes spotting opportunities that others miss as a key entrepreneurial skill. The other options contradict the note."
+        },
+        {
+          "id": "ENT-M3-B127",
+          "question": "According to the note, which of the following is NOT one of the elements considered under 'Marketing' in section 3.3.3?",
+          "options": {
+            "a": "Office rent",
+            "b": "Price",
+            "c": "Customer needs",
+            "d": "Promotion"
+          },
+          "correct_answer": "a",
+          "explanation": "Section 3.3.3 considers customer needs, price, and promotion under Marketing. Office rent is a cost element, not a marketing consideration."
+        }
+      ]
+    },
+    {
+      "section_title": "4. Feasibility Study",
+      "questions": [
+        {
+          "id": "ENT-M4-B128",
+          "question": "According to the note, a feasibility study is defined as",
+          "options": {
+            "a": "a project study undertaken to determine the viability of a business idea before committing resources",
+            "b": "an annual company report",
+            "c": "a government policy document",
+            "d": "a study of the feasibility of taxes"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines a feasibility study as a project study undertaken to determine the viability of a business idea before committing resources. The other options are unrelated documents."
+        },
+        {
+          "id": "ENT-M4-B129",
+          "question": "According to the note, a feasibility study is intended to answer how many basic questions?",
+          "options": {
+            "a": "Five",
+            "b": "Twenty",
+            "c": "Two",
+            "d": "Ten"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that a feasibility study answers five basic questions. The other numbers are incorrect."
+        },
+        {
+          "id": "ENT-M4-B130",
+          "question": "Which of the following is one of the five basic questions a feasibility study answers, as listed in the note?",
+          "options": {
+            "a": "What is the weather like?",
+            "b": "Who are the company's lawyers?",
+            "c": "Is there a sufficient market for the product or service?",
+            "d": "When was the company registered?"
+          },
+          "correct_answer": "c",
+          "explanation": "The note lists 'Is there a sufficient market for the product or service?' among the five basic questions. The other options are unrelated questions."
+        },
+        {
+          "id": "ENT-M4-B131",
+          "question": "According to the comparison table in the note, compared to a business plan, a feasibility study should be",
+          "options": {
+            "a": "concise and short",
+            "b": "written in a foreign language",
+            "c": "approved by the government",
+            "d": "long and detailed"
+          },
+          "correct_answer": "a",
+          "explanation": "The comparison table states that a feasibility study should be concise and short compared to the business plan. The other options contradict the table."
+        },
+        {
+          "id": "ENT-M4-B132",
+          "question": "According to the comparison table in the note, a feasibility study is typically conducted",
+          "options": {
+            "a": "only by the tax authorities",
+            "b": "before the business plan",
+            "c": "after the business plan",
+            "d": "after the business has failed"
+          },
+          "correct_answer": "b",
+          "explanation": "The comparison table shows that a feasibility study is conducted before the business plan. The other options are wrong timing."
+        },
+        {
+          "id": "ENT-M4-B133",
+          "question": "According to the comparison table in the note, a business plan (unlike a feasibility study) focuses on",
+          "options": {
+            "a": "only the financial projections",
+            "b": "whether the idea should be pursued at all",
+            "c": "only the marketing mix",
+            "d": "the how, when, and where of running the business"
+          },
+          "correct_answer": "d",
+          "explanation": "The comparison table shows that the business plan focuses on the how, when, and where of running the business, while the feasibility study focuses on whether to pursue the idea. The other options are not the contrast given."
+        },
+        {
+          "id": "ENT-M4-B134",
+          "question": "Which of the following is one of the objectives of a feasibility study listed in section 4.4 of the note?",
+          "options": {
+            "a": "To ascertain the viability of the project before resources are committed",
+            "b": "To register the business",
+            "c": "To advertise the business",
+            "d": "To recruit employees"
+          },
+          "correct_answer": "a",
+          "explanation": "Section 4.4 lists ascertaining the viability of the project before resources are committed among the objectives of a feasibility study. The other options are different activities."
+        },
+        {
+          "id": "ENT-M4-B135",
+          "question": "Under 'Exploring Feasibility' in section 4.6 of the note, 'Economy' refers to the ability of the new system to",
+          "options": {
+            "a": "reduce the number of employees",
+            "b": "reduce costs and be affordable",
+            "c": "reduce government revenue",
+            "d": "increase the price of products"
+          },
+          "correct_answer": "b",
+          "explanation": "Section 4.6 defines economy as the ability of the new system to reduce costs and be affordable. The other options are not the meaning given."
+        },
+        {
+          "id": "ENT-M4-B136",
+          "question": "Under 'Exploring Feasibility' in the note, 'Control' refers to",
+          "options": {
+            "a": "the extent to which the system can be controlled and managed",
+            "b": "government price controls",
+            "c": "the control of the market by competitors",
+            "d": "the number of police officers in the area"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines control as the extent to which the system can be controlled and managed. The other options are literal or unrelated meanings."
+        },
+        {
+          "id": "ENT-M4-B137",
+          "question": "Under 'Exploring Feasibility' in the note, 'Performance' refers to",
+          "options": {
+            "a": "the performance of the stock market",
+            "b": "the performance of employees only",
+            "c": "how well the new system achieves the desired results",
+            "d": "the speed of the internet"
+          },
+          "correct_answer": "c",
+          "explanation": "The note defines performance as how well the new system achieves the desired results. The other options are unrelated meanings."
+        },
+        {
+          "id": "ENT-M4-B138",
+          "question": "Which type of feasibility study, discussed in the note, investigates whether an idea can be implemented considering the available technology, manpower, and time?",
+          "options": {
+            "a": "Economic feasibility",
+            "b": "Scheduling feasibility",
+            "c": "Technical feasibility",
+            "d": "Operational feasibility"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes operational feasibility as considering whether the idea can be implemented with available technology, manpower, and time. The other options are different feasibility types."
+        },
+        {
+          "id": "ENT-M4-B139",
+          "question": "Which type of feasibility study, discussed in the note, uses cost-benefit analysis tools such as NPV (Net Present Value) and IRR?",
+          "options": {
+            "a": "Economic feasibility",
+            "b": "Legal feasibility",
+            "c": "Technical feasibility",
+            "d": "Operational feasibility"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes economic feasibility as using cost-benefit tools such as NPV and IRR. The other options are different feasibility types."
+        },
+        {
+          "id": "ENT-M4-B140",
+          "question": "Which type of feasibility study investigates whether the mandatory deadlines for the project can be met?",
+          "options": {
+            "a": "Market feasibility",
+            "b": "Scheduling feasibility",
+            "c": "Economic feasibility",
+            "d": "Technical feasibility"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes scheduling feasibility as investigating whether mandatory deadlines can be met. The other options are different feasibility types."
+        },
+        {
+          "id": "ENT-M4-B141",
+          "question": "Which type of feasibility study investigates the existence of enough customers and demand for the product?",
+          "options": {
+            "a": "Operational feasibility",
+            "b": "Technical feasibility",
+            "c": "Market feasibility",
+            "d": "Legal feasibility"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes market feasibility as investigating the existence of enough customers and demand. The other options are different feasibility types."
+        },
+        {
+          "id": "ENT-M4-B142",
+          "question": "Which type of feasibility study establishes how the various stakeholders (employees, customers, suppliers) feel about the project?",
+          "options": {
+            "a": "Economic feasibility",
+            "b": "Market feasibility",
+            "c": "Technical feasibility",
+            "d": "Operational feasibility"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes operational feasibility as establishing how stakeholders feel about the project. The other options are different feasibility types."
+        },
+        {
+          "id": "ENT-M4-B143",
+          "question": "In the investment appraisal table in the note, 'the time required to recover the initial investment' describes which criterion?",
+          "options": {
+            "a": "Payback Period",
+            "b": "Internal Rate of Return (IRR)",
+            "c": "Profitability Index",
+            "d": "Net Present Value (NPV)"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines the time required to recover the initial investment as the Payback Period. The other options are different appraisal criteria."
+        },
+        {
+          "id": "ENT-M4-B144",
+          "question": "In the investment appraisal table, 'the difference between the present value of benefits and the present value of costs' describes which criterion?",
+          "options": {
+            "a": "Net Present Value (NPV)",
+            "b": "Internal Rate of Return (IRR)",
+            "c": "Payback Period",
+            "d": "Return on Investment"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines the difference between present value of benefits and costs as Net Present Value (NPV). The other options are different criteria."
+        },
+        {
+          "id": "ENT-M4-B145",
+          "question": "In the investment appraisal table, 'the discount rate that makes the net present value of all cash flows equal to zero' describes which criterion?",
+          "options": {
+            "a": "Net Present Value (NPV)",
+            "b": "Profitability Index",
+            "c": "Payback Period",
+            "d": "Internal Rate of Return (IRR)"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines the discount rate that makes NPV zero as the Internal Rate of Return (IRR). The other options are different criteria."
+        },
+        {
+          "id": "ENT-M4-B146",
+          "question": "In the investment appraisal table, 'the ratio of benefits to costs' describes which criterion?",
+          "options": {
+            "a": "Payback Period",
+            "b": "Profitability Index",
+            "c": "Net Present Value (NPV)",
+            "d": "Internal Rate of Return (IRR)"
+          },
+          "correct_answer": "b",
+          "explanation": "The note defines the ratio of benefits to costs as the Profitability Index. The other options are different criteria."
+        },
+        {
+          "id": "ENT-M4-B147",
+          "question": "In the note, 'Return on Investment' (ROI) as an investment appraisal criterion measures",
+          "options": {
+            "a": "the time taken to recover an investment",
+            "b": "the profit generated from an investment relative to the amount invested",
+            "c": "the market share of the business",
+            "d": "the discount rate of the investment"
+          },
+          "correct_answer": "b",
+          "explanation": "The note defines ROI as the profit generated from an investment relative to the amount invested. The other options describe other criteria."
+        },
+        {
+          "id": "ENT-M4-B148",
+          "question": "According to the feasibility study outline in the note, which section is 'a summary of all key sections of the feasibility study'?",
+          "options": {
+            "a": "Marketing Plan",
+            "b": "Executive Summary",
+            "c": "Company Description",
+            "d": "Financial Plan"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes the Executive Summary as a summary of all key sections of the feasibility study. The other options are specific sections, not summaries."
+        },
+        {
+          "id": "ENT-M4-B149",
+          "question": "According to the feasibility study outline, which section 'lists the key managers, their titles, and responsibilities'?",
+          "options": {
+            "a": "Industry Analysis",
+            "b": "Financial Plan",
+            "c": "Executive Summary",
+            "d": "Organization and Management"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the Organization and Management section as listing key managers, their titles, and responsibilities. The other options are different sections."
+        },
+        {
+          "id": "ENT-M4-B150",
+          "question": "According to the feasibility study outline, which section describes the direct and indirect competition the business will face?",
+          "options": {
+            "a": "Executive Summary",
+            "b": "Company Description",
+            "c": "Industry Analysis",
+            "d": "Legal Structure"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the Industry Analysis section as covering direct and indirect competition. The other options are different sections."
+        },
+        {
+          "id": "ENT-M4-B151",
+          "question": "According to the feasibility study outline, which section outlines the government regulations the business must comply with?",
+          "options": {
+            "a": "Marketing Plan",
+            "b": "Financial Plan",
+            "c": "Executive Summary",
+            "d": "Legal and Regulatory Requirements"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the Legal and Regulatory Requirements section as outlining government regulations the business must comply with. The other options are different sections."
+        },
+        {
+          "id": "ENT-M4-B152",
+          "question": "According to the note, the final recommendations section of a feasibility study should be",
+          "options": {
+            "a": "a copy of the executive summary",
+            "b": "vague and general",
+            "c": "written by the government",
+            "d": "clear, specific, and actionable"
+          },
+          "correct_answer": "d",
+          "explanation": "The note advises that the recommendations section should be clear, specific, and actionable. The other options contradict that advice."
+        },
+        {
+          "id": "ENT-M4-B153",
+          "question": "Which of the following is listed among the importance of feasibility studies in section 4.9 of the note?",
+          "options": {
+            "a": "It guarantees instant profit",
+            "b": "It removes all business risks",
+            "c": "It replaces the need for a business plan",
+            "d": "It helps to avoid wasting resources on non-viable projects"
+          },
+          "correct_answer": "d",
+          "explanation": "Section 4.9 lists avoiding the waste of resources on non-viable projects among the importance of feasibility studies. The other options overstate what a feasibility study does."
+        },
+        {
+          "id": "ENT-M4-B154",
+          "question": "According to the note, the first step in conducting a feasibility study (section 4.10) is",
+          "options": {
+            "a": "Purchasing equipment",
+            "b": "Conducting a preliminary analysis",
+            "c": "Preparing financial projections",
+            "d": "Hiring staff"
+          },
+          "correct_answer": "b",
+          "explanation": "Section 4.10 lists conducting a preliminary analysis as the first step in a feasibility study. The other options come later."
+        },
+        {
+          "id": "ENT-M4-B155",
+          "question": "Which step in the feasibility study process 'evaluates the market potential of the project and determines demand'?",
+          "options": {
+            "a": "Market Feasibility Analysis",
+            "b": "Technical Feasibility Analysis",
+            "c": "Legal Feasibility Analysis",
+            "d": "Financial Feasibility Analysis"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the market feasibility analysis as evaluating market potential and demand. The other options are different steps."
+        },
+        {
+          "id": "ENT-M4-B156",
+          "question": "Which step in the feasibility study process 'determines whether the business has access to the technology and equipment needed'?",
+          "options": {
+            "a": "Technical Feasibility Analysis",
+            "b": "Organizational Feasibility Analysis",
+            "c": "Go/No-Go Decision",
+            "d": "Market Feasibility Analysis"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the technical feasibility analysis as determining access to technology and equipment. The other options are different steps."
+        },
+        {
+          "id": "ENT-M4-B157",
+          "question": "Which step in the feasibility study process 'considers the organizational structure, staffing requirements, and management team'?",
+          "options": {
+            "a": "Financial Feasibility Analysis",
+            "b": "Technical Feasibility Analysis",
+            "c": "Market Feasibility Analysis",
+            "d": "Organizational Feasibility Analysis"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the organizational feasibility analysis as considering structure, staffing, and management. The other options are different steps."
+        },
+        {
+          "id": "ENT-M4-B158",
+          "question": "Which step in the feasibility study process 'involves preparing projected income statements, cash flow forecasts, and balance sheets'?",
+          "options": {
+            "a": "Financial Feasibility Analysis",
+            "b": "Organizational Feasibility Analysis",
+            "c": "Legal Feasibility Analysis",
+            "d": "Market Feasibility Analysis"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the financial feasibility analysis as preparing projected income statements, cash flow forecasts, and balance sheets. The other options are different steps."
+        },
+        {
+          "id": "ENT-M4-B159",
+          "question": "According to the note, the final step of the feasibility study process is",
+          "options": {
+            "a": "The Go/No-Go Decision",
+            "b": "The Market Analysis",
+            "c": "The Hiring of Staff",
+            "d": "The Purchase of Equipment"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that the Go/No-Go Decision is the final step of the feasibility study process. The other options are earlier steps."
+        },
+        {
+          "id": "ENT-M4-B160",
+          "question": "In the note, SWOT is an acronym for",
+          "options": {
+            "a": "Savings, Wealth, Options, and Time",
+            "b": "Strengths, Weaknesses, Opportunities, and Threats",
+            "c": "Sales, Wages, Output, and Taxes",
+            "d": "Strengths, Wages, Opportunities, and Threats"
+          },
+          "correct_answer": "b",
+          "explanation": "The note defines SWOT as Strengths, Weaknesses, Opportunities, and Threats. The other expansions are incorrect."
+        },
+        {
+          "id": "ENT-M4-B161",
+          "question": "In the SWOT analysis in the note, which two components are internal factors?",
+          "options": {
+            "a": "Strengths and Threats",
+            "b": "Opportunities and Threats",
+            "c": "Strengths and Weaknesses",
+            "d": "Weaknesses and Opportunities"
+          },
+          "correct_answer": "c",
+          "explanation": "In SWOT analysis, strengths and weaknesses are internal factors. Opportunities and threats are external."
+        },
+        {
+          "id": "ENT-M4-B162",
+          "question": "In the SWOT analysis in the note, which two components are external factors?",
+          "options": {
+            "a": "Strengths and Weaknesses",
+            "b": "Threats and Weaknesses",
+            "c": "Opportunities and Strengths",
+            "d": "Opportunities and Threats"
+          },
+          "correct_answer": "d",
+          "explanation": "In SWOT analysis, opportunities and threats are external factors. Strengths and weaknesses are internal."
+        },
+        {
+          "id": "ENT-M4-B163",
+          "question": "In the SWOT example in the note, 'insufficient capital' and 'lack of entrepreneurial experience' are classified under",
+          "options": {
+            "a": "Opportunities",
+            "b": "Strengths",
+            "c": "Weaknesses",
+            "d": "Threats"
+          },
+          "correct_answer": "c",
+          "explanation": "Insufficient capital and lack of experience are internal negatives, so they are classified as weaknesses in SWOT. The other options are not the fit."
+        },
+        {
+          "id": "ENT-M4-B164",
+          "question": "In the SWOT example in the note, 'government incentives and grants' and 'population growth' are classified under",
+          "options": {
+            "a": "Weaknesses",
+            "b": "Threats",
+            "c": "Strengths",
+            "d": "Opportunities"
+          },
+          "correct_answer": "d",
+          "explanation": "Government incentives and population growth are favourable external factors, so they are opportunities in SWOT. The other options are not the fit."
+        },
+        {
+          "id": "ENT-M4-B165",
+          "question": "In the SWOT example in the note, 'intense competition' and 'political instability' are classified under",
+          "options": {
+            "a": "Opportunities",
+            "b": "Weaknesses",
+            "c": "Threats",
+            "d": "Strengths"
+          },
+          "correct_answer": "c",
+          "explanation": "Intense competition and political instability are unfavourable external factors, so they are threats in SWOT. The other options are not the fit."
+        },
+        {
+          "id": "ENT-M4-B166",
+          "question": "In the SWOT example in the note, 'strong managerial expertise' and 'proprietary technology or patents' are classified under",
+          "options": {
+            "a": "Threats",
+            "b": "Strengths",
+            "c": "Opportunities",
+            "d": "Weaknesses"
+          },
+          "correct_answer": "b",
+          "explanation": "Strong managerial expertise and proprietary technology are internal positives, so they are strengths in SWOT. The other options are not the fit."
+        },
+        {
+          "id": "ENT-M4-B167",
+          "question": "In the SWOT analysis in the note, the key question for the 'Strengths' component is",
+          "options": {
+            "a": "What external factors could hurt the business?",
+            "b": "What does the business do badly?",
+            "c": "What are the market opportunities?",
+            "d": "What does the business do well?"
+          },
+          "correct_answer": "d",
+          "explanation": "The note frames strengths with the question 'What does the business do well?'. The other questions relate to other SWOT components."
+        },
+        {
+          "id": "ENT-M4-B168",
+          "question": "In the SWOT analysis in the note, the key question for the 'Threats' component is",
+          "options": {
+            "a": "What are the growth opportunities?",
+            "b": "What external factors could harm the business?",
+            "c": "What could the business improve?",
+            "d": "What does the business do well?"
+          },
+          "correct_answer": "b",
+          "explanation": "The note frames threats with the question 'What external factors could harm the business?'. The other questions relate to other SWOT components."
+        }
+      ]
+    },
+    {
+      "section_title": "5. Business Planning",
+      "questions": [
+        {
+          "id": "ENT-M5-B169",
+          "question": "According to the note, a business plan is defined as",
+          "options": {
+            "a": "a government permit to operate",
+            "b": "a document used only for tax purposes",
+            "c": "a list of employees and their salaries",
+            "d": "a written document describing the nature of the business, the sales and marketing strategy, and the financial background, containing a projected profit and loss statement"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines a business plan as a written document describing the nature of the business, the sales and marketing strategy, and the financial background, including a projected profit and loss statement. The other options are unrelated documents."
+        },
+        {
+          "id": "ENT-M5-B170",
+          "question": "According to the note, a business plan answers four core questions. Which of the following is one of them?",
+          "options": {
+            "a": "What colour is the logo?",
+            "b": "What is the weather like?",
+            "c": "Who is the best footballer?",
+            "d": "What is the current state of the business?"
+          },
+          "correct_answer": "d",
+          "explanation": "The note lists 'What is the current state of the business?' among the four core questions a business plan answers. The other options are irrelevant questions."
+        },
+        {
+          "id": "ENT-M5-B171",
+          "question": "Which use of a business plan is described in the note as serving 'as a basis for discussion and communication with key stakeholders such as banks, investors, and partners'?",
+          "options": {
+            "a": "Communication",
+            "b": "Strategic guidance",
+            "c": "Feasibility reassessment",
+            "d": "Benchmarking"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists communication as the use of a business plan for discussion with stakeholders. The other options are different uses."
+        },
+        {
+          "id": "ENT-M5-B172",
+          "question": "Which use of a business plan is described in the note as forcing 'an entrepreneur to clarify, focus, and research the viability of the business'?",
+          "options": {
+            "a": "Strategic guidance",
+            "b": "Feasibility reassessment",
+            "c": "Benchmarking",
+            "d": "Communication"
+          },
+          "correct_answer": "b",
+          "explanation": "The note lists feasibility reassessment as forcing the entrepreneur to clarify, focus, and research viability. The other options are different uses."
+        },
+        {
+          "id": "ENT-M5-B173",
+          "question": "According to the note, 'no professional lender or investor will provide funding without seeing a well-developed business plan' relates to which use of a business plan?",
+          "options": {
+            "a": "Strategic guidance",
+            "b": "Communication",
+            "c": "Attracting debt or equity financing",
+            "d": "Benchmarking"
+          },
+          "correct_answer": "c",
+          "explanation": "The note links lender and investor requirements to attracting debt or equity financing. The other options are different uses."
+        },
+        {
+          "id": "ENT-M5-B174",
+          "question": "Which use of a business plan provides 'management with an objective basis for making day-to-day decisions'?",
+          "options": {
+            "a": "Feasibility reassessment",
+            "b": "Attracting financing",
+            "c": "Communication",
+            "d": "Strategic guidance"
+          },
+          "correct_answer": "d",
+          "explanation": "The note lists strategic guidance as providing an objective basis for day-to-day decisions. The other options are different uses."
+        },
+        {
+          "id": "ENT-M5-B175",
+          "question": "Which use of a business plan provides 'a framework against which actual performance can be measured'?",
+          "options": {
+            "a": "Benchmarking",
+            "b": "Strategic guidance",
+            "c": "Communication",
+            "d": "Attracting financing"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists benchmarking as providing a framework against which performance can be measured. The other options are different uses."
+        },
+        {
+          "id": "ENT-M5-B176",
+          "question": "According to the 'who reads a business plan' table in the note, banks and lenders primarily look for",
+          "options": {
+            "a": "a large number of employees",
+            "b": "the ability to repay the loan and a strong cash flow",
+            "c": "a high-risk venture",
+            "d": "a colourful presentation"
+          },
+          "correct_answer": "b",
+          "explanation": "The table shows banks and lenders primarily looking for the ability to repay the loan and a strong cash flow. The other options are not what lenders look for."
+        },
+        {
+          "id": "ENT-M5-B177",
+          "question": "According to the 'who reads a business plan' table, equity investors primarily look for",
+          "options": {
+            "a": "immediate repayment",
+            "b": "government guarantees",
+            "c": "high growth potential and a good return on investment",
+            "d": "low growth potential"
+          },
+          "correct_answer": "c",
+          "explanation": "The table shows equity investors primarily looking for high growth potential and a good return on investment. The other options are not what equity investors look for."
+        },
+        {
+          "id": "ENT-M5-B178",
+          "question": "According to the 'who reads a business plan' table, grant providers primarily look for",
+          "options": {
+            "a": "the entrepreneur's personal lifestyle",
+            "b": "the colour of the business card",
+            "c": "the number of cars owned",
+            "d": "the social impact and how the grant will be used"
+          },
+          "correct_answer": "d",
+          "explanation": "The table shows grant providers primarily looking for the social impact and how the grant will be used. The other options are not what grant providers look for."
+        },
+        {
+          "id": "ENT-M5-B179",
+          "question": "According to the 'who reads a business plan' table, government agencies such as SMEDAN and NEXIM primarily look for",
+          "options": {
+            "a": "the entrepreneur's political party",
+            "b": "the entrepreneur's marital status",
+            "c": "the number of children of the entrepreneur",
+            "d": "job creation potential and compliance with government programmes"
+          },
+          "correct_answer": "d",
+          "explanation": "The table shows government agencies looking for job creation potential and compliance with government programmes. The other options are personal details, not business concerns."
+        },
+        {
+          "id": "ENT-M5-B180",
+          "question": "Which type of business plan, described in the note, is 'a one to three page summary of the key points' of the business?",
+          "options": {
+            "a": "The Operational Plan",
+            "b": "The Feasibility Plan",
+            "c": "The Standard Plan",
+            "d": "The Mini Plan"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the mini plan as a one to three page summary of the key points. The other options are different plan types."
+        },
+        {
+          "id": "ENT-M5-B181",
+          "question": "Which type of business plan is 'the complete document with all the sections and detailed financials' according to the note?",
+          "options": {
+            "a": "The Standard (Full) Plan",
+            "b": "The Mini Plan",
+            "c": "The Internal Plan",
+            "d": "The Feasibility Plan"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the standard (full) plan as the complete document with all sections and detailed financials. The other options are different plan types."
+        },
+        {
+          "id": "ENT-M5-B182",
+          "question": "Which type of business plan focuses on launching a new venture from zero?",
+          "options": {
+            "a": "Feasibility Plan",
+            "b": "Growth Plan",
+            "c": "Operational Plan",
+            "d": "Start-up Plan"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the start-up plan as focusing on launching a new venture from zero. The other options are different plan types."
+        },
+        {
+          "id": "ENT-M5-B183",
+          "question": "Which type of business plan is described in the note as a 'detailed plan for the day-to-day running of the business'?",
+          "options": {
+            "a": "Start-up Plan",
+            "b": "Mini Plan",
+            "c": "Operational (Internal) Plan",
+            "d": "Growth Plan"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the operational (internal) plan as the detailed plan for day-to-day running. The other options are different plan types."
+        },
+        {
+          "id": "ENT-M5-B184",
+          "question": "Which type of business plan is used for 'scaling an existing business to the next level' according to the note?",
+          "options": {
+            "a": "Feasibility Plan",
+            "b": "Start-up Plan",
+            "c": "Operational Plan",
+            "d": "Growth (Expansion) Plan"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the growth (expansion) plan as being used for scaling an existing business. The other options are different plan types."
+        },
+        {
+          "id": "ENT-M5-B185",
+          "question": "Which type of business plan 'tests whether an idea is worth pursuing before a full plan is written'?",
+          "options": {
+            "a": "Feasibility Plan",
+            "b": "Growth Plan",
+            "c": "Mini Plan",
+            "d": "Operational Plan"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the feasibility plan as testing whether an idea is worth pursuing before a full plan is written. The other options are different plan types."
+        },
+        {
+          "id": "ENT-M5-B186",
+          "question": "According to the note, entrepreneurs are always advised to write their own business plans mainly in order to",
+          "options": {
+            "a": "understand the business deeply and take ownership",
+            "b": "save the cost of hiring writers",
+            "c": "impress the government",
+            "d": "avoid answering questions"
+          },
+          "correct_answer": "a",
+          "explanation": "The note advises entrepreneurs to write their own plans to understand the business deeply and take ownership. The other options are not the main reason given."
+        },
+        {
+          "id": "ENT-M5-B187",
+          "question": "According to the note, which section of a business plan is 'normally the largest part'?",
+          "options": {
+            "a": "Table of Contents",
+            "b": "Cover Page",
+            "c": "Situational Analysis",
+            "d": "Executive Summary"
+          },
+          "correct_answer": "c",
+          "explanation": "The note states that the situational analysis is normally the largest part of a business plan. The other options are shorter sections."
+        },
+        {
+          "id": "ENT-M5-B188",
+          "question": "Which section of a business plan 'defines where the entrepreneur wants to be in the next few years'?",
+          "options": {
+            "a": "Financial Plan",
+            "b": "Executive Summary",
+            "c": "Business Proposition",
+            "d": "Situational Analysis"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the business proposition as defining where the entrepreneur wants to be in the next few years. The other options are different sections."
+        },
+        {
+          "id": "ENT-M5-B189",
+          "question": "Which section of a business plan describes how the product/service will be packaged, promoted, priced, and distributed?",
+          "options": {
+            "a": "Executive Summary",
+            "b": "Organizational Plan",
+            "c": "Situational Analysis",
+            "d": "Marketing and Sales Plan"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes the marketing and sales plan as covering packaging, promotion, pricing, and distribution. The other options are different sections."
+        },
+        {
+          "id": "ENT-M5-B190",
+          "question": "According to the note, common risks for Nigerian SMEs include business risk, financial risk, legal and regulatory risk, and",
+          "options": {
+            "a": "Operational risk",
+            "b": "Astronomical risk",
+            "c": "Weather risk",
+            "d": "Political gossip risk"
+          },
+          "correct_answer": "a",
+          "explanation": "The note lists business, financial, legal and regulatory, and operational risk as common risks for Nigerian SMEs. The other options are not the risks listed."
+        },
+        {
+          "id": "ENT-M5-B191",
+          "question": "Which financial statement in the note 'lists the assets and liabilities of the business at the beginning of the venture'?",
+          "options": {
+            "a": "Balance Sheet",
+            "b": "Income Statement",
+            "c": "Cash Flow Statement",
+            "d": "Sales Forecast"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes the balance sheet as listing the assets and liabilities at the beginning of the venture. The other options are different statements."
+        },
+        {
+          "id": "ENT-M5-B192",
+          "question": "Which financial statement in the note 'outlines the projected sales and expenses of the business over time'?",
+          "options": {
+            "a": "Balance Sheet",
+            "b": "Bank Statement",
+            "c": "Projected Income Statement (Profit and Loss)",
+            "d": "Cash Flow Statement"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the projected income statement (profit and loss) as outlining projected sales and expenses. The other options are different statements."
+        },
+        {
+          "id": "ENT-M5-B193",
+          "question": "Which financial statement in the note 'forecasts the cash inflows and outflows of the business'?",
+          "options": {
+            "a": "Income Statement",
+            "b": "Balance Sheet",
+            "c": "Projected Cash Flow Statement",
+            "d": "Inventory List"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes the projected cash flow statement as forecasting cash inflows and outflows. The other options are different statements."
+        },
+        {
+          "id": "ENT-M5-B194",
+          "question": "According to the note, the break-even point is defined as",
+          "options": {
+            "a": "the point where a business closes",
+            "b": "the point at which total revenue equals total cost (no profit, no loss)",
+            "c": "the point where a business makes maximum profit",
+            "d": "the point where a business is sold"
+          },
+          "correct_answer": "b",
+          "explanation": "The note defines the break-even point as the point at which total revenue equals total cost, so there is no profit and no loss. The other options describe different situations."
+        },
+        {
+          "id": "ENT-M5-B195",
+          "question": "According to the note, the break-even point is calculated by dividing fixed costs by the",
+          "options": {
+            "a": "Total number of employees",
+            "b": "Contribution per unit (selling price minus variable cost)",
+            "c": "Total revenue",
+            "d": "Market share"
+          },
+          "correct_answer": "b",
+          "explanation": "The note states that the break-even point is fixed costs divided by the contribution per unit (selling price minus variable cost). The other options are not the divisor."
+        },
+        {
+          "id": "ENT-M5-B196",
+          "question": "In the break-even worked example in the note, with a selling price of N1,000 and variable cost of N400, the contribution per unit is",
+          "options": {
+            "a": "N1,000",
+            "b": "N1,400",
+            "c": "N400",
+            "d": "N600"
+          },
+          "correct_answer": "d",
+          "explanation": "Contribution per unit is selling price minus variable cost, which is N1,000 minus N400 equals N600. The other options are not the difference."
+        },
+        {
+          "id": "ENT-M5-B197",
+          "question": "In the break-even worked example in the note, with fixed costs of N300,000 and a contribution per unit of N600, the business must sell how many units per month to break even?",
+          "options": {
+            "a": "1,000 units",
+            "b": "500 units",
+            "c": "300 units",
+            "d": "600 units"
+          },
+          "correct_answer": "b",
+          "explanation": "The break-even point in units is fixed costs divided by contribution per unit: N300,000 divided by N600 equals 500 units. The other options are wrong divisions."
+        },
+        {
+          "id": "ENT-M5-B198",
+          "question": "According to the note, 'gross profit as a percentage of revenue' describes which key financial indicator?",
+          "options": {
+            "a": "Gross Profit Margin",
+            "b": "Return on Investment",
+            "c": "Payback Period",
+            "d": "Net Profit Margin"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines gross profit as a percentage of revenue as the gross profit margin. The other options are different indicators."
+        },
+        {
+          "id": "ENT-M5-B199",
+          "question": "According to the note, 'net profit as a percentage of revenue' describes which key financial indicator?",
+          "options": {
+            "a": "Break-even Point",
+            "b": "Payback Period",
+            "c": "Net Profit Margin",
+            "d": "Gross Profit Margin"
+          },
+          "correct_answer": "c",
+          "explanation": "The note defines net profit as a percentage of revenue as the net profit margin. The other options are different indicators."
+        },
+        {
+          "id": "ENT-M5-B200",
+          "question": "According to the note, 'how long it takes for cumulative profit to recover the initial investment' describes which key financial indicator?",
+          "options": {
+            "a": "Return on Investment",
+            "b": "Gross Profit Margin",
+            "c": "Net Profit Margin",
+            "d": "Payback Period"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines the time for cumulative profit to recover the initial investment as the payback period. The other options are different indicators."
+        },
+        {
+          "id": "ENT-M5-B201",
+          "question": "According to the note, 'the net gain relative to the amount invested' describes which key financial indicator?",
+          "options": {
+            "a": "Payback Period",
+            "b": "Gross Profit Margin",
+            "c": "Net Profit Margin",
+            "d": "Return on Investment (ROI)"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines the net gain relative to the amount invested as Return on Investment (ROI). The other options are different indicators."
+        },
+        {
+          "id": "ENT-M5-B202",
+          "question": "According to the note, which source of finance is 'the most common starting capital; it has no interest but is limited in size'?",
+          "options": {
+            "a": "Personal Savings and Family",
+            "b": "Venture Capital",
+            "c": "Trade Credit",
+            "d": "Commercial Bank Loans"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes personal savings and family as the most common starting capital, with no interest but limited size. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B203",
+          "question": "According to the note, which source of finance requires collateral and a strong business plan, and attracts interest?",
+          "options": {
+            "a": "Grants",
+            "b": "Family Contributions",
+            "c": "Personal Savings",
+            "d": "Commercial Bank Loans"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes commercial bank loans as requiring collateral and a strong business plan while attracting interest. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B204",
+          "question": "According to the note, which source of finance is described as 'development finance for SMEs, often at concessional rates' and is provided by institutions such as the Bank of Industry?",
+          "options": {
+            "a": "Trade Credit",
+            "b": "Personal Savings",
+            "c": "Commercial Banks",
+            "d": "Development Banks (e.g., BOI)"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes development banks such as the Bank of Industry as providing development finance for SMEs at concessional rates. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B205",
+          "question": "According to the note, which source of finance is described as providing 'smaller loans for micro and small enterprises', with examples such as NIRSAL and LAPO?",
+          "options": {
+            "a": "Commercial Banks",
+            "b": "Microfinance Banks",
+            "c": "Angel Investors",
+            "d": "Development Banks"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes microfinance banks as providing smaller loans for micro and small enterprises, with NIRSAL and LAPO as examples. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B206",
+          "question": "According to the note, which source of finance is 'non-repayable' and is exemplified by the Tony Elumelu Foundation?",
+          "options": {
+            "a": "Grants and Competitions",
+            "b": "Commercial Bank Loans",
+            "c": "Trade Credit",
+            "d": "Family Savings"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes grants and competitions as non-repayable, with the Tony Elumelu Foundation as an example. The other options are repayable sources."
+        },
+        {
+          "id": "ENT-M5-B207",
+          "question": "According to the note, which source of finance is described as 'group savings and rotating credit'?",
+          "options": {
+            "a": "Venture Capital",
+            "b": "Microfinance Banks",
+            "c": "Cooperatives and Thrift Savings",
+            "d": "Commercial Banks"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes cooperatives and thrift savings as group savings and rotating credit. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B208",
+          "question": "According to the note, which source of finance is described as 'equity funding for high-growth, scalable ventures' provided by individuals or firms who take shares?",
+          "options": {
+            "a": "Commercial Bank Loans",
+            "b": "Microfinance Banks",
+            "c": "Angel Investors and Venture Capital",
+            "d": "Trade Credit"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes angel investors and venture capital as equity funding for high-growth, scalable ventures in exchange for shares. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B209",
+          "question": "According to the note, which source of finance involves suppliers allowing the business to pay for goods after delivery?",
+          "options": {
+            "a": "Microfinance Loans",
+            "b": "Personal Savings",
+            "c": "Trade Credit",
+            "d": "Grants"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes trade credit as suppliers allowing the business to pay for goods after delivery. The other options are different sources."
+        },
+        {
+          "id": "ENT-M5-B210",
+          "question": "According to the note, the vision of a business is described as the long-term aspiration, while the mission is described as",
+          "options": {
+            "a": "the name of the business",
+            "b": "the short-term profit target",
+            "c": "the number of employees",
+            "d": "the purpose and reason for the business's existence"
+          },
+          "correct_answer": "d",
+          "explanation": "The note contrasts vision (long-term aspiration) with mission as the purpose and reason for the business's existence. The other options are not the definition of mission."
+        }
+      ]
+    },
+    {
+      "section_title": "6. Financing the Start-Up",
+      "questions": [
+        {
+          "id": "ENT-M6-B211",
+          "question": "According to the note, entrepreneurial finance is defined as",
+          "options": {
+            "a": "the application of financial management principles to the funding, investing, and operations of an entrepreneurial venture",
+            "b": "the management of a bank",
+            "c": "the calculation of personal income tax",
+            "d": "the study of government budgets"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines entrepreneurial finance as the application of financial management principles to the funding, investing, and operations of an entrepreneurial venture. The other options are unrelated to the definition."
+        },
+        {
+          "id": "ENT-M6-B212",
+          "question": "Unlike traditional corporate finance, entrepreneurial finance focuses on",
+          "options": {
+            "a": "matured, listed companies only",
+            "b": "government-owned enterprises",
+            "c": "only large multinational corporations",
+            "d": "start-ups, growth companies, and early-stage ventures"
+          },
+          "correct_answer": "d",
+          "explanation": "The note states that entrepreneurial finance focuses on start-ups, growth companies, and early-stage ventures, unlike corporate finance. The other options describe corporate finance."
+        },
+        {
+          "id": "ENT-M6-B213",
+          "question": "According to the note, which source of entrepreneurial financing is divided into savings and inherited wealth?",
+          "options": {
+            "a": "Venture capital",
+            "b": "Bank loans",
+            "c": "Personal savings",
+            "d": "Trade credit"
+          },
+          "correct_answer": "c",
+          "explanation": "The note divides personal savings into savings and inherited wealth. The other options are different sources."
+        },
+        {
+          "id": "ENT-M6-B214",
+          "question": "According to the note, an entrepreneur's willingness to sell off personal assets (such as cars and houses) is considered part of",
+          "options": {
+            "a": "Personal financing",
+            "b": "Trade credit",
+            "c": "Government grants",
+            "d": "Bank financing"
+          },
+          "correct_answer": "a",
+          "explanation": "The note treats selling personal assets as part of personal financing for the start-up. The other options are different sources."
+        },
+        {
+          "id": "ENT-M6-B215",
+          "question": "Which informal source of financing is popularly called Osusu or Esusu in Nigeria, according to the note?",
+          "options": {
+            "a": "Commercial bank loans",
+            "b": "Stock market listings",
+            "c": "Venture capital",
+            "d": "Rotating savings and credit associations (ROSCA)"
+          },
+          "correct_answer": "d",
+          "explanation": "The note identifies rotating savings and credit associations (ROSCA), popularly called Osusu or Esusu, as an informal source of financing. The other options are formal sources."
+        },
+        {
+          "id": "ENT-M6-B216",
+          "question": "According to the note, rotating credit schemes can be risky for members because they",
+          "options": {
+            "a": "are only available to the rich",
+            "b": "depend on trust, so members can disappear with the money",
+            "c": "charge very high interest",
+            "d": "require a collateral property"
+          },
+          "correct_answer": "b",
+          "explanation": "The note warns that rotating credit schemes depend on trust, so members can disappear with the money. The other options are not the risk described."
+        },
+        {
+          "id": "ENT-M6-B217",
+          "question": "According to the note, trade credit is created when",
+          "options": {
+            "a": "a bank gives a mortgage",
+            "b": "a new business buys raw materials or goods on credit from suppliers",
+            "c": "the government issues bonds",
+            "d": "shares are sold on the stock exchange"
+          },
+          "correct_answer": "b",
+          "explanation": "The note states that trade credit is created when a new business buys raw materials or goods on credit from suppliers. The other options describe other financing mechanisms."
+        },
+        {
+          "id": "ENT-M6-B218",
+          "question": "In the note, trade credit is described as",
+          "options": {
+            "a": "a form of government tax",
+            "b": "a common informal source of financing for new businesses",
+            "c": "a type of personal savings",
+            "d": "an illegal practice"
+          },
+          "correct_answer": "b",
+          "explanation": "The note describes trade credit as a common informal source of financing for new businesses. The other options are incorrect descriptions."
+        },
+        {
+          "id": "ENT-M6-B219",
+          "question": "According to the note, 'accruals' as a source of financing refer to",
+          "options": {
+            "a": "money given by the government",
+            "b": "dividends paid to shareholders",
+            "c": "shares sold to the public",
+            "d": "amounts owed by the business for services already received but not yet paid for"
+          },
+          "correct_answer": "d",
+          "explanation": "The note defines accruals as amounts owed by the business for services already received but not yet paid for. The other options are different financing items."
+        },
+        {
+          "id": "ENT-M6-B220",
+          "question": "Which source of financing, described in the note, allows people to save gradually and obtain loans from their pooled funds?",
+          "options": {
+            "a": "Venture capital",
+            "b": "Commercial banks",
+            "c": "Microfinance institutions (MFIs)",
+            "d": "Bond markets"
+          },
+          "correct_answer": "c",
+          "explanation": "The note describes microfinance institutions (MFIs) as allowing people to save gradually and obtain loans from pooled funds. The other options are different sources."
+        },
+        {
+          "id": "ENT-M6-B221",
+          "question": "Which of the following is listed among the reasons loans may not be granted in section 6.3 of the note?",
+          "options": {
+            "a": "The business is too big",
+            "b": "Poor accounting records",
+            "c": "Too much collateral",
+            "d": "The entrepreneur is too rich"
+          },
+          "correct_answer": "b",
+          "explanation": "Section 6.3 lists poor accounting records among the reasons loans may not be granted. The other options are not listed as reasons for denial."
+        },
+        {
+          "id": "ENT-M6-B222",
+          "question": "According to the note, 'inadequate lead time' relates to",
+          "options": {
+            "a": "the time spent at lunch break",
+            "b": "the duration of the loan repayment",
+            "c": "the length of the bank's opening hours",
+            "d": "the entrepreneur applying for a loan too close to when the money is needed"
+          },
+          "correct_answer": "d",
+          "explanation": "The note relates inadequate lead time to the entrepreneur applying for a loan too close to when the money is needed. The other options are literal or unrelated meanings."
+        },
+        {
+          "id": "ENT-M6-B223",
+          "question": "According to the note, which consideration for granting loans relates to determining whether the loan request matches the 'area and scope of operations' of the lending institution?",
+          "options": {
+            "a": "Amount of the loan",
+            "b": "Area of operation of the lender",
+            "c": "Period of the loan",
+            "d": "Purpose of the loan"
+          },
+          "correct_answer": "b",
+          "explanation": "The note relates the lender's area of operation to whether the loan request matches the area and scope of the lending institution. The other options are different considerations."
+        },
+        {
+          "id": "ENT-M6-B224",
+          "question": "Which consideration for granting loans, in the note, ensures that the loan amount is 'neither too small nor too big' relative to the lender's limits?",
+          "options": {
+            "a": "Area of operation",
+            "b": "Period of the loan",
+            "c": "Amount of the loan",
+            "d": "Interest rate"
+          },
+          "correct_answer": "c",
+          "explanation": "The note relates the amount of the loan to ensuring it is neither too small nor too big relative to the lender's limits. The other options are different considerations."
+        },
+        {
+          "id": "ENT-M6-B225",
+          "question": "According to the note, the higher the proportion of equity in the capital structure of a business, the",
+          "options": {
+            "a": "greater the chance of a government takeover",
+            "b": "higher the risk of bankruptcy",
+            "c": "lower the risk of bankruptcy",
+            "d": "higher the interest charges"
+          },
+          "correct_answer": "c",
+          "explanation": "The note states that a higher proportion of equity lowers the risk of bankruptcy because equity does not have to be repaid with interest. The other options contradict the note."
+        },
+        {
+          "id": "ENT-M6-B226",
+          "question": "Which consideration for granting loans relates to whether the entrepreneur can repay both principal and interest from the business's cash flow?",
+          "options": {
+            "a": "Amount of the loan",
+            "b": "Area of operation",
+            "c": "Ability to repay",
+            "d": "Character of the entrepreneur"
+          },
+          "correct_answer": "c",
+          "explanation": "The note relates the ability to repay to whether the entrepreneur can repay principal and interest from the business's cash flow. The other options are different considerations."
+        },
+        {
+          "id": "ENT-M6-B227",
+          "question": "Which consideration for granting loans assesses the drive, track record, and qualifications of the entrepreneur?",
+          "options": {
+            "a": "Ability to repay",
+            "b": "Area of operation",
+            "c": "Amount of the loan",
+            "d": "Character of the entrepreneur"
+          },
+          "correct_answer": "d",
+          "explanation": "The note relates the character of the entrepreneur to their drive, track record, and qualifications. The other options are different considerations."
+        },
+        {
+          "id": "ENT-M6-B228",
+          "question": "According to the note, the 'character' consideration for loan approval relates to the entrepreneur's",
+          "options": {
+            "a": "age",
+            "b": "religion",
+            "c": "honesty and integrity",
+            "d": "height and weight"
+          },
+          "correct_answer": "c",
+          "explanation": "The note relates the character consideration to the entrepreneur's honesty and integrity. The other options are personal attributes, not character as used in lending."
+        },
+        {
+          "id": "ENT-M6-B229",
+          "question": "According to the note, 'warehousing' as a form of collateral security means",
+          "options": {
+            "a": "storing finished goods in a warehouse as security for a loan, with the bank holding the title documents",
+            "b": "storing cash in a safe",
+            "c": "renting a warehouse for the business",
+            "d": "building a warehouse with the loan"
+          },
+          "correct_answer": "a",
+          "explanation": "The note defines warehousing as storing finished goods in a warehouse as security for a loan, with the bank holding the title documents. The other options are literal or unrelated meanings."
+        },
+        {
+          "id": "ENT-M6-B230",
+          "question": "According to the note, 'domiciliation of payment' as a condition for loans means",
+          "options": {
+            "a": "living in a foreign country",
+            "b": "directing the business's income to be paid into the lending bank's account to service the loan",
+            "c": "paying the loan in dollars",
+            "d": "paying the loan in kind"
+          },
+          "correct_answer": "b",
+          "explanation": "The note defines domiciliation of payment as directing the business's income to be paid into the lending bank's account to service the loan. The other options are literal or unrelated meanings."
+        },
+        {
+          "id": "ENT-M6-B231",
+          "question": "Which of the following is listed among the pitfalls in financing a business enterprise in section 6.5 of the note?",
+          "options": {
+            "a": "Relying only on equity",
+            "b": "Using short term funds to finance fixed assets",
+            "c": "Using long term funds for fixed assets",
+            "d": "Keeping proper records"
+          },
+          "correct_answer": "b",
+          "explanation": "Section 6.5 lists using short-term funds to finance fixed assets among the pitfalls in financing a business. The other options are proper practices or different issues."
+        },
+        {
+          "id": "ENT-M6-B232",
+          "question": "In the note, using short-term funds to finance fixed assets is described as an error because it",
+          "options": {
+            "a": "reduces the interest rate",
+            "b": "puts a square peg in a round hole; short-term funds must be repaid before the fixed asset yields returns",
+            "c": "is against the law in Nigeria",
+            "d": "increases the entrepreneur's savings"
+          },
+          "correct_answer": "b",
+          "explanation": "The note uses the analogy of a square peg in a round hole: short-term funds must be repaid before the fixed asset yields returns, creating a cash-flow mismatch. The other options are not the reason given."
+        },
+        {
+          "id": "ENT-M6-B233",
+          "question": "Which pitfall in financing, described in the note, relates to entrepreneurs venturing into unrelated business activities too soon?",
+          "options": {
+            "a": "Maintaining proper records",
+            "b": "Under-capitalisation",
+            "c": "Over-capitalisation",
+            "d": "Diversification too early"
+          },
+          "correct_answer": "d",
+          "explanation": "The note describes diversifying too early as venturing into unrelated business activities too soon. The other options are different pitfalls."
+        },
+        {
+          "id": "ENT-M6-B234",
+          "question": "Which pitfall in financing, described in the note, relates to taking money out of the business to meet increasing social and family commitments?",
+          "options": {
+            "a": "Over-extraction of funds",
+            "b": "Diversification too early",
+            "c": "Under-capitalisation",
+            "d": "Proper budgeting"
+          },
+          "correct_answer": "a",
+          "explanation": "The note describes over-extraction of funds as taking money out of the business for social and family commitments. The other options are different pitfalls."
+        },
+        {
+          "id": "ENT-M6-B235",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to commercial banks charging very high interest rates on loans?",
+          "options": {
+            "a": "Inflation",
+            "b": "Bureaucracy",
+            "c": "High interest rates",
+            "d": "Collateral requirements"
+          },
+          "correct_answer": "c",
+          "explanation": "The note lists high interest rates as a challenge where commercial banks charge very high rates on loans. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B236",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to the continuous rise in the prices of goods and services?",
+          "options": {
+            "a": "Bureaucracy",
+            "b": "Inflation",
+            "c": "High interest rates",
+            "d": "Lack of collateral"
+          },
+          "correct_answer": "b",
+          "explanation": "The note lists inflation as the continuous rise in prices. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B237",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to the lengthy, complicated, and bureaucratic loan application procedures?",
+          "options": {
+            "a": "Lack of collateral",
+            "b": "Inflation",
+            "c": "High interest rates",
+            "d": "Bureaucracy"
+          },
+          "correct_answer": "d",
+          "explanation": "The note lists bureaucracy as the lengthy, complicated loan application procedures. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B238",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to entrepreneurs being required to offer bribes before loans are approved?",
+          "options": {
+            "a": "Inflation",
+            "b": "High interest rates",
+            "c": "Corruption",
+            "d": "Bureaucracy"
+          },
+          "correct_answer": "c",
+          "explanation": "The note lists corruption as the requirement to offer bribes before loans are approved. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B239",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to entrepreneurs lacking landed property, vehicles, or other acceptable collateral?",
+          "options": {
+            "a": "Corruption",
+            "b": "Inflation",
+            "c": "Lack of collateral",
+            "d": "Bureaucracy"
+          },
+          "correct_answer": "c",
+          "explanation": "The note lists lack of collateral as entrepreneurs lacking acceptable security for loans. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B240",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to entrepreneurs lacking adequate knowledge of financial management?",
+          "options": {
+            "a": "High interest rates",
+            "b": "Low financial literacy",
+            "c": "Lack of collateral",
+            "d": "Corruption"
+          },
+          "correct_answer": "b",
+          "explanation": "The note lists low financial literacy as entrepreneurs lacking adequate knowledge of financial management. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B241",
+          "question": "Which challenge of entrepreneurial financing, discussed in the note, relates to frequent and unpredictable changes in taxation, foreign exchange, and other policies?",
+          "options": {
+            "a": "Inflation",
+            "b": "Lack of collateral",
+            "c": "Low financial literacy",
+            "d": "Regulatory instability"
+          },
+          "correct_answer": "d",
+          "explanation": "The note lists regulatory instability as frequent and unpredictable policy changes. The other options are different challenges."
+        },
+        {
+          "id": "ENT-M6-B242",
+          "question": "According to the note, entrepreneurial financing refers to the various ways an entrepreneur can",
+          "options": {
+            "a": "avoid paying taxes",
+            "b": "borrow from friends forever",
+            "c": "raise funds to start and grow a business",
+            "d": "invest in the stock market"
+          },
+          "correct_answer": "c",
+          "explanation": "The note defines entrepreneurial financing as the various ways an entrepreneur can raise funds to start and grow a business. The other options are unrelated meanings."
+        },
+        {
+          "id": "ENT-M6-B243",
+          "question": "According to the note, the sources of financing that entrepreneurs commonly use depend largely on",
+          "options": {
+            "a": "the stage of the business and its needs",
+            "b": "the weather",
+            "c": "the entrepreneur's shoe size",
+            "d": "the entrepreneur's political party"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that the sources of financing depend largely on the stage of the business and its needs. The other options are irrelevant factors."
+        },
+        {
+          "id": "ENT-M6-B244",
+          "question": "According to the note, as the size of a business increases, research shows that the proportion of capital accounted for by personal savings",
+          "options": {
+            "a": "doubles",
+            "b": "decreases",
+            "c": "remains constant",
+            "d": "increases"
+          },
+          "correct_answer": "b",
+          "explanation": "The note states that as the business grows, the proportion of capital from personal savings decreases because external sources become more important. The other options contradict the note."
+        },
+        {
+          "id": "ENT-M6-B245",
+          "question": "Which personal assets does the note mention as examples that can be sold or used as capital for a start-up?",
+          "options": {
+            "a": "Office furniture",
+            "b": "Cars, houses, and land",
+            "c": "Government bonds",
+            "d": "Company shares"
+          },
+          "correct_answer": "b",
+          "explanation": "The note mentions cars, houses, and land as personal assets that can be sold or used as start-up capital. The other options are business assets or securities."
+        },
+        {
+          "id": "ENT-M6-B246",
+          "question": "Which source of financing, described in the note, is commonly relied upon by new entrepreneurs and specifically refers to family members and relations providing funds?",
+          "options": {
+            "a": "Bank loans",
+            "b": "Venture capital",
+            "c": "Family members and relations",
+            "d": "Government grants"
+          },
+          "correct_answer": "c",
+          "explanation": "The note identifies family members and relations as a commonly relied-upon source of financing for new entrepreneurs. The other options are external sources."
+        },
+        {
+          "id": "ENT-M6-B247",
+          "question": "In the note, poor accounting records are cited as a reason loans are denied because",
+          "options": {
+            "a": "lenders cannot verify the financial health of the business",
+            "b": "it makes the business more attractive",
+            "c": "it increases the interest rate",
+            "d": "lenders prefer unverified businesses"
+          },
+          "correct_answer": "a",
+          "explanation": "The note states that poor accounting records cause denial because lenders cannot verify the financial health of the business. The other options contradict the note."
+        },
+        {
+          "id": "ENT-M6-B248",
+          "question": "According to the note, corruption weakens entrepreneurial financing partly by",
+          "options": {
+            "a": "making banks more efficient",
+            "b": "reducing the cost of loans",
+            "c": "increasing the availability of loans",
+            "d": "increasing the cost of accessing loans and discouraging lenders"
+          },
+          "correct_answer": "d",
+          "explanation": "The note states that corruption increases the cost of accessing loans and discourages lenders. The other options claim the opposite."
+        },
+        {
+          "id": "ENT-M6-B249",
+          "question": "According to the note, weak financial literacy among entrepreneurs often results in",
+          "options": {
+            "a": "better business decisions",
+            "b": "guaranteed profitability",
+            "c": "poor financial decisions and higher failure rates",
+            "d": "lower interest rates"
+          },
+          "correct_answer": "c",
+          "explanation": "The note states that weak financial literacy results in poor financial decisions and higher failure rates. The other options claim the opposite."
+        },
+        {
+          "id": "ENT-M6-B250",
+          "question": "According to Module 6's learning objectives, students should be able to apply entrepreneurial financing concepts to",
+          "options": {
+            "a": "practical business scenarios",
+            "b": "theoretical debates only",
+            "c": "personal shopping lists",
+            "d": "government tax forms"
+          },
+          "correct_answer": "a",
+          "explanation": "Module 6's learning objectives require students to apply entrepreneurial financing concepts to practical business scenarios. The other options are not part of the objective."
+        }
+      ]
+    }
+  ]
+}

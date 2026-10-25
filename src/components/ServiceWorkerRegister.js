@@ -39,6 +39,14 @@ export default function ServiceWorkerRegister() {
 
   useEffect(() => {
     if (!('serviceWorker' in navigator)) return
+    // Production only: in dev, chunk URLs have no content hash and a
+    // registered worker would pin stale bundles across code changes.
+    if (process.env.NODE_ENV !== 'production') {
+      navigator.serviceWorker.getRegistrations?.()
+        .then(regs => regs.forEach(r => r.unregister()))
+        .catch(() => {})
+      return
+    }
 
     navigator.serviceWorker.register('/sw.js').then((reg) => {
       reg.update()

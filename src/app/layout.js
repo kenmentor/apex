@@ -1,24 +1,20 @@
 import './globals.css';
+import 'swiper/css';
 import { ThemeProvider } from 'next-themes';
+import { Toaster } from 'sonner';
+import { getBaseUrl } from '@/lib/base-url';
 import NavWrapper from '@/components/NavWrapper';
+import PageTransition from '@/components/PageTransition';
 import AlexChat from '@/components/AlexChat';
 import VisitorTracker from '@/components/VisitorTracker';
 import InstallPrompt from '@/components/InstallPrompt';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import TelemetryProvider from '@/components/TelemetryProvider';
-import ProfileCompletePrompt from '@/components/ProfileCompletePrompt';
 import ConnectionStatus from '@/components/ConnectionStatus';
 
-function getBaseUrl() {
-  const url = process.env.NEXT_PUBLIC_BASE_URL || process.env.FRONTEND_URL
-  if (url) return new URL(url)
-  if (process.env.VERCEL_URL) return new URL(`https://${process.env.VERCEL_URL}`)
-  return new URL('https://apex-tau-gules.vercel.app')
-}
-
 export const metadata = {
-  metadataBase: getBaseUrl(),
+  metadataBase: new URL(getBaseUrl()),
   title: 'Apex',
   description: 'Master your exams with past questions, quizzes, and study materials',
   manifest: '/manifest.json',
@@ -47,6 +43,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"
@@ -65,8 +63,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
           <NavWrapper />
+          <PageTransition>{children}</PageTransition>
+          <Toaster position="bottom-center" toastOptions={{ style: { marginBottom: 90 } }} />
           <ConnectionStatus />
           <AlexChat />
           <VisitorTracker />
@@ -74,7 +73,6 @@ export default function RootLayout({ children }) {
           <ServiceWorkerRegister />
           <AnalyticsTracker />
           <TelemetryProvider />
-          <ProfileCompletePrompt />
         </ThemeProvider>
       </body>
     </html>

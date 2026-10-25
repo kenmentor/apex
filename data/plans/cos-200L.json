@@ -1,0 +1,101 @@
+{
+  "cohort": { "department": "COS", "level": "200 Level", "semester": "First Semester" },
+  "masteryBar": 80,
+  "courses": [
+    {
+      "code": "COS 202",
+      "title": "Computer Programming II",
+      "topics": [
+        {
+          "id": "cos202-arrays",
+          "title": "Arrays and Strings",
+          "ccmasRef": "COS 202 / Module 1",
+          "difficulty": 1,
+          "items": [
+            { "id": "cos202-arrays-learn", "kind": "learn", "title": "Read: Arrays and Strings", "readingRef": "data/courses/COS202.json#arrays" },
+            { "id": "cos202-arrays-drill", "kind": "drill", "title": "Drill: 10 array questions", "bank": "data/courses/COS202.json", "filter": { "section": "Arrays" } },
+            { "id": "cos202-arrays-prove", "kind": "prove", "title": "Prove: timed array quiz (80% to pass)", "bank": "data/courses/COS202.json", "filter": { "section": "Arrays" }, "passMark": 80 }
+          ]
+        },
+        {
+          "id": "cos202-oop",
+          "title": "Object-Oriented Basics",
+          "ccmasRef": "COS 202 / Module 2",
+          "difficulty": 2,
+          "items": [
+            { "id": "cos202-oop-learn", "kind": "learn", "title": "Read: Classes and objects", "readingRef": "data/courses/COS202.json#oop" },
+            { "id": "cos202-oop-drill", "kind": "drill", "title": "Drill: 10 OOP questions", "bank": "data/courses/COS202.json", "filter": { "section": "OOP" } },
+            { "id": "cos202-oop-prove", "kind": "prove", "title": "Prove: timed OOP quiz (80% to pass)", "bank": "data/courses/COS202.json", "filter": { "section": "OOP" }, "passMark": 80 }
+          ]
+        },
+        {
+          "id": "cos202-filehandling",
+          "title": "File Handling",
+          "ccmasRef": "COS 202 / Module 3",
+          "difficulty": 2,
+          "items": [
+            { "id": "cos202-filehandling-learn", "kind": "learn", "title": "Read: File handling", "readingRef": "data/courses/COS202.json#files" },
+            { "id": "cos202-filehandling-drill", "kind": "drill", "title": "Drill: 10 file-handling questions", "bank": "data/courses/COS202.json", "filter": { "section": "Files" } },
+            { "id": "cos202-filehandling-prove", "kind": "prove", "title": "Prove: timed file quiz (80% to pass)", "bank": "data/courses/COS202.json", "filter": { "section": "Files" }, "passMark": 80 }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "CSC 282",
+      "title": "Computer Lab 2B: Java OOP",
+      "topics": [
+        {
+          "id": "csc282-classes",
+          "title": "Classes and Constructors",
+          "ccmasRef": "CSC 282 / Module 1",
+          "difficulty": 1,
+          "items": [
+            { "id": "csc282-classes-learn", "kind": "learn", "title": "Read: Classes and constructors", "readingRef": "data/courses/CSC282.json#Q3" },
+            { "id": "csc282-classes-drill", "kind": "drill", "title": "Drill: 10 class questions", "bank": "data/courses/CSC282.json", "filter": { "section": "Classes" } },
+            { "id": "csc282-classes-prove", "kind": "prove", "title": "Prove: timed class quiz (80% to pass)", "bank": "data/courses/CSC282.json", "filter": { "section": "Classes" }, "passMark": 80 }
+          ]
+        },
+        {
+          "id": "csc282-poly",
+          "title": "Overloading and Overriding",
+          "ccmasRef": "CSC 282 / Module 2",
+          "difficulty": 3,
+          "items": [
+            { "id": "csc282-poly-learn", "kind": "learn", "title": "Read: Polymorphism in Java", "readingRef": "data/courses/CSC282.json#Q47" },
+            { "id": "csc282-poly-drill", "kind": "drill", "title": "Drill: 10 polymorphism questions", "bank": "data/courses/CSC282.json", "filter": { "section": "Polymorphism" } },
+            { "id": "csc282-poly-prove", "kind": "prove", "title": "Prove: timed polymorphism quiz (80% to pass)", "bank": "data/courses/CSC282.json", "filter": { "section": "Polymorphism" }, "passMark": 80 }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "CSC 203",
+      "title": "Discrete Structure",
+      "topics": [
+        {
+          "id": "csc203-logic",
+          "title": "Propositional Logic",
+          "ccmasRef": "CSC 203 / Module 1",
+          "difficulty": 2,
+          "items": [
+            { "id": "csc203-logic-learn", "kind": "learn", "title": "Read: Propositions and truth tables", "readingRef": "data/courses/csc203.json#logic" },
+            { "id": "csc203-logic-drill", "kind": "drill", "title": "Drill: 10 logic questions", "bank": "data/courses/csc203.json", "filter": { "section": "Logic" } },
+            { "id": "csc203-logic-prove", "kind": "prove", "title": "Prove: timed logic quiz (80% to pass)", "bank": "data/courses/csc203.json", "filter": { "section": "Logic" }, "passMark": 80 }
+          ]
+        },
+        {
+          "id": "csc203-sets",
+          "title": "Sets and Relations",
+          "ccmasRef": "CSC 203 / Module 2",
+          "difficulty": 2,
+          "items": [
+            { "id": "csc203-sets-learn", "kind": "learn", "title": "Read: Sets and relations", "readingRef": "data/courses/csc203.json#sets" },
+            { "id": "csc203-sets-drill", "kind": "drill", "title": "Drill: 10 set questions", "bank": "data/courses/csc203.json", "filter": { "section": "Sets" } },
+            { "id": "csc203-sets-prove", "kind": "prove", "title": "Prove: timed set quiz (80% to pass)", "bank": "data/courses/csc203.json", "filter": { "section": "Sets" }, "passMark": 80 }
+          ]
+        }
+      ]
+    }
+  ]
+}

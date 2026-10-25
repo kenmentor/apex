@@ -7,6 +7,9 @@ export async function GET(request) {
     const email = searchParams.get('email')
     const school = searchParams.get('school')
     const statsOnly = searchParams.get('stats') === 'true'
+    // Bound aggregation cost: top-N board (default 100). statsOnly still
+    // uses the capped set; raise limit explicitly if full stats are needed.
+    const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 500)
 
     const scoresCol = await getCollection('scores')
 
@@ -32,6 +35,7 @@ export async function GET(request) {
       },
       { $addFields: { avgPct: { $cond: [{ $gt: ['$totalQuestions', 0] }, { $round: [{ $multiply: [{ $divide: ['$totalScore', '$totalQuestions'] }, 100] }] }, 0] } } },
       { $sort: { totalScore: -1, totalTimeSpent: 1 } },
+      { $limit: limit },
     ]
 
     const aggregated = await scoresCol.aggregate(pipeline).toArray()

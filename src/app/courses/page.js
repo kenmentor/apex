@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Search, ArrowLeft, BookOpen } from 'lucide-react';
+import { Search, ArrowLeft, BookOpen, Layers } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -164,6 +164,9 @@ export default function CoursesPage() {
           <ArrowLeft className="size-4" />
         </Link>
         <h1 className="flex-1 text-base font-bold">Courses</h1>
+      <Link href="/departments" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted">
+          <Layers className="size-4" />
+        </Link>
       </header>
 
       <div className="mx-auto w-full max-w-2xl space-y-3 px-4 pt-4">

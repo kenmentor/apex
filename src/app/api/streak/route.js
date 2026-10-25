@@ -18,10 +18,22 @@ export async function GET(request) {
     const scores = await getCollection('scores')
     const docs = await scores.find({ email: email.toLowerCase().trim() }).toArray()
 
-    const activeDays = {}
-    for (const d of docs) {
-      const key = toDateKey(d.createdAt)
-      if (key) activeDays[key] = true
+    // Completion-gating (new rules): prefer plan completions at/above the
+    // mastery bar; fall back to legacy quiz activity for grandfathered display.
+    let activeDays = {}
+    try {
+      const completions = await getCollection('completions')
+      const rows = await completions.find({ email: email.toLowerCase().trim() }).toArray()
+      for (const r of rows) {
+        if (r.kind === 'prove' && (r.percentage || 0) >= 80) activeDays[toDateKey(r.createdAt)] = true
+      }
+    } catch {}
+    const gated = Object.keys(activeDays).length > 0
+    if (!gated) {
+      for (const d of docs) {
+        const key = toDateKey(d.createdAt)
+        if (key) activeDays[key] = true
+      }
     }
 
     const todayKey = new Date().toISOString().slice(0, 10)
@@ -43,6 +55,10 @@ export async function GET(request) {
       days: Object.keys(activeDays).sort(),
       today: todayKey,
       totalQuizzes: docs.length,
+      gated,
+      rules: gated
+        ? 'completion-gated: streaks count only on days a plan prove-item is completed at/above the 80% bar.'
+        : 'legacy: visit-based counting (complete a plan item to move to the new rules).',
     })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

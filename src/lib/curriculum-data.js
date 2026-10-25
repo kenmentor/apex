@@ -214,7 +214,7 @@ export const DEPARTMENTS_DATA = [
     title: 'Medicine',
     levels: {
       '100 Level': [ 'BIO 101', 'CHM 101', 'CHM 102', 'PHY 101', 'GSS 101'],
-      '200 Level': ['MED 201', 'MED 202', 'MED 203', 'BIO 201', 'GSS 212'],
+      '200 Level': ['MED 201', 'MED 202', 'MED 203', 'CLP 211', 'BIO 201', 'GSS 212'],
       '300 Level': ['MED 301', 'MED 302', 'MED 303'],
       '400 Level': ['MED 401', 'MED 402'],
     },

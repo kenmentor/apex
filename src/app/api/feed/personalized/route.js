@@ -33,11 +33,14 @@ export async function GET(request) {
     const feedItems = []
 
     // --- 1. Build user profile from quiz history ---
-    const scores = await scoresCol
-      .find({ email: email.toLowerCase().trim() })
-      .sort({ createdAt: -1 })
-      .limit(100)
-      .toArray()
+    // --- Independent reads, one parallel batch (was 4 sequential round trips) ---
+    const normalizedEmail = email.toLowerCase().trim()
+    const [scores, allCourses, userSpaces, userDoc] = await Promise.all([
+      scoresCol.find({ email: normalizedEmail }).sort({ createdAt: -1 }).limit(100).toArray(),
+      coursesCol.find({}).toArray(),
+      spacesCol.find({ members: normalizedEmail }).toArray(),
+      getCollection('users').then(col => col.findOne({ email: normalizedEmail })),
+    ])
 
     const deptFrequency = {}
     const courseFrequency = {}
@@ -78,7 +81,6 @@ export async function GET(request) {
     }
 
     // --- 3. Recommended Courses (new courses from departments user engages with) ---
-    const allCourses = await coursesCol.find({}).toArray()
     const recommended = allCourses.filter(c => !seenCourses.has(c.code) && topDepts.includes(getDept(c.code)))
     for (const c of recommended.slice(0, 4)) {
       feedItems.push({
@@ -93,7 +95,6 @@ export async function GET(request) {
     }
 
     // --- 4. Space Posts (from spaces the user is a member of) ---
-    const userSpaces = await spacesCol.find({ members: email.toLowerCase().trim() }).toArray()
     const spaceMap = {}
     const spaceIds = []
     for (const s of userSpaces) {
@@ -123,6 +124,8 @@ export async function GET(request) {
             content: p.content,
             authorName: p.authorName,
             authorAvatar: p.authorAvatar,
+            media: p.media || [],
+            viewCount: p.viewCount || 0,
             likeCount: p.likeCount || 0,
             commentCount: p.commentCount || 0,
             createdAt: p.createdAt,
@@ -131,14 +134,14 @@ export async function GET(request) {
       }
     }
 
-    // --- 5. Quick Challenge (random question from a course they've taken) ---
+    // --- 5. Quick Challenge ($sample: single indexed pass, no count+skip scan) ---
     if (recentCourseScores.length > 0) {
       const codes = recentCourseScores.map(s => s.course)
-      const totalQ = await questionsCol.countDocuments({ courseCode: { $in: codes } })
-      if (totalQ > 0) {
-        const skip = Math.floor(Math.random() * totalQ)
-        const qDocs = await questionsCol.find({ courseCode: { $in: codes } }).skip(skip).limit(1).toArray()
-        if (qDocs.length > 0) {
+      const qDocs = await questionsCol.aggregate([
+        { $match: { courseCode: { $in: codes } } },
+        { $sample: { size: 1 } },
+      ]).toArray()
+      if (qDocs.length > 0) {
           const d = qDocs[0]
           feedItems.push({
             type: 'challenge',
@@ -153,7 +156,6 @@ export async function GET(request) {
             },
           })
         }
-      }
     }
 
     // --- 6. Milestones & Achievements ---
@@ -187,19 +189,10 @@ export async function GET(request) {
     // --- Sort by priority descending ---
     feedItems.sort((a, b) => b.priority - a.priority)
 
-    // --- User points & streak ---
-    let points = 0
-    let streak = 0
-    let bestStreak = 0
-    try {
-      const usersCol = await getCollection('users')
-      const userDoc = await usersCol.findOne({ email: email.toLowerCase().trim() })
-      if (userDoc) {
-        points = userDoc.points || 0
-        streak = userDoc.streak || 0
-        bestStreak = userDoc.bestStreak || 0
-      }
-    } catch {}
+    // --- User points & streak (already fetched in the opening batch) ---
+    const points = userDoc?.points || 0
+    const streak = userDoc?.streak || 0
+    const bestStreak = userDoc?.bestStreak || 0
 
     return NextResponse.json({
       items: feedItems,

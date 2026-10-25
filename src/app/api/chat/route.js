@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
+import { getBaseUrl } from '@/lib/base-url'
 
 const COURSE_ALIASES = {
   'phy 102': 'PHY 102', 'physics ii': 'PHY 102', 'gen phys ii': 'PHY 102', 'general physics ii': 'PHY 102',
@@ -45,7 +46,7 @@ async function queryAI(messages) {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${apiKey}`,
-      'HTTP-Referer': 'https://apex-tau-gules.vercel.app',
+      'HTTP-Referer': process.env.FRONTEND_URL || 'https://gss-quiz.workers.dev',
       'X-Title': 'Apex Tutor',
     },
     body: JSON.stringify({ model, messages, temperature: 0.7, max_tokens: 1024 }),
