@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const FALLBACK_COLORS = { GSS: '#130f40', COS: '#1a5276', CSC: '#0e6655', MTH: '#7d3c98', PHY: '#c0392b', MED: '#F43F5E' };
+const FALLBACK_COLORS = { GSS: '#130f40', COS: '#1a5276', CSC: '#0e6655', MTH: '#7d3c98', PHY: '#c0392b', MED: '#F43F5E', Computing: '#1a5276', Sciences: '#0e6655', Engineering: '#b7791f', Environmental: '#2e7d32', Agriculture: '#558b2f', 'Allied-Health': '#00838f', Architecture: '#5d4037', Arts: '#6a1b9a', 'Basic-Medical': '#c62828', Communication: '#1565c0', Education: '#2e7d32', Law: '#37474f', Medicine: '#F43F5E', Pharmacy: '#6a1b9a', 'Social-Sciences': '#ef6c00', Veterinary: '#4e342e' };
 
 function SectionHeader({ label, count }) {
   return (

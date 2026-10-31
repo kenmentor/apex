@@ -75,21 +75,23 @@ export async function GET(request) {
     const needReadings = want('notes') || want('pdf')
     const needVideos = want('video') || want('audio')
 
-    const [questionsCol, theoryCol, readingsCol, videosCol] = await Promise.all([
+    const [questionsCol, theoryCol, readingsCol, videosCol, materialsCol] = await Promise.all([
       needQuestions ? getCollection('questions') : null,
       needTheory ? getCollection('theory_references') : null,
       needReadings ? getCollection('readings') : null,
       needVideos ? getCollection('videos') : null,
+      getCollection('user_materials'),
     ])
 
     const fetchN = needReadings && !type ? limit * 2 : limit
     const fetchV = needVideos && !type ? limit * 2 : limit
 
-    const [qDocs, tDocs, rDocs, vDocs] = await Promise.all([
+    const [qDocs, tDocs, rDocs, vDocs, mDocs] = await Promise.all([
       questionsCol ? searchCol(questionsCol, q, baseFilter, ['question', 'explanation', 'section'], limit) : [],
       theoryCol ? searchCol(theoryCol, q, baseFilter, ['question', 'keywords', 'mainConcepts'], limit) : [],
       readingsCol ? searchCol(readingsCol, q, baseFilter, ['title', 'content'], fetchN) : [],
       videosCol ? searchCol(videosCol, q, baseFilter, ['title', 'description'], fetchV) : [],
+      materialsCol ? searchCol(materialsCol, q, { ...baseFilter, isPublic: true }, ['title', 'fileName', 'description'], limit) : [],
     ])
 
     const quiz = qDocs.map((d) => ({
@@ -125,6 +127,30 @@ export async function GET(request) {
     })
     const video = mediaItems.filter((i) => i.kind === 'video' && want('video')).slice(0, limit)
     const audio = mediaItems.filter((i) => i.kind === 'audio' && want('audio')).slice(0, limit)
+
+    // Central public uploads from users (default public). Visible to all in search.
+    const uploads = (mDocs || []).map((d) => {
+      const kind = ['quiz', 'theory', 'notes', 'pdf', 'video', 'audio'].includes(d.itemKind) ? d.itemKind : (
+        /\.pdf$/i.test(d.fileName || '') ? 'pdf'
+        : (d.mime || '').startsWith('video/') ? 'video'
+        : (d.mime || '').startsWith('audio/') ? 'audio' : 'notes'
+      )
+      return {
+        id: `m-${String(d._id)}`, kind, courseCode: d.courseCode,
+        title: titleOf(d.title || d.fileName), subtitle: `${d.courseCode || 'Uploads'} · by ${d.ownerEmail || 'user'}`,
+        href: d.url, url: d.url,
+      }
+    })
+    for (const u of uploads) {
+      if (u.kind === 'notes' && want('notes')) notes.push(u)
+      else if (u.kind === 'pdf' && want('pdf')) pdf.push(u)
+      else if (u.kind === 'video' && want('video')) video.push(u)
+      else if (u.kind === 'audio' && want('audio')) audio.push(u)
+      else if ((u.kind === 'quiz' || u.kind === 'theory') && want(u.kind)) {
+        if (u.kind === 'quiz') quiz.push(u)
+        else theory.push(u)
+      }
+    }
 
     const groups = { quiz, theory, notes, pdf, video, audio }
     const counts = Object.fromEntries(Object.entries(groups).map(([k, v]) => [k, v.length]))

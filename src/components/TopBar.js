@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Bell } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { UserAvatarImage } from '@/components/UserAvatar';
 
@@ -29,8 +29,8 @@ export default function TopBar({ user, unread = 0, onAvatar, hideTitle = false }
           GSS Banger
         </Link>
       )}
-      <Link href="/groups?tab=inbox" aria-label="Notifications" className="relative flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-        <Bell className="size-5" />
+      <Link href="/groups?tab=inbox" aria-label="Messages" className="relative flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+        <Mail className="size-5" />
         {unread > 0 && (
           <span className="absolute -right-0.5 -top-0.5 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
             {unread > 99 ? '99+' : unread}

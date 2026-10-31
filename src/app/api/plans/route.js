@@ -9,7 +9,7 @@ const DEPT_TO_PROG = {
   'software engineering': 'SEN',
   'information technology': 'IFT',
   'cybersecurity': 'CYB',
-  'data science': 'DSC',
+  'data science': 'DTS',
   'information systems': 'INS',
   mathematics: 'MTH',
   statistics: 'STA',
@@ -19,9 +19,14 @@ const DEPT_TO_PROG = {
 }
 
 function programmeFor(user) {
-  const dept = (user?.department || '').toLowerCase().trim()
+  const dept = (user?.department || '').trim()
   if (!dept) return null
-  if (DEPT_TO_PROG[dept]) return DEPT_TO_PROG[dept]
+  // New label formats store the code: "Mathematics (MTH)" or
+  // "Mathematics (MTH · Sciences)" → MTH.
+  const paren = dept.match(/\(([A-Za-z]{2,5})[^)]*\)\s*$/)
+  if (paren) return paren[1].toUpperCase()
+  const lower = dept.toLowerCase()
+  if (DEPT_TO_PROG[lower]) return DEPT_TO_PROG[lower]
   // Fallback: programme whose name contains the department words.
   return null
 }

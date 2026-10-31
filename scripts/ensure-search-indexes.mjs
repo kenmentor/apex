@@ -25,6 +25,26 @@ const INDEXES = [
     key: { title: 'text', description: 'text' },
     name: 'study_videos_text',
   },
+  {
+    col: 'library_nodes',
+    key: { parentId: 1, ownerEmail: 1 },
+    name: 'library_parent_owner',
+  },
+  {
+    col: 'library_nodes',
+    key: { name: 'text' },
+    name: 'library_name_text',
+  },
+  {
+    col: 'library_members',
+    key: { nodeId: 1, email: 1 },
+    name: 'library_member_lookup',
+  },
+  {
+    col: 'user_materials',
+    key: { title: 'text', fileName: 'text', description: 'text' },
+    name: 'study_materials_text',
+  },
 ]
 
 async function main() {

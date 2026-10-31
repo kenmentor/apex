@@ -15,6 +15,7 @@ const routeMap = {
   '/groups': '/groups',
   '/spaces': '/groups',
   '/search': '/search',
+  '/folders': '/folders',
   '/messages': '/groups',
   '/notifications': '/groups',
   '/courses': '/courses',
@@ -78,7 +79,7 @@ export default function NavWrapper() {
         <TopBar user={user} unread={unread} onAvatar={() => setDrawer(true)} hideTitle={false} />
       )}
       <SideDrawer open={drawer} user={user} coins={coins} onClose={() => setDrawer(false)} />
-      {!hideNav && <NavBar active={active} unread={unread} />}
+      {!hideNav && <NavBar active={active} />}
     </>
   );
 }

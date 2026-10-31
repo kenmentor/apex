@@ -121,21 +121,30 @@ function FileGlyph({ ext, size = 40 }) {
 }
 
 // True book cover: first PDF page rendered via pdf.js, cached per URL.
-export function PdfCover({ url, className = '', onPages }) {
-  const [src, setSrc] = useState(() => (coverCache.has(url) ? coverCache.get(url) : undefined))
+// Remote PDFs go through /api/pdf-proxy so servers without CORS headers
+// still render (browsers block direct cross-origin pdf.js fetches).
+function proxiedPdfUrl(url) {
+  if (!url || !/^https?:\/\//i.test(url)) return url
+  return `/api/pdf-proxy?url=${encodeURIComponent(url)}`
+}
+
+// True book cover: first PDF page rendered via pdf.js, cached per URL.
+export function PdfCover({ url, className, onPages }) {
+  const srcUrl = proxiedPdfUrl(url)
+  const [src, setSrc] = useState(() => (coverCache.has(srcUrl) ? coverCache.get(srcUrl) : undefined));
 
   useEffect(() => {
-    if (!url) return
-    if (coverCache.has(url)) {
-      setSrc(coverCache.get(url))
-      if (pagesCache.has(url)) onPages?.(pagesCache.get(url))
+    if (!srcUrl) return
+    if (coverCache.has(srcUrl)) {
+      setSrc(coverCache.get(srcUrl))
+      if (pagesCache.has(srcUrl)) onPages?.(pagesCache.get(srcUrl))
       return
     }
     let live = true
     ;(async () => {
       try {
         const pdfjs = await loadPdfjs()
-        const pdf = await pdfjs.getDocument({ url, withCredentials: false }).promise
+        const pdf = await pdfjs.getDocument({ url: srcUrl, withCredentials: false }).promise
         const page = await pdf.getPage(1)
         const viewport = page.getViewport({ scale: 0.55 })
         const canvas = document.createElement('canvas')
@@ -143,12 +152,12 @@ export function PdfCover({ url, className = '', onPages }) {
         canvas.height = Math.floor(viewport.height)
         await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise
         const dataUrl = canvas.toDataURL('image/jpeg', 0.72)
-        coverCache.set(url, dataUrl)
-        pagesCache.set(url, pdf.numPages)
+        coverCache.set(srcUrl, dataUrl)
+        pagesCache.set(srcUrl, pdf.numPages)
         if (live) { setSrc(dataUrl); onPages?.(pdf.numPages) }
         await pdf.destroy().catch(() => {})
       } catch {
-        coverCache.set(url, null)
+        coverCache.set(srcUrl, null)
         if (live) setSrc(null)
       }
     })()

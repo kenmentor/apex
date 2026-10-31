@@ -5,7 +5,6 @@ import { Toaster } from 'sonner';
 import { getBaseUrl } from '@/lib/base-url';
 import NavWrapper from '@/components/NavWrapper';
 import PageTransition from '@/components/PageTransition';
-import AlexChat from '@/components/AlexChat';
 import VisitorTracker from '@/components/VisitorTracker';
 import InstallPrompt from '@/components/InstallPrompt';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
@@ -67,7 +66,6 @@ export default function RootLayout({ children }) {
           <PageTransition>{children}</PageTransition>
           <Toaster position="bottom-center" toastOptions={{ style: { marginBottom: 90 } }} />
           <ConnectionStatus />
-          <AlexChat />
           <VisitorTracker />
           <InstallPrompt />
           <ServiceWorkerRegister />

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, Map, Gamepad2, Search, Mail } from 'lucide-react';
+import { Home, Map, Gamepad2, Search, Folder } from 'lucide-react';
 import { trackEvent } from '@/lib/tracking';
 
 const links = [
@@ -9,7 +9,7 @@ const links = [
   { href: '/plan', label: 'Curriculum', icon: Map },
   { href: '/games', label: 'Games', icon: Gamepad2 },
   { href: '/search', label: 'Search', icon: Search },
-  { href: '/groups?tab=inbox', label: 'Messages', icon: Mail, badge: 'unread' },
+  { href: '/folders', label: 'Folders', icon: Folder },
 ];
 
 function trackNav(href, isActive) {
@@ -21,10 +21,8 @@ function trackNav(href, isActive) {
   }
 }
 
-export default function NavBar({ active, unread = 0 }) {
+export default function NavBar({ active }) {
   function isActive(l) {
-    // Messages owns the whole social page (groups list + inbox switcher).
-    if (l.href === '/groups?tab=inbox') return active === '/groups';
     return active === l.href;
   }
 
@@ -48,11 +46,6 @@ export default function NavBar({ active, unread = 0 }) {
               <span className={`flex size-9 items-center justify-center rounded-full transition-colors ${on ? 'bg-primary/10' : ''}`}>
                 <Icon className="size-5" strokeWidth={on ? 2.5 : 1.8} />
               </span>
-              {l.badge === 'unread' && unread > 0 && (
-                <span className="absolute right-1 top-0.5 flex min-h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white">
-                  {unread > 99 ? '99+' : unread}
-                </span>
-              )}
               <span className="hidden sm:block">{l.label}</span>
             </Link>
           );

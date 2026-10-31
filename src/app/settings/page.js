@@ -13,6 +13,10 @@ import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
+import { DEPARTMENTS, LEVELS } from '@/lib/departments'
+import SearchableField from '@/components/SearchableField'
+
+const OTHERS = 'Others… (type it yourself)'
 
 function SettingsContent() {
   const router = useRouter()
@@ -22,6 +26,9 @@ function SettingsContent() {
   const [name, setName] = useState('')
   const [school, setSchool] = useState('')
   const [department, setDepartment] = useState('')
+  const [deptInput, setDeptInput] = useState('')
+  const [customDepartment, setCustomDepartment] = useState('')
+  const [deptOptions, setDeptOptions] = useState(DEPARTMENTS)
   const [level, setLevel] = useState('')
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -38,6 +45,12 @@ function SettingsContent() {
     setSheetOpen(true)
   }
 
+  function currentDeptOptions() {
+    const base = [...deptOptions]
+    if (department && department !== OTHERS && !base.includes(department)) base.push(department)
+    return [...base, OTHERS]
+  }
+
   useEffect(() => {
     const u = getUser()
     setUserState(u)
@@ -46,6 +59,15 @@ function SettingsContent() {
     setDepartment(u?.department || '')
     setLevel(u?.level || '')
     setAvatarConfig(normalizeAvatarConfig(u?.avatarConfig) || defaultDiceConfig())
+    // Departments = programmes (what students actually identify with).
+    // Falls back to the static list offline.
+    fetch('/api/programmes', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(d => {
+        const docs = Array.isArray(d.docs) ? d.docs : []
+        if (docs.length) setDeptOptions(docs.map(x => x.label || x.name).filter(Boolean))
+      })
+      .catch(() => {})
   }, [])
 
   async function handleSave(e) {
@@ -53,8 +75,17 @@ function SettingsContent() {
     setSaving(true)
     setMessage('')
     try {
+      // If the user typed an exact option name but never tapped it,
+      // honor the text instead of silently keeping the old value.
+      const deptOptions = currentDeptOptions()
+      const typed = deptInput.trim().toLowerCase()
+      const exact = typed && deptOptions.find(o => o.toLowerCase() === typed && o !== OTHERS)
+      const dept = department === OTHERS
+        ? customDepartment.trim()
+        : (exact || department.trim())
+      if (department === OTHERS && !dept) throw new Error('Type your department')
       const body = { name: name.trim(), school: school.trim() }
-      if (department.trim()) body.department = department.trim()
+      if (dept) body.department = dept
       if (level.trim()) body.level = level.trim()
       const res = await fetch('/api/profile', {
         method: 'PUT',
@@ -210,14 +241,32 @@ function SettingsContent() {
                   <label className="mb-1 block text-[11px] font-medium text-muted-foreground">University</label>
                   <Input value={school} onChange={e => setSchool(e.target.value)} placeholder="University" />
                 </div>
-                <div>
-                  <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Department</label>
-                  <Input value={department} onChange={e => setDepartment(e.target.value)} placeholder="Department" />
-                </div>
-                <div>
-                  <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Level</label>
-                  <Input value={level} onChange={e => setLevel(e.target.value)} placeholder="e.g. 200" />
-                </div>
+                <SearchableField
+                  id="department"
+                  label="Department"
+                  value={department}
+                  onChange={(v) => { setDepartment(v); if (v !== OTHERS) setCustomDepartment('') }}
+                  onInputChange={setDeptInput}
+                  options={currentDeptOptions()}
+                  placeholder="Type to search departments…"
+                />
+                {department === OTHERS && (
+                  <div className="mt-2">
+                    <Input
+                      value={customDepartment}
+                      onChange={e => setCustomDepartment(e.target.value)}
+                      placeholder="Type your department"
+                    />
+                  </div>
+                )}
+                <SearchableField
+                  id="level"
+                  label="Level"
+                  value={level}
+                  onChange={setLevel}
+                  options={LEVELS.includes(level) || !level ? LEVELS : [...LEVELS, level]}
+                  placeholder="Type to search levels…"
+                />
                 <div className="flex gap-2 pt-1">
                   <Button type="submit" disabled={saving} className="flex-1">{saving ? 'Saving...' : 'Save'}</Button>
                   <Button type="button" variant="outline" onClick={() => setEditing(false)}>Cancel</Button>
