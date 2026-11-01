@@ -45,6 +45,16 @@ const INDEXES = [
     key: { title: 'text', fileName: 'text', description: 'text' },
     name: 'study_materials_text',
   },
+  {
+    col: 'user_materials',
+    key: { sha256: 1 },
+    name: 'materials_hash',
+  },
+  {
+    col: 'user_materials',
+    key: { ownerEmail: 1, sha256: 1 },
+    name: 'materials_owner_hash',
+  },
 ]
 
 async function main() {

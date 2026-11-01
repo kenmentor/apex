@@ -10,6 +10,7 @@ import {
   ArrowLeft, ArrowUpDown, Info, Share2, Globe, Lock,
 } from 'lucide-react'
 import { getToken } from '@/lib/auth'
+import BookGrid from '@/components/BookGrid'
 
 // Samsung My Files-inspired layout built with our own icons/components.
 // Not a pixel copy of Samsung assets — same file-manager patterns:
@@ -367,23 +368,56 @@ function FoldersInner() {
     } catch (e) { setError(e.message) } finally { setBusy(false) }
   }
 
+  async function hashFile(file) {
+    try {
+      const buf = await file.arrayBuffer()
+      const digest = await crypto.subtle.digest('SHA-256', buf)
+      return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('')
+    } catch {
+      return null
+    }
+  }
+
   async function handleUpload(e) {
     const file = e.target.files?.[0]
     if (!file) return
     setBusy(true)
     setError('')
     try {
+      const mime = file.type || ''
+      const itemKind = file.name?.endsWith('.pdf') || mime === 'application/pdf' ? 'pdf'
+        : mime.startsWith('video/') ? 'video'
+        : mime.startsWith('audio/') ? 'audio'
+        : mime.startsWith('image/') ? 'image' : 'file'
+      // Dedupe: identical bytes uploaded before by ANYONE → reuse the one
+      // stored file, skip Cloudinary. Join as an uploader via POST (no url).
+      const sha256 = await hashFile(file)
+      if (sha256) {
+        try {
+          const found = await api(`/api/materials?sha256=${sha256}`)
+          const hit = Array.isArray(found) ? found[0] : null
+          if (hit?.id) {
+            const joined = await api('/api/materials', {
+              method: 'POST',
+              body: JSON.stringify({ sha256, isPublic: true }),
+            }).catch(() => null)
+            const doc = (joined && joined.id) ? joined : { id: hit.id, isPublic: hit.isPublic !== false }
+            await api('/api/library', {
+              method: 'POST',
+              body: JSON.stringify({ kind: 'ref', name: file.name, parentId: currentId, itemKind, href: hit.url, url: hit.url, refId: doc.id, materialId: doc.id, size: file.size || hit.size || null, mime, isPublic: doc.isPublic !== false, courseCode: courseCode || hit.courseCode, sha256, subtitle: 'Already uploaded · reused' }),
+            })
+            setError('')
+            load()
+            return
+          }
+        } catch {}
+      }
       const form = new FormData()
       form.append('file', file)
       form.append('folder', 'gss-quiz/library')
       const up = await fetch('/api/upload', { method: 'POST', headers: { ...authHeaders() }, body: form })
       const ud = await up.json()
       if (!up.ok) throw new Error(ud.error || 'Upload failed')
-      const mime = file.type || ''
-      const itemKind = file.name?.endsWith('.pdf') || mime === 'application/pdf' ? 'pdf'
-        : mime.startsWith('video/') ? 'video'
-        : mime.startsWith('audio/') ? 'audio'
-        : mime.startsWith('image/') ? 'image' : 'file'
       let materialId = null
       try {
         const m = await api('/api/materials', {
@@ -391,25 +425,29 @@ function FoldersInner() {
           body: JSON.stringify({
             title: file.name, fileName: file.name, url: ud.url,
             publicId: ud.publicId || null, mime, size: file.size || null,
-            itemKind, courseCode, isPublic: true,
+            itemKind, courseCode, isPublic: true, sha256,
           }),
         })
         materialId = m.id || null
       } catch {}
       await api('/api/library', {
         method: 'POST',
-        body: JSON.stringify({ kind: 'ref', name: file.name, parentId: currentId, itemKind, href: ud.url, url: ud.url, refId: materialId || ud.publicId || null, materialId, size: file.size || null, mime, isPublic: true, courseCode, subtitle: `${formatSize(file.size)} · Public` }),
+        body: JSON.stringify({ kind: 'ref', name: file.name, parentId: currentId, itemKind, href: ud.url, url: ud.url, refId: materialId || ud.publicId || null, materialId, size: file.size || null, mime, isPublic: true, courseCode, sha256, subtitle: `${formatSize(file.size)} · Public` }),
       })
       load()
     } catch (err) { setError(err.message) } finally { setBusy(false); if (fileRef.current) fileRef.current.value = '' }
   }
 
-  async function togglePublic(node) {
+  // Visibility is per-user metadata: your toggle only ever flips YOUR copy.
+  // The shared file goes public when anyone shares it, and stays public
+  // while anyone still shares it — one user's toggle never hides or
+  // exposes another user's copy.
+  async function togglePublic(node, sharedCount = 0) {
     if (busy || !node || String(node.id).startsWith('m-')) return
     setBusy(true)
     try {
       const next = node.isPublic === false ? true : false
-      if (node.materialId) {
+      if (node.materialId && sharedCount <= 1) {
         await api(`/api/materials/${node.materialId}`, { method: 'PATCH', body: JSON.stringify({ isPublic: next }) })
       }
       await api(`/api/library/${node.id}`, { method: 'PATCH', body: JSON.stringify({ isPublic: next }) })
@@ -502,12 +540,16 @@ function FoldersInner() {
       ) : catFilter ? (
         <section className="space-y-2">
           <h2 className="text-sm font-bold">{catFiles.length} items</h2>
-          <div className={view === 'grid' ? 'grid grid-cols-2 gap-2' : 'divide-y divide-border'}>
-            {catFiles.map(n => (
-              <FileRow key={n.id} node={n} view={view} selectMode={false} checked={false}
-                onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} />
-            ))}
-          </div>
+          {catFilter === 'pdf' ? (
+            <BookGrid items={catFiles.map(n => ({ ...n, kind: 'pdf' }))} />
+          ) : (
+            <div className={view === 'grid' ? 'grid grid-cols-2 gap-2' : 'divide-y divide-border'}>
+              {catFiles.map(n => (
+                <FileRow key={n.id} node={n} view={view} selectMode={false} checked={false}
+                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} />
+              ))}
+            </div>
+          )}
           {catFiles.length === 0 && <p className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">No files in this category yet. Upload to add the first one.</p>}
         </section>
       ) : (
@@ -641,10 +683,10 @@ function FoldersInner() {
 
       {detailsNode && (
         <Sheet onClose={() => setDetailsNode(null)} title="Details">
-          <DetailsBody node={detailsNode} materials={materials} canWrite={canWrite}
-            onShare={() => shareFile(detailsNode)}
-            onTogglePublic={() => togglePublic(detailsNode)}
-            onOpenShare={() => openShare(detailsNode)} />
+        <DetailsBody node={detailsNode} materials={materials} canWrite={canWrite}
+          onShare={() => shareFile(detailsNode)}
+          onTogglePublic={(sharedCount) => togglePublic(detailsNode, sharedCount)}
+          onOpenShare={() => openShare(detailsNode)} />
         </Sheet>
       )}
 
@@ -729,6 +771,8 @@ function FoldersInner() {
 
 function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpenShare }) {
   const central = node.materialId ? materials.find(m => String(m.id) === String(node.materialId)) : null
+  const sharedCount = central?.uploaders?.length || 1
+  const shared = sharedCount > 1
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3">
@@ -756,9 +800,12 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
       </div>
       {node.materialId ? (
         canWrite && (
-          <button onClick={onTogglePublic} className="w-full rounded-xl border py-2 text-sm font-semibold hover:bg-muted">
-            {node.isPublic === false ? 'Make public (show in Search)' : 'Make private (hide from Search)'}
-          </button>
+          <>
+            <button onClick={() => onTogglePublic(sharedCount)} className="w-full rounded-xl border py-2 text-sm font-semibold hover:bg-muted">
+              {node.isPublic === false ? 'Make public (show in Search)' : 'Make private (hide from Search)'}
+            </button>
+            {shared && <p className="text-xs text-muted-foreground">Shared file · {sharedCount} people hold a copy. Your rename, move and delete only touch your copy — visibility stays shared while anyone shares it.</p>}
+          </>
         )
       ) : (
         node.kind !== 'folder' && canWrite && (

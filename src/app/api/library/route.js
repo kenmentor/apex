@@ -75,7 +75,7 @@ export async function POST(request) {
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     const email = normEmail(user.email)
     const body = await request.json()
-    const { kind, name, parentId, itemKind, refId, href, url, courseCode, subtitle, color, size, mime, isPublic, materialId } = body || {}
+    const { kind, name, parentId, itemKind, refId, href, url, courseCode, subtitle, color, size, mime, isPublic, materialId, sha256 } = body || {}
 
     if (!['folder', 'ref'].includes(kind)) return NextResponse.json({ error: 'kind must be folder|ref' }, { status: 400 })
     const clean = cleanName(name, kind === 'folder' ? 'New folder' : 'Untitled')
@@ -114,6 +114,7 @@ export async function POST(request) {
       mime: mime ? String(mime).slice(0, 100) : null,
       isPublic: isPublic === false ? false : true,
       materialId: materialId ? String(materialId).slice(0, 64) : (refId ? String(refId).slice(0, 64) : null),
+      ...(/^[0-9a-f]{64}$/.test(String(sha256 || '').toLowerCase()) ? { sha256: String(sha256).toLowerCase() } : {}),
       createdAt: now,
       updatedAt: now,
     }
