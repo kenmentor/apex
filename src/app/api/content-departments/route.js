@@ -18,9 +18,10 @@ export async function GET() {
     ])
 
     const codes = new Set()
-    for (const [col, field] of [[questionsCol, 'courseCode'], [videosCol, 'courseCode'], [theoryCol, 'courseCode'], [readingsCol, 'courseCode'], [materialsCol, 'courseCode']]) {
+    const liveOnly = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
+    for (const [col, field, live] of [[questionsCol, 'courseCode', true], [videosCol, 'courseCode', false], [theoryCol, 'courseCode', false], [readingsCol, 'courseCode', true], [materialsCol, 'courseCode', true]]) {
       if (!col) continue
-      const vals = await col.distinct(field).catch(() => [])
+      const vals = await col.distinct(field, live ? liveOnly : {}).catch(() => [])
       for (const v of vals) {
         const c = String(v || '').trim().toUpperCase()
         if (c) codes.add(c)

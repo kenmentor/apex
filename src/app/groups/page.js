@@ -5,13 +5,40 @@ import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Lock, Users, FileText, Search, BookOpen, Plus, UserPlus } from 'lucide-react'
 import { motion } from 'motion/react'
-import { getUser, getToken } from '@/lib/auth'
+import { getUser, getToken, isAdmin } from '@/lib/auth'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import TikTokTabs from '@/components/TikTokTabs'
 import InboxList from '@/components/InboxList'
 
-const ORDER = ['groups', 'inbox']
+const ORDER = ['groups', 'inbox', 'contribute']
+
+function ContributePane({ query }) {
+  const [admin, setAdmin] = useState(false);
+  const [pending, setPending] = useState(null);
+  useEffect(() => {
+    if (!isAdmin()) return;
+    setAdmin(true);
+    fetch('/api/admin/review', { headers: { Authorization: `Bearer ${getToken()}` } })
+      .then(r => r.json())
+      .then(d => { if (typeof d?.counts?.pending === 'number') setPending(d.counts.pending) })
+      .catch(() => {});
+  }, []);
+  return (
+    <div className="space-y-3">
+      {admin && (
+        <Link href="/admin/review" className="flex items-center gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-3">
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-bold">Review queue{pending != null ? ` · ${pending} waiting` : ''}</span>
+            <span className="block text-xs text-muted-foreground">Approve, merge or reject contributor submissions.</span>
+          </span>
+          <span className="shrink-0 text-xs font-bold text-amber-600">Open ›</span>
+        </Link>
+      )}
+      <InboxList query={query} types={['contribute']} autoRead />
+    </div>
+  );
+}
 
 export default function GroupsPage() {
   return (
@@ -29,10 +56,11 @@ export default function GroupsPage() {
 
 function GroupsInner() {
   const params = useSearchParams()
-  const initial = params.get('tab') === 'inbox' ? 'inbox' : 'groups'
+  const initial = ['inbox', 'contribute'].includes(params.get('tab')) ? params.get('tab') : 'groups'
   const [tab, setTab] = useState(initial)
   const [dir, setDir] = useState(1)
   const [seenInbox, setSeenInbox] = useState(initial === 'inbox')
+  const [seenContribute, setSeenContribute] = useState(initial === 'contribute')
   const [unread, setUnread] = useState(0)
   const [groups, setGroups] = useState([])
   const [loading, setLoading] = useState(true)
@@ -49,12 +77,13 @@ function GroupsInner() {
   const router = useRouter()
 
   useEffect(() => {
-    const v = params.get('tab') === 'inbox' ? 'inbox' : 'groups'
+    const v = ['inbox', 'contribute'].includes(params.get('tab')) ? params.get('tab') : 'groups'
     setTab(prev => {
       if (prev !== v) setDir(ORDER.indexOf(v) > ORDER.indexOf(prev) ? 1 : -1)
       return v
     })
     if (v === 'inbox') setSeenInbox(true)
+    if (v === 'contribute') setSeenContribute(true)
   }, [params])
 
   useEffect(() => {
@@ -88,7 +117,14 @@ function GroupsInner() {
     setDir(ORDER.indexOf(v) >= ORDER.indexOf(tab) ? 1 : -1)
     setTab(v)
     if (v === 'inbox') setSeenInbox(true)
+    if (v === 'contribute') setSeenContribute(true)
     syncUrl(v)
+  }
+
+  function stepTab(d) {
+    const i = ORDER.indexOf(tab)
+    const n = Math.min(ORDER.length - 1, Math.max(0, i + d))
+    if (ORDER[n] !== tab) goTab(ORDER[n])
   }
 
   function openFriend() {
@@ -202,10 +238,11 @@ function GroupsInner() {
         {/* TikTok-style switch — tap the words or swipe the page */}
         <div className="mt-2 border-b">
           <TikTokTabs
-            tabs={[
-              { id: 'groups', label: 'Groups' },
-              { id: 'inbox', label: 'Inbox', count: unread },
-            ]}
+          tabs={[
+            { id: 'groups', label: 'Groups' },
+            { id: 'inbox', label: 'Inbox', count: unread },
+            { id: 'contribute', label: 'Contribute' },
+          ]}
             active={tab}
             onChange={goTab}
           />
@@ -219,15 +256,17 @@ function GroupsInner() {
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.5}
-          onDragEnd={(_, info) => {
-            if (info.offset.x < -80) goTab('inbox')
-            else if (info.offset.x > 80) goTab('groups')
-          }}
+        onDragEnd={(_, info) => {
+          if (info.offset.x < -80) stepTab(1)
+          else if (info.offset.x > 80) stepTab(-1)
+        }}
           transition={{ type: 'spring', stiffness: 400, damping: 34 }}
           className="pt-4"
         >
           {tab === 'inbox' ? (
-            seenInbox ? <InboxList onUnread={setUnread} query={search} /> : <div className="py-10" />
+            seenInbox ? <InboxList onUnread={setUnread} query={search} autoRead /> : <div className="py-10" />
+          ) : tab === 'contribute' ? (
+            seenContribute ? <ContributePane query={search} /> : <div className="py-10" />
           ) : (
             <div className="space-y-5">
               {!user && (

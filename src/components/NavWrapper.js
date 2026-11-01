@@ -82,13 +82,19 @@ export default function NavWrapper() {
   useEffect(() => {
     const u = getUser();
     if (!u) return;
-    // Shell data cached 60s: navigating tabs doesn't refetch the world.
-    fetchJson('/api/notifications?limit=1', { token: getToken(), ttl: TTL.shell })
+    const loadUnread = (fresh) => fetchJson('/api/notifications?limit=1', { token: getToken(), ttl: fresh ? TTL.fresh : TTL.shell })
       .then(d => setUnread(d.unreadCount || 0))
       .catch(() => {});
+    // Shell data cached 60s: navigating tabs doesn't refetch the world.
+    loadUnread(false);
+    // Inbox marks things read — refresh the badge immediately instead of
+    // waiting out the shell cache.
+    const onRead = () => loadUnread(true);
+    try { window.addEventListener('notifications-read', onRead) } catch {}
     fetchJson('/api/wallet?email=' + encodeURIComponent(u.email), { ttl: TTL.shell })
       .then(d => { if (typeof d.spendable === 'number') setCoins(d.spendable); })
       .catch(() => {});
+    return () => { try { window.removeEventListener('notifications-read', onRead) } catch {} };
   }, [pathname]);
 
   if (HIDDEN_ROUTES.some(r => pathname === r || pathname.startsWith(r + '/'))) {

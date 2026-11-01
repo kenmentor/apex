@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
+import { notifyAdmins } from '@/lib/notify'
 
 function normCourse(code) {
   return String(code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2').slice(0, 32) || null
@@ -30,10 +31,20 @@ export async function POST(request) {
     const now = new Date().toISOString()
     const res = await col.insertOne({
       courseCode, title, content,
+      // Pending until a general admin approves it in review.
+      status: 'pending',
+      reviewedBy: null,
+      reviewedAt: null,
       source: 'contributor',
       authorEmail: String(user.email).toLowerCase(),
       createdAt: now, updatedAt: now,
     })
+    notifyAdmins({
+      type: 'contribute',
+      title: `New note for ${courseCode} — needs review`,
+      message: `${title.slice(0, 120)} · by ${String(user.email).toLowerCase()}`,
+      link: '/admin/review',
+    }, user.email).catch(() => {})
     return NextResponse.json({ success: true, id: res.insertedId.toString() }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

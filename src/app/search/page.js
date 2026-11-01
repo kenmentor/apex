@@ -25,9 +25,11 @@ const GAMES = [
 const TABS = [
   { id: '', label: 'All' },
   { id: 'books', label: 'Books' },
+  { id: 'qa', label: 'Q&A' },
   { id: 'video', label: 'Videos' },
   { id: 'audio', label: 'Audio' },
   { id: 'quiz', label: 'Quizzes' },
+  { id: 'folders', label: 'Folders' },
 ]
 
 function ytId(url) {
@@ -95,8 +97,10 @@ export default function SearchPage() {
     fetchJson('/api/spaces?limit=50', { ttl: TTL.list }).then(d => setSpaces(Array.isArray(d) ? d : [])).catch(() => {})
     try {
       const t = new URLSearchParams(window.location.search).get('type') || ''
-      if (t === 'video' || t === 'audio' || t === 'quiz') setTab(t)
-      else if (['theory', 'notes', 'pdf'].includes(t)) setTab('books')
+      if (['video', 'audio', 'quiz', 'qa', 'folders'].includes(t)) setTab(t)
+      else if (t === 'theory') setTab('qa')
+      else if (t === 'folder') setTab('folders')
+      else if (['notes', 'pdf'].includes(t)) setTab('books')
     } catch {}
     try {
       const u = getUser()
@@ -146,13 +150,16 @@ export default function SearchPage() {
     const out = []
     const push = (arr, kind) => (arr || []).forEach(i => out.push({ ...i, kind: i.kind || kind }))
     push(g.quiz, 'quiz'); push(g.theory, 'theory'); push(g.notes, 'notes')
-    push(g.pdf, 'pdf'); push(g.video, 'video'); push(g.audio, 'audio')
+    push(g.pdf, 'pdf'); push(g.video, 'video'); push(g.audio, 'audio'); push(g.folders, 'folder')
     return out
   }, [results])
 
   const tabbed = useMemo(() => {
     if (!tab) return allItems
-    if (tab === 'books') return allItems.filter(i => ['notes', 'pdf', 'theory'].includes(i.kind))
+    // Books are readable documents only — theory Q&A and curated folders live elsewhere.
+    if (tab === 'books') return allItems.filter(i => ['notes', 'pdf'].includes(i.kind))
+    if (tab === 'qa') return allItems.filter(i => i.kind === 'theory')
+    if (tab === 'folders') return allItems.filter(i => i.kind === 'folder')
     return allItems.filter(i => i.kind === tab)
   }, [allItems, tab])
 
@@ -182,7 +189,9 @@ export default function SearchPage() {
     return list
   }, [tabbed, selCourses, selUploaders, sort])
 
-  const books = filtered.filter(i => ['notes', 'pdf', 'theory'].includes(i.kind))
+  const books = filtered.filter(i => ['notes', 'pdf'].includes(i.kind))
+  const qas = filtered.filter(i => i.kind === 'theory')
+  const folderHits = filtered.filter(i => i.kind === 'folder')
   const videos = filtered.filter(i => i.kind === 'video')
   const audios = filtered.filter(i => i.kind === 'audio')
   const quizzes = filtered.filter(i => i.kind === 'quiz')
@@ -245,7 +254,9 @@ export default function SearchPage() {
   )
 
   const shelfEmpty = shelves && !shelves.videos?.length && !shelves.audio?.length && !shelves.pdf?.length && !shelves.text?.length && !shelves.quiz?.length
-  const showShelf = (k) => !tab || tab === k || (tab === 'books' && k === 'text')
+  // Shelf text mixes readable docs with theory Q&A — split them: questions are not books.
+  const shelfBooks = (shelves?.text || []).filter(t => t.source !== 'theory')
+  const shelfQa = (shelves?.text || []).filter(t => t.source === 'theory')
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-4 px-4 pb-24 pt-6">
@@ -285,12 +296,12 @@ export default function SearchPage() {
 
       {!needle && shelves && !shelfEmpty && (
         <>
-          {!!(shelves.pdf?.length || shelves.text?.length) && (!tab || tab === 'books') && (
-            <Shelf title="Books" Icon={BookOpen} count={(shelves.pdf?.length || 0) + (shelves.text?.length || 0)}>
+          {!!(shelves.pdf?.length || shelfBooks.length) && (!tab || tab === 'books') && (
+            <Shelf title="Books" Icon={BookOpen} count={(shelves.pdf?.length || 0) + shelfBooks.length}>
               <Rail>
                 {(() => {
                   const pdfs = (shelves.pdf || []).map(p => ({ ...p, kind: 'pdf' }))
-                  const texts = (shelves.text || []).map(t => ({ ...t, kind: 'text' }))
+                  const texts = shelfBooks.map(t => ({ ...t, kind: 'text' }))
                   const mixed = []
                   const n = Math.max(pdfs.length, texts.length)
                   for (let i = 0; i < n; i++) {
@@ -303,6 +314,14 @@ export default function SearchPage() {
             </Shelf>
           )}
 
+          {!!shelfQa.length && (!tab || tab === 'qa') && (
+            <Shelf title="Q&A" Icon={ClipboardList} count={shelfQa.length}>
+              <Rail>
+                {shelfQa.slice(0, 8).map(item => <RailQaCard key={item.id} item={item} />)}
+              </Rail>
+            </Shelf>
+          )}
+
           {!!shelves.videos?.length && (!tab || tab === 'video') && (
             <Shelf title="Videos" Icon={PlayCircle} count={shelves.videos.length}>
               <div className="space-y-3">
@@ -311,14 +330,14 @@ export default function SearchPage() {
             </Shelf>
           )}
 
-          {!!(shelves.pdf?.length || shelves.text?.length) && (!tab || tab === 'books') && (
+          {!!(shelves.pdf?.length || shelfBooks.length) && (!tab || tab === 'books') && (
             <section className="space-y-2">
               <h2 className="flex items-center gap-1.5 px-1 text-sm font-bold">
                 <BookOpen className="size-4 text-muted-foreground" /> More books
               </h2>
               <BookGrid items={(() => {
                 const pdfs = (shelves.pdf || []).map(p => ({ ...p, kind: 'pdf' }))
-                const texts = (shelves.text || []).map(t => ({ ...t, kind: 'text' }))
+                const texts = shelfBooks.map(t => ({ ...t, kind: 'text' }))
                 const mixed = []
                 const n = Math.max(pdfs.length, texts.length)
                 for (let i = 0; i < n; i++) {
@@ -394,6 +413,28 @@ export default function SearchPage() {
                   <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{books.length}</span>
                 </h2>
                 <BookGrid items={books} />
+              </section>
+            )}
+            {!!qas.length && (
+              <section className="space-y-2">
+                <h2 className="flex items-center gap-1.5 px-1 text-sm font-bold">
+                  <ClipboardList className="size-4 text-muted-foreground" /> Q&amp;A
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{qas.length}</span>
+                </h2>
+                <div className="divide-y divide-border rounded-2xl border">
+                  {qas.map(item => <QaRow key={item.id} item={item} />)}
+                </div>
+              </section>
+            )}
+            {!!folderHits.length && (
+              <section className="space-y-2">
+                <h2 className="flex items-center gap-1.5 px-1 text-sm font-bold">
+                  📁 Folders
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{folderHits.length}</span>
+                </h2>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {folderHits.map(item => <FolderCard key={item.id} item={item} />)}
+                </div>
               </section>
             )}
             {!!videos.length && (
@@ -482,6 +523,55 @@ export default function SearchPage() {
       )}
 
       {videoModal && <VideoModal item={videoModal} onClose={() => setVideoModal(null)} />}
+    </div>
+  )
+}
+
+function qaHref(item) {
+  return item.href || (item.courseCode ? `/courses/${String(item.courseCode).toLowerCase().replace(/\s+/g, '')}/theory` : null)
+}
+
+// Q&A rail card + row: theory questions are questions, not books.
+function FolderCard({ item }) {
+  return (
+    <Link href={item.href || '/folders'} className="flex items-center gap-3 rounded-2xl border bg-card p-3 hover:bg-muted/60">
+      <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 text-2xl">📁</span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm font-bold">{item.title}</span>
+        <span className="block truncate text-[11px] text-muted-foreground">{item.subtitle || 'Curated collection'}</span>
+      </span>
+      <SaveToFolder payload={savePayload(item, 'folder')} />
+    </Link>
+  )
+}
+
+function RailQaCard({ item }) {
+  const href = qaHref(item)
+  const body = (
+    <>
+      <span className="line-clamp-3 block text-xs font-bold leading-snug">{item.question || item.title}</span>
+      <span className="block truncate text-[11px] text-muted-foreground">{item.courseCode || 'Q&A'}</span>
+    </>
+  )
+  return (
+    <div className="w-56 shrink-0 snap-start space-y-1.5 rounded-2xl border bg-card p-3">
+      {href ? <Link href={href} className="block space-y-1.5">{body}</Link> : <div className="space-y-1.5">{body}</div>}
+      <SaveToFolder payload={savePayload(item, 'theory')} />
+    </div>
+  )
+}
+
+function QaRow({ item }) {
+  const href = qaHref(item)
+  return (
+    <div className="flex items-center gap-2.5 px-3 py-2.5">
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-violet-500/15 text-sm font-black text-violet-500">?</span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm font-semibold">{item.question || item.title}</span>
+        <span className="block truncate text-[11px] text-muted-foreground">{item.courseCode || 'Q&A'}</span>
+      </span>
+      {href && <Link href={href} className="shrink-0 text-[11px] font-bold text-primary">Open</Link>}
+      <SaveToFolder payload={savePayload(item, 'theory')} />
     </div>
   )
 }

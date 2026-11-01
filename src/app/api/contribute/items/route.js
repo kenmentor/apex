@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
+import { notifyAdmins } from '@/lib/notify'
 
 function canContribute(user) {
   return !!user && (!!user.admin || ['editor', 'official', 'admin'].includes(user.role))
@@ -17,6 +18,7 @@ function out(d) {
     title: d.title,
     url: d.url || null,
     courseCode: d.courseCode || null,
+    status: d.status || 'approved',
     addedBy: d.addedBy || d.ownerEmail || null,
     uploaders: d.uploaders || [d.ownerEmail].filter(Boolean),
     createdAt: d.createdAt,
@@ -63,6 +65,10 @@ export async function POST(request) {
       ownerEmail: me,
       addedBy: me,
       scopeDept: programme,
+      // Pending until a general admin approves it in review.
+      status: 'pending',
+      reviewedBy: null,
+      reviewedAt: null,
       hiddenBy: [],
       topic: typeof body.topic === 'string' && body.topic.trim() ? body.topic.trim().slice(0, 200) : null,
       uploaders: [me],
@@ -81,6 +87,12 @@ export async function POST(request) {
       updatedAt: now,
     }
     const res = await col.insertOne(doc)
+    notifyAdmins({
+      type: 'contribute',
+      title: `New ${doc.itemKind} for ${doc.courseCode || programme} — needs review`,
+      message: `${doc.title.slice(0, 120)} · by ${me}`,
+      link: '/admin/review',
+    }, me).catch(() => {})
     return NextResponse.json({ success: true, id: res.insertedId.toString() }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

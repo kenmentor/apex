@@ -19,7 +19,9 @@ export async function GET(request) {
       return NextResponse.json({ totalDocs: total })
     }
 
+    // Pending / rejected / revoked contributions stay out until an admin approves them.
     const filter = courseCode ? { courseCode: normalizeCourse(courseCode) } : {}
+    filter.status = { $nin: ['pending', 'rejected', 'revoked'] }
     const docs = await col.find(filter).toArray()
 
     const sections = {}

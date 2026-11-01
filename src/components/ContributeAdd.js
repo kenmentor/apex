@@ -219,6 +219,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
   const [noteDone, setNoteDone] = useState('')
   const [uploadOpen, setUploadOpen] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [sentReview, setSentReview] = useState(false)
   const [draftId, setDraftId] = useState(null)
   const [resumeCandidate, setResumeCandidate] = useState(null)
   const fileRef = useRef(null)
@@ -592,7 +593,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
     if (failed.length === 0) {
       // Published — the draft served its purpose.
       if (draftId) deleteDraft(draftId)
-      if (queue.length - done <= 0 && done > 0) { unloadOk.current = true; onDone() }
+      if (queue.length - done <= 0 && done > 0) { unloadOk.current = true; setSentReview(true) }
     } else {
       setError(`${failed.length} failed: ${failed.slice(0, 2).join(', ')}${failed.length > 2 ? '…' : ''}`)
     }
@@ -605,8 +606,8 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
         <div className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-sm" onClick={() => !committing && setConfirmOpen(false)} />
         <div className="fixed inset-x-0 bottom-0 z-[71] mx-auto w-full max-w-md rounded-t-3xl border-t bg-background p-4 pb-8">
           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-muted" />
-          <h3 className="text-sm font-black">Publish {queue.length} item{queue.length === 1 ? '' : 's'}?</h3>
-          <p className="mt-0.5 text-xs text-muted-foreground">To {courseCode}{topic ? ` · ${topic}` : ''} — visible to everyone.</p>
+        <h3 className="text-sm font-black">Send {queue.length} item{queue.length === 1 ? '' : 's'} for review?</h3>
+        <p className="mt-0.5 text-xs text-muted-foreground">To {courseCode}{topic ? ` · ${topic}` : ''} — visible after admin approval.</p>
           <div className="mt-2 max-h-40 space-y-1 overflow-y-auto">
             {queue.slice(0, 8).map(r => (
               <p key={r.key} className="truncate rounded-lg bg-muted/60 px-2.5 py-1.5 text-xs font-semibold">{r.title}</p>
@@ -616,7 +617,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
           <div className="mt-3 grid grid-cols-2 gap-2">
             <button onClick={() => setConfirmOpen(false)} disabled={committing} className="rounded-xl border py-2.5 text-sm font-bold disabled:opacity-50">Cancel</button>
             <button onClick={() => { setConfirmOpen(false); commitAll() }} disabled={committing} className="rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
-              Publish
+              Send
             </button>
           </div>
         </div>
@@ -666,7 +667,10 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
         <RichTextEditor tall value={noteHtml} onChange={setNoteHtml} placeholder="Start writing…" />
         {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
         {addedCount > 0 && !queue.length && (
-          <button onClick={onDone} className="w-full rounded-xl border py-2 text-xs font-bold">Done — show my adds</button>
+          <>
+            {sentReview && <p className="rounded-xl bg-green-500/10 px-3 py-2 text-center text-xs font-bold text-green-600">Sent to admin review ✓ — appears after approval.</p>}
+            <button onClick={onDone} className="w-full rounded-xl border py-2 text-xs font-bold">Done</button>
+          </>
         )}
         {uploadOpen && (
           <>
@@ -813,11 +817,14 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
 
       {/* 3 — one upload sends it all */}
       <button onClick={uploadPressed} disabled={committing || queue.length === 0} className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
-        {committing ? `Uploading ${progress?.done ?? 0}/${progress?.total ?? queue.length}…` : queue.length ? `Upload (${queue.length})` : addedCount ? 'All uploaded ✓' : 'Upload'}
+        {committing ? `Uploading ${progress?.done ?? 0}/${progress?.total ?? queue.length}…` : queue.length ? `Upload (${queue.length})` : addedCount ? 'Sent ✓' : 'Upload'}
       </button>
       {!queue.length && !addedCount && !noteDone && <p className="text-center text-[11px] text-muted-foreground">{isAudio ? 'Add audio from your device, folders or library — they pile up top, one Upload sends all.' : 'Add links, fresh files and folder files — they pile up top, one Upload sends all.'}</p>}
       {addedCount > 0 && !queue.length && (
-        <button onClick={onDone} className="w-full rounded-xl border py-2 text-xs font-bold">Done — show my adds</button>
+        <>
+          {sentReview && <p className="rounded-xl bg-green-500/10 px-3 py-2 text-center text-xs font-bold text-green-600">Sent to admin review ✓ — appears after approval.</p>}
+          <button onClick={onDone} className="w-full rounded-xl border py-2 text-xs font-bold">Done</button>
+        </>
       )}
       <ConfirmPublish />
     </div>
@@ -1029,7 +1036,7 @@ function CreateQuiz({ courseCode, topic, onDone, onBack }) {
       if (courseCode) {
         addPointerFor({ courseCode, kind: 'quiz', name: `${courseCode} Quiz`, href: `/courses/${courseCode.toLowerCase().replace(/\s+/g, '')}/quiz`, itemKind: 'quiz' })
       }
-      setDoneMsg('Added ✓ — write the next one')
+      setDoneMsg('Added ✓ — sent for admin review')
       setQuestion('')
       setExplanation('')
       setFibAccept('')

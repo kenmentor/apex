@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Bell, BellOff, CheckCheck, Trophy, BookOpen, TrendingUp, Star, UserPlus, MessageCircle } from 'lucide-react'
+import { Bell, BellOff, CheckCheck, Trophy, BookOpen, TrendingUp, Star, UserPlus, MessageCircle, ClipboardCheck } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -15,7 +15,12 @@ const TYPE_CONFIG = {
   streak: { icon: Star, color: '#e056a0', bg: '#e056a015' },
   follow: { icon: UserPlus, color: '#4bc0c0', bg: '#4bc0c015' },
   dm: { icon: MessageCircle, color: '#a55eea', bg: '#a55eea15' },
+  contribute: { icon: ClipboardCheck, color: '#0984e3', bg: '#0984e315' },
   system: { icon: Bell, color: '#636e72', bg: '#636e7215' },
+}
+
+function pingRead() {
+  try { window.dispatchEvent(new Event('notifications-read')) } catch {}
 }
 
 function getTimeAgo(dateStr) {
@@ -71,13 +76,15 @@ function NotificationItem({ notif, onRead }) {
 }
 
 // Shared inbox list (notifications, nudges, race results, announcements).
-// Used by the Groups inbox tab. onUnread reports the unread count for badges.
-// query filters by title/message. refreshKey refetch bumps.
-export default function InboxList({ onUnread, query = '', refreshKey = 0 }) {
+// Used by the Groups inbox + contribute tabs. onUnread reports the unread
+// count for badges. query filters by title/message. refreshKey refetch bumps.
+// types limits to notification types. autoRead marks visible items read.
+export default function InboxList({ onUnread, query = '', refreshKey = 0, types = null, autoRead = false }) {
   const router = useRouter();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const autoReadFired = useRef(false);
 
   useEffect(() => {
     const u = getUser();
@@ -119,9 +126,24 @@ export default function InboxList({ onUnread, query = '', refreshKey = 0 }) {
         setNotifications((prev) =>
           prev.map((n) => (n._id === notif._id ? { ...n, read: true } : n))
         );
+        pingRead();
       } catch {}
     }
     if (notif.link) router.push(notif.link);
+  }
+
+  async function markIdsRead(ids) {
+    if (!ids.length) return;
+    try {
+      await fetch('/api/notifications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
+        body: JSON.stringify({ ids }),
+      });
+      const set = new Set(ids.map(String));
+      setNotifications((prev) => prev.map((n) => (set.has(String(n._id)) ? { ...n, read: true } : n)));
+      pingRead();
+    } catch {}
   }
 
   async function markAllRead() {
@@ -132,8 +154,22 @@ export default function InboxList({ onUnread, query = '', refreshKey = 0 }) {
         body: JSON.stringify({ markAll: true }),
       });
       setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+      pingRead();
     } catch {}
   }
+
+  // "Seen = read": when the list is opened with items in view, mark just
+  // those visible ones read after a beat (scoped to this tab's types).
+  useEffect(() => {
+    if (!autoRead || autoReadFired.current || loading) return;
+    autoReadFired.current = true;
+    const t = setTimeout(() => {
+      const ids = notifications.filter(n => !n.read && (!types || types.includes(n.type))).map(n => String(n._id));
+      markIdsRead(ids);
+    }, 2500);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoRead, loading]);
 
   if (loading) {
     return (
@@ -156,8 +192,9 @@ export default function InboxList({ onUnread, query = '', refreshKey = 0 }) {
     );
   }
 
-  const unread = notifications.filter((n) => !n.read);
-  const read = notifications.filter((n) => n.read);
+  const scoped = types && types.length ? notifications.filter((n) => types.includes(n.type)) : notifications;
+  const unread = scoped.filter((n) => !n.read);
+  const read = scoped.filter((n) => n.read);
 
   const needle = query.trim().toLowerCase();
   const match = (n) => !needle
@@ -166,12 +203,13 @@ export default function InboxList({ onUnread, query = '', refreshKey = 0 }) {
   const unreadShown = unread.filter(match);
   const readShown = read.filter(match);
 
-  if (notifications.length === 0) {
+  if (scoped.length === 0) {
+    const contributeOnly = types && types.length && types.every(t => t === 'contribute');
     return (
       <div className="flex flex-col items-center gap-3 py-16 text-muted-foreground">
         <BellOff className="size-12 opacity-30" />
-        <p className="text-sm">No messages yet</p>
-        <p className="text-xs">Nudges from study buddies, race results, and announcements land here.</p>
+        <p className="text-sm">{contributeOnly ? 'No contribution updates yet' : 'No messages yet'}</p>
+        <p className="text-xs">{contributeOnly ? 'Submissions, approvals and review decisions land here.' : 'Nudges from study buddies, race results, and announcements land here.'}</p>
       </div>
     );
   }

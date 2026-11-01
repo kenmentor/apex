@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/db'
 import { getUserFromToken } from '@/lib/auth-server'
+import { notifyAdmins } from '@/lib/notify'
 
 function normCourse(code) {
   return String(code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2').slice(0, 32) || null
@@ -30,6 +31,10 @@ export async function POST(request) {
 
     const doc = {
       courseCode,
+      // Pending until a general admin approves it in review.
+      status: 'pending',
+      reviewedBy: null,
+      reviewedAt: null,
       section: String(body.section || 'Contributed').slice(0, 120),
       id: `contrib-${new ObjectId().toString().slice(-8)}`,
       question,
@@ -211,6 +216,13 @@ export async function POST(request) {
 
     const col = await getCollection('questions')
     const res = await col.insertOne(doc)
+    // General admins review everything before it goes live.
+    notifyAdmins({
+      type: 'contribute',
+      title: `New question for ${courseCode} — needs review`,
+      message: `${String(body.question || '').slice(0, 120)} · by ${String(user.email).toLowerCase()}`,
+      link: '/admin/review',
+    }, user.email).catch(() => {})
     return NextResponse.json({ success: true, id: res.insertedId.toString() }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

@@ -67,9 +67,10 @@ export async function PATCH(request) {
     }
 
     const body = await request.json();
-    const { id, markAll } = body;
+    const { id, ids, markAll } = body;
 
     const col = await getCollection('notifications');
+    const { ObjectId } = await import('mongodb');
 
     if (markAll) {
       await col.updateMany(
@@ -79,15 +80,24 @@ export async function PATCH(request) {
       return NextResponse.json({ success: true });
     }
 
-    if (id) {
-      await col.updateOne(
-        { _id: new (await import('mongodb')).ObjectId(id), userEmail: user.email },
+    if (Array.isArray(ids) && ids.length) {
+      const oids = ids.map(x => { try { return new ObjectId(String(x)) } catch { return null } }).filter(Boolean);
+      await col.updateMany(
+        { _id: { $in: oids }, userEmail: user.email },
         { $set: { read: true } }
       );
       return NextResponse.json({ success: true });
     }
 
-    return NextResponse.json({ error: 'Missing id or markAll' }, { status: 400 });
+    if (id) {
+      await col.updateOne(
+        { _id: new ObjectId(id), userEmail: user.email },
+        { $set: { read: true } }
+      );
+      return NextResponse.json({ success: true });
+    }
+
+    return NextResponse.json({ error: 'Missing id, ids or markAll' }, { status: 400 });
   } catch (err) {
     console.error('PATCH /api/notifications error:', err);
     return NextResponse.json({ error: 'Failed to update' }, { status: 500 });

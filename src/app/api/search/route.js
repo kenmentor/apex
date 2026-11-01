@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { getUserFromToken } from '@/lib/auth-server'
 
 // GET /api/search?q=&type=&course=&limit=
 // Study-content search only (no groups/posts): quiz, theory, notes, pdf, video, audio.
 // Response: { q, course, type, groups: { quiz, theory, notes, pdf, video, audio }, counts }
-const TYPES = ['quiz', 'theory', 'notes', 'pdf', 'video', 'audio']
+const TYPES = ['quiz', 'theory', 'notes', 'pdf', 'video', 'audio', 'folder']
 
 function normalizeCourse(code) {
   return (code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2')
@@ -75,23 +76,41 @@ export async function GET(request) {
     const needReadings = want('notes') || want('pdf')
     const needVideos = want('video') || want('audio')
 
-    const [questionsCol, theoryCol, readingsCol, videosCol, materialsCol] = await Promise.all([
+    const [questionsCol, theoryCol, readingsCol, videosCol, materialsCol, nodesCol, membersCol, me] = await Promise.all([
       needQuestions ? getCollection('questions') : null,
       needTheory ? getCollection('theory_references') : null,
       needReadings ? getCollection('readings') : null,
       needVideos ? getCollection('videos') : null,
       getCollection('user_materials'),
+      want('folder') ? getCollection('library_nodes') : null,
+      want('folder') ? getCollection('library_members') : null,
+      want('folder') ? getUserFromToken(request).then(u => (u?.email || '').toLowerCase()).catch(() => '') : Promise.resolve(''),
     ])
 
     const fetchN = needReadings && !type ? limit * 2 : limit
     const fetchV = needVideos && !type ? limit * 2 : limit
 
+    // Pending / rejected / revoked contributions stay out until an admin approves them.
+    const liveOnly = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
+    // Folders: your own + ones shared with you (curated collections stay private).
+    let fDocs = []
+    if (nodesCol && me) {
+      try {
+        const mems = await (membersCol ? membersCol.find({ email: me }).limit(200).toArray().catch(() => []) : [])
+        const { ObjectId } = await import('mongodb')
+        const sharedIds = mems.map(m => { try { return new ObjectId(String(m.nodeId)) } catch { return null } }).filter(Boolean)
+        const scopeOr = [{ ownerEmail: me }]
+        if (sharedIds.length) scopeOr.push({ _id: { $in: sharedIds } })
+        const folderFilter = { kind: 'folder', $or: scopeOr, ...(course ? { courseCode: { $in: [course, course.replace(/\s+/g, '')] } } : {}) }
+        fDocs = await searchCol(nodesCol, q, folderFilter, ['name', 'subtitle'], limit)
+      } catch { fDocs = [] }
+    }
     const [qDocs, tDocs, rDocs, vDocs, mDocs] = await Promise.all([
-      questionsCol ? searchCol(questionsCol, q, baseFilter, ['question', 'explanation', 'section'], limit) : [],
+      questionsCol ? searchCol(questionsCol, q, { ...baseFilter, ...liveOnly }, ['question', 'explanation', 'section'], limit) : [],
       theoryCol ? searchCol(theoryCol, q, baseFilter, ['question', 'keywords', 'mainConcepts'], limit) : [],
-      readingsCol ? searchCol(readingsCol, q, baseFilter, ['title', 'content'], fetchN) : [],
+      readingsCol ? searchCol(readingsCol, q, { ...baseFilter, ...liveOnly }, ['title', 'content'], fetchN) : [],
       videosCol ? searchCol(videosCol, q, baseFilter, ['title', 'description'], fetchV) : [],
-      materialsCol ? searchCol(materialsCol, q, { ...baseFilter, isPublic: true }, ['title', 'fileName', 'description'], limit) : [],
+      materialsCol ? searchCol(materialsCol, q, { ...baseFilter, isPublic: true, ...liveOnly }, ['title', 'fileName', 'description'], limit) : [],
     ])
 
     const quiz = qDocs.map((d) => ({
@@ -152,7 +171,14 @@ export async function GET(request) {
       }
     }
 
-    const groups = { quiz, theory, notes, pdf, video, audio }
+    // Curated folders (yours + shared with you) matching the query.
+    const folders = (want('folder') ? fDocs : []).map((d) => ({
+      id: String(d._id), kind: 'folder', courseCode: d.courseCode || null,
+      title: titleOf(d.name), subtitle: `${d.courseCode || 'Folder'} · curated collection`,
+      href: `/folders?id=${String(d._id)}`,
+    }))
+
+    const groups = { quiz, theory, notes, pdf, video, audio, folders }
     const counts = Object.fromEntries(Object.entries(groups).map(([k, v]) => [k, v.length]))
 
     return NextResponse.json({ q, course, type: type || null, groups, counts })

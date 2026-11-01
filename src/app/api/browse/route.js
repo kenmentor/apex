@@ -124,11 +124,13 @@ export async function GET(request) {
       getCollection('user_materials').catch(() => null),
     ])
 
+    // Pending / rejected / revoked contributions stay out until an admin approves them.
+    const liveOnly = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
     const [vDocs, tDocs, rDocs, mDocs] = await Promise.all([
       videosCol ? videosCol.find({}).sort({ _id: -1 }).limit(60).toArray().catch(() => []) : [],
       theoryCol ? theoryCol.find({}).sort({ _id: -1 }).limit(60).toArray().catch(() => []) : [],
-      readingsCol ? readingsCol.find({}).sort({ order: 1 }).limit(60).toArray().catch(() => []) : [],
-      materialsCol ? materialsCol.find({ isPublic: true }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
+      readingsCol ? readingsCol.find(liveOnly).sort({ order: 1 }).limit(60).toArray().catch(() => []) : [],
+      materialsCol ? materialsCol.find({ isPublic: true, ...liveOnly }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
     ])
 
     const [videos, audio, pdf, text, quiz] = await buildShelves({ vDocs, tDocs, rDocs, mDocs }, questionsCol, digit)
@@ -218,6 +220,7 @@ async function buildShelves({ vDocs, tDocs, rDocs, mDocs }, questionsCol, digit)
         let groups = []
         try {
           groups = await questionsCol.aggregate([
+            { $match: { status: { $nin: ['pending', 'rejected', 'revoked'] } } },
             { $group: { _id: '$courseCode', n: { $sum: 1 } } },
             { $sort: { n: -1 } },
             { $limit: 25 },

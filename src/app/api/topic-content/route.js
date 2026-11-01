@@ -35,10 +35,10 @@ export async function GET(request) {
     const [topics, videos, readings, theory, materials] = await Promise.all([
       getCollection('curriculum_topics').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('videos').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
-      getCollection('readings').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
+      getCollection('readings').then(c => c.find({ courseCode, status: { $nin: ['pending', 'rejected', 'revoked'] } }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('theory_references').then(c => c.find({ courseCode }).toArray()).catch(() => []),
-      // Contributor uploads (user_materials) — these are what the add sheet writes.
-      getCollection('user_materials').then(c => c.find({ courseCode: { $in: courseCodes }, isPublic: { $ne: false } }).sort({ createdAt: -1 }).limit(500).toArray()).catch(() => []),
+      // Approved contributor uploads (user_materials) — pending review items stay out.
+      getCollection('user_materials').then(c => c.find({ courseCode: { $in: courseCodes }, isPublic: { $ne: false }, status: { $nin: ['pending', 'rejected', 'revoked'] } }).sort({ createdAt: -1 }).limit(500).toArray()).catch(() => []),
     ])
 
     const clean = topics.map(t => ({ ...t, _id: t._id.toString() }))

@@ -69,10 +69,14 @@ export async function GET(request) {
       const rx = { $regex: escRx(q), $options: 'i' }
       filter.$or = [{ title: rx }, { fileName: rx }, { description: rx }]
     }
+    // Pending / rejected / revoked contributions stay out of public views
+    // until an admin approves them; owners always see their own.
+    const liveOnly = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
     if (mine && me) {
-      filter.$and = [{ $or: [{ isPublic: true }, { ownerEmail: me }] }]
+      filter.$and = [{ $or: [{ isPublic: true, ...liveOnly }, { ownerEmail: me }] }]
     } else {
       filter.isPublic = true
+      filter.status = { $nin: ['pending', 'rejected', 'revoked'] }
     }
 
     const col = await getCollection('user_materials')
