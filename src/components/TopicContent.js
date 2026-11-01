@@ -9,6 +9,7 @@ import TikTokTabs from '@/components/TikTokTabs'
 import MediaCard from '@/components/MediaCard'
 import { FullscreenReader, useSpeech, stripHtml } from '@/components/Reader'
 import { mockTopicContent } from '@/lib/demo-content'
+import { renderMath } from '@/lib/math'
 
 const TABS = [
   { id: 'quiz', label: 'Quiz', icon: Zap },
@@ -329,7 +330,7 @@ export default function TopicContent({ course, topic, titleHint = '' }) {
             <div className="mx-auto w-full max-w-2xl px-5 py-5">
               <h2 className="text-lg font-extrabold">{reader.item.title}</h2>
               {reader.item.content ? (
-                <div className="prose mt-3 max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: reader.item.content }} />
+                <div className="prose mt-3 max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: renderMath(reader.item.content) }} />
               ) : (
                 <ul className="mt-3 list-disc space-y-2 pl-5 leading-relaxed">
                   {(reader.item.concepts || []).map((c, i) => <li key={i}>{c}</li>)}

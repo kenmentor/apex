@@ -75,12 +75,12 @@ export async function POST(request) {
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     const email = normEmail(user.email)
     const body = await request.json()
-    const { kind, name, parentId, itemKind, refId, href, url, courseCode, subtitle, color, size, mime, isPublic, materialId, sha256 } = body || {}
+    const { kind, name, parentId, itemKind, refId, href, url, courseCode, topic, content, subtitle, color, size, mime, isPublic, materialId, sha256 } = body || {}
 
     if (!['folder', 'ref'].includes(kind)) return NextResponse.json({ error: 'kind must be folder|ref' }, { status: 400 })
-    const clean = cleanName(name, kind === 'folder' ? 'New folder' : 'Untitled')
-    if (kind === 'ref' && !href && !url && !refId) {
-      return NextResponse.json({ error: 'ref needs href, url, or refId' }, { status: 400 })
+    const clean = cleanName(name, kind === 'folder' ? 'Untitled' : 'Untitled')
+    if (kind === 'ref' && !href && !url && !refId && !content) {
+      return NextResponse.json({ error: 'ref needs href, url, refId, or content' }, { status: 400 })
     }
 
     const nodesCol = await getCollection('library_nodes')
@@ -108,6 +108,8 @@ export async function POST(request) {
       href: href ? String(href).slice(0, 500) : null,
       url: url ? String(url).slice(0, 1000) : null,
       courseCode: courseCode ? String(courseCode).slice(0, 32) : null,
+      topic: topic ? String(topic).slice(0, 200) : null,
+      content: content ? String(content).slice(0, 300000) : null,
       subtitle: subtitle ? String(subtitle).slice(0, 200) : null,
       color: color ? String(color).slice(0, 24) : null,
       size: Number.isFinite(Number(size)) ? Number(size) : null,

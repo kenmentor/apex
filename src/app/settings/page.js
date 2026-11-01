@@ -95,7 +95,7 @@ function SettingsContent() {
       if (!res.ok) throw new Error('Save failed')
       const data = await res.json()
       const u = getUser()
-      const updated = { ...u, name: data.name, school: data.school, department: data.department, level: data.level }
+      const updated = { ...u, name: data.name, school: data.school, department: data.department, level: data.level, role: data.role || u?.role }
       setUser(updated)
       setUserState(updated)
       setEditing(false)

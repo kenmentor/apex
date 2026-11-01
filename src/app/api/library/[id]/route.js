@@ -24,6 +24,12 @@ export async function PATCH(request, { params }) {
     if (body.name !== undefined) {
       update.name = cleanName(body.name, node.name)
     }
+    if (body.content !== undefined) {
+      update.content = body.content ? String(body.content).slice(0, 300000) : null
+    }
+    if (body.topic !== undefined) {
+      update.topic = body.topic ? String(body.topic).slice(0, 200) : null
+    }
     if (body.isPublic !== undefined) {
       update.isPublic = body.isPublic !== false
     }

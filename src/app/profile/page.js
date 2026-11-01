@@ -7,7 +7,7 @@ import { getUser, getToken } from '@/lib/auth'
 import { ArrowLeft, Medal, Clock, Target, GraduationCap, Settings, User } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { UserAvatar, UserAvatarImage } from '@/components/UserAvatar'
+import { UserAvatar, UserAvatarImage, AvatarWithTick } from '@/components/UserAvatar'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -89,7 +89,7 @@ function ProfileContent() {
           <>
             <Card>
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <UserAvatar user={user} className="size-20" />
+                <AvatarWithTick user={user} className="size-20" tickSize="size-5" />
                 <div className="min-w-0">
                   <h2 className="truncate text-lg font-bold">{user.name || 'Anonymous'}</h2>
                   <p className="truncate text-xs text-muted-foreground">{user.email}</p>

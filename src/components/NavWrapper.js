@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import NavBar from '@/components/NavBar';
 import TopBar from '@/components/TopBar';
 import SideDrawer from '@/components/SideDrawer';
@@ -28,12 +28,48 @@ const routeMap = {
   '/races': '/races',
   '/wallet': '/wallet',
   '/streak': '/streak',
+  '/contribute': '/contribute',
   '/settings': '/settings',
   '/admin': '/admin',
 };
 
+// Tab roots keep the plain brand header (no back button).
+const TAB_ROOTS = new Set(['/', '/plan', '/games', '/search', '/folders']);
+
+// Detail pages get back + contextual title. Parent = where back lands when
+// history is empty (fresh deep link).
+const DETAIL_TITLES = {
+  '/courses': ['Course', '/folders'],
+  '/departments': ['Departments', '/'],
+  '/alex': ['Alex', '/'],
+  '/leaderboard': ['Rankings', '/'],
+  '/profile': ['Profile', '/'],
+  '/games': ['Game', '/games'],
+  '/task': ['Task', '/plan'],
+  '/dm': ['Chat', '/groups?tab=inbox'],
+  '/races': ['Races', '/games'],
+  '/wallet': ['Wallet', '/'],
+  '/streak': ['Streak', '/'],
+  '/contribute': ['Contributor', '/'],
+  '/settings': ['Settings', '/'],
+  '/admin': ['Admin', '/'],
+  '/notifications': ['Notifications', '/'],
+  '/messages': ['Messages', '/'],
+  '/logout': ['Logout', '/'],
+};
+
+function detailFor(pathname) {
+  for (const [route, [title, parent]] of Object.entries(DETAIL_TITLES)) {
+    if (pathname === route || pathname.startsWith(route + '/')) return { title, parent };
+  }
+  const seg = (pathname || '').split('/').filter(Boolean)[0] || '';
+  const pretty = seg.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Page';
+  return { title: pretty, parent: '/' };
+}
+
 export default function NavWrapper() {
   const pathname = usePathname();
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [drawer, setDrawer] = useState(false);
   const [unread, setUnread] = useState(0);
@@ -67,16 +103,35 @@ export default function NavWrapper() {
     }
   }
 
-  // Inside a group (detail + settings) and the plan flow: fullscreen mode,
-  // no global top bar — each page brings its own slim header.
-  const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan');
+  // Group pages and deep plan pages bring their own chrome — no global bar there.
+  // The plan index itself has no header of its own, so it keeps the global one.
+  const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan/');
   // Inside a group detail/settings or a DM thread: no bottom tabs either (typer takes the room).
   const hideNav = /^\/groups\/[^/]+/.test(pathname || '') || (pathname || '').startsWith('/dm/');
+
+  const isTabRoot = TAB_ROOTS.has(active) && (pathname === active || (active === '/' && pathname === '/'));
+  const detail = !hideTop && !isTabRoot ? detailFor(pathname) : null;
+
+  function goBack(fallback) {
+    try {
+      if (typeof window !== 'undefined' && window.history.length > 1) router.back();
+      else router.push(fallback || '/');
+    } catch {
+      router.push(fallback || '/');
+    }
+  }
 
   return (
     <>
       {!hideTop && (
-        <TopBar user={user} unread={unread} onAvatar={() => setDrawer(true)} hideTitle={false} />
+        <TopBar
+          user={user}
+          unread={unread}
+          onAvatar={() => setDrawer(true)}
+          title={detail ? detail.title : 'GSS Banger'}
+          showBack={!!detail}
+          onBack={detail ? () => goBack(detail.parent) : undefined}
+        />
       )}
       <SideDrawer open={drawer} user={user} coins={coins} onClose={() => setDrawer(false)} />
       {!hideNav && <NavBar active={active} />}

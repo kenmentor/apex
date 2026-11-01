@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { getToken } from '@/lib/auth'
 import BookGrid from '@/components/BookGrid'
+import { uploadFile } from '@/lib/uploads'
 
 // Samsung My Files-inspired layout built with our own icons/components.
 // Not a pixel copy of Samsung assets — same file-manager patterns:
@@ -48,7 +49,7 @@ function iconFor(node) {
 function tintFor(node) {
   const k = node?.itemKind || node?.kind
   switch (k) {
-    case 'folder': return 'text-amber-500'
+    case 'folder': return 'text-amber-500 dark:text-amber-300'
     case 'image': return 'text-emerald-600'
     case 'video': return 'text-rose-600'
     case 'audio': return 'text-amber-600'
@@ -415,9 +416,10 @@ function FoldersInner() {
       const form = new FormData()
       form.append('file', file)
       form.append('folder', 'gss-quiz/library')
-      const up = await fetch('/api/upload', { method: 'POST', headers: { ...authHeaders() }, body: form })
-      const ud = await up.json()
-      if (!up.ok) throw new Error(ud.error || 'Upload failed')
+      // Background XHR: progress lives in the bar above the nav,
+      // the user can keep browsing while this runs.
+      const ud = await uploadFile(file, { folder: 'gss-quiz/library', getToken })
+      if (!ud?.url) throw new Error(ud?.error || 'Upload failed')
       let materialId = null
       try {
         const m = await api('/api/materials', {
@@ -519,10 +521,21 @@ function FoldersInner() {
       </div>
 
       <nav className="flex items-center gap-1 overflow-x-auto text-sm">
+        <span
+          onDragOver={canWrite ? (e) => { e.preventDefault(); setDropOver('__root__') } : undefined}
+          onDragLeave={() => setDropOver(cur => cur === '__root__' ? null : cur)}
+          onDrop={canWrite ? (e) => dropOnFolder(e, { id: null }) : undefined}
+          className={`shrink-0 rounded px-1 py-0.5 font-semibold ${dropOver === '__root__' ? 'bg-primary/15 text-primary' : !currentId ? 'bg-muted' : 'text-muted-foreground hover:bg-muted'}`}
+        >
+          <Link href="/folders" onClick={() => setCatFilter(null)}>My Files</Link>
+        </span>
         {data.breadcrumb.map(b => (
-          <span key={b.id} className="flex shrink-0 items-center gap-1">
+          <span key={b.id} className="flex shrink-0 items-center gap-1"
+            onDragOver={canWrite ? (e) => { e.preventDefault(); setDropOver(b.id) } : undefined}
+            onDragLeave={() => setDropOver(cur => cur === b.id ? null : cur)}
+            onDrop={canWrite ? (e) => dropOnFolder(e, b) : undefined}>
             <ChevronRight className="size-3 text-muted-foreground" />
-            <Link href={`/folders?id=${b.id}`} className={`rounded px-1 py-0.5 ${String(b.id) === String(currentId) ? 'bg-muted font-semibold' : 'text-muted-foreground hover:bg-muted'}`}>{b.name}</Link>
+            <Link href={`/folders?id=${b.id}`} className={`rounded px-1 py-0.5 ${dropOver === b.id ? 'bg-primary/15 text-primary' : String(b.id) === String(currentId) ? 'bg-muted font-semibold' : 'text-muted-foreground hover:bg-muted'}`}>{b.name}</Link>
           </span>
         ))}
       </nav>
@@ -574,7 +587,7 @@ function FoldersInner() {
             <h2 className="px-1 text-sm font-bold text-muted-foreground">{currentId ? (data.node?.name || 'Folder') : 'Internal storage'} <span className="ml-1 rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{folders.length + files.length}</span></h2>
             {folders.length + files.length === 0 ? (
               <div className="rounded-xl border border-dashed p-6 text-center">
-                <Folder className="mx-auto size-8 text-[#EDB600]" fill="currentColor" opacity={0.3} />
+                <Folder className="mx-auto size-8 text-[#EDB600] dark:text-amber-300" fill="currentColor" stroke="currentColor" />
                 <p className="mt-2 text-sm font-semibold">Empty folder</p>
                 <p className="text-xs text-muted-foreground">{canWrite ? 'Create a folder, upload, or save study content here. Uploads are public by default and appear in Search.' : 'Nothing here yet.'}</p>
               </div>
@@ -584,10 +597,15 @@ function FoldersInner() {
                   n.kind === 'folder' ? (
                     <FolderRow key={n.id} node={n} view={view} selectMode={selectMode} checked={selected.includes(n.id)}
                       onToggle={() => toggleSelect(n.id)} onOpen={() => (selectMode ? toggleSelect(n.id) : go(n.id))}
-                      onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} />
+                      onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)}
+                      draggable={canWrite && !selectMode} onDragStart={(e) => dragStart(e, n)} onDragEnd={() => { setDragIds([]); setDropOver(null) }}
+                      onDragOver={(e) => { e.preventDefault(); setDropOver(n.id) }} onDragLeave={() => setDropOver(cur => cur === n.id ? null : cur)}
+                      onDrop={(e) => dropOnFolder(e, n)} isDropTarget={dropOver === n.id} isDragging={dragIds.includes(n.id)} />
                   ) : (
                     <FileRow key={n.id} node={n} view={view} selectMode={selectMode} checked={selected.includes(n.id)}
-                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} />
+                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)}
+                      draggable={canWrite && !selectMode} onDragStart={(e) => dragStart(e, n)} onDragEnd={() => { setDragIds([]); setDropOver(null) }}
+                      isDragging={dragIds.includes(n.id)} />
                   )
                 ))}
               </div>
@@ -600,7 +618,7 @@ function FoldersInner() {
               <div className="divide-y divide-border">
                 {data.shared.map(s => (
                   <button key={s.id} onClick={() => go(s.id)} className="flex w-full items-center gap-3 px-1 py-2.5 text-left hover:bg-muted/50">
-                    <Folder className="size-7 shrink-0 text-[#EDB600]" fill="currentColor" opacity={0.35} />
+                    <Folder className="size-7 shrink-0 text-[#EDB600] dark:text-amber-300" fill="currentColor" stroke="currentColor" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[15px] font-medium">{s.name}</span>
                       <span className="block text-xs text-muted-foreground">{s.sharedRole === 'editor' ? 'Can edit' : 'Can view'}</span>
@@ -720,7 +738,7 @@ function FoldersInner() {
           <div className="max-h-56 space-y-1 overflow-y-auto">
             {(moveBrowse?.children || []).filter(c => c.kind === 'folder' && !moveTargets.some(t => String(t.id) === String(c.id))).map(f => (
               <button key={f.id} onClick={() => loadMoveBrowse(f.id)} className="flex w-full items-center gap-2 rounded-xl border p-2.5 text-left text-sm hover:bg-muted">
-                <Folder className="size-4 text-amber-500" /><span className="flex-1 truncate font-semibold">{f.name}</span><ChevronRight className="size-4 text-muted-foreground" />
+                <Folder className="size-4 text-amber-500 dark:text-amber-300" fill="currentColor" stroke="currentColor" /><span className="flex-1 truncate font-semibold">{f.name}</span><ChevronRight className="size-4 text-muted-foreground" />
               </button>
             ))}
             {((moveBrowse?.children || []).filter(c => c.kind === 'folder').length === 0) && <p className="py-3 text-center text-xs text-muted-foreground">No subfolders here.</p>}
@@ -835,12 +853,15 @@ function Sheet({ title, onClose, children }) {
   )
 }
 
-function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, onDetails }) {
+function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, onDetails, draggable, onDragStart, onDragEnd, onDragOver, onDragLeave, onDrop, isDropTarget, isDragging }) {
+  const dropCls = isDropTarget ? 'ring-2 ring-primary bg-primary/10 rounded-xl' : ''
+  const dragCls = isDragging ? 'opacity-40' : ''
   if (view === 'grid') {
     return (
-      <div className={`relative rounded-xl border p-3 ${checked ? 'border-primary bg-primary/5' : ''}`}>
+      <div draggable={draggable} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}
+        className={`relative rounded-xl border p-3 ${checked ? 'border-primary bg-primary/5' : ''} ${dropCls} ${dragCls}`}>
         <button onClick={onOpen} className="flex w-full flex-col gap-2 text-left">
-          <Folder className="size-8 text-amber-500" fill="currentColor" opacity={0.25} />
+          <Folder className="size-8 text-amber-500 dark:text-amber-300" fill="currentColor" stroke="currentColor" />
           <span className="line-clamp-2 text-sm font-semibold">{node.name}</span>
           <span className="text-[11px] text-muted-foreground">{formatDate(node.updatedAt || node.createdAt)}</span>
         </button>
@@ -855,12 +876,13 @@ function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, 
     )
   }
   return (
-    <div className={`flex items-center gap-1 px-1 py-1 ${checked ? 'bg-primary/5' : ''}`}>
+    <div draggable={draggable} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}
+      className={`flex items-center gap-1 px-1 py-1 ${checked ? 'bg-primary/5' : ''} ${dropCls} ${dragCls} ${isDropTarget ? 'rounded-xl' : ''}`}>
       {selectMode && <button onClick={onToggle} aria-label="Select" className="flex size-6 shrink-0 items-center justify-center rounded-md border">{checked && <span className="text-xs font-black">✓</span>}</button>}
       <button onClick={onOpen} className="flex min-w-0 flex-1 items-center gap-3 px-1 py-2 text-left hover:bg-muted/50">
-        <Folder className="size-7 shrink-0 text-[#EDB600]" fill="currentColor" opacity={0.35} />
+        <Folder className="size-7 shrink-0 text-[#EDB600] dark:text-amber-300" fill="currentColor" stroke="currentColor" />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[15px] font-medium">{node.name}</span>
+          <span className="block truncate text-[15px] font-medium">{node.name}{isDropTarget && <span className="ml-1.5 text-[11px] font-bold text-primary">· drop to move here</span>}</span>
           <span className="block text-[11px] text-muted-foreground">{formatDate(node.updatedAt || node.createdAt)}</span>
         </span>
         <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
@@ -870,7 +892,7 @@ function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, 
   )
 }
 
-function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails }) {
+function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails, draggable, onDragStart, onDragEnd, isDragging }) {
   const Icon = iconFor(node)
   const href = node.href || node.url || null
   const stale = !href && !String(node.id).startsWith('m-')
@@ -887,7 +909,8 @@ function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails 
   )
   if (view === 'grid') {
     return (
-      <div className={`relative rounded-xl border p-3 ${checked ? 'border-primary bg-primary/5' : ''}`}>
+      <div draggable={draggable} onDragStart={onDragStart} onDragEnd={onDragEnd}
+        className={`relative rounded-xl border p-3 ${checked ? 'border-primary bg-primary/5' : ''} ${isDragging ? 'opacity-40' : ''}`}>
         {href && !selectMode ? (
           String(node.id).startsWith('m-') ? <a href={href} target="_blank" rel="noreferrer" className="flex flex-col gap-2">{inner}</a>
           : <Link href={href} className="flex flex-col gap-2">{inner}</Link>
@@ -903,7 +926,8 @@ function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails 
     )
   }
   return (
-    <div className={`flex items-center gap-1 px-1 py-1 ${checked ? 'bg-primary/5' : ''}`}>
+    <div draggable={draggable} onDragStart={onDragStart} onDragEnd={onDragEnd}
+      className={`flex items-center gap-1 px-1 py-1 ${checked ? 'bg-primary/5' : ''} ${isDragging ? 'opacity-40' : ''}`}>
       {selectMode && <button onClick={onToggle} aria-label="Select" className="flex size-6 shrink-0 items-center justify-center rounded-md border">{checked && <span className="text-xs font-black">✓</span>}</button>}
       <button onClick={onDetails || (() => {})} className="flex min-w-0 flex-1 items-center gap-3 px-1 py-2 text-left hover:bg-muted/50" title="Details">
         {inner}

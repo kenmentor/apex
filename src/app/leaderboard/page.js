@@ -7,6 +7,16 @@ import { Trophy, ArrowLeft, Users, FileText, TrendingUp, Medal, Crown, Filter } 
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { RoleSeal } from '@/components/UserAvatar';
+
+function RoleDot({ role, className = '' }) {
+  if (role !== 'admin' && role !== 'editor' && role !== 'official') return null
+  return (
+    <span className={`inline-flex rounded-full ring-2 ring-background ${className}`}>
+      <RoleSeal role={role} size="size-4" />
+    </span>
+  )
+}
 import { Skeleton } from '@/components/ui/skeleton';
 
 const avatars = [
@@ -68,7 +78,7 @@ function StatCard({ icon: Icon, label, value, color, bg }) {
   );
 }
 
-function PodiumUser({ entry, rank }) {
+function PodiumUser({ entry, rank, role }) {
   const isWinner = rank === 1;
   const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
@@ -84,6 +94,7 @@ function PodiumUser({ entry, rank }) {
               {entry ? getInitials(entry.name) : '??'}
             </AvatarFallback>
           </Avatar>
+          <RoleDot role={role} className="absolute -bottom-1 -right-1" />
           {isWinner && (
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <Crown className="size-6 text-yellow-400" fill="currentColor" />
@@ -109,15 +120,15 @@ function PodiumUser({ entry, rank }) {
   );
 }
 
-function LeaderEntry({ entry, rank, isUser }) {
+function LeaderEntry({ entry, rank, isUser, role }) {
   const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
     <div className={`rounded-xl border-b border-border p-3 transition-colors last:border-b-0 ${isUser ? 'bg-primary/5 ring-1 ring-primary/20' : 'bg-card hover:bg-muted/50'}`}>
       {/* Top row: rank, avatar, name, score */}
       <div className="flex items-center gap-2.5">
         <span className="w-6 shrink-0 text-center text-sm font-bold text-muted-foreground">{rank}</span>
-        <Link href={href}>
-          <Avatar className="size-9 shrink-0">
+        <Link href={href} className="relative shrink-0">
+          <Avatar className="size-9">
             <AvatarImage src={entry.avatar} />
             <AvatarFallback
               className="text-[10px] font-bold text-white"
@@ -126,6 +137,7 @@ function LeaderEntry({ entry, rank, isUser }) {
               {getInitials(entry.name)}
             </AvatarFallback>
           </Avatar>
+          <RoleDot role={role} className="absolute -bottom-0.5 -right-0.5" />
         </Link>
         <div className="min-w-0 flex-1">
           <Link href={href}>
@@ -151,6 +163,7 @@ export default function LeaderboardPage() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUserState] = useState(null);
+  const [roleMap, setRoleMap] = useState({});
 
   useEffect(() => {
     const u = getUser();
@@ -160,8 +173,16 @@ export default function LeaderboardPage() {
       fetch('/api/leaderboard?stats=true').then(r => r.json()),
     ])
       .then(([scoresData, statsData]) => {
-        setAllEntries(Array.isArray(scoresData) ? scoresData : []);
+        const list = Array.isArray(scoresData) ? scoresData : [];
+        setAllEntries(list);
         if (statsData && !statsData.error) setStats(statsData);
+        const emails = [...new Set(list.map(e => e.email).filter(Boolean))].slice(0, 50);
+        if (emails.length) {
+          fetch(`/api/users/roles?emails=${emails.map(encodeURIComponent).join(',')}`)
+            .then(r => r.json())
+            .then(d => { if (d.roles) setRoleMap(d.roles) })
+            .catch(() => {});
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -249,7 +270,7 @@ export default function LeaderboardPage() {
               <div className="flex items-end justify-center gap-4 overflow-hidden py-4 sm:gap-6">
                 {[1, 0, 2].map(pos => {
                   const entry = top3[pos];
-                  return entry ? <PodiumUser key={pos} entry={entry} rank={pos + 1} /> : null;
+                  return entry ? <PodiumUser key={pos} entry={entry} rank={pos + 1} role={entry?.email && roleMap[entry.email.toLowerCase()]} /> : null;
                 })}
               </div>
             )}
@@ -260,7 +281,7 @@ export default function LeaderboardPage() {
               {top10.map((entry, i) => {
                 const isUser = userEmail && entry.email?.toLowerCase() === userEmail;
                 return (
-                  <LeaderEntry key={`top-${i}`} entry={entry} rank={i + 1} isUser={isUser} />
+                    <LeaderEntry key={`top-${i}`} entry={entry} rank={i + 1} isUser={isUser} role={entry?.email && roleMap[entry.email.toLowerCase()]} />
                 );
               })}
 
@@ -272,7 +293,7 @@ export default function LeaderboardPage() {
                     <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Your Rank</span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <LeaderEntry entry={userEntry} rank={userRank} isUser />
+                  <LeaderEntry entry={userEntry} rank={userRank} isUser role={userEntry?.email && roleMap[userEntry.email.toLowerCase()]} />
                 </>
               )}
 
@@ -281,7 +302,7 @@ export default function LeaderboardPage() {
                 const isUser = userEmail && entry.email?.toLowerCase() === userEmail;
                 if (isUser && showSeparator) return null;
                 return (
-                  <LeaderEntry key={`rest-${i}`} entry={entry} rank={10 + i + 1} isUser={isUser} />
+                    <LeaderEntry key={`rest-${i}`} entry={entry} rank={10 + i + 1} isUser={isUser} role={entry?.email && roleMap[entry.email.toLowerCase()]} />
                 );
               })}
             </div>

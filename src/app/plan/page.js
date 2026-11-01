@@ -6,7 +6,7 @@ import { ChevronRight } from 'lucide-react'
 import { getUser } from '@/lib/auth'
 import { Skeleton } from '@/components/ui/skeleton'
 import { mockPlan } from '@/lib/demo-content'
-import { colorFor } from './[course]/page'
+import { colorFor } from '@/lib/plan-colors'
 
 export default function PlanPage() {
   const [user, setUser] = useState(null)

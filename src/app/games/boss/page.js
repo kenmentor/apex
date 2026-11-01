@@ -41,6 +41,9 @@ const BUILD_N = 24
 const BATTLE_N = 12
 const BOSS_MAX = 120
 const PLAYER_MAX = 100
+// Boss strikes if you stare too long — hesitation costs HP.
+const STRIKE_SECONDS = 15
+const STRIKE_DMG = 12
 
 function bossFor(course) {
   let h = 0
@@ -97,6 +100,9 @@ function BossInner() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [popId, setPopId] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(STRIKE_SECONDS)
+  const flashRef = useRef(false)
+  const firedRef = useRef(false)
 
   useEffect(() => {
     fetchJson('/api/courses', { ttl: TTL.list })
@@ -109,7 +115,8 @@ function BossInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Build countdown → battle.
+  // flashRef mirrors flash state for the strike timer (avoids stale closures).
+  useEffect(() => { flashRef.current = !!flash }, [flash]);
   useEffect(() => {
     if (phase !== 'build') return
     const t = setInterval(() => {
@@ -121,6 +128,26 @@ function BossInner() {
     return () => clearInterval(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])
+
+  // Battle strike clock — one fresh fuse per question. Hesitate and the boss hits you.
+  useEffect(() => {
+    if (phase !== 'battle' || !bank) return
+    firedRef.current = false
+    const startedAt = Date.now()
+    const span = STRIKE_SECONDS * 1000
+    setTimeLeft(STRIKE_SECONDS)
+    const t = setInterval(() => {
+      const remain = Math.max(0, span - (Date.now() - startedAt))
+      setTimeLeft(Math.ceil(remain / 1000))
+      if (remain <= 0 && !firedRef.current) {
+        firedRef.current = true
+        clearInterval(t)
+        timeoutStrike()
+      }
+    }, 100)
+    return () => clearInterval(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, idx, round, bank])
 
   useEffect(() => {
     if (!result) return
@@ -151,6 +178,9 @@ function BossInner() {
     setBank(d)
     setIdx(0)
     setFlash(null)
+    flashRef.current = false
+    firedRef.current = false
+    setTimeLeft(STRIKE_SECONDS)
     setPower(0)
     setBuildCorrect(0)
     setBuildAnswered(0)
@@ -268,6 +298,30 @@ function BossInner() {
         else setIdx(i => i + 1)
       }, 800)
     }
+  }
+
+  // ── Boss strike: hesitate too long and it hits you first ──
+  function timeoutStrike() {
+    if (phase !== 'battle' || flashRef.current || !bank?.questions?.[idx] || result) return
+    setFlash({ qid: bank.questions[idx].id, letter: null, right: false })
+    setStreak(0)
+    setAnswered(a => a + 1)
+    sfx('wrong')
+    setShakeKey(k => k + 1)
+    try { arenaRef.current?.hit('boss', false) } catch {}
+    setPlayerHp(h => {
+      const remaining = Math.max(0, h - STRIKE_DMG)
+      return remaining
+    })
+    const remaining = Math.max(0, playerHp - STRIKE_DMG)
+    floatHit(`-${STRIKE_DMG} HP`, 'text-red-500')
+    setFlavor(`${boss.name} strikes while you hesitated!`)
+    setTimeout(() => {
+      setFlash(null)
+      if (remaining <= 0) knockOut(false)
+      else if (idx + 1 >= bank.questions.length) nextRound()
+      else setIdx(i => i + 1)
+    }, 900)
   }
 
   // Fresh questions keep flowing — answering is what keeps you alive.
@@ -394,7 +448,7 @@ function BossInner() {
           <p className="text-sm font-semibold">Train. Evolve. Fight.</p>
           <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-foreground">① Build ({BUILD_SECONDS}s):</span> answer fast, forge power, evolve 🌱→🔥.<br />
-            <span className="font-semibold text-foreground">② Battle:</span> your power becomes damage. Show up weak and {bossFor(pickedCourse || 'boss').name} <span className="font-semibold">will</span> defeat you.
+            <span className="font-semibold text-foreground">② Battle:</span> your power becomes damage. Answer each question within {STRIKE_SECONDS}s or {bossFor(pickedCourse || 'boss').name} <span className="font-semibold">strikes you first</span> — stall and you die.
           </p>
           <label className="block text-left text-xs font-semibold text-muted-foreground">
             Course
@@ -463,6 +517,17 @@ function BossInner() {
             </div>
           </div>
           {flavor && <p className="text-center text-xs italic text-muted-foreground">{flavor}</p>}
+          {/* Strike clock — answer before it empties or the boss hits you */}
+          <div className="flex items-center gap-2">
+            <Timer className={`size-4 shrink-0 ${timeLeft <= 5 ? 'animate-pulse text-red-500' : 'text-muted-foreground'}`} />
+            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+              <div
+                className={`h-full rounded-full transition-[width] duration-100 ${timeLeft <= 5 ? 'bg-red-500' : 'bg-amber-500'}`}
+                style={{ width: `${(timeLeft / STRIKE_SECONDS) * 100}%` }}
+              />
+            </div>
+            <span className={`w-8 text-right text-xs font-black tabular-nums ${timeLeft <= 5 ? 'text-red-500' : 'text-muted-foreground'}`}>{timeLeft}s</span>
+          </div>
           {answerCard(strike)}
         </motion.div>
       )}

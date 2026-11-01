@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ArrowLeft, UserPlus, UserCheck, Medal, Clock, Target, GraduationCap, User } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { UserAvatarImage } from '@/components/UserAvatar'
+import { UserAvatarImage, VerifiedTick } from '@/components/UserAvatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -88,12 +88,15 @@ export default function PublicProfilePage({ params }) {
           <>
             <Card>
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <Avatar className="size-16">
-                  <UserAvatarImage user={profile} />
-                  <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
-                    {profile.name?.[0]?.toUpperCase() || decodedEmail[0].toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                <span className="relative inline-flex shrink-0">
+                  <Avatar className="size-16">
+                    <UserAvatarImage user={profile} />
+                    <AvatarFallback className="bg-primary/10 text-2xl font-bold text-primary">
+                      {profile.name?.[0]?.toUpperCase() || decodedEmail[0].toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <VerifiedTick user={profile} tickSize="size-5" />
+                </span>
                 <div>
                   <h2 className="text-lg font-bold">{profile.name || 'Anonymous'}</h2>
                   <p className="text-xs text-muted-foreground">{decodedEmail}</p>

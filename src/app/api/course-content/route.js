@@ -29,11 +29,14 @@ export async function GET(request) {
     const courseCode = normalizeCourse(searchParams.get('course'))
     if (!courseCode) return NextResponse.json({ error: 'course required' }, { status: 400 })
 
-    const [topics, videos, readings, theory] = await Promise.all([
+    const courseCodes = [...new Set([courseCode, courseCode.replace(/\s+/g, '')])]
+    const [topics, videos, readings, theory, materials] = await Promise.all([
       getCollection('curriculum_topics').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('videos').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('readings').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('theory_references').then(c => c.find({ courseCode }).toArray()).catch(() => []),
+      // Contributor uploads (user_materials) — these are what the add sheet writes.
+      getCollection('user_materials').then(c => c.find({ courseCode: { $in: courseCodes }, isPublic: { $ne: false } }).sort({ createdAt: -1 }).limit(500).toArray()).catch(() => []),
     ])
 
     const vPre = videos.map(v => ({
@@ -51,6 +54,31 @@ export async function GET(request) {
       kw: [...(t.keywords || [])].flatMap(k => tokens(k)),
       qt: [...tokens(t.question), ...tokens((t.mainConcepts || []).join(' '))],
     }))
+    const mPre = (materials || []).map(m => {
+      const url = String(m.url || '')
+      const kind = String(m.itemKind || 'file')
+      const audioLike = /\.mp3|\.wav|\.ogg|\.m4a/i.test(url)
+      const pdfLike = kind === 'pdf' || /\.pdf$/i.test(url) || /\.pdf$/i.test(String(m.fileName || ''))
+      let tab = 'other'
+      let itemKind = kind
+      if (kind === 'video' && !audioLike) { tab = 'video'; itemKind = 'video' }
+      else if (kind === 'audio' || audioLike) { tab = 'audio'; itemKind = 'audio' }
+      else if (pdfLike) { tab = 'pdf'; itemKind = 'pdf' }
+      else if (kind === 'notes' || kind === 'text') { tab = 'text'; itemKind = 'text' }
+      return {
+        src: m,
+        tab,
+        topicNorm: String(m.topic || '').trim().toLowerCase(),
+        toks: tokens(m.title || m.fileName),
+        item: {
+          id: `m-${String(m._id)}`, kind: itemKind,
+          title: m.title || m.fileName || 'Untitled',
+          url: m.url || null,
+          description: '',
+          ...(tab === 'text' ? { content: '', source: 'upload' } : {}),
+        },
+      }
+    })
 
     const out = topics.map(t => {      const title = t.title || 'Topic'
       const tTokens = [...new Set(tokens(title))]
@@ -81,6 +109,15 @@ export async function GET(request) {
           coverUrl: th.src.coverUrl || th.src.cover || null,
         }
         push(s > 0 ? 'text' : 'other', item, s)
+      }
+
+      // Contributor uploads: exact topic name match always lands in its tab;
+      // otherwise fall back to keyword matching like everything else.
+      const titleNorm = String(title || '').trim().toLowerCase()
+      for (const m of mPre) {
+        const exact = m.topicNorm && m.topicNorm === titleNorm
+        const s = exact ? 100 : match(m.toks)
+        push(exact ? m.tab : (s > 0 ? m.tab : 'other'), m.item, exact ? s : s)
       }
 
       for (const k of Object.keys(tabs)) {
@@ -118,6 +155,10 @@ export async function GET(request) {
         concepts: th.src.mainConcepts || [], keywords: th.src.keywords || [], source: 'theory',
         coverUrl: th.src.coverUrl || th.src.cover || null,
       })
+    }
+    for (const m of mPre) {
+      const bucket = all[m.tab]
+      if (Array.isArray(bucket) && bucket.length < 100) bucket.push({ ...m.item, topic: m.src.topic || null })
     }
 
     return NextResponse.json({

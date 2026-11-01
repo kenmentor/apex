@@ -9,6 +9,8 @@ import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
 import { trackQuizEvent } from '@/components/AnalyticsTracker';
 import { trackEvent } from '@/lib/tracking';
 import { trackAnswerSubmitted, trackSessionTerminated, trackExplanationViewed, trackTextCopied } from '@/lib/telemetry';
+import { gradeAnswer, typeOf, canSubmitAnswer } from '@/lib/quiz-types';
+import QuestionRenderer from '@/components/exam/QuestionRenderer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import CodeBlock from '@/components/CodeBlock';
@@ -146,7 +148,10 @@ export default function QuizPage() {
   const [showStreakModal, setShowStreakModal] = useState(false);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [restoredProgress, setRestoredProgress] = useState(null);
-  const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false, year: 'mix' });
+  const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false, year: 'mix', mode: 'normal', negMark: false });
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
+  const isDrill = settings.mode === 'drill';
   const [cheatWarning, setCheatWarning] = useState('')
   const [shareCardUrl, setShareCardUrl] = useState('')
   const [showShareOptions, setShowShareOptions] = useState(false)
@@ -266,9 +271,13 @@ export default function QuizPage() {
       setQuestions(shuffleArray(unseen));
     }
     setQuizStarted(true);
-    setTimeLeft(settings.timePerQuestion);
+    const t = settings.mode === 'drill' ? 10 : settings.timePerQuestion;
+    if (settings.mode === 'drill') setSettings(s => ({ ...s, timePerQuestion: 10 }));
+    setTimeLeft(t);
+    setStreak(0);
+    setBestStreak(0);
     startTime.current = Date.now();
-    trackQuizEvent('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: settings.timePerQuestion });
+    trackQuizEvent('quiz_started', { course: code, questionCount: settings.questionLimit, timePerQuestion: t, mode: settings.mode });
   }
 
   useEffect(() => {
@@ -502,21 +511,61 @@ export default function QuizPage() {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <label className="text-sm font-semibold">Time per Question</label>
-              <div className="flex flex-wrap gap-2">
-                {timeOptions.map((t) => (
-                  <Button
-                    key={t}
-                    variant={settings.timePerQuestion === t ? 'default' : 'outline'}
-                    className="min-w-[60px] flex-1 text-sm"
-                    onClick={() => setSettings(s => ({ ...s, timePerQuestion: t }))}
-                  >
-                    {t}s
-                  </Button>
-                ))}
-              </div>
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Mode</label>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant={settings.mode !== 'drill' ? 'default' : 'outline'}
+                className="flex-1 text-sm"
+                onClick={() => setSettings(s => ({ ...s, mode: 'normal' }))}
+              >
+                Normal
+              </Button>
+              <Button
+                variant={settings.mode === 'drill' ? 'default' : 'outline'}
+                className="flex-1 text-sm"
+                onClick={() => setSettings(s => ({ ...s, mode: 'drill', timePerQuestion: 10 }))}
+              >
+                ⚡ Speed drill
+              </Button>
             </div>
+            {settings.mode === 'drill' && (
+              <p className="text-xs text-muted-foreground">10s per question · one tap answers instantly · streaks earn glory.</p>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between rounded-xl border p-4">
+            <div>
+              <div className="text-sm font-semibold">Negative marking</div>
+              <div className="text-xs text-muted-foreground">−1 for every wrong answer, like school exams</div>
+            </div>
+            <button
+              onClick={() => setSettings(s => ({ ...s, negMark: !s.negMark }))}
+              className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors"
+              style={{ backgroundColor: settings.negMark ? 'var(--color-primary)' : '#ccc' }}
+            >
+              <span
+                className="pointer-events-none inline-block size-5 rounded-full bg-white shadow-lg transition-transform"
+                style={{ transform: settings.negMark ? 'translateX(20px)' : 'translateX(0)' }}
+              />
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Time per Question</label>
+            <div className="flex flex-wrap gap-2">
+              {timeOptions.map((t) => (
+                <Button
+                  key={t}
+                  variant={settings.timePerQuestion === t ? 'default' : 'outline'}
+                  className="min-w-[60px] flex-1 text-sm"
+                  onClick={() => setSettings(s => ({ ...s, timePerQuestion: t }))}
+                >
+                  {t}s
+                </Button>
+              ))}
+            </div>
+          </div>
 
             {allQuestions.length > 0 && (
               <p className="text-center text-xs text-muted-foreground">
@@ -602,16 +651,35 @@ export default function QuizPage() {
   const totalAnswered = answers.length;
   const correctCount = answers.reduce((count, a) => {
     const q = questions[a.questionIndex];
-    return count + (isAnswerCorrect(a.selected, q?.correct_answer) ? 1 : 0);
+    return count + (gradeAnswer(q || {}, a.selected) === true ? 1 : 0);
   }, 0);
+  // Negative marking (school style): −1 per answered-but-wrong, blanks score 0.
+  const wrongCount = answers.reduce((count, a) => {
+    const q = questions[a.questionIndex];
+    const blank = a.selected == null || a.selected === '' || (typeof a.selected === 'object' && Object.keys(a.selected).length === 0);
+    return count + (!blank && gradeAnswer(q || {}, a.selected) === false ? 1 : 0);
+  }, 0);
+  // Written/clinical formats (essay, MEQ, viva, OSCE) are self-reviewed, not auto-scored.
+  const ungradedCount = answers.reduce((count, a) => {
+    const q = questions[a.questionIndex];
+    return count + (gradeAnswer(q || {}, a.selected) == null ? 1 : 0);
+  }, 0);
+  const gradedTotal = total - ungradedCount;
+  const adjustedScore = settings.negMark ? Math.max(0, correctCount - wrongCount) : correctCount;
+  const adjustedPct = total > 0 ? Math.round((adjustedScore / total) * 100) : 0;
+  const qType = typeOf(question);
+  const canSubmit = canSubmitAnswer(question || {}, selected);
   const elapsedSeconds = Math.floor((Date.now() - startTime.current) / 1000);
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
 
-  function handleSelect(key) {
-    if (revealAnswer) return;
+  // Speed drill: a single option tap answers and moves on instantly.
+  const DRILL_INSTANT = ['sba', 'tf', 'image', 'assertion'];
+  function handleQuickPick(key) {
+    if (revealAnswer || !isDrill || !DRILL_INSTANT.includes(qType)) return;
     playClick();
-    setSelected(key === selected ? null : key);
-    if (key !== selected) trackQuizEvent('quiz_answer', { course: code, question: currentIndex, selected: key });
+    setSelected(key);
+    trackQuizEvent('quiz_answer', { course: code, question: currentIndex, selected: key, mode: 'drill' });
+    setTimeout(() => handleNext(false, key), 80);
   }
 
   function handleShowAnswer() {
@@ -622,13 +690,25 @@ export default function QuizPage() {
     }
   }
 
+  function correctValueFor(q) {
+    const t = typeOf(q || {});
+    if (t === 'fib') return (q?.blankAnswers || [''])[0];
+    if (t === 'match') {
+      const out = {};
+      (q?.pairs || []).forEach((p, i) => { out[i] = p.answer; });
+      return out;
+    }
+    if (t === 'mtf') return { ...(q?.correct_answer || {}) };
+    return q?.correct_answer;
+  }
+
   function handleNextAfterReveal() {
     setRevealAnswer(false);
-    const newAnswers = [...answers, { selected: question?.correct_answer, questionIndex: currentIndex, question: question.question, options: question.options }];
+    const newAnswers = [...answers, { selected: correctValueFor(question) ?? selected, questionIndex: currentIndex, question: question.question, options: question.options, type: qType, correctKey: question?.correct_answer ?? question?.blankAnswers ?? null }];
     setAnswers(newAnswers);
     const finalCorrectCount = newAnswers.reduce((count, a) => {
       const q = questions[a.questionIndex];
-      return count + (isAnswerCorrect(a.selected, q?.correct_answer) ? 1 : 0);
+      return count + (gradeAnswer(q || {}, a.selected) === true ? 1 : 0);
     }, 0);
 
     if (currentIndex + 1 < total) {
@@ -651,17 +731,17 @@ export default function QuizPage() {
     }
   }
 
-  function handleNext(timedOut = false) {
-    if (selected === null && !timedOut) return;
+  function handleNext(timedOut = false, forced = null) {
+    if (forced == null && !canSubmit && !timedOut) return;
     clearInterval(timerRef.current);
     playClick();
 
-    const answered = selected ?? null;
-    const newAnswers = [...answers, { selected: answered, questionIndex: currentIndex, question: question.question, options: question.options }];
+    const answered = forced ?? selected ?? null;
+    const newAnswers = [...answers, { selected: answered, questionIndex: currentIndex, question: question.question, options: question.options, type: qType, correctKey: question?.correct_answer ?? question?.blankAnswers ?? null }];
     setAnswers(newAnswers);
 
-    // Telemetry per answer
-    if (answered != null && question) {
+    // Telemetry per answer (single-answer formats only)
+    if (answered != null && question && ['sba', 'tf', 'image'].includes(qType)) {
       const correctAns = String(question.correct_answer).toLowerCase();
       const selectedOpt = String(answered).toLowerCase();
       const correctIndex = question.options ? Object.keys(question.options).findIndex(k => String(k).toLowerCase() === correctAns) : -1;
@@ -669,7 +749,7 @@ export default function QuizPage() {
       const timeSpent = settings.timePerQuestion - timeLeft;
       trackAnswerSubmitted({
         question_id: question._id || question.id || `${question.question?.slice(0, 30)}`,
-        is_correct: isAnswerCorrect(answered, question.correct_answer),
+        is_correct: gradeAnswer(question, answered),
         time_spent_sec: Math.max(1, timeSpent),
         selected_option_index: selectedIndex,
         correct_option_index: correctIndex,
@@ -679,8 +759,24 @@ export default function QuizPage() {
 
     const finalCorrectCount = newAnswers.reduce((count, a) => {
       const q = questions[a.questionIndex];
-      return count + (isAnswerCorrect(a.selected, q?.correct_answer) ? 1 : 0);
+      return count + (gradeAnswer(q || {}, a.selected) === true ? 1 : 0);
     }, 0);
+    const finalWrongCount = newAnswers.reduce((count, a) => {
+      const q = questions[a.questionIndex];
+      const blank = a.selected == null || a.selected === '' || (typeof a.selected === 'object' && Object.keys(a.selected).length === 0);
+      return count + (!blank && gradeAnswer(q || {}, a.selected) === false ? 1 : 0);
+    }, 0);
+    const finalScore = settings.negMark ? Math.max(0, finalCorrectCount - finalWrongCount) : finalCorrectCount;
+
+    if (isDrill) {
+      const ok = gradeAnswer(question || {}, answered);
+      setStreak(prev => {
+        const next = ok ? prev + 1 : 0;
+        setBestStreak(b => Math.max(b, next));
+        return next;
+      });
+      if (ok) playCorrect(); else playWrong();
+    }
 
     if (currentIndex + 1 < total) {
       const nextIndex = currentIndex + 1;
@@ -692,11 +788,11 @@ export default function QuizPage() {
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
-      trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000) });
+      trackQuizEvent('quiz_completed', { course: code, score: finalScore, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), negMark: settings.negMark });
       trackSessionTerminated({ quiz_id: code, last_completed_step: total, total_steps: total });
       const user = getUser();
       if (user) {
-        setTimeout(() => handleAutoSave(finalCorrectCount, total), 100);
+        setTimeout(() => handleAutoSave(finalScore, total), 100);
       } else {
         setShowSaveModal(true);
       }
@@ -795,6 +891,8 @@ export default function QuizPage() {
     setSaved(false);
     setPlayerName('');
     setPlayerSchool('');
+    setStreak(0);
+    setBestStreak(0);
     startTime.current = Date.now();
   }
 
@@ -849,6 +947,12 @@ export default function QuizPage() {
           </Card>
 
           <Card className="divide-y p-0">
+            {bestStreak > 1 && (
+              <div className="flex items-center justify-between p-4">
+                <span className="text-sm text-muted-foreground">Best Streak</span>
+                <span className="text-sm font-bold text-orange-500">🔥 {bestStreak}</span>
+              </div>
+            )}
             <div className="flex items-center justify-between p-4">
               <span className="text-sm text-muted-foreground">Time Spent</span>
               <span className="text-sm font-bold text-orange-500">{formatTime(elapsedSeconds)}</span>
@@ -865,10 +969,22 @@ export default function QuizPage() {
               <span className="text-sm text-muted-foreground">Wrong Answers</span>
               <span className="text-sm font-bold text-red-500">{totalAnswered - correctCount}</span>
             </div>
+            {settings.negMark && (
+              <div className="flex items-center justify-between bg-red-500/5 p-4">
+                <span className="text-sm text-muted-foreground">Negative marking (−1 each)</span>
+                <span className="text-sm font-bold text-red-500">{correctCount} − {wrongCount} = {adjustedScore}</span>
+              </div>
+            )}
             <div className="flex items-center justify-between p-4">
               <span className="text-sm text-muted-foreground">Percentage</span>
               <span className={`text-sm font-bold ${pct >= 80 ? 'text-green-500' : pct >= 50 ? 'text-orange-500' : 'text-red-500'}`}>{pct}%</span>
             </div>
+            {ungradedCount > 0 && (
+              <div className="flex items-center justify-between p-4">
+                <span className="text-sm text-muted-foreground">Written / clinical</span>
+                <span className="text-sm font-bold">{ungradedCount} for self-review</span>
+              </div>
+            )}
             <div className="flex items-center justify-between p-4">
               <span className="text-sm text-muted-foreground">Course</span>
               <span className="text-sm font-medium">{code}</span>
@@ -992,9 +1108,17 @@ export default function QuizPage() {
             <ChevronLeft className="size-4" />
           </Link>
           <h1 className="text-lg font-bold">{code}</h1>
-          <div className="flex items-center gap-2 rounded-full bg-red-50 px-3 py-1.5 font-semibold text-red-500">
-            <Clock className="size-4" />
-            <span>{timeLeft}s</span>
+          <div className="flex items-center gap-2">
+            {isDrill && streak > 1 && (
+              <div className="flex items-center gap-1 rounded-full bg-orange-500/15 px-3 py-1.5 font-bold text-orange-500">
+                <Flame className="size-4" />
+                <span>{streak}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-2 rounded-full bg-red-50 px-3 py-1.5 font-semibold text-red-500">
+              <Clock className="size-4" />
+              <span>{timeLeft}s</span>
+            </div>
           </div>
         </div>
 
@@ -1011,8 +1135,13 @@ export default function QuizPage() {
         </div>
 
         {/* Question */}
-        <Card className="mb-6 flex min-h-[120px] items-center justify-center px-7 py-9 text-center">
+        <Card className="mb-6 flex min-h-[120px] flex-col items-center justify-center gap-3 px-7 py-9 text-center">
           <p className="text-base font-medium leading-relaxed">{question.question}</p>
+          {qType !== 'sba' && (
+            <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              {({tf: 'True / False', multi: 'Pick all that apply', fib: 'Type the answer', match: 'Matching · EMQ', mtf: 'True or False each', image: 'Image question', assertion: 'Assertion–Reason', case: 'Case-based', saq: `Short answer${question.marks ? ` · ${question.marks} marks` : ''}`, essay: `Essay${question.marks ? ` · ${question.marks} marks` : ''}`, meq: 'Staged case · MEQ', spotter: 'Spotter station', osce: `OSCE station${question.station?.minutes ? ` · ${question.station.minutes} min` : ''}`, audio: 'Listen, then answer', viva: 'Viva practice'})[qType] || qType}
+            </span>
+          )}
         </Card>
 
         {/* Code block */}
@@ -1020,35 +1149,16 @@ export default function QuizPage() {
           <CodeBlock code={question.code} />
         )}
 
-        {/* Options */}
-        <div className="mb-6 space-y-3">
-          {optionKeys.map((key, idx) => {
-            const isCorrect = correctKeys.includes(String(key).toLowerCase());
-            const isRevealedCorrect = revealAnswer && isCorrect;
-            const isSelected = selected === key;
-
-            let styles = 'border bg-muted/50 hover:bg-muted';
-            if (isSelected) styles = 'border-2 border-primary bg-primary text-primary-foreground';
-            if (isRevealedCorrect) styles = 'border-2 border-green-500 bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-300';
-
-            return (
-              <button
-                key={key}
-                onClick={() => handleSelect(key)}
-                className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all active:scale-[0.98] ${styles}`}
-              >
-                <span className={`flex size-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold ${
-                  isSelected ? 'bg-white/20 text-white' : isRevealedCorrect ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
-                }`}>
-                  {OPTION_LABELS[idx] || key.toUpperCase()}
-                </span>
-                <span className="flex-1 text-sm">{question.options[key]}</span>
-                {isRevealedCorrect && (
-                  <Check className="size-5 shrink-0 text-green-500" />
-                )}
-              </button>
-            );
-          })}
+        {/* Every format renders through the same engine as the author preview. */}
+        <div className="mb-6">
+          <QuestionRenderer
+            key={`${code}-${currentIndex}-${question.id || question._id || 'q'}`}
+            q={question}
+            value={selected}
+            onChange={setSelected}
+            onPick={isDrill ? handleQuickPick : undefined}
+            revealed={revealAnswer}
+          />
         </div>
 
         {/* Explanation */}
@@ -1068,12 +1178,12 @@ export default function QuizPage() {
           <div className="space-y-3">
             <Button
               className="w-full py-6 text-base font-bold"
-              disabled={selected === null}
+              disabled={!canSubmit}
               onClick={handleNext}
             >
               {currentIndex + 1 < total ? 'NEXT' : 'FINISH'}
             </Button>
-            {!selected && !revealAnswer && (
+            {!selected && !revealAnswer && !isDrill && (
               <button
                 onClick={handleShowAnswer}
                 className="block w-full text-center text-sm font-semibold text-orange-500 underline underline-offset-3 opacity-80 transition-opacity hover:opacity-100"
