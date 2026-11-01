@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Check, Zap, Timer, ListChecks, Trophy, Film, Music, FileText, BookOpen, Square, Volume2, ExternalLink, Plus } from 'lucide-react'
+import { ArrowLeft, Check, Zap, Timer, ListChecks, Trophy, Film, Music, FileText, BookOpen, Square, Volume2, ExternalLink, Plus, Layers } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import TikTokTabs from '@/components/TikTokTabs'
@@ -233,6 +233,14 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd })
             <span className="mt-0.5 size-6 shrink-0 rounded-full border-2 border-muted-foreground/40" />
           )}
           <h2 className="min-w-0 flex-1 text-[15px] font-bold leading-snug">{content.title}</h2>
+          <Link
+            href={`/courses/${course}/flashcards?topic=${encodeURIComponent(planTopic.id ?? content.id ?? '')}&title=${encodeURIComponent(content.title || '')}`}
+            title="Study this topic's flashcards"
+            aria-label={`Flashcards for ${content.title}`}
+            className="flex shrink-0 items-center justify-center rounded-lg p-1.5 text-violet-500 hover:bg-violet-500/10"
+          >
+            <Layers className="size-4" />
+          </Link>
           {rows.length > 0 && <span className="mt-1 shrink-0 text-[11px] text-muted-foreground">{tDone}/{rows.length}</span>}
         </div>
       )}

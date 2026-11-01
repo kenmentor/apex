@@ -21,6 +21,8 @@ export default function FlashCardsPage() {
   const [error, setError] = useState(null)
   const [currentIdx, setCurrentIdx] = useState(0)
   const [shuffled, setShuffled] = useState(false)
+  const [topicId, setTopicId] = useState('')
+  const [topicTitle, setTopicTitle] = useState('')
 
   useEffect(() => {
     const user = getUser()
@@ -30,7 +32,20 @@ export default function FlashCardsPage() {
       return
     }
 
-    fetch(`/api/theory/references?courseCode=${encodeURIComponent(formattedCode)}&withAnswer=true`, {
+    let tId = ''
+    let tTitle = ''
+    try {
+      const sp = new URLSearchParams(window.location.search)
+      tId = sp.get('topic') || ''
+      tTitle = sp.get('title') || ''
+    } catch {}
+    setTopicId(tId)
+    setTopicTitle(tTitle)
+
+    const qs = new URLSearchParams({ courseCode: formattedCode, withAnswer: 'true' })
+    if (tId) qs.set('topic', tId)
+    if (tTitle) qs.set('title', tTitle)
+    fetch(`/api/theory/references?${qs.toString()}`, {
       headers: { Authorization: `Bearer ${getToken()}` },
     })
       .then(r => {
@@ -112,9 +127,9 @@ export default function FlashCardsPage() {
               <Layers className="size-7 text-muted-foreground" />
             </div>
             <h2 className="text-lg font-bold">No Flash Cards</h2>
-            <p className="text-sm text-muted-foreground">No theory questions available for {formattedCode} yet.</p>
-            <Button className="mt-2" onClick={() => router.push(`/courses/${paramCode.toLowerCase()}`)}>
-              Back to Course
+            <p className="text-sm text-muted-foreground">{topicTitle ? `No flash cards match “${topicTitle}” yet.` : `No theory questions available for ${formattedCode} yet.`}</p>
+            <Button className="mt-2" onClick={() => router.push(topicId ? `/plan/${paramCode.toLowerCase().replace(/\s+/g, '')}/${encodeURIComponent(topicId)}${topicTitle ? `?t=${encodeURIComponent(topicTitle)}` : ''}` : `/courses/${paramCode.toLowerCase()}`)}>
+              {topicId ? 'Back to Topic' : 'Back to Course'}
             </Button>
           </div>
         </Card>
@@ -130,10 +145,10 @@ export default function FlashCardsPage() {
       <div className="mx-auto w-full max-w-lg">
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
-          <Link href={`/courses/${paramCode.toLowerCase()}`} className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80">
+          <Link href={topicId ? `/plan/${paramCode.toLowerCase().replace(/\s+/g, '')}/${encodeURIComponent(topicId)}${topicTitle ? `?t=${encodeURIComponent(topicTitle)}` : ''}` : `/courses/${paramCode.toLowerCase()}`} className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80">
             <ChevronLeft className="size-4" />
           </Link>
-          <h1 className="text-lg font-bold">Flash Cards</h1>
+          <h1 className="min-w-0 flex-1 truncate px-2 text-center text-lg font-bold">{topicTitle ? topicTitle : 'Flash Cards'}</h1>
           <button
             onClick={handleShuffle}
             className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80"

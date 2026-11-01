@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Layers } from 'lucide-react'
 import TopicContent from '@/components/TopicContent'
 
 export default function TopicPage({ params }) {
@@ -27,6 +27,14 @@ export default function TopicPage({ params }) {
           <ArrowLeft className="size-4" />
         </Link>
         <h1 className="min-w-0 flex-1 truncate text-sm font-bold">{title}</h1>
+        <Link
+          href={`/courses/${String(course).toLowerCase().replace(/\s+/g, '')}/flashcards?topic=${encodeURIComponent(topic)}${title && title !== 'Topic' ? `&title=${encodeURIComponent(title)}` : titleHint ? `&title=${encodeURIComponent(titleHint)}` : ''}`}
+          title="Study this topic's flashcards"
+          className="flex shrink-0 items-center gap-1.5 rounded-xl bg-violet-500/10 px-2.5 py-2 text-xs font-bold text-violet-600 hover:bg-violet-500/20 dark:text-violet-400"
+        >
+          <Layers className="size-4" />
+          <span className="hidden sm:inline">Flashcards</span>
+        </Link>
       </div>
 
       <TopicContent course={course} topic={topic} titleHint={titleHint} />

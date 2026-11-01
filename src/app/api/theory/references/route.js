@@ -6,11 +6,19 @@ function normalizeCourse(code) {
   return (code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2')
 }
 
+const STOP = new Set('the and for with from that this these those are was were has have had not but you your can all any per via into over under about its our out who whom which what when where while will would there their them they then than that these those also such into onto upon de la en el y der die das und the'.split(/\s+/))
+
+function tokens(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !STOP.has(w))
+}
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const courseCode = searchParams.get('courseCode')
     const withAnswer = searchParams.get('withAnswer') === 'true'
+    // Optional topic filter: only refs matching this topic's keywords.
+    const topicTitle = (searchParams.get('title') || '').trim()
 
     if (!courseCode) {
       return NextResponse.json({ error: 'courseCode required' }, { status: 400 })
@@ -24,10 +32,21 @@ export async function GET(request) {
     }
 
     const refsCol = await getCollection('theory_references')
-    const refs = await refsCol
+    let refs = await refsCol
       .find({ courseCode: normalizeCourse(courseCode) })
       .sort({ createdAt: -1 })
       .toArray()
+
+    if (topicTitle) {
+      const tTokens = [...new Set(tokens(topicTitle))]
+      const need = Math.max(1, Math.ceil(tTokens.length * 0.2))
+      const normTitle = topicTitle.trim().toLowerCase()
+      refs = refs.filter(r => {
+        if (String(r.section || '').trim().toLowerCase() === normTitle) return true
+        const rToks = [...tokens(r.question), ...tokens((r.mainConcepts || []).join(' ')), ...(r.keywords || []).flatMap(k => tokens(k))]
+        return rToks.filter(w => tTokens.includes(w)).length >= need
+      })
+    }
 
     const safe = refs.map(r => {
       const doc = {

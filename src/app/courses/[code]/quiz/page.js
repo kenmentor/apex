@@ -149,6 +149,7 @@ export default function QuizPage() {
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [restoredProgress, setRestoredProgress] = useState(null);
   const [settings, setSettings] = useState({ questionLimit: 10, timePerQuestion: 30, offline: false, year: 'mix', mode: 'normal', negMark: false });
+  const [showMore, setShowMore] = useState(false);
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const isDrill = settings.mode === 'drill';
@@ -486,31 +487,46 @@ export default function QuizPage() {
       <div className="flex min-h-dvh flex-col bg-background px-5 pb-24 pt-6">
         <div className="mx-auto w-full max-w-lg">
           {/* Top bar */}
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-5 flex items-center justify-between">
             <Link href={`/courses/${code.toLowerCase()}`} className="flex size-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80">
               <ChevronLeft className="size-4" />
             </Link>
-            <h1 className="text-lg font-bold">Quiz Settings</h1>
+            <h1 className="text-lg font-bold">Quiz</h1>
             <div className="size-10" />
           </div>
 
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <label className="text-sm font-semibold">Number of Questions</label>
-              <div className="flex flex-wrap gap-2">
-                {limitOptions.map((n) => (
-                  <Button
-                    key={n}
-                    variant={settings.questionLimit === n ? 'default' : 'outline'}
-                    className="min-w-[60px] flex-1 text-sm"
-                    onClick={() => setSettings(s => ({ ...s, questionLimit: n }))}
-                  >
-                    {n === allQuestions.length ? 'All' : n}
-                  </Button>
-                ))}
-              </div>
+          <div className="space-y-4">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold">Number of Questions</label>
+            <div className="flex flex-wrap gap-2">
+              {limitOptions.map((n) => (
+                <Button
+                  key={n}
+                  variant={settings.questionLimit === n ? 'default' : 'outline'}
+                  className="min-w-[60px] flex-1 text-sm"
+                  onClick={() => setSettings(s => ({ ...s, questionLimit: n }))}
+                >
+                  {n === allQuestions.length ? 'All' : n}
+                </Button>
+              ))}
             </div>
+          </div>
 
+          {allQuestions.length > 0 && (
+            <p className="text-center text-xs text-muted-foreground">
+              {settings.questionLimit >= allQuestions.length
+                ? `All ${allQuestions.length} questions`
+                : `${settings.questionLimit} of ${allQuestions.length}`}
+              {settings.mode === 'drill' ? ' · ⚡ drill · 10s each' : ` · ${settings.timePerQuestion}s each`}
+              {settings.negMark ? ' · −1 marking' : ''}
+            </p>
+          )}
+
+          <button onClick={() => setShowMore(v => !v)} className="w-full rounded-xl border py-2 text-xs font-bold text-muted-foreground hover:bg-muted/60">
+            {showMore ? 'Hide setup options ↑' : '⚙ Setup options (mode, timer, marking…)'}
+          </button>
+
+          {showMore && (<>
           <div className="space-y-3">
             <label className="text-sm font-semibold">Mode</label>
             <div className="flex flex-wrap gap-2">
@@ -567,28 +583,6 @@ export default function QuizPage() {
             </div>
           </div>
 
-            {allQuestions.length > 0 && (
-              <p className="text-center text-xs text-muted-foreground">
-                {(() => {
-                  const unseenCount = allQuestions.length - getSeenIds(code).length
-                  return (
-                    <>
-                      {settings.questionLimit >= allQuestions.length
-                        ? `All ${allQuestions.length} questions`
-                        : `${settings.questionLimit} of ${allQuestions.length} questions (randomly selected)`}
-                      {unseenCount > 0 && unseenCount < allQuestions.length && (
-                        <span> · {unseenCount} new</span>
-                      )}
-                      {unseenCount === 0 && <span> · 🔄 all seen, repeating</span>}
-                      <br />
-                      {settings.timePerQuestion}s per question
-                      {' · '}~{Math.round(settings.questionLimit * settings.timePerQuestion / 60)} min total
-                    </>
-                  )
-                })()}
-              </p>
-            )}
-
             <div className="flex items-center justify-between rounded-xl border p-4">
               <div>
                 <div className="text-sm font-semibold">Offline Mode</div>
@@ -634,6 +628,7 @@ export default function QuizPage() {
                 </div>
               );
             })()}
+          </>)}
 
             <Button onClick={handleStartQuiz} className="w-full py-6 text-base font-bold tracking-wide">
               START QUIZ
