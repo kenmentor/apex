@@ -7,13 +7,17 @@ import {
   Search, Folder, FileText, Files, PlayCircle, Play, Headphones, BookOpen, ClipboardList,
   ChevronRight, ChevronLeft, Plus, LayoutGrid, List, CheckSquare, X, Link as LinkIcon,
   Users, MoreVertical, Upload, Gamepad2, GraduationCap, Image as ImageIcon,
-  ArrowLeft, ArrowUpDown, Info, Share2, Globe, Lock,
+  ArrowLeft, ArrowUpDown, Info, Share2, Globe, Lock, Download, CheckCircle2, WifiOff, Loader2,
 } from 'lucide-react'
 import { getToken } from '@/lib/auth'
 import BookGrid from '@/components/BookGrid'
 import VideoModal from '@/components/VideoModal'
 import { uploadFile } from '@/lib/uploads'
-import { thumbFor, isYouTubeUrl, ytEmbedUrl } from '@/lib/youtube'
+import { thumbFor, isYouTubeUrl, ytEmbedUrl, ytThumb } from '@/lib/youtube'
+import {
+  snapshotKey, saveSnapshot, getSnapshot, pinFile, getPinned, unpin, listPinnedKeys,
+  objectUrlFor, queueOp, listOutbox, removeOutbox, isOnlineNow,
+} from '@/lib/offline-files'
 
 function isPlayableMedia(node) {
   const k = node?.itemKind || node?.kind
@@ -160,6 +164,14 @@ function FoldersInner() {
   const [linkOpen, setLinkOpen] = useState(false)
   const [linkName, setLinkName] = useState('')
   const [linkUrl, setLinkUrl] = useState('')
+  const [linkMeta, setLinkMeta] = useState(null) // { title, author, thumb } from /api/youtube-meta
+  const [linkFetching, setLinkFetching] = useState(false)
+  const [online, setOnline] = useState(true)
+  const [offlineNote, setOfflineNote] = useState(false)
+  const [pinnedIds, setPinnedIds] = useState([])
+  const [pinBusy, setPinBusy] = useState(null)
+  const [queuedCount, setQueuedCount] = useState(0)
+  const lastLinkFetched = useRef('')
   const [shareTarget, setShareTarget] = useState(null)
   const [shareRows, setShareRows] = useState([])
   const [shareEmail, setShareEmail] = useState('')
@@ -188,12 +200,25 @@ function FoldersInner() {
       if (q.trim()) qs.set('q', q.trim())
       const d = await api(`/api/library${qs.toString() ? `?${qs}` : ''}`)
       setData({ node: d.node || null, breadcrumb: d.breadcrumb || [], role: d.role || 'owner', children: d.children || [], shared: d.shared || [] })
+      setOfflineNote(false)
+      // Snapshot for offline browsing (no mobile data → still open folders).
+      try { await saveSnapshot(snapshotKey(currentId, q.trim()), d) } catch {}
       // Central public store for categories (best-effort).
       try {
         const m = await fetch('/api/materials?limit=50').then(r => r.json())
         if (Array.isArray(m)) setMaterials(m)
       } catch {}
     } catch (e) {
+      // Offline? Fall back to the last good snapshot so folders still open.
+      try {
+        const snap = await getSnapshot(snapshotKey(currentId, q.trim()))
+        if (snap) {
+          setData({ node: snap.node || null, breadcrumb: snap.breadcrumb || [], role: snap.role || 'owner', children: snap.children || [], shared: snap.shared || [] })
+          setOfflineNote(true)
+          setError('')
+          return
+        }
+      } catch {}
       setError(e.message)
     } finally {
       setLoading(false)
@@ -214,6 +239,82 @@ function FoldersInner() {
     } catch {}
   }, [view, sort])
 
+  // Online state + pinned ids + queued-op count.
+  useEffect(() => {
+    const sync = () => setOnline(isOnlineNow())
+    sync()
+    window.addEventListener('online', sync)
+    window.addEventListener('offline', sync)
+    listPinnedKeys().then(keys => setPinnedIds(keys || [])).catch(() => {})
+    listOutbox().then(rows => setQueuedCount((rows || []).length)).catch(() => {})
+    return () => {
+      window.removeEventListener('online', sync)
+      window.removeEventListener('offline', sync)
+    }
+  }, [])
+
+  // Flush queued folder/link creates when back online.
+  useEffect(() => {
+    if (!online) return
+    let dead = false
+    ;(async () => {
+      const rows = await listOutbox().catch(() => [])
+      if (!rows?.length || dead) return
+      for (const op of rows) {
+        if (op.type === 'upload') continue // uploads flush via retry button (needs File)
+        try {
+          if (op.type === 'folder') {
+            await api('/api/library', { method: 'POST', body: JSON.stringify(op.payload) })
+          } else if (op.type === 'link') {
+            await api('/api/library', { method: 'POST', body: JSON.stringify(op.payload) })
+          } else continue
+          await removeOutbox(op.qid)
+        } catch {}
+      }
+      if (!dead) {
+        const left = await listOutbox().catch(() => [])
+        setQueuedCount((left || []).length)
+        load()
+        // Then upload any queued file bytes.
+        try { await retryQueuedUploads() } catch {}
+      }
+    })()
+    return () => { dead = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [online])
+
+  // Paste a YouTube link → auto-fetch title/thumb, editable before save.
+  // (Same /api/youtube-meta the contribute flow uses.)
+  async function lookupLink(u) {
+    const v = (u ?? linkUrl).trim()
+    if (!v || v.length < 8) return
+    if (lastLinkFetched.current === v) return
+    if (!isYouTubeUrl(v)) { setLinkMeta(null); return }
+    lastLinkFetched.current = v
+    setLinkFetching(true)
+    try {
+      const res = await fetch(`/api/youtube-meta?url=${encodeURIComponent(v)}`)
+      const d = await res.json().catch(() => ({}))
+      if (!res.ok || d.error) throw new Error(d.error || 'fetch failed')
+      setLinkMeta(d.playlist ? null : d)
+      setLinkName(prev => (prev.trim() ? prev : (d.title || '')))
+      if (d.playlist) setError(`That's a playlist (${d.count} videos) — open it and add videos one link at a time for now.`)
+    } catch {
+      setLinkMeta({ url: v, title: '', author: null, thumb: ytThumb(v) })
+    } finally {
+      setLinkFetching(false)
+    }
+  }
+
+  useEffect(() => {
+    const v = linkUrl.trim()
+    if (!linkOpen || v.length < 8 || !/youtu\.?be|youtube/.test(v)) return
+    if (lastLinkFetched.current === v) return
+    const t = setTimeout(() => { lookupLink(v) }, 500)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [linkUrl, linkOpen])
+
   function sortNodes(list) {
     const arr = [...list]
     if (sort === 'newest') arr.sort((a, b) => String(b.updatedAt || b.createdAt || '').localeCompare(String(a.updatedAt || a.createdAt || '')))
@@ -227,19 +328,20 @@ function FoldersInner() {
   const folders = sortNodes(data.children.filter(c => c.kind === 'folder'))
   const files = sortNodes(data.children.filter(c => c.kind !== 'folder'))
 
+  const isVideoNode = (f) => (f?.itemKind === 'video') || isYouTubeUrl(f?.url || f?.href || '')
   const catCounts = {
     image: materials.filter(m => m.itemKind === 'image').length + files.filter(f => f.itemKind === 'image').length,
-    video: materials.filter(m => m.itemKind === 'video').length + files.filter(f => f.itemKind === 'video').length,
+    video: materials.filter(m => m.itemKind === 'video').length + files.filter(isVideoNode).length,
     audio: materials.filter(m => m.itemKind === 'audio').length + files.filter(f => f.itemKind === 'audio').length,
     pdf: materials.filter(m => m.itemKind === 'pdf').length + files.filter(f => f.itemKind === 'pdf').length,
     quiz: files.filter(f => f.itemKind === 'quiz').length,
     theory: files.filter(f => f.itemKind === 'theory').length,
     notes: materials.filter(m => m.itemKind === 'notes').length + files.filter(f => f.itemKind === 'notes').length,
-    link: files.filter(f => f.itemKind === 'link').length,
+    link: files.filter(f => f.itemKind === 'link' && !isYouTubeUrl(f.url || f.href || '')).length,
   }
   const catFiles = catFilter
     ? sortNodes([
-        ...files.filter(f => f.itemKind === catFilter),
+        ...files.filter(f => catFilter === 'video' ? isVideoNode(f) : catFilter === 'link' ? (f.itemKind === 'link' && !isYouTubeUrl(f.url || f.href || '')) : f.itemKind === catFilter),
         ...materials
           .filter(m => m.itemKind === catFilter)
           .map(m => ({ id: `m-${m.id}`, kind: 'ref', name: m.title, itemKind: m.itemKind, href: m.url, url: m.url, thumb: m.thumb || null, size: m.size, courseCode: m.courseCode, subtitle: `${m.courseCode || 'Uploads'} · Public`, updatedAt: m.createdAt, isPublic: true, central: true })),
@@ -290,6 +392,15 @@ function FoldersInner() {
   async function createFolder() {
     if (busy) return
     const name = folderName.trim() || 'New folder'
+    if (!isOnlineNow()) {
+      await queueOp({ type: 'folder', payload: { kind: 'folder', name, parentId: currentId } })
+      const left = await listOutbox().catch(() => [])
+      setQueuedCount((left || []).length)
+      setFolderName('')
+      setNewOpen(false)
+      setError('Offline — folder will be created when you’re back online.')
+      return
+    }
     setBusy(true)
     try {
       await api('/api/library', { method: 'POST', body: JSON.stringify({ kind: 'folder', name, parentId: currentId }) })
@@ -371,15 +482,44 @@ function FoldersInner() {
 
   async function createLink() {
     if (busy) return
-    if (!linkUrl.trim()) { setError('Paste a URL first'); return }
-    setBusy(true)
-    try {
-      await api('/api/library', {
-        method: 'POST',
-        body: JSON.stringify({ kind: 'ref', name: linkName.trim() || linkUrl.trim(), parentId: currentId, itemKind: 'link', href: linkUrl.trim(), url: linkUrl.trim() }),
-      })
+    const rawUrl = linkUrl.trim()
+    if (!rawUrl) { setError('Paste a URL first'); return }
+    // We don't upload video files — a YouTube link IS the video. Save it as
+    // itemKind video (with thumb) so it plays + shows under Videos.
+    const yt = isYouTubeUrl(rawUrl)
+    const metaUrl = linkMeta?.url || rawUrl
+    const finalUrl = yt ? metaUrl : rawUrl
+    const title = linkName.trim() || linkMeta?.title?.trim() || (yt ? 'YouTube video' : rawUrl)
+    const thumb = linkMeta?.thumb || ytThumb(finalUrl) || null
+    const payload = {
+      kind: 'ref',
+      name: title,
+      parentId: currentId,
+      itemKind: yt ? 'video' : 'link',
+      href: finalUrl,
+      url: finalUrl,
+      thumb,
+      subtitle: linkMeta?.author ? `YouTube · ${linkMeta.author}` : (yt ? 'YouTube' : null),
+    }
+    if (!isOnlineNow()) {
+      await queueOp({ type: 'link', payload })
+      const left = await listOutbox().catch(() => [])
+      setQueuedCount((left || []).length)
       setLinkName('')
       setLinkUrl('')
+      setLinkMeta(null)
+      lastLinkFetched.current = ''
+      setLinkOpen(false)
+      setError('Offline — link will be saved when you’re back online.')
+      return
+    }
+    setBusy(true)
+    try {
+      await api('/api/library', { method: 'POST', body: JSON.stringify(payload) })
+      setLinkName('')
+      setLinkUrl('')
+      setLinkMeta(null)
+      lastLinkFetched.current = ''
       setLinkOpen(false)
       load()
     } catch (e) { setError(e.message) } finally { setBusy(false) }
@@ -398,6 +538,25 @@ function FoldersInner() {
   async function handleUpload(e) {
     const file = e.target.files?.[0]
     if (!file) return
+    // No data? Queue the bytes on-device, upload when back online.
+    if (!isOnlineNow()) {
+      try {
+        const buf = await file.arrayBuffer()
+        await queueOp({
+          type: 'upload', fileName: file.name, mime: file.type || null, size: file.size || null,
+          parentId: currentId, courseCode: courseCode || null,
+          blob: new Blob([buf], { type: file.type || 'application/octet-stream' }),
+        })
+        const left = await listOutbox().catch(() => [])
+        setQueuedCount((left || []).length)
+        setError(`Offline — “${file.name}” queued, it uploads when you’re back online.`)
+      } catch {
+        setError('Offline — could not queue that file.')
+      } finally {
+        if (fileRef.current) fileRef.current.value = ''
+      }
+      return
+    }
     setBusy(true)
     setError('')
     try {
@@ -456,10 +615,103 @@ function FoldersInner() {
     } catch (err) { setError(err.message) } finally { setBusy(false); if (fileRef.current) fileRef.current.value = '' }
   }
 
+  // Upload queued file bytes (stored while offline) now that we're online.
+  async function retryQueuedUploads() {
+    if (busy || !isOnlineNow()) return
+    const rows = await listOutbox().catch(() => [])
+    const ups = (rows || []).filter(r => r.type === 'upload' && r.blob)
+    if (!ups.length) return
+    setBusy(true)
+    try {
+      for (const op of ups) {
+        try {
+          const file = new File([op.blob], op.fileName || 'upload', { type: op.mime || 'application/octet-stream' })
+          const mime = op.mime || file.type || ''
+          const itemKind = file.name?.endsWith('.pdf') || mime === 'application/pdf' ? 'pdf'
+            : mime.startsWith('video/') ? 'video'
+            : mime.startsWith('audio/') ? 'audio'
+            : mime.startsWith('image/') ? 'image' : 'file'
+          const ud = await uploadFile(file, { folder: 'gss-quiz/library', getToken })
+          if (!ud?.url) throw new Error('Upload failed')
+          let materialId = null
+          try {
+            const m = await api('/api/materials', {
+              method: 'POST',
+              body: JSON.stringify({
+                title: file.name, fileName: file.name, url: ud.url,
+                publicId: ud.publicId || null, mime, size: file.size || null,
+                itemKind, courseCode: op.courseCode || courseCode, isPublic: true,
+              }),
+            })
+            materialId = m.id || null
+          } catch {}
+          await api('/api/library', {
+            method: 'POST',
+            body: JSON.stringify({ kind: 'ref', name: file.name, parentId: op.parentId ?? currentId, itemKind, href: ud.url, url: ud.url, refId: materialId || ud.publicId || null, materialId, size: file.size || null, mime, isPublic: true, courseCode: op.courseCode || courseCode, subtitle: `${formatSize(file.size)} · Public` }),
+          })
+          await removeOutbox(op.qid)
+        } catch {}
+      }
+      const left = await listOutbox().catch(() => [])
+      setQueuedCount((left || []).length)
+      load()
+    } finally {
+      setBusy(false)
+    }
+  }
+
   // Visibility is per-user metadata: your toggle only ever flips YOUR copy.
   // The shared file goes public when anyone shares it, and stays public
   // while anyone still shares it — one user's toggle never hides or
   // exposes another user's copy.
+  const isPinned = (id) => pinnedIds.includes(String(id))
+
+  // "Available offline": download the bytes to this device (PDFs, images,
+  // audio, uploaded video files). YouTube links can't be pinned — streaming only.
+  async function togglePin(node) {
+    if (!node || String(node.id).startsWith('m-')) return
+    const id = String(node.id)
+    const url = node.url || node.href || ''
+    if (isPinned(id)) {
+      await unpin(id)
+      setPinnedIds(prev => prev.filter(x => x !== id))
+      return
+    }
+    if (isYouTubeUrl(url)) {
+      setError('YouTube needs internet — only uploaded files can be saved offline.')
+      return
+    }
+    if (!url) return
+    setPinBusy(id)
+    try {
+      const r = await pinFile({ id, url, name: node.name, mime: node.mime, itemKind: node.itemKind, size: node.size })
+      if (r?.error) setError(r.error)
+      else {
+        const keys = await listPinnedKeys().catch(() => [])
+        setPinnedIds(keys || [])
+        setError('')
+      }
+    } finally {
+      setPinBusy(null)
+    }
+  }
+
+  // Play prefers the on-device copy (works with no data); else streams.
+  async function playNode(node) {
+    if (!node) return
+    try {
+      if (isPinned(node.id)) {
+        const rec = await getPinned(node.id)
+        const u = rec ? objectUrlFor(rec) : null
+        if (u) {
+          setPlayingNode({ ...node, url: u, href: u })
+          return
+        }
+      }
+    } catch {}
+    setPlayingNode(node)
+  }
+
   async function togglePublic(node, sharedCount = 0) {
     if (busy || !node || String(node.id).startsWith('m-')) return
     setBusy(true)
@@ -562,6 +814,18 @@ function FoldersInner() {
       </div>
 
       {error && <p className="rounded-xl border border-red-200 bg-red-50 p-2.5 text-xs font-semibold text-red-600">{error}</p>}
+      {(!online || offlineNote) && (
+        <p className="flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 p-2.5 text-xs font-semibold text-amber-700">
+          <WifiOff className="size-3.5 shrink-0" />
+          {!online ? 'Offline — showing your saved folders. Pinned files still open.' : 'Showing saved folders (couldn’t reach server). Pinned files still open.'}
+        </p>
+      )}
+      {queuedCount > 0 && online && (
+        <button onClick={retryQueuedUploads} className="flex items-center gap-1.5 rounded-xl border p-2.5 text-left text-xs font-semibold text-muted-foreground hover:bg-muted">
+          <Upload className="size-3.5 shrink-0" />
+          {queuedCount} change{queuedCount > 1 ? 's' : ''} waiting to sync — tap to retry now.
+        </button>
+      )}
       {!canWrite && !catFilter && <p className="rounded-xl border p-2.5 text-xs text-muted-foreground">Viewer access — you can open files but not change anything.</p>}
 
       {loading ? (
@@ -574,8 +838,8 @@ function FoldersInner() {
           ) : (
             <div className={view === 'grid' ? 'grid grid-cols-2 gap-2' : 'divide-y divide-border'}>
               {catFiles.map(n => (
-                <FileRow key={n.id} node={n} view={view} selectMode={false} checked={false}
-                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={(node) => setPlayingNode(node)} />
+                <FileRow key={n.id} node={n} view={view} selectMode={false} checked={false} pinned={isPinned(n.id)}
+                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={playNode} />
               ))}
             </div>
           )}
@@ -618,8 +882,8 @@ function FoldersInner() {
                       onDragOver={(e) => { e.preventDefault(); setDropOver(n.id) }} onDragLeave={() => setDropOver(cur => cur === n.id ? null : cur)}
                       onDrop={(e) => dropOnFolder(e, n)} isDropTarget={dropOver === n.id} isDragging={dragIds.includes(n.id)} />
                   ) : (
-                    <FileRow key={n.id} node={n} view={view} selectMode={selectMode} checked={selected.includes(n.id)}
-                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={(node) => setPlayingNode(node)}
+                    <FileRow key={n.id} node={n} view={view} selectMode={selectMode} checked={selected.includes(n.id)} pinned={isPinned(n.id)}
+                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={playNode}
                       draggable={canWrite && !selectMode} onDragStart={(e) => dragStart(e, n)} onDragEnd={() => { setDragIds([]); setDropOver(null) }}
                       isDragging={dragIds.includes(n.id)} />
                   )
@@ -701,7 +965,7 @@ function FoldersInner() {
       {menuNode && !detailsNode && (
         <Sheet onClose={() => setMenuNode(null)} title={menuNode.name}>
           <div className="space-y-1">
-            {menuNode && isPlayableMedia(menuNode) && <button onClick={() => { setPlayingNode(menuNode); setMenuNode(null) }} className="block w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-sky-600">Play</button>}
+            {menuNode && isPlayableMedia(menuNode) && <button onClick={() => { playNode(menuNode); setMenuNode(null) }} className="block w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-sky-600">Play</button>}
             {(menuNode.itemKind || menuNode.kind) === 'pdf' && (menuNode.href || menuNode.url) && <Link href={readHref(menuNode.href || menuNode.url, menuNode.name)} className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-sky-600">Read</Link>}
             {menuNode.href && !isPlayableMedia(menuNode) && (menuNode.itemKind || menuNode.kind) !== 'pdf' && !String(menuNode.id).startsWith('m-') && <Link href={menuNode.href} className="block rounded-xl px-3 py-2.5 text-sm font-semibold hover:bg-muted">Open</Link>}
             {menuNode.href && !isPlayableMedia(menuNode) && (menuNode.itemKind || menuNode.kind) !== 'pdf' && String(menuNode.id).startsWith('m-') && <a href={menuNode.href} target="_blank" rel="noreferrer" className="block rounded-xl px-3 py-2.5 text-sm font-semibold hover:bg-muted">Open</a>}
@@ -720,6 +984,8 @@ function FoldersInner() {
       {detailsNode && (
         <Sheet onClose={() => setDetailsNode(null)} title="Details">
         <DetailsBody node={detailsNode} materials={materials} canWrite={canWrite}
+          pinned={isPinned(detailsNode.id)} pinBusy={pinBusy === String(detailsNode.id)}
+          onTogglePin={() => togglePin(detailsNode)}
           onShare={() => shareFile(detailsNode)}
           onTogglePublic={(sharedCount) => togglePublic(detailsNode, sharedCount)}
           onOpenShare={() => openShare(detailsNode)} />
@@ -784,11 +1050,34 @@ function FoldersInner() {
       )}
 
       {linkOpen && (
-        <Sheet onClose={() => setLinkOpen(false)} title="New link">
+        <Sheet onClose={() => { setLinkOpen(false); setLinkMeta(null); lastLinkFetched.current = '' }} title="New link">
           <div className="space-y-2">
-            <input value={linkName} onChange={e => setLinkName(e.target.value)} placeholder="Name (optional)" className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
-            <input value={linkUrl} onChange={e => setLinkUrl(e.target.value)} placeholder="https://…" className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
-            <button onClick={createLink} disabled={busy} className="w-full rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">Save link</button>
+            <input value={linkUrl}
+              onChange={e => { const nv = e.target.value; setLinkUrl(nv); if (linkMeta && nv.trim() !== (linkMeta.url || '')) { setLinkMeta(null); if (linkName === (linkMeta.title || '')) setLinkName('') } }}
+              onPaste={e => { const v = (e.clipboardData?.getData('text') || '').trim(); if (v) setTimeout(() => lookupLink(v), 50) }}
+              placeholder="Paste YouTube link or https://…"
+              inputMode="url" className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
+            {(linkFetching || linkMeta) && (
+              <div className="flex items-center gap-2 rounded-xl bg-muted/60 p-2">
+                {linkFetching ? (
+                  <span className="flex items-center gap-1.5 px-1 text-xs font-semibold text-muted-foreground"><Loader2 className="size-3.5 animate-spin" /> Reading title…</span>
+                ) : (
+                  <>
+                    {(linkMeta.thumb || ytThumb(linkMeta.url || linkUrl)) && (
+                      <img src={linkMeta.thumb || ytThumb(linkMeta.url || linkUrl)} alt="" loading="lazy" className="h-12 w-20 shrink-0 rounded-lg object-cover" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-xs font-bold">{linkMeta.title || 'YouTube video'}</p>
+                      {linkMeta.author && <p className="truncate text-[11px] text-muted-foreground">by {linkMeta.author}</p>}
+                      <p className="text-[11px] font-bold text-emerald-600">Saves under Videos ✓</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+            <input value={linkName} onChange={e => setLinkName(e.target.value)} placeholder={isYouTubeUrl(linkUrl) ? 'Video title… (auto-filled, editable)' : 'Name (optional)'} className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
+            <button onClick={createLink} disabled={busy} className="w-full rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">Save {isYouTubeUrl(linkUrl) ? 'video' : 'link'}</button>
+            {isYouTubeUrl(linkUrl) && <p className="text-[11px] text-muted-foreground">YouTube videos stream — they need internet and can’t be saved offline.</p>}
           </div>
         </Sheet>
       )}
@@ -820,13 +1109,15 @@ function FoldersInner() {
   )
 }
 
-function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpenShare }) {
+function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpenShare, pinned, pinBusy, onTogglePin }) {
   const central = node.materialId ? materials.find(m => String(m.id) === String(node.materialId)) : null
   const sharedCount = central?.uploaders?.length || 1
   const shared = sharedCount > 1
   const mediaUrl = node.url || node.href || central?.url || null
   const mediaKind = node.itemKind || node.kind || central?.itemKind || null
   const isVideo = mediaKind === 'video' || isYouTubeUrl(mediaUrl)
+  const isYT = isYouTubeUrl(mediaUrl)
+  const pinnable = !String(node.id).startsWith('m-') && node.kind === 'ref' && !!mediaUrl && !isYT && ['pdf', 'image', 'audio', 'video', 'file'].includes(mediaKind || 'file')
   const embed = isVideo ? ytEmbedUrl(mediaUrl) : null
   const thumb = thumbFor({ ...node, url: mediaUrl })
   return (
@@ -902,6 +1193,14 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
         )
       )}
       {!node.materialId && node.kind !== 'folder' && <p className="text-xs text-muted-foreground">Visibility for links applies to this folder copy. Central uploads can be toggled from Details.</p>}
+      {pinnable && (
+        <button onClick={onTogglePin} disabled={pinBusy} className={`flex w-full items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted disabled:opacity-50 ${pinned ? 'border-emerald-300 bg-emerald-50 text-emerald-700' : ''}`}>
+          {pinBusy ? <Loader2 className="size-4 animate-spin" /> : pinned ? <CheckCircle2 className="size-4" /> : <Download className="size-4" />}
+          {pinned ? 'Available offline ✓ (tap to remove)' : 'Make available offline'}
+        </button>
+      )}
+      {isYT && <p className="text-xs text-muted-foreground">YouTube streams need internet — it can’t be saved offline, but the link itself is always in your folders.</p>}
+      {pinned && <p className="text-xs text-muted-foreground">Saved on this device — opens with no mobile data.</p>}
     </div>
   )
 }
@@ -961,7 +1260,7 @@ function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, 
   )
 }
 
-function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails, onPlay, draggable, onDragStart, onDragEnd, isDragging }) {
+function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, onDetails, onPlay, draggable, onDragStart, onDragEnd, isDragging }) {
   const Icon = iconFor(node)
   const href = node.href || node.url || null
   const stale = !href && !String(node.id).startsWith('m-')
@@ -986,7 +1285,7 @@ function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails,
         <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted"><Icon className={`size-5 ${tintFor(node)}`} /></span>
       )}
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold">{node.name}{stale && <span className="ml-1.5 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">missing</span>}</span>
+        <span className="block truncate text-sm font-semibold">{node.name}{stale && <span className="ml-1.5 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">missing</span>}{pinned && <span className="ml-1.5 rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">offline</span>}</span>
         {!!meta && <span className="block truncate text-[11px] text-muted-foreground">{meta}{node.subtitle && node.subtitle !== meta ? ` · ${node.subtitle}` : ''}</span>}
         {!meta && node.subtitle && <span className="block truncate text-[11px] text-muted-foreground">{node.subtitle}</span>}
       </span>

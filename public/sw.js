@@ -1,4 +1,5 @@
-const CACHE = 'apex-cache-v6'
+const CACHE = 'apex-cache-v7'
+const FILES = 'apex-files-v1'
 const PRECACHE = [
   '/',
   '/plan',
@@ -6,6 +7,8 @@ const PRECACHE = [
   '/search',
   '/messages',
   '/courses',
+  '/folders',
+  '/read',
   '/leaderboard',
   '/auth',
   '/notifications',
@@ -13,6 +16,7 @@ const PRECACHE = [
   '/icon-192.png',
   '/icon-512.png',
   '/just-logo.png',
+  '/pdf.worker.min.mjs',
 ]
 
 self.addEventListener('install', (e) => {
@@ -30,7 +34,7 @@ self.addEventListener('message', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+      Promise.all(keys.filter((k) => k !== CACHE && k !== FILES).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   )
 })
@@ -76,6 +80,20 @@ self.addEventListener('fetch', (e) => {
   // Skip chrome-extension and non-http
   if (!request.url.startsWith('http')) return
 
+  // Pinned uploads (Cloudinary) + PDF proxy + thumbs: cache-first so a
+  // file opened once still loads on flaky network. Pinned bytes also live
+  // in IndexedDB (see lib/offline-files) which is the true offline source.
+  try {
+    const u = new URL(request.url)
+    const isFileHost = u.hostname.includes('res.cloudinary.com')
+      || u.hostname.includes('img.youtube.com')
+      || (u.pathname === '/api/pdf-proxy')
+    if (isFileHost) {
+      e.respondWith(fileCacheFirst(request))
+      return
+    }
+  } catch {}
+
   // API: network first, fallback to cache
   if (request.url.includes('/api/')) {
     e.respondWith(networkFirst(request))
@@ -110,6 +128,27 @@ async function cacheFirst(req) {
     }
     return res
   } catch {
+    return new Response('Offline', { status: 503 })
+  }
+}
+
+async function fileCacheFirst(req) {
+  try {
+    const hit = await caches.match(req)
+    if (hit) return hit
+  } catch {}
+  try {
+    const res = await fetch(req)
+    if (res.ok) {
+      const cache = await caches.open(FILES)
+      cache.put(req, res.clone()).catch(() => {})
+    }
+    return res
+  } catch {
+    try {
+      const hit = await caches.match(req)
+      if (hit) return hit
+    } catch {}
     return new Response('Offline', { status: 503 })
   }
 }

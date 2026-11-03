@@ -203,9 +203,24 @@ export default function PdfReader({ url, title, backHref = '/folders', bare = fa
     ;(async () => {
       try {
         const pdfjs = await loadPdfjs()
-        const res = await fetch(`/api/pdf-proxy?url=${encodeURIComponent(url)}`)
-        if (!res.ok) throw new Error(res.status === 413 ? 'File too large to read here' : 'Could not open this file')
-        const buf = await res.arrayBuffer()
+        let buf = null
+        // Offline-first: blob: URLs and pinned on-device copies open with no data.
+        if (String(url || '').startsWith('blob:')) {
+          const r = await fetch(url)
+          if (!r.ok) throw new Error('Could not open this file')
+          buf = await r.arrayBuffer()
+        } else {
+          try {
+            const { getPinnedByUrl } = await import('@/lib/offline-files')
+            const rec = await getPinnedByUrl(url)
+            if (rec?.blob) buf = await rec.blob.arrayBuffer()
+          } catch {}
+        }
+        if (!buf) {
+          const res = await fetch(`/api/pdf-proxy?url=${encodeURIComponent(url)}`)
+          if (!res.ok) throw new Error(res.status === 413 ? 'File too large to read here' : (typeof navigator !== 'undefined' && navigator.onLine === false ? 'You’re offline — pin this file while online to read it here.' : 'Could not open this file'))
+          buf = await res.arrayBuffer()
+        }
         const pdf = await pdfjs.getDocument({ data: new Uint8Array(buf) }).promise
         if (dead) { try { await pdf.destroy() } catch {} return }
         pdfRef.current = pdf
