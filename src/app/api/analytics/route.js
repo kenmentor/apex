@@ -3,8 +3,16 @@ import { getCollection } from '@/lib/db'
 
 export async function POST(request) {
   try {
-    const body = await request.json()
-    const { event, data = {} } = body
+    const raw = await request.text().catch(() => '')
+    if (!raw) return NextResponse.json({ error: 'empty body' }, { status: 400 })
+    if (raw.length > 100000) return NextResponse.json({ error: 'body too large' }, { status: 413 })
+    let body = null
+    try {
+      body = JSON.parse(raw)
+    } catch {
+      return NextResponse.json({ error: 'invalid JSON' }, { status: 400 })
+    }
+    const { event, data = {} } = body || {}
 
     if (!event) {
       return NextResponse.json({ error: 'event required' }, { status: 400 })

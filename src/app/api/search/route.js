@@ -24,6 +24,13 @@ function titleOf(s, n = 120) {
   return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t
 }
 
+// Short model-answer excerpt so Q&A hits can flip/expand like flashcards
+// without shipping full reference answers in every search.
+function excerptOf(s, n = 280) {
+  const t = String(s || '').replace(/\s+/g, ' ').trim()
+  return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t
+}
+
 function isPdfDoc(d) {
   return Boolean(d.pdfUrl) || /\.pdf(\?|$)/i.test(String(d.url || ''))
 }
@@ -117,12 +124,15 @@ export async function GET(request) {
       id: String(d._id), kind: 'quiz', courseCode: d.courseCode,
       title: titleOf(d.question), subtitle: `${d.courseCode || ''}${d.section ? ` · ${d.section}` : ''} · Quiz`,
       href: `${courseHref(d.courseCode)}/quiz`,
+      answer: d.explanation ? excerptOf(d.explanation) : null,
     }))
 
     const theory = tDocs.map((d) => ({
       id: String(d._id), kind: 'theory', courseCode: d.courseCode,
       title: titleOf(d.question), subtitle: `${d.courseCode || ''} · Theory${d.difficulty ? ` · ${d.difficulty}` : ''}`,
       href: `${courseHref(d.courseCode)}/theory`,
+      answer: d.referenceAnswer ? excerptOf(d.referenceAnswer) : null,
+      concepts: Array.isArray(d.mainConcepts) ? d.mainConcepts.slice(0, 3).map(c => titleOf(c, 140)) : [],
     }))
 
     const readingItems = rDocs.map((d) => {

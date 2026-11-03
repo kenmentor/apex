@@ -8,10 +8,17 @@ import {
   ChevronRight, ChevronLeft, Plus, LayoutGrid, List, CheckSquare, X, Link as LinkIcon,
   Users, MoreVertical, Upload, Gamepad2, GraduationCap, Image as ImageIcon,
   ArrowLeft, ArrowUpDown, Info, Share2, Globe, Lock, Download, CheckCircle2, WifiOff, Loader2,
+  Youtube, MoreHorizontal, NotebookPen, ScanLine, Camera, Send,
+  Mic,
 } from 'lucide-react'
 import { getToken } from '@/lib/auth'
 import BookGrid from '@/components/BookGrid'
 import VideoModal from '@/components/VideoModal'
+import NoteReader from '@/components/NoteReader'
+import ScanCamera from '@/components/ScanCamera'
+import { LiveLecture, formatElapsed } from '@/lib/live-lecture'
+import RichTextEditor from '@/components/RichTextEditor'
+import { extractNoteText, plainToHtml, htmlToText, escHtml } from '@/lib/ocr'
 import { uploadFile } from '@/lib/uploads'
 import { thumbFor, isYouTubeUrl, ytEmbedUrl, ytThumb } from '@/lib/youtube'
 import {
@@ -118,6 +125,13 @@ async function api(path, opts = {}) {
     headers: { 'Content-Type': 'application/json', ...authHeaders(), ...(opts.headers || {}) },
   })
   const data = await res.json().catch(() => ({}))
+  if (res.status === 401) {
+    // Tokens live 7 days — after that the server stops recognizing us until
+    // the next login. Say so plainly instead of a dead "Unauthorized".
+    const err = new Error('Session expired — log in again to keep using your folders.')
+    err.code = 401
+    throw err
+  }
   if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`)
   return data
 }
@@ -151,6 +165,7 @@ function FoldersInner() {
   const [selected, setSelected] = useState([])
   const [selectMode, setSelectMode] = useState(false)
   const [error, setError] = useState('')
+  const [sessionExpired, setSessionExpired] = useState(false)
 
   const [newOpen, setNewOpen] = useState(false)
   const [folderName, setFolderName] = useState('')
@@ -162,8 +177,36 @@ function FoldersInner() {
   const [moveBrowseId, setMoveBrowseId] = useState(null)
   const [moveBrowse, setMoveBrowse] = useState(null)
   const [linkOpen, setLinkOpen] = useState(false)
+  const [linkMode, setLinkMode] = useState('link') // 'video' (red YouTube) | 'link'
   const [linkName, setLinkName] = useState('')
   const [linkUrl, setLinkUrl] = useState('')
+  const [noteOpen, setNoteOpen] = useState(false)
+  const [noteTypeOpen, setNoteTypeOpen] = useState(false)
+  const [noteTitle, setNoteTitle] = useState('')
+  const [noteHtml, setNoteHtml] = useState('')
+  // Draft autosave: every keystroke-safe snapshot lands in Drafts.
+  const [noteDraftId, setNoteDraftId] = useState(null)
+  const [noteResume, setNoteResume] = useState(null)
+  const noteSavedRef = useRef(false)
+  // Live lecture notes: lecturer speaks, Apex types. Cloud Whisper worker.
+  const [liveStatus, setLiveStatus] = useState('idle') // idle|starting|listening|paused|stopping|error
+  const [liveElapsed, setLiveElapsed] = useState(0)
+  const [liveError, setLiveError] = useState('')
+  const [liveLast, setLiveLast] = useState('')
+  const [liveQuiet, setLiveQuiet] = useState(0)
+  const liveCtl = useRef(null)
+  const liveSegs = useRef([])
+  const liveScrollRef = useRef(null)
+  // Scan paper notes: multi-page camera + batch on-device OCR.
+  const [scanOpen, setScanOpen] = useState(false)
+  const [scanCamOpen, setScanCamOpen] = useState(false)
+  const [scanFiles, setScanFiles] = useState([]) // [{ id, url, file }]
+  const [scanBusy, setScanBusy] = useState(false)
+  const [scanProg, setScanProg] = useState(null)
+  const [scanError, setScanError] = useState('')
+  const scanFileRef = useRef(null)
+  const scanSeq = useRef(0)
+  const [moreOpen, setMoreOpen] = useState(false)
   const [linkMeta, setLinkMeta] = useState(null) // { title, author, thumb } from /api/youtube-meta
   const [linkFetching, setLinkFetching] = useState(false)
   const [online, setOnline] = useState(true)
@@ -178,6 +221,7 @@ function FoldersInner() {
   const [shareRole, setShareRole] = useState('viewer')
   const [menuNode, setMenuNode] = useState(null)
   const [detailsNode, setDetailsNode] = useState(null)
+  const [readingNode, setReadingNode] = useState(null)
   const [playingNode, setPlayingNode] = useState(null)
   const [dragIds, setDragIds] = useState([])
   const [dropOver, setDropOver] = useState(null)
@@ -201,6 +245,7 @@ function FoldersInner() {
       const d = await api(`/api/library${qs.toString() ? `?${qs}` : ''}`)
       setData({ node: d.node || null, breadcrumb: d.breadcrumb || [], role: d.role || 'owner', children: d.children || [], shared: d.shared || [] })
       setOfflineNote(false)
+      setSessionExpired(false)
       // Snapshot for offline browsing (no mobile data → still open folders).
       try { await saveSnapshot(snapshotKey(currentId, q.trim()), d) } catch {}
       // Central public store for categories (best-effort).
@@ -209,6 +254,12 @@ function FoldersInner() {
         if (Array.isArray(m)) setMaterials(m)
       } catch {}
     } catch (e) {
+      // Expired login must never masquerade as "offline" — say so plainly.
+      if (e.code === 401) {
+        setSessionExpired(true)
+        setError('')
+        return
+      }
       // Offline? Fall back to the last good snapshot so folders still open.
       try {
         const snap = await getSnapshot(snapshotKey(currentId, q.trim()))
@@ -314,6 +365,127 @@ function FoldersInner() {
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [linkUrl, linkOpen])
+
+  // Draft autosave: 2.5s after the last keystroke (or phrase), silent, online only.
+  useEffect(() => {
+    if (!noteOpen || noteSavedRef.current) return
+    if (!htmlToText(liveFullHtml(noteHtml)) && !noteTitle.trim() && !noteDraftId) return
+    const t = setTimeout(() => { saveNoteDraft().catch(() => {}) }, 2500)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteHtml, noteTitle, noteOpen, liveLast])
+
+  // Accidental refresh with unsent work → browser asks first.
+  useEffect(() => {
+    if (!noteOpen || noteSavedRef.current) return
+    if (!htmlToText(noteHtml) && !noteTitle.trim()) return
+    const handler = (e) => { e.preventDefault(); e.returnValue = '' }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [noteOpen, noteHtml, noteTitle])
+
+  // ---- Live lecture notes: speech lands in its own always-visible block
+  // (tiptap eats foreign markers and won't sync while focused — so we never
+  // merge mid-session). Save/draft time folds it into the note HTML. ----
+  function liveBlockInner() {
+    return liveSegs.current.map(s => `<p>${escHtml(s.text)}</p>`).join('')
+  }
+
+  function liveFullHtml(base) {
+    const inner = liveBlockInner()
+    const clean = String(base || '').replace(/<div id="live-transcript">[\s\S]*?<\/div>/, '')
+    if (!inner) return clean
+    return `${clean}${clean ? '<p></p>' : ''}<div id="live-transcript"><h2>Live transcript</h2>${inner}</div>`
+  }
+
+  // Pull a previously saved transcript back into live segments so a resumed
+  // note keeps one continuous block instead of two.
+  function seedLiveSegs(html) {
+    liveSegs.current = []
+    const src = String(html || '')
+    const m = src.match(/<div id="live-transcript">([\s\S]*?)<\/div>/)
+    if (m) {
+      const paras = [...m[1].matchAll(/<p>([\s\S]*?)<\/p>/gi)]
+        .map(x => x[1].replace(/<[^>]*>/g, '').trim())
+        .filter(Boolean)
+      liveSegs.current = paras.map(text => ({ text }))
+    }
+    return src.replace(/<div id="live-transcript">[\s\S]*?<\/div>/, '')
+  }
+
+  async function startLive() {
+    if (liveCtl.current) return
+    setLiveError('')
+    setLiveLast('')
+    setLiveQuiet(0)
+    setLiveElapsed(0)
+    liveSegs.current = []
+    // Cloud engine: no signal, no session.
+    if (!isOnlineNow()) {
+      setLiveError('Live notes need internet.')
+      setLiveStatus('error')
+      return
+    }
+    const ctl = new LiveLecture({
+      onResult: ({ text }) => {
+        liveSegs.current.push({ text })
+        setLiveLast(text)
+      },
+      onState: (st, msg) => {
+        setLiveStatus(st)
+        if (st === 'error') setLiveError(msg || 'Live notes failed.')
+        if (st === 'idle') liveCtl.current = null
+      },
+      onTick: (s, q) => { setLiveElapsed(s); setLiveQuiet(q || 0) },
+    })
+    liveCtl.current = ctl
+    setLiveStatus('starting')
+    try {
+      await ctl.start()
+    } catch (e) {
+      setLiveError(e.message || 'Could not start live notes.')
+      setLiveStatus('error')
+      liveCtl.current = null
+    }
+  }
+
+  // Mic icon toggle: idle → start, listening → pause, paused → resume.
+  function toggleLive() {
+    const ctl = liveCtl.current
+    if (!ctl) { startLive(); return }
+    if (liveStatus === 'listening') ctl.pause()
+    else if (liveStatus === 'paused') ctl.resume()
+  }
+
+  // "Take note for me": editor opens and the mic is already on.
+  function openLiveNote() {
+    openNoteEditor()
+    startLive()
+  }
+
+  async function stopLive() {
+    const ctl = liveCtl.current
+    if (!ctl) return
+    setLiveStatus('stopping')
+    try { await ctl.stop() } catch {}
+  }
+
+  // Keep the flowing transcript pinned to the latest words.
+  useEffect(() => {
+    try {
+      const el = liveScrollRef.current
+      if (el) el.scrollTop = el.scrollHeight
+    } catch {}
+  }, [liveLast])
+
+  // Closing the editor mid-lecture stops capture; the transcript so far is
+  // already in the note + draft, so nothing is lost.
+  useEffect(() => {
+    if (!noteOpen && liveCtl.current) {
+      try { liveCtl.current.stop() } catch {}
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteOpen])
 
   function sortNodes(list) {
     const arr = [...list]
@@ -478,6 +650,182 @@ function FoldersInner() {
       setSelectMode(false)
       load()
     } catch (e) { setError(e.message) } finally { setBusy(false) }
+  }
+
+  async function createNote() {
+    if (busy) return
+    if (liveCtl.current) { try { await stopLive() } catch {} }
+    const title = noteTitle.trim()
+    const full = liveFullHtml(noteHtml)
+    const textLen = htmlToText(full).length
+    if (!title && !textLen) { setError('Write something first'); return }
+    if (!isOnlineNow()) { setError('Offline — notes save when you’re back online.'); return }
+    setBusy(true)
+    try {
+      await api('/api/library', {
+        method: 'POST',
+        body: JSON.stringify({
+          kind: 'ref', name: title || 'Untitled note', parentId: currentId,
+          itemKind: 'notes', content: full || null, subtitle: 'Note',
+        }),
+      })
+      setNoteTitle('')
+      setNoteHtml('')
+      liveSegs.current = []
+      setLiveLast('')
+      noteSavedRef.current = true
+      await deleteNoteDraft(noteDraftId)
+      setNoteDraftId(null)
+      setNoteResume(null)
+      setNoteOpen(false)
+      load()
+    } catch (e) { setError(e.message) } finally { setBusy(false) }
+  }
+
+  function openNoteEditor({ title = '', html = '' } = {}) {
+    setNoteTitle(title)
+    setNoteHtml(seedLiveSegs(html))
+    setLiveLast('')
+    setNoteTypeOpen(false)
+    setScanOpen(false)
+    setError('')
+    noteSavedRef.current = false
+    setNoteDraftId(null)
+    setNoteResume(null)
+    if (!title && !htmlToText(html)) {
+      // Unfinished business? Offer the autosaved draft for this folder.
+      findNoteDraft(currentId).then(hit => { if (hit) setNoteResume(hit) }).catch(() => {})
+    }
+    setNoteOpen(true)
+  }
+
+  function parseNoteDraft(content) {
+    try {
+      const d = JSON.parse(String(content || ''))
+      if (d && typeof d === 'object' && d.kind === 'note-draft') return d
+    } catch {}
+    return null
+  }
+
+  async function ensureDraftsFolder() {
+    const root = await api('/api/library')
+    const hit = (root.children || []).find(c => c.kind === 'folder' && String(c.name || '').toLowerCase() === 'drafts')
+    if (hit) return hit.id
+    const c = await api('/api/library', { method: 'POST', body: JSON.stringify({ kind: 'folder', name: 'Drafts', parentId: null }) })
+    return c.node.id
+  }
+
+  async function findNoteDraft(parentId) {
+    try {
+      const draftsId = await ensureDraftsFolder()
+      const d = await api(`/api/library?parentId=${encodeURIComponent(draftsId)}`)
+      const hits = (d.children || [])
+        .filter(c => c.kind === 'ref' && c.itemKind === 'draft')
+        .map(c => ({ node: c, draft: parseNoteDraft(c.content) }))
+        .filter(x => x.draft && String(x.draft.parentId ?? '') === String(parentId ?? ''))
+        .sort((a, b) => String(b.draft.savedAt || '').localeCompare(String(a.draft.savedAt || '')))
+      return hits[0] || null
+    } catch { return null }
+  }
+
+  async function saveNoteDraft() {
+    const title = noteTitle.trim()
+    const html = liveFullHtml(noteHtml)
+    if (!htmlToText(html) && !title) return
+    if (noteSavedRef.current || !isOnlineNow()) return
+    try {
+      const content = JSON.stringify({ kind: 'note-draft', title, html, parentId: currentId, savedAt: new Date().toISOString() })
+      const name = title || 'Untitled note'
+      if (noteDraftId) {
+        await api(`/api/library/${encodeURIComponent(noteDraftId)}`, { method: 'PATCH', body: JSON.stringify({ name, content }) })
+      } else {
+        const draftsId = await ensureDraftsFolder()
+        const c = await api('/api/library', { method: 'POST', body: JSON.stringify({ kind: 'ref', name, parentId: draftsId, itemKind: 'draft', content, subtitle: 'Draft' }) })
+        if (c?.node?.id) setNoteDraftId(c.node.id)
+      }
+    } catch {}
+  }
+
+  async function deleteNoteDraft(id) {
+    if (!id) return
+    try { await api(`/api/library/${encodeURIComponent(id)}`, { method: 'DELETE' }) } catch {}
+  }
+
+  function addScanFiles(files) {
+    const list = Array.from(files || []).filter(f => /^image\//.test(f.type || ''))
+    if (!list.length) return
+    setScanFiles(prev => {
+      const room = Math.max(0, 10 - prev.length)
+      return [...prev, ...list.slice(0, room).map(file => {
+        const id = `scan-${Date.now()}-${scanSeq.current++}`
+        let url = null
+        try { url = URL.createObjectURL(file) } catch {}
+        return { id, url, file }
+      })]
+    })
+    setScanError('')
+    setScanProg(null)
+  }
+
+  function removeScanFile(id) {
+    setScanFiles(prev => {
+      const hit = prev.find(x => x.id === id)
+      if (hit?.url) { try { URL.revokeObjectURL(hit.url) } catch {} }
+      return prev.filter(x => x.id !== id)
+    })
+  }
+
+  function clearScanFiles() {
+    setScanFiles(prev => {
+      prev.forEach(x => { if (x.url) { try { URL.revokeObjectURL(x.url) } catch {} } })
+      return []
+    })
+  }
+
+  async function runScan() {
+    if (!scanFiles.length || scanBusy) return
+    setScanBusy(true)
+    setScanError('')
+    const files = [...scanFiles]
+    const total = files.length
+    const parts = []
+    let minConf = 100
+    try {
+      for (let i = 0; i < total; i++) {
+        const label = total > 1 ? `Page ${i + 1}/${total}` : 'Reading…'
+        setScanProg({ status: label, progress: Math.round((i / total) * 100) })
+        const { text, confidence } = await extractNoteText(files[i].file, {
+          onProgress: (m) => {
+            const p = m && typeof m.progress === 'number' ? m.progress : 0
+            setScanProg({ status: `${label} ${Math.round(p * 100)}%`, progress: Math.round(((i + p) / total) * 100) })
+          },
+        })
+        if (typeof confidence === 'number') minConf = Math.min(minConf, confidence)
+        const body = plainToHtml(text)
+        parts.push(total > 1 ? `<h2>Page ${i + 1}</h2>${body}` : body)
+      }
+      const html = parts.join('')
+      if (!htmlToText(html)) throw new Error('No text found — try better light and hold steady.')
+      setScanProg({ status: 'Done', progress: 100 })
+      openNoteEditor({ title: noteTitle.trim() || (total > 1 ? `Scanned note (${total} pages)` : 'Scanned note'), html: parts.join('') })
+      setScanOpen(false)
+      clearScanFiles()
+      if (minConf < 60) setError(`Scanned with low confidence (${minConf}%) — skim and fix errors.`)
+    } catch (e) {
+      setScanError(e.message || 'Could not read those photos.')
+    } finally {
+      setScanBusy(false)
+      setScanProg(null)
+    }
+  }
+
+  function openLinkSheet(mode) {
+    setLinkMode(mode)
+    setLinkMeta(null)
+    lastLinkFetched.current = ''
+    setNewOpen(false)
+    setMoreOpen(false)
+    setLinkOpen(true)
   }
 
   async function createLink() {
@@ -696,6 +1044,37 @@ function FoldersInner() {
     }
   }
 
+  async function saveNoteContent(node, content) {
+    if (!node || busy) return
+    setBusy(true)
+    try {
+      const d = await api(`/api/library/${node.id}`, { method: 'PATCH', body: JSON.stringify({ content: content || null }) })
+      if (d?.node) setDetailsNode(d.node)
+      load()
+    } catch (e) { setError(e.message) } finally { setBusy(false) }
+  }
+
+  // Send a folder note into the course bank: same review pipeline as
+  // contributions — appears in theory/search/plan after admin approval.
+  // Returns a confirmation message for the Details sheet (null on failure).
+  async function publishNote(node) {
+    if (!node?.content || busy) return null
+    const cc = node.courseCode || courseCode
+    if (!cc) { setError('No course here — open a course folder to send this to its bank.'); return null }
+    setBusy(true)
+    try {
+      await api('/api/contribute/readings', {
+        method: 'POST',
+        body: JSON.stringify({ title: node.name, courseCode: cc, content: node.content }),
+      })
+      setError('')
+      return `Sent to the ${cc} bank — shows up after admin approval.`
+    } catch (e) {
+      setError(e.message)
+      return null
+    } finally { setBusy(false) }
+  }
+
   // Play prefers the on-device copy (works with no data); else streams.
   async function playNode(node) {
     if (!node) return
@@ -814,6 +1193,12 @@ function FoldersInner() {
       </div>
 
       {error && <p className="rounded-xl border border-red-200 bg-red-50 p-2.5 text-xs font-semibold text-red-600">{error}</p>}
+      {sessionExpired && (
+        <div className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 p-2.5">
+          <p className="min-w-0 flex-1 text-xs font-semibold text-amber-700">Session expired — your login lasted 7 days. Your files are safe.</p>
+          <Link href="/auth" className="shrink-0 rounded-xl bg-amber-600 px-3.5 py-1.5 text-xs font-bold text-white">Log in</Link>
+        </div>
+      )}
       {(!online || offlineNote) && (
         <p className="flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 p-2.5 text-xs font-semibold text-amber-700">
           <WifiOff className="size-3.5 shrink-0" />
@@ -839,7 +1224,7 @@ function FoldersInner() {
             <div className={view === 'grid' ? 'grid grid-cols-2 gap-2' : 'divide-y divide-border'}>
               {catFiles.map(n => (
                 <FileRow key={n.id} node={n} view={view} selectMode={false} checked={false} pinned={isPinned(n.id)}
-                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={playNode} />
+                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={playNode} onRead={(node) => setReadingNode(node)} />
               ))}
             </div>
           )}
@@ -883,7 +1268,7 @@ function FoldersInner() {
                       onDrop={(e) => dropOnFolder(e, n)} isDropTarget={dropOver === n.id} isDragging={dragIds.includes(n.id)} />
                   ) : (
                     <FileRow key={n.id} node={n} view={view} selectMode={selectMode} checked={selected.includes(n.id)} pinned={isPinned(n.id)}
-                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={playNode}
+                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={playNode} onRead={(node) => setReadingNode(node)}
                       draggable={canWrite && !selectMode} onDragStart={(e) => dragStart(e, n)} onDragEnd={() => { setDragIds([]); setDropOver(null) }}
                       isDragging={dragIds.includes(n.id)} />
                   )
@@ -951,11 +1336,42 @@ function FoldersInner() {
               <input value={folderName} onChange={e => setFolderName(e.target.value)} placeholder="Folder name" className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
               <button onClick={createFolder} disabled={busy} className="shrink-0 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">Create</button>
             </div>
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <button onClick={() => { setNewOpen(false); fileRef.current?.click() }} className="flex items-center gap-2 rounded-xl border p-3 text-sm font-semibold hover:bg-muted"><Upload className="size-4" /> Upload file</button>
-              <button onClick={() => { setNewOpen(false); setLinkOpen(true) }} className="flex items-center gap-2 rounded-xl border p-3 text-sm font-semibold hover:bg-muted"><LinkIcon className="size-4" /> Add link</button>
-              <Link href={quizHref} className="flex items-center gap-2 rounded-xl border p-3 text-sm font-semibold hover:bg-muted"><GraduationCap className="size-4" /> Make quiz</Link>
-              <Link href={gamesHref} className="flex items-center gap-2 rounded-xl border p-3 text-sm font-semibold hover:bg-muted"><Gamepad2 className="size-4" /> Make game</Link>
+            <div className="space-y-1 pt-1">
+              <button onClick={() => openLinkSheet('video')} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-100"><Youtube className="size-5 text-red-600" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Add video</span><span className="block truncate text-xs text-muted-foreground">Paste a YouTube link</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </button>
+              <button onClick={() => { setNewOpen(false); fileRef.current?.click() }} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100"><Upload className="size-5 text-emerald-600" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Upload file</span><span className="block truncate text-xs text-muted-foreground">PDF, photo, audio from this device</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </button>
+              <button onClick={() => { setNewOpen(false); setNoteTypeOpen(true) }} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-100"><NotebookPen className="size-5 text-amber-600" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Make note</span><span className="block truncate text-xs text-muted-foreground">Write, scan paper, or AI-draft</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </button>
+              <Link href={quizHref} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-violet-100"><GraduationCap className="size-5 text-violet-600" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Make quiz</span><span className="block truncate text-xs text-muted-foreground">{courseCode ? `For ${courseCode}` : 'Pick a course first'}</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </Link>
+              <Link href={gamesHref} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-sky-100"><Gamepad2 className="size-5 text-sky-600" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Make game</span><span className="block truncate text-xs text-muted-foreground">Turn study into play</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </Link>
+              <button onClick={() => openLinkSheet('link')} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-200"><LinkIcon className="size-5 text-slate-600" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Add link</span><span className="block truncate text-xs text-muted-foreground">Save any URL here</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </button>
+              <button onClick={() => { setNewOpen(false); setMoreOpen(true) }} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted"><MoreHorizontal className="size-5 text-muted-foreground" /></span>
+                <span className="min-w-0 flex-1"><span className="block text-sm font-bold">More</span><span className="block truncate text-xs text-muted-foreground">Contribute, browse uploads…</span></span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </button>
             </div>
             <p className="text-xs text-muted-foreground">Uploads are public by default — they are stored centrally and appear in Search for everyone.</p>
           </div>
@@ -986,6 +1402,10 @@ function FoldersInner() {
         <DetailsBody node={detailsNode} materials={materials} canWrite={canWrite}
           pinned={isPinned(detailsNode.id)} pinBusy={pinBusy === String(detailsNode.id)}
           onTogglePin={() => togglePin(detailsNode)}
+          onSaveNote={(content) => saveNoteContent(detailsNode, content)}
+          onRead={(node) => { setDetailsNode(null); setReadingNode(node) }}
+          onPublish={() => publishNote(detailsNode)}
+          courseCode={courseCode}
           onShare={() => shareFile(detailsNode)}
           onTogglePublic={(sharedCount) => togglePublic(detailsNode, sharedCount)}
           onOpenShare={() => openShare(detailsNode)} />
@@ -1004,6 +1424,27 @@ function FoldersInner() {
             courseCode: playingNode.courseCode || null,
           }}
           onClose={() => setPlayingNode(null)}
+        />
+      )}
+
+      {readingNode && (
+        <NoteReader
+          title={readingNode.name || 'Note'}
+          subtitle={readingNode.courseCode || readingNode.subtitle || null}
+          html={readingNode.content}
+          savePayload={{
+            name: readingNode.name, itemKind: 'notes',
+            refId: String(readingNode.id || ''),
+            href: null, url: null,
+            courseCode: readingNode.courseCode || null, subtitle: readingNode.subtitle || null,
+          }}
+          extraActions={(readingNode.courseCode || courseCode) && !!readingNode.content && (
+            <button onClick={() => publishNote(readingNode)} aria-label="Send to course bank" title={`Send to ${readingNode.courseCode || courseCode} bank`}
+              className="flex size-8 items-center justify-center rounded-lg hover:bg-muted">
+              <Send className="size-4" />
+            </button>
+          )}
+          onClose={() => setReadingNode(null)}
         />
       )}
 
@@ -1050,12 +1491,17 @@ function FoldersInner() {
       )}
 
       {linkOpen && (
-        <Sheet onClose={() => { setLinkOpen(false); setLinkMeta(null); lastLinkFetched.current = '' }} title="New link">
+        <Sheet onClose={() => { setLinkOpen(false); setLinkMeta(null); lastLinkFetched.current = '' }} title={linkMode === 'video' ? 'Add video' : 'New link'}>
           <div className="space-y-2">
+            {linkMode === 'video' && (
+              <p className="flex items-center gap-1.5 rounded-xl bg-red-50 px-3 py-2 text-xs font-semibold text-red-600">
+                <Youtube className="size-4 shrink-0" /> Videos are YouTube links — paste one below, no file upload needed.
+              </p>
+            )}
             <input value={linkUrl}
               onChange={e => { const nv = e.target.value; setLinkUrl(nv); if (linkMeta && nv.trim() !== (linkMeta.url || '')) { setLinkMeta(null); if (linkName === (linkMeta.title || '')) setLinkName('') } }}
               onPaste={e => { const v = (e.clipboardData?.getData('text') || '').trim(); if (v) setTimeout(() => lookupLink(v), 50) }}
-              placeholder="Paste YouTube link or https://…"
+              placeholder={linkMode === 'video' ? 'Paste YouTube link…' : 'Paste YouTube link or https://…'}
               inputMode="url" className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
             {(linkFetching || linkMeta) && (
               <div className="flex items-center gap-2 rounded-xl bg-muted/60 p-2">
@@ -1078,6 +1524,166 @@ function FoldersInner() {
             <input value={linkName} onChange={e => setLinkName(e.target.value)} placeholder={isYouTubeUrl(linkUrl) ? 'Video title… (auto-filled, editable)' : 'Name (optional)'} className="w-full rounded-xl border px-3 py-2 text-sm outline-none" />
             <button onClick={createLink} disabled={busy} className="w-full rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">Save {isYouTubeUrl(linkUrl) ? 'video' : 'link'}</button>
             {isYouTubeUrl(linkUrl) && <p className="text-[11px] text-muted-foreground">YouTube videos stream — they need internet and can’t be saved offline.</p>}
+          </div>
+        </Sheet>
+      )}
+
+      {noteTypeOpen && (
+        <Sheet onClose={() => setNoteTypeOpen(false)} title="Make note">
+          <div className="space-y-1">
+            <button onClick={() => openNoteEditor()} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-100"><NotebookPen className="size-5 text-amber-600" /></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Write it yourself</span><span className="block truncate text-xs text-muted-foreground">Full editor, your words</span></span>
+              <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+            </button>
+            <button onClick={() => { setNoteTypeOpen(false); setScanError(''); setScanProg(null); setScanOpen(true) }} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100"><ScanLine className="size-5 text-emerald-600" /></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Scan paper note</span><span className="block truncate text-xs text-muted-foreground">Photo → text, on this phone, free</span></span>
+              <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+            </button>
+            <button onClick={openLiveNote} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-100"><Mic className="size-5 text-red-600" /></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Take note for me</span><span className="block truncate text-xs text-muted-foreground">Listens and types as they speak</span></span>
+              <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+            </button>
+          </div>
+        </Sheet>
+      )}
+
+      {noteOpen && (
+        <div className="fixed inset-0 z-[60] overflow-y-auto bg-background">
+          <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col px-4 pb-4 pt-4">
+            <div className="mb-3 flex items-center gap-2">
+              <h2 className="flex-1 truncate text-base font-black">New note</h2>
+              {(liveStatus === 'listening' || liveStatus === 'paused') && (
+                <span className="shrink-0 text-[11px] font-bold text-muted-foreground">
+                  {liveStatus === 'listening' && <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-red-500" />}{formatElapsed(liveElapsed)}
+                </span>
+              )}
+              {noteDraftId && liveStatus === 'idle' && <span className="shrink-0 text-[11px] font-semibold text-muted-foreground">Draft saved ✓</span>}
+              <button onClick={toggleLive} disabled={liveStatus === 'starting' || liveStatus === 'stopping'} aria-label="Live lecture mic"
+                className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${liveStatus === 'listening' ? 'bg-red-500/15 text-red-600' : 'hover:bg-muted'}`}>
+                {(liveStatus === 'starting' || liveStatus === 'stopping')
+                  ? <Loader2 className="size-4 animate-spin" />
+                  : <Mic className="size-4" />}
+              </button>
+              <button onClick={() => setNoteOpen(false)} aria-label="Close" className="flex size-8 items-center justify-center rounded-lg hover:bg-muted"><X className="size-4" /></button>
+            </div>
+            {liveStatus === 'starting' && <p className="mb-2 text-[11px] text-muted-foreground">Connecting…</p>}
+            {liveError && <p className="mb-2 text-xs font-semibold text-red-500">{liveError}</p>}
+            {(liveSegs.current.length > 0 || liveStatus === 'listening') && (
+              <div className="mb-2 rounded-2xl border bg-muted/40 p-3">
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  Live transcript{liveStatus === 'listening' ? ' · listening' : ''}
+                </p>
+                <div ref={liveScrollRef} className="max-h-44 overflow-y-auto">
+                  <p className="text-[13px] leading-relaxed">
+                    {liveSegs.current.map(s => s.text).join(' ')}
+                    {liveStatus === 'listening' && !liveSegs.current.length && (
+                      <span className="text-muted-foreground">Listening… words appear here as they speak.</span>
+                    )}
+                  </p>
+                </div>
+              </div>
+            )}
+            {liveStatus === 'listening' && liveQuiet > 10 && (
+              <p className="mb-2 text-[11px] font-semibold text-amber-600">Mic sounds quiet — move closer or uncover it.</p>
+            )}
+            {noteResume && !htmlToText(noteHtml) && !noteTitle.trim() && (
+              <div className="mb-2 flex items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-2.5 py-2 text-xs">
+                <span className="min-w-0 flex-1 truncate font-semibold">Unfinished: {noteResume.node.name || 'Untitled'}</span>
+                <button
+                  onClick={() => {
+                    setNoteTitle(noteResume.draft.title || '')
+                    setNoteHtml(seedLiveSegs(noteResume.draft.html || ''))
+                    setLiveLast('')
+                    setNoteDraftId(noteResume.node.id)
+                    setNoteResume(null)
+                  }}
+                  className="shrink-0 rounded-lg bg-primary px-2.5 py-1 text-[11px] font-bold text-primary-foreground">Resume</button>
+                <button
+                  onClick={() => { deleteNoteDraft(noteResume.node.id); setNoteResume(null) }}
+                  aria-label="Discard draft" className="shrink-0 rounded-md p-1 hover:bg-muted"><X className="size-3.5 text-muted-foreground" /></button>
+              </div>
+            )}
+            <input value={noteTitle} onChange={e => setNoteTitle(e.target.value)} placeholder="Title" className="mb-2 w-full rounded-xl border px-3 py-2 text-sm font-bold outline-none" />
+            <div className="min-h-0 flex-1">
+              <RichTextEditor tall value={noteHtml} onChange={setNoteHtml} placeholder="Start writing…" />
+            </div>
+            <p className="py-2 text-[11px] text-muted-foreground">Saved in {data.node?.name || 'My Files'}. Tap it anytime to read or edit.</p>
+            <div className="sticky bottom-0 bg-background pb-2 pt-1">
+              <button onClick={createNote} disabled={busy} className="w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground disabled:opacity-50">
+                {busy ? 'Saving…' : 'Save note'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {scanOpen && (
+        <Sheet onClose={() => setScanOpen(false)} title="Scan paper note">
+          <div className="space-y-2">
+            <input ref={scanFileRef} type="file" accept="image/*" multiple className="hidden" onChange={e => { addScanFiles(e.target.files); e.target.value = '' }} />
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={() => { setScanOpen(false); setScanCamOpen(true) }} className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground">
+                <Camera className="size-4" /> Camera
+              </button>
+              <button onClick={() => scanFileRef.current?.click()} className="flex items-center justify-center gap-1.5 rounded-xl border py-2.5 text-sm font-bold">
+                Choose images
+              </button>
+            </div>
+            {scanFiles.length > 0 && (
+              <div className="grid grid-cols-4 gap-1.5">
+                {scanFiles.map(f => (
+                  <span key={f.id} className="relative">
+                    {f.url && <img src={f.url} alt="" className="h-20 w-full rounded-lg border object-cover" />}
+                    <button onClick={() => removeScanFile(f.id)} aria-label="Remove page"
+                      className="absolute right-1 top-1 flex size-6 items-center justify-center rounded-full bg-black/70 text-white">
+                      <X className="size-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            {scanProg && (
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-muted-foreground">{scanProg.status}</p>
+                {scanProg.progress != null && (
+                  <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                    <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${scanProg.progress}%` }} />
+                  </div>
+                )}
+              </div>
+            )}
+            {scanError && <p className="text-xs font-semibold text-red-500">{scanError}</p>}
+            <button onClick={runScan} disabled={scanBusy || !scanFiles.length} className="w-full rounded-xl bg-emerald-600 py-2 text-sm font-bold text-white disabled:opacity-50">
+              {scanBusy ? 'Reading…' : scanFiles.length > 1 ? `Extract ${scanFiles.length} pages` : 'Extract text'}
+            </button>
+            <p className="text-[11px] text-muted-foreground">Reads on this phone — no upload, no cost. Fit each page in the frame; you review before saving.</p>
+          </div>
+        </Sheet>
+      )}
+
+      {scanCamOpen && (
+        <ScanCamera
+          onDone={(files) => { setScanCamOpen(false); addScanFiles(files); setScanOpen(true) }}
+          onClose={() => { setScanCamOpen(false); setScanOpen(true) }}
+        />
+      )}
+
+      {moreOpen && (
+        <Sheet onClose={() => setMoreOpen(false)} title="More">
+          <div className="space-y-1">
+            <Link href="/contribute" className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-indigo-100"><Users className="size-5 text-indigo-600" /></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Contribute to a course</span><span className="block truncate text-xs text-muted-foreground">Videos, PDFs, quizzes for review</span></span>
+              <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+            </Link>
+            <Link href="/search" className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-teal-100"><Search className="size-5 text-teal-600" /></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Browse uploads</span><span className="block truncate text-xs text-muted-foreground">Everything public in Search</span></span>
+              <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+            </Link>
           </div>
         </Sheet>
       )}
@@ -1109,7 +1715,13 @@ function FoldersInner() {
   )
 }
 
-function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpenShare, pinned, pinBusy, onTogglePin }) {
+function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpenShare, pinned, pinBusy, onTogglePin, onSaveNote, onRead, onPublish, courseCode }) {
+  const [editingNote, setEditingNote] = useState(false)
+  const [noteDraft, setNoteDraft] = useState('')
+  const [noteSaving, setNoteSaving] = useState(false)
+  const [pubMsg, setPubMsg] = useState('')
+  const [pubBusy, setPubBusy] = useState(false)
+  useEffect(() => { setPubMsg('') }, [node.id])
   const central = node.materialId ? materials.find(m => String(m.id) === String(node.materialId)) : null
   const sharedCount = central?.uploaders?.length || 1
   const shared = sharedCount > 1
@@ -1160,8 +1772,37 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
           {node.isPublic === false ? <><Lock className="size-3" /> Private</> : <><Globe className="size-3" /> Public</>}
         </span>
       </div>
-      <dl className="space-y-1.5 rounded-xl border p-3 text-sm">
-        {!!(node.size || central?.size) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Size</dt><dd className="font-semibold">{formatSize(node.size || central?.size)}</dd></div>}
+      {(node.itemKind === 'notes' || node.itemKind === 'draft') && (
+        <div className="space-y-2">
+          {!editingNote && !!node.content && (
+            <div className="prose max-h-64 max-w-none overflow-y-auto rounded-xl bg-muted/60 p-3 text-sm dark:prose-invert" dangerouslySetInnerHTML={{ __html: node.content }} />
+          )}
+          {!editingNote && !node.content && canWrite && (
+            <button onClick={() => { setNoteDraft(''); setEditingNote(true) }} className="w-full rounded-xl border border-dashed py-2.5 text-sm font-semibold text-muted-foreground hover:bg-muted">
+              Write something…
+            </button>
+          )}
+          {!editingNote && !!node.content && canWrite && (
+            <button onClick={() => { setNoteDraft(node.content || ''); setEditingNote(true) }} className="w-full rounded-xl border py-2 text-sm font-semibold hover:bg-muted">
+              Edit note
+            </button>
+          )}
+          {editingNote && (
+            <>
+              <RichTextEditor value={noteDraft} onChange={setNoteDraft} placeholder="Write here…" />
+              <div className="flex gap-2">
+                <button onClick={() => setEditingNote(false)} disabled={noteSaving} className="flex-1 rounded-xl border py-2 text-sm font-semibold disabled:opacity-50">Cancel</button>
+                <button
+                  onClick={async () => { setNoteSaving(true); try { await onSaveNote?.(noteDraft); setEditingNote(false) } finally { setNoteSaving(false) } }}
+                  disabled={noteSaving || !htmlToText(noteDraft)} className="flex-1 rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground disabled:opacity-50">
+                  {noteSaving ? 'Saving…' : 'Save'}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+      <dl className="space-y-1.5 rounded-xl border p-3 text-sm">        {!!(node.size || central?.size) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Size</dt><dd className="font-semibold">{formatSize(node.size || central?.size)}</dd></div>}
         {!!(node.updatedAt || node.createdAt || central?.createdAt) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Modified</dt><dd className="font-semibold">{formatDate(node.updatedAt || node.createdAt || central?.createdAt)}</dd></div>}
         {!!(node.courseCode || central?.courseCode) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Course</dt><dd className="font-semibold">{node.courseCode || central?.courseCode}</dd></div>}
         {!!central?.ownerEmail && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Owner</dt><dd className="max-w-[60%] truncate font-semibold">{central.ownerEmail}</dd></div>}
@@ -1173,6 +1814,19 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
             <BookOpen className="size-4" /> Read
           </Link>
         )}
+        {(node.itemKind === 'notes' || node.itemKind === 'draft') && node.content && (
+          <button onClick={() => onRead?.(node)} className="col-span-2 flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground">
+            <BookOpen className="size-4" /> Read
+          </button>
+        )}
+        {(node.itemKind === 'notes' || node.itemKind === 'draft') && node.content && (node.courseCode || courseCode) && (
+          <button
+            onClick={async () => { setPubBusy(true); try { const m = await onPublish?.(); if (m) setPubMsg(m) } finally { setPubBusy(false) } }}
+            disabled={pubBusy} className="col-span-2 flex items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted disabled:opacity-50">
+            <Send className="size-4" /> {pubBusy ? 'Sending…' : `Send to ${node.courseCode || courseCode} bank`}
+          </button>
+        )}
+        {pubMsg && <p className="col-span-2 rounded-xl bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{pubMsg}</p>}
         {(node.href || node.url) && <button onClick={onShare} className="flex items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted"><Share2 className="size-4" /> Copy link</button>}
         {node.kind === 'folder' && canWrite && <button onClick={onOpenShare} className="flex items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted"><Users className="size-4" /> Share</button>}
       </div>
@@ -1260,7 +1914,7 @@ function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, 
   )
 }
 
-function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, onDetails, onPlay, draggable, onDragStart, onDragEnd, isDragging }) {
+function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, onDetails, onPlay, onRead, draggable, onDragStart, onDragEnd, isDragging }) {
   const Icon = iconFor(node)
   const href = node.href || node.url || null
   const stale = !href && !String(node.id).startsWith('m-')
@@ -1270,6 +1924,7 @@ function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, on
   const isVideo = kind === 'video' || isYouTubeUrl(href)
   const playable = !selectMode && !!onPlay && isPlayableMedia(node)
   const readable = kind === 'pdf' && !!href && !selectMode
+  const noteReadable = (kind === 'notes' || kind === 'draft') && !!node.content && !selectMode && !!onRead
   const inner = (
     <>
       {thumb ? (
@@ -1299,6 +1954,8 @@ function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, on
           <button onClick={() => onPlay(node)} className="flex w-full flex-col gap-2 text-left">{inner}</button>
         ) : readable ? (
           <Link href={readHref(href, node.name)} className="flex w-full flex-col gap-2 text-left">{inner}</Link>
+        ) : noteReadable ? (
+          <button onClick={() => onRead(node)} className="flex w-full flex-col gap-2 text-left">{inner}</button>
         ) : href && !selectMode ? (
           String(node.id).startsWith('m-') ? <a href={href} target="_blank" rel="noreferrer" className="flex flex-col gap-2">{inner}</a>
           : <Link href={href} className="flex flex-col gap-2">{inner}</Link>
@@ -1324,6 +1981,8 @@ function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, on
         <button onClick={() => onPlay(node)} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Play</button>
       ) : readable ? (
         <Link href={readHref(href, node.name)} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Read</Link>
+      ) : noteReadable ? (
+        <button onClick={() => onRead(node)} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Read</button>
       ) : href && !selectMode && (
         String(node.id).startsWith('m-') ? <a href={href} target="_blank" rel="noreferrer" className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Open</a>
         : <Link href={href} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Open</Link>

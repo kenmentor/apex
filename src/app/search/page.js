@@ -2,23 +2,24 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { Search, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check } from 'lucide-react'
+import { Search, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2 } from 'lucide-react'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import { getUser } from '@/lib/auth'
+import { myScope, inScopeOrAsked, queryCourseToken } from '@/lib/scope'
 import SaveToFolder from '@/components/SaveToFolder'
 import BookGrid, { BookCover } from '@/components/BookGrid'
 import VideoModal from '@/components/VideoModal'
 
 const GAMES = [
-  { href: '/games/chunk', label: 'Reassemble the explanation', tags: 'game chunk reorder definition' },
-  { href: '/games/sprint', label: 'Speed Sprint', tags: 'game sprint timed mcq quiz' },
-  { href: '/games/pairs', label: 'Match Pairs', tags: 'game pairs match term definition memory' },
-  { href: '/games/cloze', label: 'Cloze Blanks', tags: 'game cloze fill blank explanation' },
-  { href: '/games/blitz', label: 'Survival Blitz', tags: 'game blitz survival streak hearts mcq quiz' },
-  { href: '/games/odd', label: 'Odd One Out', tags: 'game odd intruder terms discrimination' },
-  { href: '/games/boss', label: 'Boss Battle', tags: 'game boss battle fight hp monster mcq quiz' },
-  { href: '/games/typing', label: 'Typing Rush', tags: 'game typing rush keyboard speed terms' },
-  { href: '/races', label: 'Races', tags: 'race competition ghost live multiplayer' },
+  { href: '/games/chunk', label: 'Reassemble the explanation', blurb: 'Rebuild answers in order', tags: 'game chunk reorder definition' },
+  { href: '/games/sprint', label: 'Speed Sprint', blurb: 'Timed rapid-fire round', tags: 'game sprint timed mcq quiz' },
+  { href: '/games/pairs', label: 'Match Pairs', blurb: 'Match terms to meanings', tags: 'game pairs match term definition memory' },
+  { href: '/games/cloze', label: 'Cloze Blanks', blurb: 'Fill the missing words', tags: 'game cloze fill blank explanation' },
+  { href: '/games/blitz', label: 'Survival Blitz', blurb: 'Survive the streak', tags: 'game blitz survival streak hearts mcq quiz' },
+  { href: '/games/odd', label: 'Odd One Out', blurb: 'Spot the intruder', tags: 'game odd intruder terms discrimination' },
+  { href: '/games/boss', label: 'Boss Battle', blurb: 'Battle the boss', tags: 'game boss battle fight hp monster mcq quiz' },
+  { href: '/games/typing', label: 'Typing Rush', blurb: 'Type terms, fast', tags: 'game typing rush keyboard speed terms' },
+  { href: '/races', label: 'Races', blurb: 'Race live opponents', tags: 'race competition ghost live multiplayer' },
 ]
 
 // Perlego-style unified tabs. Books = PDFs + notes + theory.
@@ -91,6 +92,10 @@ export default function SearchPage() {
   const [selCourses, setSelCourses] = useState([])
   const [selUploaders, setSelUploaders] = useState([])
   const [sort, setSort] = useState('relevance')
+  // Scope: your level + department by default; Everything opts out.
+  const [scopeMode, setScopeMode] = useState('mine')
+  const [myDept, setMyDept] = useState('')
+  const [myLevel, setMyLevel] = useState('')
 
   useEffect(() => {
     fetchJson('/api/courses', { ttl: TTL.list }).then(d => setCourses(Array.isArray(d) ? d : (d.docs || d.courses || []))).catch(() => {})
@@ -106,6 +111,8 @@ export default function SearchPage() {
       const u = getUser()
       const lv = u?.level || ''
       if (lv) setLevelLabel(lv)
+      if (u?.department) setMyDept(u.department)
+      if (lv) setMyLevel(lv)
       const sp = new URLSearchParams(window.location.search)
       const mock = sp.get('mock') === '1'
       if (mock) setMockMode(true)
@@ -154,14 +161,23 @@ export default function SearchPage() {
     return out
   }, [results])
 
+  // Default view is your world only: level + department. An explicit
+  // course code in the query ("law 101") or the Everything toggle opts out.
+  const scopeObj = useMemo(() => myScope(myDept, myLevel), [myDept, myLevel])
+  const askedToken = useMemo(() => queryCourseToken(q), [q])
+  const scoped = useMemo(() => {
+    if (scopeMode !== 'mine' || !scopeObj || scopeObj.mode === 'all') return allItems
+    return allItems.filter(i => inScopeOrAsked(i, scopeObj, askedToken))
+  }, [allItems, scopeMode, scopeObj, askedToken])
+
   const tabbed = useMemo(() => {
-    if (!tab) return allItems
+    if (!tab) return scoped
     // Books are readable documents only — theory Q&A and curated folders live elsewhere.
-    if (tab === 'books') return allItems.filter(i => ['notes', 'pdf'].includes(i.kind))
-    if (tab === 'qa') return allItems.filter(i => i.kind === 'theory')
-    if (tab === 'folders') return allItems.filter(i => i.kind === 'folder')
-    return allItems.filter(i => i.kind === tab)
-  }, [allItems, tab])
+    if (tab === 'books') return scoped.filter(i => ['notes', 'pdf'].includes(i.kind))
+    if (tab === 'qa') return scoped.filter(i => i.kind === 'theory')
+    if (tab === 'folders') return scoped.filter(i => i.kind === 'folder')
+    return scoped.filter(i => i.kind === tab)
+  }, [scoped, tab])
 
   const courseCounts = useMemo(() => {
     const m = new Map()
@@ -253,10 +269,20 @@ export default function SearchPage() {
     </div>
   )
 
-  const shelfEmpty = shelves && !shelves.videos?.length && !shelves.audio?.length && !shelves.pdf?.length && !shelves.text?.length && !shelves.quiz?.length
   // Shelf text mixes readable docs with theory Q&A — split them: questions are not books.
-  const shelfBooks = (shelves?.text || []).filter(t => t.source !== 'theory')
-  const shelfQa = (shelves?.text || []).filter(t => t.source === 'theory')
+  const shelfBooksAll = (shelves?.text || []).filter(t => t.source !== 'theory')
+  const shelfQaAll = (shelves?.text || []).filter(t => t.source === 'theory')
+  // Shelves never show other levels/departments — browsing stays in your
+  // world. Search-with-query and the Everything toggle are the way out.
+  const mineOnly = scopeMode === 'mine' && scopeObj && scopeObj.mode !== 'all'
+  const keepShelf = (i) => !mineOnly || inScopeOrAsked(i, scopeObj, null)
+  const shelfVideos = (shelves?.videos || []).filter(keepShelf)
+  const shelfAudio = (shelves?.audio || []).filter(keepShelf)
+  const shelfPdf = (shelves?.pdf || []).filter(keepShelf)
+  const shelfBooks = shelfBooksAll.filter(keepShelf)
+  const shelfQa = shelfQaAll.filter(keepShelf)
+  const shelfQuiz = (shelves?.quiz || []).filter(keepShelf)
+  const shelfScopedEmpty = !shelfVideos.length && !shelfAudio.length && !shelfPdf.length && !shelfBooks.length && !shelfQa.length && !shelfQuiz.length
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-4 px-4 pb-24 pt-6">
@@ -294,13 +320,30 @@ export default function SearchPage() {
         ))}
       </div>
 
-      {!needle && shelves && !shelfEmpty && (
+      {/* Scope: your level + department by default, Everything opts out */}
+      {scopeObj.mode !== 'all' && (
+        <div className="flex items-center gap-2">
+          <div className="flex max-w-full rounded-full border bg-card p-0.5 text-xs font-bold">
+            <button onClick={() => setScopeMode('mine')}
+              className={'max-w-36 truncate rounded-full px-3 py-1.5 ' + (scopeMode === 'mine' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground')}>
+              My {scopeObj.short}
+            </button>
+            <button onClick={() => setScopeMode('all')}
+              className={'shrink-0 rounded-full px-3 py-1.5 ' + (scopeMode === 'all' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground')}>
+              Everything
+            </button>
+          </div>
+          {scopeMode === 'mine' && !!needle && <span className="shrink-0 text-[11px] text-muted-foreground">in your courses</span>}
+        </div>
+      )}
+
+      {!needle && shelves && !shelfScopedEmpty && (
         <>
-          {!!(shelves.pdf?.length || shelfBooks.length) && (!tab || tab === 'books') && (
-            <Shelf title="Books" Icon={BookOpen} count={(shelves.pdf?.length || 0) + shelfBooks.length}>
+          {!!(shelfPdf.length || shelfBooks.length) && (!tab || tab === 'books') && (
+            <Shelf title="Books" Icon={BookOpen} count={shelfPdf.length + shelfBooks.length}>
               <Rail>
                 {(() => {
-                  const pdfs = (shelves.pdf || []).map(p => ({ ...p, kind: 'pdf' }))
+                  const pdfs = shelfPdf.map(p => ({ ...p, kind: 'pdf' }))
                   const texts = shelfBooks.map(t => ({ ...t, kind: 'text' }))
                   const mixed = []
                   const n = Math.max(pdfs.length, texts.length)
@@ -322,21 +365,21 @@ export default function SearchPage() {
             </Shelf>
           )}
 
-          {!!shelves.videos?.length && (!tab || tab === 'video') && (
-            <Shelf title="Videos" Icon={PlayCircle} count={shelves.videos.length}>
+          {!!shelfVideos.length && (!tab || tab === 'video') && (
+            <Shelf title="Videos" Icon={PlayCircle} count={shelfVideos.length}>
               <div className="space-y-3">
-                {shelves.videos.map(v => <VideoCard key={v.id} item={v} wide onOpen={setVideoModal} />)}
+                {shelfVideos.map(v => <VideoCard key={v.id} item={v} wide onOpen={setVideoModal} />)}
               </div>
             </Shelf>
           )}
 
-          {!!(shelves.pdf?.length || shelfBooks.length) && (!tab || tab === 'books') && (
+          {!!(shelfPdf.length || shelfBooks.length) && (!tab || tab === 'books') && (
             <section className="space-y-2">
               <h2 className="flex items-center gap-1.5 px-1 text-sm font-bold">
                 <BookOpen className="size-4 text-muted-foreground" /> More books
               </h2>
               <BookGrid items={(() => {
-                const pdfs = (shelves.pdf || []).map(p => ({ ...p, kind: 'pdf' }))
+                const pdfs = shelfPdf.map(p => ({ ...p, kind: 'pdf' }))
                 const texts = shelfBooks.map(t => ({ ...t, kind: 'text' }))
                 const mixed = []
                 const n = Math.max(pdfs.length, texts.length)
@@ -349,48 +392,54 @@ export default function SearchPage() {
             </section>
           )}
 
-          {!!shelves.audio?.length && (!tab || tab === 'audio') && (
-            <Shelf title="Audio" Icon={Headphones} count={shelves.audio.length}
+          {!!shelfAudio.length && (!tab || tab === 'audio') && (
+            <Shelf title="Audio" Icon={Headphones} count={shelfAudio.length}
               expanded={expanded === 'audio'} onSeeAll={() => setExpanded(expanded === 'audio' ? null : 'audio')}>
               {expanded === 'audio' ? (
-                <div className="divide-y divide-border">{shelves.audio.map(a => <AudioRow key={a.id} item={a} />)}</div>
+                <div className="divide-y divide-border">{shelfAudio.map(a => <AudioRow key={a.id} item={a} />)}</div>
               ) : (
-                <Rail>{shelves.audio.slice(0, 8).map(a => <AudioTile key={a.id} item={a} />)}</Rail>
+                <Rail>{shelfAudio.slice(0, 8).map(a => <AudioTile key={a.id} item={a} />)}</Rail>
               )}
             </Shelf>
           )}
 
-          {!!shelves.quiz?.length && (!tab || tab === 'quiz') && (
-            <Shelf title="Quizzes" Icon={ClipboardList} count={shelves.quiz.length}
+          {!!shelfQuiz.length && (!tab || tab === 'quiz') && (
+            <Shelf title="Quizzes" Icon={ClipboardList} count={shelfQuiz.length}
               expanded={expanded === 'quiz'} onSeeAll={() => setExpanded(expanded === 'quiz' ? null : 'quiz')}>
-              {(expanded === 'quiz' ? shelves.quiz : shelves.quiz.slice(0, 4)).map(g => <QuizCard key={g.id} item={g} />)}
+              {(expanded === 'quiz' ? shelfQuiz : shelfQuiz.slice(0, 4)).map(g => <QuizCard key={g.id} item={g} />)}
             </Shelf>
           )}
 
           {!tab && (
-            <Shelf title="Games" Icon={PlayCircle}>
+            <Shelf title="Games" Icon={Gamepad2}>
               <Rail>
-                {GAMES.slice(0, 8).map(g => (
-                  <Link key={g.href} href={g.href} className="flex w-40 shrink-0 snap-start flex-col gap-2 rounded-2xl bg-violet-600 p-4 text-white">
-                    <span className="text-2xl">🎮</span>
-                    <span className="line-clamp-2 text-sm font-bold leading-snug">{g.label}</span>
-                  </Link>
-                ))}
+                {GAMES.slice(0, 8).map(g => <GameTile key={g.href} game={g} />)}
               </Rail>
             </Shelf>
           )}
         </>
       )}
 
-      {!needle && (!shelves || shelfEmpty) && (
-        <div className="rounded-2xl border border-dashed p-6 text-center">
-          <p className="text-sm font-bold">Your library is filling up</p>
-          <p className="mt-1 text-xs text-muted-foreground">Uploads from everyone appear here automatically. Add the first file from My Files.</p>
-          <div className="mt-3 flex items-center justify-center gap-2">
-            <Link href="/folders" className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">Open My Files</Link>
-            <Link href="/search?mock=1" className="rounded-xl border px-4 py-2 text-xs font-bold">Preview sample shelves</Link>
+      {!needle && (!shelves || shelfScopedEmpty) && (
+        mineOnly ? (
+          <div className="rounded-2xl border border-dashed p-6 text-center">
+            <p className="text-sm font-bold">Nothing for {scopeObj.label} yet</p>
+            <p className="mt-1 text-xs text-muted-foreground">New uploads for your courses will appear here automatically.</p>
+            <button onClick={() => setScopeMode('all')} className="mt-3 rounded-xl border px-4 py-2 text-xs font-bold">Browse everything</button>
           </div>
-        </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed p-6 text-center">
+            <p className="text-sm font-bold">Your library is filling up</p>
+            <p className="mt-1 text-xs text-muted-foreground">Uploads from everyone appear here automatically. Add the first file from My Files.</p>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+              <Link href="/folders" className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">Open My Files</Link>
+              <Link href="/search?mock=1" className="rounded-xl border px-4 py-2 text-xs font-bold">Preview sample shelves</Link>
+              {(!myDept || !myLevel) && (
+                <Link href="/profile/settings" className="rounded-xl border border-primary/40 px-4 py-2 text-xs font-bold text-primary">Set department & level</Link>
+              )}
+            </div>
+          </div>
+        )
       )}
 
       {!!needle && needle.length >= 2 && (
@@ -401,9 +450,16 @@ export default function SearchPage() {
           <div className="min-w-0 space-y-5">
             {searching && !results && <p className="text-sm text-muted-foreground">Searching study content…</p>}
             {results && filtered.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                No matches{q ? ` for “${q}”` : ''}{tab ? ` in ${TABS.find(t => t.id === tab)?.label}` : ''}{selCourses.length + selUploaders.length > 0 ? ' with these filters' : ''}. Try clearing a filter.
-              </p>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  No matches{q ? ` for “${q}”` : ''}{tab ? ` in ${TABS.find(t => t.id === tab)?.label}` : ''}{mineOnly ? ' in your courses' : ''}{selCourses.length + selUploaders.length > 0 ? ' with these filters' : ''}. Try clearing a filter.
+                </p>
+                {mineOnly && allItems.length > 0 && (
+                  <button onClick={() => setScopeMode('all')} className="rounded-xl border px-4 py-2 text-xs font-bold">
+                    Search everything instead
+                  </button>
+                )}
+              </div>
             )}
 
             {!!books.length && (
@@ -421,9 +477,15 @@ export default function SearchPage() {
                   <ClipboardList className="size-4 text-muted-foreground" /> Q&amp;A
                   <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{qas.length}</span>
                 </h2>
-                <div className="divide-y divide-border rounded-2xl border">
-                  {qas.map(item => <QaRow key={item.id} item={item} />)}
-                </div>
+                {tab === 'qa' ? (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {qas.map(item => <QaGridCard key={item.id} item={item} />)}
+                  </div>
+                ) : (
+                  <div className="divide-y divide-border rounded-2xl border">
+                    {qas.map(item => <QaRow key={item.id} item={item} />)}
+                  </div>
+                )}
               </section>
             )}
             {!!folderHits.length && (
@@ -492,8 +554,15 @@ export default function SearchPage() {
                   <section className="space-y-2">
                     <h2 className="px-1 text-sm font-bold">Games</h2>
                     {hitGames.map(g => (
-                      <Link key={g.href} href={g.href} className="block rounded-xl border bg-card p-3 text-sm hover:bg-muted">
-                        <span className="font-semibold">🎮 {g.label}</span>
+                      <Link key={g.href} href={g.href} className="flex items-center gap-3 rounded-xl border bg-card p-3 transition-colors hover:bg-muted/40">
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted">
+                          <Gamepad2 className="size-5 text-foreground" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-sm font-semibold">{g.label}</span>
+                          <span className="block truncate text-[11px] text-muted-foreground">{g.blurb}</span>
+                        </span>
+                        <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
                       </Link>
                     ))}
                   </section>
@@ -545,33 +614,187 @@ function FolderCard({ item }) {
   )
 }
 
-function RailQaCard({ item }) {
-  const href = qaHref(item)
-  const body = (
-    <>
-      <span className="line-clamp-3 block text-xs font-bold leading-snug">{item.question || item.title}</span>
-      <span className="block truncate text-[11px] text-muted-foreground">{item.courseCode || 'Q&A'}</span>
-    </>
-  )
+function GameTile({ game }) {
   return (
-    <div className="w-56 shrink-0 snap-start space-y-1.5 rounded-2xl border bg-card p-3">
-      {href ? <Link href={href} className="block space-y-1.5">{body}</Link> : <div className="space-y-1.5">{body}</div>}
-      <SaveToFolder payload={savePayload(item, 'theory')} />
+    <Link href={game.href} className="flex w-44 shrink-0 snap-start flex-col rounded-2xl border bg-card p-3.5 transition-colors hover:bg-muted/40">
+      <span className="flex size-10 items-center justify-center rounded-xl bg-muted">
+        <Gamepad2 className="size-5 text-foreground" />
+      </span>
+      <span className="mt-2.5 line-clamp-2 text-[13px] font-bold leading-snug">{game.label}</span>
+      <span className="mt-0.5 truncate text-[11px] text-muted-foreground">{game.blurb}</span>
+      <span className="mt-2 flex items-center gap-0.5 text-[11px] font-bold text-primary">
+        Play <ChevronRight className="size-3.5" />
+      </span>
+    </Link>
+  )
+}
+
+function RailQaCard({ item }) {
+  const [flipped, setFlipped] = useState(false)
+  const href = qaHref(item)
+  const answer = item.answer || null
+  const concepts = Array.isArray(item.concepts) ? item.concepts : []
+  const canFlip = !!(answer || concepts.length)
+  return (
+    <div className="flex w-56 shrink-0 snap-start flex-col rounded-2xl border bg-card p-3.5">
+      <div
+        onClick={() => canFlip && setFlipped(f => !f)}
+        className={`relative w-full ${canFlip ? 'cursor-pointer' : ''}`}
+        style={{ perspective: '1000px' }}>
+        <div
+          className="relative w-full transition-transform duration-500"
+          style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)', minHeight: '9.5rem' }}>
+          {/* Front — question */}
+          <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
+            {item.courseCode && <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode}</span>}
+            <span className="line-clamp-4 block flex-1 text-[13px] font-medium leading-relaxed">{item.question || item.title}</span>
+            {!!metaOf(item) && <span className="block truncate text-[11px] text-muted-foreground">{metaOf(item)}</span>}
+          </div>
+          {/* Back — model answer */}
+          <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+            <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-600">Model answer</span>
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              {answer
+                ? <span className="block text-[13px] leading-relaxed text-muted-foreground">{answer}</span>
+                : (
+                  <ul className="list-disc space-y-1 pl-4 text-[13px] leading-relaxed text-muted-foreground">
+                    {concepts.map((c, i) => <li key={i}>{c}</li>)}
+                  </ul>
+                )}
+            </div>
+            {href && (
+              <Link href={href} onClick={e => e.stopPropagation()} className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-primary">
+                Full answer <ChevronRight className="size-3" />
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+      <span className="mt-2.5 flex items-center gap-2 border-t pt-2" onClick={e => e.stopPropagation()}>
+        <span className="flex-1 truncate text-[11px] font-semibold text-muted-foreground">
+          {canFlip ? (flipped ? 'Tap to hide' : 'Tap to reveal') : (item.courseCode || 'Q&A')}
+        </span>
+        <SaveToFolder payload={savePayload(item, 'theory')} />
+      </span>
+    </div>
+  )
+}
+
+// "GSS 212 · Theory · medium" → eyebrow keeps the course, meta keeps the rest.
+function metaOf(item) {
+  const parts = String(item.subtitle || '').split('·').map(s => s.trim()).filter(Boolean)
+  const rest = parts.filter(p => p !== (item.courseCode || '').trim())
+  return rest.join(' · ')
+}
+
+// Big flip card for the Q&A tab: room to breathe, question front,
+// model answer back. Same data as the rows, more presence.
+function QaGridCard({ item }) {
+  const [flipped, setFlipped] = useState(false)
+  const href = qaHref(item)
+  const answer = item.answer || null
+  const concepts = Array.isArray(item.concepts) ? item.concepts : []
+  const canFlip = !!(answer || concepts.length)
+  return (
+    <div className="flex min-h-48 flex-col rounded-2xl border bg-card p-5 shadow-sm">
+      <div
+        onClick={() => canFlip && setFlipped(f => !f)}
+        className={`relative w-full flex-1 ${canFlip ? 'cursor-pointer' : ''}`}
+        style={{ perspective: '1000px' }}>
+        <div
+          className="relative w-full transition-transform duration-500"
+          style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)', minHeight: '11rem' }}>
+          {/* Front — question */}
+          <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
+            <div className="flex items-center gap-2">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted font-serif text-base italic text-muted-foreground">Q</span>
+              {item.courseCode && <span className="truncate text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode}</span>}
+            </div>
+            <p className="line-clamp-5 flex flex-1 items-center py-3 text-[15px] font-medium leading-relaxed">{item.question || item.title}</p>
+            {!!metaOf(item) && <p className="shrink-0 truncate text-[11px] text-muted-foreground">{metaOf(item)}</p>}
+          </div>
+          {/* Back — model answer */}
+          <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-emerald-600">Model answer</span>
+            <div className="min-h-0 flex-1 overflow-y-auto py-2">
+              {answer
+                ? <p className="text-sm leading-relaxed text-muted-foreground">{answer}</p>
+                : (
+                  <ul className="list-disc space-y-1 pl-4 text-sm leading-relaxed text-muted-foreground">
+                    {concepts.map((c, i) => <li key={i}>{c}</li>)}
+                  </ul>
+                )}
+            </div>
+            {href && (
+              <Link href={href} onClick={e => e.stopPropagation()} className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-primary">
+                Study the full answer <ChevronRight className="size-3" />
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+      <span className="mt-3 flex items-center gap-2 border-t pt-2.5" onClick={e => e.stopPropagation()}>
+        <span className="flex-1 truncate text-[11px] font-semibold text-muted-foreground">
+          {canFlip ? (flipped ? 'Tap to hide' : 'Tap to reveal answer') : 'Q&A'}
+        </span>
+        <SaveToFolder payload={savePayload(item, 'theory')} />
+      </span>
     </div>
   )
 }
 
 function QaRow({ item }) {
+  const [open, setOpen] = useState(false)
   const href = qaHref(item)
+  const text = item.question || item.title
+  const meta = metaOf(item)
+  const answer = item.answer || null
+  const concepts = Array.isArray(item.concepts) ? item.concepts : []
+  const canFlip = !!(answer || concepts.length)
   return (
-    <div className="flex items-center gap-2.5 px-3 py-2.5">
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-violet-500/15 text-sm font-black text-violet-500">?</span>
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold">{item.question || item.title}</span>
-        <span className="block truncate text-[11px] text-muted-foreground">{item.courseCode || 'Q&A'}</span>
-      </span>
-      {href && <Link href={href} className="shrink-0 text-[11px] font-bold text-primary">Open</Link>}
-      <SaveToFolder payload={savePayload(item, 'theory')} />
+    <div className="group px-4 py-3.5 transition-colors hover:bg-muted/50">
+      <div className="flex items-start gap-2">
+        <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md bg-muted font-serif text-sm italic text-muted-foreground">Q</span>
+        <button
+          onClick={() => canFlip && setOpen(o => !o)}
+          aria-expanded={open}
+          className={`min-w-0 flex-1 text-left ${canFlip ? 'cursor-pointer' : 'cursor-default'}`}>
+          {item.courseCode && <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode}</span>}
+          <span className={`mt-0.5 block text-sm font-medium leading-relaxed ${open ? '' : 'line-clamp-2'}`}>{text}</span>
+          {!!meta && <span className="mt-1 block truncate text-[11px] text-muted-foreground">{meta}</span>}
+          {canFlip && (
+            <span className="mt-1.5 inline-flex items-center gap-0.5 text-[11px] font-bold text-primary">
+              {open ? 'Hide answer' : 'Tap to reveal answer'}
+              <ChevronDown className={`size-3 transition-transform ${open ? 'rotate-180' : ''}`} />
+            </span>
+          )}
+        </button>
+        <span className="flex shrink-0 items-center gap-0.5 pt-0.5">
+          <SaveToFolder payload={savePayload(item, 'theory')} />
+          {href && (
+            <Link href={href} aria-label="Open" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <ChevronRight className="size-4" />
+            </Link>
+          )}
+        </span>
+      </div>
+      {open && canFlip && (
+        <div className="ml-8 mt-2.5 rounded-xl border-l-2 border-l-emerald-500 bg-muted/40 p-3">
+          <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-emerald-600">Model answer</p>
+          {answer
+            ? <p className="text-[13px] leading-relaxed text-muted-foreground">{answer}</p>
+            : (
+              <ul className="list-disc space-y-1 pl-4 text-[13px] leading-relaxed text-muted-foreground">
+                {concepts.map((c, i) => <li key={i}>{c}</li>)}
+              </ul>
+            )}
+          {href && (
+            <Link href={href} className="mt-1.5 inline-flex items-center gap-0.5 text-[11px] font-bold text-primary">
+              Study the full answer <ChevronRight className="size-3" />
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -687,16 +910,25 @@ function AudioRow({ item }) {
 }
 
 function QuizCard({ item }) {
+  const meta = metaOf(item)
   return (
-    <div className="flex items-center gap-3 rounded-2xl bg-amber-500 p-4 text-white">
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-[15px] font-extrabold">{item.title}</span>
-        <span className="block text-xs text-white/80">{item.subtitle}</span>
-      </span>
-      <SaveToFolder payload={savePayload(item, 'quiz')} />
-      <Link href={item.href} className="shrink-0 rounded-xl bg-white px-4 py-2 text-xs font-extrabold text-amber-600">
-        Start
-      </Link>
+    <div className="rounded-2xl border bg-card p-4 transition-colors hover:bg-muted/40">
+      <div className="flex items-start gap-3">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/15">
+          <ClipboardList className="size-5 text-amber-600" />
+        </span>
+        <span className="min-w-0 flex-1">
+          {item.courseCode && <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode} · Quiz</span>}
+          <span className="mt-0.5 line-clamp-2 block text-sm font-medium leading-relaxed">{item.title}</span>
+          {!!(meta || item.subtitle) && <span className="mt-1 block truncate text-[11px] text-muted-foreground">{meta || item.subtitle}</span>}
+        </span>
+      </div>
+      <div className="mt-3 flex items-center gap-2 border-t pt-3">
+        <Link href={item.href} className="flex-1 rounded-xl bg-amber-600 py-2 text-center text-xs font-bold text-white transition-colors hover:bg-amber-700">
+          Start quiz
+        </Link>
+        <SaveToFolder payload={savePayload(item, 'quiz')} />
+      </div>
     </div>
   )
 }

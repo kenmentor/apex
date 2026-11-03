@@ -13,6 +13,7 @@ const PRECACHE = [
   '/auth',
   '/notifications',
   '/manifest.json',
+  '/audio-capture.worklet.js',
   '/icon-192.png',
   '/icon-512.png',
   '/just-logo.png',

@@ -1,4 +1,6 @@
 let cachedSessionId = null
+let muted = false
+let failures = 0
 
 export function getOrCreateSessionId() {
   if (cachedSessionId) return cachedSessionId
@@ -20,7 +22,22 @@ export function getPwaStatus() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 }
 
+function sendBlind(body) {
+  try {
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/analytics', new Blob([body], { type: 'application/json' }))
+      return
+    }
+  } catch {}
+  try {
+    fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
+  } catch {}
+}
+
 export function trackEvent(event, data = {}) {
+  // Session circuit breaker: a failing endpoint must not loop forever —
+  // console spam and battery drain, especially mid-lecture.
+  if (muted) return
   try {
     const sessionId = getOrCreateSessionId()
     const payload = {
@@ -28,10 +45,20 @@ export function trackEvent(event, data = {}) {
       data: { ...data, sessionId, isPwa: getPwaStatus(), path: window.location.pathname },
     }
     const body = JSON.stringify(payload)
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon('/api/analytics', new Blob([body], { type: 'application/json' }))
-    } else {
-      fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
-    }
+    fetch('/api/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: true,
+    }).then(
+      (res) => {
+        if (res.ok) failures = 0
+        else if (++failures >= 3) muted = true
+      },
+      () => {
+        // Offline / unreachable: fall back to blind beacon, don't count it.
+        sendBlind(body)
+      }
+    ).catch(() => {})
   } catch {}
 }
