@@ -29,14 +29,23 @@ export async function POST(request) {
     }
     const col = await getCollection('readings')
     const now = new Date().toISOString()
+    const me = String(user.email).toLowerCase()
+    const references = (Array.isArray(body.references) ? body.references : String(body.references || '').split(/[,\n]/))
+      .map(r => typeof r === 'string' ? r.trim() : String(r?.url || '').trim())
+      .filter(Boolean).slice(0, 10)
+      .map(url => ({ label: url.slice(0, 80), url: url.slice(0, 1000) }))
+    const changeNote = String(body.changeNote || '').trim().slice(0, 500) || null
     const res = await col.insertOne({
       courseCode, title, content,
       // Pending until a general admin approves it in review.
       status: 'pending',
       reviewedBy: null,
       reviewedAt: null,
+      changeNote,
+      references,
+      versions: [{ v: 1, at: now, by: me, note: changeNote ? `Submitted: ${changeNote}` : 'Submitted for review' }],
       source: 'contributor',
-      authorEmail: String(user.email).toLowerCase(),
+      authorEmail: me,
       createdAt: now, updatedAt: now,
     })
     notifyAdmins({

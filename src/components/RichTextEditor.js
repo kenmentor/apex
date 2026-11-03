@@ -48,6 +48,9 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
   const [imgTab, setImgTab] = useState(null) // 'folder' | 'library' | null
   const [uploading, setUploading] = useState(false)
   const fileRef = useRef(null)
+  const editorRef = useRef(null)
+  const onChangeRef = useRef(onChange)
+  onChangeRef.current = onChange
 
   const editor = useEditor({
     extensions: [StarterKit.configure({ heading: { levels: [2, 3] } }), CustomImage],
@@ -60,9 +63,27 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
           : 'min-h-48 max-h-[45dvh] overflow-y-auto rounded-xl border bg-background px-3 py-2 text-sm outline-none focus:border-primary prose-sm dark:prose-invert [&_h2]:text-base [&_h2]:font-extrabold [&_h3]:text-sm [&_h3]:font-bold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-2 [&_blockquote]:border-primary/40 [&_blockquote]:pl-3 [&_blockquote]:text-muted-foreground [&_img]:rounded-xl [&_img]:my-2 [&_img]:max-w-full',
         'data-placeholder': placeholder,
       },
+      handlePaste: (view, event) => {
+        const files = [...(event.clipboardData?.files || [])].filter(f => /^image\//.test(f.type || ''))
+        if (!files.length) return false
+        event.preventDefault()
+        uploadFilesAndInsert(files)
+        return true
+      },
+      handleDrop: (view, event) => {
+        const files = [...(event.dataTransfer?.files || [])].filter(f => /^image\//.test(f.type || ''))
+        if (!files.length) return false
+        event.preventDefault()
+        uploadFilesAndInsert(files)
+        return true
+      },
     },
-    onUpdate: ({ editor }) => onChange?.(editor.getHTML()),
+    onUpdate: ({ editor }) => onChangeRef.current?.(editor.getHTML()),
   })
+
+  useEffect(() => {
+    editorRef.current = editor || null
+  }, [editor])
 
   useEffect(() => {
     if (editor && value !== undefined && editor.getHTML() !== value && !editor.isFocused) {
@@ -72,21 +93,38 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
   }, [value])
 
   function insertImage(url, alt) {
-    if (!url || !editor) return
-    editor.chain().focus().setImage({ src: url, alt: alt || null })
-    onChange?.(editor.getHTML())
+    const ed = editorRef.current || editor
+    if (!url || !ed) return
+    ed.chain().focus().setImage({ src: url, alt: alt || null }).run()
+    onChangeRef.current?.(ed.getHTML())
+  }
+
+  async function uploadFilesAndInsert(files) {
+    const imgs = (files || []).filter(f => /^image\//.test(f.type || ''))
+    const ed = editorRef.current || editor
+    if (!imgs.length || !ed) return false
+    setUploading(true)
+    try {
+      for (const file of imgs.slice(0, 5)) {
+        const up = await uploadFile(file, { folder: 'gss-quiz/notes', getToken })
+        if (up?.url) {
+          ed.chain().focus().setImage({ src: up.url, alt: file.name || null }).run()
+        }
+      }
+      onChangeRef.current?.(ed.getHTML())
+      return true
+    } catch {
+      return false
+    } finally {
+      setUploading(false)
+    }
   }
 
   async function uploadAndInsert(e) {
     const file = e.target.files?.[0]
     if (fileRef.current) fileRef.current.value = ''
-    if (!file || !editor) return
-    setUploading(true)
-    try {
-      const up = await uploadFile(file, { folder: 'gss-quiz/notes', getToken })
-      if (up?.url) insertImage(up.url, file.name)
-    } catch {}
-    finally { setUploading(false) }
+    if (!file) return
+    await uploadFilesAndInsert([file])
   }
 
   if (!editor) {
@@ -113,7 +151,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
           className={btn(editor.isActive('orderedList'))}><ListOrdered className="size-4" /></button>
         <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} aria-label="Quote"
           className={btn(editor.isActive('quote'))}><Quote className="size-4" /></button>
-        <button type="button" onClick={() => { editor.chain().focus().insertContent('\\(x^2\\) ') }} aria-label="Insert math" title="Insert math \(...\)"
+        <button type="button" onClick={() => { editor.chain().focus().insertContent('\\(x^2\\) ').run() }} aria-label="Insert math" title="Insert math \(...\)"
           className={btn(false)}><Sigma className="size-4" /></button>
         <span className="mx-0.5 h-5 w-px bg-border" />
         <button type="button" onClick={() => setImgOpen(true)} aria-label="Add image" title="Add image"

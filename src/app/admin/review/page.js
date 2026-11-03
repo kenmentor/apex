@@ -4,10 +4,14 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getToken, isAdmin } from '@/lib/auth'
-import { ArrowLeft, Check, X, GitMerge, History, Inbox, AlertTriangle, ExternalLink, FileText, HelpCircle, Music, PlayCircle, Image as ImageIcon, Mic } from 'lucide-react'
+import { ArrowLeft, Check, X, GitMerge, History, ExternalLink, FileText, HelpCircle, Music, PlayCircle, Image as ImageIcon, Mic, Pencil, RotateCcw } from 'lucide-react'
+import { motion } from 'motion/react'
+import TikTokTabs from '@/components/TikTokTabs'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+
+const ORDER = ['pending', 'conflicts', 'suggest', 'recent']
 
 function getAuthHeaders() {
   const token = getToken()
@@ -93,6 +97,23 @@ export default function ReviewPage() {
   const [busy, setBusy] = useState('')
   const [keepMap, setKeepMap] = useState({})
   const [error, setError] = useState('')
+  const [expanded, setExpanded] = useState({})
+  const [rejectFor, setRejectFor] = useState(null)
+  const [rejectNote, setRejectNote] = useState('')
+  const [dir, setDir] = useState(1)
+
+  const toggle = (key) => setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
+
+  function goTab(v) {
+    setDir(ORDER.indexOf(v) >= ORDER.indexOf(tab) ? 1 : -1)
+    setTab(v)
+  }
+
+  function stepTab(d) {
+    const i = ORDER.indexOf(tab)
+    const n = Math.min(ORDER.length - 1, Math.max(0, i + d))
+    if (ORDER[n] !== tab) goTab(ORDER[n])
+  }
 
   async function load() {
     setLoading(true)
@@ -111,12 +132,27 @@ export default function ReviewPage() {
     load()
   }, [])
 
-  async function act(collection, id, action) {
+  async function act(collection, id, action, extra = {}) {
     setBusy(`${collection}:${id}:${action}`)
     try {
-      const res = await fetch('/api/admin/review', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify({ collection, id, action }) })
+      const res = await fetch('/api/admin/review', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify({ collection, id, action, ...extra }) })
       const d = await res.json()
       if (!res.ok) throw new Error(d.error || 'Action failed')
+      setRejectFor(null)
+      setRejectNote('')
+      await load()
+    } catch (e) { setError(e.message) }
+    finally { setBusy('') }
+  }
+
+  async function suggestAct(s, action) {
+    setBusy(`suggestions:${s.id}:${action}`)
+    try {
+      const res = await fetch('/api/admin/review', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify({ action: action === 'approve' ? 'suggest-approve' : 'suggest-reject', suggestionId: s.id, note: action === 'reject' ? rejectNote : '' }) })
+      const d = await res.json()
+      if (!res.ok) throw new Error(d.error || 'Action failed')
+      setRejectFor(null)
+      setRejectNote('')
       await load()
     } catch (e) { setError(e.message) }
     finally { setBusy('') }
@@ -139,6 +175,34 @@ export default function ReviewPage() {
   const pending = data?.pending || []
   const conflicts = data?.conflicts || []
   const recent = data?.recent || []
+  const suggestions = data?.suggestions || []
+
+  function HistoryBlock({ item }) {
+    if (!item.hasHistory || !item.versions?.length) return null
+    const key = `h:${item.collection}:${item.id}`
+    return (
+      <div className="mt-2 rounded-xl bg-muted/40 p-2">
+        <button onClick={() => toggle(key)} className="flex w-full items-center gap-1.5 text-[11px] font-bold text-muted-foreground">
+          <History className="size-3.5" /> Version history ({item.versions.length})
+        </button>
+        {expanded[key] && (
+          <div className="mt-1.5 space-y-1.5">
+            {[...item.versions].reverse().map(v => (
+              <div key={v.v} className="flex items-center gap-2 rounded-lg bg-background px-2 py-1.5 text-[11px]">
+                <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 font-black">v{v.v}</span>
+                <span className="min-w-0 flex-1 truncate">{v.note || '—'}{v.by ? ` · ${v.by}` : ''}{v.at ? ` · ${timeAgo(v.at)}` : ''}</span>
+                {v.hasSnapshot && (
+                  <button disabled={!!busy} onClick={() => act(item.collection, item.id, 'revert', { versionIndex: v.idx })} title="Restore this version" className="flex shrink-0 items-center gap-1 rounded-md border px-1.5 py-0.5 text-[10px] font-bold text-amber-600 disabled:opacity-50">
+                    <RotateCcw className="size-3" /> Revert
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-4 px-4 pb-28 pt-4">
@@ -150,20 +214,42 @@ export default function ReviewPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
-        {[
-          { id: 'pending', label: `Pending (${pending.length})`, icon: Inbox },
-          { id: 'conflicts', label: `Conflicts (${conflicts.length})`, icon: AlertTriangle },
-          { id: 'recent', label: 'Recent', icon: History },
-        ].map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} className={`flex items-center justify-center gap-1 rounded-lg py-1.5 text-xs font-black ${tab === t.id ? 'bg-background shadow' : 'text-muted-foreground'}`}>
-            <t.icon className="size-3.5" />{t.label}
-          </button>
-        ))}
+      <div className="border-b">
+        <TikTokTabs
+          tabs={[
+            { id: 'pending', label: 'Pending', count: pending.length },
+            { id: 'conflicts', label: 'Conflicts', count: conflicts.length },
+            { id: 'suggest', label: 'Edits', count: suggestions.length },
+            { id: 'recent', label: 'Recent' },
+          ]}
+          active={tab}
+          onChange={goTab}
+        />
       </div>
+      {(() => {
+        const bits = []
+        if (pending.length) bits.push(`${pending.length} waiting`)
+        if (conflicts.length) bits.push(`${conflicts.length} conflict${conflicts.length === 1 ? '' : 's'}`)
+        if (suggestions.length) bits.push(`${suggestions.length} suggested edit${suggestions.length === 1 ? '' : 's'}`)
+        if (!bits.length) return null
+        return <p className="px-1 text-center text-[11px] font-semibold text-muted-foreground">{bits.join(' · ')}</p>
+      })()}
 
       {error && <p className="rounded-xl bg-red-500/10 px-3 py-2 text-xs font-semibold text-red-500">{error}</p>}
 
+      <motion.div
+        key={tab}
+        initial={{ opacity: 0, x: 48 * dir }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.5}
+        onDragEnd={(_, info) => {
+          if (info.offset.x < -80) stepTab(1)
+          else if (info.offset.x > 80) stepTab(-1)
+        }}
+      >
       {loading ? (
         <div className="space-y-2">{[1, 2, 3].map(i => <Skeleton key={i} className="h-28 w-full rounded-2xl" />)}</div>
       ) : tab === 'pending' ? (
@@ -195,14 +281,38 @@ export default function ReviewPage() {
                   <div className="mt-3 rounded-xl bg-muted/40 p-3">
                     <Preview item={item} />
                   </div>
-                  <div className="mt-3 grid grid-cols-2 gap-2">
-                    <Button size="sm" variant="outline" disabled={!!busy} onClick={() => act(item.collection, item.id, 'reject')} className="text-red-500">
-                      {busy === bkey + ':reject' ? '…' : <><X className="mr-1 size-3.5" /> Reject</>}
-                    </Button>
-                    <Button size="sm" disabled={!!busy} onClick={() => act(item.collection, item.id, 'approve')} className="bg-green-600 hover:bg-green-700">
-                      {busy === bkey + ':approve' ? '…' : <><Check className="mr-1 size-3.5" /> Approve</>}
-                    </Button>
-                  </div>
+                  {item.changeNote && <p className="mt-2 text-[11px] text-muted-foreground"><span className="font-bold text-foreground">Contributor note: </span>{item.changeNote}</p>}
+                  {!!item.references?.length && (
+                    <div className="mt-1.5 flex flex-wrap gap-1">
+                      {item.references.map((r, i) => (
+                        <a key={i} href={r.url} target="_blank" rel="noreferrer" className="max-w-full truncate rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold text-primary">↗ {r.label || r.url}</a>
+                      ))}
+                    </div>
+                  )}
+                  {!!item.attachments?.length && (
+                    <p className="mt-1.5 text-[11px] text-muted-foreground">📎 {item.attachments.map(a => a.name).join(', ')}</p>
+                  )}
+                  <HistoryBlock item={item} />
+                  {rejectFor === bkey ? (
+                    <div className="mt-3 space-y-1.5">
+                      <input value={rejectNote} onChange={e => setRejectNote(e.target.value)} placeholder="Reason (sent to the contributor)…" className="w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" autoFocus />
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button size="sm" variant="outline" disabled={!!busy} onClick={() => { setRejectFor(null); setRejectNote('') }}>Cancel</Button>
+                        <Button size="sm" disabled={!!busy} onClick={() => act(item.collection, item.id, 'reject', { note: rejectNote })} className="bg-red-600 hover:bg-red-700">
+                          {busy === bkey + ':reject' ? '…' : 'Confirm reject'}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      <Button size="sm" variant="outline" disabled={!!busy} onClick={() => setRejectFor(bkey)} className="text-red-500">
+                        <X className="mr-1 size-3.5" /> Reject
+                      </Button>
+                      <Button size="sm" disabled={!!busy} onClick={() => act(item.collection, item.id, 'approve')} className="bg-green-600 hover:bg-green-700">
+                        {busy === bkey + ':approve' ? '…' : <><Check className="mr-1 size-3.5" /> Approve</>}
+                      </Button>
+                    </div>
+                  )}
                 </Card>
               );
             })}
@@ -262,6 +372,67 @@ export default function ReviewPage() {
             ))}
           </div>
         )
+      ) : tab === 'suggest' ? (
+        suggestions.length === 0 ? (
+          <div className="rounded-2xl border border-dashed p-8 text-center">
+            <p className="text-2xl">✏️</p>
+            <p className="mt-2 text-sm font-bold">No suggested edits</p>
+            <p className="text-xs text-muted-foreground">Learner-proposed fixes will land here for review.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {suggestions.map(s => {
+              const bkey = `suggestions:${s.id}`
+              return (
+                <Card key={bkey} className="p-4">
+                  <div className="flex items-center gap-2">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-muted"><Pencil className="size-4 text-muted-foreground" /></span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold">{s.title}</p>
+                      <p className="truncate text-[11px] text-muted-foreground">{[s.courseCode, s.topic, s.author ? `by ${s.author}` : null, timeAgo(s.createdAt)].filter(Boolean).join(' · ')}</p>
+                    </div>
+                    <StatusBadge status={s.status} />
+                  </div>
+                  <p className="mt-2 rounded-xl bg-muted/40 px-3 py-2 text-xs"><span className="font-bold">Why: </span>{s.preview?.note || '—'}</p>
+                  {!!s.preview?.references?.length && (
+                    <div className="mt-1.5 flex flex-wrap gap-1">
+                      {s.preview.references.map((r, i) => (
+                        <a key={i} href={r.url} target="_blank" rel="noreferrer" className="max-w-full truncate rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold text-primary">↗ {r.label || r.url}</a>
+                      ))}
+                    </div>
+                  )}
+                  <div className="mt-2 space-y-1.5">
+                    {(s.preview?.diffs || []).map((d, i) => (
+                      <div key={i} className="overflow-hidden rounded-xl border text-xs">
+                        <p className="bg-muted/60 px-2.5 py-1 font-black uppercase tracking-wide text-[10px] text-muted-foreground">{d.key}</p>
+                        <p className="px-2.5 py-1.5 text-muted-foreground line-through decoration-red-300">{d.from || '(empty)'}</p>
+                        <p className="border-t bg-green-500/5 px-2.5 py-1.5 font-medium text-green-700 dark:text-green-400">{d.to || '(empty)'}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {rejectFor === bkey ? (
+                    <div className="mt-3 space-y-1.5">
+                      <input value={rejectNote} onChange={e => setRejectNote(e.target.value)} placeholder="Reason (sent to the suggester)…" className="w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" autoFocus />
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button size="sm" variant="outline" disabled={!!busy} onClick={() => { setRejectFor(null); setRejectNote('') }}>Cancel</Button>
+                        <Button size="sm" disabled={!!busy} onClick={() => suggestAct(s, 'reject')} className="bg-red-600 hover:bg-red-700">Confirm</Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      <Button size="sm" variant="outline" disabled={!!busy} onClick={() => setRejectFor(bkey)} className="text-red-500">
+                        {busy === bkey ? '…' : <><X className="mr-1 size-3.5" /> Reject</>}
+                      </Button>
+                      <Button size="sm" disabled={!!busy} onClick={() => suggestAct(s, 'approve')} className="bg-green-600 hover:bg-green-700">
+                        {busy === bkey ? '…' : <><Check className="mr-1 size-3.5" /> Apply</>}
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+        )
       ) : (
         recent.length === 0 ? (
           <p className="rounded-2xl border border-dashed p-6 text-center text-xs text-muted-foreground">No decisions yet.</p>
@@ -289,6 +460,7 @@ export default function ReviewPage() {
           </div>
         )
       )}
+      </motion.div>
     </div>
   )
 }

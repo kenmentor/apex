@@ -29,9 +29,12 @@ function ContributePane({ query }) {
       {admin && (
         <Link href="/admin/review" className="flex items-center gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-3">
           <span className="min-w-0 flex-1">
-            <span className="block text-sm font-bold">Review queue{pending != null ? ` · ${pending} waiting` : ''}</span>
+            <span className="block text-sm font-bold">Review queue{pending ? ` · ${pending} waiting` : ''}</span>
             <span className="block text-xs text-muted-foreground">Approve, merge or reject contributor submissions.</span>
           </span>
+          {pending > 0 && (
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber-500 text-[11px] font-black text-white">{pending > 9 ? '9+' : pending}</span>
+          )}
           <span className="shrink-0 text-xs font-bold text-amber-600">Open ›</span>
         </Link>
       )}

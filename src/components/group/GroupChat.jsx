@@ -10,6 +10,7 @@ import VoiceRecorder from '@/components/VoiceRecorder'
 import AudioPlayer from '@/components/AudioPlayer'
 import { RichContent } from '@/components/TagCard'
 import { toast } from 'sonner'
+import { pdfReadHref } from '@/lib/reader'
 
 function timeOf(iso) {
   try {
@@ -194,7 +195,21 @@ export default function GroupChat({ groupId, user }) {
         </div>
       )
     }
-    if (m.kind === 'file' && m.fileUrl) {
+      if (m.kind === 'file' && m.fileUrl) {
+      const readerHref = pdfReadHref({ url: m.fileUrl, title: m.fileName })
+      if (readerHref) {
+        return (
+          <Link href={readerHref} className="flex items-center gap-2">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-black/10">
+              <FileText className="size-4" />
+            </span>
+            <span className="min-w-0">
+              <span className="block max-w-[160px] truncate text-xs font-bold">{m.fileName || 'File'}</span>
+              <span className="block text-[10px] opacity-70">Tap to read</span>
+            </span>
+          </Link>
+        )
+      }
       const isImage = m.fileType === 'image' || m.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)/i)
       if (isImage) {
         return (

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Play, FileText, Eye, ArrowBigUp, MessageCircle } from 'lucide-react'
 import PlaceholderMedia from '@/components/PlaceholderMedia'
 import { getToken } from '@/lib/auth'
+import { thumbFor } from '@/lib/youtube'
 
 function mediaKind(m) {
   const t = (m.type || '').toLowerCase()
@@ -69,11 +70,24 @@ export default function FeedCard({ item, userEmail }) {
         {kind === 'image' && (
           <img src={m.url} alt={m.label || d.title || ''} loading="lazy" className="mt-2 max-h-48 w-full rounded-lg object-cover" />
         )}
-        {kind === 'video' && (
-          <span className="relative mt-2 flex h-32 items-center justify-center rounded-lg bg-black/80">
-            <Play className="size-8 text-white" fill="currentColor" />
-          </span>
-        )}
+        {kind === 'video' && (() => {
+          const vt = thumbFor({ url: m?.url, thumb: m?.thumb })
+          if (!vt) {
+            return (
+              <span className="relative mt-2 flex h-32 items-center justify-center rounded-lg bg-black/80">
+                <Play className="size-8 text-white" fill="currentColor" />
+              </span>
+            )
+          }
+          return (
+            <span className="relative mt-2 block h-32 overflow-hidden rounded-lg bg-black/80">
+              <img src={vt} alt={m.label || d.title || ''} loading="lazy" className="size-full object-cover" />
+              <span className="absolute inset-0 flex items-center justify-center bg-black/25">
+                <Play className="size-8 text-white" fill="currentColor" />
+              </span>
+            </span>
+          )
+        })()}
         {kind === 'file' && (
           <span className="mt-2 flex items-center gap-2 rounded-lg bg-muted p-2 text-xs">
             <FileText className="size-4 shrink-0" />

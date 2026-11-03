@@ -63,13 +63,18 @@ export default function BookGrid({ items }) {
     <div className="grid grid-cols-2 gap-x-5 gap-y-6">
       {(items || []).map((item) => {
         const href = bookHref(item)
+        const pdfUrl = item.kind === 'pdf' && (item.url || item.href) && /^https?:\/\//.test(item.url || item.href)
+          ? `/read?url=${encodeURIComponent(item.url || item.href)}&title=${encodeURIComponent(item.title || 'Reading')}`
+          : null
+        const openHref = pdfUrl || href
+        const internal = openHref && String(openHref).startsWith('/')
         return (
           <div key={item.id} className="min-w-0">
             <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg shadow-md">
-              {href && !String(href).startsWith('/courses') ? (
-                <a href={href} target="_blank" rel="noreferrer" className="block h-full w-full"><BookCover item={item} /></a>
-              ) : href ? (
-                <Link href={href} className="block h-full w-full"><BookCover item={item} /></Link>
+              {openHref && !internal ? (
+                <a href={openHref} target="_blank" rel="noreferrer" className="block h-full w-full"><BookCover item={item} /></a>
+              ) : openHref ? (
+                <Link href={openHref} className="block h-full w-full"><BookCover item={item} /></Link>
               ) : (
                 <span className="block h-full w-full"><BookCover item={item} /></span>
               )}
@@ -79,10 +84,10 @@ export default function BookGrid({ items }) {
             </div>
             <div className="mt-4">
               <h3 className="line-clamp-2 text-[20px] font-medium leading-[1.45] text-black">
-                {href && !String(href).startsWith('/courses') ? (
-                  <a href={href} target="_blank" rel="noreferrer">{item.title}</a>
-                ) : href ? (
-                  <Link href={href}>{item.title}</Link>
+                {openHref && !internal ? (
+                  <a href={openHref} target="_blank" rel="noreferrer">{item.title}</a>
+                ) : openHref ? (
+                  <Link href={openHref}>{item.title}</Link>
                 ) : item.title}
               </h3>
               <p className="mt-2 line-clamp-2 text-[18px] leading-7 text-gray-600">{bookAuthor(item)}</p>

@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { fetchJson } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
+import VideoModal from '@/components/VideoModal';
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -33,6 +34,7 @@ export default function CourseDetailPage() {
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [shareToast, setShareToast] = useState(false);
+  const [playingVideo, setPlayingVideo] = useState(null);
 
   const code = course?.code || formattedCode;
   const codeForUrl = code.toLowerCase().replace(/\s+/g, '');
@@ -299,7 +301,7 @@ export default function CourseDetailPage() {
                   {videos.map((v) => {
                     const vid = getYouTubeId(v.url);
                     return (
-                      <a key={v._id} href={v.url} target="_blank" rel="noopener noreferrer" className="block w-full text-left">
+                      <button key={v._id} onClick={() => setPlayingVideo(v)} className="block w-full text-left">
                         <Card className="overflow-hidden transition-colors hover:bg-accent">
                           {vid && (
                             <div className="relative aspect-video bg-black">
@@ -322,7 +324,7 @@ export default function CourseDetailPage() {
                             )}
                           </CardContent>
                         </Card>
-                      </a>
+                      </button>
                     );
                   })}
                 </div>
@@ -432,6 +434,21 @@ export default function CourseDetailPage() {
         <div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background shadow-lg animate-in fade-in slide-in-from-bottom-2">
           Link copied to clipboard!
         </div>
+      )}
+
+      {playingVideo && (
+        <VideoModal
+          item={{
+            url: playingVideo.url || null,
+            title: playingVideo.title || 'Video',
+            subtitle: playingVideo.description || code || null,
+            kind: 'video',
+            id: playingVideo._id,
+            href: playingVideo.url || null,
+            courseCode: code || null,
+          }}
+          onClose={() => setPlayingVideo(null)}
+        />
       )}
     </div>
   );

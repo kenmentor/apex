@@ -3,7 +3,7 @@
 import { useState, useEffect, use, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ArrowLeft, Send, FileText, Image as ImageIcon, Film, Music, File, X, Download, Heart, MessageCircle, Share2, ChevronDown, ChevronUp, Settings, ExternalLink, Trash2, Lock } from 'lucide-react'
+import { ArrowLeft, Send, FileText, Image as ImageIcon, Film, Music, File, X, Download, Heart, MessageCircle, Share2, ChevronDown, ChevronUp, Settings, ExternalLink, Trash2, Lock, BookOpen } from 'lucide-react'
 import { toast } from 'sonner'
 import { getUser, getToken } from '@/lib/auth'
 import { trackEvent } from '@/lib/tracking'
@@ -18,6 +18,7 @@ import GroupChat from '@/components/group/GroupChat'
 import TikTokSheet from '@/components/TikTokSheet'
 import SnapRow from '@/components/SnapRow'
 import ShareSheet from '@/components/ShareSheet'
+import { pdfReadHref } from '@/lib/reader'
 import { RichContent } from '@/components/TagCard'
 
 export const LABELS = [
@@ -86,6 +87,22 @@ export function MediaSection({ media }) {
           )
         }
         if (isPdf) {
+          const readerHref = pdfReadHref({ url: m.url, title: m.label || 'PDF Document' })
+          if (readerHref) {
+            return (
+              <Link key={i} href={readerHref}
+                className="flex items-center gap-3 rounded-xl border p-3 transition-colors hover:bg-muted/50">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-red-500/10">
+                  <FileText className="size-5 text-red-500" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{m.label || 'PDF Document'}</div>
+                  <div className="text-[11px] text-muted-foreground">Tap to read</div>
+                </div>
+                <BookOpen className="size-4 shrink-0 text-muted-foreground" />
+              </Link>
+            )
+          }
           return (
             <a key={i} href={m.url} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-3 rounded-xl border p-3 transition-colors hover:bg-muted/50">

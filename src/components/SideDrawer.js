@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { X, Map, Users, Gamepad2, PlusCircle, Wallet, BarChart3, Settings, LogOut, PenLine } from 'lucide-react';
+import { X, Map, Users, Gamepad2, PlusCircle, Wallet, BarChart3, User, LogOut, PenLine } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { UserAvatarImage, VerifiedTick } from '@/components/UserAvatar';
 import AvatarViewer from '@/components/AvatarViewer';
@@ -14,7 +14,7 @@ const ROWS = [
   { href: '/groups/create', label: 'Create', icon: PlusCircle },
   { href: '/wallet', label: 'Wallet', icon: Wallet },
   { href: '/leaderboard', label: 'Rankings', icon: BarChart3 },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: '/profile', label: 'Profile & Settings', icon: User },
 ];
 
 const isContributor = (user) => !!user && (!!user.admin || user.role === 'editor' || user.role === 'official' || user.role === 'admin');

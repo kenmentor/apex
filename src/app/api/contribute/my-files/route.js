@@ -20,6 +20,7 @@ export async function GET(request) {
         name: d.name,
         kind: d.itemKind || 'file',
         url: d.url || d.href,
+        thumb: d.thumb || null,
         courseCode: d.courseCode || null,
         materialId: d.materialId || null,
         updatedAt: d.updatedAt || null,

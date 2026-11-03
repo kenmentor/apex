@@ -5,12 +5,15 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Pencil } from 'lucide-react';
+import SuggestEdit from '@/components/SuggestEdit';
 
 export default function ReviewPage() {
   const params = useParams();
   const code = params.code?.toUpperCase() || '';
   const [data, setData] = useState(null);
+  const [suggestQ, setSuggestQ] = useState(null);
+  const [sentMsg, setSentMsg] = useState('');
 
   useEffect(() => {
     try {
@@ -72,7 +75,12 @@ export default function ReviewPage() {
                     {a.isCorrect ? '✓' : '✗'}
                   </div>
                   <div className="min-w-0 flex-1 space-y-3">
-                    <p className="text-sm font-semibold leading-relaxed">Q{i + 1}. {q.question}</p>
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="min-w-0 flex-1 text-sm font-semibold leading-relaxed">Q{i + 1}. {q.question}</p>
+                      <button onClick={() => { setSuggestQ(q); setSentMsg('') }} title="Suggest an edit" className="flex shrink-0 items-center gap-1 rounded-lg bg-muted px-2 py-1 text-[11px] font-bold text-muted-foreground hover:bg-muted/60 hover:text-foreground">
+                        <Pencil className="size-3" /> Fix
+                      </button>
+                    </div>
                     {(q.imageUrl || q.image_url) && !q.subQuestions && !q.pairs && (
                       <img src={q.imageUrl || q.image_url} alt="Question image" loading="lazy" className="max-h-48 w-full rounded-xl object-contain bg-black/5" />
                     )}
@@ -230,6 +238,15 @@ export default function ReviewPage() {
             <Button className="px-8 py-5 text-sm font-semibold">Back to Results</Button>
           </Link>
         </div>
+        {sentMsg && <p className="pt-2 text-center text-xs font-bold text-green-600">{sentMsg}</p>}
+        {suggestQ && (
+          <SuggestEdit
+            collection="questions"
+            target={suggestQ}
+            onClose={() => setSuggestQ(null)}
+            onDone={() => { setSuggestQ(null); setSentMsg('Suggestion sent ✓ — an admin will review it.'); setTimeout(() => setSentMsg(''), 4000) }}
+          />
+        )}
       </div>
     </div>
   );

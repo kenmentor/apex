@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Eye, ArrowBigUp, MessageCircle, FileText } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
 import { Skeleton } from '@/components/ui/skeleton'
+import { pdfReadHref } from '@/lib/reader'
 
 function kindOf(m) {
   const t = (m.type || '').toLowerCase()
@@ -83,6 +84,12 @@ export default function FeedItemPage({ params }) {
           )
           if (k === 'video') return <video key={i} src={m.url} controls className="max-h-80 w-full rounded-xl" />
           if (k === 'image') return <img key={i} src={m.url} alt={m.label || ''} loading="lazy" className="w-full rounded-xl object-cover" />
+          const readerHref = pdfReadHref({ url: m.url, title: m.label })
+          if (readerHref) return (
+            <Link key={i} href={readerHref} className="flex items-center gap-2 rounded-xl border p-3 text-sm hover:bg-muted">
+              <FileText className="size-4 shrink-0" /><span className="truncate">{m.label || 'Attachment'}</span>
+            </Link>
+          )
           return (
             <a key={i} href={m.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl border p-3 text-sm hover:bg-muted">
               <FileText className="size-4 shrink-0" /><span className="truncate">{m.label || 'Attachment'}</span>

@@ -7,8 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import TikTokTabs from '@/components/TikTokTabs'
 import MediaCard from '@/components/MediaCard'
+import PdfReader from '@/components/PdfReader'
 import { FullscreenReader, useSpeech, stripHtml } from '@/components/Reader'
 import { TextCard } from '@/components/TopicContent'
+import SuggestEdit from '@/components/SuggestEdit'
 import { getUser } from '@/lib/auth'
 import { mockPlan, mockTopicContent } from '@/lib/demo-content'
 import { colorFor } from '@/lib/plan-colors'
@@ -206,7 +208,10 @@ function QuizCard({ course, title }) {
 
 function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd }) {
   const [reader, setReader] = useState(null)
+  const [suggestOpen, setSuggestOpen] = useState(false)
+  const [sentMsg, setSentMsg] = useState('')
   const speech = useSpeech()
+  const canSuggest = reader && (reader.kind === 'text' || reader.kind === 'pdf') && reader.item?.source !== 'theory'
 
   const items = content.tabs?.[tab] || []
   const rows = planTopic.items || []
@@ -301,10 +306,19 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd })
           onClose={() => { speech.stop(); setReader(null) }}
           actions={
             <div className="flex shrink-0 items-center gap-1">
+              {canSuggest && (
+                <button
+                  onClick={() => { setSentMsg(''); setSuggestOpen(true) }}
+                  title="Suggest an edit"
+                  className="flex h-8 items-center gap-1 rounded-lg px-2 text-[11px] font-bold text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  ✏️ Suggest edit
+                </button>
+              )}
               {reader.kind === 'text' && (
                 <button
                   onClick={() => speech.toggle(itemSpeechText(reader.item))}
-                  aria-label={speech.speaking ? 'Stop reading aloud' : 'Read aloud'}
+                  aria-label={reader.speaking ? 'Stop reading aloud' : 'Read aloud'}
                   className="flex size-8 items-center justify-center rounded-lg hover:bg-muted"
                 >
                   {speech.speaking ? <Square className="size-4" /> : <Volume2 className="size-4" />}
@@ -320,8 +334,8 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd })
           }
         >
           {reader.kind === 'pdf' ? (
-            <div className="h-full">
-              <iframe src={reader.item.url} title={reader.item.title} className="h-full w-full border-0" />
+            <div className="h-full min-h-0">
+              <PdfReader bare url={reader.item.url} title={reader.item.title} />
             </div>
           ) : (
             <div className="mx-auto w-full max-w-2xl px-5 py-5">
@@ -336,6 +350,15 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd })
             </div>
           )}
         </FullscreenReader>
+      )}
+      {sentMsg && <p className="text-center text-xs font-bold text-green-600">{sentMsg}</p>}
+      {suggestOpen && reader && (
+        <SuggestEdit
+          collection="auto"
+          target={reader.item}
+          onClose={() => setSuggestOpen(false)}
+          onDone={() => { setSuggestOpen(false); setSentMsg('Suggestion sent ✓ — an admin will review it.'); setTimeout(() => setSentMsg(''), 4000) }}
+        />
       )}
     </section>
   )

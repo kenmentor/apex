@@ -8,6 +8,7 @@ import TikTokTabs from '@/components/TikTokTabs'
 import { getUser, getToken } from '@/lib/auth'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import { colorFor } from '@/lib/plan-colors'
+import { pdfReadHref } from '@/lib/reader'
 import AddSheet from '@/components/ContributeAdd'
 
 const TABS = [
@@ -225,6 +226,7 @@ export default function ContributeCoursePage({ params }) {
 function CompactRow({ item }) {
   const vid = item.kind === 'video' || (item.url && item.url.includes('youtu'))
   const thumb = item.thumb || (item.url ? (ytId(item.url) ? `https://img.youtube.com/vi/${ytId(item.url)}/hqdefault.jpg` : null) : null)
+  const readerHref = item.kind === 'pdf' ? pdfReadHref({ url: item.url, title: item.title }) : null
   return (
     <div className="flex items-center gap-2.5 rounded-xl bg-muted/40 p-2">
       {thumb ? (
@@ -245,7 +247,11 @@ function CompactRow({ item }) {
         {item.url && <span className="block truncate text-[10px] text-muted-foreground">{hostOf(item.url)}</span>}
       </span>
       {item.url ? (
-        <a href={item.url} target="_blank" rel="noreferrer" className="shrink-0 text-[11px] font-bold text-primary">Open</a>
+        readerHref ? (
+          <Link href={readerHref} className="shrink-0 text-[11px] font-bold text-primary">Read</Link>
+        ) : (
+          <a href={item.url} target="_blank" rel="noreferrer" className="shrink-0 text-[11px] font-bold text-primary">Open</a>
+        )
       ) : (
         <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground">bank</span>
       )}

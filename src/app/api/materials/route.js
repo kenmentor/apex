@@ -26,6 +26,7 @@ function toOut(d) {
     title: d.title,
     fileName: d.fileName,
     url: d.url,
+    thumb: d.thumb || null,
     itemKind: d.itemKind,
     mime: d.mime || null,
     size: d.size || null,
@@ -117,6 +118,7 @@ export async function POST(request) {
 
     const url = String(body?.url || '').slice(0, 1000)
     if (!url) return NextResponse.json({ error: 'url required' }, { status: 400 })
+    const thumbRaw = String(body?.thumb || '').trim()
     const fileName = String(body?.fileName || body?.title || 'upload').slice(0, 200)
     const title = String(body?.title || fileName).slice(0, 200)
     const itemKind = body?.itemKind || kindOf(body?.mime, fileName)
@@ -128,6 +130,7 @@ export async function POST(request) {
       title,
       fileName,
       url,
+      thumb: thumbRaw.startsWith('https://') ? thumbRaw.slice(0, 500) : null,
       publicId: body?.publicId ? String(body.publicId).slice(0, 200) : null,
       mime: body?.mime ? String(body.mime).slice(0, 100) : null,
       size: Number.isFinite(Number(body?.size)) ? Number(body.size) : null,

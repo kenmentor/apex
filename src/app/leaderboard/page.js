@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getUser } from '@/lib/auth';
-import { Trophy, ArrowLeft, Users, FileText, TrendingUp, Medal, Crown, Filter } from 'lucide-react';
+import { Trophy, ArrowLeft, Users, FileText, TrendingUp, Medal, Crown } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -65,14 +65,12 @@ function formatTime(secs) {
 function StatCard({ icon: Icon, label, value, color, bg }) {
   return (
     <Card>
-      <CardContent className="flex items-center gap-3 p-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl" style={{ background: bg, color }}>
-          <Icon className="size-5" />
+      <CardContent className="flex flex-col items-center gap-0.5 px-2 py-2.5 text-center">
+        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg" style={{ background: bg, color }}>
+          <Icon className="size-4" />
         </div>
-        <div className="min-w-0">
-          <div className="text-xs text-muted-foreground">{label}</div>
-          <div className="text-lg font-bold">{value}</div>
-        </div>
+        <div className="text-sm font-bold leading-tight">{value}</div>
+        <div className="text-[10px] leading-tight text-muted-foreground">{label}</div>
       </CardContent>
     </Card>
   );
@@ -123,36 +121,31 @@ function PodiumUser({ entry, rank, role }) {
 function LeaderEntry({ entry, rank, isUser, role }) {
   const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
-    <div className={`rounded-xl border-b border-border p-3 transition-colors last:border-b-0 ${isUser ? 'bg-primary/5 ring-1 ring-primary/20' : 'bg-card hover:bg-muted/50'}`}>
-      {/* Top row: rank, avatar, name, score */}
-      <div className="flex items-center gap-2.5">
-        <span className="w-6 shrink-0 text-center text-sm font-bold text-muted-foreground">{rank}</span>
-        <Link href={href} className="relative shrink-0">
-          <Avatar className="size-9">
-            <AvatarImage src={entry.avatar} />
-            <AvatarFallback
-              className="text-[10px] font-bold text-white"
-              style={{ background: avatars[getAvatarIndex(entry._id, rank)] }}
-            >
-              {getInitials(entry.name)}
-            </AvatarFallback>
-          </Avatar>
-          <RoleDot role={role} className="absolute -bottom-0.5 -right-0.5" />
+    <div className={`flex items-center gap-2 rounded-xl border-b border-border px-2.5 py-2 transition-colors last:border-b-0 ${isUser ? 'bg-primary/5 ring-1 ring-primary/20' : 'bg-card hover:bg-muted/50'}`}>
+      <span className="w-5 shrink-0 text-center text-xs font-black text-muted-foreground">{rank}</span>
+      <Link href={href} className="relative shrink-0">
+        <Avatar className="size-8">
+          <AvatarImage src={entry.avatar} />
+          <AvatarFallback
+            className="text-[10px] font-bold text-white"
+            style={{ background: avatars[getAvatarIndex(entry._id, rank)] }}
+          >
+            {getInitials(entry.name)}
+          </AvatarFallback>
+        </Avatar>
+        <RoleDot role={role} className="absolute -bottom-0.5 -right-0.5" />
+      </Link>
+      <div className="min-w-0 flex-1 leading-tight">
+        <Link href={href}>
+          <div className="truncate text-[13px] font-bold hover:text-primary transition-colors">{entry.name}</div>
         </Link>
-        <div className="min-w-0 flex-1">
-          <Link href={href}>
-            <div className="truncate text-sm font-semibold leading-tight hover:text-primary transition-colors">{entry.name}</div>
-          </Link>
-        </div>
-        <div className="shrink-0 text-right">
-          <div className="text-sm font-bold leading-tight">{entry.totalScore} pts</div>
+        <div className="truncate text-[10px] text-muted-foreground">
+          {[entry.school, `${entry.quizCount} quiz${entry.quizCount !== 1 ? 'zes' : ''}`].filter(Boolean).join(' · ')}
         </div>
       </div>
-      {/* Bottom row: school, quizzes, percentage */}
-      <div className="mt-1.5 flex items-center gap-2 pl-[46px] text-[11px] text-muted-foreground">
-        {entry.school && <span className="truncate">{entry.school}</span>}
-        <span className="shrink-0">· {entry.quizCount} quiz{entry.quizCount !== 1 ? 'zes' : ''}</span>
-        <span className="ml-auto shrink-0 font-medium">{entry.avgPct}%</span>
+      <div className="shrink-0 text-right leading-tight">
+        <div className="text-[13px] font-bold">{entry.totalScore}</div>
+        <div className="text-[10px] font-semibold text-muted-foreground">{entry.avgPct}%</div>
       </div>
     </div>
   );
@@ -235,13 +228,11 @@ export default function LeaderboardPage() {
           <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
             <ArrowLeft className="size-4" />
           </Link>
-          <h1 className="flex-1 text-base font-bold">Leader Board</h1>
-          <button className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-            <Filter className="size-4 text-muted-foreground" />
-          </button>
-        </header>
+        <h1 className="flex-1 text-base font-bold">Rankings</h1>
+        <div className="size-9" />
+      </header>
 
-      <div className="mx-auto w-full max-w-2xl space-y-6 px-4 pt-4">
+      <div className="mx-auto w-full max-w-2xl space-y-4 px-4 pt-4">
         {allEntries.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-16">
             <Trophy className="size-12 text-muted-foreground/30" />
@@ -257,7 +248,7 @@ export default function LeaderboardPage() {
           <>
             {/* Stats */}
             {stats && (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="grid grid-cols-4 gap-2">
                 <StatCard icon={Users} label="Players" value={stats.totalPlayers} bg="#e8f4fd" color="#3498db" />
                 <StatCard icon={FileText} label="Quizzes" value={stats.totalQuizzes} bg="#fef3e2" color="#f39c12" />
                 <StatCard icon={TrendingUp} label="Avg Pct" value={`${stats.avgPercentage}%`} bg="#e6f7ee" color="#27ae60" />

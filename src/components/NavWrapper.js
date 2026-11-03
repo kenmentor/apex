@@ -109,11 +109,11 @@ export default function NavWrapper() {
     }
   }
 
-  // Group pages and deep plan pages bring their own chrome — no global bar there.
+  // Group pages, deep plan pages and the profile bring their own chrome — no global bar there.
   // The plan index itself has no header of its own, so it keeps the global one.
-  const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan/');
+  const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan/') || pathname === '/profile' || pathname.startsWith('/profile/') || pathname === '/read';
   // Inside a group detail/settings or a DM thread: no bottom tabs either (typer takes the room).
-  const hideNav = /^\/groups\/[^/]+/.test(pathname || '') || (pathname || '').startsWith('/dm/');
+  const hideNav = /^\/groups\/[^/]+/.test(pathname || '') || (pathname || '').startsWith('/dm/') || pathname === '/read';
 
   const isTabRoot = TAB_ROOTS.has(active) && (pathname === active || (active === '/' && pathname === '/'));
   const detail = !hideTop && !isTabRoot ? detailFor(pathname) : null;

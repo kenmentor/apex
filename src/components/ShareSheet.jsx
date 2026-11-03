@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import { FileText, Image as ImageIcon, Film, Music, File, Download, Send, Check } from 'lucide-react'
 import { getToken } from '@/lib/auth'
@@ -9,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import TikTokSheet from '@/components/TikTokSheet'
 import SnapRow from '@/components/SnapRow'
 import { toast } from 'sonner'
+import { pdfReadHref } from '@/lib/reader'
 
 const DESTS = [
   { id: 'clipboard', icon: '📋', label: 'Copy', tint: 'bg-muted' },
@@ -235,10 +237,15 @@ export default function ShareSheet({ open, onOpenChange, post, user, currentGrou
             )}
             {media.map((m, i) => {
               const isImage = m.type === 'image' || m.url?.match(/\.(jpg|jpeg|png|gif|webp)/i)
+              const readerHref = !isImage ? pdfReadHref({ url: m.url, title: m.label }) : null
+              const Row = readerHref ? Link : 'a'
+              const rowProps = readerHref
+                ? { href: readerHref }
+                : { href: m.url, target: '_blank', rel: 'noopener noreferrer' }
               return (
-                <a
+                <Row
                   key={i}
-                  href={m.url} target="_blank" rel="noopener noreferrer"
+                  {...rowProps}
                   className="flex items-center gap-3 rounded-xl border p-2.5 hover:bg-muted/50"
                 >
                   {isImage ? (
@@ -253,10 +260,10 @@ export default function ShareSheet({ open, onOpenChange, post, user, currentGrou
                   )}
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-xs font-bold">{m.label || 'File'}</span>
-                    <span className="block text-[11px] text-muted-foreground">Tap to open</span>
+                    <span className="block text-[11px] text-muted-foreground">{readerHref ? 'Tap to read' : 'Tap to open'}</span>
                   </span>
                   <Download className="size-4 shrink-0 text-muted-foreground" />
-                </a>
+                </Row>
               )
             })}
           </div>

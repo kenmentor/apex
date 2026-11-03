@@ -1,18 +1,16 @@
 'use client'
 
-import { X, ExternalLink } from 'lucide-react'
+import { X, ExternalLink, Headphones } from 'lucide-react'
 import SaveToFolder from '@/components/SaveToFolder'
-
-function ytId(url) {
-  const m = String(url || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/)
-  return m ? m[1] : null
-}
+import { ytId, ytThumb } from '@/lib/youtube'
 
 // YouTube-style watch modal: 16:9 player on top, title + meta below,
 // Save + open-in-YouTube actions. No page change, no new tab.
 export default function VideoModal({ item, onClose }) {
   if (!item) return null
   const vid = ytId(item.url)
+  const isAudio = !vid && (item.kind === 'audio' || /\.(mp3|wav|ogg|m4a)(\?|$)/i.test(item.url || ''))
+  const art = ytThumb(item.url) || item.thumb || null
   return (
     <>
       <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-[2px]" onClick={onClose} />
@@ -26,6 +24,17 @@ export default function VideoModal({ item, onClose }) {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
+          ) : isAudio ? (
+            <div className="flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-violet-950 via-[#130f40] to-black p-6">
+              {art ? (
+                <img src={art} alt="" className="size-20 rounded-2xl object-cover shadow-lg" />
+              ) : (
+                <span className="flex size-20 items-center justify-center rounded-2xl bg-white/10">
+                  <Headphones className="size-9 text-white" />
+                </span>
+              )}
+              <audio src={item.url} controls autoPlay playsInline className="w-full max-w-sm" />
+            </div>
           ) : item.url ? (
             <video src={item.url} controls autoPlay playsInline className="size-full" />
           ) : (

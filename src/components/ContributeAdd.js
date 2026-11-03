@@ -57,7 +57,7 @@ async function ensureFolder(name, parentId) {
 
 // Every scope add drops a pointer ref into My Files under
 // Contributions / {COURSE} / {media-kind} — same file, zero copies.
-async function addPointerFor({ courseCode, kind, name, url, href, itemKind, materialId }) {
+async function addPointerFor({ courseCode, kind, name, url, href, itemKind, materialId, thumb }) {
   try {
     const root = await ensureFolder('Contributions', null)
     const course = await ensureFolder(courseCode || 'General', root)
@@ -68,6 +68,7 @@ async function addPointerFor({ courseCode, kind, name, url, href, itemKind, mate
         kind: 'ref', name, parentId: folder,
         itemKind: kind === 'quiz' ? 'game' : (itemKind || kind || 'link'),
         href: href || url || null, url: url || null,
+        thumb: thumb || null,
         courseCode: courseCode || null, materialId: materialId || null,
         subtitle: 'From contributions',
       }),
@@ -219,6 +220,8 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
   const [noteDone, setNoteDone] = useState('')
   const [uploadOpen, setUploadOpen] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [changeNote, setChangeNote] = useState('')
+  const [references, setReferences] = useState('')
   const [sentReview, setSentReview] = useState(false)
   const [draftId, setDraftId] = useState(null)
   const [resumeCandidate, setResumeCandidate] = useState(null)
@@ -519,6 +522,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
     }
     pushItems({
       title: node.name, fileName: node.name, url: href,
+      thumb: node.thumb || node.coverUrl || ytThumb(href) || null,
       itemKind: node.itemKind || lockedKind || 'file',
       courseCode: courseCode || node.courseCode || null, source: 'folder',
     })
@@ -542,7 +546,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
         // Staged editor texts publish as notes.
         if (item.html && !item.file) {
           const noteTitle = item.title || item.fileName || 'Untitled'
-          await api('/api/contribute/readings', { method: 'POST', body: JSON.stringify({ title: noteTitle, courseCode: courseCode || null, content: item.html, topic: topic || null }) })
+          await api('/api/contribute/readings', { method: 'POST', body: JSON.stringify({ title: noteTitle, courseCode: courseCode || null, content: item.html, topic: topic || null, changeNote: changeNote.trim() || null, references: references.trim() || null }) })
           await addPointerFor({ courseCode: courseCode || null, kind: 'notes', name: noteTitle, href: courseCode ? `/courses/${String(courseCode).toLowerCase().replace(/\s+/g, '')}/theory` : null, itemKind: 'notes' })
           done += 1
           setProgress({ done, total: batch.length, current: item.title })
@@ -568,9 +572,11 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
             title: item.title || item.fileName || 'Untitled',
             fileName: item.fileName || item.title || 'Untitled',
             url: finalUrl, publicId, mime, size,
+            thumb: item.thumb || ytThumb(finalUrl) || null,
             itemKind: item.itemKind || lockedKind || 'file',
             courseCode: courseCode || item.courseCode || null,
             programme, topic: topic || null, isPublic: true,
+            changeNote: changeNote.trim() || null, references: references.trim() || null,
           }),
         })
         await addPointerFor({
@@ -578,6 +584,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
           kind: item.itemKind || lockedKind || 'file',
           name: item.title || item.fileName || 'Untitled',
           url: finalUrl, itemKind: item.itemKind || lockedKind,
+          thumb: item.thumb || ytThumb(finalUrl) || null,
           materialId: d.id,
         })
         done += 1
@@ -604,7 +611,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
     return (
       <>
         <div className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-sm" onClick={() => !committing && setConfirmOpen(false)} />
-        <div className="fixed inset-x-0 bottom-0 z-[71] mx-auto w-full max-w-md rounded-t-3xl border-t bg-background p-4 pb-8">
+        <div className="fixed inset-x-0 bottom-0 z-[71] mx-auto max-h-[85dvh] w-full max-w-md overflow-y-auto rounded-t-3xl border-t bg-background p-4 pb-8">
           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-muted" />
         <h3 className="text-sm font-black">Send {queue.length} item{queue.length === 1 ? '' : 's'} for review?</h3>
         <p className="mt-0.5 text-xs text-muted-foreground">To {courseCode}{topic ? ` · ${topic}` : ''} — visible after admin approval.</p>
@@ -614,6 +621,8 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
             ))}
             {queue.length > 8 && <p className="px-1 text-[11px] text-muted-foreground">…and {queue.length - 8} more</p>}
           </div>
+          <input value={changeNote} onChange={e => setChangeNote(e.target.value)} placeholder="What changed? (optional note for the reviewer)" className="mt-2 w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" />
+          <input value={references} onChange={e => setReferences(e.target.value)} placeholder="Supporting links (optional, comma separated)" inputMode="url" className="mt-1.5 w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" />
           <div className="mt-3 grid grid-cols-2 gap-2">
             <button onClick={() => setConfirmOpen(false)} disabled={committing} className="rounded-xl border py-2.5 text-sm font-bold disabled:opacity-50">Cancel</button>
             <button onClick={() => { setConfirmOpen(false); commitAll() }} disabled={committing} className="rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
@@ -899,6 +908,8 @@ function CreateQuiz({ courseCode, topic, onDone, onBack }) {
   const [fileText, setFileText] = useState('')
   const [bulkBusy, setBulkBusy] = useState(false)
   const [bulkDone, setBulkDone] = useState('')
+  const [quizNote, setQuizNote] = useState('')
+  const [quizRefs, setQuizRefs] = useState('')
   const fileRef = useRef(null)
   const imgRef = useRef(null)
 
@@ -910,7 +921,7 @@ function CreateQuiz({ courseCode, topic, onDone, onBack }) {
   }
 
   function buildPayload() {
-    const base = { courseCode: courseCode || null, section: topic || undefined, explanation: explanation.trim(), ...(marks ? { marks: Math.max(1, parseInt(marks, 10) || 1) } : {}) }
+    const base = { courseCode: courseCode || null, section: topic || undefined, explanation: explanation.trim(), ...(marks ? { marks: Math.max(1, parseInt(marks, 10) || 1) } : {}), changeNote: quizNote.trim() || null, references: quizRefs.trim() || null }
     if (format === 'tf') {
       if (question.trim().length < 10) throw new Error('Write the statement first')
       return { ...base, questionType: 'tf', question: question.trim(), options: { A: 'True', B: 'False' }, correctAnswer: correctIdx === 0 ? 'A' : 'B' }
@@ -1173,6 +1184,8 @@ function CreateQuiz({ courseCode, topic, onDone, onBack }) {
               </div>
             </div>
           )}
+          <input value={quizNote} onChange={e => setQuizNote(e.target.value)} placeholder="What changed? (optional note for the reviewer)" className="w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" />
+          <input value={quizRefs} onChange={e => setQuizRefs(e.target.value)} placeholder="Supporting links (optional, comma separated)" inputMode="url" className="w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" />
           {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
           {(bulkDone || doneMsg) && <p className="text-xs font-bold text-green-600">{bulkDone || doneMsg}</p>}
           <button disabled={bulkBusy || !bulk?.items.length} onClick={uploadAll} className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
@@ -1413,6 +1426,8 @@ function CreateQuiz({ courseCode, topic, onDone, onBack }) {
             </div>
           )}
           <textarea value={explanation} onChange={e => setExplanation(e.target.value)} placeholder="Explanation (optional)" rows={2} className="w-full rounded-xl border bg-background px-3 py-2 text-sm outline-none" />
+          <input value={quizNote} onChange={e => setQuizNote(e.target.value)} placeholder="What changed? (optional note for the reviewer)" className="w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" />
+          <input value={quizRefs} onChange={e => setQuizRefs(e.target.value)} placeholder="Supporting links (optional, comma separated)" inputMode="url" className="w-full rounded-xl border bg-background px-3 py-2 text-xs outline-none" />
           {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
           {(doneMsg) && <p className="text-xs font-bold text-green-600">{doneMsg}</p>}
           <button disabled={busy} onClick={save} className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">

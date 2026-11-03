@@ -75,7 +75,7 @@ export async function POST(request) {
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     const email = normEmail(user.email)
     const body = await request.json()
-    const { kind, name, parentId, itemKind, refId, href, url, courseCode, topic, content, subtitle, color, size, mime, isPublic, materialId, sha256 } = body || {}
+    const { kind, name, parentId, itemKind, refId, href, url, courseCode, topic, content, subtitle, color, size, mime, isPublic, materialId, sha256, thumb } = body || {}
 
     if (!['folder', 'ref'].includes(kind)) return NextResponse.json({ error: 'kind must be folder|ref' }, { status: 400 })
     const clean = cleanName(name, kind === 'folder' ? 'Untitled' : 'Untitled')
@@ -109,6 +109,7 @@ export async function POST(request) {
       url: url ? String(url).slice(0, 1000) : null,
       courseCode: courseCode ? String(courseCode).slice(0, 32) : null,
       topic: topic ? String(topic).slice(0, 200) : null,
+      thumb: String(thumb || '').trim().startsWith('https://') ? String(thumb).trim().slice(0, 500) : null,
       content: content ? String(content).slice(0, 300000) : null,
       subtitle: subtitle ? String(subtitle).slice(0, 200) : null,
       color: color ? String(color).slice(0, 24) : null,

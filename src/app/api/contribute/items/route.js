@@ -61,20 +61,32 @@ export async function POST(request) {
     const me = String(user.email).toLowerCase()
     const now = new Date().toISOString()
     const col = await getCollection('user_materials')
+    const references = (Array.isArray(body.references) ? body.references : String(body.references || '').split(/[,\n]/))
+      .map(r => typeof r === 'string' ? r.trim() : String(r?.url || '').trim())
+      .filter(Boolean).slice(0, 10)
+      .map(url => ({ label: url.slice(0, 80), url: url.slice(0, 1000) }))
+    const changeNote = String(body.changeNote || '').trim().slice(0, 500) || null
+    const attachments = url ? [{ name: String(body.fileName || body.title || 'file').slice(0, 200), url: String(url).slice(0, 1000), kind: 'file' }] : []
+    const thumb = String(body?.thumb || '').trim()
     const doc = {
       ownerEmail: me,
       addedBy: me,
       scopeDept: programme,
+      attachments,
       // Pending until a general admin approves it in review.
       status: 'pending',
       reviewedBy: null,
       reviewedAt: null,
+      changeNote,
+      references,
+      versions: [{ v: 1, at: now, by: me, note: changeNote ? `Submitted: ${changeNote}` : 'Submitted for review' }],
       hiddenBy: [],
       topic: typeof body.topic === 'string' && body.topic.trim() ? body.topic.trim().slice(0, 200) : null,
       uploaders: [me],
       title: String(body.title || body.fileName || 'Untitled').slice(0, 200),
       fileName: String(body.fileName || body.title || 'Untitled').slice(0, 200),
       url,
+      thumb: /^https:\/\//.test(thumb) ? thumb.slice(0, 500) : null,
       publicId: body?.publicId ? String(body.publicId).slice(0, 200) : null,
       mime: body?.mime ? String(body.mime).slice(0, 100) : null,
       size: Number.isFinite(Number(body?.size)) ? Number(body.size) : null,

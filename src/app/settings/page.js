@@ -18,12 +18,13 @@ import SearchableField from '@/components/SearchableField'
 
 const OTHERS = 'Others… (type it yourself)'
 
-function SettingsContent() {
+export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
   const [user, setUserState] = useState(null)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState('')
+  const [bio, setBio] = useState('')
   const [school, setSchool] = useState('')
   const [department, setDepartment] = useState('')
   const [deptInput, setDeptInput] = useState('')
@@ -55,6 +56,7 @@ function SettingsContent() {
     const u = getUser()
     setUserState(u)
     setName(u?.name || '')
+    setBio(u?.bio || '')
     setSchool(u?.school || '')
     setDepartment(u?.department || '')
     setLevel(u?.level || '')
@@ -85,6 +87,7 @@ function SettingsContent() {
         : (exact || department.trim())
       if (department === OTHERS && !dept) throw new Error('Type your department')
       const body = { name: name.trim(), school: school.trim() }
+      if (bio.trim()) body.bio = bio.trim()
       if (dept) body.department = dept
       if (level.trim()) body.level = level.trim()
       const res = await fetch('/api/profile', {
@@ -95,7 +98,7 @@ function SettingsContent() {
       if (!res.ok) throw new Error('Save failed')
       const data = await res.json()
       const u = getUser()
-      const updated = { ...u, name: data.name, school: data.school, department: data.department, level: data.level, role: data.role || u?.role }
+      const updated = { ...u, name: data.name, bio: data.bio ?? u?.bio, school: data.school, department: data.department, level: data.level, role: data.role || u?.role }
       setUser(updated)
       setUserState(updated)
       setEditing(false)
@@ -180,13 +183,15 @@ function SettingsContent() {
 
   if (!user) {
     return (
-      <div className="flex min-h-dvh flex-col bg-background">
-        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur">
-          <Link href="/profile" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-            <ArrowLeft className="size-4" />
-          </Link>
-          <h1 className="flex-1 text-base font-bold">Settings</h1>
-        </header>
+      <div className={bare ? 'flex flex-col bg-background' : 'flex min-h-dvh flex-col bg-background'}>
+        {!bare && (
+          <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur">
+            <Link href="/profile" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+              <ArrowLeft className="size-4" />
+            </Link>
+            <h1 className="flex-1 text-base font-bold">Settings</h1>
+          </header>
+        )}
         <div className="flex flex-col items-center gap-4 py-16">
           <p className="text-muted-foreground">Not signed in</p>
           <Button asChild><Link href="/auth">Sign In</Link></Button>
@@ -196,18 +201,21 @@ function SettingsContent() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background pb-24">
-      <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <Link href="/profile" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-          <ArrowLeft className="size-4" />
-        </Link>
-        <h1 className="flex-1 text-base font-bold">Settings</h1>
-        <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-          {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
-        </button>
-      </header>
+    <div className={bare ? 'flex flex-col bg-background' : 'flex min-h-dvh flex-col bg-background pb-24'}>
+      {!bare && (
+        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <Link href="/profile" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+            <ArrowLeft className="size-4" />
+          </Link>
+          <h1 className="flex-1 text-base font-bold">Settings</h1>
+          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+            {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          </button>
+        </header>
+      )}
 
-      <div className="mx-auto w-full max-w-lg space-y-3 px-3 pt-3">
+      <div className={bare ? 'w-full space-y-3' : 'mx-auto w-full max-w-lg space-y-3 px-3 pt-3'}>
+        {!hideAvatar && (
         <Card>
           <CardContent className="flex flex-col items-center gap-2 p-6 text-center">
             <button type="button" onClick={openSheet} aria-label="Change profile photo" className="relative rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring">
@@ -221,6 +229,7 @@ function SettingsContent() {
             <p className="text-xs text-muted-foreground">{user.email}</p>
           </CardContent>
         </Card>
+        )}
 
         {message && (
           <div className={`text-center text-sm ${message.includes('fail') || message.includes('error') || message.includes('Failed') ? 'text-red-500' : 'text-green-600'}`}>
@@ -240,6 +249,10 @@ function SettingsContent() {
                 <div>
                   <label className="mb-1 block text-[11px] font-medium text-muted-foreground">University</label>
                   <Input value={school} onChange={e => setSchool(e.target.value)} placeholder="University" />
+                </div>
+                <div>
+                  <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Bio</label>
+                  <Input value={bio} onChange={e => setBio(e.target.value.slice(0, 160))} placeholder="One line about you…" />
                 </div>
                 <SearchableField
                   id="department"
@@ -384,9 +397,10 @@ function SettingsContent() {
 }
 
 export default function SettingsPage() {
-  return (
-    <Suspense>
-      <SettingsContent />
-    </Suspense>
-  )
+  // Settings live inside Profile now; old links land on its Settings section.
+  const router = useRouter()
+  useEffect(() => {
+    router.replace('/profile#settings')
+  }, [router])
+  return null
 }

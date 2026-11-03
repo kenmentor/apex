@@ -4,14 +4,29 @@ import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import {
-  Search, Folder, FileText, Files, PlayCircle, Headphones, BookOpen, ClipboardList,
+  Search, Folder, FileText, Files, PlayCircle, Play, Headphones, BookOpen, ClipboardList,
   ChevronRight, ChevronLeft, Plus, LayoutGrid, List, CheckSquare, X, Link as LinkIcon,
   Users, MoreVertical, Upload, Gamepad2, GraduationCap, Image as ImageIcon,
   ArrowLeft, ArrowUpDown, Info, Share2, Globe, Lock,
 } from 'lucide-react'
 import { getToken } from '@/lib/auth'
 import BookGrid from '@/components/BookGrid'
+import VideoModal from '@/components/VideoModal'
 import { uploadFile } from '@/lib/uploads'
+import { thumbFor, isYouTubeUrl, ytEmbedUrl } from '@/lib/youtube'
+
+function isPlayableMedia(node) {
+  const k = node?.itemKind || node?.kind
+  const u = node?.url || node?.href || ''
+  if (!u) return false
+  if (k === 'video' || k === 'audio') return true
+  if (isYouTubeUrl(u)) return true
+  return /\.(mp4|webm|mov|mp3|wav|ogg|m4a)(\?|$)/i.test(u)
+}
+
+function readHref(url, name) {
+  return `/read?url=${encodeURIComponent(url || '')}&title=${encodeURIComponent(name || 'Reading')}`
+}
 
 // Samsung My Files-inspired layout built with our own icons/components.
 // Not a pixel copy of Samsung assets — same file-manager patterns:
@@ -151,6 +166,7 @@ function FoldersInner() {
   const [shareRole, setShareRole] = useState('viewer')
   const [menuNode, setMenuNode] = useState(null)
   const [detailsNode, setDetailsNode] = useState(null)
+  const [playingNode, setPlayingNode] = useState(null)
   const [dragIds, setDragIds] = useState([])
   const [dropOver, setDropOver] = useState(null)
 
@@ -226,7 +242,7 @@ function FoldersInner() {
         ...files.filter(f => f.itemKind === catFilter),
         ...materials
           .filter(m => m.itemKind === catFilter)
-          .map(m => ({ id: `m-${m.id}`, kind: 'ref', name: m.title, itemKind: m.itemKind, href: m.url, url: m.url, size: m.size, courseCode: m.courseCode, subtitle: `${m.courseCode || 'Uploads'} · Public`, updatedAt: m.createdAt, isPublic: true, central: true })),
+          .map(m => ({ id: `m-${m.id}`, kind: 'ref', name: m.title, itemKind: m.itemKind, href: m.url, url: m.url, thumb: m.thumb || null, size: m.size, courseCode: m.courseCode, subtitle: `${m.courseCode || 'Uploads'} · Public`, updatedAt: m.createdAt, isPublic: true, central: true })),
       ])
     : []
 
@@ -559,7 +575,7 @@ function FoldersInner() {
             <div className={view === 'grid' ? 'grid grid-cols-2 gap-2' : 'divide-y divide-border'}>
               {catFiles.map(n => (
                 <FileRow key={n.id} node={n} view={view} selectMode={false} checked={false}
-                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} />
+                  onToggle={() => {}} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={(node) => setPlayingNode(node)} />
               ))}
             </div>
           )}
@@ -603,7 +619,7 @@ function FoldersInner() {
                       onDrop={(e) => dropOnFolder(e, n)} isDropTarget={dropOver === n.id} isDragging={dragIds.includes(n.id)} />
                   ) : (
                     <FileRow key={n.id} node={n} view={view} selectMode={selectMode} checked={selected.includes(n.id)}
-                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)}
+                      onToggle={() => toggleSelect(n.id)} onMenu={() => setMenuNode(n)} onDetails={() => setDetailsNode(n)} onPlay={(node) => setPlayingNode(node)}
                       draggable={canWrite && !selectMode} onDragStart={(e) => dragStart(e, n)} onDragEnd={() => { setDragIds([]); setDropOver(null) }}
                       isDragging={dragIds.includes(n.id)} />
                   )
@@ -685,8 +701,10 @@ function FoldersInner() {
       {menuNode && !detailsNode && (
         <Sheet onClose={() => setMenuNode(null)} title={menuNode.name}>
           <div className="space-y-1">
-            {menuNode.href && !String(menuNode.id).startsWith('m-') && <Link href={menuNode.href} className="block rounded-xl px-3 py-2.5 text-sm font-semibold hover:bg-muted">Open</Link>}
-            {menuNode.href && String(menuNode.id).startsWith('m-') && <a href={menuNode.href} target="_blank" rel="noreferrer" className="block rounded-xl px-3 py-2.5 text-sm font-semibold hover:bg-muted">Open</a>}
+            {menuNode && isPlayableMedia(menuNode) && <button onClick={() => { setPlayingNode(menuNode); setMenuNode(null) }} className="block w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-sky-600">Play</button>}
+            {(menuNode.itemKind || menuNode.kind) === 'pdf' && (menuNode.href || menuNode.url) && <Link href={readHref(menuNode.href || menuNode.url, menuNode.name)} className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-sky-600">Read</Link>}
+            {menuNode.href && !isPlayableMedia(menuNode) && (menuNode.itemKind || menuNode.kind) !== 'pdf' && !String(menuNode.id).startsWith('m-') && <Link href={menuNode.href} className="block rounded-xl px-3 py-2.5 text-sm font-semibold hover:bg-muted">Open</Link>}
+            {menuNode.href && !isPlayableMedia(menuNode) && (menuNode.itemKind || menuNode.kind) !== 'pdf' && String(menuNode.id).startsWith('m-') && <a href={menuNode.href} target="_blank" rel="noreferrer" className="block rounded-xl px-3 py-2.5 text-sm font-semibold hover:bg-muted">Open</a>}
             {menuNode.kind === 'folder' && <button onClick={() => { go(menuNode.id); setMenuNode(null) }} className="block w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold hover:bg-muted">Open folder</button>}
             <button onClick={() => { setDetailsNode(menuNode); setMenuNode(null) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm hover:bg-muted"><Info className="size-4" /> Details</button>
             {(menuNode.href || menuNode.url) && <button onClick={() => shareFile(menuNode)} className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm hover:bg-muted"><Share2 className="size-4" /> Share (copy link)</button>}
@@ -706,6 +724,21 @@ function FoldersInner() {
           onTogglePublic={(sharedCount) => togglePublic(detailsNode, sharedCount)}
           onOpenShare={() => openShare(detailsNode)} />
         </Sheet>
+      )}
+
+      {playingNode && (
+        <VideoModal
+          item={{
+            url: playingNode.url || playingNode.href || null,
+            title: playingNode.name || 'Video',
+            subtitle: playingNode.courseCode || playingNode.subtitle || null,
+            kind: (playingNode.itemKind || playingNode.kind) === 'audio' ? 'audio' : 'video',
+            id: playingNode.id,
+            href: playingNode.href || playingNode.url || null,
+            courseCode: playingNode.courseCode || null,
+          }}
+          onClose={() => setPlayingNode(null)}
+        />
       )}
 
       {renameTarget && (
@@ -791,12 +824,43 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
   const central = node.materialId ? materials.find(m => String(m.id) === String(node.materialId)) : null
   const sharedCount = central?.uploaders?.length || 1
   const shared = sharedCount > 1
+  const mediaUrl = node.url || node.href || central?.url || null
+  const mediaKind = node.itemKind || node.kind || central?.itemKind || null
+  const isVideo = mediaKind === 'video' || isYouTubeUrl(mediaUrl)
+  const embed = isVideo ? ytEmbedUrl(mediaUrl) : null
+  const thumb = thumbFor({ ...node, url: mediaUrl })
   return (
     <div className="space-y-3">
+      {isVideo && mediaUrl && (
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
+          {embed ? (
+            <iframe
+              src={embed}
+              title={node.name || 'Video'}
+              className="size-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <video src={mediaUrl} controls playsInline preload="metadata" poster={thumb || undefined} className="size-full" />
+          )}
+        </div>
+      )}
       <div className="flex items-center gap-3">
-        <span className="flex size-12 items-center justify-center rounded-2xl bg-muted">
-          {(() => { const I = iconFor(node); return <I className={`size-6 ${tintFor(node)}`} /> })()}
-        </span>
+        {thumb ? (
+          <span className="relative size-12 shrink-0 overflow-hidden rounded-2xl bg-black/80">
+            <img src={thumb} alt="" loading="lazy" className="size-full object-cover" />
+            {isVideo && (
+              <span className="absolute inset-0 flex items-center justify-center bg-black/25">
+                <Play className="size-5 text-white" fill="currentColor" />
+              </span>
+            )}
+          </span>
+        ) : (
+          <span className="flex size-12 items-center justify-center rounded-2xl bg-muted">
+            {(() => { const I = iconFor(node); return <I className={`size-6 ${tintFor(node)}`} /> })()}
+          </span>
+        )}
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-bold">{node.name}</p>
           <p className="text-xs text-muted-foreground">{node.itemKind || node.kind}{node.courseCode ? ` · ${node.courseCode}` : ''}</p>
@@ -813,6 +877,11 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
         <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Visibility</dt><dd className="font-semibold">{node.isPublic === false ? 'Only people with access' : 'Everyone (in Search)'}</dd></div>
       </dl>
       <div className="grid grid-cols-2 gap-2">
+        {(node.itemKind || node.kind) === 'pdf' && mediaUrl && (
+          <Link href={readHref(mediaUrl, node.name)} className="col-span-2 flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground">
+            <BookOpen className="size-4" /> Read
+          </Link>
+        )}
         {(node.href || node.url) && <button onClick={onShare} className="flex items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted"><Share2 className="size-4" /> Copy link</button>}
         {node.kind === 'folder' && canWrite && <button onClick={onOpenShare} className="flex items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted"><Users className="size-4" /> Share</button>}
       </div>
@@ -892,14 +961,30 @@ function FolderRow({ node, view, selectMode, checked, onToggle, onOpen, onMenu, 
   )
 }
 
-function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails, draggable, onDragStart, onDragEnd, isDragging }) {
+function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails, onPlay, draggable, onDragStart, onDragEnd, isDragging }) {
   const Icon = iconFor(node)
   const href = node.href || node.url || null
   const stale = !href && !String(node.id).startsWith('m-')
   const meta = metaLine(node)
+  const thumb = thumbFor(node)
+  const kind = node?.itemKind || node?.kind
+  const isVideo = kind === 'video' || isYouTubeUrl(href)
+  const playable = !selectMode && !!onPlay && isPlayableMedia(node)
+  const readable = kind === 'pdf' && !!href && !selectMode
   const inner = (
     <>
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted"><Icon className={`size-5 ${tintFor(node)}`} /></span>
+      {thumb ? (
+        <span className="relative size-10 shrink-0 overflow-hidden rounded-xl bg-black/80">
+          <img src={thumb} alt="" loading="lazy" className="size-full object-cover" />
+          {isVideo && (
+            <span className="absolute inset-0 flex items-center justify-center bg-black/25">
+              <Play className="size-4 text-white" fill="currentColor" />
+            </span>
+          )}
+        </span>
+      ) : (
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted"><Icon className={`size-5 ${tintFor(node)}`} /></span>
+      )}
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-semibold">{node.name}{stale && <span className="ml-1.5 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">missing</span>}</span>
         {!!meta && <span className="block truncate text-[11px] text-muted-foreground">{meta}{node.subtitle && node.subtitle !== meta ? ` · ${node.subtitle}` : ''}</span>}
@@ -911,7 +996,11 @@ function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails,
     return (
       <div draggable={draggable} onDragStart={onDragStart} onDragEnd={onDragEnd}
         className={`relative rounded-xl border p-3 ${checked ? 'border-primary bg-primary/5' : ''} ${isDragging ? 'opacity-40' : ''}`}>
-        {href && !selectMode ? (
+        {playable ? (
+          <button onClick={() => onPlay(node)} className="flex w-full flex-col gap-2 text-left">{inner}</button>
+        ) : readable ? (
+          <Link href={readHref(href, node.name)} className="flex w-full flex-col gap-2 text-left">{inner}</Link>
+        ) : href && !selectMode ? (
           String(node.id).startsWith('m-') ? <a href={href} target="_blank" rel="noreferrer" className="flex flex-col gap-2">{inner}</a>
           : <Link href={href} className="flex flex-col gap-2">{inner}</Link>
         ) : (
@@ -932,7 +1021,11 @@ function FileRow({ node, view, selectMode, checked, onToggle, onMenu, onDetails,
       <button onClick={onDetails || (() => {})} className="flex min-w-0 flex-1 items-center gap-3 px-1 py-2 text-left hover:bg-muted/50" title="Details">
         {inner}
       </button>
-      {href && !selectMode && (
+      {playable ? (
+        <button onClick={() => onPlay(node)} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Play</button>
+      ) : readable ? (
+        <Link href={readHref(href, node.name)} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Read</Link>
+      ) : href && !selectMode && (
         String(node.id).startsWith('m-') ? <a href={href} target="_blank" rel="noreferrer" className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Open</a>
         : <Link href={href} className="shrink-0 px-1 py-1 text-[12px] font-semibold text-sky-600">Open</Link>
       )}

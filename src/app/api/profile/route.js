@@ -16,10 +16,12 @@ export async function GET(request) {
       id: user._id.toString(),
       email: user.email,
       name: user.name || '',
+      bio: user.bio || '',
       school: user.school || '',
       department: user.department || '',
       level: user.level || '',
         avatar: user.avatar || '',
+        cover: user.cover || '',
         avatarConfig: user.avatarConfig || null,
         role: user.role || 'student',
         verified: !!user.verified,
@@ -39,12 +41,20 @@ export async function PUT(request) {
     const user = await getUserFromToken(request)
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { name, school, avatar, avatarConfig, department, level } = await request.json()
+    const { name, bio, school, avatar, cover, avatarConfig, department, level } = await request.json()
     const update = {}
     if (name !== undefined) update.name = name.trim()
+    if (bio !== undefined) update.bio = String(bio).trim().slice(0, 160)
     if (school !== undefined) update.school = school.trim()
     if (department !== undefined) update.department = department.trim()
     if (level !== undefined) update.level = level.trim()
+    if (cover !== undefined) {
+      const okCover = !cover || cover.startsWith('https://res.cloudinary.com/');
+      if (!okCover) {
+        return NextResponse.json({ error: 'Invalid cover URL' }, { status: 400 });
+      }
+      update.cover = cover
+    }
     if (avatar !== undefined) {
       const okHost = !avatar || avatar.startsWith('https://res.cloudinary.com/') || avatar.startsWith('https://api.dicebear.com/');
       if (!okHost) {
@@ -73,7 +83,9 @@ export async function PUT(request) {
         role: updated.role || 'student',
         verified: !!updated.verified,
       name: updated.name || '',
+      bio: updated.bio || '',
       avatar: updated.avatar || '',
+      cover: updated.cover || '',
       avatarConfig: updated.avatarConfig || null,
     })
   } catch (error) {

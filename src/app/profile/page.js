@@ -1,77 +1,139 @@
 'use client'
 
 import { Suspense, useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { getUser, getToken } from '@/lib/auth'
-import { ArrowLeft, Medal, Clock, Target, GraduationCap, Settings, User } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { getUser, setUser, getToken } from '@/lib/auth'
+import { setCached } from '@/lib/client-cache'
+import { contributorRating } from '@/lib/contributor-rating'
+import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar'
+import AvatarCustomizer from '@/components/AvatarCustomizer'
+import { User, ArrowLeft } from 'lucide-react'
+import ContributorProfile from '@/components/ContributorProfile'
+import Contributions from '@/components/Contributions'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { UserAvatar, UserAvatarImage, AvatarWithTick } from '@/components/UserAvatar'
 import { Button } from '@/components/ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 
-function formatTime(secs) {
-  if (!secs) return '—'
-  const m = Math.floor(secs / 60)
-  const s = secs % 60
-  return `${m}m ${s}s`
-}
-
 function ProfileContent() {
-  const searchParams = useSearchParams()
+  const router = useRouter()
   const [user, setUserState] = useState(null)
   const [scores, setScores] = useState([])
-  const [followStats, setFollowStats] = useState({ followersCount: 0, followingCount: 0, isFollowing: false })
+  const [contrib, setContrib] = useState(null)
+  const [contribLoading, setContribLoading] = useState(true)
   const [loading, setLoading] = useState(true)
+  const [uploading, setUploading] = useState(false)
+  const [showAvatarBuilder, setShowAvatarBuilder] = useState(false)
+  const [avatarConfig, setAvatarConfig] = useState(null)
+  const [savingAvatar, setSavingAvatar] = useState(false)
 
   useEffect(() => {
     const u = getUser()
     setUserState(u)
     if (u?.email) {
+      const t = getToken()
       Promise.all([
         fetch(`/api/scores?email=${encodeURIComponent(u.email)}`).then(r => r.json()),
-        fetch(`/api/follow?email=${encodeURIComponent(u.email)}`, {
-          headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
-        }).then(r => r.ok ? r.json() : { followersCount: 0, followingCount: 0, isFollowing: false }),
+        t ? fetch('/api/contributions/mine', { headers: { Authorization: `Bearer ${t}` }, cache: 'no-store' }).then(r => r.json()).catch(() => null) : Promise.resolve(null),
       ])
-        .then(([myScores, fStats]) => {
-          setScores(Array.isArray(myScores) ? myScores : [])
-          setFollowStats(fStats)
+        .then(([myScores, contribData]) => {
+          const list = Array.isArray(myScores) ? myScores : []
+          setScores(list)
+          setCached('scores', list)
+          if (contribData && !contribData.error) {
+            setContrib(contribData)
+            setCached('contrib', contribData)
+          }
+          setContribLoading(false)
           setLoading(false)
         })
-        .catch(() => setLoading(false))
+        .catch(() => { setLoading(false); setContribLoading(false) })
     } else {
       setLoading(false)
+      setContribLoading(false)
     }
   }, [])
 
-  const totalAttempts = scores.length
+  async function uploadPhoto(file, kind) {
+    if (!file) return
+    setUploading(true)
+    try {
+      const form = new FormData()
+      form.append('file', file)
+      form.append('folder', kind === 'cover' ? 'gss-quiz/covers' : 'gss-quiz/avatars')
+      const up = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${getToken()}` },
+        body: form,
+      })
+      if (!up.ok) throw new Error('Upload failed')
+      const { url } = await up.json()
+      const res = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(kind === 'cover' ? { cover: url } : { avatar: url }),
+      })
+      if (!res.ok) throw new Error('Save failed')
+      const u = getUser()
+      const updated = { ...u, ...(kind === 'cover' ? { cover: url } : { avatar: url }) }
+      setUser(updated)
+      setUserState(updated)
+    } catch {}
+    setUploading(false)
+  }
+
+  function openAvatarBuilder() {
+    try {
+      const u = getUser()
+      setAvatarConfig(normalizeAvatarConfig(u?.avatarConfig) || defaultDiceConfig())
+    } catch { setAvatarConfig(defaultDiceConfig()) }
+    setShowAvatarBuilder(true)
+  }
+
+  async function handleSaveAvatar() {
+    if (!avatarConfig) return
+    setSavingAvatar(true)
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ avatarConfig }),
+      })
+      if (!res.ok) throw new Error('Save failed')
+      const data = await res.json()
+      const u = getUser()
+      const updated = { ...u, avatarConfig: data.avatarConfig || avatarConfig }
+      setUser(updated)
+      setUserState(updated)
+      setShowAvatarBuilder(false)
+    } catch {}
+    setSavingAvatar(false)
+  }
+
   const bestPct = scores.length > 0 ? Math.max(...scores.map(s => s.percentage || 0)) : 0
-  const avgPct = scores.length > 0 ? Math.round(scores.reduce((s, e) => s + (e.percentage || 0), 0) / scores.length) : 0
-  const totalTime = scores.reduce((s, e) => s + (e.timeSpent || 0), 0)
+  const medals = contrib?.medals || []
+  const rating = contrib ? contributorRating({
+    approved: contrib.totals?.approved || 0,
+    total: contrib.totals?.total || 0,
+    courses: contrib.totals?.courses || 0,
+    rank: contrib.rank ?? null,
+    totalContributors: contrib.totalContributors || 0,
+    badgesWon: medals.filter(m => m.earned).length,
+    badgesTotal: medals.length,
+    streak: contrib.streak || 0,
+  }) : null
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background pb-24">
-      <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <Link href="/leaderboard" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-          <ArrowLeft className="size-4" />
-        </Link>
-        <h1 className="flex-1 truncate text-base font-bold">Profile</h1>
-        <Link href="/settings" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-          <Settings className="size-4" />
-        </Link>
-      </header>
-
-      <div className="mx-auto w-full max-w-lg space-y-3 px-3 pt-3">
-        {loading ? (
-          <>
-            <Skeleton className="h-28 w-full rounded-xl" />
-            <Skeleton className="h-20 w-full rounded-xl" />
-            <Skeleton className="h-40 w-full rounded-xl" />
-          </>
-        ) : !user ? (
+    <div className="min-h-dvh bg-background pb-28">
+      {loading ? (
+        <div className="mx-auto w-full max-w-xl space-y-3 px-4 pt-4">
+          <Skeleton className="h-44 w-full rounded-none sm:rounded-2xl" />
+          <Skeleton className="h-20 w-full rounded-xl" />
+          <Skeleton className="h-40 w-full rounded-xl" />
+        </div>
+      ) : !user ? (
+        <div className="mx-auto w-full max-w-xl px-4 pt-10">
           <Card>
             <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
               <Avatar className="size-16">
@@ -85,120 +147,44 @@ function ProfileContent() {
               </Button>
             </CardContent>
           </Card>
-        ) : (
-          <>
-            <Card>
-              <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <AvatarWithTick user={user} className="size-20" tickSize="size-5" />
-                <div className="min-w-0">
-                  <h2 className="truncate text-lg font-bold">{user.name || 'Anonymous'}</h2>
-                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
-                </div>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/settings">Change avatar</Link>
-                </Button>
-                {user.school && (
-                  <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
-                    <GraduationCap className="size-3.5 shrink-0" />
-                    <span>{user.school}</span>
-                    {user.department && <span className="opacity-50">·</span>}
-                    {user.department && <span>{user.department}</span>}
-                    {user.level && <span className="opacity-50">·</span>}
-                    {user.level && <span>{user.level}</span>}
-                  </div>
-                )}
-                {user.verified && (
-                  <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                    ✓ Verified
-                  </span>
-                )}
-              </CardContent>
-            </Card>
+        </div>
+      ) : (
+        <>
+          <ContributorProfile
+            user={user}
+            totals={contrib?.totals}
+            rank={contrib?.rank}
+            isOwner
+            uploading={uploading}
+            rating={rating}
+            onAvatarFile={(f) => uploadPhoto(f, 'avatar')}
+            onCoverFile={(f) => uploadPhoto(f, 'cover')}
+            onEditProfile={() => router.push('/profile/settings')}
+            onCreateAvatar={openAvatarBuilder}
+          />
 
-            <div className="grid grid-cols-3 gap-2">
-              <Card>
-                <CardContent className="flex flex-col items-center py-3 text-center">
-                  <div className="text-lg font-bold text-primary">{followStats.followersCount}</div>
-                  <div className="text-[10px] text-muted-foreground">Followers</div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="flex flex-col items-center py-3 text-center">
-                  <div className="text-lg font-bold text-primary">{followStats.followingCount}</div>
-                  <div className="text-[10px] text-muted-foreground">Following</div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="flex flex-col items-center py-3 text-center">
-                  <div className="text-lg font-bold text-primary">{totalAttempts}</div>
-                  <div className="text-[10px] text-muted-foreground">Quizzes</div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card>
-              <CardContent className="divide-y p-0">
-                <div className="flex items-center justify-between px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Medal className="size-4 text-yellow-500" />
-                    <span className="text-xs text-muted-foreground">Best Score</span>
-                  </div>
-                  <span className="text-sm font-bold text-green-500">{bestPct}%</span>
-                </div>
-                <div className="flex items-center justify-between px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Target className="size-4 text-blue-500" />
-                    <span className="text-xs text-muted-foreground">Average</span>
-                  </div>
-                  <span className="text-sm font-bold">{avgPct}%</span>
-                </div>
-                <div className="flex items-center justify-between px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Clock className="size-4 text-orange-500" />
-                    <span className="text-xs text-muted-foreground">Total Time</span>
-                  </div>
-                  <span className="text-sm font-bold">{Math.round(totalTime / 60)}m</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="flex items-center gap-3 py-2">
-              <div className="h-px flex-1 bg-border" />
-              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">History</span>
-              <div className="h-px flex-1 bg-border" />
-            </div>
-
-            {scores.length === 0 ? (
-              <div className="py-8 text-center text-sm text-muted-foreground">
-                No scores yet. Take a quiz to see your results here.
+          {showAvatarBuilder ? (
+            <div className="mx-auto w-full max-w-xl space-y-2 px-4 pt-4">
+              <div className="flex items-center gap-3 py-2">
+                <button onClick={() => setShowAvatarBuilder(false)} aria-label="Go back" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
+                  <ArrowLeft size={18} />
+                </button>
+                <h1 className="text-lg font-bold tracking-tight">Create an avatar</h1>
               </div>
-            ) : (
-              <ScrollArea className="max-h-[300px]">
-                <div className="space-y-2">
-                  {scores.map((s, i) => (
-                    <Card key={`${i}-${s.course || 'unknown'}`}>
-                      <CardContent className="flex items-center justify-between p-3">
-                        <div className="min-w-0 flex-1">
-                          <div className="truncate text-sm font-semibold">{s.course}</div>
-                          <div className="text-xs text-muted-foreground">
-                            {formatTime(s.timeSpent)} · {new Date(s.createdAt).toLocaleDateString()}
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs text-muted-foreground">{s.score}/{s.total}</span>
-                          <span className={`text-base font-bold ${s.percentage >= 50 ? 'text-green-600' : 'text-red-500'}`}>
-                            {s.percentage}%
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </ScrollArea>
-            )}
-          </>
-        )}
-      </div>
+              <AvatarCustomizer value={avatarConfig} onChange={setAvatarConfig} size={96} />
+              <div className="py-2">
+                <Button onClick={handleSaveAvatar} disabled={savingAvatar} className="h-12 w-full text-base">
+                  {savingAvatar ? 'Saving…' : 'Save avatar'}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="mx-auto w-full max-w-xl space-y-4 px-4 pt-4">
+              <Contributions data={contrib} loading={contribLoading} historyCount={scores.length} bestPct={scores.length ? bestPct : null} />
+            </div>
+          )}
+        </>
+      )}
     </div>
   )
 }

@@ -29,12 +29,23 @@ export async function POST(request) {
     if (question.length < 10 && !['match', 'meq', 'osce', 'spotter'].includes(questionType)) return NextResponse.json({ error: 'Question is too short' }, { status: 400 })
     if (body.marks != null) doc.marks = Math.max(1, Math.min(100, Number(body.marks) || 1))
 
+    const me = String(user.email).toLowerCase()
+    // Supporting references: [{ label, url }]
+    const references = (Array.isArray(body.references) ? body.references : String(body.references || '').split(/[,\n]/))
+      .map(r => typeof r === 'string' ? r.trim() : String(r?.url || '').trim())
+      .filter(Boolean).slice(0, 10)
+      .map(url => ({ label: url.slice(0, 80), url: url.slice(0, 1000) }))
+    const changeNote = String(body.changeNote || '').trim().slice(0, 500) || null
+
     const doc = {
       courseCode,
       // Pending until a general admin approves it in review.
       status: 'pending',
       reviewedBy: null,
       reviewedAt: null,
+      changeNote,
+      references,
+      versions: [{ v: 1, at: new Date().toISOString(), by: me, note: changeNote ? `Submitted: ${changeNote}` : 'Submitted for review' }],
       section: String(body.section || 'Contributed').slice(0, 120),
       id: `contrib-${new ObjectId().toString().slice(-8)}`,
       question,

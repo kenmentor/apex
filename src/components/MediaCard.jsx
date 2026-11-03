@@ -6,6 +6,8 @@ import { FileIcon, defaultStyles } from 'react-file-icon'
 import AudioPlayer from '@/components/AudioPlayer'
 import { getToken } from '@/lib/auth'
 import { toast } from 'sonner'
+import Link from 'next/link'
+import { pdfReadHref } from '@/lib/reader'
 
 // Standard media presentation: every video / audio / PDF / file renders
 // through this card — same cover language, same views + upvote row.
@@ -298,6 +300,21 @@ function PdfCard({ item, onOpen }) {
 
 function FileCard({ item }) {
   const ext = extOf(item.url || item.title)
+  const readerHref = pdfReadHref({ url: item.url, title: item.title || item.fileName })
+  if (readerHref) {
+    return (
+      <Link href={readerHref} className="flex items-center gap-3 rounded-xl border bg-card p-3 hover:bg-muted/50">
+        <span className="shrink-0">
+          <FileGlyph ext={ext} size={40} />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-bold">{item.title || item.fileName || 'File'}</p>
+          <p className="text-[11px] uppercase text-muted-foreground">{ext || 'file'} · tap to read</p>
+          {item.url && <StatRow url={item.url} className="pt-1" />}
+        </div>
+      </Link>
+    )
+  }
   return (
     <a href={item.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl border bg-card p-3 hover:bg-muted/50">
       <span className="shrink-0">
