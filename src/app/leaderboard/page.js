@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { getUser } from '@/lib/auth';
-import { Trophy, ArrowLeft, Users, FileText, TrendingUp, Medal, Crown, Search, ChevronRight } from 'lucide-react';
+import { Trophy, Users, FileText, TrendingUp, Medal, Crown, Search, ChevronRight } from 'lucide-react';
 import { AvatarWithTick } from '@/components/UserAvatar';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -161,12 +161,6 @@ export default function LeaderboardPage() {
   if (loading) {
     return (
       <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
-        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-            <ArrowLeft className="size-4" />
-          </Link>
-          <h1 className="flex-1 text-base font-bold">Rankings</h1>
-        </header>
         <div className="mx-auto w-full max-w-2xl space-y-4 px-4 py-4">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-24 rounded-2xl" />)}
@@ -189,16 +183,6 @@ export default function LeaderboardPage() {
 
   return (
     <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
-      <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-          <ArrowLeft className="size-4" />
-        </Link>
-        <h1 className="flex flex-1 items-center gap-2 text-base font-bold">
-          <Trophy className="size-4 text-yellow-500" /> Rankings
-        </h1>
-        <div className="size-9" />
-      </header>
-
       <div className="mx-auto w-full max-w-2xl space-y-4 px-4 pt-4">
         {allEntries.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-16">
