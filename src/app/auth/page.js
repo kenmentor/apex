@@ -7,11 +7,81 @@ import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar';
 import AvatarCustomizer from '@/components/AvatarCustomizer';
 import NIGERIAN_UNIVERSITIES from '@/lib/universities';
 import { DEPARTMENTS, LEVELS } from '@/lib/departments';
-import { ArrowRight, Mail, Check, X, Search, ChevronDown, Hash } from 'lucide-react';
+import { ArrowRight, Mail, Check, X, Search, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+// Six-box OTP: auto-advance, backspace flow, paste-to-fill, and OS
+// one-time-code autofill (mobile keyboards offer codes copied from email).
+function OtpBoxes({ value, onChange }) {
+  const refs = useRef([]);
+  const digits = Array.from({ length: 6 }, (_, i) => value[i] || '');
+
+  function commit(arr) {
+    onChange(arr.join('').replace(/\D/g, '').slice(0, 6));
+  }
+
+  function handleChange(i, e) {
+    const raw = String(e.target.value || '').replace(/\D/g, '');
+    const arr = Array.from({ length: 6 }, (_, k) => value[k] || '');
+    if (!raw) {
+      arr[i] = '';
+      commit(arr);
+      return;
+    }
+    // Full code landed in one box (autofill/paste): spread it out.
+    for (let k = 0; k < raw.length && i + k < 6; k++) arr[i + k] = raw[k];
+    commit(arr);
+    const next = Math.min(i + raw.length, 5);
+    requestAnimationFrame(() => {
+      refs.current[next]?.focus();
+      try { refs.current[next]?.select() } catch {}
+    });
+  }
+
+  function handleKeyDown(i, e) {
+    if (e.key === 'Backspace' && !digits[i] && i > 0) {
+      e.preventDefault();
+      const arr = Array.from({ length: 6 }, (_, k) => value[k] || '');
+      arr[i - 1] = '';
+      commit(arr);
+      refs.current[i - 1]?.focus();
+    } else if (e.key === 'ArrowLeft' && i > 0) {
+      refs.current[i - 1]?.focus();
+    } else if (e.key === 'ArrowRight' && i < 5) {
+      refs.current[i + 1]?.focus();
+    }
+  }
+
+  function handlePaste(e) {
+    const text = (e.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+    if (!text) return;
+    e.preventDefault();
+    commit(text.split(''));
+    requestAnimationFrame(() => refs.current[Math.min(text.length, 5)]?.focus());
+  }
+
+  return (
+    <div className="flex justify-center gap-2" onPaste={handlePaste}>
+      {digits.map((d, i) => (
+        <input
+          key={i}
+          ref={el => { refs.current[i] = el }}
+          value={d}
+          onChange={e => handleChange(i, e)}
+          onKeyDown={e => handleKeyDown(i, e)}
+          inputMode="numeric"
+          autoComplete={i === 0 ? 'one-time-code' : 'off'}
+          maxLength={6}
+          aria-label={`Digit ${i + 1}`}
+          className="h-14 w-12 rounded-xl border bg-background text-center text-2xl font-black tabular-nums outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+        />
+      ))}
+    </div>
+  );
+}
 
 // Passwordless sign-in: one email box -> 6-digit code -> in for 90 days.
 // No passwords, no Google, no third-party identity store.
@@ -136,6 +206,16 @@ function AuthForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
+  // Typed the full code (paste, autofill or thumb-typing)? Go automatically.
+  const typedFull = useRef(false);
+  useEffect(() => {
+    if (typedFull.current && code.replace(/\D/g, '').length >= 6 && !submitting && step === 'code') {
+      typedFull.current = false;
+      handleVerify();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code]);
+
   async function handleAvatarComplete(skip) {
     if (skip) { router.push('/'); return; }
     setError('');
@@ -247,12 +327,8 @@ function AuthForm() {
             <p className="mt-1 text-sm text-muted-foreground">We sent a 6-digit code to {email}.</p>
           </div>
           <div className="mt-6 space-y-3">
-            <div className="relative">
-              <Hash className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input value={code} onChange={e => { setCode(e.target.value.replace(/\D/g, '').slice(0, 6)); setError('') }} placeholder="6-digit code"
-                inputMode="numeric" onKeyDown={e => e.key === 'Enter' && handleVerify()} className="h-14 py-3 pl-11 text-center text-xl tracking-[0.5em]" />
-            </div>
-            <Button onClick={() => handleVerify()} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
+            <OtpBoxes value={code} onChange={v => { typedFull.current = true; setCode(v); setError('') }} />
+            <Button onClick={() => { typedFull.current = false; handleVerify() }} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
               {submitting ? 'Checking…' : 'Sign in'}<Check className="ml-2 size-4" />
             </Button>
             <div className="flex items-center justify-between">
