@@ -44,8 +44,9 @@ async function pushVersion(col, doc, { by, note }) {
 
 function withCollection(d, collection) {
   if (!d || typeof d !== 'object') return d
-  try { Object.defineProperty(d, '__collection', { value: collection, enumerable: false }) } catch {}
-  d.__collection = collection
+  // Writable + configurable so re-tagging never throws
+  // ("Cannot assign to read only property" broke every approve).
+  try { Object.defineProperty(d, '__collection', { value: collection, enumerable: false, writable: true, configurable: true }) } catch {}
   return d
 }
 
