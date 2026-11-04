@@ -196,6 +196,12 @@ export default function AdminPage() {
         <Link href="/admin/review" className="flex size-9 items-center justify-center rounded-lg bg-amber-500/15 hover:bg-amber-500/25" title="Review queue">
           <Bell className="size-4 text-amber-600" />
         </Link>
+        <Link href="/admin/requests" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted" title="Contributor requests">
+          <Users className="size-4" />
+        </Link>
+        <Link href="/admin/users" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted" title="People & roles">
+          <Pencil className="size-4" />
+        </Link>
       </header>
 
       <div className="mx-auto w-full max-w-4xl space-y-3 px-3 pt-3">

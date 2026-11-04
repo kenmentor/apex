@@ -23,6 +23,9 @@ export default function ContributePage() {
   const [progState, setProgState] = useState(null)
   const [addFor, setAddFor] = useState(null)
   const [showNewCourse, setShowNewCourse] = useState(false)
+  const [reqStatus, setReqStatus] = useState(null) // null|pending|approved|declined|none
+  const [reqBusy, setReqBusy] = useState(false)
+  const [reqMsg, setReqMsg] = useState('')
   const courseSlug = (c) => String(c || '').toLowerCase().replace(/\s+/g, '')
   const role = user?.role || 'student'
   const allowed = !!user && (!!user.admin || role === 'editor' || role === 'official' || role === 'admin')
@@ -61,22 +64,7 @@ export default function ContributePage() {
   if (!ready) return <div className="flex min-h-dvh items-center justify-center pb-24"><p className="text-sm text-muted-foreground">Opening contributor hub…</p></div>
 
   if (!allowed) {
-    return (
-      <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-4 px-4 pb-24 pt-6">
-        <div className="flex items-center gap-2">
-          <button onClick={() => router.back()} aria-label="Back" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted"><ArrowLeft className="size-4" /></button>
-          <h1 className="flex-1 text-xl font-bold">Contributor</h1>
-        </div>
-        <div className="rounded-2xl border p-6 text-center">
-          <Lock className="mx-auto size-8 text-muted-foreground" />
-          <p className="mt-2 text-sm font-bold">Contributors only</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Your account is signed in as <span className="font-semibold">{role}</span>. Ask an admin to set your role to <span className="font-semibold">editor</span> for {user?.department || 'your department'} and this hub will unlock.
-          </p>
-          <Link href="/" className="mt-4 inline-block rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">Back home</Link>
-        </div>
-      </div>
-    )
+    return <RequestAccess user={user} role={role} status={reqStatus} setStatus={setReqStatus} busy={reqBusy} setBusy={setReqBusy} msg={reqMsg} setMsg={setReqMsg} />
   }
 
   return (
@@ -148,6 +136,78 @@ export default function ContributePage() {
           onDone={() => { setShowNewCourse(false); window.location.reload() }}
         />
       )}
+    </div>
+  )
+}
+
+// Locked-out view for normal users: one tap asks to become a contributor.
+// The request pings every admin instantly; approval unlocks this hub.
+function RequestAccess({ user, role, status, setStatus, busy, setBusy, msg, setMsg }) {
+  const router = useRouter()
+
+  useEffect(() => {
+    fetch('/api/contribute/requests?mine=1', { headers: { Authorization: `Bearer ${getToken()}` } })
+      .then(r => r.json().catch(() => ({})))
+      .then(d => setStatus(d?.request ? d.request.status : 'none'))
+      .catch(() => setStatus('none'))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function ask() {
+    if (busy) return
+    setBusy(true)
+    setMsg('')
+    try {
+      const res = await fetch('/api/contribute/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
+      })
+      const d = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(d.error || `Failed (${res.status})`)
+      setStatus('pending')
+      setMsg('Request sent — an admin will review it and you’ll be notified here.')
+    } catch (e) { setMsg(e.message) } finally { setBusy(false) }
+  }
+
+  return (
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-4 px-4 pb-24 pt-6">
+      <div className="flex items-center gap-2">
+        <button onClick={() => router.back()} aria-label="Back" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted"><ArrowLeft className="size-4" /></button>
+        <h1 className="flex-1 text-xl font-bold">Contributor</h1>
+      </div>
+      <div className="rounded-2xl border p-6 text-center">
+        <Lock className="mx-auto size-8 text-muted-foreground" />
+        <p className="mt-2 text-sm font-bold">Contributors only</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Signed in as <span className="font-semibold">{role}</span>{user?.department ? <> for <span className="font-semibold">{user.department}</span></> : ''}.
+        </p>
+        {status === null && <p className="mt-3 text-xs text-muted-foreground">Checking…</p>}
+        {status === 'pending' && (
+          <p className="mx-auto mt-3 max-w-xs rounded-xl bg-amber-500/10 px-3 py-2 text-xs font-bold text-amber-600">
+            Request pending — an admin will review it and you’ll be notified here.
+          </p>
+        )}
+        {status === 'approved' && (
+          <p className="mx-auto mt-3 max-w-xs rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-600">
+            Approved ✓ — log out and back in, then reopen this page.
+          </p>
+        )}
+        {(status === 'none' || status === 'declined') && (
+          <>
+            {status === 'declined' && (
+              <p className="mx-auto mt-3 max-w-xs rounded-xl bg-muted px-3 py-2 text-xs text-muted-foreground">
+                Last request was declined — you can ask again.
+              </p>
+            )}
+            <button onClick={ask} disabled={busy}
+              className="mt-4 w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
+              {busy ? 'Sending…' : 'Request contributor access'}
+            </button>
+          </>
+        )}
+        {msg && status !== 'pending' && <p className="mt-2 text-xs font-semibold text-muted-foreground">{msg}</p>}
+      </div>
+      <Link href="/" className="mx-auto rounded-xl border px-4 py-2 text-xs font-bold">Back home</Link>
     </div>
   )
 }
