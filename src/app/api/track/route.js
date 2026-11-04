@@ -20,7 +20,8 @@ export async function POST(request) {
         userAgent: request.headers.get('user-agent') || '',
         ...metadata,
       },
-      createdAt: new Date(),
+      // ISO strings like every other analytics writer — keeps range filters working.
+      createdAt: new Date().toISOString(),
     })
 
     return NextResponse.json({ ok: true })

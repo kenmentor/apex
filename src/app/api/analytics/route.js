@@ -40,14 +40,34 @@ export async function GET(request) {
     const range = searchParams.get('range') || '7d'
     const eventFilter = searchParams.get('event')
     const dateFilter = searchParams.get('date')
+    const fromParam = searchParams.get('from')
+    const toParam = searchParams.get('to')
 
     const col = await getCollection('analytics')
 
     const now = new Date()
     const daysBack = range === '24h' ? 1 : range === '30d' ? 30 : 7
-    const since = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000)
+    let since = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000)
+    let until = null
+    let rangeKey = range
+    let fromStr = null
+    let toStr = null
+    // Calendar range (?from=YYYY-MM-DD&to=YYYY-MM-DD) beats presets.
+    // No upper bound on history — any past date works.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(fromParam || '') && /^\d{4}-\d{2}-\d{2}$/.test(toParam || '') && fromParam <= toParam) {
+      since = new Date(`${fromParam}T00:00:00.000Z`)
+      // Exclusive upper bound: start of the day AFTER `to`, so the whole
+      // `to` day is included regardless of millisecond precision.
+      const toDay = new Date(`${toParam}T00:00:00.000Z`)
+      until = new Date(toDay.getTime() + 24 * 60 * 60 * 1000)
+      rangeKey = 'custom'
+      fromStr = fromParam
+      toStr = toParam
+    }
 
-    const match = { createdAt: { $gte: since.toISOString() } }
+    const match = { createdAt: { $gte: since.toISOString(), ...(until ? { $lt: until.toISOString() } : {}) } }
+    const sinceDate = new Date(since.getTime())
+    const untilDate = until ? new Date(until.getTime()) : null
 
     // Date filter: narrow to a specific day (YYYY-MM-DD)
     if (dateFilter) {
@@ -121,29 +141,78 @@ export async function GET(request) {
       { $sort: { _id: 1 } },
     ]).toArray()
 
+    // Daily signed-in users (distinct emails on page views) + daily event volume.
+    const dailySignedIn = await col.aggregate([
+      { $match: { ...match, event: 'page_view', 'data.email': { $ne: null } } },
+      { $addFields: { day: { $substr: ['$createdAt', 0, 10] } } },
+      { $group: { _id: { day: '$day', email: '$data.email' } } },
+      { $group: { _id: '$_id.day', users: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ]).toArray().catch(() => [])
+    const dailyEvents = await col.aggregate([
+      { $match: match },
+      { $addFields: { day: { $substr: ['$createdAt', 0, 10] } } },
+      { $group: { _id: '$day', n: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ]).toArray().catch(() => [])
+    // Daily installs + downloads series so custom ranges graph cleanly.
+    const dailyInstalls = await col.aggregate([
+      { $match: { ...match, event: 'pwa_install' } },
+      { $addFields: { day: { $substr: ['$createdAt', 0, 10] } } },
+      { $group: { _id: '$day', n: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ]).toArray().catch(() => [])
+    const dailyDownloads = await col.aggregate([
+      { $match: { ...match, event: 'download_click' } },
+      { $addFields: { day: { $substr: ['$createdAt', 0, 10] } } },
+      { $group: { _id: '$day', n: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ]).toArray().catch(() => [])
+
     const avgQuiz = quizScores[0] || null
 
     // ---- Growth: signups come from the users collection itself ----
+    // Respects both ends of the window (presets AND custom from/to).
     let signups = 0
     let signupsDaily = []
     try {
       const users = await getCollection('users')
       const sinceDate = new Date(since.getTime())
-      signups = await users.countDocuments({ createdAt: { $gte: sinceDate } }).catch(() => 0)
+      const userMatchDate = untilDate
+        ? { createdAt: { $gte: sinceDate, $lt: untilDate } }
+        : { createdAt: { $gte: sinceDate } }
+      signups = await users.countDocuments(userMatchDate).catch(() => 0)
       if (!signups) {
         // Legacy docs may carry ISO strings instead of Dates.
-        signups = await users.countDocuments({ createdAt: { $gte: since.toISOString() } }).catch(() => 0)
+        const userMatchStr = until
+          ? { createdAt: { $gte: since.toISOString(), $lt: until.toISOString() } }
+          : { createdAt: { $gte: since.toISOString() } }
+        signups = await users.countDocuments(userMatchStr).catch(() => 0)
       }
+      const perDayMatch = untilDate
+        ? { $or: [{ createdAt: { $gte: sinceDate, $lt: untilDate } }, { createdAt: { $gte: since.toISOString(), $lt: until.toISOString() } }] }
+        : { $or: [{ createdAt: { $gte: sinceDate } }, { createdAt: { $gte: since.toISOString() } }] }
       const perDay = await users.aggregate([
-        { $match: { $or: [{ createdAt: { $gte: sinceDate } }, { createdAt: { $gte: since.toISOString() } }] } },
+        { $match: perDayMatch },
         { $group: { _id: { $substr: [{ $toString: '$createdAt' }, 0, 10] }, n: { $sum: 1 } } },
         { $sort: { _id: 1 } },
       ]).toArray().catch(() => [])
-      signupsDaily = perDay.map(d => ({ date: d._id, users: d.n }))
+      // Clamp to the window (string comparison works for YYYY-MM-DD).
+      signupsDaily = perDay
+        .map(d => ({ date: d._id, users: d.n }))
+        .filter(d => !fromStr || !toStr || (d.date >= fromStr && d.date <= toStr))
     } catch {}
 
     const installs = await col.countDocuments({ ...match, event: 'pwa_install' }).catch(() => 0)
     const shares = await col.countDocuments({ ...match, event: 'share_completed' }).catch(() => 0)
+    // File/result downloads (download_click) — distinct from PWA installs.
+    const downloads = await col.countDocuments({ ...match, event: 'download_click' }).catch(() => 0)
+    const downloadersAgg = await col.aggregate([
+      { $match: { ...match, event: 'download_click' } },
+      { $group: { _id: '$data.sessionId' } },
+      { $count: 'total' },
+    ]).toArray().catch(() => [])
+    const downloaderCount = downloadersAgg[0]?.total || 0
 
     let contributor = { pending: 0, approved: 0, declined: 0 }
     try {
@@ -168,13 +237,16 @@ export async function GET(request) {
     let notesCreated = 0
     try {
       const mats = await getCollection('user_materials')
+      const matsMatch = until
+        ? { createdAt: { $gte: since.toISOString(), $lt: until.toISOString() } }
+        : { createdAt: { $gte: since.toISOString() } }
       uploadsByKind = await mats.aggregate([
-        { $match: { createdAt: { $gte: since.toISOString() } } },
+        { $match: matsMatch },
         { $group: { _id: '$itemKind', n: { $sum: 1 } } },
         { $sort: { n: -1 } },
       ]).toArray().catch(() => [])
       const nodes = await getCollection('library_nodes')
-      notesCreated = await nodes.countDocuments({ itemKind: 'notes', createdAt: { $gte: since.toISOString() } }).catch(() => 0)
+      notesCreated = await nodes.countDocuments({ itemKind: 'notes', ...matsMatch }).catch(() => 0)
     } catch {}
     const topSearches = await col.aggregate([
       { $match: { ...match, event: 'search_executed' } },
@@ -201,7 +273,7 @@ export async function GET(request) {
     let rageClicks = 0
     try {
       const tcol = await getCollection('telemetry')
-      const tmatch = { createdAt: { $gte: since } }
+      const tmatch = until ? { createdAt: { $gte: since, $lt: until } } : { createdAt: { $gte: since } }
       runtimeErrors = await tcol.aggregate([
         { $match: { ...tmatch, event: 'runtime_error_caught' } },
         { $group: { _id: '$payload.error_message', n: { $sum: 1 } } },
@@ -213,14 +285,25 @@ export async function GET(request) {
     runtimeErrors = runtimeErrors.map(e => ({ message: String(e._id || 'unknown').slice(0, 120), n: e.n }))
 
     return NextResponse.json({
-      range,
+      range: rangeKey,
+      preset: range,
+      from: fromStr,
+      to: toStr,
+      since: since.toISOString(),
+      until: until ? until.toISOString() : null,
       totalEvents,
       uniqueVisitors,
       signedInCount,
       signups,
       signupsDaily,
+      dailySignedIn: dailySignedIn.map(d => ({ date: d._id, users: d.users })),
+      dailyEvents: dailyEvents.map(d => ({ date: d._id, n: d.n })),
+      dailyInstalls: dailyInstalls.map(d => ({ date: d._id, n: d.n })),
+      dailyDownloads: dailyDownloads.map(d => ({ date: d._id, n: d.n })),
       installs,
       shares,
+      downloads,
+      downloaderCount,
       contributor,
       flashcards,
       videoPlays,

@@ -1,153 +1,107 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { getUser } from '@/lib/auth';
-import { Trophy, ArrowLeft, Users, FileText, TrendingUp, Medal, Crown } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { RoleSeal } from '@/components/UserAvatar';
-
-function RoleDot({ role, className = '' }) {
-  if (role !== 'admin' && role !== 'editor' && role !== 'official') return null
-  return (
-    <span className={`inline-flex rounded-full ring-2 ring-background ${className}`}>
-      <RoleSeal role={role} size="size-4" />
-    </span>
-  )
-}
+import { Trophy, ArrowLeft, Users, FileText, TrendingUp, Medal, Crown, Search, ChevronRight } from 'lucide-react';
+import { AvatarWithTick } from '@/components/UserAvatar';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const avatars = [
-  'linear-gradient(135deg, #ff9f43, #ff4757)',
-  'linear-gradient(135deg, #4bc0c0, #36a2eb)',
-  'linear-gradient(135deg, #a855f7, #6366f1)',
-  'linear-gradient(135deg, #05c46b, #0be881)',
-  'linear-gradient(135deg, #f1c40f, #f39c12)',
-  'linear-gradient(135deg, #e74c3c, #c0392b)',
-  'linear-gradient(135deg, #3498db, #2980b9)',
-  'linear-gradient(135deg, #9b59b6, #8e44ad)',
-  'linear-gradient(135deg, #00b894, #00cec9)',
-  'linear-gradient(135deg, #fd79a8, #e84393)',
-];
+const RANK_STYLE = {
+  1: { ring: '#f1c40f', chip: '#f1c40f', label: '1st' },
+  2: { ring: '#bdc3c7', chip: '#95a5a6', label: '2nd' },
+  3: { ring: '#cd7f32', chip: '#cd7f32', label: '3rd' },
+};
 
-function getInitials(name) {
-  if (!name) return '??';
-  const parts = name.trim().split(/\s+/);
-  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-  return name.slice(0, 2).toUpperCase();
-}
-
-function getAvatarIndex(id, idx) {
-  if (typeof id === 'string') {
-    let hash = 0;
-    for (let i = 0; i < id.length; i++) hash = (hash + id.charCodeAt(i)) % avatars.length;
-    return hash;
-  }
-  return (idx || 0) % avatars.length;
-}
-
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-function formatTime(secs) {
-  if (!secs) return '—';
-  const m = Math.floor(secs / 60);
-  const s = secs % 60;
-  if (m > 60) return `${Math.floor(m / 60)}h ${m % 60}m`;
-  return `${m}m ${s}s`;
+function toAvatarUser(entry, role) {
+  if (!entry) return { name: '---' };
+  return {
+    name: entry.name,
+    email: entry.email,
+    avatar: entry.avatar || '',
+    avatarConfig: entry.avatarConfig || null,
+    role: entry.role || role || null,
+    admin: (entry.role || role) === 'admin',
+  };
 }
 
 function StatCard({ icon: Icon, label, value, color, bg }) {
   return (
-    <Card>
-      <CardContent className="flex flex-col items-center gap-0.5 px-2 py-2.5 text-center">
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg" style={{ background: bg, color }}>
-          <Icon className="size-4" />
-        </div>
-        <div className="text-sm font-bold leading-tight">{value}</div>
-        <div className="text-[10px] leading-tight text-muted-foreground">{label}</div>
-      </CardContent>
-    </Card>
+    <div className="flex flex-col items-center gap-1 rounded-2xl border bg-card px-2 py-3 text-center">
+      <div className="flex size-9 items-center justify-center rounded-xl" style={{ background: bg, color }}>
+        <Icon className="size-4" />
+      </div>
+      <div className="text-base font-extrabold leading-tight tabular-nums">{value}</div>
+      <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+    </div>
   );
 }
 
-function PodiumUser({ entry, rank, role }) {
-  const isWinner = rank === 1;
+function PodiumCard({ entry, rank, role, large }) {
+  const s = RANK_STYLE[rank];
   const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
-    <div className={`flex flex-1 flex-col items-center min-w-0 ${rank === 2 ? 'order-first sm:order-none' : ''}`}>
-      <Link href={href} className="relative inline-flex flex-col items-center">
-        <div className="relative">
-          <Avatar className="size-12 border-4 border-background sm:size-16" style={{ boxShadow: isWinner ? '0 0 0 3px #f1c40f' : undefined }}>
-            <AvatarImage src={entry?.avatar} />
-            <AvatarFallback
-              className="text-lg font-bold text-white"
-              style={{ background: avatars[getAvatarIndex(entry?._id, rank - 1)] }}
-            >
-              {entry ? getInitials(entry.name) : '??'}
-            </AvatarFallback>
-          </Avatar>
-          <RoleDot role={role} className="absolute -bottom-1 -right-1" />
-          {isWinner && (
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <Crown className="size-6 text-yellow-400" fill="currentColor" />
-            </div>
+    <Link
+      href={href}
+      className={`relative flex flex-1 flex-col items-center rounded-3xl border bg-card px-2 pb-3 pt-5 text-center transition-transform hover:-translate-y-0.5 ${rank === 1 ? 'shadow-lg' : ''}`}
+      style={rank === 1 ? { borderColor: '#f1c40f55' } : undefined}
+    >
+      {rank === 1 && <Crown className="absolute -top-3.5 size-7 text-yellow-400" fill="currentColor" />}
+      <span
+        className="absolute -top-2.5 rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-white"
+        style={{ background: s.chip }}
+      >
+        {s.label}
+      </span>
+      <span className="rounded-full p-1" style={{ boxShadow: `0 0 0 3px ${s.ring}` }}>
+        <AvatarWithTick
+          user={toAvatarUser(entry, role)}
+          className={large ? 'size-20' : 'size-16'}
+          tickSize="size-5"
+          fallbackClassName="text-xl"
+        />
+      </span>
+      <div className="mt-2 w-full truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
+      <div className="text-sm font-extrabold tabular-nums text-primary">{entry?.totalScore || 0} pts</div>
+      <div className="text-[10px] font-semibold text-muted-foreground">{entry?.avgPct ?? 0}% avg · {entry?.quizCount ?? 0} quiz{(entry?.quizCount ?? 0) === 1 ? '' : 'zes'}</div>
+    </Link>
+  );
+}
+
+function RankRow({ entry, rank, isUser, role }) {
+  const s = RANK_STYLE[rank];
+  const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 rounded-2xl border bg-card px-3 py-2.5 transition-colors hover:bg-muted/50 ${isUser ? 'border-primary/60 ring-1 ring-primary/30' : ''}`}
+    >
+      <span
+        className="flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-black tabular-nums"
+        style={s ? { background: s.chip, color: '#fff' } : undefined}
+      >
+        {s ? <Medal className="size-3.5" /> : rank}
+      </span>
+      <AvatarWithTick user={toAvatarUser(entry, role)} className="size-10" tickSize="size-4" />
+      <span className="min-w-0 flex-1 leading-tight">
+        <span className="flex items-center gap-1.5">
+          <span className="truncate text-sm font-bold">{entry.name}</span>
+          {isUser && (
+            <span className="shrink-0 rounded-full bg-primary px-1.5 py-px text-[9px] font-black uppercase tracking-wide text-primary-foreground">
+              You
+            </span>
           )}
-          <Badge
-            variant="secondary"
-            className="absolute -bottom-1 left-1/2 size-6 -translate-x-1/2 p-0 text-xs font-bold"
-            style={{
-              background: rank === 1 ? '#f1c40f' : rank === 2 ? '#bdc3c7' : '#cd7f32',
-              color: 'white',
-            }}
-          >
-            {rank}
-          </Badge>
-        </div>
-        <div className="mt-3 w-full text-center">
-          <div className="truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
-          <div className="text-xs font-semibold text-primary">{entry?.totalScore || 0} pts</div>
-        </div>
-      </Link>
-    </div>
-  );
-}
-
-function LeaderEntry({ entry, rank, isUser, role }) {
-  const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
-  return (
-    <div className={`flex items-center gap-2 rounded-xl border-b border-border px-2.5 py-2 transition-colors last:border-b-0 ${isUser ? 'bg-primary/5 ring-1 ring-primary/20' : 'bg-card hover:bg-muted/50'}`}>
-      <span className="w-5 shrink-0 text-center text-xs font-black text-muted-foreground">{rank}</span>
-      <Link href={href} className="relative shrink-0">
-        <Avatar className="size-8">
-          <AvatarImage src={entry.avatar} />
-          <AvatarFallback
-            className="text-[10px] font-bold text-white"
-            style={{ background: avatars[getAvatarIndex(entry._id, rank)] }}
-          >
-            {getInitials(entry.name)}
-          </AvatarFallback>
-        </Avatar>
-        <RoleDot role={role} className="absolute -bottom-0.5 -right-0.5" />
-      </Link>
-      <div className="min-w-0 flex-1 leading-tight">
-        <Link href={href}>
-          <div className="truncate text-[13px] font-bold hover:text-primary transition-colors">{entry.name}</div>
-        </Link>
-        <div className="truncate text-[10px] text-muted-foreground">
+        </span>
+        <span className="block truncate text-[11px] text-muted-foreground">
           {[entry.school, `${entry.quizCount} quiz${entry.quizCount !== 1 ? 'zes' : ''}`].filter(Boolean).join(' · ')}
-        </div>
-      </div>
-      <div className="shrink-0 text-right leading-tight">
-        <div className="text-[13px] font-bold">{entry.totalScore}</div>
-        <div className="text-[10px] font-semibold text-muted-foreground">{entry.avgPct}%</div>
-      </div>
-    </div>
+        </span>
+      </span>
+      <span className="shrink-0 text-right leading-tight">
+        <span className="block text-sm font-extrabold tabular-nums">{entry.totalScore}</span>
+        <span className="block text-[11px] font-semibold text-muted-foreground">{entry.avgPct}% avg</span>
+      </span>
+      <ChevronRight className="size-4 shrink-0 text-muted-foreground/50" />
+    </Link>
   );
 }
 
@@ -157,6 +111,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [user, setUserState] = useState(null);
   const [roleMap, setRoleMap] = useState({});
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     const u = getUser();
@@ -169,9 +124,10 @@ export default function LeaderboardPage() {
         const list = Array.isArray(scoresData) ? scoresData : [];
         setAllEntries(list);
         if (statsData && !statsData.error) setStats(statsData);
-        const emails = [...new Set(list.map(e => e.email).filter(Boolean))].slice(0, 50);
-        if (emails.length) {
-          fetch(`/api/users/roles?emails=${emails.map(encodeURIComponent).join(',')}`)
+        // Roles for entries that didn't already carry one from the API.
+        const missing = [...new Set(list.filter(e => !e.role && e.email).map(e => e.email))].slice(0, 50);
+        if (missing.length) {
+          fetch(`/api/users/roles?emails=${missing.map(encodeURIComponent).join(',')}`)
             .then(r => r.json())
             .then(d => { if (d.roles) setRoleMap(d.roles) })
             .catch(() => {});
@@ -181,32 +137,41 @@ export default function LeaderboardPage() {
       .catch(() => setLoading(false));
   }, []);
 
+  const roleOf = (entry) => entry?.role || (entry?.email && roleMap[entry.email.toLowerCase()]) || null;
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return allEntries;
+    return allEntries.filter(e =>
+      e.name?.toLowerCase().includes(q) || e.school?.toLowerCase().includes(q)
+    );
+  }, [allEntries, query]);
+
   const userEmail = user?.email?.toLowerCase();
-  const userEntry = allEntries.find(e => e.email?.toLowerCase() === userEmail);
-  const userRank = userEntry ? allEntries.indexOf(userEntry) + 1 : null;
-  const isInTop10 = userRank && userRank <= 10;
+  const userRank = useMemo(() => {
+    const i = allEntries.findIndex(e => e.email?.toLowerCase() === userEmail);
+    return i >= 0 ? i + 1 : null;
+  }, [allEntries, userEmail]);
+  const userEntry = userRank ? allEntries[userRank - 1] : null;
+  const searching = query.trim().length > 0;
 
   const top3 = allEntries.slice(0, 3);
-
-  // Build display: top 10, optional separator+user, then rest
-  const top10 = allEntries.slice(0, 10);
-  const afterTop10 = allEntries.slice(10);
-  const showSeparator = userEntry && !isInTop10;
+  const showPodium = top3.length > 0 && !searching;
 
   if (loading) {
     return (
-    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+      <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
         <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
             <ArrowLeft className="size-4" />
           </Link>
-          <h1 className="flex-1 text-base font-bold">Leader Board</h1>
+          <h1 className="flex-1 text-base font-bold">Rankings</h1>
         </header>
         <div className="mx-auto w-full max-w-2xl space-y-4 px-4 py-4">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20 rounded-xl" />)}
+            {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-24 rounded-2xl" />)}
           </div>
-          <div className="flex justify-center gap-6 py-8">
+          <div className="grid grid-cols-3 items-end gap-3 pt-6">
             {[1, 2, 3].map(i => (
               <div key={i} className="flex flex-col items-center gap-2">
                 <Skeleton className="size-16 rounded-full" />
@@ -215,7 +180,7 @@ export default function LeaderboardPage() {
             ))}
           </div>
           <div className="space-y-2">
-            {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 rounded-xl" />)}
+            {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 rounded-2xl" />)}
           </div>
         </div>
       </div>
@@ -223,12 +188,14 @@ export default function LeaderboardPage() {
   }
 
   return (
-      <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
-        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-            <ArrowLeft className="size-4" />
-          </Link>
-        <h1 className="flex-1 text-base font-bold">Rankings</h1>
+    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
+      <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+          <ArrowLeft className="size-4" />
+        </Link>
+        <h1 className="flex flex-1 items-center gap-2 text-base font-bold">
+          <Trophy className="size-4 text-yellow-500" /> Rankings
+        </h1>
         <div className="size-9" />
       </header>
 
@@ -246,7 +213,6 @@ export default function LeaderboardPage() {
           </div>
         ) : (
           <>
-            {/* Stats */}
             {stats && (
               <div className="grid grid-cols-4 gap-2">
                 <StatCard icon={Users} label="Players" value={stats.totalPlayers} bg="#e8f4fd" color="#3498db" />
@@ -256,50 +222,70 @@ export default function LeaderboardPage() {
               </div>
             )}
 
-            {/* Podium */}
-            {top3.length > 0 && (
-              <div className="flex items-end justify-center gap-4 overflow-hidden py-4 sm:gap-6">
-                {[1, 0, 2].map(pos => {
-                  const entry = top3[pos];
-                  return entry ? <PodiumUser key={pos} entry={entry} rank={pos + 1} role={entry?.email && roleMap[entry.email.toLowerCase()]} /> : null;
-                })}
+            {showPodium && (
+              <div className="grid grid-cols-3 items-end gap-2 pt-5 sm:gap-3">
+                <PodiumCard entry={top3[1]} rank={2} role={top3[1] && roleOf(top3[1])} />
+                <PodiumCard entry={top3[0]} rank={1} large role={top3[0] && roleOf(top3[0])} />
+                {top3[2] ? (
+                  <PodiumCard entry={top3[2]} rank={3} role={roleOf(top3[2])} />
+                ) : (
+                  <div className="flex flex-1 flex-col items-center rounded-3xl border border-dashed px-2 py-6 text-center">
+                    <span className="text-xs font-bold text-muted-foreground">3rd place</span>
+                    <span className="text-[11px] text-muted-foreground">up for grabs</span>
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Leaderboard List */}
-            <div className="space-y-1">
-              {/* Top 10 */}
-              {top10.map((entry, i) => {
-                const isUser = userEmail && entry.email?.toLowerCase() === userEmail;
-                return (
-                    <LeaderEntry key={`top-${i}`} entry={entry} rank={i + 1} isUser={isUser} role={entry?.email && roleMap[entry.email.toLowerCase()]} />
-                );
-              })}
+            {userEntry && userRank > 3 && !searching && (
+              <Link
+                href={userEntry.email ? `/profile/${encodeURIComponent(userEntry.email)}` : '#'}
+                className="flex items-center gap-3 rounded-2xl border border-primary/60 bg-primary/5 px-3 py-2.5 ring-1 ring-primary/30"
+              >
+                <AvatarWithTick user={toAvatarUser(userEntry, roleOf(userEntry))} className="size-10" tickSize="size-4" />
+                <span className="min-w-0 flex-1 leading-tight">
+                  <span className="block truncate text-sm font-bold">Your rank · #{userRank}</span>
+                  <span className="block truncate text-[11px] text-muted-foreground">
+                    {userEntry.totalScore} pts · {userEntry.avgPct}% avg — keep climbing
+                  </span>
+                </span>
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+              </Link>
+            )}
 
-              {/* Separator + User (if not in top 10) */}
-              {showSeparator && (
-                <>
-                  <div className="flex items-center gap-3 py-3">
-                    <div className="h-px flex-1 bg-border" />
-                    <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Your Rank</span>
-                    <div className="h-px flex-1 bg-border" />
-                  </div>
-                  <LeaderEntry entry={userEntry} rank={userRank} isUser role={userEntry?.email && roleMap[userEntry.email.toLowerCase()]} />
-                </>
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Search players or schools…"
+                className="w-full rounded-2xl border bg-card py-2.5 pl-9 pr-9 text-sm font-medium outline-none placeholder:text-muted-foreground/60 focus:border-primary"
+              />
+              {query && (
+                <button
+                  onClick={() => setQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold text-muted-foreground"
+                >
+                  Clear
+                </button>
               )}
+            </div>
 
-              {/* After top 10 (skip user if already shown above) */}
-              {afterTop10.map((entry, i) => {
+            <div className="space-y-2">
+              {searching && filtered.length === 0 && (
+                <p className="rounded-2xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+                  No players match “{query.trim()}”.
+                </p>
+              )}
+              {(searching ? filtered : allEntries.slice(3)).map((entry) => {
+                const rank = allEntries.indexOf(entry) + 1;
                 const isUser = userEmail && entry.email?.toLowerCase() === userEmail;
-                if (isUser && showSeparator) return null;
-                return (
-                    <LeaderEntry key={`rest-${i}`} entry={entry} rank={10 + i + 1} isUser={isUser} role={entry?.email && roleMap[entry.email.toLowerCase()]} />
-                );
+                return <RankRow key={entry.email || `${rank}-${entry.name}`} entry={entry} rank={rank} isUser={isUser} role={roleOf(entry)} />;
               })}
             </div>
 
             <div className="text-center text-xs text-muted-foreground">
-              Ranking by total correct answers · {allEntries.length} players
+              Ranking by total correct answers · {searching ? `${filtered.length} of ` : ''}{allEntries.length} players
             </div>
           </>
         )}

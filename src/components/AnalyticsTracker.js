@@ -20,10 +20,12 @@ export default function AnalyticsTracker() {
     if (!pathname) return
 
     const nav = performance.getEntriesByType('navigation')[0]
+    const u = typeof getUser === 'function' ? getUser() : null
     trackEvent('page_view', {
       path: pathname,
       isRefresh: !!(nav && nav.type === 'reload'),
       isPwa: getPwaStatus(),
+      email: u?.email || null,
     })
 
     startTime.current = Date.now()

@@ -117,39 +117,29 @@ export default function InstallPrompt() {
         className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
       />
       <div
-        className="fixed left-1/2 top-1/2 z-50 w-[88%] max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-2xl p-6 text-center shadow-2xl"
-        style={{ background: 'linear-gradient(145deg, #1a1a2e, #16213e)' }}
+        className="fixed left-1/2 top-1/2 z-50 w-[88%] max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/10 bg-[#0d0d14] p-6 text-center shadow-2xl"
       >
-        <div
-          className="mx-auto mb-3.5 flex size-14 items-center justify-center rounded-2xl"
-          style={{ background: 'linear-gradient(135deg, #ff9f43, #ff6b35)', boxShadow: '0 8px 24px rgba(255,159,67,0.3)' }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </div>
+        <img src="/white-logo.png" alt="Apex" className="mx-auto mb-3 size-16 rounded-2xl object-cover" />
 
-        <h2 className="mb-1 text-lg font-bold text-white">Install Apex</h2>
-        <p className="mb-5 text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-          Study anywhere, even offline. Take quizzes without internet and track your progress on the go.
+        <h2 className="mb-1 text-lg font-bold text-white">Get the Apex app</h2>
+        <p className="mb-4 text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          Faster than the browser. Works offline. One tap from your home screen.
         </p>
 
         <button
           onClick={handleInstall}
-          className="mb-2.5 w-full rounded-xl py-3.5 text-sm font-extrabold tracking-wide text-white"
+          className="mb-2 w-full rounded-xl py-3.5 text-sm font-extrabold tracking-wide text-white"
           style={{ background: 'linear-gradient(135deg, #ff9f43, #ff6b35)', boxShadow: '0 6px 20px rgba(255,159,67,0.35)' }}
         >
-          INSTALL APP
+          INSTALL NOW — IT’S FREE
         </button>
 
         <button
           onClick={handleDismiss}
           className="-mb-2 mt-1 cursor-pointer border-none bg-transparent px-2 py-0.5"
-          style={{ color: 'rgba(255,255,255,0.1)', fontSize: 9, fontWeight: 300, letterSpacing: '0.5px' }}
+          style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11, fontWeight: 500, letterSpacing: '0.3px' }}
         >
-          Not now
+          Maybe later
         </button>
       </div>
     </>

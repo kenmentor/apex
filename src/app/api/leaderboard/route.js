@@ -58,10 +58,13 @@ export async function GET(request) {
     const emails = ranked.map(e => e.email).filter(Boolean)
     if (emails.length > 0) {
       const usersCol = await getCollection('users')
-      const users = await usersCol.find({ email: { $in: emails } }, { projection: { email: 1, avatar: 1 } }).toArray()
-      const avatarMap = Object.fromEntries(users.filter(u => u.avatar).map(u => [u.email.toLowerCase(), u.avatar]))
+      const users = await usersCol.find({ email: { $in: emails } }, { projection: { email: 1, avatar: 1, avatarConfig: 1, role: 1, admin: 1 } }).toArray()
+      const userMap = Object.fromEntries(users.map(u => [u.email.toLowerCase(), u]))
       for (const entry of ranked) {
-        entry.avatar = avatarMap[entry.email.toLowerCase()] || ''
+        const u = userMap[entry.email.toLowerCase()] || {}
+        entry.avatar = u.avatar || ''
+        entry.avatarConfig = u.avatarConfig || null
+        entry.role = u.admin || u.role === 'admin' ? 'admin' : (u.role || null)
       }
     }
 
