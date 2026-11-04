@@ -5,7 +5,7 @@ import { Mail, ChevronLeft } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { UserAvatarImage, VerifiedTick } from '@/components/UserAvatar';
 
-export default function TopBar({ user, unread = 0, onAvatar, title = 'GSS Banger', showBack = false, onBack }) {
+export default function TopBar({ user, unread = 0, onAvatar, title = 'Apex', showBack = false, onBack }) {
   return (
     <header className="sticky top-0 z-40 flex items-center gap-2 border-b bg-background/95 px-4 py-2.5 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {showBack ? (
@@ -32,7 +32,7 @@ export default function TopBar({ user, unread = 0, onAvatar, title = 'GSS Banger
         </button>
       )}
       <span className="flex-1 truncate text-base font-bold">
-        {showBack ? title : <Link href="/">GSS Banger</Link>}
+        {showBack ? title : <Link href="/">Apex</Link>}
       </span>
       <Link href="/groups?tab=inbox" aria-label="Messages" className="relative flex size-9 items-center justify-center rounded-lg hover:bg-muted">
         <Mail className="size-5" />

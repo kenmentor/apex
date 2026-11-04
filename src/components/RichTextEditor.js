@@ -9,6 +9,7 @@ import { uploadFile } from '@/lib/uploads'
 import { getToken } from '@/lib/auth'
 import { FolderBrowseInline, LibraryListInline } from '@/components/AttachPickers'
 import { renderMath } from '@/lib/math'
+import { templateBgStyle } from '@/lib/note-template'
 
 // Minimal block image node (no extra deps): renders <img>, parses it back,
 // inserts via setImage. Stored as plain HTML with everything else.
@@ -39,10 +40,10 @@ const CustomImage = Node.create({
   },
 })
 
-// Clean, mobile-friendly rich-text editor: sticky toolbar (stays put at the
-// bottom of long notes), live preview, inline images from device / folders /
-// library. No bubble menus, no clutter.
-export default function RichTextEditor({ value, onChange, placeholder = 'Write your note…', tall = false }) {
+// Clean, mobile-friendly rich-text editor: formatting rail (top by default,
+// Samsung-style bottom rail above the keyboard with toolbar="bottom"),
+// live preview, inline images from device / folders / library.
+export default function RichTextEditor({ value, onChange, placeholder = 'Write your note…', tall = false, toolbar = 'top', template = 'plain' }) {
   const [preview, setPreview] = useState(false)
   const [imgOpen, setImgOpen] = useState(false)
   const [imgTab, setImgTab] = useState(null) // 'folder' | 'library' | null
@@ -134,10 +135,10 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
   const btn = (active) =>
     `flex size-9 items-center justify-center rounded-lg ${active ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`
 
-  return (
-    <div className="space-y-2">
-      {/* Sticky: formatting stays reachable at the bottom of long notes. */}
-      <div className="sticky top-0 z-10 flex flex-wrap items-center gap-0.5 rounded-xl border bg-card p-1 shadow-sm">
+  const rail = (
+      <div className={(toolbar === 'bottom'
+        ? 'fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-2xl items-center gap-0.5 overflow-x-auto border-x border-t bg-card/95 px-2 pt-1.5 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] backdrop-blur [padding-bottom:max(0.375rem,env(safe-area-inset-bottom))] [&>*]:shrink-0'
+        : 'sticky top-0 z-10 flex flex-wrap items-center gap-0.5 rounded-xl border bg-card p-1 shadow-sm')}>
         <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} aria-label="Bold"
           className={btn(editor.isActive('bold'))}><Bold className="size-4" /></button>
         <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} aria-label="Italic"
@@ -167,13 +168,28 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
           {preview ? <Pencil className="size-4" /> : <Eye className="size-4" />}
         </button>
       </div>
+  )
+
+  // Lined pages need text riding the rules. Bottom-rail mode pads for the
+  // fixed rail so the last lines never hide under it.
+  const templateWrap = (template && template !== 'plain' && tall
+    ? '[&_.ProseMirror]:leading-[28px]'
+    : '') + (toolbar === 'bottom' ? ' pb-24' : '')
+
+  return (
+    <div className="space-y-2">
+      {toolbar !== 'bottom' && rail}
 
       {preview ? (
         <div className={'overflow-y-auto px-1 py-2 prose dark:prose-invert ' + (tall ? 'min-h-[55dvh] text-[15px] leading-relaxed [&_img]:my-3 [&_img]:rounded-xl [&_img]:max-w-full' : 'prose-sm min-h-48 rounded-xl border bg-background px-3 [&_img]:my-2 [&_img]:rounded-xl [&_img]:max-w-full')}
           dangerouslySetInnerHTML={{ __html: renderMath(value || editor.getHTML()) || '<p class="text-muted-foreground">Nothing to preview yet.</p>' }} />
       ) : (
-        <EditorContent editor={editor} />
+        <div className={templateWrap} style={templateBgStyle(template)}>
+          <EditorContent editor={editor} />
+        </div>
       )}
+
+      {toolbar === 'bottom' && rail}
 
       {imgOpen && (
         <>

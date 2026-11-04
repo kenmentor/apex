@@ -3,15 +3,24 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, PlayCircle, Star, Film, ClipboardList, MessageSquare, X, ArrowLeft, Bookmark, Play, BookOpen, Layers, Share2 } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { FileText, Film, ClipboardList, MessageSquare, X, ArrowLeft, Play, BookOpen, Layers, Share2, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { fetchJson } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 import VideoModal from '@/components/VideoModal';
+import NoteReader from '@/components/NoteReader';
+import { stripHtml } from '@/components/Reader';
+
+const COURSE_TABS = [
+  { id: 'quizzes', label: 'Quizzes' },
+  { id: 'theory', label: 'Theory' },
+  { id: 'flashcards', label: 'Cards' },
+  { id: 'notes', label: 'Notes' },
+  { id: 'videos', label: 'Videos' },
+  { id: 'curriculum', label: 'Curriculum' },
+];
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -35,6 +44,7 @@ export default function CourseDetailPage() {
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [shareToast, setShareToast] = useState(false);
   const [playingVideo, setPlayingVideo] = useState(null);
+  const [reading, setReading] = useState(null);
 
   const code = course?.code || formattedCode;
   const codeForUrl = code.toLowerCase().replace(/\s+/g, '');
@@ -64,18 +74,7 @@ export default function CourseDetailPage() {
       .catch(() => setLoading(false));
   }, [paramCode, formattedCode]);
 
-  // Auto-trigger feedback popup once after 30s, only once ever
-  useEffect(() => {
-    if (loading) return
-    try {
-      if (localStorage.getItem('fb_shown')) return
-    } catch {}
-    const timer = setTimeout(() => {
-      setShowFeedback(true)
-      try { localStorage.setItem('fb_shown', '1') } catch {}
-    }, 30000)
-    return () => clearTimeout(timer)
-  }, [loading])
+  // Manual rating via the header icon only — no auto popups.
 
   function getYouTubeId(url) {
     const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
@@ -144,7 +143,7 @@ export default function CourseDetailPage() {
 
   return (
       <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
-        <header className="sticky top-0 z-50 flex items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="flex items-center gap-1 px-4 py-2">
           <Link href="/courses" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
             <ArrowLeft className="size-4" />
           </Link>
@@ -166,173 +165,117 @@ export default function CourseDetailPage() {
         </header>
 
       <div className="mx-auto w-full max-w-2xl space-y-4 px-4 py-4">
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full overflow-x-auto flex-nowrap justify-start">
-            <TabsTrigger value="quizzes" className="flex-1">
-              <Star className="mr-1 size-3" />
-              Quizzes
-            </TabsTrigger>
-            <TabsTrigger value="theory" className="flex-1">
-              <BookOpen className="mr-1 size-3" />
-              Theory
-            </TabsTrigger>
-            <TabsTrigger value="flashcards" className="flex-1">
-              <Layers className="mr-1 size-3" />
-              Cards
-            </TabsTrigger>
-            <TabsTrigger value="notes" className="flex-1">
-              <FileText className="mr-1 size-3" />
-              Notes
-            </TabsTrigger>
-            <TabsTrigger value="videos" className="flex-1">
-              <PlayCircle className="mr-1 size-3" />
-              Videos
-            </TabsTrigger>
-            <TabsTrigger value="curriculum" className="flex-1">
-              <ClipboardList className="mr-1 size-3" />
-              Curriculum
-            </TabsTrigger>
-          </TabsList>
+        <section className="space-y-0.5">
+          <p className="px-1 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">{code}</p>
+          <h1 className="px-1 text-xl font-extrabold leading-tight">{course?.title || 'Course'}</h1>
+          <p className="px-1 text-xs text-muted-foreground">{questionCount || 0} questions · {videos.length} videos · {readings.length} notes</p>
+        </section>
 
-          <TabsContent value="quizzes" className="mt-4">
-            <div className="space-y-4">
-              <Card
-                className="overflow-hidden border-0 text-white"
-                style={{ background: `linear-gradient(135deg, ${course?.color || '#130f40'}, #2c2c54)` }}
-              >
-                <CardContent className="p-6 text-center">
-                  <ClipboardList className="mx-auto mb-2 size-9" />
-                  <h3 className="text-lg font-bold">{code} Full Quiz</h3>
-                  <p className="mb-4 text-sm text-white/70">{questionCount || 0} questions</p>
-                  {questionCount > 0 ? (
-                    <Button
-                      onClick={() => router.push(`/courses/${codeForUrl}/quiz`)}
-                      className="bg-white text-black hover:bg-white/90"
-                      size="lg"
-                    >
-                      Start Quiz
-                    </Button>
-                  ) : (
-                    <p className="text-sm text-white/60">No questions available yet.</p>
-                  )}
-                </CardContent>
-              </Card>
+        <div className="flex gap-5 overflow-x-auto border-b px-1 text-sm font-bold">
+          {COURSE_TABS.map(t => (
+            <button key={t.id} onClick={() => setActiveTab(t.id)}
+              className={'shrink-0 pb-2 ' + (activeTab === t.id ? 'border-b-2 border-primary text-foreground' : 'text-muted-foreground')}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === 'quizzes' && (
+          <ActionCard icon={ClipboardList} tint="bg-amber-500 text-white" wash="[background:linear-gradient(180deg,rgba(245,158,11,0.10),transparent)]" title={`${code} Full Quiz`}
+            meta={`${questionCount || 0} questions · timed`} cta={questionCount > 0 ? 'Start Quiz' : 'No questions yet'}
+            disabled={!questionCount} onCta={() => router.push(`/courses/${codeForUrl}/quiz`)} />
+        )}
+
+        {activeTab === 'theory' && (
+          <ActionCard icon={BookOpen} tint="bg-violet-600 text-white" wash="[background:linear-gradient(180deg,rgba(124,58,237,0.10),transparent)]" title={`${code} Theory Exam`}
+            meta="Type or snap your answers" cta="Start Theory" onCta={() => router.push(`/courses/${codeForUrl}/theory`)} />
+        )}
+
+        {activeTab === 'flashcards' && (
+          <ActionCard icon={Layers} tint="bg-sky-600 text-white" wash="[background:linear-gradient(180deg,rgba(2,132,199,0.10),transparent)]" title={`${code} Flash Cards`}
+            meta="Study theory questions and answers" cta="Study Cards" onCta={() => router.push(`/courses/${codeForUrl}/flashcards`)} />
+        )}
+
+        {activeTab === 'notes' && (
+          readings.length === 0 ? (
+            <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
+              <FileText className="size-12 opacity-40" />
+              <p className="text-sm">No notes yet for {code}.</p>
             </div>
-          </TabsContent>
-
-          <TabsContent value="theory" className="mt-4">
-            <div className="space-y-4">
-              <Card
-                className="overflow-hidden border-0 text-white"
-                style={{ background: `linear-gradient(135deg, ${course?.color || '#6b21a8'}, #312e81)` }}
-              >
-                <CardContent className="p-6 text-center">
-                  <BookOpen className="mx-auto mb-2 size-9" />
-                  <h3 className="text-lg font-bold">{code} Theory Exam</h3>
-                  <p className="mb-4 text-sm text-white/70">Type or snap your answers</p>
-                  <Button
-                    onClick={() => router.push(`/courses/${codeForUrl}/theory`)}
-                    className="bg-white text-black hover:bg-white/90"
-                    size="lg"
-                  >
-                    Start Theory
-                  </Button>
-                </CardContent>
-              </Card>
+          ) : (
+            <div className="divide-y divide-border rounded-2xl border">
+              {readings.map((r) => (
+                <button key={r._id} onClick={() => setReading(r)} className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-muted/50">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted">
+                    <FileText className="size-5 text-sky-600" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-semibold">{r.title}</span>
+                    <span className="block truncate text-[11px] text-muted-foreground">{stripHtml(r.content).slice(0, 120)}</span>
+                  </span>
+                  <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+                </button>
+              ))}
             </div>
-          </TabsContent>
+          )
+        )}
 
-          <TabsContent value="flashcards" className="mt-4">
-            <div className="space-y-4">
-              <Card
-                className="overflow-hidden border-0 text-white"
-                style={{ background: `linear-gradient(135deg, ${course?.color || '#0891b2'}, #164e63)` }}
-              >
-                <CardContent className="p-6 text-center">
-                  <Layers className="mx-auto mb-2 size-9" />
-                  <h3 className="text-lg font-bold">{code} Flash Cards</h3>
-                  <p className="mb-4 text-sm text-white/70">Study theory questions and answers</p>
-                  <Button
-                    onClick={() => router.push(`/courses/${codeForUrl}/flashcards`)}
-                    className="bg-white text-black hover:bg-white/90"
-                    size="lg"
-                  >
-                    Study Cards
-                  </Button>
-                </CardContent>
-              </Card>
+        {reading && (
+          <NoteReader
+            title={reading.title || 'Note'}
+            subtitle={code}
+            html={reading.content}
+            savePayload={{
+              name: reading.title, itemKind: 'notes',
+              refId: String(reading._id || ''),
+              href: null, url: null,
+              courseCode: code, subtitle: code,
+            }}
+            onClose={() => setReading(null)}
+          />
+        )}
+
+        {activeTab === 'videos' && (
+          videos.length === 0 ? (
+            <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
+              <Film className="size-12 opacity-40" />
+              <p className="text-sm">No videos yet for {code}.</p>
             </div>
-          </TabsContent>
-
-          <TabsContent value="notes" className="mt-4">
-            <ScrollArea className="max-h-[calc(100dvh-200px)]">
-              {readings.length === 0 ? (
-                <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
-                  <FileText className="size-12 opacity-40" />
-                  <p className="text-sm">No notes yet for {code}.</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {readings.map((r) => (
-                    <Card key={r._id}>
-                      <CardContent className="p-5">
-                        <h2 className="mb-3 text-lg font-bold">{r.title}</h2>
-                        <div
-                          className="prose prose-sm max-w-none text-muted-foreground"
-                          dangerouslySetInnerHTML={{ __html: r.content }}
+          ) : (
+            <div className="space-y-3">
+              {videos.map((v) => {
+                const vid = getYouTubeId(v.url);
+                return (
+                  <button key={v._id} onClick={() => setPlayingVideo(v)} className="block w-full overflow-hidden rounded-2xl border bg-card text-left transition-colors hover:bg-muted/40">
+                    {vid && (
+                      <div className="relative aspect-video bg-black">
+                        <img
+                          src={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`}
+                          alt={v.title}
+                          loading="lazy"
+                          className="size-full object-cover"
                         />
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </ScrollArea>
-          </TabsContent>
-
-          <TabsContent value="videos" className="mt-4">
-            <ScrollArea className="max-h-[calc(100dvh-200px)]">
-              {videos.length === 0 ? (
-                <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
-                  <Film className="size-12 opacity-40" />
-                  <p className="text-sm">No videos yet for {code}.</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {videos.map((v) => {
-                    const vid = getYouTubeId(v.url);
-                    return (
-                      <button key={v._id} onClick={() => setPlayingVideo(v)} className="block w-full text-left">
-                        <Card className="overflow-hidden transition-colors hover:bg-accent">
-                          {vid && (
-                            <div className="relative aspect-video bg-black">
-                              <img
-                                src={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`}
-                                alt={v.title}
-                                className="size-full object-cover"
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="flex size-12 items-center justify-center rounded-full bg-black/70">
-                                  <Play className="size-5 text-white" fill="white" />
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          <CardContent className="p-3">
-                            <div className="text-sm font-semibold">{v.title}</div>
-                            {v.description && (
-                              <div className="mt-1 text-xs text-muted-foreground">{v.description}</div>
-                            )}
-                          </CardContent>
-                        </Card>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value="curriculum" className="mt-4">
-            {!curriculum ? (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="flex size-12 items-center justify-center rounded-full bg-black/70">
+                            <Play className="size-5 text-white" fill="white" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div className="p-3">
+                      <div className="line-clamp-2 text-sm font-semibold leading-snug">{v.title}</div>
+                      {v.description && (
+                        <div className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">{v.description}</div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )
+        )}
+        {activeTab === 'curriculum' && (
+          !curriculum ? (
               <div className="flex flex-col items-center gap-3 py-12 text-muted-foreground">
                 <ClipboardList className="size-12 opacity-40" />
                 <p className="text-sm">No CCMAS record for {code} yet.</p>
@@ -374,9 +317,8 @@ export default function CourseDetailPage() {
                   </Card>
                 )}
               </div>
-            )}
-          </TabsContent>
-        </Tabs>
+            )
+          )}
       </div>
 
       {/* Feedback Modal */}
@@ -450,6 +392,26 @@ export default function CourseDetailPage() {
           onClose={() => setPlayingVideo(null)}
         />
       )}
+    </div>
+  );
+}
+
+function ActionCard({ icon: Icon, tint, wash, title, meta, cta, onCta, disabled }) {
+  return (
+    <div className={`rounded-2xl border bg-card p-4 ${wash || ''}`}>
+      <div className="flex items-center gap-3">
+        <span className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${tint}`}>
+          <Icon className="size-6" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[15px] font-extrabold leading-snug">{title}</span>
+          <span className="mt-0.5 block truncate text-xs text-muted-foreground">{meta}</span>
+        </span>
+      </div>
+      <button onClick={onCta} disabled={disabled}
+        className="mt-3.5 w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground disabled:opacity-40">
+        {cta}
+      </button>
     </div>
   );
 }

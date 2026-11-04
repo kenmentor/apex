@@ -30,13 +30,14 @@ function getOrigin() {
 }
 
 export async function generateMetadata({ params }) {
-  const code = (params.code || '').toUpperCase().replace(/-/g, '')
+  const { code: rawCode } = await params
+  const code = (rawCode || '').toUpperCase().replace(/-/g, '')
   const formattedCode = code.replace(/^([A-Z]+)(\d+)$/, '$1 $2')
   const course = COURSES[formattedCode] || { title: '' }
   const pageTitle = formattedCode + (course.title ? ` - ${course.title}` : '')
   const origin = getOrigin()
   const ogUrl = `${origin}/api/og?code=${encodeURIComponent(formattedCode)}`
-  const pageUrl = `${origin}/courses/${params.code}`
+  const pageUrl = `${origin}/courses/${rawCode}`
 
   return {
     title: pageTitle,

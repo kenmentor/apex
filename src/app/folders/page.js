@@ -9,7 +9,7 @@ import {
   Users, MoreVertical, Upload, Gamepad2, GraduationCap, Image as ImageIcon,
   ArrowLeft, ArrowUpDown, Info, Share2, Globe, Lock, Download, CheckCircle2, WifiOff, Loader2,
   Youtube, MoreHorizontal, NotebookPen, ScanLine, Camera, Send,
-  Mic,
+  Mic, Palette, Check,
 } from 'lucide-react'
 import { getToken } from '@/lib/auth'
 import BookGrid from '@/components/BookGrid'
@@ -19,6 +19,7 @@ import ScanCamera from '@/components/ScanCamera'
 import { LiveLecture, formatElapsed } from '@/lib/live-lecture'
 import RichTextEditor from '@/components/RichTextEditor'
 import { extractNoteText, plainToHtml, htmlToText, escHtml } from '@/lib/ocr'
+import { NOTE_TEMPLATES, nextTemplate, templateBgStyle } from '@/lib/note-template'
 import { uploadFile } from '@/lib/uploads'
 import { thumbFor, isYouTubeUrl, ytEmbedUrl, ytThumb } from '@/lib/youtube'
 import {
@@ -184,6 +185,7 @@ function FoldersInner() {
   const [noteTypeOpen, setNoteTypeOpen] = useState(false)
   const [noteTitle, setNoteTitle] = useState('')
   const [noteHtml, setNoteHtml] = useState('')
+  const [noteTemplate, setNoteTemplate] = useState('plain')
   // Draft autosave: every keystroke-safe snapshot lands in Drafts.
   const [noteDraftId, setNoteDraftId] = useState(null)
   const [noteResume, setNoteResume] = useState(null)
@@ -304,7 +306,7 @@ function FoldersInner() {
     }
   }, [])
 
-  // Flush queued folder/link creates when back online.
+  // Flush queued folder/link/note creates when back online.
   useEffect(() => {
     if (!online) return
     let dead = false
@@ -314,9 +316,7 @@ function FoldersInner() {
       for (const op of rows) {
         if (op.type === 'upload') continue // uploads flush via retry button (needs File)
         try {
-          if (op.type === 'folder') {
-            await api('/api/library', { method: 'POST', body: JSON.stringify(op.payload) })
-          } else if (op.type === 'link') {
+          if (op.type === 'folder' || op.type === 'link' || op.type === 'note') {
             await api('/api/library', { method: 'POST', body: JSON.stringify(op.payload) })
           } else continue
           await removeOutbox(op.qid)
@@ -659,16 +659,32 @@ function FoldersInner() {
     const full = liveFullHtml(noteHtml)
     const textLen = htmlToText(full).length
     if (!title && !textLen) { setError('Write something first'); return }
-    if (!isOnlineNow()) { setError('Offline — notes save when you’re back online.'); return }
+    const payload = {
+      kind: 'ref', name: title || 'Untitled note', parentId: currentId,
+      itemKind: 'notes', content: full || null, subtitle: 'Note',
+      ...(noteTemplate !== 'plain' ? { color: noteTemplate } : {}),
+    }
+    if (!isOnlineNow()) {
+      // Offline: queue the note on-device, it saves when back online.
+      try {
+        await queueOp({ type: 'note', payload })
+        const left = await listOutbox().catch(() => [])
+        setQueuedCount((left || []).length)
+        setNoteTitle('')
+        setNoteHtml('')
+        liveSegs.current = []
+        setLiveLast('')
+        noteSavedRef.current = true
+        setNoteOpen(false)
+        setError('Offline — note queued, it saves when you’re back online.')
+      } catch {
+        setError('Offline — could not queue that note.')
+      }
+      return
+    }
     setBusy(true)
     try {
-      await api('/api/library', {
-        method: 'POST',
-        body: JSON.stringify({
-          kind: 'ref', name: title || 'Untitled note', parentId: currentId,
-          itemKind: 'notes', content: full || null, subtitle: 'Note',
-        }),
-      })
+      await api('/api/library', { method: 'POST', body: JSON.stringify(payload) })
       setNoteTitle('')
       setNoteHtml('')
       liveSegs.current = []
@@ -682,9 +698,10 @@ function FoldersInner() {
     } catch (e) { setError(e.message) } finally { setBusy(false) }
   }
 
-  function openNoteEditor({ title = '', html = '' } = {}) {
+  function openNoteEditor({ title = '', html = '', template = 'plain' } = {}) {
     setNoteTitle(title)
     setNoteHtml(seedLiveSegs(html))
+    setNoteTemplate(template || 'plain')
     setLiveLast('')
     setNoteTypeOpen(false)
     setScanOpen(false)
@@ -734,7 +751,7 @@ function FoldersInner() {
     if (!htmlToText(html) && !title) return
     if (noteSavedRef.current || !isOnlineNow()) return
     try {
-      const content = JSON.stringify({ kind: 'note-draft', title, html, parentId: currentId, savedAt: new Date().toISOString() })
+      const content = JSON.stringify({ kind: 'note-draft', title, html, template: noteTemplate, parentId: currentId, savedAt: new Date().toISOString() })
       const name = title || 'Untitled note'
       if (noteDraftId) {
         await api(`/api/library/${encodeURIComponent(noteDraftId)}`, { method: 'PATCH', body: JSON.stringify({ name, content }) })
@@ -797,7 +814,9 @@ function FoldersInner() {
         const { text, confidence } = await extractNoteText(files[i].file, {
           onProgress: (m) => {
             const p = m && typeof m.progress === 'number' ? m.progress : 0
-            setScanProg({ status: `${label} ${Math.round(p * 100)}%`, progress: Math.round(((i + p) / total) * 100) })
+            const preparing = m?.status && m.status !== 'recognizing text'
+            const phase = preparing ? 'Preparing reader (one-time)…' : label
+            setScanProg({ status: `${phase} ${Math.round(p * 100)}%`, progress: Math.round(((i + p) / total) * 100) })
           },
         })
         if (typeof confidence === 'number') minConf = Math.min(minConf, confidence)
@@ -1432,6 +1451,7 @@ function FoldersInner() {
           title={readingNode.name || 'Note'}
           subtitle={readingNode.courseCode || readingNode.subtitle || null}
           html={readingNode.content}
+          template={readingNode.color}
           savePayload={{
             name: readingNode.name, itemKind: 'notes',
             refId: String(readingNode.id || ''),
@@ -1553,21 +1573,30 @@ function FoldersInner() {
       {noteOpen && (
         <div className="fixed inset-0 z-[60] overflow-y-auto bg-background">
           <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col px-4 pb-4 pt-4">
-            <div className="mb-3 flex items-center gap-2">
-              <h2 className="flex-1 truncate text-base font-black">New note</h2>
+            <div className="mb-3 flex items-center gap-1">
+              <button onClick={() => setNoteOpen(false)} aria-label="Close" className="flex size-8 shrink-0 items-center justify-center rounded-lg hover:bg-muted"><X className="size-4" /></button>
+              <h2 className="min-w-0 flex-1 truncate text-base font-black">New note</h2>
               {(liveStatus === 'listening' || liveStatus === 'paused') && (
                 <span className="shrink-0 text-[11px] font-bold text-muted-foreground">
                   {liveStatus === 'listening' && <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-red-500" />}{formatElapsed(liveElapsed)}
                 </span>
               )}
               {noteDraftId && liveStatus === 'idle' && <span className="shrink-0 text-[11px] font-semibold text-muted-foreground">Draft saved ✓</span>}
+              <button onClick={() => setNoteTemplate(t => nextTemplate(t))} aria-label="Page template"
+                title={`Page: ${NOTE_TEMPLATES.find(t => t.id === noteTemplate)?.label || 'Plain'}`}
+                className="flex size-8 shrink-0 items-center justify-center rounded-lg hover:bg-muted">
+                <Palette className="size-4" />
+              </button>
               <button onClick={toggleLive} disabled={liveStatus === 'starting' || liveStatus === 'stopping'} aria-label="Live lecture mic"
                 className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${liveStatus === 'listening' ? 'bg-red-500/15 text-red-600' : 'hover:bg-muted'}`}>
                 {(liveStatus === 'starting' || liveStatus === 'stopping')
                   ? <Loader2 className="size-4 animate-spin" />
                   : <Mic className="size-4" />}
               </button>
-              <button onClick={() => setNoteOpen(false)} aria-label="Close" className="flex size-8 items-center justify-center rounded-lg hover:bg-muted"><X className="size-4" /></button>
+              <button onClick={createNote} disabled={busy} aria-label="Save note" title="Save note"
+                className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground disabled:opacity-50">
+                {busy ? <Loader2 className="size-4 animate-spin" /> : <Check className="size-4" strokeWidth={3} />}
+              </button>
             </div>
             {liveStatus === 'starting' && <p className="mb-2 text-[11px] text-muted-foreground">Connecting…</p>}
             {liveError && <p className="mb-2 text-xs font-semibold text-red-500">{liveError}</p>}
@@ -1596,6 +1625,7 @@ function FoldersInner() {
                   onClick={() => {
                     setNoteTitle(noteResume.draft.title || '')
                     setNoteHtml(seedLiveSegs(noteResume.draft.html || ''))
+                    setNoteTemplate(noteResume.draft.template || 'plain')
                     setLiveLast('')
                     setNoteDraftId(noteResume.node.id)
                     setNoteResume(null)
@@ -1608,13 +1638,7 @@ function FoldersInner() {
             )}
             <input value={noteTitle} onChange={e => setNoteTitle(e.target.value)} placeholder="Title" className="mb-2 w-full rounded-xl border px-3 py-2 text-sm font-bold outline-none" />
             <div className="min-h-0 flex-1">
-              <RichTextEditor tall value={noteHtml} onChange={setNoteHtml} placeholder="Start writing…" />
-            </div>
-            <p className="py-2 text-[11px] text-muted-foreground">Saved in {data.node?.name || 'My Files'}. Tap it anytime to read or edit.</p>
-            <div className="sticky bottom-0 bg-background pb-2 pt-1">
-              <button onClick={createNote} disabled={busy} className="w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground disabled:opacity-50">
-                {busy ? 'Saving…' : 'Save note'}
-              </button>
+              <RichTextEditor tall toolbar="bottom" template={noteTemplate} value={noteHtml} onChange={setNoteHtml} placeholder="Start writing…" />
             </div>
           </div>
         </div>
@@ -1659,7 +1683,7 @@ function FoldersInner() {
             <button onClick={runScan} disabled={scanBusy || !scanFiles.length} className="w-full rounded-xl bg-emerald-600 py-2 text-sm font-bold text-white disabled:opacity-50">
               {scanBusy ? 'Reading…' : scanFiles.length > 1 ? `Extract ${scanFiles.length} pages` : 'Extract text'}
             </button>
-            <p className="text-[11px] text-muted-foreground">Reads on this phone — no upload, no cost. Fit each page in the frame; you review before saving.</p>
+            <p className="text-[11px] text-muted-foreground">Reads on this phone — no upload, no cost. First run downloads the reader (once), then it works offline. Fit each page in the frame; you review before saving.</p>
           </div>
         </Sheet>
       )}
@@ -1772,10 +1796,10 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
           {node.isPublic === false ? <><Lock className="size-3" /> Private</> : <><Globe className="size-3" /> Public</>}
         </span>
       </div>
-      {(node.itemKind === 'notes' || node.itemKind === 'draft') && (
+      {node.itemKind === 'notes' && (
         <div className="space-y-2">
           {!editingNote && !!node.content && (
-            <div className="prose max-h-64 max-w-none overflow-y-auto rounded-xl bg-muted/60 p-3 text-sm dark:prose-invert" dangerouslySetInnerHTML={{ __html: node.content }} />
+            <div className="prose max-h-64 max-w-none overflow-y-auto rounded-xl bg-muted/60 p-3 text-sm dark:prose-invert" style={templateBgStyle(node.color)} dangerouslySetInnerHTML={{ __html: node.content }} />
           )}
           {!editingNote && !node.content && canWrite && (
             <button onClick={() => { setNoteDraft(''); setEditingNote(true) }} className="w-full rounded-xl border border-dashed py-2.5 text-sm font-semibold text-muted-foreground hover:bg-muted">
@@ -1802,6 +1826,11 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
           )}
         </div>
       )}
+      {node.itemKind === 'draft' && (
+        <p className="rounded-xl bg-amber-500/10 px-3 py-2 text-xs font-semibold text-amber-700">
+          Unfinished draft — resume it from Make note in its folder.
+        </p>
+      )}
       <dl className="space-y-1.5 rounded-xl border p-3 text-sm">        {!!(node.size || central?.size) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Size</dt><dd className="font-semibold">{formatSize(node.size || central?.size)}</dd></div>}
         {!!(node.updatedAt || node.createdAt || central?.createdAt) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Modified</dt><dd className="font-semibold">{formatDate(node.updatedAt || node.createdAt || central?.createdAt)}</dd></div>}
         {!!(node.courseCode || central?.courseCode) && <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Course</dt><dd className="font-semibold">{node.courseCode || central?.courseCode}</dd></div>}
@@ -1814,12 +1843,12 @@ function DetailsBody({ node, materials, canWrite, onShare, onTogglePublic, onOpe
             <BookOpen className="size-4" /> Read
           </Link>
         )}
-        {(node.itemKind === 'notes' || node.itemKind === 'draft') && node.content && (
+        {node.itemKind === 'notes' && node.content && (
           <button onClick={() => onRead?.(node)} className="col-span-2 flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2 text-sm font-bold text-primary-foreground">
             <BookOpen className="size-4" /> Read
           </button>
         )}
-        {(node.itemKind === 'notes' || node.itemKind === 'draft') && node.content && (node.courseCode || courseCode) && (
+        {node.itemKind === 'notes' && node.content && (node.courseCode || courseCode) && (
           <button
             onClick={async () => { setPubBusy(true); try { const m = await onPublish?.(); if (m) setPubMsg(m) } finally { setPubBusy(false) } }}
             disabled={pubBusy} className="col-span-2 flex items-center justify-center gap-1.5 rounded-xl border py-2 text-sm font-semibold hover:bg-muted disabled:opacity-50">
@@ -1924,7 +1953,7 @@ function FileRow({ node, view, selectMode, checked, pinned, onToggle, onMenu, on
   const isVideo = kind === 'video' || isYouTubeUrl(href)
   const playable = !selectMode && !!onPlay && isPlayableMedia(node)
   const readable = kind === 'pdf' && !!href && !selectMode
-  const noteReadable = (kind === 'notes' || kind === 'draft') && !!node.content && !selectMode && !!onRead
+  const noteReadable = kind === 'notes' && !!node.content && !selectMode && !!onRead
   const inner = (
     <>
       {thumb ? (

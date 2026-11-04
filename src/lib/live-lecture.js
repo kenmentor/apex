@@ -301,6 +301,11 @@ export class LiveLecture {
       e.fatal = true
       throw e
     }
+    if (res.status === 403) {
+      const e = new Error('This app address is blocked — contact support.')
+      e.fatal = true
+      throw e
+    }
     if (res.status === 429) throw new Error('rate')
     if (!res.ok) throw new Error(`worker-${res.status}`)
     const d = await res.json().catch(() => ({}))

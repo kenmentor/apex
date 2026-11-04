@@ -159,8 +159,9 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
 
       {tab === 'quiz' && <QuizCard course={String(slug).toLowerCase()} title={code} />}
 
-      {tab !== 'quiz' && visible.map(s => (
+      {tab !== 'quiz' && visible.map((s, i) => (
         <TopicSection key={s.plan.id} planTopic={s.plan} content={s.content} tab={tab} course={String(slug).toLowerCase()} doneIds={doneIds} flat={s.plan.id === 'all'}
+          index={i} color={color}
           onAdd={contribute && s.plan.id !== 'all' ? () => onAddTopic?.(s.content.title) : undefined} />
       ))}
 
@@ -206,7 +207,7 @@ function QuizCard({ course, title }) {
   )
 }
 
-function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd }) {
+function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, color, onAdd }) {
   const [reader, setReader] = useState(null)
   const [suggestOpen, setSuggestOpen] = useState(false)
   const [sentMsg, setSentMsg] = useState('')
@@ -227,15 +228,20 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd })
   const topicSpeech = ((content.tabs?.text || []).map(itemSpeechText).join('\n\n')).slice(0, 8000)
 
   return (
-    <section className="space-y-2">
+    <section id={`topic-${planTopic.id}`} className="scroll-mt-24 space-y-2">
       {!flat && (
-        <div className="flex items-start gap-2.5 px-1 pt-2">
+        <div className="flex items-center gap-2.5 rounded-2xl px-3 py-2.5" style={{ background: `${color}40` }}>
+          {typeof index === 'number' && (
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-background text-[11px] font-black text-muted-foreground">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+          )}
           {tAll ? (
-            <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-green-500">
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-green-500">
               <Check className="size-4 text-white" strokeWidth={3} />
             </span>
           ) : (
-            <span className="mt-0.5 size-6 shrink-0 rounded-full border-2 border-muted-foreground/40" />
+            <span className="size-6 shrink-0 rounded-full border-2 border-muted-foreground/40 bg-background" />
           )}
           <h2 className="min-w-0 flex-1 text-[15px] font-bold leading-snug">{content.title}</h2>
           <Link
@@ -246,7 +252,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, onAdd })
           >
             <Layers className="size-4" />
           </Link>
-          {rows.length > 0 && <span className="mt-1 shrink-0 text-[11px] text-muted-foreground">{tDone}/{rows.length}</span>}
+          {rows.length > 0 && <span className="shrink-0 text-[11px] text-muted-foreground">{tDone}/{rows.length}</span>}
         </div>
       )}
       {onAdd && (

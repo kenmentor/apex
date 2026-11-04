@@ -3,12 +3,13 @@
 import { Volume2, Square } from 'lucide-react'
 import { FullscreenReader, useSpeech } from './Reader'
 import { renderMath } from '@/lib/math'
+import { templateBgStyle } from '@/lib/note-template'
 import SaveToFolder from './SaveToFolder'
 
 // Shared fullscreen note reader — the same reading experience everywhere:
 // course theory, folder notes, search hits. Prose + math + listen-aloud.
-// Props: { title, subtitle, html, savePayload?, extraActions?, onClose }
-export default function NoteReader({ title, subtitle, html, savePayload, extraActions, onClose }) {
+// Props: { title, subtitle, html, template?, savePayload?, extraActions?, onClose }
+export default function NoteReader({ title, subtitle, html, template, savePayload, extraActions, onClose }) {
   const speech = useSpeech()
 
   function close() {
@@ -44,6 +45,7 @@ export default function NoteReader({ title, subtitle, html, savePayload, extraAc
         )}
         <div
           className="prose mt-3 max-w-none dark:prose-invert"
+          style={templateBgStyle(template)}
           dangerouslySetInnerHTML={{ __html: renderMath(html || '<p class="text-muted-foreground">Empty note.</p>') }}
         />
       </div>

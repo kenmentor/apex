@@ -134,7 +134,7 @@ export default function NavWrapper() {
           user={user}
           unread={unread}
           onAvatar={() => setDrawer(true)}
-          title={detail ? detail.title : 'GSS Banger'}
+          title={detail ? detail.title : 'Apex'}
           showBack={!!detail}
           onBack={detail ? () => goBack(detail.parent) : undefined}
         />
