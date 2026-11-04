@@ -315,7 +315,7 @@ function AuthForm() {
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pb-10 pt-10">
       {step === 'email' && (
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
-          <Brand title="Welcome to Apex" sub="Enter your email — we'll send a sign-in code." />
+          <Brand title="Welcome to Apex" sub="Enter your email for a sign-in code." />
           <div className="mt-7 space-y-3">
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -323,35 +323,25 @@ function AuthForm() {
                 onKeyDown={e => e.key === 'Enter' && handleSendCode()} className={'h-14 py-3 pl-11 text-base ' + (error ? 'border-red-500' : '')} />
             </div>
             <Button onClick={handleSendCode} disabled={submitting} className="h-14 w-full text-base">
-              {submitting ? 'Sending…' : 'Send me a code'}<ArrowRight className="ml-2 size-4" />
+              {submitting ? 'Sending…' : 'Send code'}<ArrowRight className="ml-2 size-4" />
             </Button>
-            <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-              {[
-                ['No password', '🔓'],
-                ['Stays 90 days', '📆'],
-                ['Free forever', '🎓'],
-              ].map(([label, icon]) => (
-                <div key={label} className="rounded-xl bg-muted/60 px-1 py-2.5">
-                  <div className="text-lg leading-none">{icon}</div>
-                  <div className="mt-1 text-[10px] font-bold text-muted-foreground">{label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       )}
 
       {step === 'code' && (
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
-          <Brand title="Check your email" sub={<>We sent a 6-digit code to <span className="font-bold text-foreground">{email}</span>.</>} />
+          <Brand title="Enter code" sub={<>Sent to <span className="font-bold text-foreground">{email}</span>.</>} />
           <div className="mt-7 space-y-4">
             <OtpBoxes value={code} hasError={!!error} onChange={v => { typedFull.current = true; setCode(v); setError('') }} />
             <Button onClick={() => { typedFull.current = false; handleVerify() }} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
-              {submitting ? 'Checking…' : 'Sign in'}<Check className="ml-2 size-4" />
+              {submitting ? 'Checking…' : 'Sign in'}
             </Button>
-            <div className="flex items-center justify-between">
-              <button onClick={() => setStep('email')} className="text-sm font-medium text-muted-foreground">← Change email</button>
-              <button onClick={handleSendCode} disabled={submitting || cooldown > 0} className="text-sm font-medium text-primary disabled:opacity-50">
+            <div className="flex h-10 items-center justify-between">
+              <button onClick={() => setStep('email')} className="inline-flex h-10 items-center gap-1.5 px-1 text-sm font-semibold text-muted-foreground">
+                <ArrowRight className="size-4 rotate-180" /> Back
+              </button>
+              <button onClick={handleSendCode} disabled={submitting || cooldown > 0} className="inline-flex h-10 items-center px-1 text-sm font-semibold text-primary disabled:opacity-50">
                 {cooldown > 0 ? `Resend in ${cooldown}s` : 'Resend code'}
               </button>
             </div>
@@ -435,10 +425,14 @@ function AuthForm() {
                   <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 </div>
               </div>
-              <Button onClick={handleDeptComplete} disabled={submitting || !department || !level} className="mt-auto h-14 text-base">
-                Continue<ArrowRight className="ml-2 size-4" />
-              </Button>
-              <button onClick={() => setStep('uni')} className="pb-2 text-center text-sm font-medium text-muted-foreground">← Back</button>
+          <Button onClick={handleDeptComplete} disabled={submitting || !department || !level} className="mt-auto h-14 text-base">
+            Continue<ArrowRight className="ml-2 size-4" />
+          </Button>
+          <div className="flex h-10 items-center">
+            <button onClick={() => setStep('uni')} className="inline-flex h-10 items-center gap-1.5 px-1 text-sm font-semibold text-muted-foreground">
+              <ArrowRight className="size-4 rotate-180" /> Back
+            </button>
+          </div>
             </div>
           )}
           {step === 'avatar' && (
@@ -450,11 +444,13 @@ function AuthForm() {
               <ScrollArea className="min-h-0 max-h-[52dvh] flex-1 pr-2">
                 <AvatarCustomizer value={avatarConfig} onChange={setAvatarConfig} size={120} />
               </ScrollArea>
-              <Button onClick={() => handleAvatarComplete(false)} disabled={submitting} className="h-14 text-base">Start studying<Check className="ml-2 size-4" /></Button>
-              <div className="flex items-center justify-between pb-2">
-                <button onClick={() => setStep('dept')} className="text-sm font-medium text-muted-foreground">← Back</button>
-                <button onClick={() => handleAvatarComplete(true)} className="text-center text-sm font-medium text-muted-foreground">Skip for now</button>
-              </div>
+          <Button onClick={() => handleAvatarComplete(false)} disabled={submitting} className="h-14 text-base">Start studying</Button>
+          <div className="flex h-10 items-center justify-between">
+            <button onClick={() => setStep('dept')} className="inline-flex h-10 items-center gap-1.5 px-1 text-sm font-semibold text-muted-foreground">
+              <ArrowRight className="size-4 rotate-180" /> Back
+            </button>
+            <button onClick={() => handleAvatarComplete(true)} className="inline-flex h-10 items-center px-1 text-sm font-semibold text-muted-foreground">Skip</button>
+          </div>
             </div>
           )}
         </>
