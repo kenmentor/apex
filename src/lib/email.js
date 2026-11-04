@@ -50,7 +50,7 @@ export async function sendLoginCodeEmail(email, code) {
       <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px;text-align:center">
         <h2 style="color:#130f40;margin-bottom:8px">Apex</h2>
         <p style="color:#333;line-height:1.6">Enter this code to sign in. It expires in 10 minutes.</p>
-        <div style="font-size:56px;font-weight:900;letter-spacing:16px;color:#130f40;background:#f4f4f8;border-radius:12px;padding:20px 16px 20px 32px;margin:20px 0">${code}</div>
+        <div style="font-size:44px;font-weight:900;letter-spacing:10px;color:#130f40;background:#f4f4f8;border-radius:12px;padding:20px 8px 20px 18px;margin:20px 0;white-space:nowrap">${code}</div>
         <a href="${magicUrl}" style="display:inline-block;background:#ff9f43;color:#130f40;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:800;font-size:16px;margin:8px 0 16px">Sign me in automatically →</a>
         <p style="color:#999;font-size:13px">Tip: tap and hold the code to copy it.<br>Didn't ask for this? Ignore the email.</p>
       </div>`,
