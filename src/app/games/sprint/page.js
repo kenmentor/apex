@@ -10,6 +10,7 @@ import { scoreSprint } from '@/lib/games'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
+import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -34,6 +35,7 @@ function SprintInner() {
   const [phase, setPhase] = useState('setup')
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
+  const [pickerOpen, setPickerOpen] = useState(false)
   const [count, setCount] = useState(10)
   const [bank, setBank] = useState(null)
   const [idx, setIdx] = useState(0)
@@ -173,13 +175,8 @@ function SprintInner() {
         <div className="space-y-3 rounded-2xl border p-5">
           <p className="text-sm font-semibold">How fast can you think? ⚡</p>
           <p className="text-sm text-muted-foreground">One question at a time against the clock. Tap fast — streaks build fire, mistakes kill it. No going back.</p>
-          <label className="block text-xs font-semibold text-muted-foreground">
-            Course
-            <select value={pickedCourse} onChange={e => setPickedCourse(e.target.value)} className="mt-1 w-full rounded-xl border bg-background px-3 py-2 text-sm text-foreground">
-              <option value="">Pick a course…</option>
-              {courses.map(c => <option key={c.code} value={c.code}>{c.code} — {c.title}</option>)}
-            </select>
-          </label>
+          <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
           <div className="flex gap-1.5">
             {[5, 10, 15].map(n => (
               <button key={n} onClick={() => setCount(n)} className={'flex-1 rounded-xl border px-3 py-1.5 text-xs font-bold ' + (count === n ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-muted')}>

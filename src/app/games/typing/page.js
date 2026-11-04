@@ -10,6 +10,7 @@ import { closeMatch, scoreTyping } from '@/lib/games'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
+import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -36,6 +37,7 @@ function TypingInner() {
   const [phase, setPhase] = useState('setup')
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
+  const [pickerOpen, setPickerOpen] = useState(false)
   const [course, setCourse] = useState('')
   const [deck, setDeck] = useState([])
   const [idx, setIdx] = useState(0)
@@ -199,13 +201,8 @@ function TypingInner() {
         <div className="space-y-3 rounded-2xl border p-5">
           <p className="text-sm font-semibold">Fingers faster than memory?</p>
           <p className="text-sm text-muted-foreground">Definitions flash for <span className="font-semibold text-foreground">60 seconds</span> — type the exact term. Close spelling counts. Streaks build combo fire. Skip what you don't know, speed is everything.</p>
-          <label className="block text-xs font-semibold text-muted-foreground">
-            Course
-            <select value={pickedCourse} onChange={e => setPickedCourse(e.target.value)} className="mt-1 w-full rounded-xl border bg-background px-3 py-2 text-sm text-foreground">
-              <option value="">Pick a course…</option>
-              {courses.map(c => <option key={c.code} value={c.code}>{c.code} — {c.title}</option>)}
-            </select>
-          </label>
+          <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => start()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Loading…' : 'Start the clock'}

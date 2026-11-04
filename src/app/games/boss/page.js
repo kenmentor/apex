@@ -10,6 +10,7 @@ import { scoreBoss } from '@/lib/games'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
+import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 import FightArena from '@/components/game/FightArena'
@@ -72,6 +73,7 @@ function BossInner() {
   const [phase, setPhase] = useState('setup')
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
+  const [pickerOpen, setPickerOpen] = useState(false)
   const [course, setCourse] = useState('')
   const [boss, setBoss] = useState(BOSSES[0])
   const [bank, setBank] = useState(null)
@@ -450,13 +452,8 @@ function BossInner() {
             <span className="font-semibold text-foreground">① Build ({BUILD_SECONDS}s):</span> answer fast, forge power, evolve 🌱→🔥.<br />
             <span className="font-semibold text-foreground">② Battle:</span> your power becomes damage. Answer each question within {STRIKE_SECONDS}s or {bossFor(pickedCourse || 'boss').name} <span className="font-semibold">strikes you first</span> — stall and you die.
           </p>
-          <label className="block text-left text-xs font-semibold text-muted-foreground">
-            Course
-            <select value={pickedCourse} onChange={e => setPickedCourse(e.target.value)} className="mt-1 w-full rounded-xl border bg-background px-3 py-2 text-sm text-foreground">
-              <option value="">Pick a course…</option>
-              {courses.map(c => <option key={c.code} value={c.code}>{c.code} — {c.title}</option>)}
-            </select>
-          </label>
+          <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => start()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Entering…' : 'Start training'}

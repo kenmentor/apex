@@ -9,6 +9,7 @@ import { chunkText, seededShuffle, scoreOrder } from '@/lib/games'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
+import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -22,6 +23,7 @@ export default function ChunkGamePage() {
   const [phase, setPhase] = useState('setup')
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState('')
+  const [pickerOpen, setPickerOpen] = useState(false)
   const [round, setRound] = useState(null)
   const [slots, setSlots] = useState([])
   const [tray, setTray] = useState([])
@@ -214,19 +216,8 @@ export default function ChunkGamePage() {
             A real definition is shattered into pieces. Read every piece — only the meaning tells you what comes next.
             Pieces <span className="font-semibold text-foreground">snap and lock</span> when they sit well.
           </p>
-          <label className="block text-xs font-semibold text-muted-foreground">
-            Course
-            <select
-              value={pickedCourse}
-              onChange={e => setPickedCourse(e.target.value)}
-              className="mt-1 w-full rounded-xl border bg-background px-3 py-2 text-sm text-foreground"
-            >
-              <option value="">🎲 Surprise me</option>
-              {courses.map(c => (
-                <option key={c.code} value={c.code}>{c.code} — {c.title}</option>
-              ))}
-            </select>
-          </label>
+          <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} emptyLabel="🎲 Surprise me" />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} allowRandom />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button
             onClick={() => start()}
