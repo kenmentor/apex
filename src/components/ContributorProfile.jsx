@@ -119,7 +119,7 @@ export default function ContributorProfile({
                       <Link2 className="size-4 text-muted-foreground" /> Copy link
                     </button>
                     {isOwner && (
-                      <a href="/auth" onClick={() => { try { localStorage.removeItem('gss_quiz_auth') } catch {} }} className="flex w-full items-center gap-2.5 px-4 py-3 text-left text-[13px] font-bold text-red-500 hover:bg-muted">
+                      <a href="/logout" className="flex w-full items-center gap-2.5 px-4 py-3 text-left text-[13px] font-bold text-red-500 hover:bg-muted">
                         <LogOut className="size-4" /> Sign out
                       </a>
                     )}

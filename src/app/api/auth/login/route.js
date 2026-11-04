@@ -1,96 +1,10 @@
 import { NextResponse } from 'next/server'
-import bcrypt from 'bcryptjs'
-import { getCollection } from '@/lib/db'
-import { signToken } from '@/lib/auth-server'
 
-export async function POST(request) {
-  try {
-    const { email, school, department, level, password } = await request.json()
-    if (!email || !email.includes('@')) {
-      return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
-    }
-
-    const users = await getCollection('users')
-    const normalizedEmail = email.toLowerCase().trim()
-    const existing = await users.findOne({ email: normalizedEmail })
-
-    if (existing) {
-      // Password accounts must prove it. Legacy passwordless accounts keep working.
-      if (existing.passwordHash) {
-        if (!password) return NextResponse.json({ error: 'Enter your password.', needsPassword: true }, { status: 401 })
-        const ok = await bcrypt.compare(password, existing.passwordHash)
-        if (!ok) return NextResponse.json({ error: 'Wrong email or password.' }, { status: 401 })
-      }
-      const hasSchool = !!(existing.school && existing.school.trim())
-      const hasDept = !!(existing.department && existing.department.trim())
-      const hasLevel = !!(existing.level && existing.level.trim())
-      const token = signToken({ email: existing.email, admin: !!existing.admin })
-
-      const updates = {}
-      if (school !== undefined && school !== existing.school) updates.school = school.trim()
-      if (department !== undefined && department !== existing.department) updates.department = department.trim()
-      if (level !== undefined && level !== existing.level) updates.level = level.trim()
-      if (Object.keys(updates).length > 0) {
-        await users.updateOne({ _id: existing._id }, { $set: updates })
-      }
-
-      const needsSchool = !hasSchool && !school
-      const needsDeptOrLevel = (!hasDept && !department) || (!hasLevel && !level)
-
-      return NextResponse.json({
-        id: existing._id.toString(),
-        email: existing.email,
-        school: school?.trim() || existing.school || '',
-        department: department?.trim() || existing.department || '',
-        level: level?.trim() || existing.level || '',
-        admin: !!existing.admin,
-        role: existing.role || 'student',
-        verified: !!existing.verified,
-        name: existing.name || '',
-        avatar: existing.avatar || '',
-        avatarConfig: existing.avatarConfig || null,
-        token,
-        isNewUser: false,
-        needsSchool,
-        needsDeptOrLevel: needsSchool ? false : needsDeptOrLevel,
-        hasPassword: !!existing.passwordHash,
-      })
-    }
-
-    const result = await users.insertOne({
-      email: normalizedEmail,
-      school: school?.trim() || '',
-      department: department?.trim() || '',
-      level: level?.trim() || '',
-      role: 'student',
-      university: '',
-      createdAt: new Date(),
-      admin: false,
-      verified: false,
-      name: '',
-      avatar: '',
-      avatarConfig: null,
-    })
-
-    const token = signToken({ email: normalizedEmail, admin: false })
-    return NextResponse.json({
-      id: result.insertedId.toString(),
-      email: normalizedEmail,
-      school: school?.trim() || '',
-      department: department?.trim() || '',
-      level: level?.trim() || '',
-      admin: false,
-      role: 'student',
-      verified: false,
-      name: '',
-      avatar: '',
-      avatarConfig: null,
-      token,
-      isNewUser: true,
-      needsSchool: !school,
-      needsDeptOrLevel: false,
-    })
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
-  }
+// Retired: sign-in is Google-only via Clerk (/auth). Kept as a stub so old
+// clients get a clear message instead of a 404.
+export async function POST() {
+  return NextResponse.json(
+    { error: 'Password sign-in is retired. Please sign in with Google.' },
+    { status: 410 }
+  )
 }

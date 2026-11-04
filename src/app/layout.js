@@ -1,3 +1,5 @@
+import { ClerkProvider } from '@clerk/nextjs';
+import { shadcn } from '@clerk/ui/themes';
 import './globals.css';
 import 'swiper/css';
 import { ThemeProvider } from 'next-themes';
@@ -11,6 +13,7 @@ import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import TelemetryProvider from '@/components/TelemetryProvider';
 import ConnectionStatus from '@/components/ConnectionStatus';
+import ClerkSync from '@/components/ClerkSync';
 
 export const metadata = {
   metadataBase: new URL(getBaseUrl()),
@@ -60,7 +63,8 @@ export default function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-title" content="Apex" />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ClerkProvider appearance={{ theme: shadcn }}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NavWrapper />
           <PageTransition>{children}</PageTransition>
           <Toaster position="bottom-center" toastOptions={{ style: { marginBottom: 90 } }} />
@@ -70,7 +74,9 @@ export default function RootLayout({ children }) {
           <ServiceWorkerRegister />
           <AnalyticsTracker />
           <TelemetryProvider />
-        </ThemeProvider>
+          <ClerkSync />
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

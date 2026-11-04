@@ -2,9 +2,10 @@
 
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@clerk/nextjs'
 import Link from 'next/link'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
-import { ArrowLeft, Camera, LogOut, Shield, CheckCircle, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
+import { ArrowLeft, Camera, LogOut, Shield, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
 import { Drawer } from 'vaul'
 import { Card, CardContent } from '@/components/ui/card'
 import { UserAvatar } from '@/components/UserAvatar'
@@ -20,6 +21,7 @@ const OTHERS = 'Others… (type it yourself)'
 
 export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const router = useRouter()
+  const { signOut } = useAuth()
   const { theme, setTheme } = useTheme()
   const [user, setUserState] = useState(null)
   const [editing, setEditing] = useState(false)
@@ -34,7 +36,6 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState('')
-  const [sendingVerify, setSendingVerify] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
   const [sheetView, setSheetView] = useState('choose') // choose | avatar
   const [avatarConfig, setAvatarConfig] = useState(null)
@@ -161,23 +162,17 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   }
 
   async function handleSendVerification() {
-    setSendingVerify(true)
-    setMessage('')
-    try {
-      const res = await fetch('/api/auth/send-verification', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${getToken()}` },
-      })
-      if (!res.ok) throw new Error('Failed to send')
-      setMessage('Verification email sent!')
-    } catch (err) { setMessage(err.message) }
-    setSendingVerify(false)
+    // Retired with password auth: Google emails arrive pre-verified.
+    setMessage('Your Google sign-in email is already verified.')
   }
 
   function handleLogout() {
     const u = getUser()
-    if (u?.email) localStorage.setItem('apex_last_email', u.email)
+    if (u?.email) {
+      try { localStorage.setItem('apex_last_email', u.email) } catch {}
+    }
     clearUser()
+    try { signOut() } catch {}
     router.push('/auth')
   }
 
@@ -312,12 +307,6 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
         <Card>
           <CardContent className="p-4 space-y-3">
             <h3 className="text-sm font-semibold">Account</h3>
-            {!user.verified && (
-              <Button variant="outline" className="w-full" onClick={handleSendVerification} disabled={sendingVerify}>
-                <CheckCircle className="mr-1.5 size-4" />
-                {sendingVerify ? 'Sending...' : 'Verify Email'}
-              </Button>
-            )}
             {isAdmin() && (
               <Button variant="outline" className="w-full" asChild>
                 <Link href="/admin"><Shield className="mr-1.5 size-4" />Admin Dashboard</Link>
