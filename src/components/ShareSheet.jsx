@@ -63,6 +63,7 @@ export default function ShareSheet({ open, onOpenChange, post, user, currentGrou
   }
 
   async function trackShare(platform) {
+    try { (await import('@/lib/tracking')).trackEvent('share_completed', { platform, source: 'sheet' }) } catch {}
     try {
       await fetch(`/api/space-posts/${post._id}/share`, {
         method: 'POST',

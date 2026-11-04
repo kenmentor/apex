@@ -75,6 +75,7 @@ export async function GET(request) {
           title: m.title || m.fileName || 'Untitled',
           url: m.url || null,
           description: '',
+          by: m.ownerEmail ? String(m.ownerEmail).toLowerCase() : null,
           ...(tab === 'text' ? { content: '', source: 'upload' } : {}),
         },
       }
@@ -97,7 +98,7 @@ export async function GET(request) {
       }
       for (const r of rPre) {
         const s = match(r.toks)
-        const item = { id: String(r.src._id), kind: 'text', title: r.src.title, content: r.src.content || '', source: 'reading', coverUrl: r.src.coverUrl || r.src.cover || null }
+        const item = { id: String(r.src._id), kind: 'text', title: r.src.title, content: r.src.content || '', source: 'reading', coverUrl: r.src.coverUrl || r.src.cover || null, by: r.src.authorEmail ? String(r.src.authorEmail).toLowerCase() : null }
         if (r.isPdf) push(s > 0 ? 'pdf' : 'other', { ...item, kind: 'pdf', url: r.src.pdfUrl || r.src.url }, s)
         else push(s > 0 ? 'text' : 'other', item, s)
       }
@@ -161,11 +162,42 @@ export async function GET(request) {
       if (Array.isArray(bucket) && bucket.length < 100) bucket.push({ ...m.item, topic: m.src.topic || null })
     }
 
+    // Faces behind the content: one users lookup for every uploader/author
+    // so the client can render real avatars, not initials.
+    let people = {}
+    try {
+      const emails = new Set()
+      for (const m of materials || []) {
+        const e = String(m.ownerEmail || '').toLowerCase().trim()
+        if (e) emails.add(e)
+      }
+      for (const r of readings || []) {
+        const e = String(r.authorEmail || '').toLowerCase().trim()
+        if (e) emails.add(e)
+      }
+      if (emails.size) {
+        const users = await getCollection('users')
+        const docs = await users
+          .find({ email: { $in: [...emails] } })
+          .project({ email: 1, name: 1, avatar: 1, avatarConfig: 1 })
+          .toArray()
+          .catch(() => [])
+        for (const u of docs || []) {
+          people[String(u.email || '').toLowerCase()] = {
+            name: u.name || null,
+            avatar: u.avatar || null,
+            avatarConfig: u.avatarConfig || null,
+          }
+        }
+      }
+    } catch {}
+
     return NextResponse.json({
       courseCode,
       topics: out,
       all,
       totals: Object.fromEntries(Object.entries(all).map(([k, v]) => [k, v.length])),
+      people,
     })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

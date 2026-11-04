@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { X, ExternalLink, Headphones, Maximize, Minimize } from 'lucide-react'
 import SaveToFolder from '@/components/SaveToFolder'
 import { ytId, ytThumb } from '@/lib/youtube'
+import { trackEvent } from '@/lib/tracking'
 
 // Fullscreen watch player. Portrait: fullscreen takeover with 16:9 stage +
 // title/meta/actions below. Landscape (phone slanted): chrome + meta hide
@@ -19,6 +20,12 @@ export default function VideoModal({ item, onClose }) {
   const vid = ytId(src)
   const isAudio = !vid && ((item?.kind === 'audio') || /\.(mp3|wav|ogg|m4a)(\?|$)/i.test(src || ''))
   const art = ytThumb(src) || item?.thumb || null
+
+  // One play event per open: what actually gets watched.
+  useEffect(() => {
+    try { trackEvent('video_play', { courseCode: item?.courseCode || null, kind: item?.kind || 'video' }) } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Lock page scroll + Esc/back-button close while open.
   useEffect(() => {

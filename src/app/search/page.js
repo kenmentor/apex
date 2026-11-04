@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { Search, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2 } from 'lucide-react'
+import { Search, SearchX, LibraryBig, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2 } from 'lucide-react'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import { getUser } from '@/lib/auth'
+import { trackSearch } from '@/lib/telemetry'
 import { myScope, inScopeOrAsked, queryCourseToken } from '@/lib/scope'
 import SaveToFolder from '@/components/SaveToFolder'
 import BookGrid, { BookCover } from '@/components/BookGrid'
@@ -74,6 +75,19 @@ function Rail({ children }) {
   return <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1">{children}</div>
 }
 
+function EmptyState({ icon: Icon, tint = 'bg-muted text-muted-foreground', title, sub, action }) {
+  return (
+    <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed px-6 py-10 text-center">
+      <span className={`flex size-12 items-center justify-center rounded-2xl ${tint}`}>
+        <Icon className="size-6" />
+      </span>
+      <p className="text-sm font-bold">{title}</p>
+      {!!sub && <p className="max-w-xs text-xs text-muted-foreground">{sub}</p>}
+      {!!action && <span className="mt-1 flex flex-wrap items-center justify-center gap-2">{action}</span>}
+    </div>
+  )
+}
+
 export default function SearchPage() {
   const [q, setQ] = useState('')
   const [tab, setTab] = useState('')
@@ -136,12 +150,20 @@ export default function SearchPage() {
     const t = setTimeout(() => {
       const params = new URLSearchParams({ q: needle, limit: '12' })
       fetchJson(`/api/search?${params.toString()}`, { ttl: TTL.list })
-        .then(d => { if (!d.error) setResults(d); })
+        .then(d => {
+          if (!d.error) {
+            setResults(d)
+            try {
+              const n = Object.values(d.groups || {}).reduce((a, arr) => a + (arr || []).length, 0)
+              trackSearch({ query_string: needle, results_count: n, tab })
+            } catch {}
+          }
+        })
         .catch(() => {})
         .finally(() => setSearching(false))
     }, 300)
     return () => clearTimeout(t)
-  }, [q])
+  }, [q, tab])
 
   const needle = q.trim().toLowerCase()
   const match = (s) => !needle || String(s || '').toLowerCase().includes(needle)
@@ -234,6 +256,25 @@ export default function SearchPage() {
 
   const rail = (
     <div className="space-y-4">
+      {scopeObj.mode !== 'all' && (
+        <div>
+          <h3 className="mb-1 px-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">Scope</h3>
+          {['mine', 'all'].map(s => (
+            <button key={s} onClick={() => setScopeMode(s)}
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm hover:bg-muted">
+              <span className={`flex size-4 items-center justify-center rounded-full border ${scopeMode === s ? 'border-primary' : 'border-muted-foreground/40'}`}>
+                {scopeMode === s && <span className="size-2 rounded-full bg-primary" />}
+              </span>
+              {s === 'mine' ? `My ${scopeObj.short}` : 'Everything'}
+            </button>
+          ))}
+          <p className="px-2 pt-1 text-[11px] leading-snug text-muted-foreground">
+            {scopeMode === 'mine'
+              ? 'Only your level + department. Switch to see the whole bank.'
+              : 'The whole bank, all levels and departments.'}
+          </p>
+        </div>
+      )}
       <div>
         <div className="mb-1 flex items-center gap-2">
           <h3 className="flex-1 px-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">Course</h3>
@@ -297,9 +338,8 @@ export default function SearchPage() {
           <Search className="size-4 shrink-0 text-muted-foreground" />
           <input value={q} onChange={e => setQ(e.target.value)} placeholder="Titles, topics, courses, authors…" className="w-full bg-transparent text-sm outline-none" />
         </div>
-        {!!needle && needle.length >= 2 && (
-          <button onClick={() => setFiltersOpen(true)} aria-label="Filters"
-            className={`relative flex size-11 shrink-0 items-center justify-center rounded-full border ${selCourses.length + selUploaders.length > 0 ? 'border-primary bg-primary/10' : 'bg-card'}`}>
+        <button onClick={() => setFiltersOpen(true)} aria-label="Filters"
+          className={`relative flex size-11 shrink-0 items-center justify-center rounded-full border ${(selCourses.length + selUploaders.length > 0 || scopeMode === 'all') ? 'border-primary bg-primary/10' : 'bg-card'}`}>
             <SlidersHorizontal className="size-4" />
             {selCourses.length + selUploaders.length > 0 && (
               <span className="absolute -right-0.5 -top-0.5 flex size-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
@@ -307,7 +347,6 @@ export default function SearchPage() {
               </span>
             )}
           </button>
-        )}
       </div>
 
       {/* Perlego-style tabs */}
@@ -319,23 +358,6 @@ export default function SearchPage() {
           </button>
         ))}
       </div>
-
-      {/* Scope: your level + department by default, Everything opts out */}
-      {scopeObj.mode !== 'all' && (
-        <div className="flex items-center gap-2">
-          <div className="flex max-w-full rounded-full border bg-card p-0.5 text-xs font-bold">
-            <button onClick={() => setScopeMode('mine')}
-              className={'max-w-36 truncate rounded-full px-3 py-1.5 ' + (scopeMode === 'mine' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground')}>
-              My {scopeObj.short}
-            </button>
-            <button onClick={() => setScopeMode('all')}
-              className={'shrink-0 rounded-full px-3 py-1.5 ' + (scopeMode === 'all' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground')}>
-              Everything
-            </button>
-          </div>
-          {scopeMode === 'mine' && !!needle && <span className="shrink-0 text-[11px] text-muted-foreground">in your courses</span>}
-        </div>
-      )}
 
       {!needle && shelves && !shelfScopedEmpty && (
         <>
@@ -422,23 +444,29 @@ export default function SearchPage() {
 
       {!needle && (!shelves || shelfScopedEmpty) && (
         mineOnly ? (
-          <div className="rounded-2xl border border-dashed p-6 text-center">
-            <p className="text-sm font-bold">Nothing for {scopeObj.label} yet</p>
-            <p className="mt-1 text-xs text-muted-foreground">New uploads for your courses will appear here automatically.</p>
-            <button onClick={() => setScopeMode('all')} className="mt-3 rounded-xl border px-4 py-2 text-xs font-bold">Browse everything</button>
-          </div>
+          <EmptyState
+            icon={Search}
+            tint="bg-sky-500/15 text-sky-600"
+            title={`Nothing for ${scopeObj.label} yet`}
+            sub="New uploads for your courses will appear here automatically."
+            action={
+              <button onClick={() => setScopeMode('all')} className="rounded-xl border px-4 py-2 text-xs font-bold">Browse everything</button>
+            }
+          />
         ) : (
-          <div className="rounded-2xl border border-dashed p-6 text-center">
-            <p className="text-sm font-bold">Your library is filling up</p>
-            <p className="mt-1 text-xs text-muted-foreground">Uploads from everyone appear here automatically. Add the first file from My Files.</p>
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <EmptyState
+            icon={LibraryBig}
+            tint="bg-violet-500/15 text-violet-600"
+            title="Your library is filling up"
+            sub="Uploads from everyone appear here automatically. Add the first file from My Files."
+            action={<>
               <Link href="/folders" className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">Open My Files</Link>
-              <Link href="/search?mock=1" className="rounded-xl border px-4 py-2 text-xs font-bold">Preview sample shelves</Link>
+              <Link href="/search?mock=1" className="rounded-xl border px-4 py-2 text-xs font-bold">Preview samples</Link>
               {(!myDept || !myLevel) && (
                 <Link href="/profile/settings" className="rounded-xl border border-primary/40 px-4 py-2 text-xs font-bold text-primary">Set department & level</Link>
               )}
-            </div>
-          </div>
+            </>}
+          />
         )
       )}
 
@@ -450,16 +478,24 @@ export default function SearchPage() {
           <div className="min-w-0 space-y-5">
             {searching && !results && <p className="text-sm text-muted-foreground">Searching study content…</p>}
             {results && filtered.length === 0 && (
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  No matches{q ? ` for “${q}”` : ''}{tab ? ` in ${TABS.find(t => t.id === tab)?.label}` : ''}{mineOnly ? ' in your courses' : ''}{selCourses.length + selUploaders.length > 0 ? ' with these filters' : ''}. Try clearing a filter.
-                </p>
-                {mineOnly && allItems.length > 0 && (
-                  <button onClick={() => setScopeMode('all')} className="rounded-xl border px-4 py-2 text-xs font-bold">
-                    Search everything instead
-                  </button>
-                )}
-              </div>
+              <EmptyState
+                icon={SearchX}
+                tint="bg-amber-500/15 text-amber-600"
+                title="No matches"
+                sub={`Nothing${q ? ` for “${q}”` : ''}${tab ? ` in ${TABS.find(t => t.id === tab)?.label}` : ''}${mineOnly ? ' in your courses' : ''}${selCourses.length + selUploaders.length > 0 ? ' with these filters' : ''}.`}
+                action={<>
+                  {(selCourses.length + selUploaders.length > 0) && (
+                    <button onClick={() => { setSelCourses([]); setSelUploaders([]) }} className="rounded-xl border px-4 py-2 text-xs font-bold">
+                      Clear filters
+                    </button>
+                  )}
+                  {mineOnly && allItems.length > 0 && (
+                    <button onClick={() => setScopeMode('all')} className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">
+                      Search everything
+                    </button>
+                  )}
+                </>}
+              />
             )}
 
             {!!books.length && (

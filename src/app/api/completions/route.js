@@ -24,8 +24,7 @@ export async function GET(request) {
   }
 }
 
-export async function POST(request) {
-  try {
+export async function POST(request) {  try {
     const body = await request.json()
     const { email, topicId, itemId, kind, percentage } = body
     if (!email || !topicId || !itemId || !kind) {
@@ -60,5 +59,23 @@ export async function POST(request) {
     return NextResponse.json({ success: true, id: result.insertedId.toString(), gift }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to record completion: ' + error.message }, { status: 500 })
+  }
+}
+
+// DELETE ?email=&topicId=&itemId= — undo a manual check-off.
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const email = (searchParams.get('email') || '').toLowerCase().trim()
+    const topicId = searchParams.get('topicId') || ''
+    const itemId = searchParams.get('itemId') || ''
+    if (!email || !topicId || !itemId) {
+      return NextResponse.json({ error: 'email, topicId, itemId required' }, { status: 400 })
+    }
+    const col = await getCollection('completions')
+    await col.deleteMany({ email, topicId, itemId })
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to remove completion' }, { status: 500 })
   }
 }

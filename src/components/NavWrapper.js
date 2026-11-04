@@ -39,13 +39,12 @@ const TAB_ROOTS = new Set(['/', '/plan', '/games', '/search', '/folders']);
 // Detail pages get back + contextual title. Parent = where back lands when
 // history is empty (fresh deep link).
 const DETAIL_TITLES = {
-  '/courses': ['Course', '/folders'],
+  '/courses': ['Course', '/courses'],
   '/departments': ['Departments', '/'],
   '/alex': ['Alex', '/'],
   '/leaderboard': ['Rankings', '/'],
   '/profile': ['Profile', '/'],
   '/games': ['Game', '/games'],
-  '/task': ['Task', '/plan'],
   '/dm': ['Chat', '/groups?tab=inbox'],
   '/races': ['Races', '/games'],
   '/wallet': ['Wallet', '/'],
@@ -109,9 +108,10 @@ export default function NavWrapper() {
     }
   }
 
-  // Group pages, deep plan pages and the profile bring their own chrome — no global bar there.
-  // The plan index itself has no header of its own, so it keeps the global one.
-  const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan/') || pathname === '/profile' || pathname.startsWith('/profile/') || pathname === '/read';
+  // Group pages, deep plan pages, course pages and the profile bring their own
+  // chrome — no global bar there. The plan index itself has no header of its
+  // own, so it keeps the global one.
+  const hideTop = pathname === '/groups' || pathname.startsWith('/groups/') || pathname.startsWith('/plan/') || pathname.startsWith('/courses/') || pathname === '/profile' || pathname.startsWith('/profile/') || pathname === '/read';
   // Inside a group detail/settings or a DM thread: no bottom tabs either (typer takes the room).
   const hideNav = /^\/groups\/[^/]+/.test(pathname || '') || (pathname || '').startsWith('/dm/') || pathname === '/read';
 

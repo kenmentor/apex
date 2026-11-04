@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { isAdmin } from '@/lib/auth'
+import { isAdmin, getToken } from '@/lib/auth'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
 const COLORS = ['#ff9f43', '#130f40', '#34c759', '#9b59b6', '#e17055', '#007aff', '#00b894', '#6c5ce7', '#d63031', '#636e72']
@@ -22,7 +22,7 @@ export default function ActivityPage() {
     const params = new URLSearchParams({ range })
     if (selectedDay) params.set('date', selectedDay)
     if (selectedEvent) params.set('event', selectedEvent)
-    fetch(`/api/analytics?${params}`)
+    fetch(`/api/analytics?${params}`, { headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {} })
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))

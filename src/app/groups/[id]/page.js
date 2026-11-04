@@ -150,6 +150,7 @@ export function PostCard({ post, user, spaceCreator, onDelete }) {
 
   async function trackShare(platform) {
     setShareCount(prev => prev + 1)
+    try { trackEvent('share_completed', { platform, source: 'group' }) } catch {}
     try {
       const res = await fetch(`/api/space-posts/${post._id}/share`, {
         method: 'POST',

@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
   const description = bits.join(' · ')
   const avatar = user.avatar && String(user.avatar).startsWith('http')
     ? user.avatar
-    : `${getBaseUrl()}/icon-512.png`
+    : `${getBaseUrl()}/white-logo.png`
   const title = `${name} (${handle})`
   return {
     title,

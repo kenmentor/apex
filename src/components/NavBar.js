@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Home, Map, Gamepad2, Search, Folder } from 'lucide-react';
-import { trackEvent } from '@/lib/tracking';
 import { subscribeUploads } from '@/lib/uploads';
 
 const links = [
@@ -15,7 +14,7 @@ const links = [
 ];
 
 function trackNav(href, isActive) {
-  trackEvent('navigation_click', { to: href, from: typeof window !== 'undefined' ? window.location.pathname : '' });
+  // page_view already records the journey — no per-tap event.
   if (isActive && typeof window !== 'undefined') {
     // Re-tapping the current tab: back to top + let the page reset itself.
     window.scrollTo({ top: 0, behavior: 'smooth' });

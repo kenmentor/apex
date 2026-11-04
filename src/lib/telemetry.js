@@ -1,3 +1,7 @@
+// Thin shippers to /api/telemetry (fire-and-forget, session-muted on failure).
+// Deliberately small: only events that answer a product question survive.
+// Removed: heartbeats, nav clicks, refresh/PWA dupes, validation/network/
+// clipboard/space/syllabus noise — page_view + errors cover the rest.
 const TELEMETRY_URL = '/api/telemetry'
 
 function send(event, payload) {
@@ -29,32 +33,13 @@ export function trackExplanationViewed({ question_id, duration_ms }) {
   send('explanation_viewed', { question_id, duration_ms })
 }
 
-export function trackZeroResultQuery({ query_string }) {
-  send('search_executed', { query_string, results_count: 0 })
-}
-
-export function trackSpaceInteraction({ space_id, action }) {
-  send('space_interaction', { space_id, action })
-}
-
-export function trackSyllabusExpand({ course_code, topic_id }) {
-  send('syllabus_node_expanded', { course_code, topic_id })
+// Every completed search (not just dead ends): what people want + gaps.
+export function trackSearch({ query_string, results_count, tab }) {
+  send('search_executed', { query_string, results_count, tab: tab || 'all' })
 }
 
 export function trackRageClick({ target_element_selector, click_coordinates }) {
   send('ui_rage_click', { target_element_selector, click_coordinates })
-}
-
-export function trackNetworkTransaction({ endpoint_url, duration_ms, http_status }) {
-  send('network_transaction_logged', { endpoint_url, duration_ms, http_status })
-}
-
-export function trackValidationFailed({ input_field_id, failed_rule_type }) {
-  send('form_validation_failed', { input_field_id, failed_rule_type })
-}
-
-export function trackTextCopied({ view_context, copied_text_length }) {
-  send('text_clipboard_copied', { view_context, copied_text_length })
 }
 
 export function trackRuntimeError({ error_message, stack_trace, active_view }) {

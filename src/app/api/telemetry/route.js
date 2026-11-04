@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { notifyAdmins } from '@/lib/notify'
 
 export async function POST(request) {
   try {
@@ -10,6 +11,27 @@ export async function POST(request) {
     }
     const col = await getCollection('telemetry')
     await col.insertOne({ event, payload, createdAt: new Date() })
+
+    // Crash spike alarm: same error 5+ times in an hour → ping admins now.
+    if (event === 'runtime_error_caught' && payload?.error_message) {
+      try {
+        const hourAgo = new Date(Date.now() - 60 * 60 * 1000)
+        const n = await col.countDocuments({
+          event: 'runtime_error_caught',
+          'payload.error_message': payload.error_message,
+          createdAt: { $gte: hourAgo },
+        })
+        if (n === 5) {
+          await notifyAdmins({
+            type: 'crash-spike',
+            title: 'Crash spike: app is breaking',
+            message: `${String(payload.error_message).slice(0, 120)} — 5× in the last hour on ${payload.active_view || 'unknown page'}.`,
+            link: '/admin/analytics/telemetry',
+          }).catch(() => {})
+        }
+      } catch {}
+    }
+
     return NextResponse.json({ ok: true })
   } catch (error) {
     return NextResponse.json({ error: 'Failed' }, { status: 500 })

@@ -22,14 +22,14 @@ export const metadata = {
     title: 'Apex',
     statusBarStyle: 'black-translucent',
     startupImage: [
-      { url: '/icon-512.png', media: '(device-width: 1024px)' },
-      { url: '/icon-512.png', media: '(device-width: 834px)' },
-      { url: '/icon-512.png', media: '(device-width: 430px)' },
-      { url: '/icon-192.png', media: '(device-width: 320px)' },
+      { url: '/white-logo.png', media: '(device-width: 1024px)' },
+      { url: '/white-logo.png', media: '(device-width: 834px)' },
+      { url: '/white-logo.png', media: '(device-width: 430px)' },
+      { url: '/white-logo.png', media: '(device-width: 320px)' },
     ],
   },
   other: {
-    'apple-touch-icon': '/icon-192.png',
+    'apple-touch-icon': '/black-logo.png',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'mobile-web-app-capable': 'yes',
@@ -48,9 +48,8 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
+        <link rel="apple-touch-icon" href="/black-logo.png" />
+        <link rel="apple-touch-icon" sizes="500x500" href="/black-logo.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="theme-color" content="#130f40" />

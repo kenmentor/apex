@@ -191,7 +191,8 @@ export default function HomePage() {
     <div className="mx-auto min-h-dvh max-w-2xl space-y-7 px-5 pb-28 pt-6">
       {!user && (
         <div className="flex items-center gap-4">
-          <img src="/just-logo.png" alt="Apex" className="size-12 rounded-xl object-cover shrink-0" />
+          <img src="/black-logo.png" alt="Apex" className="size-12 shrink-0 rounded-xl object-cover dark:hidden" />
+          <img src="/white-logo.png" alt="Apex" className="hidden size-12 shrink-0 rounded-xl object-cover dark:block" />
           <div className="flex-1 min-w-0">
             <h1 className="text-xl font-bold truncate">Apex</h1>
             <p className="text-xs text-muted-foreground">Master your exams with past questions</p>
@@ -239,7 +240,7 @@ export default function HomePage() {
       {user && (
         <section className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
-            <ActionBlock href="/task" color="#F59E0B" Icon={ClipboardList} title="Take a quiz" sub="Practice now" />
+            <ActionBlock href="/plan" color="#F59E0B" Icon={ClipboardList} title="Take a quiz" sub="Pick a course & practice" />
           </div>
           <ActionBlock href="/games" color="#7C3AED" Icon={Gamepad2} title="Games" sub="Play & compete" />
           <ActionBlock href="/folders" color="#0284C7" Icon={Folder} title="My Files" sub="Notes & PDFs" />

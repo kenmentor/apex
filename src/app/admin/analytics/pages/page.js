@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { isAdmin } from '@/lib/auth'
+import { isAdmin, getToken } from '@/lib/auth'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 export default function PagesPage() {
@@ -15,7 +15,7 @@ export default function PagesPage() {
   useEffect(() => {
     if (!isAdmin()) { router.push('/auth'); return }
     setLoading(true)
-    fetch(`/api/analytics?range=${range}`)
+    fetch(`/api/analytics?range=${range}`, { headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {} })
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))

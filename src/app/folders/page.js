@@ -1556,14 +1556,14 @@ function FoldersInner() {
               <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Write it yourself</span><span className="block truncate text-xs text-muted-foreground">Full editor, your words</span></span>
               <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
             </button>
-            <button onClick={() => { setNoteTypeOpen(false); setScanError(''); setScanProg(null); setScanOpen(true) }} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+            <button disabled className="flex w-full cursor-not-allowed items-center gap-3 rounded-2xl border p-3 text-left opacity-50">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100"><ScanLine className="size-5 text-emerald-600" /></span>
-              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Scan paper note</span><span className="block truncate text-xs text-muted-foreground">Photo → text, on this phone, free</span></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Scan paper note</span><span className="block truncate text-xs text-muted-foreground">Paused — accuracy isn’t good enough yet</span></span>
               <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
             </button>
-            <button onClick={openLiveNote} className="flex w-full items-center gap-3 rounded-2xl border p-3 text-left hover:bg-muted/60">
+            <button disabled className="flex w-full cursor-not-allowed items-center gap-3 rounded-2xl border p-3 text-left opacity-50">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-100"><Mic className="size-5 text-red-600" /></span>
-              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Take note for me</span><span className="block truncate text-xs text-muted-foreground">Listens and types as they speak</span></span>
+              <span className="min-w-0 flex-1"><span className="block text-sm font-bold">Take note for me <span className="ml-1 rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground">Coming soon</span></span><span className="block truncate text-xs text-muted-foreground">Listens and types as they speak</span></span>
               <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
             </button>
           </div>
@@ -1587,12 +1587,7 @@ function FoldersInner() {
                 className="flex size-8 shrink-0 items-center justify-center rounded-lg hover:bg-muted">
                 <Palette className="size-4" />
               </button>
-              <button onClick={toggleLive} disabled={liveStatus === 'starting' || liveStatus === 'stopping'} aria-label="Live lecture mic"
-                className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${liveStatus === 'listening' ? 'bg-red-500/15 text-red-600' : 'hover:bg-muted'}`}>
-                {(liveStatus === 'starting' || liveStatus === 'stopping')
-                  ? <Loader2 className="size-4 animate-spin" />
-                  : <Mic className="size-4" />}
-              </button>
+              {/* Live mic hidden while Take-note-for-me is Coming soon. Logic stays for relaunch. */}
               <button onClick={createNote} disabled={busy} aria-label="Save note" title="Save note"
                 className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground disabled:opacity-50">
                 {busy ? <Loader2 className="size-4 animate-spin" /> : <Check className="size-4" strokeWidth={3} />}

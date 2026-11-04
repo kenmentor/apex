@@ -223,19 +223,19 @@ export default function AdminPage() {
               <>
                 {/* Row 1: Core metrics */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" href="/admin/analytics/active" />
-                  <MetricCard icon={Users} label="Today" value={d.todayUnique ?? '—'} sub="unique users" href="/admin/analytics/overview" />
+                  <MetricCard icon={Activity} label="Active Now" value={d.activeNow ?? '—'} color="text-green-500" href="/admin/analytics/activity" />
+                  <MetricCard icon={Users} label="Today" value={d.todayUnique ?? '—'} sub="unique users" href="/admin/analytics" />
                   <MetricCard icon={Users} label="7-Day Sessions" value={d.uniqueSessions ?? '—'}
                     sub={d.metrics?.uniqueSessions?.trend === 'up' ? `↑ +${d.metrics.uniqueSessions.change}%` : d.metrics?.uniqueSessions?.trend === 'down' ? `↓ ${d.metrics.uniqueSessions.change}%` : '—'}
-                    href="/admin/analytics/overview" />
+                    href="/admin/analytics" />
                   <MetricCard icon={Zap} label="Total Events" value={d.totalEvents ?? '—'}
                     sub={d.metrics?.totalEvents?.trend === 'up' ? `↑ +${d.metrics.totalEvents.change}%` : d.metrics?.totalEvents?.trend === 'down' ? `↓ ${d.metrics.totalEvents.change}%` : '—'}
-                    href="/admin/analytics/overview" />
+                    href="/admin/analytics" />
                 </div>
 
                 {/* Row 2: PWA / Web + Refreshes + Downloads */}
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <Link href="/admin/analytics/pwa">
+                  <Link href="/admin/analytics/content">
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                       <CardContent className="p-3">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">PWA vs Web</div>
@@ -255,11 +255,11 @@ export default function AdminPage() {
                   </Link>
                   <MetricCard icon={RefreshCw} label="Page Refreshes" value={d.pageRefreshes ?? '—'} color="text-orange-500"
                     sub={d.metrics?.pageRefreshes?.trend === 'up' ? `↑ +${d.metrics.pageRefreshes.change}%` : d.metrics?.pageRefreshes?.trend === 'down' ? `↓ ${d.metrics.pageRefreshes.change}%` : '—'}
-                    href="/admin/analytics/refreshes" />
+                    href="/admin/analytics/activity" />
                   <MetricCard icon={Download} label="Downloads" value={d.downloadClicks ?? '—'}
                     sub={d.metrics?.downloads?.trend === 'up' ? `↑ +${d.metrics.downloads.change}%` : d.metrics?.downloads?.trend === 'down' ? `↓ ${d.metrics.downloads.change}%` : '—'}
-                    href="/admin/analytics/downloads" />
-                  <Link href="/admin/analytics/hours">
+                    href="/admin/analytics/content" />
+                  <Link href="/admin/analytics/activity">
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                       <CardContent className="p-3">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Peak Hour</div>
@@ -282,8 +282,8 @@ export default function AdminPage() {
                   <MetricCard icon={Layers} label="Flashcard Opens"
                     value={d.flashcard?.opens ?? '—'}
                     sub={d.metrics?.flashcardOpens?.trend === 'up' ? `↑ +${d.metrics.flashcardOpens.change}% · ~${d.flashcard.avgTimeSeconds}s avg` : d.metrics?.flashcardOpens?.trend === 'down' ? `↓ ${d.metrics.flashcardOpens.change}% · ~${d.flashcard.avgTimeSeconds}s avg` : d.flashcard?.avgTimeSeconds ? `~${d.flashcard.avgTimeSeconds}s avg` : ''}
-                    href="/admin/analytics/flashcards" />
-                  <Link href="/admin/analytics/engagement">
+                    href="/admin/analytics/insights" />
+                  <Link href="/admin/analytics/activity">
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                       <CardContent className="p-3">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Click-Through</div>
@@ -299,7 +299,7 @@ export default function AdminPage() {
                       </CardContent>
                     </Card>
                   </Link>
-                  <Link href="/admin/analytics/engagement">
+                  <Link href="/admin/analytics/activity">
                     <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
                       <CardContent className="p-3">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">Engagement</div>
@@ -322,11 +322,11 @@ export default function AdminPage() {
                   <MetricCard icon={Zap} label="Quiz Started"
                     value={d.metrics?.quizStarted?.now ?? '—'}
                     sub={d.metrics?.quizStarted?.trend === 'up' ? `↑ +${d.metrics.quizStarted.change}%` : d.metrics?.quizStarted?.trend === 'down' ? `↓ ${d.metrics.quizStarted.change}%` : '—'}
-                    href="/admin/analytics/quizzes" />
+                    href="/admin/analytics/insights" />
                   <MetricCard icon={BarChart3} label="Quiz Avg Score"
                     value={d.metrics?.quizAvgScore?.now != null ? `${d.metrics.quizAvgScore.now}%` : '—'}
                     sub={d.metrics?.quizAvgScore?.trend === 'up' ? `↑ +${d.metrics.quizAvgScore.change}%` : d.metrics?.quizAvgScore?.trend === 'down' ? `↓ ${d.metrics.quizAvgScore.change}%` : '—'}
-                    href="/admin/analytics/quizzes" />
+                    href="/admin/analytics/insights" />
                 </div>
 
                 {/* Row 5: Top Pages */}

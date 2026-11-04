@@ -16,41 +16,29 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
+      "src": "/white-logo.png",
+      "sizes": "500x500",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
+      "src": "/black-logo.png",
+      "sizes": "500x500",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
+      "src": "/white-logo.png",
+      "sizes": "500x500",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Apex Dashboard"
     },
     {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
+      "src": "/white-logo.png",
+      "sizes": "500x500",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Apex Mobile"
@@ -61,19 +49,19 @@
       "name": "Courses",
       "short_name": "Courses",
       "url": "/courses",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/white-logo.png", "sizes": "500x500" }]
     },
     {
       "name": "Leaderboard",
       "short_name": "Rankings",
       "url": "/leaderboard",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/white-logo.png", "sizes": "500x500" }]
     },
     {
       "name": "Spaces",
       "short_name": "Spaces",
       "url": "/spaces",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/white-logo.png", "sizes": "500x500" }]
     }
   ]
 }

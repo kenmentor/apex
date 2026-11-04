@@ -14,9 +14,8 @@ const PRECACHE = [
   '/notifications',
   '/manifest.json',
   '/audio-capture.worklet.js',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/just-logo.png',
+  '/white-logo.png',
+  '/black-logo.png',
   '/pdf.worker.min.mjs',
 ]
 
@@ -48,8 +47,8 @@ self.addEventListener('push', (e) => {
   const { title, body, url } = data
   const options = {
     body,
-    icon: '/icon-192.png',
-    badge: '/icon-192.png',
+    icon: '/white-logo.png',
+    badge: '/white-logo.png',
     vibrate: [200, 100, 200],
     data: { url },
   }
