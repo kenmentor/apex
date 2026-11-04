@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, Suspense } from 'react';
+import { useState, useEffect, useRef, useId, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setUser, getUser, getToken } from '@/lib/auth';
 import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar';
@@ -15,7 +15,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 // Six-box OTP: auto-advance, backspace flow, paste-to-fill, and OS
 // one-time-code autofill (mobile keyboards offer codes copied from email).
-function OtpBoxes({ value, onChange, hasError }) {
+function OtpBoxes({ value, onChange, hasError, namePrefix }) {
   const refs = useRef([]);
   const digits = Array.from({ length: 6 }, (_, i) => value[i] || '');
 
@@ -70,6 +70,7 @@ function OtpBoxes({ value, onChange, hasError }) {
           key={i}
           ref={el => { refs.current[i] = el }}
           value={d}
+          name={namePrefix ? `${namePrefix}-${i}` : undefined}
           onChange={e => handleChange(i, e)}
           onKeyDown={e => handleKeyDown(i, e)}
           inputMode="numeric"
@@ -114,6 +115,9 @@ function AuthForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const autoTried = useRef(false);
+  // Unique per page load: stops the browser restoring stale codes into the
+  // boxes on refresh or back-navigation. useId is SSR-safe.
+  const formId = useId().replace(/[^a-zA-Z0-9]/g, '');
   const [step, setStep] = useState('email'); // email | code | uni | dept | avatar
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -137,6 +141,8 @@ function AuthForm() {
       const saved = localStorage.getItem('apex_last_email');
       if (saved) setEmail(saved);
     } catch {}
+    // Never show a stale code: fresh boxes on every load.
+    setCode('');
     // Already holding a session? Skip straight in.
     try { if (getUser()?.token) router.push('/'); } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -333,7 +339,7 @@ function AuthForm() {
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
           <Brand title="Enter code" sub={<>Sent to <span className="font-bold text-foreground">{email}</span>.</>} />
           <div className="mt-7 space-y-4">
-            <OtpBoxes value={code} hasError={!!error} onChange={v => { typedFull.current = true; setCode(v); setError('') }} />
+            <OtpBoxes value={code} hasError={!!error} namePrefix={`otp${formId}`} onChange={v => { typedFull.current = true; setCode(v); setError('') }} />
             <Button onClick={() => { typedFull.current = false; handleVerify() }} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
               {submitting ? 'Checking…' : 'Sign in'}
             </Button>
