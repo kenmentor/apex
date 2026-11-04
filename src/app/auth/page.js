@@ -15,7 +15,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 // Six-box OTP: auto-advance, backspace flow, paste-to-fill, and OS
 // one-time-code autofill (mobile keyboards offer codes copied from email).
-function OtpBoxes({ value, onChange }) {
+function OtpBoxes({ value, onChange, hasError }) {
   const refs = useRef([]);
   const digits = Array.from({ length: 6 }, (_, i) => value[i] || '');
 
@@ -76,7 +76,7 @@ function OtpBoxes({ value, onChange }) {
           autoComplete={i === 0 ? 'one-time-code' : 'off'}
           maxLength={6}
           aria-label={`Digit ${i + 1}`}
-          className="h-14 w-12 rounded-xl border bg-background text-center text-2xl font-black tabular-nums outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+          className={'h-14 w-full min-w-0 max-w-[54px] flex-1 rounded-xl border bg-background text-center text-2xl font-black tabular-nums outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 ' + (hasError ? 'border-red-500' : '')}
         />
       ))}
     </div>
@@ -85,6 +85,19 @@ function OtpBoxes({ value, onChange }) {
 
 // Passwordless sign-in: one email box -> 6-digit code -> in for 90 days.
 // No passwords, no Google, no third-party identity store.
+function Brand({ title, sub }) {
+  return (
+    <div className="flex flex-col items-center text-center">
+      <span className="flex size-16 items-center justify-center overflow-hidden rounded-3xl bg-[#130f40] shadow-lg">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/white-logo.png" alt="Apex" className="size-10 object-contain" draggable={false} />
+      </span>
+      <h1 className="mt-3 text-2xl font-black tracking-tight">{title}</h1>
+      {sub ? <p className="mt-1 max-w-[280px] text-sm text-muted-foreground">{sub}</p> : null}
+    </div>
+  );
+}
+
 function saveSession(data) {
   setUser({ id: data.id, email: data.email, school: data.school || '', department: data.department || '', level: data.level || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', avatarConfig: data.avatarConfig || null, token: data.token || '' });
 }
@@ -302,32 +315,37 @@ function AuthForm() {
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pb-10 pt-10">
       {step === 'email' && (
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-black tracking-tight">Welcome to Apex</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Enter your email — we&apos;ll send a sign-in code.</p>
-          </div>
-          <div className="mt-6 space-y-3">
+          <Brand title="Welcome to Apex" sub="Enter your email — we'll send a sign-in code." />
+          <div className="mt-7 space-y-3">
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input value={email} onChange={e => { setEmail(e.target.value); setError('') }} placeholder="Email address" type="email"
-                onKeyDown={e => e.key === 'Enter' && handleSendCode()} className="h-14 py-3 pl-11 text-base" />
+              <Input value={email} onChange={e => { setEmail(e.target.value); setError('') }} placeholder="Email address" type="email" autoComplete="email"
+                onKeyDown={e => e.key === 'Enter' && handleSendCode()} className={'h-14 py-3 pl-11 text-base ' + (error ? 'border-red-500' : '')} />
             </div>
             <Button onClick={handleSendCode} disabled={submitting} className="h-14 w-full text-base">
               {submitting ? 'Sending…' : 'Send me a code'}<ArrowRight className="ml-2 size-4" />
             </Button>
-            <p className="text-center text-[11px] text-muted-foreground">No password. No Google. The code lasts 10 minutes; your sign-in lasts months.</p>
+            <div className="grid grid-cols-3 gap-2 pt-1 text-center">
+              {[
+                ['No password', '🔓'],
+                ['Stays 90 days', '📆'],
+                ['Free forever', '🎓'],
+              ].map(([label, icon]) => (
+                <div key={label} className="rounded-xl bg-muted/60 px-1 py-2.5">
+                  <div className="text-lg leading-none">{icon}</div>
+                  <div className="mt-1 text-[10px] font-bold text-muted-foreground">{label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
       {step === 'code' && (
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-black tracking-tight">Check your email ✉️</h1>
-            <p className="mt-1 text-sm text-muted-foreground">We sent a 6-digit code to {email}.</p>
-          </div>
-          <div className="mt-6 space-y-3">
-            <OtpBoxes value={code} onChange={v => { typedFull.current = true; setCode(v); setError('') }} />
+          <Brand title="Check your email" sub={<>We sent a 6-digit code to <span className="font-bold text-foreground">{email}</span>.</>} />
+          <div className="mt-7 space-y-4">
+            <OtpBoxes value={code} hasError={!!error} onChange={v => { typedFull.current = true; setCode(v); setError('') }} />
             <Button onClick={() => { typedFull.current = false; handleVerify() }} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
               {submitting ? 'Checking…' : 'Sign in'}<Check className="ml-2 size-4" />
             </Button>
