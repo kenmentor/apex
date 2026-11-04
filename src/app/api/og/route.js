@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og'
 import React from 'react'
+import { courseTitle, courseAccent } from '@/lib/course-meta'
 
 const el = (tag, style, ...children) =>
   React.createElement(tag, style ? { style } : null, ...children.flat(Infinity).filter(Boolean))
@@ -7,57 +8,7 @@ const el = (tag, style, ...children) =>
 const txt = (content, style) => el('span', style, content)
 
 function getCourse(code) {
-  const known = {
-    'GSS 112': 'Peace & Conflict',
-    'GSS 212': 'Philosophy & Logic',
-    'GSS 101': 'Citizenship Education',
-    'GST 112': 'Nigerian People & Culture',
-    'CSC 101': 'Intro to Computing',
-    'CSC 102': 'Intro to Computing',
-    'CSC 162': 'Comp Programming',
-    'CSC 182': 'Data Structures',
-    'CSC 203': 'Discrete Structure',
-    'CSC 282': 'Java OOP',
-    'PHY 102': 'General Physics II',
-    'PHY 108': 'General Physics III',
-    'MTH 101': 'General Maths I',
-    'BCM 242': 'Carb. Metabolism',
-    'MLS 161': 'MLS & Lab Safety',
-    'IFT 212': 'Information Technology',
-    'CHM 101': 'General Chemistry I',
-    'STA 111': 'Intro to Statistics',
-    'COS 202': 'Computer Science',
-    'INS 202': 'Insurance',
-    'ENT 211': 'Entrepreneurship & Innovation',
-    'CLP 211': 'Chemical Pathology',
-  }
-  return known[code] || ''
-}
-
-// Each course gets its own accent color so shared links are instantly distinguishable.
-const ACCENTS = {
-  'GSS 112': '#38BDF8',
-  'GSS 212': '#A78BFA',
-  'GSS 101': '#34D399',
-  'GST 112': '#7DD3FC',
-  'CSC 101': '#22D3EE',
-  'CSC 102': '#22D3EE',
-  'CSC 162': '#4ADE80',
-  'CSC 182': '#FBBF24',
-  'CSC 203': '#FB923C',
-  'CSC 282': '#F87171',
-  'PHY 102': '#60A5FA',
-  'PHY 108': '#818CF8',
-  'MTH 101': '#FACC15',
-  'BCM 242': '#F472B6',
-  'MLS 161': '#2DD4BF',
-  'IFT 212': '#E879F9',
-  'CHM 101': '#FDBA74',
-  'STA 111': '#93C5FD',
-  'COS 202': '#D8B4FE',
-  'INS 202': '#A3E635',
-  'ENT 211': '#C7F800',
-  'CLP 211': '#F43F5E',
+  return courseTitle(code)
 }
 
 function hexToRgba(hex, alpha) {
@@ -86,7 +37,7 @@ export async function GET(request) {
     const fontFamily = fontData ? 'Anton' : 'system-ui'
 
     const BG = '#020B22'
-    const ACCENT = ACCENTS[code] || '#C7F800'
+    const ACCENT = courseAccent(code)
     const GLOW = hexToRgba(ACCENT, 0.22)
 
     return new ImageResponse(

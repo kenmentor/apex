@@ -1,29 +1,5 @@
-const COURSES = {
-  'GSS 112': { title: 'Peace & Conflict Resolution' },
-  'GSS 212': { title: 'Philosophy & Logic' },
-  'GSS 101': { title: 'Citizenship Education' },
-  'GST 112': { title: 'Nigerian People & Culture' },
-  'CSC 101': { title: 'Introduction to Computing' },
-  'CSC 102': { title: 'Introduction to Computing' },
-  'CSC 162': { title: 'Computer Programming' },
-  'CSC 182': { title: 'Data Structures & Algorithms' },
-  'CSC 203': { title: 'Discrete Structure' },
-  'CSC 282': { title: 'Java OOP' },
-  'PHY 102': { title: 'General Physics II' },
-  'PHY 108': { title: 'General Physics III' },
-  'MTH 101': { title: 'General Mathematics I' },
-  'BCM 242': { title: 'Carbohydrate Metabolism' },
-  'MLS 161': { title: 'MLS & Lab Safety' },
-  'IFT 212': { title: 'Information Technology' },
-  'CHM 101': { title: 'General Chemistry I' },
-  'STA 111': { title: 'Intro to Statistics' },
-  'COS 202': { title: 'Computer Science' },
-  'INS 202': { title: 'Insurance' },
-  'ENT 211': { title: 'Entrepreneurship & Innovation' },
-  'CLP 211': { title: 'Chemical Pathology' },
-}
-
 import { getBaseUrl } from '@/lib/base-url'
+import { formatCourseCode, courseTitle } from '@/lib/course-meta'
 
 function getOrigin() {
   return getBaseUrl()
@@ -31,10 +7,9 @@ function getOrigin() {
 
 export async function generateMetadata({ params }) {
   const { code: rawCode } = await params
-  const code = (rawCode || '').toUpperCase().replace(/-/g, '')
-  const formattedCode = code.replace(/^([A-Z]+)(\d+)$/, '$1 $2')
-  const course = COURSES[formattedCode] || { title: '' }
-  const pageTitle = formattedCode + (course.title ? ` - ${course.title}` : '')
+  const formattedCode = formatCourseCode(rawCode)
+  const title = courseTitle(formattedCode)
+  const pageTitle = formattedCode + (title ? ` - ${title}` : '')
   const origin = getOrigin()
   const ogUrl = `${origin}/api/og?code=${encodeURIComponent(formattedCode)}`
   const pageUrl = `${origin}/courses/${rawCode}`
@@ -44,7 +19,7 @@ export async function generateMetadata({ params }) {
     metadataBase: new URL(origin),
     openGraph: {
       title: `${pageTitle} | Apex`,
-      description: `Practice ${formattedCode} past questions and theory answers. Ace your exams with Apex!${course.title ? ` ${course.title}` : ''}`,
+      description: `Practice ${formattedCode} past questions and theory answers. Ace your exams with Apex!${title ? ` ${title}` : ''}`,
       url: pageUrl,
       siteName: 'Apex',
       type: 'website',
@@ -53,7 +28,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: 'summary_large_image',
       title: `${pageTitle} | Apex`,
-      description: `Practice ${formattedCode} past questions and theory answers. Ace your exams with Apex!${course.title ? ` ${course.title}` : ''}`,
+      description: `Practice ${formattedCode} past questions and theory answers. Ace your exams with Apex!${title ? ` ${title}` : ''}`,
       images: [ogUrl],
     },
   }
