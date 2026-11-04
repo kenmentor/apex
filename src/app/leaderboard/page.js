@@ -3,7 +3,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { getUser } from '@/lib/auth';
-import { Trophy, Users, FileText, TrendingUp, Medal, Crown, Search, ChevronRight } from 'lucide-react';
+import { Trophy, Users, FileText, TrendingUp, Medal, Crown, Search, ChevronRight, Play } from 'lucide-react';
+import { motion } from 'motion/react';
 import { AvatarWithTick } from '@/components/UserAvatar';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -25,14 +26,17 @@ function toAvatarUser(entry, role) {
   };
 }
 
-function StatCard({ icon: Icon, label, value, color, bg }) {
+// Arcade-style banner tile: gradient + watermark icon, like the games hub.
+function BannerStat({ icon: Icon, label, value, bg }) {
   return (
-    <div className="flex flex-col items-center gap-1 rounded-2xl border bg-card px-2 py-3 text-center">
-      <div className="flex size-9 items-center justify-center rounded-xl" style={{ background: bg, color }}>
+    <div className="relative flex flex-col overflow-hidden rounded-3xl p-3.5 text-white shadow-md">
+      <span className="absolute inset-0" style={{ background: bg }} aria-hidden />
+      <Icon className="pointer-events-none absolute -bottom-4 -right-4 size-20 text-white/10" strokeWidth={1.5} aria-hidden />
+      <span className="relative flex size-9 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
         <Icon className="size-4" />
-      </div>
-      <div className="text-base font-extrabold leading-tight tabular-nums">{value}</div>
-      <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      </span>
+      <span className="relative mt-3 text-xl font-black leading-none tabular-nums">{value}</span>
+      <span className="relative mt-1 text-[10px] font-bold uppercase tracking-widest text-white/70">{label}</span>
     </div>
   );
 }
@@ -162,8 +166,9 @@ export default function LeaderboardPage() {
     return (
       <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-24">
         <div className="mx-auto w-full max-w-2xl space-y-4 px-4 py-4">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-24 rounded-2xl" />)}
+          <Skeleton className="h-48 rounded-3xl" />
+          <div className="grid grid-cols-2 gap-2.5">
+            {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-28 rounded-3xl" />)}
           </div>
           <div className="grid grid-cols-3 items-end gap-3 pt-6">
             {[1, 2, 3].map(i => (
@@ -197,12 +202,33 @@ export default function LeaderboardPage() {
           </div>
         ) : (
           <>
+            {/* Featured hero — Boss Battle banner treatment */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+            >
+              <div className="relative block overflow-hidden rounded-3xl p-5 text-white shadow-lg" style={{ background: 'linear-gradient(150deg, #451a03 0%, #92400e 55%, #d97706 100%)' }}>
+                <Trophy className="pointer-events-none absolute -bottom-6 -right-6 size-40 text-white/10" strokeWidth={1.25} />
+                <span className="inline-block max-w-full truncate rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">
+                  {top3[0]?.name ? `No. 1 · ${top3[0].name}` : 'Live season'}
+                </span>
+                <span className="mt-8 block text-2xl font-black tracking-tight">Rankings</span>
+                <span className="mt-0.5 block max-w-[75%] text-[13px] leading-snug text-white/75">
+                  {stats ? `${stats.totalPlayers} players · ${stats.totalQuizzes} quizzes · ${stats.avgPercentage}% avg` : 'Every quiz counts. Climb the board.'}
+                </span>
+                <Link href="/courses" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold text-black">
+                  <Play className="size-3.5" fill="currentColor" /> Take a quiz
+                </Link>
+              </div>
+            </motion.div>
+
             {stats && (
-              <div className="grid grid-cols-4 gap-2">
-                <StatCard icon={Users} label="Players" value={stats.totalPlayers} bg="#e8f4fd" color="#3498db" />
-                <StatCard icon={FileText} label="Quizzes" value={stats.totalQuizzes} bg="#fef3e2" color="#f39c12" />
-                <StatCard icon={TrendingUp} label="Avg Pct" value={`${stats.avgPercentage}%`} bg="#e6f7ee" color="#27ae60" />
-                <StatCard icon={Medal} label="Top Score" value={stats.topScore || 0} bg="#f4e6fd" color="#9b59b6" />
+              <div className="grid grid-cols-2 gap-2.5">
+                <BannerStat icon={Users} label="Players" value={stats.totalPlayers} bg="linear-gradient(160deg, #1e1b4b 0%, #4338ca 100%)" />
+                <BannerStat icon={FileText} label="Quizzes" value={stats.totalQuizzes} bg="linear-gradient(160deg, #451a03 0%, #b45309 100%)" />
+                <BannerStat icon={TrendingUp} label="Avg Pct" value={`${stats.avgPercentage}%`} bg="linear-gradient(160deg, #042f2e 0%, #0f766e 100%)" />
+                <BannerStat icon={Medal} label="Top Score" value={stats.topScore || 0} bg="linear-gradient(160deg, #2e1065 0%, #5b21b6 100%)" />
               </div>
             )}
 
