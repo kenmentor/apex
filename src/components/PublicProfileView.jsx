@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { UserPlus, UserCheck } from 'lucide-react'
+import { UserPlus, UserCheck, Flame } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
 import ContributorProfile from '@/components/ContributorProfile'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
-// Preview for visitors: identity + follow + top achievements only.
-// Email, averages, totals and follower counts stay private.
+// Preview for visitors: identity + follow + contribution achievements.
+// Quiz averages/totals and follower counts stay private; approved
+// contribution counts + streak are public motivation.
 export default function PublicProfileView({ email }) {
   const me = getUser()
   const decodedEmail = decodeURIComponent(email)
@@ -18,20 +19,29 @@ export default function PublicProfileView({ email }) {
 
   const [profile, setProfile] = useState(null)
   const [scores, setScores] = useState([])
+  const [contrib, setContrib] = useState(null)
   const [loading, setLoading] = useState(true)
   const [isFollowing, setIsFollowing] = useState(false)
 
   useEffect(() => {
     async function load() {
       try {
-        const [userRes, scoresRes] = await Promise.all([
+        const token = getToken()
+        const [userRes, scoresRes, contribRes] = await Promise.all([
           fetch(`/api/profile?email=${encodeURIComponent(decodedEmail)}`),
           fetch(`/api/scores?email=${encodeURIComponent(decodedEmail)}`),
+          fetch(`/api/contributions/public?email=${encodeURIComponent(decodedEmail)}`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          }).catch(() => null),
         ])
         if (userRes.ok) setProfile(await userRes.json())
         if (scoresRes.ok) {
           const data = await scoresRes.json()
           setScores(data.scores || data || [])
+        }
+        if (contribRes && contribRes.ok) {
+          const c = await contribRes.json().catch(() => null)
+          if (c && !c.error) setContrib(c)
         }
 
         const followRes = await fetch(`/api/follow?email=${encodeURIComponent(decodedEmail)}`, {
@@ -85,10 +95,18 @@ export default function PublicProfileView({ email }) {
           <ContributorProfile
             user={profile}
             isOwner={false}
-            showStats={false}
+            totals={contrib?.totals}
+            rank={contrib?.rank}
+            showStats={!!contrib && (contrib.totals?.approved || 0) > 0}
           />
 
           <div className="mx-auto w-full max-w-xl space-y-4 px-4 pt-4">
+            {(contrib?.streak || 0) > 0 && (
+              <p className="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-orange-500/10 px-3 py-1.5 text-xs font-bold text-orange-600">
+                <Flame className="size-4" /> {contrib.streak}-day contribution streak
+                {contrib?.rank ? <span className="text-muted-foreground">· #{contrib.rank} contributor</span> : null}
+              </p>
+            )}
             {!isMe && me && (
               <Button
                 onClick={handleFollow}

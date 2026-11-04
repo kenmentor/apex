@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { getUserFromToken } from '@/lib/auth-server'
 
 // GET /api/course-content?course=COS+202
 // Whole course at once: every topic with its media tabs
@@ -30,14 +31,27 @@ export async function GET(request) {
     if (!courseCode) return NextResponse.json({ error: 'course required' }, { status: 400 })
 
     const courseCodes = [...new Set([courseCode, courseCode.replace(/\s+/g, '')])]
-    const [topics, videos, readings, theory, materials] = await Promise.all([
+    // Optional identity: pending uploads are only ever shown to their
+    // uploader (or an admin). Anonymous / other viewers never see them.
+    const viewer = await getUserFromToken(request).catch(() => null)
+    const viewerEmail = String(viewer?.email || '').toLowerCase().trim()
+    const viewerIsAdmin = !!viewer?.admin
+    const [topics, videos, readings, theory, materials, pendingAll] = await Promise.all([
       getCollection('curriculum_topics').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('videos').then(c => c.find({ courseCode }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('readings').then(c => c.find({ courseCode, status: { $nin: ['pending', 'rejected', 'revoked'] } }).sort({ order: 1 }).toArray()).catch(() => []),
       getCollection('theory_references').then(c => c.find({ courseCode }).toArray()).catch(() => []),
       // Approved contributor uploads (user_materials) — pending review items stay out.
       getCollection('user_materials').then(c => c.find({ courseCode: { $in: courseCodes }, isPublic: { $ne: false }, status: { $nin: ['pending', 'rejected', 'revoked'] } }).sort({ createdAt: -1 }).limit(500).toArray()).catch(() => []),
+      // Pending uploads for this course (scoped to viewer below).
+      (viewerEmail
+        ? getCollection('user_materials').then(c => c.find({ courseCode: { $in: courseCodes }, status: 'pending' }).sort({ createdAt: -1 }).limit(200).toArray()).catch(() => [])
+        : Promise.resolve([])),
     ])
+    // Not global: only the uploader's own pending items (admins see all).
+    const pending = (pendingAll || []).filter(m =>
+      viewerIsAdmin || String(m.ownerEmail || '').toLowerCase() === viewerEmail
+    )
 
     const vPre = videos.map(v => ({
       src: v,
@@ -81,6 +95,36 @@ export async function GET(request) {
       }
     })
 
+    // Pending uploads: same tab mapping, but flagged under review. They
+    // only ever land on their EXACT topic — no keyword spread, no flat
+    // fallback — so they never leak across the course.
+    const pPre = (pending || []).map(m => {
+      const url = String(m.url || '')
+      const kind = String(m.itemKind || 'file')
+      const audioLike = /\.mp3|\.wav|\.ogg|\.m4a/i.test(url)
+      const pdfLike = kind === 'pdf' || /\.pdf$/i.test(url) || /\.pdf$/i.test(String(m.fileName || ''))
+      let tab = 'other'
+      let itemKind = kind
+      if (kind === 'video' && !audioLike) { tab = 'video'; itemKind = 'video' }
+      else if (kind === 'audio' || audioLike) { tab = 'audio'; itemKind = 'audio' }
+      else if (pdfLike) { tab = 'pdf'; itemKind = 'pdf' }
+      else if (kind === 'notes' || kind === 'text') { tab = 'text'; itemKind = 'text' }
+      return {
+        src: m,
+        tab,
+        topicNorm: String(m.topic || '').trim().toLowerCase(),
+        item: {
+          id: `p-${String(m._id)}`, kind: itemKind,
+          title: m.title || m.fileName || 'Untitled',
+          url: m.url || null,
+          description: '',
+          by: m.ownerEmail ? String(m.ownerEmail).toLowerCase() : null,
+          underReview: true,
+          ...(tab === 'text' ? { content: '', source: 'upload' } : {}),
+        },
+      }
+    })
+
     const out = topics.map(t => {      const title = t.title || 'Topic'
       const tTokens = [...new Set(tokens(title))]
       const need = Math.max(1, Math.ceil(tTokens.length * 0.2))
@@ -119,6 +163,10 @@ export async function GET(request) {
         const exact = m.topicNorm && m.topicNorm === titleNorm
         const s = exact ? 100 : match(m.toks)
         push(exact ? m.tab : (s > 0 ? m.tab : 'other'), m.item, exact ? s : s)
+      }
+      // Pending uploads: exact topic match only — never keyword-matched.
+      for (const m of pPre) {
+        if (m.topicNorm && m.topicNorm === titleNorm) push(m.tab, m.item, 100)
       }
 
       for (const k of Object.keys(tabs)) {
@@ -168,6 +216,10 @@ export async function GET(request) {
     try {
       const emails = new Set()
       for (const m of materials || []) {
+        const e = String(m.ownerEmail || '').toLowerCase().trim()
+        if (e) emails.add(e)
+      }
+      for (const m of pending || []) {
         const e = String(m.ownerEmail || '').toLowerCase().trim()
         if (e) emails.add(e)
       }

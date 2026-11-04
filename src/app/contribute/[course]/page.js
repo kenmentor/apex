@@ -56,7 +56,7 @@ export default function ContributeCoursePage({ params }) {
     const u = getUser()
     setUser(u)
     setReady(true)
-    fetchJson(`/api/course-content?course=${encodeURIComponent(slug)}`, { ttl: TTL.list })
+    fetchJson(`/api/course-content?course=${encodeURIComponent(slug)}`, { token: getToken(), ttl: TTL.list })
       .then(d => { if (d.courseCode) setContent(d) })
       .catch(() => {})
   }, [slug])
@@ -243,7 +243,14 @@ function CompactRow({ item }) {
         <BookOpen className="size-4 shrink-0 text-muted-foreground" />
       )}
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[13px] font-semibold">{item.title}</span>
+        <span className="flex items-center gap-1.5">
+          <span className="block truncate text-[13px] font-semibold">{item.title}</span>
+          {item.underReview && (
+            <span className="shrink-0 rounded-full bg-amber-500/15 px-1.5 py-px text-[9px] font-black uppercase tracking-wide text-amber-600">
+              Under review
+            </span>
+          )}
+        </span>
         {item.url && <span className="block truncate text-[10px] text-muted-foreground">{hostOf(item.url)}</span>}
       </span>
       {item.url ? (

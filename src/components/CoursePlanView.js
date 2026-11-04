@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, Zap, Timer, ListChecks, Trophy, Film, Music, FileText, BookOpen, Square, Volume2, ExternalLink, Plus, Layers, X, ChevronRight } from 'lucide-react'
 import UserAvatar from '@/components/UserAvatar'
@@ -265,6 +265,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
   const [sentMsg, setSentMsg] = useState('')
   const [contribOpen, setContribOpen] = useState(false)
   const [toggling, setToggling] = useState(false)
+  const [extraPeople, setExtraPeople] = useState({})
   const speech = useSpeech()
   const canSuggest = reader && (reader.kind === 'text' || reader.kind === 'pdf') && reader.item?.source !== 'theory'
 
@@ -310,7 +311,40 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
   // topic's matched content (API attaches their real avatar). Ranked by
   // items contributed (ties: email, so order never reshuffles). Nothing
   // attributable → no stack, no clutter.
-  const people = content?.people || {}
+  const people = useMemo(
+    () => ({ ...(content?.people || {}), ...extraPeople }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [content?.people, extraPeople]
+  )
+
+  // Safety net: if the API's people map missed a contributor (stale cache,
+  // casing, whatever), resolve them straight from their profile so we never
+  // show a bare initial for a real face.
+  useEffect(() => {
+    const missing = new Set()
+    for (const k of ['video', 'audio', 'pdf', 'text']) {
+      for (const it of content?.tabs?.[k] || []) {
+        const email = String(it.by || '').toLowerCase().trim()
+        if (email && !people[email]) missing.add(email)
+      }
+    }
+    if (!missing.size) return
+    let cancelled = false
+    ;(async () => {
+      const got = {}
+      await Promise.all([...missing].slice(0, 6).map(async (email) => {
+        try {
+          const r = await fetch(`/api/profile?email=${encodeURIComponent(email)}`)
+          if (!r.ok) return
+          const u = await r.json()
+          if (u && !u.error) got[email] = { name: u.name || null, avatar: u.avatar || null, avatarConfig: u.avatarConfig || null }
+        } catch {}
+      }))
+      if (!cancelled && Object.keys(got).length) setExtraPeople(prev => ({ ...prev, ...got }))
+    })()
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content])
   const contributors = (() => {
     if (Array.isArray(content.contributors) && content.contributors.length) {
       return [...content.contributors].sort((a, b) => (b.count || 0) - (a.count || 0) || String(a.email).localeCompare(String(b.email)))
