@@ -1,5 +1,17 @@
 const STORAGE_KEY = 'gss_quiz_auth'
 export const ROLE_BACKUP_KEY = 'gss_role_backup'
+// Presence flag the edge middleware reads to gate personal pages.
+// (HttpOnly would be nicer, but the session itself lives in localStorage;
+// the cookie is only a bouncer, APIs still enforce the real token.)
+const COOKIE_FLAG = 'apex_auth=1'
+
+function setFlag() {
+  try { document.cookie = `${COOKIE_FLAG}; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax` } catch {}
+}
+
+function clearFlag() {
+  try { document.cookie = 'apex_auth=; path=/; max-age=0; SameSite=Lax' } catch {}
+}
 
 export function getUser() {
   if (typeof window === 'undefined') return null
@@ -12,12 +24,14 @@ export function getUser() {
 export function setUser(user) {
   if (typeof window === 'undefined') return
   localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+  if (user?.token) setFlag()
 }
 
 export function clearUser() {
   if (typeof window === 'undefined') return
   localStorage.removeItem(STORAGE_KEY)
   localStorage.removeItem(ROLE_BACKUP_KEY)
+  clearFlag()
 }
 
 // Dev-only view switcher: lets a real admin browse the app as an editor

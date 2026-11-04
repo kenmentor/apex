@@ -26,7 +26,7 @@ function toAvatarUser(entry, role) {
   };
 }
 
-function PodiumCard({ entry, rank, role, large }) {
+function PodiumCard({ entry, rank, role, large, contrib }) {
   const s = RANK_STYLE[rank];
   const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
@@ -53,11 +53,38 @@ function PodiumCard({ entry, rank, role, large }) {
       <div className="mt-2 w-full truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
       <div className="text-sm font-extrabold tabular-nums text-primary">{entry?.totalScore || 0} pts</div>
       <div className="text-[10px] font-semibold text-muted-foreground">{entry?.avgPct ?? 0}% avg · {entry?.quizCount ?? 0} quiz{(entry?.quizCount ?? 0) === 1 ? '' : 'zes'}</div>
+      {!!contrib?.medals?.length && (
+        <div className="mt-1.5 flex justify-center">
+          <MedalStack medals={contrib.medals} size="size-4 text-[10px]" max={4} />
+        </div>
+      )}
     </Link>
   );
 }
 
-function RankRow({ entry, rank, isUser, role }) {
+// Earned achievement badges, overlapped like a facepile.
+function MedalStack({ medals = [], size = 'size-5 text-[11px]', max = 5 }) {
+  const shown = medals.slice(0, max);
+  const extra = medals.length - shown.length;
+  if (!shown.length && !extra) return null;
+  return (
+    <span className="inline-flex items-center">
+      {shown.map(m => (
+        <span key={m.id} title={m.label}
+          className={`flex shrink-0 items-center justify-center rounded-full bg-muted ring-2 ring-card ${size} -ml-1.5 first:ml-0`}>
+          {m.icon}
+        </span>
+      ))}
+      {extra > 0 && (
+        <span className={`flex shrink-0 items-center justify-center rounded-full bg-primary/10 font-black text-primary ring-2 ring-card ${size} -ml-1.5`} style={{ fontSize: 9 }}>
+          +{extra}
+        </span>
+      )}
+    </span>
+  );
+}
+
+function RankRow({ entry, rank, isUser, role, contrib }) {
   const s = RANK_STYLE[rank];
   const href = entry?.email ? `/profile/${encodeURIComponent(entry.email)}` : '#';
   return (
@@ -84,6 +111,14 @@ function RankRow({ entry, rank, isUser, role }) {
         <span className="block truncate text-[11px] text-muted-foreground">
           {[entry.school, `${entry.quizCount} quiz${entry.quizCount !== 1 ? 'zes' : ''}`].filter(Boolean).join(' · ')}
         </span>
+        {!!contrib && (contrib.approved > 0 || (contrib.medals || []).length > 0) && (
+          <span className="mt-1 flex items-center gap-1.5">
+            <MedalStack medals={contrib.medals || []} />
+            <span className="truncate text-[10px] font-bold text-muted-foreground">
+              {contrib.approved} upload{contrib.approved === 1 ? '' : 's'}
+            </span>
+          </span>
+        )}
       </span>
       <span className="shrink-0 text-right leading-tight">
         <span className="block text-sm font-extrabold tabular-nums">{entry.totalScore}</span>
@@ -100,6 +135,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [user, setUserState] = useState(null);
   const [roleMap, setRoleMap] = useState({});
+  const [contribMap, setContribMap] = useState({});
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -121,12 +157,21 @@ export default function LeaderboardPage() {
             .then(d => { if (d.roles) setRoleMap(d.roles) })
             .catch(() => {});
         }
+        // Contribution badges + upload counts for the visible board.
+        const board = [...new Set(list.slice(0, 30).map(e => e.email).filter(Boolean))];
+        if (board.length) {
+          fetch(`/api/contributions/public?emails=${board.map(encodeURIComponent).join(',')}`)
+            .then(r => r.json())
+            .then(d => { if (d.users) setContribMap(d.users) })
+            .catch(() => {});
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
   const roleOf = (entry) => entry?.role || (entry?.email && roleMap[entry.email.toLowerCase()]) || null;
+  const contribOf = (entry) => (entry?.email && contribMap[entry.email.toLowerCase()]) || null;
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -222,10 +267,10 @@ export default function LeaderboardPage() {
 
             {showPodium && (
               <div className="grid grid-cols-3 items-end gap-2 pt-5 sm:gap-3">
-                <PodiumCard entry={top3[1]} rank={2} role={top3[1] && roleOf(top3[1])} />
-                <PodiumCard entry={top3[0]} rank={1} large role={top3[0] && roleOf(top3[0])} />
+                <PodiumCard entry={top3[1]} rank={2} role={top3[1] && roleOf(top3[1])} contrib={top3[1] && contribOf(top3[1])} />
+                <PodiumCard entry={top3[0]} rank={1} large role={top3[0] && roleOf(top3[0])} contrib={top3[0] && contribOf(top3[0])} />
                 {top3[2] ? (
-                  <PodiumCard entry={top3[2]} rank={3} role={roleOf(top3[2])} />
+                  <PodiumCard entry={top3[2]} rank={3} role={roleOf(top3[2])} contrib={contribOf(top3[2])} />
                 ) : (
                   <div className="flex flex-1 flex-col items-center rounded-3xl border border-dashed px-2 py-6 text-center">
                     <span className="text-xs font-bold text-muted-foreground">3rd place</span>
@@ -246,6 +291,12 @@ export default function LeaderboardPage() {
                   <span className="block truncate text-[11px] text-muted-foreground">
                     {userEntry.totalScore} pts · {userEntry.avgPct}% avg — keep climbing
                   </span>
+                  {(() => { const c = contribOf(userEntry); return !!c && (c.approved > 0 || (c.medals || []).length > 0) ? (
+                    <span className="mt-1 flex items-center gap-1.5">
+                      <MedalStack medals={c.medals || []} />
+                      <span className="truncate text-[10px] font-bold text-muted-foreground">{c.approved} uploads</span>
+                    </span>
+                  ) : null })()}
                 </span>
                 <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
               </Link>
@@ -278,7 +329,7 @@ export default function LeaderboardPage() {
               {(searching ? filtered : allEntries.slice(3)).map((entry) => {
                 const rank = allEntries.indexOf(entry) + 1;
                 const isUser = userEmail && entry.email?.toLowerCase() === userEmail;
-                return <RankRow key={entry.email || `${rank}-${entry.name}`} entry={entry} rank={rank} isUser={isUser} role={roleOf(entry)} />;
+                return <RankRow key={entry.email || `${rank}-${entry.name}`} entry={entry} rank={rank} isUser={isUser} role={roleOf(entry)} contrib={contribOf(entry)} />;
               })}
             </div>
 

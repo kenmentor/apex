@@ -124,20 +124,15 @@ export default function HomePage() {
   useEffect(() => {
     const u = getUser();
     setUser(u);
-    const fetches = [
-      fetchJson('/api/categories?limit=20', { ttl: TTL.list }),
-    ];
-
-    if (u?.email) {
-      fetches.push(
+    const fetches = u?.email
+      ? [
+        fetchJson('/api/categories?limit=20', { ttl: TTL.list }),
         fetchJson(`/api/feed/personalized?email=${encodeURIComponent(u.email)}`, {
           token: getToken(), ttl: 15000,
-        }).catch(() => ({ items: [] }))
-      );
-      fetches.push(
-        fetchJson(`/api/streak?email=${encodeURIComponent(u.email)}`, { ttl: 15000 }).catch(() => ({}))
-      );
-    }
+        }).catch(() => ({ items: [] })),
+        fetchJson(`/api/streak?email=${encodeURIComponent(u.email)}`, { ttl: 15000 }).catch(() => ({})),
+      ]
+      : [Promise.resolve({ docs: [] })];
 
     Promise.all(fetches)
       .then(([catsData, feedData, streak]) => {
@@ -255,32 +250,14 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Not logged in: show departments */}
+      {/* Not logged in: no departments — just the way in. */}
       {!user && (
-        <section className="space-y-3">
-          <h2 className="text-sm font-bold">Departments</h2>
-          <div className="space-y-2">
-            {categories.map((cat) => {
-              const color = cat.color || DEPT_COLORS[cat.code] || '#636e72';
-              return (
-                <Link
-                  key={cat.id || cat.code}
-                  href={`/departments/${cat.code?.toLowerCase()}`}
-                  className="flex items-center gap-4 rounded-xl p-4 text-white transition-all active:scale-[0.98]"
-                  style={{ background: `linear-gradient(135deg, ${color}, ${color}dd)` }}
-                >
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/20 text-sm font-bold backdrop-blur-sm">
-                    {cat.code?.slice(0, 3)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-sm font-bold truncate">{cat.title}</div>
-                    <div className="text-xs text-white/70">{cat.courseCount || 0} courses</div>
-                  </div>
-                  <ArrowRight className="size-4 shrink-0 text-white/50" />
-                </Link>
-              );
-            })}
-          </div>
+        <section className="overflow-hidden rounded-3xl p-6 text-center text-white" style={{ background: 'linear-gradient(135deg, #130f40, #2c2c54)' }}>
+          <h2 className="text-lg font-black">Your study plan lives here</h2>
+          <p className="mx-auto mt-1 max-w-[260px] text-xs text-white/70">Sign in to unlock your courses, quizzes and progress.</p>
+          <Link href="/auth" className="mt-4 inline-block rounded-full bg-white px-6 py-2.5 text-sm font-extrabold text-black">
+            Sign in
+          </Link>
         </section>
       )}
 

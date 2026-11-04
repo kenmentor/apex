@@ -143,8 +143,14 @@ function AuthForm() {
     } catch {}
     // Never show a stale code: fresh boxes on every load.
     setCode('');
-    // Already holding a session? Skip straight in.
-    try { if (getUser()?.token) router.push('/'); } catch {}
+    // Already holding a session? Heal the edge cookie, skip straight in.
+    try {
+      const u = getUser();
+      if (u?.token) {
+        try { document.cookie = `apex_auth=1; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax` } catch {}
+        router.push('/');
+      }
+    } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

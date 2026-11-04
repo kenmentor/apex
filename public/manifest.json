@@ -22,10 +22,10 @@
       "purpose": "any"
     },
     {
-      "src": "/black-logo.png",
+      "src": "/white-logo.png",
       "sizes": "500x500",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
