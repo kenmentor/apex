@@ -2,7 +2,6 @@
 
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@clerk/nextjs'
 import Link from 'next/link'
 import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
 import { ArrowLeft, Camera, LogOut, Shield, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
@@ -21,7 +20,6 @@ const OTHERS = 'Others… (type it yourself)'
 
 export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const router = useRouter()
-  const { signOut } = useAuth()
   const { theme, setTheme } = useTheme()
   const [user, setUserState] = useState(null)
   const [editing, setEditing] = useState(false)
@@ -172,7 +170,6 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
       try { localStorage.setItem('apex_last_email', u.email) } catch {}
     }
     clearUser()
-    try { signOut() } catch {}
     router.push('/auth')
   }
 

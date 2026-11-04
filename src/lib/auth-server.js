@@ -3,8 +3,8 @@ import { getCollection } from '@/lib/db'
 
 const SECRET = process.env.JWT_API_KEY || 'dev-secret'
 
-export function signToken(payload) {
-  return jwt.sign(payload, SECRET, { expiresIn: '7d' })
+export function signToken(payload, expiresIn = '7d') {
+  return jwt.sign(payload, SECRET, { expiresIn })
 }
 
 export function verifyToken(token) {
