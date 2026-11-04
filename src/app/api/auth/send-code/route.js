@@ -5,7 +5,6 @@ import { sendLoginCodeEmail } from '@/lib/email'
 
 const CODE_TTL_MS = 10 * 60 * 1000
 const RESEND_WAIT_MS = 60 * 1000
-const MAX_PER_HOUR = 5
 
 // POST /api/auth/send-code { email } — passwordless sign-in.
 // One box: user gives an email, gets a 6-digit code. No passwords, no Google.
@@ -22,9 +21,8 @@ export async function POST(request) {
 
     const recent = await codes.find({ email: cleanEmail, createdAt: { $gte: new Date(now.getTime() - 60 * 60 * 1000) } })
       .sort({ createdAt: -1 }).toArray().catch(() => [])
-    if (recent.length >= MAX_PER_HOUR) {
-      return NextResponse.json({ error: 'Too many codes. Try again in an hour.' }, { status: 429 })
-    }
+    // No hourly cap — codes always send. The 60s resend wait is the only
+    // throttle, so normal use never hits a wall.
     if (recent[0] && now.getTime() - new Date(recent[0].createdAt).getTime() < RESEND_WAIT_MS) {
       return NextResponse.json({ error: 'Code already sent. Wait a minute before retrying.', sent: true })
     }
