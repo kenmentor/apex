@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { setUser, getUser, getToken } from '@/lib/auth';
 import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar';
 import AvatarCustomizer from '@/components/AvatarCustomizer';
@@ -20,7 +20,17 @@ function saveSession(data) {
 }
 
 export default function AuthPage() {
+  return (
+    <Suspense>
+      <AuthForm />
+    </Suspense>
+  );
+}
+
+function AuthForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const autoTried = useRef(false);
   const [step, setStep] = useState('email'); // email | code | uni | dept | avatar
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -89,15 +99,17 @@ export default function AuthPage() {
     }
   }
 
-  async function handleVerify() {
-    if (code.trim().length < 4) return fail('Enter the code we sent you.');
+  async function handleVerify(emOverride, cdOverride) {
+    const em = (emOverride ?? email).trim();
+    const cd = (cdOverride ?? code).trim();
+    if (cd.length < 4) return fail('Enter the code we sent you.');
     setError('');
     setSubmitting(true);
     try {
       const res = await fetch('/api/auth/verify-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), code: code.trim() }),
+        body: JSON.stringify({ email: em, code: cd }),
       });
       const data = await res.json().catch(() => ({}));
       if (!data.token) throw new Error(data.error || 'That code did not work.');
@@ -109,6 +121,20 @@ export default function AuthPage() {
       setSubmitting(false);
     }
   }
+
+  // Magic link (?email=&code=): fill in and verify once, hands-free.
+  useEffect(() => {
+    if (autoTried.current) return;
+    const em = (searchParams.get('email') || '').trim();
+    const cd = (searchParams.get('code') || '').replace(/\D/g, '').slice(0, 6);
+    if (!em.includes('@') || cd.length < 4) return;
+    autoTried.current = true;
+    setEmail(em);
+    setCode(cd);
+    setStep('code');
+    handleVerify(em, cd);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   async function handleAvatarComplete(skip) {
     if (skip) { router.push('/'); return; }
@@ -226,7 +252,7 @@ export default function AuthPage() {
               <Input value={code} onChange={e => { setCode(e.target.value.replace(/\D/g, '').slice(0, 6)); setError('') }} placeholder="6-digit code"
                 inputMode="numeric" onKeyDown={e => e.key === 'Enter' && handleVerify()} className="h-14 py-3 pl-11 text-center text-xl tracking-[0.5em]" />
             </div>
-            <Button onClick={handleVerify} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
+            <Button onClick={() => handleVerify()} disabled={submitting || code.trim().length < 4} className="h-14 w-full text-base">
               {submitting ? 'Checking…' : 'Sign in'}<Check className="ml-2 size-4" />
             </Button>
             <div className="flex items-center justify-between">
