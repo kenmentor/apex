@@ -31,23 +31,22 @@ export async function sendVerificationEmail(email) {
   return data?.id
 }
 
-// Passwordless sign-in code via Brevo: huge bold code + one-tap link.
-// Uses BREVO_API_KEY (server-only, never exposed to the client).
+// Passwordless sign-in code via Resend: huge bold code + one-tap link.
+// Uses RESEND_API_KEY (server-only). Note: until a domain is verified in
+// Resend, delivery works to the account address only.
 export async function sendLoginCodeEmail(email, code) {
-  const apiKey = process.env.BREVO_API_KEY
+  const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) throw new Error('Email service not configured.')
-  const senderEmail = process.env.SENDER_EMAIL || 'agentwithme@gmail.com'
-  const senderName = process.env.SENDER_NAME || 'Apex'
   const base = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '')
   const magicUrl = `${base}/auth?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`
-  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+  const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { 'api-key': apiKey, 'Content-Type': 'application/json', accept: 'application/json' },
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      sender: { name: senderName, email: senderEmail },
-      to: [{ email }],
+      from: 'Apex <onboarding@resend.dev>',
+      to: [email],
       subject: `${code} is your Apex sign-in code`,
-      htmlContent: `
+      html: `
       <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px;text-align:center">
         <h2 style="color:#130f40;margin-bottom:8px">Apex</h2>
         <p style="color:#333;line-height:1.6">Enter this code to sign in. It expires in 10 minutes.</p>
@@ -58,6 +57,6 @@ export async function sendLoginCodeEmail(email, code) {
     }),
   })
   const data = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(data?.message || `Brevo send failed (${res.status})`)
-  return data?.messageId || 'sent'
+  if (!res.ok) throw new Error(data?.message || `Email send failed (${res.status})`)
+  return data?.id || 'sent'
 }
