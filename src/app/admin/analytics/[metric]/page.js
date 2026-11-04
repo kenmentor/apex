@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { use } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { isAdmin } from '@/lib/auth'
+import { isAdmin, getToken } from '@/lib/auth'
 import { ArrowLeft, Activity, Users, Smartphone, Monitor, RefreshCw, Download, Clock, Layers, MousePointerClick, Eye, Zap, TrendingUp } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -36,7 +36,8 @@ export default function MetricDetailPage({ params }) {
   useEffect(() => {
     if (!isAdmin()) { router.push('/auth'); return }
     setLoading(true)
-    fetch(`/api/admin/dashboard/${metric}`)
+    const t = getToken()
+    fetch(`/api/admin/dashboard/${metric}`, { headers: t ? { Authorization: `Bearer ${t}` } : {} })
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))

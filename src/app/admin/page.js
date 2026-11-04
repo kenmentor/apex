@@ -83,7 +83,7 @@ export default function AdminPage() {
   async function loadDashboard() {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/dashboard')
+      const res = await fetch('/api/admin/dashboard', { headers: getAuthHeaders() })
       const data = await res.json()
       setDash(data)
     } catch {}

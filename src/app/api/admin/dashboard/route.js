@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { requireAdmin } from '@/lib/auth-server'
 import { getComparedMetrics } from '@/lib/metrics'
 
-export async function GET() {
+export async function GET(request) {
   try {
+    const admin = await requireAdmin(request)
+    if (!admin) return NextResponse.json({ error: 'Admins only' }, { status: 403 })
     const col = await getCollection('analytics')
     const now = new Date()
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())

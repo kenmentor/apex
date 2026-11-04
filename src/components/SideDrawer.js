@@ -56,12 +56,17 @@ export default function SideDrawer({ open, user, coins, onClose }) {
         </div>
 
         <nav className="mt-4 space-y-1">
-          {isContributor(user) && (
+          {isContributor(user) ? (
             <Link href="/contribute" onClick={onClose} className="flex items-center gap-3 rounded-xl bg-primary/10 px-3 py-2.5 text-sm font-bold text-primary">
               <PenLine className="size-4 shrink-0" />
               Contributor
             </Link>
-          )}
+          ) : !!user ? (
+            <Link href="/contribute" onClick={onClose} className="flex items-center gap-3 rounded-xl bg-primary/10 px-3 py-2.5 text-sm font-bold text-primary">
+              <PenLine className="size-4 shrink-0" />
+              Become a contributor
+            </Link>
+          ) : null}
           {!!user?.admin && (
             <>
               <p className="px-3 pb-1 pt-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Admin</p>

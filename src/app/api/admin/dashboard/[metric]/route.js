@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { requireAdmin } from '@/lib/auth-server'
 
 export async function GET(request, { params }) {
   try {
+    const admin = await requireAdmin(request)
+    if (!admin) return NextResponse.json({ error: 'Admins only' }, { status: 403 })
     const { metric } = await params
     const col = await getCollection('analytics')
     const now = new Date()
