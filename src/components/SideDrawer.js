@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { X, Map, Users, Gamepad2, PlusCircle, Wallet, BarChart3, User, LogOut, PenLine } from 'lucide-react';
+import { X, Map, Users, Gamepad2, PlusCircle, Wallet, BarChart3, User, LogOut, PenLine, ShieldCheck, Inbox, Bell } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { UserAvatarImage, VerifiedTick } from '@/components/UserAvatar';
 import AvatarViewer from '@/components/AvatarViewer';
@@ -61,6 +61,26 @@ export default function SideDrawer({ open, user, coins, onClose }) {
               <PenLine className="size-4 shrink-0" />
               Contributor
             </Link>
+          )}
+          {!!user?.admin && (
+            <>
+              <p className="px-3 pb-1 pt-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Admin</p>
+              {[
+                { href: '/admin/analytics', label: 'Stats', icon: BarChart3 },
+                { href: '/admin/review', label: 'Review queue', icon: Bell },
+                { href: '/admin/requests', label: 'Contributor requests', icon: Inbox },
+                { href: '/admin/users', label: 'People & roles', icon: Users },
+                { href: '/admin', label: 'Admin home', icon: ShieldCheck },
+              ].map(r => {
+                const Icon = r.icon;
+                return (
+                  <Link key={r.href} href={r.href} onClick={onClose} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium hover:bg-muted">
+                    <Icon className="size-4 shrink-0 text-muted-foreground" />
+                    {r.label}
+                  </Link>
+                )
+              })}
+            </>
           )}
           {ROWS.map(r => {
             const Icon = r.icon;
