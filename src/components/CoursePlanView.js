@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Check, Zap, Timer, ListChecks, Trophy, Film, Music, FileText, BookOpen, Square, Volume2, ExternalLink, Plus, Layers, X, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Check, Zap, Timer, ListChecks, Trophy, Film, Music, FileText, BookOpen, Square, Volume2, ExternalLink, Plus, Layers, X, ChevronRight, Share2 } from 'lucide-react'
 import UserAvatar from '@/components/UserAvatar'
+import CourseShareCard from '@/components/CourseShareCard'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import TikTokTabs from '@/components/TikTokTabs'
@@ -42,6 +43,7 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   const [loading, setLoading] = useState(true)
   const [demoMode, setDemoMode] = useState(false)
   const [loadFailed, setLoadFailed] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
 
   useEffect(() => {
     try { setDemoMode(new URLSearchParams(window.location.search).get('demo') === '1') } catch {}
@@ -175,6 +177,10 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
           <ArrowLeft className="size-4" />
         </Link>
         <h1 className="min-w-0 flex-1 truncate text-sm font-bold">{code}{headerSuffix}</h1>
+        <button onClick={() => setShareOpen(true)} aria-label="Share this course"
+          className="flex size-9 shrink-0 items-center justify-center rounded-lg border hover:bg-muted">
+          <Share2 className="size-4" />
+        </button>
         {contribute && (
           <button onClick={() => onAddCourse?.()} aria-label="Add content to this course"
             className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
@@ -222,6 +228,17 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
           <p className="text-xs">No {tab} content in this course yet — new uploads will appear here.</p>
         </div>
       )}
+
+      <CourseShareCard
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        course={{ code, title, color }}
+        stats={{
+          questions: null,
+          videos: (content?.totals?.video || 0) + (content?.totals?.audio || 0),
+          notes: (content?.totals?.pdf || 0) + (content?.totals?.text || 0),
+        }}
+      />
     </div>
   )
 }

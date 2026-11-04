@@ -10,6 +10,7 @@ import { fetchJson } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 import VideoModal from '@/components/VideoModal';
 import NoteReader from '@/components/NoteReader';
+import CourseShareCard from '@/components/CourseShareCard';
 import { stripHtml } from '@/components/Reader';
 
 const COURSE_TABS = [
@@ -47,7 +48,7 @@ export default function CourseDetailPage() {
   const [feedbackComment, setFeedbackComment] = useState('');
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
-  const [shareToast, setShareToast] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [playingVideo, setPlayingVideo] = useState(null);
   const [reading, setReading] = useState(null);
 
@@ -117,17 +118,8 @@ export default function CourseDetailPage() {
   }
 
   async function handleShare() {
-    const url = window.location.href
-    const title = `${code} - ${course?.title || 'Past Questions & Theory'} | Apex`
-    if (navigator.share) {
-      try { await navigator.share({ title, url }) } catch {}
-    } else {
-      try {
-        await navigator.clipboard.writeText(url)
-        setShareToast(true)
-        setTimeout(() => setShareToast(false), 2000)
-      } catch {}
-    }
+    // The share sheet renders the course graphic — just open it.
+    setShareOpen(true)
   }
 
   if (loading) {
@@ -363,12 +355,6 @@ export default function CourseDetailPage() {
       )}
 
       {/* Share toast */}
-      {shareToast && (
-        <div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background shadow-lg animate-in fade-in slide-in-from-bottom-2">
-          Link copied to clipboard!
-        </div>
-      )}
-
       {playingVideo && (
         <VideoModal
           item={{
@@ -383,6 +369,13 @@ export default function CourseDetailPage() {
           onClose={() => setPlayingVideo(null)}
         />
       )}
+
+      <CourseShareCard
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        course={course}
+        stats={{ questions: questionCount, videos: videos.length, notes: readings.length }}
+      />
     </div>
   );
 }

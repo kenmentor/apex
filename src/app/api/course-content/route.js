@@ -125,6 +125,11 @@ export async function GET(request) {
       }
     })
 
+    // All exact topic names in this course (for single-homing uploads).
+    const topicNorms = new Set(
+      topics.map(x => String(x.title || '').trim().toLowerCase()).filter(Boolean)
+    )
+
     const out = topics.map(t => {      const title = t.title || 'Topic'
       const tTokens = [...new Set(tokens(title))]
       const need = Math.max(1, Math.ceil(tTokens.length * 0.2))
@@ -132,7 +137,14 @@ export async function GET(request) {
         ? overlap(textTokens, tTokens).length * weight : 0
 
       const tabs = { video: [], audio: [], pdf: [], text: [], other: [] }
-      const push = (tab, item, score) => tabs[tab].push({ ...item, _score: score })
+      const seenInTab = { video: new Set(), audio: new Set(), pdf: new Set(), text: new Set(), other: new Set() }
+      // Same link twice in one tab = duplicate: keep the first, drop the rest.
+      const push = (tab, item, score) => {
+        const k = item.url || item.id
+        if (k && seenInTab[tab].has(k)) return
+        if (k) seenInTab[tab].add(k)
+        tabs[tab].push({ ...item, _score: score })
+      }
 
       for (const v of vPre) {
         const s = match(v.toks)
@@ -158,9 +170,12 @@ export async function GET(request) {
 
       // Contributor uploads: exact topic name match always lands in its tab;
       // otherwise fall back to keyword matching like everything else.
+      // Single-homed: an upload whose topic exactly matches a course topic
+      // lives ONLY there — never keyword-scattered across other topics.
       const titleNorm = String(title || '').trim().toLowerCase()
       for (const m of mPre) {
         const exact = m.topicNorm && m.topicNorm === titleNorm
+        if (!exact && m.topicNorm && topicNorms.has(m.topicNorm)) continue
         const s = exact ? 100 : match(m.toks)
         push(exact ? m.tab : (s > 0 ? m.tab : 'other'), m.item, exact ? s : s)
       }

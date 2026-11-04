@@ -56,7 +56,14 @@ export async function GET(request) {
       ? overlap(textTokens, tTokens).length * weight : 0
 
     const tabs = { video: [], audio: [], pdf: [], text: [], other: [] }
-    const push = (tab, item, score) => tabs[tab].push({ ...item, _score: score })
+    const seenInTab = { video: new Set(), audio: new Set(), pdf: new Set(), text: new Set(), other: new Set() }
+    // Same link twice in one tab = duplicate: keep the first, drop the rest.
+    const push = (tab, item, score) => {
+      const k = item.url || item.id
+      if (k && seenInTab[tab].has(k)) return
+      if (k) seenInTab[tab].add(k)
+      tabs[tab].push({ ...item, _score: score })
+    }
 
     for (const v of videos) {
       const s = match([...tokens(v.title), ...tokens(v.description)])
@@ -91,7 +98,9 @@ export async function GET(request) {
 
     // Contributor uploads: exact topic name match always lands in its tab;
     // otherwise fall back to keyword matching like everything else.
+    // Single-homed: homed to another course topic → stays out of this one.
     const titleNorm = String(title || '').trim().toLowerCase()
+    const topicNorms = new Set(clean.map(t => String(t.title || '').trim().toLowerCase()).filter(Boolean))
     for (const m of (materials || [])) {
       const url = String(m.url || '')
       const kind = String(m.itemKind || 'file')
@@ -109,7 +118,9 @@ export async function GET(request) {
         url: m.url || null, description: '',
         ...(tab === 'text' ? { content: '', source: 'upload' } : {}),
       }
-      const exact = String(m.topic || '').trim().toLowerCase() === titleNorm
+      const mNorm = String(m.topic || '').trim().toLowerCase()
+      const exact = mNorm === titleNorm
+      if (!exact && mNorm && topicNorms.has(mNorm)) continue // homed elsewhere
       const s = exact ? 100 : match(tokens(m.title || m.fileName))
       push(exact ? tab : (s > 0 ? tab : 'other'), item, s)
     }
