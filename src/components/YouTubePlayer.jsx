@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Play, Pause, Maximize, Minimize, RotateCcw } from 'lucide-react'
+import { Play, Pause, Maximize, Minimize, RotateCcw, Loader2 } from 'lucide-react'
 
 let apiPromise = null
 function loadApi() {
@@ -52,7 +52,14 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
   const [dur, setDur] = useState(0)
   const [showUi, setShowUi] = useState(true)
   const [isFs, setIsFs] = useState(false)
+  const [theater, setTheater] = useState(false)
+  const [scrubbing, setScrubbing] = useState(false)
+  const [scrubVal, setScrubVal] = useState(0)
   const [speedIx, setSpeedIx] = useState(0)
+
+  // iPhones have no element Fullscreen API — fall back to theater takeover.
+  const canFs = typeof document !== 'undefined'
+    && !!(document.documentElement?.requestFullscreen || document.documentElement?.webkitRequestFullscreen)
 
   const poke = useCallback(() => {
     setShowUi(true)
@@ -72,7 +79,7 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
         const d = p.getDuration?.() || 0
         if (d) setDur(d)
       } catch {}
-    }, 500)
+    }, 250)
   }, [])
 
   const stopTick = useCallback(() => {
@@ -148,8 +155,14 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
     } catch {}
   }
 
-  function seek(v) {
+  function seekStart(v) {
+    setScrubbing(true)
+    setScrubVal(Number(v))
+  }
+
+  function seekEnd(v) {
     const p = playerRef.current
+    setScrubbing(false)
     if (!p) return
     try { p.seekTo(Number(v), true); setTime(Number(v)) } catch {}
     poke()
@@ -164,6 +177,12 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
   }
 
   async function toggleFs() {
+    if (!canFs) {
+      // No Fullscreen API (iPhone Safari): theater takeover instead.
+      setTheater(t => !t)
+      poke()
+      return
+    }
     try {
       if (!document.fullscreenElement) await wrapRef.current?.requestFullscreen?.()
       else await document.exitFullscreen()
@@ -174,7 +193,8 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
   if (!videoId) return null
 
   return (
-    <div ref={wrapRef} className={`group relative select-none overflow-hidden bg-black ${className}`}>
+    <div ref={wrapRef}
+      className={`group relative select-none overflow-hidden bg-black ${className} ${theater ? '!fixed !inset-0 !z-[80] !aspect-auto !h-dvh !w-full !max-h-none' : ''}`}>
       {/* Poster */}
       {!started && (
         <button onClick={boot} aria-label={`Play ${title || 'video'}`} className="absolute inset-0 block h-full w-full text-left">
@@ -209,9 +229,17 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
         </div>
       )}
 
-      {/* Tap layer: toggles UI, double duty as big pause hit-area */}
+      {/* Loading: obvious feedback between tap and first frame */}
+      {started && !failed && !ready && (
+        <span className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black">
+          <Loader2 className="size-10 animate-spin text-white" />
+          <span className="text-xs font-bold text-white/70">Loading video…</span>
+        </span>
+      )}
+
+      {/* Tap layer: one tap = play/pause, always. No dead taps. */}
       {started && !failed && (
-        <button aria-label={playing ? 'Pause' : 'Play'} onClick={() => (showUi ? toggle() : poke())}
+        <button aria-label={playing ? 'Pause' : 'Play'} onClick={toggle}
           className="absolute inset-0 block h-full w-full cursor-pointer" style={{ background: 'transparent' }} />
       )}
 
@@ -248,8 +276,11 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
       {started && !failed && (
         <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-3 pb-2.5 pt-8 transition-opacity ${showUi || !playing ? 'opacity-100' : 'pointer-events-none opacity-0'}`}>
           <input
-            type="range" min={0} max={Math.max(dur, 1)} step={0.5} value={Math.min(time, dur || time)}
-            onChange={e => seek(e.target.value)}
+            type="range" min={0} max={Math.max(dur, 1)} step={0.5}
+            value={scrubbing ? scrubVal : Math.min(time, dur || time)}
+            onPointerDown={e => seekStart(e.target.value)}
+            onChange={e => setScrubVal(Number(e.target.value))}
+            onPointerUp={e => seekEnd(e.target.value)}
             aria-label="Seek"
             className="w-full accent-white"
           />
@@ -264,9 +295,9 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
               className="flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-[11px] font-black hover:bg-white/15">
               {SPEEDS[speedIx]}x
             </button>
-            <button onClick={toggleFs} aria-label="Fullscreen"
+            <button onClick={toggleFs} aria-label={theater || isFs ? 'Exit fullscreen' : 'Fullscreen'}
               className="flex size-9 items-center justify-center rounded-full hover:bg-white/15">
-              {isFs ? <Minimize className="size-4" /> : <Maximize className="size-4" />}
+              {theater || isFs ? <Minimize className="size-4" /> : <Maximize className="size-4" />}
             </button>
           </div>
         </div>
