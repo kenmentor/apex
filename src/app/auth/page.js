@@ -91,6 +91,17 @@ function AuthForm() {
       fail('Browser storage is blocked — enable storage/cookies for this site, then retry.');
       return;
     }
+    // Read-back: prove the session actually persisted before routing.
+    // Without this, a failed write strands users on this screen.
+    try {
+      if (!getUser()?.token) {
+        fail('Session did not stick — check storage/cookies for this site, then retry.');
+        return;
+      }
+    } catch {
+      fail('Session did not stick — check storage/cookies for this site, then retry.');
+      return;
+    }
     try { document.cookie = `apex_auth=1; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax` } catch {}
     const dice = normalizeAvatarConfig(data.avatarConfig);
     if (dice) setAvatarConfig(dice);
