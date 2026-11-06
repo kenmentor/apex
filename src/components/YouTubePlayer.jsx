@@ -215,16 +215,27 @@ export default function YouTubePlayer({ videoId, title, thumb, autoPlay = true, 
           className="absolute inset-0 block h-full w-full cursor-pointer" style={{ background: 'transparent' }} />
       )}
 
-      {/* Center state */}
-      {started && !failed && !playing && !ended && ready && showUi && (
-        <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <span className="flex size-16 items-center justify-center rounded-full bg-white/95 text-black shadow-2xl">
-            <Play className="ml-1 size-7" fill="currentColor" />
+      {/* Paused: full Apex poster covers YouTube's own pause chrome
+          (title bar, channel avatar) so the brand never breaks. Taps fall
+          through to the play/pause layer beneath. */}
+      {started && !failed && !playing && !ended && ready && (
+        <span className="pointer-events-none absolute inset-0 block bg-black">
+          {thumb && <img src={thumb} alt="" className="size-full object-cover" loading="lazy" draggable={false} />}
+          <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex size-16 items-center justify-center rounded-full bg-white/95 text-black shadow-2xl">
+              <Play className="ml-1 size-7" fill="currentColor" />
+            </span>
           </span>
+          {!!title && (
+            <span className="absolute inset-x-0 bottom-12 truncate px-4 text-left text-sm font-bold text-white drop-shadow">
+              {title}
+            </span>
+          )}
         </span>
       )}
       {ended && (
-        <span className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/70">
+        <span className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black">
           <button onClick={() => { setEnded(false); try { playerRef.current?.seekTo?.(0, true); playerRef.current?.playVideo?.() } catch {} }}
             className="flex size-16 items-center justify-center rounded-full bg-white text-black shadow-2xl">
             <RotateCcw className="size-7" />
