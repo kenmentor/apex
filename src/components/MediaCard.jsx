@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Play, Eye, Heart, Music } from 'lucide-react'
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import AudioPlayer from '@/components/AudioPlayer'
+import YouTubePlayer from '@/components/YouTubePlayer'
 import { getToken } from '@/lib/auth'
 import { toast } from 'sonner'
 import Link from 'next/link'
@@ -189,13 +190,7 @@ function YouTubeCard({ item }) {
   return (
     <div className="overflow-hidden rounded-xl border bg-card">
       {playing && vid ? (
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${vid}?rel=0&cc_load_policy=1&autoplay=1`}
-          title={item.title}
-          className="aspect-video w-full border-0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
+        <YouTubePlayer videoId={vid} title={item.title} thumb={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`} autoPlay className="aspect-video w-full" />
       ) : (
         <button onClick={() => vid && setPlaying(true)} className="relative block aspect-video w-full bg-black text-left">
           {vid && (

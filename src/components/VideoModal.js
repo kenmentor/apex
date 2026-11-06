@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { X, ExternalLink, Headphones, Maximize, Minimize } from 'lucide-react'
 import SaveToFolder from '@/components/SaveToFolder'
+import YouTubePlayer from '@/components/YouTubePlayer'
 import { ytId, ytThumb } from '@/lib/youtube'
 import { trackEvent } from '@/lib/tracking'
 
@@ -86,14 +87,7 @@ export default function VideoModal({ item, onClose }) {
       {/* Stage */}
       <div className="relative w-full shrink-0 bg-black portrait:aspect-video landscape:min-h-0 landscape:flex-1">
         {vid ? (
-          <iframe
-            key={vid}
-            src={`https://www.youtube.com/embed/${vid}?rel=0&playsinline=1&autoplay=1`}
-            title={item.title || 'Video'}
-            className="absolute inset-0 size-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            allowFullScreen
-          />
+          <YouTubePlayer videoId={vid} title={item.title} thumb={art} autoPlay className="absolute inset-0" />
         ) : isAudio ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-violet-950 via-[#130f40] to-black p-6">
             {art ? (
