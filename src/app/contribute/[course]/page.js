@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Lock, Plus, ChevronDown, PlayCircle, FileText, ClipboardList, Music, Zap, GraduationCap, X, BookOpen } from 'lucide-react'
+import { ArrowLeft, Lock, Plus, ChevronDown, PlayCircle, FileText, ClipboardList, Music, Zap, GraduationCap, X, BookOpen, Globe } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import TikTokTabs from '@/components/TikTokTabs'
 import { getUser, getToken } from '@/lib/auth'
@@ -10,6 +10,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import { colorFor } from '@/lib/plan-colors'
 import { pdfReadHref } from '@/lib/reader'
 import AddSheet from '@/components/ContributeAdd'
+import OnlineFindSheet from '@/components/OnlineFindSheet'
 
 const TABS = [
   { id: 'video', label: 'Video' },
@@ -47,6 +48,7 @@ export default function ContributeCoursePage({ params }) {
   const [tab, setTab] = useState('video')
   const [openTopic, setOpenTopic] = useState(null)
   const [addFor, setAddFor] = useState(null)
+  const [findOnline, setFindOnline] = useState(false)
   const [showNewTopic, setShowNewTopic] = useState(false)
   const [newTitle, setNewTitle] = useState('')
   const [busy, setBusy] = useState(false)
@@ -116,6 +118,10 @@ export default function ContributeCoursePage({ params }) {
       <div className="flex items-center gap-2">
         <Link href="/contribute" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted"><ArrowLeft className="size-4" /></Link>
         <h1 className="min-w-0 flex-1 truncate text-sm font-bold">{code} · Contributor</h1>
+        <button onClick={() => setFindOnline(true)} aria-label="Find free books and media online" title="Find online"
+          className="flex size-9 shrink-0 items-center justify-center rounded-full border hover:bg-muted">
+          <Globe className="size-4" />
+        </button>
         <button onClick={() => setAddFor({ topic: null, kind: tab })} aria-label="Add content to course"
           className="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
           <Plus className="size-5" strokeWidth={2.5} />
@@ -197,6 +203,15 @@ export default function ContributeCoursePage({ params }) {
           programme={prog(code)}
           onClose={() => setAddFor(null)}
           onDone={() => { setAddFor(null); window.location.reload() }}
+        />
+      )}
+      {findOnline && (
+        <OnlineFindSheet
+          courseCode={code}
+          topic={null}
+          programme={prog(code)}
+          onClose={() => setFindOnline(false)}
+          onDone={() => { setFindOnline(false); window.location.reload() }}
         />
       )}
 
