@@ -60,29 +60,39 @@ export async function GET(request) {
 
     const approvedMatch = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
 
-    // ---- Batch board mode: one query per store, grouped in JS ----
+    // ---- Batch board mode: aggregates per store (no doc cap) ----
     if (batch.length) {
-      const [qs, rs, ms] = await Promise.all([
-        qCol ? qCol.find({ authorEmail: { $in: batch } }).project({ authorEmail: 1, courseCode: 1, status: 1, createdAt: 1 }).limit(3000).toArray().catch(() => []) : [],
-        rCol ? rCol.find({ authorEmail: { $in: batch } }).project({ authorEmail: 1, courseCode: 1, status: 1, createdAt: 1 }).limit(3000).toArray().catch(() => []) : [],
-        mCol ? mCol.find({ ownerEmail: { $in: batch } }).project({ ownerEmail: 1, courseCode: 1, status: 1, createdAt: 1 }).limit(3000).toArray().catch(() => []) : [],
-      ])
       const per = new Map(batch.map(e => [e, { approved: 0, courses: new Set(), byDay: {} }]))
-      const feed = (list, key) => {
-        for (const d of list) {
-          const e = String(d[key] || '').toLowerCase()
+      const feedAgg = async (col, field) => {
+        if (!col) return
+        const rows = await col.aggregate([
+          { $match: { [field]: { $in: batch }, ...approvedMatch } },
+          {
+            $group: {
+              _id: {
+                email: `$${field}`,
+                day: { $substr: [{ $toString: '$createdAt' }, 0, 10] },
+                course: { $ifNull: ['$courseCode', 'General'] },
+              },
+              n: { $sum: 1 },
+            },
+          },
+        ]).toArray().catch(() => [])
+        for (const r of rows) {
+          const e = String(r._id?.email || '').toLowerCase()
           const slot = per.get(e)
           if (!slot) continue
-          if (['pending', 'rejected', 'revoked'].includes(d.status)) continue
-          slot.approved += 1
-          if (d.courseCode) slot.courses.add(d.courseCode)
-          const k = dayKey(d.createdAt)
-          if (k) slot.byDay[k] = (slot.byDay[k] || 0) + 1
+          slot.approved += r.n
+          if (r._id?.course) slot.courses.add(r._id.course)
+          const k = r._id?.day
+          if (k && /^\d{4}-\d{2}-\d{2}$/.test(k)) slot.byDay[k] = (slot.byDay[k] || 0) + r.n
         }
       }
-      feed(qs, 'authorEmail')
-      feed(rs, 'authorEmail')
-      feed(ms, 'ownerEmail')
+      await Promise.all([
+        feedAgg(qCol, 'authorEmail'),
+        feedAgg(rCol, 'authorEmail'),
+        feedAgg(mCol, 'ownerEmail'),
+      ])
 
       // Contributor rank ladder (approved counts) for rank context.
       let order = []
@@ -111,27 +121,48 @@ export async function GET(request) {
       return NextResponse.json({ users })
     }
 
-    const [qs, rs, ms] = await Promise.all([
-      qCol ? qCol.find({ authorEmail: email }).project({ courseCode: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(500).toArray().catch(() => []) : [],
-      rCol ? rCol.find({ authorEmail: email }).project({ courseCode: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(500).toArray().catch(() => []) : [],
-      mCol ? mCol.find({ ownerEmail: email }).project({ courseCode: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(500).toArray().catch(() => []) : [],
+    // ---- Single profile mode: aggregates for math (no doc cap) ----
+    const approvedOf = (col, field, email) =>
+      col ? col.countDocuments({ [field]: email, ...approvedMatch }).catch(() => 0) : Promise.resolve(0)
+    const [qTotal, rTotal, mTotal, qAppr, rAppr, mAppr] = await Promise.all([
+      qCol ? qCol.countDocuments({ authorEmail: email }).catch(() => 0) : Promise.resolve(0),
+      rCol ? rCol.countDocuments({ authorEmail: email }).catch(() => 0) : Promise.resolve(0),
+      mCol ? mCol.countDocuments({ ownerEmail: email }).catch(() => 0) : Promise.resolve(0),
+      approvedOf(qCol, 'authorEmail', email),
+      approvedOf(rCol, 'authorEmail', email),
+      approvedOf(mCol, 'ownerEmail', email),
     ])
-    const all = [...qs, ...rs, ...ms]
-    const visible = isSelf ? all : all.filter(d => !['pending', 'rejected', 'revoked'].includes(d.status))
-
+    // Exact totals from counts (no doc cap); days + courses from aggregates.
+    const approved = qAppr + rAppr + mAppr
+    let pending = 0
+    if (isSelf) {
+      const [qp, rp, mp] = await Promise.all([
+        qCol ? qCol.countDocuments({ authorEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
+        rCol ? rCol.countDocuments({ authorEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
+        mCol ? mCol.countDocuments({ ownerEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
+      ])
+      pending = qp + rp + mp
+    }
     const byDay = {}
     const courses = new Set()
-    let approved = 0
-    let pending = 0
-    for (const d of visible) {
-      const st = d.status || 'approved'
-      if (st === 'approved') {
-        approved += 1
-        if (d.courseCode) courses.add(d.courseCode)
-        const k = dayKey(d.createdAt)
-        if (k) byDay[k] = (byDay[k] || 0) + 1
-      } else if (st === 'pending' && isSelf) {
-        pending += 1
+    for (const [col, field] of [[qCol, 'authorEmail'], [rCol, 'authorEmail'], [mCol, 'ownerEmail']]) {
+      if (!col) continue
+      const rows = await col.aggregate([
+        { $match: { [field]: email, ...approvedMatch } },
+        {
+          $group: {
+            _id: {
+              day: { $substr: [{ $toString: '$createdAt' }, 0, 10] },
+              course: { $ifNull: ['$courseCode', 'General'] },
+            },
+            n: { $sum: 1 },
+          },
+        },
+      ]).toArray().catch(() => [])
+      for (const r of rows) {
+        if (r._id?.course) courses.add(r._id.course)
+        const k = r._id?.day
+        if (k && /^\d{4}-\d{2}-\d{2}$/.test(k)) byDay[k] = (byDay[k] || 0) + r.n
       }
     }
 

@@ -30,9 +30,52 @@ export async function GET(request) {
     ])
 
     const [qs, rs, ms] = await Promise.all([
-      qCol ? qCol.find({ authorEmail: me }).project({ question: 1, courseCode: 1, status: 1, createdAt: 1, questionType: 1 }).sort({ createdAt: -1 }).limit(500).toArray().catch(() => []) : [],
-      rCol ? rCol.find({ authorEmail: me }).project({ title: 1, courseCode: 1, topic: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(500).toArray().catch(() => []) : [],
-      mCol ? mCol.find({ ownerEmail: me }).project({ title: 1, fileName: 1, courseCode: 1, topic: 1, itemKind: 1, url: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(500).toArray().catch(() => []) : [],
+      qCol ? qCol.find({ authorEmail: me }).project({ question: 1, courseCode: 1, status: 1, createdAt: 1, questionType: 1 }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
+      rCol ? rCol.find({ authorEmail: me }).project({ title: 1, courseCode: 1, topic: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
+      mCol ? mCol.find({ ownerEmail: me }).project({ title: 1, fileName: 1, courseCode: 1, topic: 1, itemKind: 1, url: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
+    ])
+
+    // Totals + heatmap math runs on SERVER-SIDE aggregates (no 500-doc cap),
+    // so prolific contributors see every item counted, not just the first page.
+    const STATUSES = ['pending', 'approved', 'rejected', 'revoked']
+    const isLive = (st) => !['pending', 'rejected', 'revoked'].includes(st)
+    async function summarize(col, field) {
+      const out = { total: 0, approved: 0, pending: 0, rejected: 0, revoked: 0, byDay: {}, byCourse: {} }
+      if (!col) return out
+      try {
+        const rows = await col.aggregate([
+          { $match: { [field]: me } },
+          {
+            $group: {
+              _id: {
+                day: { $substr: [{ $toString: '$createdAt' }, 0, 10] },
+                course: { $ifNull: ['$courseCode', 'General'] },
+                status: '$status',
+              },
+              n: { $sum: 1 },
+            },
+          },
+        ]).toArray().catch(() => [])
+        for (const r of rows) {
+          const st = STATUSES.includes(r._id?.status) ? r._id.status : 'approved'
+          out.total += r.n
+          out[st] = (out[st] || 0) + r.n
+          const c = r._id?.course || 'General'
+          out.byCourse[c] = out.byCourse[c] || { courseCode: c, total: 0, approved: 0 }
+          out.byCourse[c].total += r.n
+          if (isLive(st)) {
+            out.byCourse[c].approved += r.n
+            const k = r._id?.day
+            if (k && /^\d{4}-\d{2}-\d{2}$/.test(k)) out.byDay[k] = (out.byDay[k] || 0) + r.n
+          }
+        }
+      } catch {}
+      return out
+    }
+    const [qSum, rSum, mSum] = await Promise.all([
+      summarize(qCol, 'authorEmail'),
+      summarize(rCol, 'authorEmail'),
+      summarize(mCol, 'ownerEmail'),
     ])
 
     const items = [
@@ -44,16 +87,14 @@ export async function GET(request) {
     const byStatus = { pending: 0, approved: 0, rejected: 0, revoked: 0 }
     const byCourse = {}
     const byDay = {}
-    for (const it of items) {
-      const st = ['pending', 'approved', 'rejected', 'revoked'].includes(it.status) ? it.status : 'approved'
-      it.status = st
-      byStatus[st] = (byStatus[st] || 0) + 1
-      const c = it.courseCode || 'General'
-      byCourse[c] = byCourse[c] || { courseCode: c, total: 0, approved: 0 }
-      byCourse[c].total += 1
-      if (st === 'approved') byCourse[c].approved += 1
-      const k = dayKey(it.createdAt)
-      if (k) byDay[k] = (byDay[k] || 0) + 1
+    for (const s of [qSum, rSum, mSum]) {
+      for (const k of STATUSES) byStatus[k] += s[k] || 0
+      for (const [c, v] of Object.entries(s.byCourse)) {
+        byCourse[c] = byCourse[c] || { courseCode: c, total: 0, approved: 0 }
+        byCourse[c].total += v.total
+        byCourse[c].approved += v.approved
+      }
+      for (const [k, n] of Object.entries(s.byDay)) byDay[k] = (byDay[k] || 0) + n
     }
     const courses = Object.values(byCourse).sort((a, b) => b.total - a.total)
 
