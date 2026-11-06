@@ -7,7 +7,10 @@ import { initializeApp, getApps } from 'firebase/app'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDgPYyFxDGMFW4GpERNflbkEAoKxgaFRiw',
-  authDomain: 'apex-e9c78.firebaseapp.com',
+  // Fixed production host: exactly ONE handler URI to authorize in Google
+  // Cloud (https://apex-tau-gules.vercel.app/__/auth/handler), and it also
+  // serves dev (the handler bounces back to the initiating localhost URL).
+  authDomain: 'apex-tau-gules.vercel.app',
   projectId: 'apex-e9c78',
   storageBucket: 'apex-e9c78.firebasestorage.app',
   messagingSenderId: '879742774988',
