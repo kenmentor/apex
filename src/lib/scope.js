@@ -7,6 +7,21 @@
 // Items with no courseCode ("General") and the user's own folders always pass.
 import { DEPARTMENTS_DATA } from './curriculum-data'
 
+let knownCache = null
+// Every course code the static map knows about. Anything else is newer
+// than the map — never hide what we can't scope.
+function knownCourses() {
+  if (!knownCache) {
+    knownCache = new Set()
+    for (const e of DEPARTMENTS_DATA || []) {
+      for (const lvl of Object.values(e.levels || {})) {
+        for (const c of lvl || []) knownCache.add(normCode(c))
+      }
+    }
+  }
+  return knownCache
+}
+
 export function normCode(c) {
   return String(c || '').toUpperCase().replace(/\s+/g, '')
 }
@@ -46,7 +61,11 @@ export function inScope(item, scope) {
   if (item?.kind === 'folder') return true // your own folders are always yours
   const code = item?.courseCode
   if (!code) return true // General items belong to everyone
-  if (scope.mode === 'dept' && scope.courses) return scope.courses.has(normCode(code))
+  if (scope.mode === 'dept' && scope.courses) {
+    // Unknown to the map (newer courses): show, don't hide.
+    if (!knownCourses().has(normCode(code))) return true
+    return scope.courses.has(normCode(code))
+  }
   if (scope.mode === 'level' && scope.digit) {
     const m = String(code).match(/(\d)\d*\s*$/)
     const d = m ? m[1] : null
