@@ -80,7 +80,10 @@ function AuthForm() {
 
   function afterAuth(data) {
     try { localStorage.setItem('apex_last_email', data.email) } catch {}
-    saveSession(data);
+    if (!saveSession(data)) {
+      fail('Browser storage is blocked — enable storage/cookies for this site, then retry.');
+      return;
+    }
     try { document.cookie = `apex_auth=1; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax` } catch {}
     const dice = normalizeAvatarConfig(data.avatarConfig);
     if (dice) setAvatarConfig(dice);
@@ -210,6 +213,9 @@ function AuthForm() {
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
           <Brand title="Welcome to Apex" sub="Continue with Google to keep studying." />
           <div className="mt-7 space-y-3">
+            {!!error && (
+              <p className="rounded-xl bg-red-500/10 px-3 py-2.5 text-center text-xs font-bold text-red-500">{error}</p>
+            )}
             <Button onClick={handleGoogle} disabled={submitting} variant="outline" className="h-14 w-full gap-3 text-base font-bold">
               <GoogleIcon /> {submitting ? 'Signing in…' : 'Continue with Google'}
             </Button>

@@ -22,9 +22,14 @@ export function getUser() {
 }
 
 export function setUser(user) {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+  if (typeof window === 'undefined') return false
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+  } catch {
+    return false
+  }
   if (user?.token) setFlag()
+  return true
 }
 
 export function clearUser() {
