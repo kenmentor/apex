@@ -55,7 +55,8 @@ function AuthForm() {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  function fail(msg) { setError(msg); toast.error(msg); }
+  const [status, setStatus] = useState('');
+  function fail(msg) { setError(msg); setStatus(''); toast.error(msg); }
 
   const filtered = search
     ? NIGERIAN_UNIVERSITIES.filter(u => u.toLowerCase().includes(search.toLowerCase()))
@@ -73,7 +74,11 @@ function AuthForm() {
       }
     } catch {}
     completeRedirectSignIn()
-      .then(t => { if (t) bridge(t) })
+      .then(t => {
+        if (!t) return;
+        setStatus('Completing sign-in…');
+        bridge(t);
+      })
       .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -95,6 +100,7 @@ function AuthForm() {
 
   async function bridge(idToken) {
     setSubmitting(true);
+    setStatus('Verifying with Apex…');
     try {
       const res = await fetch('/api/auth/firebase', {
         method: 'POST',
@@ -103,17 +109,26 @@ function AuthForm() {
       });
       const data = await res.json().catch(() => ({}));
       if (!data.token) throw new Error(data.error || 'Sign-in failed.');
+      setStatus('Saving session…');
       toast.success('Signed in — welcome!');
       afterAuth(data);
     } catch (e) {
       fail(e.message);
     } finally {
       setSubmitting(false);
+      setStatus('');
     }
   }
 
   async function handleGoogle() {
     setError('');
+    setStatus('Opening Google…');
+    // Safety net: never leave the button spinning forever.
+    const watchdog = setTimeout(() => {
+      setSubmitting(false);
+      setStatus('');
+      fail('Timed out — tap to retry.');
+    }, 45000);
     try {
       const idToken = await googleSignIn();
       if (idToken) await bridge(idToken);
@@ -122,6 +137,8 @@ function AuthForm() {
       if (e?.code === 'auth/popup-closed-by-user') return;
       // Show the real code (e.g. auth/unauthorized-domain) so it can be fixed.
       fail(`Google sign-in failed${e?.code ? ` (${e.code})` : ''}. Try again.`);
+    } finally {
+      clearTimeout(watchdog);
     }
   }
 
@@ -219,6 +236,9 @@ function AuthForm() {
             <Button onClick={handleGoogle} disabled={submitting} variant="outline" className="h-14 w-full gap-3 text-base font-bold">
               <GoogleIcon /> {submitting ? 'Signing in…' : 'Continue with Google'}
             </Button>
+            {!!status && !error && (
+              <p className="text-center text-xs font-semibold text-muted-foreground">{status}</p>
+            )}
           </div>
         </div>
       )}
