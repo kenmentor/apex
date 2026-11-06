@@ -117,7 +117,8 @@ function AuthForm() {
       // null = redirect flow; bridge runs on return via the mount effect.
     } catch (e) {
       if (e?.code === 'auth/popup-closed-by-user') return;
-      fail('Google sign-in failed. Try again.');
+      // Show the real code (e.g. auth/unauthorized-domain) so it can be fixed.
+      fail(`Google sign-in failed${e?.code ? ` (${e.code})` : ''}. Try again.`);
     }
   }
 
