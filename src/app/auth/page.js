@@ -79,7 +79,9 @@ function AuthForm() {
         setStatus('Completing sign-in…');
         bridge(t);
       })
-      .catch(() => {});
+      .catch((e) => {
+        fail(`Return trip failed${e?.code ? ` (${e.code})` : ''}. Tap Google again.`);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -133,12 +135,20 @@ function AuthForm() {
       const idToken = await googleSignIn();
       if (idToken) await bridge(idToken);
       // null = redirect flow; bridge runs on return via the mount effect.
+      // If we get here with no token and no redirect, say so.
+      clearTimeout(watchdog);
+      if (!idToken) setStatus('');
     } catch (e) {
-      if (e?.code === 'auth/popup-closed-by-user') return;
+      clearTimeout(watchdog);
+      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') {
+        setSubmitting(false);
+        setStatus('');
+        return;
+      }
       // Show the real code (e.g. auth/unauthorized-domain) so it can be fixed.
       fail(`Google sign-in failed${e?.code ? ` (${e.code})` : ''}. Try again.`);
     } finally {
-      clearTimeout(watchdog);
+      setSubmitting(false);
     }
   }
 

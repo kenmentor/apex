@@ -51,15 +51,12 @@ export async function googleSignIn() {
 }
 
 // Completes a redirect sign-in on return (returns ID token or null).
+// Errors propagate so the caller can show them — never swallow silently.
 export async function completeRedirectSignIn() {
   const { getAuth, getRedirectResult } = await import('firebase/auth')
-  try {
-    const res = await getRedirectResult(getAuth(firebaseApp))
-    if (!res?.user) return null
-    return await res.user.getIdToken()
-  } catch {
-    return null
-  }
+  const res = await getRedirectResult(getAuth(firebaseApp))
+  if (!res?.user) return null
+  return await res.user.getIdToken()
 }
 
 export async function firebaseSignOut() {
