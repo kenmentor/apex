@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { Search, SearchX, LibraryBig, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2 } from 'lucide-react'
+import { Search, SearchX, LibraryBig, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2, Globe, ExternalLink, FileText, Image as ImageIcon } from 'lucide-react'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import { getUser } from '@/lib/auth'
 import { trackSearch } from '@/lib/telemetry'
@@ -95,6 +95,8 @@ export default function SearchPage() {
   const [spaces, setSpaces] = useState([])
   const [results, setResults] = useState(null)
   const [searching, setSearching] = useState(false)
+  const [webItems, setWebItems] = useState([])
+  const [webLoading, setWebLoading] = useState(false)
   const [shelves, setShelves] = useState(null)
   const [levelLabel, setLevelLabel] = useState('')
   const [mockMode, setMockMode] = useState(false)
@@ -162,6 +164,23 @@ export default function SearchPage() {
         .catch(() => {})
         .finally(() => setSearching(false))
     }, 300)
+    return () => clearTimeout(t)
+  }, [q, tab])
+
+  // Same query against the open web (free books, PDFs, images, audio).
+  // Scope-free by design: the web always answers, even with zero library hits.
+  useEffect(() => {
+    const needle = q.trim()
+    if (needle.length < 3) { setWebItems([]); setWebLoading(false); return }
+    setWebLoading(true)
+    const t = setTimeout(() => {
+      const type = tab === 'books' ? 'pdf' : tab === 'audio' ? 'audio' : 'all'
+      fetch(`/api/discover?q=${encodeURIComponent(needle)}&type=${type}`)
+        .then(r => r.json().catch(() => ({})))
+        .then(d => setWebItems(Array.isArray(d.items) ? d.items : []))
+        .catch(() => setWebItems([]))
+        .finally(() => setWebLoading(false))
+    }, 600)
     return () => clearTimeout(t)
   }, [q, tab])
 
@@ -560,6 +579,45 @@ export default function SearchPage() {
                   <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{quizzes.length}</span>
                 </h2>
                 {quizzes.map(item => <QuizCard key={item.id} item={item} />)}
+              </section>
+            )}
+
+            {(webLoading || webItems.length > 0) && !['quiz', 'qa', 'folders'].includes(tab) && (
+              <section className="space-y-2">
+                <h2 className="flex items-center gap-1.5 px-1 text-sm font-bold">
+                  <Globe className="size-4 text-muted-foreground" /> From the web
+                  {!!webItems.length && (
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">{webItems.length}</span>
+                  )}
+                </h2>
+                {webLoading && !webItems.length ? (
+                  <p className="px-1 text-xs text-muted-foreground">Searching free books, PDFs, images…</p>
+                ) : (
+                  <div className="divide-y divide-border rounded-2xl border">
+                    {webItems.map(item => (
+                      <a key={item.id} href={item.url} target="_blank" rel="noreferrer"
+                        className="flex items-center gap-3 p-3 transition-colors hover:bg-muted/50">
+                        {item.thumb ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.thumb} alt="" loading="lazy" className="size-11 shrink-0 rounded-lg bg-muted object-cover" draggable={false} />
+                        ) : (
+                          <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-muted">
+                            {item.kind === 'pdf' ? <FileText className="size-4 text-red-500" />
+                              : item.kind === 'audio' ? <Music className="size-4 text-green-500" />
+                              : <ImageIcon className="size-4 text-blue-500" />}
+                          </span>
+                        )}
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-sm font-semibold">{item.title}</span>
+                          <span className="block truncate text-[11px] text-muted-foreground">
+                            {item.kind.toUpperCase()} · {item.source} — opens direct file
+                          </span>
+                        </span>
+                        <ExternalLink className="size-4 shrink-0 text-muted-foreground" />
+                      </a>
+                    ))}
+                  </div>
+                )}
               </section>
             )}
 
