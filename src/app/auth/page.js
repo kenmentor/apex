@@ -159,8 +159,9 @@ function AuthForm() {
         setStatus('');
         return;
       }
-      // Show the real code (e.g. auth/unauthorized-domain) so it can be fixed.
-      fail(`Google sign-in failed${e?.code ? ` (${e.code})` : ''}. Try again.`);
+      // Firebase errors carry .code; bridge/server failures carry the reason
+      // in .message — surface whichever exists.
+      fail(e?.code ? `Google sign-in failed (${e.code}). Try again.` : (e?.message || 'Google sign-in failed. Try again.'));
     } finally {
       setSubmitting(false);
     }
