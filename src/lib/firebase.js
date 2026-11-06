@@ -41,12 +41,27 @@ function isMobileFlow() {
   } catch { return false }
 }
 
+// True inside WhatsApp/Instagram/Facebook/TikTok-style in-app browsers,
+// whose storage is walled off per-app (sessions can't stick, popups escape
+// to the system browser). PWA standalone and real browsers return false.
+export function isInAppBrowser() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false
+  try {
+    if (window.matchMedia?.('(display-mode: standalone)').matches) return false
+    if (navigator.standalone) return false
+  } catch {}
+  const ua = navigator.userAgent || ''
+  if (/FBAN|FBIO|FBAV|Instagram|WhatsApp|Line\/|Twitter|TikTok|Snapchat|Pinterest|WeChat|MicroMessenger|KAKAOTALK|NAVER|Viber|Telegram/i.test(ua)) return true
+  // Android WebView (wv) and iOS WKWebView without Safari identity.
+  if (/Android/i.test(ua) && /; wv\)/.test(ua)) return true
+  if (/iPhone|iPad|iPod/i.test(ua) && /Version\//.test(ua) && !/Safari\//.test(ua)) return true
+  return false
+}
+
 export async function googleSignIn() {
   const { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } =
     await import('firebase/auth')
   const auth = getAuth(firebaseApp)
-  const provider = new GoogleAuthProvider()
-  provider.setCustomParameters({ prompt: 'select_account' })
   // Mobile: popups open as detached tabs that can never report back to the
   // opener — go redirect-only so the whole flow stays in ONE tab.
   if (!isMobileFlow()) {

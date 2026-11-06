@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { setUser, getUser, getToken } from '@/lib/auth';
-import { googleSignIn, completeRedirectSignIn } from '@/lib/firebase';
+import { googleSignIn, completeRedirectSignIn, isInAppBrowser } from '@/lib/firebase';
 import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar';
 import AvatarCustomizer from '@/components/AvatarCustomizer';
 import NIGERIAN_UNIVERSITIES from '@/lib/universities';
@@ -56,6 +56,9 @@ function AuthForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
+  const [inApp] = useState(() => {
+    try { return isInAppBrowser() } catch { return false }
+  });
   function fail(msg) { setError(msg); setStatus(''); toast.error(msg); }
 
   const filtered = search
@@ -250,6 +253,15 @@ function AuthForm() {
       {step === 'signin' && (
         <div className="flex min-h-[calc(100dvh-120px)] flex-col justify-center">
           <Brand title="Welcome to Apex" sub="Continue with Google to keep studying." />
+          {inApp && (
+            <div className="mt-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-3 text-center">
+              <p className="text-xs font-extrabold text-amber-600">You&apos;re in an in-app browser</p>
+              <p className="mt-1 text-[11px] leading-snug text-muted-foreground">
+                Sign-in can&apos;t stick here. Open this page in <span className="font-bold text-foreground">Chrome</span> or{' '}
+                <span className="font-bold text-foreground">Safari</span> (⋯ → Open in browser), then sign in.
+              </p>
+            </div>
+          )}
           <div className="mt-7 space-y-3">
             {!!error && (
               <p className="rounded-xl bg-red-500/10 px-3 py-2.5 text-center text-xs font-bold text-red-500">{error}</p>
