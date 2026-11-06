@@ -33,24 +33,34 @@ export function startAnalytics() {
     .catch(() => {})
 }
 
+function isMobileFlow() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false
+  if (/Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent || '')) return true
+  try {
+    return (navigator.maxTouchPoints > 0 && Math.min(window.screen.width, window.screen.height) < 820)
+  } catch { return false }
+}
+
 export async function googleSignIn() {
   const { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } =
     await import('firebase/auth')
   const auth = getAuth(firebaseApp)
   const provider = new GoogleAuthProvider()
   provider.setCustomParameters({ prompt: 'select_account' })
-  // Popup is smoother on desktop; it throws on blocked popups/mobile PWA —
-  // fall through to redirect in that case.
-  try {
-    const cred = await signInWithPopup(auth, provider)
-    return await cred.user.getIdToken()
-  } catch (e) {
-    if (e?.code === 'auth/popup-blocked' || e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') {
-      await signInWithRedirect(auth, provider)
-      return null // resolves after redirect back
+  // Mobile: popups open as detached tabs that can never report back to the
+  // opener — go redirect-only so the whole flow stays in ONE tab.
+  if (!isMobileFlow()) {
+    try {
+      const cred = await signInWithPopup(auth, provider)
+      return await cred.user.getIdToken()
+    } catch (e) {
+      if (e?.code !== 'auth/popup-blocked' && e?.code !== 'auth/popup-closed-by-user'
+        && e?.code !== 'auth/cancelled-popup-request') throw e
+      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') throw e
     }
-    throw e
   }
+  await signInWithRedirect(auth, provider)
+  return null // resolves after redirect back
 }
 
 // Completes a redirect sign-in on return (returns ID token or null).
