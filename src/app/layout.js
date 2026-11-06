@@ -11,6 +11,7 @@ import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import TelemetryProvider from '@/components/TelemetryProvider';
 import ConnectionStatus from '@/components/ConnectionStatus';
+import FirebaseInit from '@/components/FirebaseInit';
 
 export const metadata = {
   metadataBase: new URL(getBaseUrl()),
@@ -70,6 +71,7 @@ export default function RootLayout({ children }) {
           <ServiceWorkerRegister />
           <AnalyticsTracker />
           <TelemetryProvider />
+          <FirebaseInit />
         </ThemeProvider>
       </body>
     </html>

@@ -13,6 +13,7 @@ export default function LogoutPage() {
       try { localStorage.setItem('apex_last_email', u.email) } catch {}
     }
     clearUser()
+    import('@/lib/firebase').then(m => m.firebaseSignOut()).catch(() => {})
     router.replace('/auth')
   }, [router])
 

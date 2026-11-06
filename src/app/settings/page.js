@@ -170,6 +170,7 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
       try { localStorage.setItem('apex_last_email', u.email) } catch {}
     }
     clearUser()
+    import('@/lib/firebase').then(m => m.firebaseSignOut()).catch(() => {})
     router.push('/auth')
   }
 
