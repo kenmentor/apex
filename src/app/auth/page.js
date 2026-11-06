@@ -17,7 +17,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 // Google sign-in via Firebase, app users in our own DB:
 // uni -> dept/level -> avatar onboarding, then 90-day sessions.
 function saveSession(data) {
-  setUser({ id: data.id, email: data.email, school: data.school || '', department: data.department || '', level: data.level || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', avatarConfig: data.avatarConfig || null, token: data.token || '' });
+  return setUser({ id: data.id, email: data.email, school: data.school || '', department: data.department || '', level: data.level || '', admin: !!data.admin, verified: !!data.verified, name: data.name || '', avatar: data.avatar || '', avatarConfig: data.avatarConfig || null, token: data.token || '' });
 }
 
 function Brand({ title, sub }) {

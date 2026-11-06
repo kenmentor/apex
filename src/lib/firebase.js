@@ -7,9 +7,10 @@ import { initializeApp, getApps } from 'firebase/app'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDgPYyFxDGMFW4GpERNflbkEAoKxgaFRiw',
-  // Fixed production host: exactly ONE handler URI to authorize in Google
-  // Cloud (https://apex-tau-gules.vercel.app/__/auth/handler), and it also
-  // serves dev (the handler bounces back to the initiating localhost URL).
+  // Same-domain auth handler proxy (see next.config.mjs rewrites):
+  // the helper runs on our own origin so browsers can't block its
+  // storage. Authorized in console as
+  // https://apex-tau-gules.vercel.app/__/auth/handler
   authDomain: 'apex-tau-gules.vercel.app',
   projectId: 'apex-e9c78',
   storageBucket: 'apex-e9c78.firebasestorage.app',
@@ -62,6 +63,8 @@ export async function googleSignIn() {
   const { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } =
     await import('firebase/auth')
   const auth = getAuth(firebaseApp)
+  const provider = new GoogleAuthProvider()
+  try { provider.setCustomParameters({ prompt: 'select_account' }) } catch {}
   // Mobile: popups open as detached tabs that can never report back to the
   // opener — go redirect-only so the whole flow stays in ONE tab.
   if (!isMobileFlow()) {
