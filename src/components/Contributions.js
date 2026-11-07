@@ -73,7 +73,7 @@ function chunkDays(days, maxCols) {
   return cols.slice(-maxCols)
 }
 
-export default function Contributions({ data, loading: externalLoading, historyCount = 0, bestPct = null }) {
+export default function Contributions({ data, loading: externalLoading, historyCount = 0, bestPct = null, showGraph = true }) {
   const [internal, setInternal] = useState(null)
   const [internalLoading, setInternalLoading] = useState(!data)
   const [error, setError] = useState('')
@@ -207,7 +207,8 @@ export default function Contributions({ data, loading: externalLoading, historyC
         )
       })()}
 
-      {/* Streak — month dropdown, full-width bold 3-month grid */}
+      {/* Contribution streak graph — hidden in study-only mode */}
+      {showGraph && (
       <div className="px-1">
         <div className="flex items-center gap-2">
           <div className="relative">
@@ -268,6 +269,7 @@ export default function Contributions({ data, loading: externalLoading, historyC
           </div>
         )}
       </div>
+      )}
 
       {/* Sections — each opens its own full-screen page */}
       <div className="divide-y divide-border/60 px-1">

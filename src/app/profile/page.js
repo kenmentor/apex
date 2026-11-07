@@ -12,6 +12,7 @@ import BtnSpinner from '@/components/BtnSpinner'
 import { User, ArrowLeft } from 'lucide-react'
 import ContributorProfile from '@/components/ContributorProfile'
 import Contributions from '@/components/Contributions'
+import StudyActivity from '@/components/StudyActivity'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -107,6 +108,9 @@ function ProfileContent() {
   }
 
   const bestPct = scores.length > 0 ? Math.max(...scores.map(s => s.percentage || 0)) : 0
+  // Contributors see BOTH graphs (contributions + study); normal users see
+  // their study graph plus the useful links (history, performance, settings).
+  const isContributor = !!user && (!!user.admin || ['editor', 'official', 'admin'].includes(user.role))
   const medals = contrib?.medals || []
   const rating = contrib ? contributorRating({
     approved: contrib.totals?.approved || 0,
@@ -175,7 +179,17 @@ function ProfileContent() {
             </div>
           ) : (
             <div className="mx-auto w-full max-w-xl space-y-4 px-4 pt-4">
-              <Contributions data={contrib} loading={contribLoading} historyCount={scores.length} bestPct={scores.length ? bestPct : null} />
+              {isContributor ? (
+                <>
+                  <Contributions data={contrib} loading={contribLoading} historyCount={scores.length} bestPct={scores.length ? bestPct : null} />
+                  <StudyActivity />
+                </>
+              ) : (
+                <>
+                  <StudyActivity />
+                  <Contributions data={contrib} loading={contribLoading} historyCount={scores.length} bestPct={scores.length ? bestPct : null} showGraph={false} />
+                </>
+              )}
             </div>
           )}
         </>
