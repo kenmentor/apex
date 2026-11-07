@@ -528,6 +528,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
                 <Check className="size-4 text-white" strokeWidth={3} />
               </button>
             ) : (
+              <>
               <button onClick={openTick} disabled={toggling || !planTopic.id} aria-label="Check off topic" title="Tap to check off"
                 className="mt-0.5 size-6 shrink-0 rounded-full border-2 border-muted-foreground/40 bg-background hover:border-green-500 disabled:opacity-50" />
               {tickOpen && (
@@ -592,6 +593,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
                   </div>
                 </div>
               )}
+              </>
             )}
             <div className="min-w-0 flex-1">
               <h2 className="text-[15px] font-bold leading-snug">{content.title}</h2>

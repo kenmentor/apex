@@ -59,8 +59,6 @@ export default function PlanPage() {
     )
   }
 
-  const doneIds = new Set((completions || []).map(c => `${c.topicId}:${c.itemId}`));
-
   function CourseBlock({ course }) {
     const topics = course.topics || []
     const totalItems = topics.reduce((n, t) => n + (t.items || []).length, 0)

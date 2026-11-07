@@ -112,7 +112,6 @@ export async function POST(request) {  try {
       return NextResponse.json({ error: `This topic has a quiz — pass it (${TOPIC_PASS_PCT}%+) or explain what you learned in ${EXPLAIN_MIN_WORDS}+ words (${wordCount}/${EXPLAIN_MIN_WORDS}).` }, { status: 400 })
     }
 
-    const col = await getCollection('completions')
     const doc = {
       email: email.toLowerCase().trim(),
       topicId,
