@@ -19,6 +19,7 @@ export const DEPARTMENTS = [
   'Mass Communication',
   'Political Science',
   'Law',
+  'Anatomy',
   'Medicine',
   'Nursing',
   'Pharmacy',
