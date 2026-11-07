@@ -87,6 +87,7 @@ export async function POST(request) {
     const membersCol = await getCollection('library_members')
 
     let parentOid = null
+    let autoFolderPath = null
     if (parentId) {
       parentOid = toId(parentId)
       if (!parentOid) return NextResponse.json({ error: 'Invalid parentId' }, { status: 400 })
@@ -95,6 +96,21 @@ export async function POST(request) {
       if (parent.kind !== 'folder') return NextResponse.json({ error: 'Parent is not a folder' }, { status: 400 })
       const { role } = await loadChain(nodesCol, membersCol, parentOid, email)
       if (role !== 'owner' && role !== 'editor') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    } else if (kind === 'ref') {
+      // No folder picked → auto-file under Bookmarked/<Type>/ so every save
+      // lands organized by media type instead of piling up at root.
+      const TYPE_FOLDERS = { video: 'Videos', audio: 'Audio', pdf: 'PDFs', text: 'Notes', image: 'Images', file: 'Files', link: 'Links' }
+      const typeLabel = TYPE_FOLDERS[String(itemKind || 'link').toLowerCase()] || 'Files'
+      const now0 = new Date().toISOString()
+      async function ensureFolder(name, parent) {
+        const hit = await nodesCol.findOne({ ownerEmail: email, kind: 'folder', name, parentId: parent })
+        if (hit) return hit._id
+        const r = await nodesCol.insertOne({ ownerEmail: email, kind: 'folder', name, parentId: parent, itemKind: 'folder', createdAt: now0, updatedAt: now0 })
+        return r.insertedId
+      }
+      const rootId = await ensureFolder('Bookmarked', null)
+      parentOid = await ensureFolder(typeLabel, rootId)
+      autoFolderPath = `Bookmarked/${typeLabel}`
     }
 
     const now = new Date().toISOString()
@@ -122,7 +138,7 @@ export async function POST(request) {
       updatedAt: now,
     }
     const result = await nodesCol.insertOne(doc)
-    return NextResponse.json({ success: true, node: serializeNode({ ...doc, _id: result.insertedId }) }, { status: 201 })
+    return NextResponse.json({ success: true, node: serializeNode({ ...doc, _id: result.insertedId }), ...(autoFolderPath ? { folderPath: autoFolderPath } : {}) }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }

@@ -39,3 +39,13 @@ export const TOPIC_PASS_PCT = 50
 export const TOPIC_QUIZ_LENGTH = 10
 // Fewer real questions than this = "no quiz available", tick works directly.
 export const TOPIC_MIN_QUESTIONS = 3
+// Prove-by-writing: explanations shorter than this don't earn the tick.
+export const EXPLAIN_MIN_WORDS = 200
+
+// Word count for HTML or plain text (shared by the editor counter and the
+// server gate so both enforce exactly the same bar).
+export function countWords(html) {
+  const text = String(html || '').replace(/<[^>]*>/g, ' ').replace(/&nbsp;/gi, ' ').replace(/\s+/g, ' ').trim()
+  if (!text) return 0
+  return text.split(' ').length
+}

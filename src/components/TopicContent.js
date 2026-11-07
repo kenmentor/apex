@@ -12,6 +12,7 @@ import { FullscreenReader, useSpeech, stripHtml } from '@/components/Reader'
 import { mockTopicContent } from '@/lib/demo-content'
 import { renderMath } from '@/lib/math'
 import SuggestEdit from '@/components/SuggestEdit'
+import { markTopicViewed } from '@/lib/progress'
 
 const TABS = [
   { id: 'quiz', label: 'Quiz', icon: Zap },
@@ -84,8 +85,13 @@ export default function TopicContent({ course, topic, titleHint = '' }) {
 
   function openReader(kind, item) {
     speech.stop()
+    // Opening anything counts as doing the reading (auto view-tick).
+    markTopicViewed(topic)
     setReader({ kind, item })
   }
+
+  // Video/audio play straight in the card — same auto-tick.
+  const markViewed = () => markTopicViewed(topic)
 
   function closeReader() {
     speech.stop()
@@ -205,7 +211,7 @@ export default function TopicContent({ course, topic, titleHint = '' }) {
           <EmptyTab tab="video" />
         ) : (
           <div className="space-y-3">
-            {(tabs.video || []).map(v => <MediaCard key={v.id} item={v} />)}
+            {(tabs.video || []).map(v => <MediaCard key={v.id} item={v} onView={markViewed} />)}
           </div>
         )
       )}
@@ -243,7 +249,7 @@ export default function TopicContent({ course, topic, titleHint = '' }) {
             </div>
           )}
           {(tabs.audio || []).filter(a => a.url).map(a => (
-            <MediaCard key={a.id} item={{ ...a, type: 'audio' }} />
+            <MediaCard key={a.id} item={{ ...a, type: 'audio' }} onView={markViewed} />
           ))}
           {(tabs.audio || []).filter(a => !a.url).map(a => (
             <div key={a.id} className="flex items-center gap-3 rounded-xl border bg-card p-3">

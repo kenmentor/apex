@@ -16,6 +16,9 @@ import SuggestEdit from '@/components/SuggestEdit'
 import { getUser } from '@/lib/auth'
 import { haptic } from '@/lib/haptics'
 import BtnSpinner from '@/components/BtnSpinner'
+import RichTextEditor from '@/components/RichTextEditor'
+import { topicDoneCount, topicIsComplete, markTopicViewed } from '@/lib/progress'
+import { countWords, EXPLAIN_MIN_WORDS } from '@/lib/topic-match'
 import { mockPlan, mockTopicContent } from '@/lib/demo-content'
 import { colorFor } from '@/lib/plan-colors'
 
@@ -165,7 +168,7 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   const blocks = sections.length ? sections : flat
 
   const totalItems = planTopics.reduce((n, t) => n + (t.items || []).length, 0)
-  const doneItems = planTopics.reduce((n, t) => n + (t.items || []).filter(it => doneIds.has(`${t.id}:${it.id}`)).length, 0)
+  const doneItems = planTopics.reduce((n, t) => n + topicDoneCount(t.items, t.id, doneIds), 0)
   const coursePct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0
 
   // Course-level check-off: one tap checks every topic (manual flags), one
@@ -173,8 +176,7 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   // Same rule as TopicSection: a topic counts when fully done OR manually set.
   const secStates = blocks.map(s => {
     const rows = s.plan?.items || []
-    const tDone = rows.filter(i => doneIds.has(`${s.plan.id}:${i.id}`)).length
-    const complete = (rows.length > 0 && tDone === rows.length) || doneIds.has(`${s.plan.id}:manual`)
+    const complete = topicIsComplete(rows, s.plan.id, doneIds)
     return { id: s.plan.id, complete }
   }).filter(s => s.id)
   const courseDone = secStates.length > 0 && secStates.every(s => s.complete)
@@ -266,7 +268,7 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
         />
       </div>
 
-      {tab === 'quiz' && <QuizCard course={String(slug).toLowerCase()} title={code} />}
+      {tab === 'quiz' && <QuizCard course={String(slug).toLowerCase()} title={code} topics={planTopics} />}
 
       {tab !== 'quiz' && visible.map((s, i) => (
         <TopicSection key={s.plan.id} planTopic={s.plan} content={s.content} tab={tab} course={String(slug).toLowerCase()} doneIds={doneIds} flat={s.plan.id === 'all'}
@@ -294,7 +296,14 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   )
 }
 
-function QuizCard({ course, title }) {
+function QuizCard({ course, title, topics = [] }) {
+  // Standard entry: pick a topic (or everything), then the same quiz
+  // machine runs. Topic quizzes here are pure practice — no auto check-off.
+  const [picked, setPicked] = useState('all')
+  const valid = (topics || []).filter(t => t && t.id)
+  const quizHref = picked === 'all' || !picked
+    ? `/courses/${course}/quiz`
+    : `/courses/${course}/quiz?topic=${encodeURIComponent(picked)}&title=${encodeURIComponent(valid.find(t => String(t.id) === String(picked))?.title || '')}`
   return (
     <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
       <div className="flex items-center gap-3">
@@ -306,6 +315,29 @@ function QuizCard({ course, title }) {
           <p className="text-[11px] text-muted-foreground">Timed · scored · course question bank</p>
         </div>
       </div>
+      {!!valid.length && (
+        <div className="mt-3">
+          <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Quiz me on</p>
+          <div className="flex flex-wrap gap-1.5">
+            <button
+              onClick={() => setPicked('all')}
+              className={'rounded-full px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ' + (picked === 'all' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}
+            >
+              All topics
+            </button>
+            {valid.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setPicked(String(t.id))}
+                title={t.title}
+                className={'max-w-[160px] truncate rounded-full px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ' + (String(picked) === String(t.id) ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}
+              >
+                {t.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="mt-3 flex gap-4 text-center">
         <div className="flex-1 rounded-xl bg-background/60 py-2">
           <Timer className="mx-auto size-4 text-muted-foreground" />
@@ -321,7 +353,7 @@ function QuizCard({ course, title }) {
         </div>
       </div>
       <Button asChild className="mt-3 h-12 w-full text-base">
-        <Link href={`/courses/${course}/quiz`}>Start quiz</Link>
+        <Link href={quizHref}>Start quiz{picked !== 'all' && picked ? ' · topic' : ''}</Link>
       </Button>
     </div>
   )
@@ -334,13 +366,56 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
   const [contribOpen, setContribOpen] = useState(false)
   const [toggling, setToggling] = useState(false)
   const [tickOpen, setTickOpen] = useState(false)
+  // Tick modal step: 'choose' (quiz vs write) or 'write' (200+ word proof).
+  const [tickStep, setTickStep] = useState('choose')
+  const [noteHtml, setNoteHtml] = useState('')
+  const [noteSaving, setNoteSaving] = useState(false)
+  const [noteError, setNoteError] = useState('')
+  const noteWords = countWords(noteHtml)
+  const noteReady = noteWords >= EXPLAIN_MIN_WORDS
+
+  function openTick() {
+    setTickStep('choose')
+    setNoteError('')
+    setTickOpen(true)
+  }
+
+  // Prove-by-writing: 200+ words on what was learned earns the tick.
+  async function submitExplanation() {
+    if (noteSaving || !planTopic.id) return
+    const u = getUser()
+    if (!u?.email) return
+    if (!noteReady) {
+      setNoteError(`Write at least ${EXPLAIN_MIN_WORDS} words (${noteWords}/${EXPLAIN_MIN_WORDS}).`)
+      return
+    }
+    setNoteSaving(true)
+    setNoteError('')
+    try {
+      const res = await fetch('/api/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: u.email, topicId: planTopic.id, itemId: 'manual', kind: 'topic', via: 'note', note: noteHtml }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Could not save')
+      haptic.success()
+      setTickOpen(false)
+      setNoteHtml('')
+      await onChanged?.()
+    } catch (e) {
+      setNoteError(e?.message || 'Could not save — try again.')
+    } finally {
+      setNoteSaving(false)
+    }
+  }
   const [extraPeople, setExtraPeople] = useState({})
   const speech = useSpeech()
   const canSuggest = reader && (reader.kind === 'text' || reader.kind === 'pdf') && reader.item?.source !== 'theory'
 
   const items = content.tabs?.[tab] || []
   const rows = planTopic.items || []
-  const tDone = rows.filter(i => doneIds.has(`${planTopic.id}:${i.id}`)).length
+  const tDone = topicDoneCount(rows, planTopic.id, doneIds)
   const tAll = rows.length > 0 && tDone === rows.length
   const manualDone = doneIds.has(`${planTopic.id}:manual`)
   const complete = tAll || manualDone
@@ -434,6 +509,9 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
   })()
   const displayName = (c) => c.name || String(c.email.split('@')[0]).replace(/[._-]+/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase())
 
+  // Opening anything counts as doing the reading (auto view-tick).
+  const markViewed = () => markTopicViewed(planTopic.id, doneIds, onChanged);
+
   return (
     <section id={`topic-${planTopic.id}`} className="scroll-mt-24 space-y-2">
       {!flat && (
@@ -450,36 +528,67 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
                 <Check className="size-4 text-white" strokeWidth={3} />
               </button>
             ) : (
-              <button onClick={() => setTickOpen(true)} disabled={toggling || !planTopic.id} aria-label="Check off topic" title="Tap to check off"
+              <button onClick={openTick} disabled={toggling || !planTopic.id} aria-label="Check off topic" title="Tap to check off"
                 className="mt-0.5 size-6 shrink-0 rounded-full border-2 border-muted-foreground/40 bg-background hover:border-green-500 disabled:opacity-50" />
               {tickOpen && (
                 <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-5" onClick={() => setTickOpen(false)}>
-                  <div className="w-full max-w-sm space-y-4 rounded-3xl bg-card p-6 text-center shadow-xl" onClick={e => e.stopPropagation()}>
-                    <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-green-500/10">
-                      <Check className="size-6 text-green-500" strokeWidth={3} />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-extrabold">Check off this topic?</h3>
-                      <p className="mt-1 text-xs text-muted-foreground">Prove it with a quick quiz (50%+ to pass) — or just mark it done.</p>
-                    </div>
-                    <div className="space-y-2">
-                      <Link
-                        href={`/courses/${course}/quiz?topic=${encodeURIComponent(planTopic.id)}&title=${encodeURIComponent(content.title || '')}&autocheck=1`}
-                        className="block w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground"
-                      >
-                        Take the quiz
-                      </Link>
-                      <button
-                        onClick={async () => { setTickOpen(false); await toggleTopic() }}
-                        disabled={toggling}
-                        className="w-full rounded-xl border py-2.5 text-sm font-bold disabled:opacity-50"
-                      >
-                        Just mark done
-                      </button>
-                      <button onClick={() => setTickOpen(false)} className="w-full py-1 text-xs font-semibold text-muted-foreground">
-                        Cancel
-                      </button>
-                    </div>
+                  <div className="flex max-h-[88dvh] w-full max-w-md flex-col rounded-3xl bg-card p-6 shadow-xl" onClick={e => e.stopPropagation()}>
+                    {tickStep === 'choose' ? (
+                      <div className="space-y-4 text-center">
+                        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-green-500/10">
+                          <Check className="size-6 text-green-500" strokeWidth={3} />
+                        </div>
+                        <div>
+                          <h3 className="text-base font-extrabold">Check off this topic?</h3>
+                          <p className="mt-1 text-xs text-muted-foreground">Prove it — pass a quick quiz, or explain what you learned in {EXPLAIN_MIN_WORDS}+ words.</p>
+                        </div>
+                        <div className="space-y-2">
+                          <Link
+                            href={`/courses/${course}/quiz?topic=${encodeURIComponent(planTopic.id)}&title=${encodeURIComponent(content.title || '')}&autocheck=1`}
+                            className="block w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground"
+                          >
+                            Take the quiz
+                          </Link>
+                          <button
+                            onClick={() => setTickStep('write')}
+                            className="w-full rounded-xl border py-2.5 text-sm font-bold"
+                          >
+                            Write what I learned
+                          </button>
+                          <button onClick={() => setTickOpen(false)} className="w-full py-1 text-xs font-semibold text-muted-foreground">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex min-h-0 flex-col space-y-3">
+                        <div className="text-center">
+                          <h3 className="text-base font-extrabold">What did you learn?</h3>
+                          <p className="mt-1 text-xs text-muted-foreground">Explain this topic in your own words — {EXPLAIN_MIN_WORDS}+ words to earn the tick.</p>
+                        </div>
+                        <div className="min-h-0 overflow-y-auto">
+                          <RichTextEditor value={noteHtml} onChange={setNoteHtml} placeholder="Explain what you learned…" tall />
+                        </div>
+                        <div className="flex items-center justify-between px-1">
+                          <span className={'text-xs font-bold ' + (noteReady ? 'text-green-500' : 'text-muted-foreground')}>
+                            {noteWords}/{EXPLAIN_MIN_WORDS} words
+                          </span>
+                          {!!noteError && <span className="text-xs font-semibold text-red-500">{noteError}</span>}
+                        </div>
+                        <div className="shrink-0 space-y-2">
+                          <button
+                            onClick={submitExplanation}
+                            disabled={noteSaving || !noteReady}
+                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground disabled:opacity-50"
+                          >
+                            {noteSaving ? <><BtnSpinner className="size-4" /> Saving…</> : 'Submit & check off'}
+                          </button>
+                          <button onClick={() => { setTickStep('choose'); setNoteError('') }} className="w-full py-1 text-xs font-semibold text-muted-foreground">
+                            ← Back
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -514,7 +623,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
         </button>
       )}
 
-      {tab === 'video' && items.map(v => <MediaCard key={v.id} item={v} />)}
+      {tab === 'video' && items.map(v => <MediaCard key={v.id} item={v} onView={markViewed} />)}
 
       {tab === 'audio' && (
         <>
@@ -537,7 +646,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
               </div>
             </div>
           )}
-          {items.filter(a => a.url).map(a => <MediaCard key={a.id} item={{ ...a, type: 'audio' }} />)}
+          {items.filter(a => a.url).map(a => <MediaCard key={a.id} item={{ ...a, type: 'audio' }} onView={markViewed} />)}
           {items.filter(a => !a.url).map(a => (
             <div key={a.id} className="flex items-center gap-3 rounded-xl border bg-card p-3">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
@@ -552,10 +661,10 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
         </>
       )}
 
-      {tab === 'text' && items.map(t => <TextCard key={t.id} item={t} onOpen={(item) => { speech.stop(); setReader({ kind: 'text', item }) }} />)}
+      {tab === 'text' && items.map(t => <TextCard key={t.id} item={t} onOpen={(item) => { markViewed(); speech.stop(); setReader({ kind: 'text', item }) }} />)}
 
       {tab === 'pdf' && items.map(p => (
-        <MediaCard key={p.id} item={{ ...p, type: 'pdf' }} onOpenPdf={(item) => { speech.stop(); setReader({ kind: 'pdf', item }) }} />
+        <MediaCard key={p.id} item={{ ...p, type: 'pdf' }} onView={markViewed} onOpenPdf={(item) => { markViewed(); speech.stop(); setReader({ kind: 'pdf', item }) }} />
       ))}
 
       {tab === 'flashcards' && (

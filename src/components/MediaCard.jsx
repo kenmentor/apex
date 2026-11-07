@@ -183,16 +183,25 @@ export function PdfCover({ url, className, onPages }) {
   )
 }
 
-function YouTubeCard({ item }) {
+function YouTubeCard({ item, onView }) {
   const [playing, setPlaying] = useState(false)
   const m = String(item.url || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/)
   const vid = m ? m[1] : null
+  const viewedRef = useRef(false)
+  function play() {
+    if (!vid) return
+    setPlaying(true)
+    if (!viewedRef.current) {
+      viewedRef.current = true
+      try { onView?.(item) } catch {}
+    }
+  }
   return (
     <div className="overflow-hidden rounded-xl border bg-card">
       {playing && vid ? (
         <YouTubePlayer videoId={vid} title={item.title} thumb={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`} autoPlay className="aspect-video w-full" />
       ) : (
-        <button onClick={() => vid && setPlaying(true)} className="relative block aspect-video w-full bg-black text-left">
+        <button onClick={play} className="relative block aspect-video w-full bg-black text-left">
           {vid && (
             <img src={`https://img.youtube.com/vi/${vid}/hqdefault.jpg`} alt={item.title} className="size-full object-cover" loading="lazy" />
           )}
@@ -211,11 +220,16 @@ function YouTubeCard({ item }) {
   )
 }
 
-function VideoFileCard({ item }) {
+function VideoFileCard({ item, onView }) {
   const [playing, setPlaying] = useState(false)
   const videoRef = useRef(null)
+  const viewedRef = useRef(false)
   function play() {
     setPlaying(true)
+    if (!viewedRef.current) {
+      viewedRef.current = true
+      try { onView?.(item) } catch {}
+    }
     requestAnimationFrame(() => videoRef.current?.play().catch(() => {}))
   }
   return (
@@ -238,7 +252,7 @@ function VideoFileCard({ item }) {
   )
 }
 
-function AudioCard({ item }) {
+function AudioCard({ item, onView }) {
   return (
     <div className="rounded-xl border bg-card">
       <div className="flex items-center gap-3 p-3 pb-1">
@@ -252,7 +266,7 @@ function AudioCard({ item }) {
       </div>
       {item.url ? (
         <div className="px-2 pb-2">
-          <AudioPlayer src={item.url} />
+          <AudioPlayer src={item.url} onPlay={() => { try { onView?.(item) } catch {} }} />
         </div>
       ) : (
         <p className="px-3 pb-3 text-[11px] text-muted-foreground">Audio coming soon</p>
@@ -325,11 +339,12 @@ function FileCard({ item }) {
 }
 
 // The one standardized card. kind auto-detected unless item.type forces it.
-export default function MediaCard({ item, onOpenPdf }) {
+// onView(item) fires once when content starts playing/opening (auto-tick).
+export default function MediaCard({ item, onOpenPdf, onView }) {
   const kind = kindOf(item)
-  if (kind === 'youtube') return <YouTubeCard item={item} />
-  if (kind === 'video') return <VideoFileCard item={item} />
-  if (kind === 'audio') return <AudioCard item={item} />
+  if (kind === 'youtube') return <YouTubeCard item={item} onView={onView} />
+  if (kind === 'video') return <VideoFileCard item={item} onView={onView} />
+  if (kind === 'audio') return <AudioCard item={item} onView={onView} />
   if (kind === 'pdf') return <PdfCard item={item} onOpen={onOpenPdf} />
   if (kind === 'image') {
     return (

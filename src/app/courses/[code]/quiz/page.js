@@ -11,7 +11,9 @@ import { trackQuizEvent } from '@/components/AnalyticsTracker';
 import { trackEvent } from '@/lib/tracking';
 import { trackAnswerSubmitted, trackSessionTerminated, trackExplanationViewed, trackTextCopied } from '@/lib/telemetry';
 import { gradeAnswer, typeOf, canSubmitAnswer } from '@/lib/quiz-types';
-import { sectionsForTopic, TOPIC_PASS_PCT, TOPIC_QUIZ_LENGTH, TOPIC_MIN_QUESTIONS } from '@/lib/topic-match';
+import { sectionsForTopic, TOPIC_PASS_PCT, TOPIC_QUIZ_LENGTH, TOPIC_MIN_QUESTIONS, EXPLAIN_MIN_WORDS, countWords } from '@/lib/topic-match';
+import RichTextEditor from '@/components/RichTextEditor';
+import BtnSpinner from '@/components/BtnSpinner';
 import QuestionRenderer from '@/components/exam/QuestionRenderer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -289,11 +291,59 @@ function QuizInner() {
       fetch('/api/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic' }),
+        body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic', via: 'quiz' }),
       }).catch(() => {})
     } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished])
+
+  // ── No-quiz topics default to prove-by-writing (same 200+ word bar as
+  // the tick modal, same standardized editor). No free ticks anywhere.
+  function TopicExplain({ topicId, topicTitle, slug }) {
+    const [noteHtml, setNoteHtml] = useState('')
+    const [saving, setSaving] = useState(false)
+    const [error, setError] = useState('')
+    const words = countWords(noteHtml)
+    const ready = words >= EXPLAIN_MIN_WORDS
+    async function submit() {
+      if (saving || !ready) return
+      const u = getUser()
+      if (!u?.email) { setError('Sign in to save your explanation.'); return }
+      setSaving(true)
+      setError('')
+      try {
+        const res = await fetch('/api/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic', via: 'note', note: noteHtml }),
+        })
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) throw new Error(data.error || 'Could not save')
+        haptic.success()
+        router.push(`/plan/${slug}/${encodeURIComponent(topicId)}`)
+      } catch (e) {
+        setError(e?.message || 'Could not save — try again.')
+      } finally {
+        setSaving(false)
+      }
+    }
+    return (
+      <div className="space-y-3">
+        <div className="max-h-64 overflow-y-auto text-left">
+          <RichTextEditor value={noteHtml} onChange={setNoteHtml} placeholder="Explain what you learned in your own words…" tall />
+        </div>
+        <div className="flex items-center justify-between px-1">
+          <span className={'text-xs font-bold ' + (ready ? 'text-green-500' : 'text-muted-foreground')}>
+            {words}/{EXPLAIN_MIN_WORDS} words
+          </span>
+          {!!error && <span className="text-xs font-semibold text-red-500">{error}</span>}
+        </div>
+        <Button className="w-full py-5 text-sm font-bold" disabled={saving || !ready} onClick={submit}>
+          {saving ? <span className="flex items-center justify-center gap-2"><BtnSpinner /> Saving…</span> : 'Submit & check off'}
+        </Button>
+      </div>
+    )
+  }
 
   function handleResume(saved) {
     if (saved.settings) setSettings(saved.settings);
@@ -511,8 +561,8 @@ function QuizInner() {
   }
 
   if (allQuestions.length === 0) {
-    // Topic mode with an empty bank = "no quiz available": offer the
-    // direct tick so the flow never dead-ends.
+    // Topic mode with an empty bank = "no quiz available": default to
+    // prove-by-writing so the flow never dead-ends.
     if (topicMode) {
       const slug = String(code).toLowerCase().replace(/\s+/g, '');
       return (
@@ -520,27 +570,9 @@ function QuizInner() {
           <Card className="w-full max-w-lg space-y-4 py-10 text-center">
             <div className="text-5xl">📝</div>
             <h2 className="px-6 text-lg font-extrabold">{topicTitle || 'This topic'}</h2>
-            <p className="px-6 text-sm text-muted-foreground">No quiz questions for this topic yet — you can just tick it done.</p>
+            <p className="px-6 text-sm text-muted-foreground">No questions for this course yet — explain what you learned instead ({EXPLAIN_MIN_WORDS}+ words).</p>
             <div className="space-y-2 px-6 pt-2">
-              <Button
-                className="w-full py-5 text-sm font-bold"
-                onClick={async () => {
-                  try {
-                    const u = getUser();
-                    if (u?.email) {
-                      await fetch('/api/completions', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic' }),
-                      }).catch(() => {});
-                      haptic.success();
-                    }
-                  } catch {}
-                  router.push(`/plan/${slug}/${encodeURIComponent(topicId)}`);
-                }}
-              >
-                Mark topic done
-              </Button>
+              <TopicExplain topicId={topicId} topicTitle={topicTitle} slug={slug} />
               <Link href={`/plan/${slug}/${encodeURIComponent(topicId)}`} className="block">
                 <Button variant="ghost" className="w-full">Back to topic</Button>
               </Link>
@@ -604,27 +636,9 @@ function QuizInner() {
             <Card className="w-full max-w-lg space-y-4 py-10 text-center">
               <div className="text-5xl">📝</div>
               <h2 className="px-6 text-lg font-extrabold">{topicTitle || 'This topic'}</h2>
-              <p className="px-6 text-sm text-muted-foreground">No quiz questions for this topic yet — you can just tick it done.</p>
+              <p className="px-6 text-sm text-muted-foreground">No quiz questions for this topic yet — explain what you learned instead ({EXPLAIN_MIN_WORDS}+ words).</p>
               <div className="space-y-2 px-6 pt-2">
-                <Button
-                  className="w-full py-5 text-sm font-bold"
-                  onClick={async () => {
-                    try {
-                      const u = getUser();
-                      if (u?.email) {
-                        await fetch('/api/completions', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic' }),
-                        }).catch(() => {});
-                        haptic.success();
-                      }
-                    } catch {}
-                    router.push(`/plan/${slug}/${encodeURIComponent(topicId)}`);
-                  }}
-                >
-                  Mark topic done
-                </Button>
+                <TopicExplain topicId={topicId} topicTitle={topicTitle} slug={slug} />
                 <Link href={`/plan/${slug}/${encodeURIComponent(topicId)}`} className="block">
                   <Button variant="ghost" className="w-full">Back to topic</Button>
                 </Link>

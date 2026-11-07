@@ -41,7 +41,7 @@ export default function SaveToFolder({ payload, label = 'Save' }) {
     setBusy(true)
     setMsg('')
     try {
-      await api('/api/library', {
+      const data = await api('/api/library', {
         method: 'POST',
         body: JSON.stringify({
           kind: 'ref',
@@ -55,8 +55,8 @@ export default function SaveToFolder({ payload, label = 'Save' }) {
           subtitle: payload.subtitle || null,
         }),
       })
-      setMsg('Saved ✓')
-      setTimeout(() => setOpen(false), 600)
+      setMsg(data.folderPath ? `Saved ✓ → ${data.folderPath}` : 'Saved ✓')
+      setTimeout(() => setOpen(false), 900)
     } catch (e) { setMsg(e.message) } finally { setBusy(false) }
   }
 

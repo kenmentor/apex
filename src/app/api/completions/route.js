@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
 import { recordCompletionGift } from '@/lib/ledger'
+import { countWords, EXPLAIN_MIN_WORDS, sectionsForTopic, TOPIC_MIN_QUESTIONS, TOPIC_PASS_PCT } from '@/lib/topic-match'
+
+function normCourse(code) {
+  return String(code || '').trim().toUpperCase().replace(/\s+/g, ' ').replace(/^([A-Z]+)(\d+)$/, '$1 $2')
+}
 
 function dayKey(iso) {
   return (iso || '').slice(0, 10)
@@ -25,7 +30,7 @@ export async function GET(request) {
 
 export async function POST(request) {  try {
     const body = await request.json()
-    const { email, topicId, itemId, kind, percentage, items, courseCode } = body
+    const { email, topicId, itemId, kind, percentage, items, courseCode, note, via } = body
     if (!email) {
       return NextResponse.json({ error: 'email required' }, { status: 400 })
     }
@@ -69,6 +74,44 @@ export async function POST(request) {  try {
     if (!topicId || !itemId || !kind) {
       return NextResponse.json({ error: 'email, topicId, itemId, kind required' }, { status: 400 })
     }
+
+    // Proof gate (server-side, can't be bypassed from the client): a manual
+    // topic check-off needs either a passed topic quiz (via: 'quiz') or a
+    // 200+ word written explanation saved with it.
+    let noteText = null
+    let wordCount = 0
+    if (note !== undefined && note !== null) {
+      noteText = String(note).slice(0, 20000)
+      wordCount = countWords(noteText)
+    }
+    if (kind === 'topic' && itemId === 'manual' && via !== 'quiz' && wordCount < EXPLAIN_MIN_WORDS) {
+      // "No quiz available" fallback: verify against the real bank instead
+      // of trusting the client — if a real topic quiz exists, the user must
+      // pass it or write the explanation.
+      if (via === 'no-quiz' && body?.courseCode && body?.title) {
+        const qCol = await getCollection('questions')
+        const qDocs = await qCol
+          .find({ courseCode: normCourse(body.courseCode) })
+          .project({ section: 1 })
+          .toArray()
+        const bySection = {}
+        for (const d of qDocs) {
+          const s = d.section || 'General'
+          bySection[s] = (bySection[s] || 0) + 1
+        }
+        const matched = new Set(sectionsForTopic(Object.keys(bySection), String(body.title)))
+        const poolSize = Object.entries(bySection).reduce((n, [s, c]) => n + (matched.has(s) ? c : 0), 0)
+        if (poolSize < TOPIC_MIN_QUESTIONS) {
+          // Genuinely no quiz — tick allowed, record how.
+          const col = await getCollection('completions')
+          const now = new Date().toISOString()
+          await col.insertOne({ email: email.toLowerCase().trim(), topicId, itemId, kind, percentage: null, via: 'no-quiz', createdAt: now })
+          return NextResponse.json({ success: true, added: 1 }, { status: 201 })
+        }
+      }
+      return NextResponse.json({ error: `This topic has a quiz — pass it (${TOPIC_PASS_PCT}%+) or explain what you learned in ${EXPLAIN_MIN_WORDS}+ words (${wordCount}/${EXPLAIN_MIN_WORDS}).` }, { status: 400 })
+    }
+
     const col = await getCollection('completions')
     const doc = {
       email: email.toLowerCase().trim(),
@@ -76,6 +119,8 @@ export async function POST(request) {  try {
       itemId,
       kind,
       percentage: percentage ?? null,
+      ...(noteText ? { note: noteText, wordCount } : {}),
+      ...(via ? { via: String(via).slice(0, 16) } : {}),
       createdAt: new Date().toISOString(),
     }
     const result = await col.insertOne(doc)

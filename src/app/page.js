@@ -7,6 +7,7 @@ import { ArrowRight, Flame, ClipboardList, Gamepad2, Folder, Search, ChevronRigh
 import { getUser, getToken } from '@/lib/auth';
 import { reviewProfile } from '@/lib/profile-review';
 import { colorFor } from '@/lib/plan-colors';
+import { topicDoneCount } from '@/lib/progress';
 import { fetchJson, TTL } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -295,7 +296,7 @@ export default function HomePage() {
           {topCourses.map((course) => {
             const topics = course.topics || []
             const totalItems = topics.reduce((n, t) => n + (t.items || []).length, 0)
-            const doneItems = topics.reduce((n, t) => n + (t.items || []).filter(i => doneIds.has(`${t.id}:${i.id}`)).length, 0)
+            const doneItems = topics.reduce((n, t) => n + topicDoneCount(t.items, t.id, doneIds), 0)
             const coursePct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0
             const color = colorFor(course.code)
             const slug = String(course.code).toLowerCase().replace(/\s+/g, '')

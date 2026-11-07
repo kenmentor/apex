@@ -16,9 +16,11 @@ const RATES = [1, 1.25, 1.5, 2]
 let activeWs = null
 
 // Spotify-style audio: real waveform, green progress, play/time/speed.
-export default function AudioPlayer({ src }) {
+// onPlay fires once per mount on first play (used for auto view-ticks).
+export default function AudioPlayer({ src, onPlay }) {
   const waveRef = useRef(null)
   const wsRef = useRef(null)
+  const playedRef = useRef(false)
   const [playing, setPlaying] = useState(false)
   const [time, setTime] = useState(0)
   const [dur, setDur] = useState(0)
@@ -49,6 +51,10 @@ export default function AudioPlayer({ src }) {
           if (activeWs && activeWs !== ws) { try { activeWs.pause() } catch {} }
           activeWs = ws
           if (live) setPlaying(true)
+          if (!playedRef.current) {
+            playedRef.current = true
+            try { onPlay?.() } catch {}
+          }
         })
         ws.on('pause', () => { if (live) setPlaying(false) })
         ws.on('finish', () => { if (live) { setPlaying(false); setTime(0) } })
