@@ -45,6 +45,9 @@ export async function GET(request) {
     let idx = clean.findIndex(t => String(t.id) === topicParam || String(t._id) === topicParam)
     const topic = idx >= 0 ? clean[idx] : null
     const title = topic?.title || titleParam || 'Topic'
+    // Exact-title sets used for single-homing (videos + uploads).
+    const titleNorm = String(title || '').trim().toLowerCase()
+    const topicNorms = new Set(clean.map(t => String(t.title || '').trim().toLowerCase()).filter(Boolean))
     const prev = idx > 0 ? { id: String(clean[idx - 1].id ?? clean[idx - 1]._id), title: clean[idx - 1].title } : null
     const next = idx >= 0 && idx < clean.length - 1
       ? { id: String(clean[idx + 1].id ?? clean[idx + 1]._id), title: clean[idx + 1].title }
@@ -68,11 +71,15 @@ export async function GET(request) {
     for (const v of videos) {
       const s = match([...tokens(v.title), ...tokens(v.description)])
       const url = String(v.url || '')
-      if (/\.mp3|\.wav|\.ogg|\.m4a/i.test(url) || v.audioUrl) {
-        push(s > 0 ? 'audio' : 'other', { id: String(v._id), kind: 'audio', title: v.title, url: v.url, description: v.description || '' }, s)
-      } else {
-        push(s > 0 ? 'video' : 'other', { id: String(v._id), kind: 'video', title: v.title, url: v.url, description: v.description || '' }, s)
-      }
+      // Exact topic homing (same rule as contributor uploads): a video with
+      // `topic` set lives ONLY under that exact topic title and stays out of
+      // every other topic — no keyword spreading. Without `topic`, falls back
+      // to keyword matching like before.
+      const vNorm = String(v.topic || '').trim().toLowerCase()
+      const exactV = vNorm && vNorm === titleNorm
+      if (vNorm && !exactV && topicNorms.has(vNorm)) continue
+      const tab = /(\.mp3|\.wav|\.ogg|\.m4a)/i.test(url) || v.audioUrl ? 'audio' : 'video'
+      push(exactV ? tab : (s > 0 ? tab : 'other'), { id: String(v._id), kind: tab, title: v.title, url: v.url, description: v.description || '' }, exactV ? 100 : s)
     }
 
     for (const r of readings) {
@@ -99,8 +106,6 @@ export async function GET(request) {
     // Contributor uploads: exact topic name match always lands in its tab;
     // otherwise fall back to keyword matching like everything else.
     // Single-homed: homed to another course topic → stays out of this one.
-    const titleNorm = String(title || '').trim().toLowerCase()
-    const topicNorms = new Set(clean.map(t => String(t.title || '').trim().toLowerCase()).filter(Boolean))
     for (const m of (materials || [])) {
       const url = String(m.url || '')
       const kind = String(m.itemKind || 'file')
