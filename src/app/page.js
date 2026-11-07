@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, Flame, ClipboardList, Gamepad2, Folder, Search } from 'lucide-react';
+import { ArrowRight, Flame, ClipboardList, Gamepad2, Folder, Search, ChevronRight } from 'lucide-react';
 import { getUser, getToken } from '@/lib/auth';
+import { reviewProfile } from '@/lib/profile-review';
+import { colorFor } from '@/lib/plan-colors';
 import { fetchJson, TTL } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -64,6 +66,23 @@ function StreakDots({ days }) {
   );
 }
 
+function Ring({ pct, size = 40 }) {
+  const r = (size - 6) / 2
+  const c = 2 * Math.PI * r
+  const done = pct >= 100
+  return (
+    <span className="relative inline-flex shrink-0 items-center justify-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth="4" className="stroke-white/30" />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth="4" strokeLinecap="round"
+          strokeDasharray={c} strokeDashoffset={c - (Math.min(100, pct) / 100) * c}
+          className={done ? 'stroke-green-300' : 'stroke-white'} style={{ transition: 'stroke-dashoffset 0.4s' }} />
+      </svg>
+      <span className="absolute text-[10px] font-bold text-white">{Math.round(pct)}%</span>
+    </span>
+  )
+}
+
 function FeedItem({ item }) {
   const router = useRouter();
   const d = item.data;
@@ -115,28 +134,32 @@ function FeedItem({ item }) {
 }
 
 export default function HomePage() {
-  const [categories, setCategories] = useState([]);
   const [user, setUser] = useState(null);
   const [feed, setFeed] = useState([]);
   const [streakData, setStreakData] = useState(null);
+  const [planCourses, setPlanCourses] = useState([]);
+  const [completions, setCompletions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [bannerOff, setBannerOff] = useState(false);
 
   useEffect(() => {
     const u = getUser();
     setUser(u);
-    const fetches = u?.email
-      ? [
-        fetchJson('/api/categories?limit=20', { ttl: TTL.list }),
-        fetchJson(`/api/feed/personalized?email=${encodeURIComponent(u.email)}`, {
-          token: getToken(), ttl: 15000,
-        }).catch(() => ({ items: [] })),
-        fetchJson(`/api/streak?email=${encodeURIComponent(u.email)}`, { ttl: 15000 }).catch(() => ({})),
-      ]
-      : [Promise.resolve({ docs: [] })];
-
-    Promise.all(fetches)
-      .then(([catsData, feedData, streak]) => {
-        setCategories(catsData.docs || []);
+    if (!u?.email) {
+      setLoading(false);
+      return;
+    }
+    Promise.all([
+      fetchJson(`/api/feed/personalized?email=${encodeURIComponent(u.email)}`, {
+        token: getToken(), ttl: 15000,
+      }).catch(() => ({ items: [] })),
+      fetchJson(`/api/streak?email=${encodeURIComponent(u.email)}`, { ttl: 15000 }).catch(() => ({})),
+      fetch('/api/plans?email=' + encodeURIComponent(u.email), { cache: 'no-store' }).then(r => r.json()).catch(() => null),
+      fetch('/api/completions?email=' + encodeURIComponent(u.email), { cache: 'no-store' }).then(r => r.json().catch(() => [])).catch(() => []),
+    ])
+      .then(([feedData, streak, plan, comps]) => {
+        if (plan?.supported) setPlanCourses(plan.courses || []);
+        setCompletions(Array.isArray(comps) ? comps : []);
         if (streak) setStreakData(streak.email ? streak : null);
         if (feedData?.items) {
           const twoDaysAgo = Date.now() - 48 * 60 * 60 * 1000;
@@ -182,8 +205,26 @@ export default function HomePage() {
 
   const showContinue = continueItems;
 
+  // Top courses: most content first (empty courses sink), max 5 on home —
+  // the full list lives on /plan. Styled exactly like plan blocks.
+  const doneIds = new Set((completions || []).map(c => `${c.topicId}:${c.itemId}`));
+  const topCourses = [...(planCourses || [])]
+    .sort((a, b) => ((b.topics || []).length - (a.topics || []).length))
+    .slice(0, 5);
+
   return (
     <div className="mx-auto min-h-dvh max-w-2xl space-y-7 px-5 pb-28 pt-6">
+      {!!user && !bannerOff && reviewProfile(user).needsReview && (
+        <div className="flex items-center gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+          <p className="flex-1 text-xs font-semibold text-amber-700 dark:text-amber-400">
+            Your school, department or avatar needs a quick confirm so your plan stays accurate.
+          </p>
+          <Link href="/auth?review=1" className="shrink-0 rounded-xl bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground">
+            Review
+          </Link>
+          <button onClick={() => setBannerOff(true)} aria-label="Dismiss" className="shrink-0 px-1 text-lg leading-none text-muted-foreground">×</button>
+        </div>
+      )}
       {!user && (
         <div className="flex items-center gap-4">
           <img src="/black-logo.png" alt="Apex" className="size-12 shrink-0 rounded-xl object-cover dark:hidden" />
@@ -239,6 +280,45 @@ export default function HomePage() {
           </div>
           <ActionBlock href="/games" color="#7C3AED" Icon={Gamepad2} title="Games" sub="Play & compete" />
           <ActionBlock href="/folders" color="#0284C7" Icon={Folder} title="My Files" sub="Notes & PDFs" />
+        </section>
+      )}
+
+      {/* Your courses — top 5, plan-style blocks, straight into the quiz */}
+      {user && topCourses.length > 0 && (
+        <section className="space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-sm font-bold text-muted-foreground">Your courses</h2>
+            <Link href="/plan" className="flex items-center gap-1 text-xs font-bold text-primary">
+              See all <ArrowRight className="size-3.5" />
+            </Link>
+          </div>
+          {topCourses.map((course) => {
+            const topics = course.topics || []
+            const totalItems = topics.reduce((n, t) => n + (t.items || []).length, 0)
+            const doneItems = topics.reduce((n, t) => n + (t.items || []).filter(i => doneIds.has(`${t.id}:${i.id}`)).length, 0)
+            const coursePct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0
+            const color = colorFor(course.code)
+            const slug = String(course.code).toLowerCase().replace(/\s+/g, '')
+            return (
+              <Link
+                key={course.code}
+                href={`/courses/${slug}/quiz`}
+                className="flex w-full items-center gap-3 rounded-3xl p-4 text-left text-white transition-all active:scale-[0.99]"
+                style={{ background: `linear-gradient(135deg, ${color}, ${color}CC)` }}
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="block text-lg font-extrabold">{course.code}</span>
+                  <span className="block truncate text-xs text-white/75">{course.title}</span>
+                  <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-white/25">
+                    <span className="block h-full rounded-full bg-white transition-all" style={{ width: `${coursePct}%` }} />
+                  </span>
+                  <span className="mt-1.5 block text-[11px] text-white/75">{topics.length} topics · {doneItems}/{totalItems} done</span>
+                </span>
+                <Ring pct={coursePct} />
+                <ChevronRight className="size-5 shrink-0 text-white/70" />
+              </Link>
+            )
+          })}
         </section>
       )}
 

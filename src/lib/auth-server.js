@@ -23,7 +23,22 @@ export async function getUserFromToken(request) {
   try {
     const decoded = verifyToken(token)
     const users = await getCollection('users')
-    return await users.findOne({ email: decoded.email })
+    const email = String(decoded.email || '').toLowerCase().trim()
+    if (!email) return null
+    let user = await users.findOne({ email })
+    if (!user) {
+      // Old docs may carry original casing ("User@X.com") while tokens carry
+      // lowercase — match once case-insensitively, then heal the stored value
+      // so every later lookup hits the index. Without this, old users 401 on
+      // EVERY authenticated call with no way forward.
+      const escaped = email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      user = await users.findOne({ email: { $regex: `^${escaped}$`, $options: 'i' } })
+      if (user && user.email !== email) {
+        try { await users.updateOne({ _id: user._id }, { $set: { email } }) } catch {}
+        user = { ...user, email }
+      }
+    }
+    return user
   } catch {
     return null
   }

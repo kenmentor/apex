@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { playClick, playCorrect, playWrong } from '@/lib/sound';
+import { haptic } from '@/lib/haptics';
 import { getUser, getToken } from '@/lib/auth';
 import { getCachedQuestions, cacheQuestions } from '@/lib/questionCache';
 import { trackQuizEvent } from '@/components/AnalyticsTracker';
@@ -712,6 +713,7 @@ export default function QuizPage() {
       setTimeLeft(settings.timePerQuestion);
     } else {
       setFinished(true);
+      haptic.finish();
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);
@@ -770,7 +772,7 @@ export default function QuizPage() {
         setBestStreak(b => Math.max(b, next));
         return next;
       });
-      if (ok) playCorrect(); else playWrong();
+      if (ok) { playCorrect(); haptic.success(); } else { playWrong(); haptic.error(); }
     }
 
     if (currentIndex + 1 < total) {
@@ -780,6 +782,7 @@ export default function QuizPage() {
       setTimeLeft(settings.timePerQuestion);
     } else {
       setFinished(true);
+      haptic.finish();
       clearInterval(timerRef.current);
       clearProgress();
       markSeenIds(code, selectedIndicesRef.current);

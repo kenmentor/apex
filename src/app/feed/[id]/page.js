@@ -4,6 +4,7 @@ import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Eye, ArrowBigUp, MessageCircle, FileText } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
+import { haptic } from '@/lib/haptics'
 import { Skeleton } from '@/components/ui/skeleton'
 import { pdfReadHref } from '@/lib/reader'
 
@@ -40,6 +41,7 @@ export default function FeedItemPage({ params }) {
 
   async function upvote() {
     const prev = liked
+    if (!prev) haptic.tap()
     setLiked(!prev)
     setLikes(c => c + (prev ? -1 : 1))
     try {

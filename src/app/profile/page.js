@@ -3,7 +3,7 @@
 import { Suspense, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { getUser, setUser, getToken } from '@/lib/auth'
+import { getUser, setUser, getToken, apiPutProfile } from '@/lib/auth'
 import { setCached } from '@/lib/client-cache'
 import { contributorRating } from '@/lib/contributor-rating'
 import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar'
@@ -69,17 +69,15 @@ function ProfileContent() {
       })
       if (!up.ok) throw new Error('Upload failed')
       const { url } = await up.json()
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(kind === 'cover' ? { cover: url } : { avatar: url }),
-      })
-      if (!res.ok) throw new Error('Save failed')
+      await apiPutProfile(kind === 'cover' ? { cover: url } : { avatar: url })
       const u = getUser()
       const updated = { ...u, ...(kind === 'cover' ? { cover: url } : { avatar: url }) }
       setUser(updated)
       setUserState(updated)
-    } catch {}
+    } catch {
+      // SESSION_EXPIRED clears the session inside apiPutProfile; send them to sign in.
+      try { if (!getUser()?.token) router.push('/auth') } catch {}
+    }
     setUploading(false)
   }
 
@@ -95,19 +93,15 @@ function ProfileContent() {
     if (!avatarConfig) return
     setSavingAvatar(true)
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ avatarConfig }),
-      })
-      if (!res.ok) throw new Error('Save failed')
-      const data = await res.json()
+      const data = await apiPutProfile({ avatarConfig })
       const u = getUser()
       const updated = { ...u, avatarConfig: data.avatarConfig || avatarConfig }
       setUser(updated)
       setUserState(updated)
       setShowAvatarBuilder(false)
-    } catch {}
+    } catch {
+      try { if (!getUser()?.token) router.push('/auth') } catch {}
+    }
     setSavingAvatar(false)
   }
 

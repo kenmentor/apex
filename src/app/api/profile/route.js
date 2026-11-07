@@ -39,34 +39,46 @@ export async function GET(request) {
 export async function PUT(request) {
   try {
     const user = await getUserFromToken(request)
-    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!user) return NextResponse.json({ error: 'Session expired — please sign in again' }, { status: 401 })
 
-    const { name, bio, school, avatar, cover, avatarConfig, department, level } = await request.json()
+    const body = await request.json().catch(() => ({}))
+    // Safe coercion: old clients/docs can send non-strings (numbers, null).
+    // Calling .trim() on those threw a 500 that surfaced as "Save failed".
+    const str = v => (typeof v === 'string' ? v : v === undefined || v === null ? undefined : String(v))
+    const { name, bio, school, avatar, cover, avatarConfig, department, level } = body || {}
     const update = {}
-    if (name !== undefined) update.name = name.trim()
-    if (bio !== undefined) update.bio = String(bio).trim().slice(0, 160)
-    if (school !== undefined) update.school = school.trim()
-    if (department !== undefined) update.department = department.trim()
-    if (level !== undefined) update.level = level.trim()
+    const s = str(name); if (s !== undefined) update.name = s.trim()
+    const b = str(bio); if (b !== undefined) update.bio = b.trim().slice(0, 160)
+    const sc = str(school); if (sc !== undefined) update.school = sc.trim()
+    const d = str(department); if (d !== undefined) update.department = d.trim()
+    const l = str(level); if (l !== undefined) update.level = l.trim()
     if (cover !== undefined) {
-      const okCover = !cover || cover.startsWith('https://res.cloudinary.com/');
+      const c = str(cover) || ''
+      const okCover = !c || c.startsWith('https://res.cloudinary.com/');
       if (!okCover) {
         return NextResponse.json({ error: 'Invalid cover URL' }, { status: 400 });
       }
-      update.cover = cover
+      update.cover = c
     }
     if (avatar !== undefined) {
-      const okHost = !avatar || avatar.startsWith('https://res.cloudinary.com/') || avatar.startsWith('https://api.dicebear.com/');
+      const a = str(avatar) || ''
+      // Google photos: the Firebase bridge itself stores lh3.googleusercontent
+      // URLs as avatars — rejecting them here 400-blocked those users' saves.
+      const okHost = !a || a.startsWith('https://res.cloudinary.com/') || a.startsWith('https://api.dicebear.com/') || /^https:\/\/lh\d\.googleusercontent\.com\//.test(a);
       if (!okHost) {
         return NextResponse.json({ error: 'Invalid avatar URL' }, { status: 400 });
       }
-      update.avatar = avatar
+      update.avatar = a
     }
     if (avatarConfig !== undefined) {
       if (avatarConfig !== null && (typeof avatarConfig !== 'object' || Array.isArray(avatarConfig))) {
         return NextResponse.json({ error: 'Invalid avatar config' }, { status: 400 });
       }
       update.avatarConfig = avatarConfig
+    }
+    // Empty $set throws a Mongo 500 — return a clear 400 instead.
+    if (Object.keys(update).length === 0) {
+      return NextResponse.json({ error: 'Nothing to update' }, { status: 400 })
     }
 
     const users = await getCollection('users')

@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, Send, FileText, Image as ImageIcon, Film, Music, File, X, Download, Heart, MessageCircle, Share2, ChevronDown, ChevronUp, Settings, ExternalLink, Trash2, Lock, BookOpen } from 'lucide-react'
 import { toast } from 'sonner'
 import { getUser, getToken } from '@/lib/auth'
+import { haptic } from '@/lib/haptics'
 import { trackEvent } from '@/lib/tracking'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -221,6 +222,7 @@ export function PostCard({ post, user, spaceCreator, onDelete }) {
     if (!user || liking) return
     const prevLiked = liked
     const prevCount = likeCount
+    if (!prevLiked) haptic.tap()
     setLiked(!prevLiked)
     setLikeCount(prevLiked ? prevCount - 1 : prevCount + 1)
     setLiking(true)

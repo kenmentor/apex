@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import { getCollection } from '@/lib/db'
 import { signToken } from '@/lib/auth-server'
+import { reviewProfile } from '@/lib/profile-review'
 
 const PROJECT_ID = 'apex-e9c78'
 const CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
@@ -9,9 +10,18 @@ let certCache = { at: 0, keys: null }
 
 async function getCerts() {
   if (certCache.keys && Date.now() - certCache.at < 60 * 60 * 1000) return certCache.keys
-  const res = await fetch(CERT_URL, { signal: AbortSignal.timeout(10000) })
-  if (!res.ok) throw new Error('Could not fetch signing keys.')
-  certCache = { at: Date.now(), keys: await res.json() }
+  try {
+    // Cold starts fetch these synchronously before ANY login can verify —
+    // keep it short so one slow Google response can't stall sign-in.
+    const res = await fetch(CERT_URL, { signal: AbortSignal.timeout(5000) })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    certCache = { at: Date.now(), keys: await res.json() }
+  } catch (e) {
+    // Stale keys still verify live tokens (Google rotates slowly) — better
+    // than failing every login during a cert-endpoint blip.
+    if (certCache.keys) return certCache.keys
+    throw new Error('Could not fetch signing keys.')
+  }
   return certCache.keys
 }
 
@@ -25,7 +35,9 @@ async function verifyFirebaseIdToken(idToken) {
   const certs = await getCerts()
   const cert = certs[decoded.header.kid]
   if (!cert) throw new Error('Unknown signing key.')
-  const payload = jwt.verify(idToken, cert, { algorithms: ['RS256'] })
+  // clockTolerance: serverless clocks drift; without leeway valid tokens get
+  // randomly rejected at the exp/nbf edges ("shaky" logins).
+  const payload = jwt.verify(idToken, cert, { algorithms: ['RS256'], clockTolerance: 30 })
   if (payload.iss !== `https://securetoken.google.com/${PROJECT_ID}`) throw new Error('Wrong issuer.')
   if (payload.aud !== PROJECT_ID) throw new Error('Wrong audience.')
   if (!payload.sub) throw new Error('No subject.')
@@ -79,9 +91,14 @@ export async function POST(request) {
       user = await users.findOne({ _id: user._id })
     }
 
-    const hasSchool = !!(user.school && String(user.school).trim())
-    const hasDept = !!(user.department && String(user.department).trim())
-    const hasLevel = !!(user.level && String(user.level).trim())
+    // Validity, not just presence: stale old-app values must re-prompt.
+    const review = reviewProfile({
+      school: user.school,
+      department: user.department,
+      level: user.level,
+      avatar: user.avatar,
+      avatarConfig: user.avatarConfig,
+    })
     const token = signToken({ email: user.email, admin: !!user.admin }, '90d')
 
     return NextResponse.json({
@@ -98,8 +115,10 @@ export async function POST(request) {
       avatarConfig: user.avatarConfig || null,
       token,
       isNewUser,
-      needsSchool: !hasSchool,
-      needsDeptOrLevel: !hasDept || !hasLevel,
+      needsSchool: review.needsSchool,
+      needsDeptOrLevel: review.needsDept || review.needsLevel,
+      needsAvatar: review.needsAvatar,
+      needsReview: review.needsReview,
     })
   } catch (error) {
     return NextResponse.json({ error: 'Sign-in failed: ' + error.message }, { status: 401 })

@@ -74,6 +74,27 @@ export function getToken() {
   return user?.token || null
 }
 
+// Single choke point for profile saves. Previously every caller showed a
+// generic "Save failed" on ANY non-OK — including expired sessions (401),
+// which left old users retrying forever with no way forward. Now 401s carry
+// a SESSION_EXPIRED code so callers can bounce to /auth instead.
+export async function apiPutProfile(body) {
+  const res = await fetch('/api/profile', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
+    body: JSON.stringify(body || {}),
+  })
+  const data = await res.json().catch(() => ({}))
+  if (res.status === 401) {
+    try { clearUser() } catch {}
+    const e = new Error(data.error || 'Session expired — please sign in again')
+    e.code = 'SESSION_EXPIRED'
+    throw e
+  }
+  if (!res.ok) throw new Error(data.error || 'Save failed')
+  return data
+}
+
 export function isAdmin() {
   const user = getUser()
   return !!user?.admin

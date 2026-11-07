@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { getUser, setUser } from '@/lib/auth'
 import { DEPARTMENTS, LEVELS } from '@/lib/departments'
-import { getToken } from '@/lib/auth'
+import { apiPutProfile } from '@/lib/auth'
+import { reviewProfile } from '@/lib/profile-review'
 
 const STORAGE_KEY = 'apex_profile_prompted'
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000
@@ -27,7 +28,10 @@ export default function ProfileCompletePrompt() {
   useEffect(() => {
     const user = getUser()
     if (!user || !user.email) return
-    if (user.department && user.level) return
+    // Same canonical check as everywhere else: stale-but-present values
+    // must also prompt (they used to slip through and get nagged elsewhere).
+    const r = reviewProfile(user)
+    if (!r.needsDept && !r.needsLevel) return
 
     const dismissedAt = getDismissedAt()
     if (dismissedAt && Date.now() - dismissedAt < SEVEN_DAYS) return
@@ -43,22 +47,17 @@ export default function ProfileCompletePrompt() {
     setError('')
     setSaving(true)
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
-        body: JSON.stringify({ department, level }),
-      })
-      const data = await res.json()
-      if (data.id) {
-        const user = getUser()
-        setUser({ ...user, department: data.department, level: data.level })
-        localStorage.removeItem(STORAGE_KEY)
-        setShow(false)
-      } else {
-        setError(data.error || 'Failed to save')
+      const data = await apiPutProfile({ department, level })
+      const user = getUser()
+      setUser({ ...user, department: data.department, level: data.level })
+      localStorage.removeItem(STORAGE_KEY)
+      setShow(false)
+    } catch (e) {
+      if (e?.code === 'SESSION_EXPIRED') {
+        try { window.location.href = '/auth' } catch {}
+        return
       }
-    } catch {
-      setError('Could not connect to server')
+      setError(e?.message || 'Failed to save')
     } finally {
       setSaving(false)
     }

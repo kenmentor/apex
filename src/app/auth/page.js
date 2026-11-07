@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
-import { setUser, getUser, getToken } from '@/lib/auth';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { setUser, getUser, getToken, apiPutProfile } from '@/lib/auth';
+import { reviewProfile, isValidSchool, isValidDepartment, isValidLevel } from '@/lib/profile-review';
 import { googleSignIn, completeRedirectSignIn, isInAppBrowser } from '@/lib/firebase';
 import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar';
 import AvatarCustomizer from '@/components/AvatarCustomizer';
@@ -46,7 +47,10 @@ function GoogleIcon() {
 
 function AuthForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState('signin'); // signin | uni | dept | avatar
+  const [isReview, setIsReview] = useState(false);
+  const [notice, setNotice] = useState('');
   const [avatarConfig, setAvatarConfig] = useState(() => defaultDiceConfig());
   const [school, setSchool] = useState('');
   const [department, setDepartment] = useState('');
@@ -65,17 +69,50 @@ function AuthForm() {
     ? NIGERIAN_UNIVERSITIES.filter(u => u.toLowerCase().includes(search.toLowerCase()))
     : NIGERIAN_UNIVERSITIES;
 
-  // Already holding a session? Heal the edge cookie, skip straight in.
+  // Already holding a session? Heal the edge cookie, then either go home
+  // or — for stale profiles (?review=1 or invalid stored values) — route
+  // into the fix-up flow with current values prefilled.
   // Otherwise finish a redirect sign-in if one just landed.
   useEffect(() => {
-    try {
-      const u = getUser();
-      if (u?.token) {
-        try { document.cookie = `apex_auth=1; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax` } catch {}
+    let u = null;
+    try { u = getUser(); } catch {}
+    if (u?.token) {
+      // The edge middleware gates personal pages on this cookie. If cookies
+      // are blocked the write silently fails and the user bounces
+      // gated-page → /auth → home forever with no message. Detect it here
+      // and STOP instead of redirecting into that loop.
+      let cookieStuck = false;
+      try {
+        document.cookie = `apex_auth=1; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax`;
+        cookieStuck = document.cookie.includes('apex_auth=');
+      } catch {}
+      if (!cookieStuck) {
+        fail('Cookies are blocked for this site — personal pages (Plan, Wallet, Streak) will keep bouncing you back here. Enable cookies, then continue.');
+        return;
+      }
+      const r = reviewProfile(u);
+      if (r.needsReview) {
+        try {
+          if (isValidSchool(u.school)) { setSchool(u.school); setSearch(u.school); }
+          else if (u.school) setSearch(String(u.school));
+          if (isValidDepartment(u.department)) setDepartment(u.department);
+          if (isValidLevel(u.level)) setLevel(u.level);
+        } catch {}
+        setIsReview(true);
+        setNotice('We updated schools & departments — please confirm your details.');
+        if (r.needsSchool) setStep('uni');
+        else if (r.needsDept || r.needsLevel) setStep('dept');
+        else setStep('avatar');
+        return;
+      }
+      if (searchParams.get('review') === '1') {
+        // Asked to review but everything is already valid.
         router.push('/');
         return;
       }
-    } catch {}
+      router.push('/');
+      return;
+    }
     completeRedirectSignIn()
       .then(t => {
         if (!t) return;
@@ -108,9 +145,16 @@ function AuthForm() {
     try { document.cookie = `apex_auth=1; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax` } catch {}
     const dice = normalizeAvatarConfig(data.avatarConfig);
     if (dice) setAvatarConfig(dice);
-    if (data.needsSchool) setStep('uni');
-    else if (data.needsDeptOrLevel) setStep('dept');
-    else if (!(data.avatar || data.avatarConfig)) setStep('avatar');
+    // Validity, not presence: stale old-app values re-prompt here too, so a
+    // returning user with a misaligned department can't skip the fix-up.
+    const r = reviewProfile(data);
+    if (!data.isNewUser && (r.needsSchool || r.needsDept || r.needsLevel)) {
+      setIsReview(true);
+      setNotice('We updated schools & departments — please confirm your details.');
+    }
+    if (r.needsSchool) setStep('uni');
+    else if (r.needsDept || r.needsLevel) setStep('dept');
+    else if (r.needsAvatar) setStep('avatar');
     else router.push('/');
   }
 
@@ -139,12 +183,14 @@ function AuthForm() {
   async function handleGoogle() {
     setError('');
     setStatus('Opening Google…');
-    // Safety net: never leave the button spinning forever.
+    // Safety net: never leave the button spinning forever. 25s is generous
+    // (popups resolve in seconds; redirect unloads the page) — 45s just made
+    // hangs feel broken for longer.
     const watchdog = setTimeout(() => {
       setSubmitting(false);
       setStatus('');
       fail('Timed out — tap to retry.');
-    }, 45000);
+    }, 25000);
     try {
       const idToken = await googleSignIn();
       if (idToken) await bridge(idToken);
@@ -154,7 +200,9 @@ function AuthForm() {
       if (!idToken) setStatus('');
     } catch (e) {
       clearTimeout(watchdog);
-      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') {
+      if (e?.code === 'auth/timeout') {
+        fail('Taking too long — check your connection, then tap Google again.');
+      } else if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') {
         setSubmitting(false);
         setStatus('');
         return;
@@ -167,25 +215,29 @@ function AuthForm() {
     }
   }
 
+  // Expired mid-onboarding session: start over at sign-in instead of
+  // stranding the user on a failing save step.
+  function expiredBackToSignin(e) {
+    if (e?.code !== 'SESSION_EXPIRED') return false;
+    setStep('signin');
+    setStatus('');
+    fail('Session expired — please sign in again.');
+    return true;
+  }
+
   async function handleAvatarComplete(skip) {
     if (skip) { router.push('/'); return; }
     setError('');
     setSubmitting(true);
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
-        body: JSON.stringify({ avatarConfig }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      const data = await apiPutProfile({ avatarConfig });
       const u = getUser() || {};
       const updated = { ...u, avatarConfig: data.avatarConfig || avatarConfig, avatar: data.avatar || u.avatar || '' };
       setUser(updated);
       toast.success('Avatar saved!');
       router.push('/');
     } catch (e) {
-      fail(e.message);
+      if (!expiredBackToSignin(e)) fail(e.message);
     } finally {
       setSubmitting(false);
     }
@@ -196,18 +248,12 @@ function AuthForm() {
     setError('');
     setSubmitting(true);
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
-        body: JSON.stringify({ school }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      const data = await apiPutProfile({ school });
       const u = getUser() || {};
       setUser({ ...u, school: data.school || school });
       setStep('dept');
     } catch (e) {
-      fail(e.message);
+      if (!expiredBackToSignin(e)) fail(e.message);
     } finally {
       setSubmitting(false);
     }
@@ -219,13 +265,7 @@ function AuthForm() {
     setError('');
     setSubmitting(true);
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
-        body: JSON.stringify({ school, department, level }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      const data = await apiPutProfile({ school, department, level });
       const u = getUser() || {};
       const updated = { ...u, school: data.school || school, department: data.department || department, level: data.level || level };
       setUser(updated);
@@ -234,7 +274,7 @@ function AuthForm() {
       if (!(updated.avatar || updated.avatarConfig)) setStep('avatar');
       else router.push('/');
     } catch (e) {
-      fail(e.message);
+      if (!expiredBackToSignin(e)) fail(e.message);
     } finally {
       setSubmitting(false);
     }
@@ -282,6 +322,9 @@ function AuthForm() {
           <div className="mb-1 flex justify-center gap-1.5">
             {[1, 2, 3].map(i => <span key={i} className={'h-1.5 w-8 rounded-full ' + (i <= dots ? 'bg-primary' : 'bg-muted')} />)}
           </div>
+          {!!notice && (
+            <p className="rounded-xl bg-amber-500/10 px-3 py-2.5 text-center text-xs font-bold text-amber-600">{notice}</p>
+          )}
           {step === 'uni' && (
             <div className="flex flex-1 flex-col gap-5 pt-6">
               <div className="text-center">

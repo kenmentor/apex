@@ -3,7 +3,7 @@
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { getUser, setUser, clearUser, isAdmin, getToken } from '@/lib/auth'
+import { getUser, setUser, clearUser, isAdmin, getToken, apiPutProfile } from '@/lib/auth'
 import { ArrowLeft, Camera, LogOut, Shield, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
 import { Drawer } from 'vaul'
 import { Card, CardContent } from '@/components/ui/card'
@@ -14,9 +14,10 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
 import { DEPARTMENTS, LEVELS } from '@/lib/departments'
+import NIGERIAN_UNIVERSITIES from '@/lib/universities'
+import { isValidSchool, isValidDepartment, isValidLevel } from '@/lib/profile-review'
+import { hapticsEnabled, setHapticsEnabled } from '@/lib/haptics'
 import SearchableField from '@/components/SearchableField'
-
-const OTHERS = 'Others… (type it yourself)'
 
 export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const router = useRouter()
@@ -28,8 +29,6 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const [school, setSchool] = useState('')
   const [department, setDepartment] = useState('')
   const [deptInput, setDeptInput] = useState('')
-  const [customDepartment, setCustomDepartment] = useState('')
-  const [deptOptions, setDeptOptions] = useState(DEPARTMENTS)
   const [level, setLevel] = useState('')
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -38,6 +37,7 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const [sheetView, setSheetView] = useState('choose') // choose | avatar
   const [avatarConfig, setAvatarConfig] = useState(null)
   const [savingAvatar, setSavingAvatar] = useState(false)
+  const [hapticsOn, setHapticsOn] = useState(true)
   const fileRef = useRef(null)
 
   function openSheet() {
@@ -46,9 +46,11 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   }
 
   function currentDeptOptions() {
-    const base = [...deptOptions]
-    if (department && department !== OTHERS && !base.includes(department)) base.push(department)
-    return [...base, OTHERS]
+    // Canonical list ONLY (same list onboarding + review use). Settings used
+    // to save programme labels / free text here, which the review check then
+    // rejected — users bounced settings ↔ fix-up forever. Never save
+    // anything this list doesn't contain.
+    return DEPARTMENTS
   }
 
   useEffect(() => {
@@ -60,15 +62,10 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
     setDepartment(u?.department || '')
     setLevel(u?.level || '')
     setAvatarConfig(normalizeAvatarConfig(u?.avatarConfig) || defaultDiceConfig())
-    // Departments = programmes (what students actually identify with).
-    // Falls back to the static list offline.
-    fetch('/api/programmes', { cache: 'no-store' })
-      .then(r => r.json())
-      .then(d => {
-        const docs = Array.isArray(d.docs) ? d.docs : []
-        if (docs.length) setDeptOptions(docs.map(x => x.label || x.name).filter(Boolean))
-      })
-      .catch(() => {})
+    try { setHapticsOn(hapticsEnabled()) } catch {}
+    // No remote fetch for options: DEPARTMENTS / universities / LEVELS are
+    // the canonical static lists. Saving anything else re-triggers the
+    // review nag and loops the user back to fix-up.
   }, [])
 
   async function handleSave(e) {
@@ -76,33 +73,34 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
     setSaving(true)
     setMessage('')
     try {
-      // If the user typed an exact option name but never tapped it,
-      // honor the text instead of silently keeping the old value.
+      // Validate against the SAME canonical lists the review check uses.
+      // Anything else saves fine but gets flagged immediately after — the
+      // settings ↔ fix-up loop users were stuck in.
       const deptOptions = currentDeptOptions()
       const typed = deptInput.trim().toLowerCase()
-      const exact = typed && deptOptions.find(o => o.toLowerCase() === typed && o !== OTHERS)
-      const dept = department === OTHERS
-        ? customDepartment.trim()
-        : (exact || department.trim())
-      if (department === OTHERS && !dept) throw new Error('Type your department')
-      const body = { name: name.trim(), school: school.trim() }
+      const exact = typed && deptOptions.find(o => o.toLowerCase() === typed)
+      const dept = exact || department.trim()
+      if (!dept) throw new Error('Pick your department from the list')
+      if (!isValidDepartment(dept)) throw new Error('Pick your department from the list')
+      const sch = school.trim()
+      if (sch && !isValidSchool(sch)) throw new Error('Pick your university from the list')
+      const lvl = level.trim()
+      if (lvl && !isValidLevel(lvl)) throw new Error('Pick your level from the list')
+      const body = { name: name.trim(), school: sch }
       if (bio.trim()) body.bio = bio.trim()
-      if (dept) body.department = dept
-      if (level.trim()) body.level = level.trim()
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
-      if (!res.ok) throw new Error('Save failed')
-      const data = await res.json()
+      body.department = dept
+      if (lvl) body.level = lvl
+      const data = await apiPutProfile(body)
       const u = getUser()
       const updated = { ...u, name: data.name, bio: data.bio ?? u?.bio, school: data.school, department: data.department, level: data.level, role: data.role || u?.role }
       setUser(updated)
       setUserState(updated)
       setEditing(false)
       setMessage('Saved!')
-    } catch (err) { setMessage(err.message) }
+    } catch (err) {
+      if (err?.code === 'SESSION_EXPIRED') { router.push('/auth'); return }
+      setMessage(err.message)
+    }
     setSaving(false)
   }
 
@@ -121,19 +119,17 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
       })
       if (!res.ok) throw new Error('Upload failed')
       const { url } = await res.json()
-      const profileRes = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ avatar: url }),
-      })
-      if (!profileRes.ok) throw new Error('Profile update failed')
+      await apiPutProfile({ avatar: url })
       const u = getUser()
       setUser({ ...u, avatar: url })
       setUserState({ ...u, avatar: url })
       setMessage('Avatar updated!')
       setSheetOpen(false)
       e.target.value = ''
-    } catch (err) { setMessage(err.message) }
+    } catch (err) {
+      if (err?.code === 'SESSION_EXPIRED') { router.push('/auth'); return }
+      setMessage(err.message)
+    }
     setUploading(false)
   }
 
@@ -142,20 +138,17 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
     setSavingAvatar(true)
     setMessage('')
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ avatarConfig }),
-      })
-      if (!res.ok) throw new Error('Avatar save failed')
-      const data = await res.json()
+      const data = await apiPutProfile({ avatarConfig })
       const u = getUser()
       const updated = { ...u, avatarConfig: data.avatarConfig || avatarConfig }
       setUser(updated)
       setUserState(updated)
       setMessage('Avatar updated!')
       setSheetOpen(false)
-    } catch (err) { setMessage(err.message) }
+    } catch (err) {
+      if (err?.code === 'SESSION_EXPIRED') { router.push('/auth'); return }
+      setMessage(err.message)
+    }
     setSavingAvatar(false)
   }
 
@@ -239,10 +232,17 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                   <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Name</label>
                   <Input value={name} onChange={e => setName(e.target.value)} placeholder="Your name" />
                 </div>
-                <div>
-                  <label className="mb-1 block text-[11px] font-medium text-muted-foreground">University</label>
-                  <Input value={school} onChange={e => setSchool(e.target.value)} placeholder="University" />
-                </div>
+                <SearchableField
+                  id="school"
+                  label="University"
+                  value={school}
+                  onChange={setSchool}
+                  options={NIGERIAN_UNIVERSITIES}
+                  placeholder="Type to search universities…"
+                />
+                {!!school && !isValidSchool(school) && (
+                  <p className="text-xs font-semibold text-amber-600">Saved value isn&apos;t recognised — pick your university from the list.</p>
+                )}
                 <div>
                   <label className="mb-1 block text-[11px] font-medium text-muted-foreground">Bio</label>
                   <Input value={bio} onChange={e => setBio(e.target.value.slice(0, 160))} placeholder="One line about you…" />
@@ -250,29 +250,26 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                 <SearchableField
                   id="department"
                   label="Department"
-                  value={department}
-                  onChange={(v) => { setDepartment(v); if (v !== OTHERS) setCustomDepartment('') }}
+                  value={isValidDepartment(department) ? department : ''}
+                  onChange={setDepartment}
                   onInputChange={setDeptInput}
                   options={currentDeptOptions()}
                   placeholder="Type to search departments…"
                 />
-                {department === OTHERS && (
-                  <div className="mt-2">
-                    <Input
-                      value={customDepartment}
-                      onChange={e => setCustomDepartment(e.target.value)}
-                      placeholder="Type your department"
-                    />
-                  </div>
+                {!!department && !isValidDepartment(department) && (
+                  <p className="text-xs font-semibold text-amber-600">Saved value isn&apos;t recognised — pick your department from the list.</p>
                 )}
                 <SearchableField
                   id="level"
                   label="Level"
-                  value={level}
+                  value={isValidLevel(level) ? level : ''}
                   onChange={setLevel}
-                  options={LEVELS.includes(level) || !level ? LEVELS : [...LEVELS, level]}
+                  options={LEVELS}
                   placeholder="Type to search levels…"
                 />
+                {!!level && !isValidLevel(level) && (
+                  <p className="text-xs font-semibold text-amber-600">Saved value isn&apos;t recognised — pick your level from the list.</p>
+                )}
                 <div className="flex gap-2 pt-1">
                   <Button type="submit" disabled={saving} className="flex-1">{saving ? 'Saving...' : 'Save'}</Button>
                   <Button type="button" variant="outline" onClick={() => setEditing(false)}>Cancel</Button>
@@ -299,6 +296,31 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                 <Button onClick={() => setEditing(true)} className="w-full">Edit Profile</Button>
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 space-y-3">
+            <h3 className="text-sm font-semibold">Preferences</h3>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={hapticsOn}
+              onClick={() => {
+                const next = !hapticsOn
+                setHapticsOn(next)
+                setHapticsEnabled(next)
+              }}
+              className="flex w-full items-center justify-between rounded-lg bg-muted/50 px-3 py-2.5"
+            >
+              <span className="text-left">
+                <span className="block text-sm font-medium">Haptics</span>
+                <span className="block text-xs text-muted-foreground">Gentle vibration on answers & likes</span>
+              </span>
+              <span className={'relative h-6 w-11 shrink-0 rounded-full transition-colors ' + (hapticsOn ? 'bg-primary' : 'bg-muted-foreground/30')}>
+                <span className={'absolute top-0.5 size-5 rounded-full bg-white shadow transition-all ' + (hapticsOn ? 'left-[22px]' : 'left-0.5')} />
+              </span>
+            </button>
           </CardContent>
         </Card>
 

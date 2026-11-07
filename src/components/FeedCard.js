@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Play, FileText, Eye, ArrowBigUp, MessageCircle } from 'lucide-react'
 import PlaceholderMedia from '@/components/PlaceholderMedia'
 import { getToken } from '@/lib/auth'
+import { haptic } from '@/lib/haptics'
 import { thumbFor } from '@/lib/youtube'
 
 function mediaKind(m) {
@@ -37,6 +38,7 @@ export default function FeedCard({ item, userEmail }) {
     e.stopPropagation()
     if (!postId) return
     const prev = liked
+    if (!prev) haptic.tap()
     setLiked(!prev)
     setLikes(c => c + (prev ? -1 : 1))
     try {
