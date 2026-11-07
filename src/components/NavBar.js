@@ -55,7 +55,7 @@ export default function NavBar({ active }) {
               key={l.href}
               href={l.href}
               onClick={() => trackNav(l.href, on)}
-              className={`relative flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs transition-colors sm:px-0 ${
+              className={`relative flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs transition-all duration-100 active:scale-90 active:bg-muted ${
                 on
                   ? 'text-primary font-semibold'
                   : 'text-muted-foreground hover:text-foreground'

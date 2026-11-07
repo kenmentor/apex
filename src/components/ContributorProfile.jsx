@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, MoreHorizontal, GraduationCap, Star, Camera, Pencil, Settings, Share2, Link2, LogOut, Check, ImagePlus, Smile, ChevronRight } from 'lucide-react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import BtnSpinner from '@/components/BtnSpinner'
 import { UserAvatarImage, RoleSeal, roleTick } from '@/components/UserAvatar'
 
 function Stat({ value, label }) {
@@ -135,7 +136,7 @@ export default function ContributorProfile({
                 aria-label="Change banner"
                 className="absolute bottom-3 right-4 flex items-center gap-1.5 rounded-full bg-background/85 px-3 py-1.5 text-[11px] font-bold shadow-sm backdrop-blur transition hover:bg-background"
               >
-                <Camera className="size-3.5" /> {uploading ? 'Saving…' : 'Cover'}
+                <Camera className="size-3.5" /> {uploading ? <span className="flex items-center gap-1"><BtnSpinner className="size-3" /> Saving…</span> : 'Cover'}
               </button>
               <input ref={coverRef} type="file" accept="image/*" className="hidden" onChange={e => onCoverFile?.(e.target.files?.[0] || null)} />
             </>
@@ -238,7 +239,7 @@ export default function ContributorProfile({
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-bold">Upload a photo</span>
-                  <span className="block text-xs text-muted-foreground">{uploading ? 'Uploading…' : 'From your gallery or camera'}</span>
+                  <span className="block text-xs text-muted-foreground">{uploading ? <span className="flex items-center gap-1"><BtnSpinner className="size-3" /> Uploading…</span> : 'From your gallery or camera'}</span>
                 </span>
                 <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
               </button>

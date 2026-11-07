@@ -11,6 +11,7 @@ import NIGERIAN_UNIVERSITIES from '@/lib/universities';
 import { DEPARTMENTS, LEVELS } from '@/lib/departments';
 import { ArrowRight, Check, X, Search, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
+import BtnSpinner from '@/components/BtnSpinner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -308,7 +309,7 @@ function AuthForm() {
               <p className="rounded-xl bg-red-500/10 px-3 py-2.5 text-center text-xs font-bold text-red-500">{error}</p>
             )}
             <Button onClick={handleGoogle} disabled={submitting} variant="outline" className="h-14 w-full gap-3 text-base font-bold">
-              <GoogleIcon /> {submitting ? 'Signing in…' : 'Continue with Google'}
+              <GoogleIcon /> {submitting ? <span className="flex items-center gap-2"><BtnSpinner /> Signing in…</span> : 'Continue with Google'}
             </Button>
             {!!status && !error && (
               <p className="text-center text-xs font-semibold text-muted-foreground">{status}</p>

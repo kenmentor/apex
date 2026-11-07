@@ -9,6 +9,7 @@ import { ytThumb, FolderBrowseInline, LibraryListInline } from '@/components/Att
 import { escHtml, convertFileToHtml, convertUrlToHtml } from '@/lib/file-to-html'
 import { parseQuizFile } from '@/lib/quiz-types'
 import QuestionRenderer from '@/components/exam/QuestionRenderer'
+import BtnSpinner from '@/components/BtnSpinner'
 
 const MAX_PER_SHEET = 30
 
@@ -170,7 +171,7 @@ export default function AddSheet({ courseCode, topic, programme, kind, onClose, 
               <p className="mt-0.5 text-xs text-muted-foreground">You have unsent text. Save it to Drafts in your folders, or discard it.</p>
               <div className="mt-3 space-y-2">
                 <button onClick={exitSaveDraft} disabled={exitSaving} className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
-                  {exitSaving ? 'Saving…' : 'Save as draft'}
+                  {exitSaving ? <span className="flex items-center justify-center gap-2"><BtnSpinner className="size-4" /> Saving…</span> : 'Save as draft'}
                 </button>
                 <div className="grid grid-cols-2 gap-2">
                   <button onClick={() => { setExitOpen(false); close() }} disabled={exitSaving} className="rounded-xl border py-2 text-xs font-bold disabled:opacity-50">Discard</button>
@@ -626,7 +627,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
           <div className="mt-3 grid grid-cols-2 gap-2">
             <button onClick={() => setConfirmOpen(false)} disabled={committing} className="rounded-xl border py-2.5 text-sm font-bold disabled:opacity-50">Cancel</button>
             <button onClick={() => { setConfirmOpen(false); commitAll() }} disabled={committing} className="rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
-              Send
+              {committing ? <span className="flex items-center justify-center gap-2"><BtnSpinner className="size-4" /> Sending…</span> : 'Send'}
             </button>
           </div>
         </div>
@@ -826,7 +827,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
 
       {/* 3 — one upload sends it all */}
       <button onClick={uploadPressed} disabled={committing || queue.length === 0} className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
-        {committing ? `Uploading ${progress?.done ?? 0}/${progress?.total ?? queue.length}…` : queue.length ? `Upload (${queue.length})` : addedCount ? 'Sent ✓' : 'Upload'}
+        {committing ? <span className="flex items-center justify-center gap-2"><BtnSpinner className="size-4" /> Uploading {progress?.done ?? 0}/{progress?.total ?? queue.length}…</span> : queue.length ? `Upload (${queue.length})` : addedCount ? 'Sent ✓' : 'Upload'}
       </button>
       {!queue.length && !addedCount && !noteDone && <p className="text-center text-[11px] text-muted-foreground">{isAudio ? 'Add audio from your device, folders or library — they pile up top, one Upload sends all.' : 'Add links, fresh files and folder files — they pile up top, one Upload sends all.'}</p>}
       {addedCount > 0 && !queue.length && (

@@ -8,6 +8,7 @@ import { setCached } from '@/lib/client-cache'
 import { contributorRating } from '@/lib/contributor-rating'
 import { defaultDiceConfig, normalizeAvatarConfig } from '@/lib/dice-avatar'
 import AvatarCustomizer from '@/components/AvatarCustomizer'
+import BtnSpinner from '@/components/BtnSpinner'
 import { User, ArrowLeft } from 'lucide-react'
 import ContributorProfile from '@/components/ContributorProfile'
 import Contributions from '@/components/Contributions'
@@ -168,7 +169,7 @@ function ProfileContent() {
               <AvatarCustomizer value={avatarConfig} onChange={setAvatarConfig} size={96} />
               <div className="py-2">
                 <Button onClick={handleSaveAvatar} disabled={savingAvatar} className="h-12 w-full text-base">
-                  {savingAvatar ? 'Saving…' : 'Save avatar'}
+                  {savingAvatar ? <span className="flex items-center justify-center gap-2"><BtnSpinner /> Saving…</span> : 'Save avatar'}
                 </Button>
               </div>
             </div>

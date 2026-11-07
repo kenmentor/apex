@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { getUser, setUser, clearUser, isAdmin, getToken, apiPutProfile } from '@/lib/auth'
 import { ArrowLeft, Camera, LogOut, Shield, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
 import { Drawer } from 'vaul'
+import BtnSpinner from '@/components/BtnSpinner'
 import { Card, CardContent } from '@/components/ui/card'
 import { UserAvatar } from '@/components/UserAvatar'
 import AvatarCustomizer from '@/components/AvatarCustomizer'
@@ -271,7 +272,7 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                   <p className="text-xs font-semibold text-amber-600">Saved value isn&apos;t recognised — pick your level from the list.</p>
                 )}
                 <div className="flex gap-2 pt-1">
-                  <Button type="submit" disabled={saving} className="flex-1">{saving ? 'Saving...' : 'Save'}</Button>
+                  <Button type="submit" disabled={saving} className="flex-1">{saving ? <span className="flex items-center justify-center gap-2"><BtnSpinner /> Saving…</span> : 'Save'}</Button>
                   <Button type="button" variant="outline" onClick={() => setEditing(false)}>Cancel</Button>
                 </div>
               </form>
@@ -358,11 +359,11 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                     className="flex w-full items-center gap-3 rounded-2xl border p-4 text-left hover:bg-muted disabled:opacity-50"
                   >
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
-                      <ImagePlus className="size-5 text-primary" />
+                      {uploading ? <BtnSpinner className="size-5 text-primary" /> : <ImagePlus className="size-5 text-primary" />}
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-sm font-bold">Upload a photo</span>
-                      <span className="block text-xs text-muted-foreground">{uploading ? 'Uploading...' : 'From your gallery or camera'}</span>
+                      <span className="block text-xs text-muted-foreground">{uploading ? 'Uploading…' : 'From your gallery or camera'}</span>
                     </span>
                   </button>
                   <button
@@ -393,7 +394,7 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                 </div>
                 <div className="shrink-0 p-4 pt-2">
                   <Button onClick={handleSaveAvatarConfig} disabled={savingAvatar} className="h-12 w-full text-base">
-                    {savingAvatar ? 'Saving...' : 'Save avatar'}
+                    {savingAvatar ? <span className="flex items-center justify-center gap-2"><BtnSpinner /> Saving…</span> : 'Save avatar'}
                   </Button>
                 </div>
               </div>

@@ -427,6 +427,24 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .page-enter { animation: none; } }
 
+/* ─── Instant press feedback on EVERY clickable ───
+   Two parts: (1) kill the mobile tap delay so the press registers the
+   moment skin touches glass; (2) a universal pressed look (quick brightness
+   dip) so every button/link/card visibly answers the tap — even ones with
+   no component-level active: style. Snaps in AND out (no transition) for
+   that native feel. Respects reduced-motion. */
+@layer base {
+  a, button, [role='button'], input[type='submit'], select {
+    touch-action: manipulation;
+  }
+  a:active, button:active:not(:disabled), [role='button']:active {
+    filter: brightness(0.9);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a:active, button:active, [role='button']:active { filter: none; }
+  }
+}
+
 /* ============ Admin analytics design system ============ */
 :root {
   --an-bg: #f4f5f7;
