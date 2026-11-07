@@ -7,6 +7,7 @@ import NavWrapper from '@/components/NavWrapper';
 import PageTransition from '@/components/PageTransition';
 import VisitorTracker from '@/components/VisitorTracker';
 import InstallPrompt from '@/components/InstallPrompt';
+import YearCheckPrompt from '@/components/YearCheckPrompt';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import TelemetryProvider from '@/components/TelemetryProvider';
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
           <ConnectionStatus />
           <VisitorTracker />
           <InstallPrompt />
+          <YearCheckPrompt />
           <ServiceWorkerRegister />
           <AnalyticsTracker />
           <TelemetryProvider />

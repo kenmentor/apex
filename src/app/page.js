@@ -8,6 +8,8 @@ import { getUser, getToken } from '@/lib/auth';
 import { reviewProfile } from '@/lib/profile-review';
 import { colorFor } from '@/lib/plan-colors';
 import { topicDoneCount } from '@/lib/progress';
+import { splitBySemester } from '@/lib/semesters';
+import SemesterDivider from '@/components/SemesterDivider';
 import { fetchJson, TTL } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -212,6 +214,36 @@ export default function HomePage() {
   const topCourses = [...(planCourses || [])]
     .sort((a, b) => ((b.topics || []).length - (a.topics || []).length))
     .slice(0, 5);
+  const { first: topFirst, second: topSecond } = splitBySemester(topCourses);
+  const topBoth = topFirst.length > 0 && topSecond.length > 0;
+
+  function HomeCourseBlock({ course }) {
+    const topics = course.topics || []
+    const totalItems = topics.reduce((n, t) => n + (t.items || []).length, 0)
+    const doneItems = topics.reduce((n, t) => n + topicDoneCount(t.items, t.id, doneIds), 0)
+    const coursePct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0
+    const color = colorFor(course.code)
+    const slug = String(course.code).toLowerCase().replace(/\s+/g, '')
+    return (
+      <Link
+        key={course.code}
+        href={`/plan/${slug}`}
+        className="flex w-full items-center gap-3 rounded-3xl p-4 text-left text-white transition-all active:scale-[0.99]"
+        style={{ background: `linear-gradient(135deg, ${color}, ${color}CC)` }}
+      >
+        <span className="min-w-0 flex-1">
+          <span className="block text-lg font-extrabold">{course.code}</span>
+          <span className="block truncate text-xs text-white/75">{course.title}</span>
+          <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-white/25">
+            <span className="block h-full rounded-full bg-white transition-all" style={{ width: `${coursePct}%` }} />
+          </span>
+          <span className="mt-1.5 block text-[11px] text-white/75">{topics.length} topics · {doneItems}/{totalItems} done</span>
+        </span>
+        <Ring pct={coursePct} />
+        <ChevronRight className="size-5 shrink-0 text-white/70" />
+      </Link>
+    )
+  }
 
   return (
     <div className="mx-auto min-h-dvh max-w-2xl space-y-7 px-5 pb-28 pt-6">
@@ -293,33 +325,15 @@ export default function HomePage() {
               See all <ArrowRight className="size-3.5" />
             </Link>
           </div>
-          {topCourses.map((course) => {
-            const topics = course.topics || []
-            const totalItems = topics.reduce((n, t) => n + (t.items || []).length, 0)
-            const doneItems = topics.reduce((n, t) => n + topicDoneCount(t.items, t.id, doneIds), 0)
-            const coursePct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0
-            const color = colorFor(course.code)
-            const slug = String(course.code).toLowerCase().replace(/\s+/g, '')
-            return (
-              <Link
-                key={course.code}
-                href={`/plan/${slug}`}
-                className="flex w-full items-center gap-3 rounded-3xl p-4 text-left text-white transition-all active:scale-[0.99]"
-                style={{ background: `linear-gradient(135deg, ${color}, ${color}CC)` }}
-              >
-                <span className="min-w-0 flex-1">
-                  <span className="block text-lg font-extrabold">{course.code}</span>
-                  <span className="block truncate text-xs text-white/75">{course.title}</span>
-                  <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-white/25">
-                    <span className="block h-full rounded-full bg-white transition-all" style={{ width: `${coursePct}%` }} />
-                  </span>
-                  <span className="mt-1.5 block text-[11px] text-white/75">{topics.length} topics · {doneItems}/{totalItems} done</span>
-                </span>
-                <Ring pct={coursePct} />
-                <ChevronRight className="size-5 shrink-0 text-white/70" />
-              </Link>
-            )
-          })}
+          {topBoth && <SemesterDivider label="First Semester" />}
+          {topFirst.map((course) => <HomeCourseBlock key={course.code} course={course} />)}
+          {topBoth && (
+            <>
+              <SemesterDivider label="Second Semester" />
+              {topSecond.map((course) => <HomeCourseBlock key={course.code} course={course} />)}
+            </>
+          )}
+          {!topBoth && topSecond.map((course) => <HomeCourseBlock key={course.code} course={course} />)}
         </section>
       )}
 
