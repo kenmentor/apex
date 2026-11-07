@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
-import { getUserFromToken } from '@/lib/auth-server'
 import { recordCompletionGift } from '@/lib/ledger'
 
 function dayKey(iso) {
@@ -26,13 +25,50 @@ export async function GET(request) {
 
 export async function POST(request) {  try {
     const body = await request.json()
-    const { email, topicId, itemId, kind, percentage } = body
-    if (!email || !topicId || !itemId || !kind) {
+    const { email, topicId, itemId, kind, percentage, items, courseCode } = body
+    if (!email) {
+      return NextResponse.json({ error: 'email required' }, { status: 400 })
+    }
+    const emailLc = email.toLowerCase().trim()
+    const col = await getCollection('completions')
+
+    // Bulk path: mark-whole-course check-off in ONE request instead of
+    // fanning out dozens of POSTs (slow + half-applied on flaky networks).
+    // Body: { email, items: [{topicId, itemId}], kind?, courseCode? }
+    if (Array.isArray(items)) {
+      const clean = items
+        .filter(i => i && i.topicId && i.itemId)
+        .slice(0, 500)
+        .map(i => ({ topicId: String(i.topicId), itemId: String(i.itemId) }))
+      if (!clean.length) {
+        return NextResponse.json({ error: 'items required' }, { status: 400 })
+      }
+      const topicIds = [...new Set(clean.map(i => i.topicId))]
+      const itemIds = [...new Set(clean.map(i => i.itemId))]
+      const existing = await col
+        .find({ email: emailLc, topicId: { $in: topicIds }, itemId: { $in: itemIds } })
+        .project({ topicId: 1, itemId: 1 })
+        .toArray()
+      const have = new Set(existing.map(d => `${d.topicId}:${d.itemId}`))
+      const fresh = clean.filter(i => !have.has(`${i.topicId}:${i.itemId}`))
+      if (fresh.length) {
+        const now = new Date().toISOString()
+        await col.insertMany(fresh.map(i => ({
+          email: emailLc,
+          topicId: i.topicId,
+          itemId: i.itemId,
+          kind: kind || 'topic',
+          ...(courseCode ? { courseCode: String(courseCode) } : {}),
+          percentage: null,
+          createdAt: now,
+        })))
+      }
+      return NextResponse.json({ success: true, added: fresh.length }, { status: 201 })
+    }
+
+    if (!topicId || !itemId || !kind) {
       return NextResponse.json({ error: 'email, topicId, itemId, kind required' }, { status: 400 })
     }
-    const userFromToken = await getUserFromToken(request).catch(() => null)
-    const from = userFromToken?.email || email.toLowerCase().trim()
-
     const col = await getCollection('completions')
     const doc = {
       email: email.toLowerCase().trim(),
@@ -63,8 +99,29 @@ export async function POST(request) {  try {
 }
 
 // DELETE ?email=&topicId=&itemId= — undo a manual check-off.
+// DELETE with JSON body { email, items: [{topicId, itemId}] } — undo a
+// whole-course check-off in one call (only the given pairs are removed,
+// e.g. the manual flags; quiz-earned item completions stay).
 export async function DELETE(request) {
   try {
+    let bodyItems = null
+    try {
+      const body = await request.json()
+      if (Array.isArray(body?.items)) bodyItems = body
+    } catch {}
+    const col = await getCollection('completions')
+    if (bodyItems) {
+      const email = String(bodyItems.email || '').toLowerCase().trim()
+      const pairs = bodyItems.items
+        .filter(i => i && i.topicId && i.itemId)
+        .slice(0, 500)
+        .map(i => ({ topicId: String(i.topicId), itemId: String(i.itemId) }))
+      if (!email || !pairs.length) {
+        return NextResponse.json({ error: 'email, items required' }, { status: 400 })
+      }
+      await col.deleteMany({ email, $or: pairs })
+      return NextResponse.json({ success: true })
+    }
     const { searchParams } = new URL(request.url)
     const email = (searchParams.get('email') || '').toLowerCase().trim()
     const topicId = searchParams.get('topicId') || ''
@@ -72,7 +129,6 @@ export async function DELETE(request) {
     if (!email || !topicId || !itemId) {
       return NextResponse.json({ error: 'email, topicId, itemId required' }, { status: 400 })
     }
-    const col = await getCollection('completions')
     await col.deleteMany({ email, topicId, itemId })
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -14,6 +14,8 @@ import { FullscreenReader, useSpeech, stripHtml } from '@/components/Reader'
 import { TextCard } from '@/components/TopicContent'
 import SuggestEdit from '@/components/SuggestEdit'
 import { getUser } from '@/lib/auth'
+import { haptic } from '@/lib/haptics'
+import BtnSpinner from '@/components/BtnSpinner'
 import { mockPlan, mockTopicContent } from '@/lib/demo-content'
 import { colorFor } from '@/lib/plan-colors'
 
@@ -44,6 +46,7 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   const [demoMode, setDemoMode] = useState(false)
   const [loadFailed, setLoadFailed] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
+  const [marking, setMarking] = useState(false)
 
   useEffect(() => {
     try { setDemoMode(new URLSearchParams(window.location.search).get('demo') === '1') } catch {}
@@ -165,6 +168,43 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   const doneItems = planTopics.reduce((n, t) => n + (t.items || []).filter(it => doneIds.has(`${t.id}:${it.id}`)).length, 0)
   const coursePct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0
 
+  // Course-level check-off: one tap checks every topic (manual flags), one
+  // tap undoes just those flags — quiz-earned item completions are untouched.
+  // Same rule as TopicSection: a topic counts when fully done OR manually set.
+  const secStates = blocks.map(s => {
+    const rows = s.plan?.items || []
+    const tDone = rows.filter(i => doneIds.has(`${s.plan.id}:${i.id}`)).length
+    const complete = (rows.length > 0 && tDone === rows.length) || doneIds.has(`${s.plan.id}:manual`)
+    return { id: s.plan.id, complete }
+  }).filter(s => s.id)
+  const courseDone = secStates.length > 0 && secStates.every(s => s.complete)
+
+  async function toggleCourse() {
+    const u = getUser()
+    if (!u?.email || marking || !secStates.length) return
+    setMarking(true)
+    try {
+      if (courseDone) {
+        await fetch('/api/completions', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: u.email, items: secStates.map(s => ({ topicId: s.id, itemId: 'manual' })) }),
+        }).catch(() => null)
+      } else {
+        const missing = secStates.filter(s => !s.complete).map(s => ({ topicId: s.id, itemId: 'manual' }))
+        await fetch('/api/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: u.email, items: missing, kind: 'topic', courseCode: code }),
+        }).catch(() => null)
+      }
+      haptic.tap()
+      await refreshCompletions()
+    } finally {
+      setMarking(false)
+    }
+  }
+
   const visible = tab === 'quiz' ? blocks
     : tab === 'flashcards'
       ? blocks.filter(s => (s.content.tabs?.text || []).length > 0)
@@ -206,6 +246,17 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
           </>
         )}
       </div>
+
+      {secStates.length > 0 && (
+        <button
+          onClick={toggleCourse}
+          disabled={marking}
+          className={'flex w-full items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-bold transition-all active:scale-[0.99] disabled:opacity-60 ' + (courseDone ? 'border-green-500/40 bg-green-500/10 text-green-600 dark:text-green-400' : 'border-primary/30 bg-primary/5 text-primary')}
+        >
+          {marking ? <BtnSpinner /> : courseDone ? <Check className="size-4" strokeWidth={3} /> : <Square className="size-4" />}
+          {marking ? 'Saving…' : courseDone ? 'Course complete — tap to undo' : 'Mark course as complete'}
+        </button>
+      )}
 
       <div className="border-b">
         <TikTokTabs
@@ -282,6 +333,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
   const [sentMsg, setSentMsg] = useState('')
   const [contribOpen, setContribOpen] = useState(false)
   const [toggling, setToggling] = useState(false)
+  const [tickOpen, setTickOpen] = useState(false)
   const [extraPeople, setExtraPeople] = useState({})
   const speech = useSpeech()
   const canSuggest = reader && (reader.kind === 'text' || reader.kind === 'pdf') && reader.item?.source !== 'theory'
@@ -398,8 +450,39 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
                 <Check className="size-4 text-white" strokeWidth={3} />
               </button>
             ) : (
-              <button onClick={toggleTopic} disabled={toggling || !planTopic.id} aria-label="Check off topic" title="Tap to check off"
+              <button onClick={() => setTickOpen(true)} disabled={toggling || !planTopic.id} aria-label="Check off topic" title="Tap to check off"
                 className="mt-0.5 size-6 shrink-0 rounded-full border-2 border-muted-foreground/40 bg-background hover:border-green-500 disabled:opacity-50" />
+              {tickOpen && (
+                <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-5" onClick={() => setTickOpen(false)}>
+                  <div className="w-full max-w-sm space-y-4 rounded-3xl bg-card p-6 text-center shadow-xl" onClick={e => e.stopPropagation()}>
+                    <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-green-500/10">
+                      <Check className="size-6 text-green-500" strokeWidth={3} />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-extrabold">Check off this topic?</h3>
+                      <p className="mt-1 text-xs text-muted-foreground">Prove it with a quick quiz (50%+ to pass) — or just mark it done.</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Link
+                        href={`/courses/${course}/quiz?topic=${encodeURIComponent(planTopic.id)}&title=${encodeURIComponent(content.title || '')}&autocheck=1`}
+                        className="block w-full rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground"
+                      >
+                        Take the quiz
+                      </Link>
+                      <button
+                        onClick={async () => { setTickOpen(false); await toggleTopic() }}
+                        disabled={toggling}
+                        className="w-full rounded-xl border py-2.5 text-sm font-bold disabled:opacity-50"
+                      >
+                        Just mark done
+                      </button>
+                      <button onClick={() => setTickOpen(false)} className="w-full py-1 text-xs font-semibold text-muted-foreground">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             )}
             <div className="min-w-0 flex-1">
               <h2 className="text-[15px] font-bold leading-snug">{content.title}</h2>

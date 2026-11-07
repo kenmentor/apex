@@ -302,7 +302,7 @@ export default function HomePage() {
             return (
               <Link
                 key={course.code}
-                href={`/courses/${slug}/quiz`}
+                href={`/plan/${slug}`}
                 className="flex w-full items-center gap-3 rounded-3xl p-4 text-left text-white transition-all active:scale-[0.99]"
                 style={{ background: `linear-gradient(135deg, ${color}, ${color}CC)` }}
               >

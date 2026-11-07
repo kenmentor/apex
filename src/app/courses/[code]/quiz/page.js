@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useState, useEffect, useRef, useMemo, Suspense } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { playClick, playCorrect, playWrong } from '@/lib/sound';
 import { haptic } from '@/lib/haptics';
@@ -11,6 +11,7 @@ import { trackQuizEvent } from '@/components/AnalyticsTracker';
 import { trackEvent } from '@/lib/tracking';
 import { trackAnswerSubmitted, trackSessionTerminated, trackExplanationViewed, trackTextCopied } from '@/lib/telemetry';
 import { gradeAnswer, typeOf, canSubmitAnswer } from '@/lib/quiz-types';
+import { sectionsForTopic, TOPIC_PASS_PCT, TOPIC_QUIZ_LENGTH, TOPIC_MIN_QUESTIONS } from '@/lib/topic-match';
 import QuestionRenderer from '@/components/exam/QuestionRenderer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -127,11 +128,35 @@ function clearSeenIds(code) {
 }
 
 export default function QuizPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+        <p className="text-sm text-muted-foreground">Loading questions…</p>
+      </div>
+    }>
+      <QuizInner />
+    </Suspense>
+  );
+}
+
+function QuizInner() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const code = params.code?.toUpperCase() || '';
 
+  // ── Topic-check mode (?topic=<id>&title=<t>&autocheck=1) ──
+  // Same quiz machine, scoped to one plan topic: the pool is drawn from
+  // question sections matching the topic title, and scoring TOPIC_PASS_PCT%+
+  // auto-checks the topic off. Fewer than TOPIC_MIN_QUESTIONS matched =
+  // "no quiz available" (caller ticks directly instead).
+  const topicId = searchParams.get('topic') || '';
+  const topicTitle = searchParams.get('title') || '';
+  const autocheck = searchParams.get('autocheck') === '1';
+  const topicMode = !!topicId;
+
   const [allQuestions, setAllQuestions] = useState([]);
+  const [sections, setSections] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quizStarted, setQuizStarted] = useState(false);
@@ -163,6 +188,16 @@ export default function QuizPage() {
   const timerRef = useRef(null);
 
   const PROGRESS_KEY = `quiz_progress_${code.toLowerCase()}`;
+  const postedTopicDone = useRef(false);
+
+  // Topic pool: questions from bank sections matching the topic title.
+  const topicPool = useMemo(() => {
+    if (!topicMode || !sections.length) return [];
+    const matched = new Set(sectionsForTopic(sections.map(s => s.section_title), topicTitle));
+    if (!matched.size) return [];
+    return sections.filter(s => matched.has(s.section_title)).flatMap(s => s.questions);
+  }, [topicMode, sections, topicTitle]);
+  const topicEmpty = topicMode && !loading && topicPool.length < TOPIC_MIN_QUESTIONS;
   const stateRef = useRef({});
   const selectedIndicesRef = useRef([]);
   const unmountSaved = useRef(false);
@@ -201,10 +236,11 @@ export default function QuizPage() {
         const res = await fetch(`/api/questions?course=${encodeURIComponent(code)}`)
         const data = await res.json()
         if (cancelled) return
-        let allQ = []
-        if (data.sections) allQ = data.sections.flatMap((s) => s.questions)
-        else if (Array.isArray(data)) allQ = data
-        setAllQuestions(allQ)
+      let allQ = []
+      if (data.sections) allQ = data.sections.flatMap((s) => s.questions)
+      else if (Array.isArray(data)) allQ = data
+      setSections(Array.isArray(data.sections) ? data.sections : [])
+      setAllQuestions(allQ)
         cacheQuestions(code, allQ)
         if (!cached || cached.length === 0) {
           const saved = loadProgress()
@@ -222,6 +258,42 @@ export default function QuizPage() {
     load()
     return () => { cancelled = true }
   }, [code, settings.offline])
+
+  // Topic-check start: short sharp quiz from the matched pool only.
+  function handleStartTopicQuiz() {
+    const pool = shuffleArray(topicPool).slice(0, Math.min(TOPIC_QUIZ_LENGTH, topicPool.length))
+    if (!pool.length) return
+    playClick()
+    selectedIndicesRef.current = pool.map(q => allQuestions.indexOf(q))
+    setQuestions(pool)
+    setSettings(s => ({ ...s, questionLimit: pool.length, mode: 'normal', negMark: false }))
+    setQuizStarted(true)
+    setTimeLeft(settings.timePerQuestion)
+    setStreak(0)
+    setBestStreak(0)
+    setCurrentIndex(0)
+    setSelected(null)
+    setAnswers([])
+    startTime.current = Date.now()
+    trackQuizEvent('quiz_started', { course: code, topic: topicId, questionCount: pool.length, mode: 'topic-check' })
+  }
+
+  // Auto check-off: pass the topic quiz and the topic ticks itself.
+  useEffect(() => {
+    if (!finished || !topicMode || !autocheck) return
+    if (pct < TOPIC_PASS_PCT || postedTopicDone.current) return
+    postedTopicDone.current = true
+    try {
+      const u = getUser()
+      if (!u?.email) return
+      fetch('/api/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic' }),
+      }).catch(() => {})
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finished])
 
   function handleResume(saved) {
     if (saved.settings) setSettings(saved.settings);
@@ -373,6 +445,7 @@ export default function QuizPage() {
   }, [finished])
 
   useEffect(() => {
+    if (topicMode) return; // topic checks must not clobber course progress
     if (quizStarted && !finished && answers.length > 0 && answers.length !== prevAnswerCount.current) {
       prevAnswerCount.current = answers.length;
       const data = {
@@ -393,6 +466,7 @@ export default function QuizPage() {
 
   useEffect(() => {
     unmountSaved.current = false;
+    if (topicMode) return; // topic checks must not clobber course progress
     return () => {
       if (!unmountSaved.current) {
         unmountSaved.current = true;
@@ -437,6 +511,44 @@ export default function QuizPage() {
   }
 
   if (allQuestions.length === 0) {
+    // Topic mode with an empty bank = "no quiz available": offer the
+    // direct tick so the flow never dead-ends.
+    if (topicMode) {
+      const slug = String(code).toLowerCase().replace(/\s+/g, '');
+      return (
+        <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+          <Card className="w-full max-w-lg space-y-4 py-10 text-center">
+            <div className="text-5xl">📝</div>
+            <h2 className="px-6 text-lg font-extrabold">{topicTitle || 'This topic'}</h2>
+            <p className="px-6 text-sm text-muted-foreground">No quiz questions for this topic yet — you can just tick it done.</p>
+            <div className="space-y-2 px-6 pt-2">
+              <Button
+                className="w-full py-5 text-sm font-bold"
+                onClick={async () => {
+                  try {
+                    const u = getUser();
+                    if (u?.email) {
+                      await fetch('/api/completions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic' }),
+                      }).catch(() => {});
+                      haptic.success();
+                    }
+                  } catch {}
+                  router.push(`/plan/${slug}/${encodeURIComponent(topicId)}`);
+                }}
+              >
+                Mark topic done
+              </Button>
+              <Link href={`/plan/${slug}/${encodeURIComponent(topicId)}`} className="block">
+                <Button variant="ghost" className="w-full">Back to topic</Button>
+              </Link>
+            </div>
+          </Card>
+        </div>
+      );
+    }
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
         <Card className="w-full max-w-lg flex items-center justify-center py-20 text-center">
@@ -452,8 +564,9 @@ export default function QuizPage() {
     );
   }
 
-  // ─────────── RESUME PROMPT ───────────
-  if (showResumePrompt && restoredProgress) {
+  // ─────────── RESUME PROMPT (course mode only — topic checks never
+  // touch saved course progress) ───────────
+  if (showResumePrompt && restoredProgress && !topicMode) {
     const answered = restoredProgress.answers.length;
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
@@ -482,6 +595,66 @@ export default function QuizPage() {
 
   // ─────────── SETTINGS SCREEN ───────────
   if (!quizStarted) {
+    // Topic-check mode: short scoped quiz instead of full setup.
+    if (topicMode) {
+      const slug = String(code).toLowerCase().replace(/\s+/g, '');
+      if (topicEmpty) {
+        return (
+          <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+            <Card className="w-full max-w-lg space-y-4 py-10 text-center">
+              <div className="text-5xl">📝</div>
+              <h2 className="px-6 text-lg font-extrabold">{topicTitle || 'This topic'}</h2>
+              <p className="px-6 text-sm text-muted-foreground">No quiz questions for this topic yet — you can just tick it done.</p>
+              <div className="space-y-2 px-6 pt-2">
+                <Button
+                  className="w-full py-5 text-sm font-bold"
+                  onClick={async () => {
+                    try {
+                      const u = getUser();
+                      if (u?.email) {
+                        await fetch('/api/completions', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ email: u.email, topicId, itemId: 'manual', kind: 'topic' }),
+                        }).catch(() => {});
+                        haptic.success();
+                      }
+                    } catch {}
+                    router.push(`/plan/${slug}/${encodeURIComponent(topicId)}`);
+                  }}
+                >
+                  Mark topic done
+                </Button>
+                <Link href={`/plan/${slug}/${encodeURIComponent(topicId)}`} className="block">
+                  <Button variant="ghost" className="w-full">Back to topic</Button>
+                </Link>
+              </div>
+            </Card>
+          </div>
+        );
+      }
+      return (
+        <div className="flex min-h-dvh items-center justify-center bg-background px-5 pb-24">
+          <Card className="w-full max-w-lg space-y-4 py-10 text-center">
+            <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-primary/10">
+              <span className="text-3xl">✅</span>
+            </div>
+            <h2 className="px-6 text-lg font-extrabold">{topicTitle || 'Topic check'}</h2>
+            <p className="px-6 text-sm text-muted-foreground">
+              {Math.min(TOPIC_QUIZ_LENGTH, topicPool.length)} quick questions · score {TOPIC_PASS_PCT}%+ to check this topic off.
+            </p>
+            <div className="space-y-2 px-6 pt-2">
+              <Button className="w-full py-5 text-base font-bold" onClick={handleStartTopicQuiz}>
+                Start topic quiz
+              </Button>
+              <Link href={`/plan/${slug}/${encodeURIComponent(topicId)}`} className="block">
+                <Button variant="ghost" className="w-full">Study first</Button>
+              </Link>
+            </div>
+          </Card>
+        </div>
+      );
+    }
     const limitOptions = [5, 10, 15, 20, 25, 30, 50, allQuestions.length];
     const timeOptions = [5, 10, 15, 20, 30, 45, 60, 90, 120];
     return (
@@ -716,7 +889,7 @@ export default function QuizPage() {
       haptic.finish();
       clearInterval(timerRef.current);
       clearProgress();
-      markSeenIds(code, selectedIndicesRef.current);
+      if (!topicMode) markSeenIds(code, selectedIndicesRef.current);
       trackQuizEvent('quiz_completed', { course: code, score: finalCorrectCount, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), revealed: true });
       trackSessionTerminated({ quiz_id: code, last_completed_step: total, total_steps: total });
       const user = getUser();
@@ -785,7 +958,7 @@ export default function QuizPage() {
       haptic.finish();
       clearInterval(timerRef.current);
       clearProgress();
-      markSeenIds(code, selectedIndicesRef.current);
+      if (!topicMode) markSeenIds(code, selectedIndicesRef.current);
       trackQuizEvent('quiz_completed', { course: code, score: finalScore, total, timeSpent: Math.floor((Date.now() - startTime.current) / 1000), negMark: settings.negMark });
       trackSessionTerminated({ quiz_id: code, last_completed_step: total, total_steps: total });
       const user = getUser();
@@ -880,6 +1053,7 @@ export default function QuizPage() {
   function handleRestart() {
     playClick();
     clearProgress();
+    postedTopicDone.current = false;
     setQuizStarted(false);
     setCurrentIndex(0);
     setSelected(null);
@@ -912,6 +1086,24 @@ export default function QuizPage() {
             <div className="flex items-center justify-center gap-2 rounded-xl bg-yellow-100 p-3 text-sm text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
               <AlertTriangle className="size-4 shrink-0" />
               {cheatWarning}
+            </div>
+          )}
+
+          {topicMode && (
+            <div className={'rounded-2xl border p-4 text-center ' + (pct >= TOPIC_PASS_PCT ? 'border-green-500/40 bg-green-500/10' : 'border-red-500/40 bg-red-500/10')}>
+              {pct >= TOPIC_PASS_PCT ? (
+                <>
+                  <p className="text-sm font-extrabold text-green-600 dark:text-green-400">Passed — topic checked off ✓</p>
+                  <Link href={autocheck ? `/plan/${String(code).toLowerCase().replace(/\s+/g, '')}/${encodeURIComponent(topicId)}` : `/courses/${code.toLowerCase()}/quiz`} className="mt-2 inline-block text-xs font-bold text-primary">
+                    {autocheck ? 'Back to topic' : 'Back to quiz setup'}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm font-extrabold text-red-500">Scored {pct}% — {TOPIC_PASS_PCT}%+ needed to check this topic off.</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Retry the quiz or study the topic, then come back.</p>
+                </>
+              )}
             </div>
           )}
 
