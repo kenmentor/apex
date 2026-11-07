@@ -1,11 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { X, Map, Users, Gamepad2, PlusCircle, Wallet, BarChart3, User, LogOut, PenLine, ShieldCheck, Inbox, Bell } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { UserAvatarImage, VerifiedTick } from '@/components/UserAvatar';
-import AvatarViewer from '@/components/AvatarViewer';
 
 const ROWS = [
   { href: '/plan', label: 'My Curriculum', icon: Map },
@@ -20,7 +18,6 @@ const ROWS = [
 const isContributor = (user) => !!user && (!!user.admin || user.role === 'editor' || user.role === 'official' || user.role === 'admin');
 
 export default function SideDrawer({ open, user, coins, onClose }) {
-  const [viewing, setViewing] = useState(false);
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[60]">
@@ -28,7 +25,7 @@ export default function SideDrawer({ open, user, coins, onClose }) {
       <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r bg-background p-4">
         <div className="flex items-center justify-between">
           <div className="flex min-w-0 flex-1 items-center gap-3">
-            <button onClick={() => user && setViewing(true)} aria-label="View profile photo" className="relative shrink-0 rounded-full focus:outline-none focus:ring-2 focus:ring-ring">
+            <Link href="/profile" onClick={onClose} aria-label="Go to profile" className="relative shrink-0 rounded-full focus:outline-none focus:ring-2 focus:ring-ring">
               {user ? (
                 <span className="relative inline-flex">
                   <Avatar className="size-10">
@@ -44,7 +41,7 @@ export default function SideDrawer({ open, user, coins, onClose }) {
                   <AvatarFallback className="bg-muted text-sm font-bold">?</AvatarFallback>
                 </Avatar>
               )}
-            </button>
+            </Link>
             <Link href="/profile" onClick={onClose} className="min-w-0 flex-1">
               <span className="block truncate text-sm font-bold hover:underline">{user?.name || user?.email || 'Guest'}</span>
               <span className="block text-xs text-muted-foreground">{coins ?? '—'} coins</span>
@@ -103,7 +100,6 @@ export default function SideDrawer({ open, user, coins, onClose }) {
         </nav>
         <div className="flex-1" />
       </aside>
-      {viewing && user && <AvatarViewer user={user} onClose={() => setViewing(false)} />}
     </div>
   );
 }
