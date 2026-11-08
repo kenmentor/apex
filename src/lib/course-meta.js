@@ -35,6 +35,12 @@ export const COURSE_TITLES = {
   'INS 202': 'Insurance',
   'ENT 211': 'Entrepreneurship & Innovation',
   'CLP 211': 'Chemical Pathology',
+  'ANA 201': 'Anatomy of Upper/Lower Limbs',
+  'ANA 202': 'Histology of Basic Tissues',
+  'ANA 203': 'General and Systemic Embryology',
+  'ANA 204': 'Anatomy of Thorax, Abdomen, Pelvis & Perineum',
+  'BCH 201': 'General Biochemistry I',
+  'BCH 202': 'General Biochemistry II',
 }
 
 export const COURSE_ACCENTS = {

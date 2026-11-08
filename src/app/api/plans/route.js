@@ -4,6 +4,9 @@ import { loadPilotPlan, planProgress as legacyProgress, MASTERY_BAR } from '@/li
 import { mergeActivities } from '@/lib/curriculum'
 
 // Maps stored department names to CCMAS programme codes.
+// Covers every department in src/lib/departments.js plus legacy free-text
+// values already saved on user profiles (e.g. "Biochemistry",
+// "Medicine and Surgery (MBBS/MBChB) (MBBS)").
 const DEPT_TO_PROG = {
   'computer science': 'COS',
   'software engineering': 'SEN',
@@ -16,6 +19,29 @@ const DEPT_TO_PROG = {
   physics: 'PHY',
   chemistry: 'CHM',
   biology: 'BIO',
+  // Basic / medical sciences — previously missing, so Anatomy/Biochemistry
+  // users fell through to the legacy COS pilot plan.
+  anatomy: 'ANA',
+  'human anatomy': 'ANA',
+  biochemistry: 'BCH',
+  microbiology: 'MCB',
+  'medical laboratory science': 'MLS',
+  'medical laboratory technology': 'MLS',
+  'science laboratory technology': 'SLT',
+  physiology: 'PIO',
+  medicine: 'MBBS',
+  'medicine and surgery': 'MBBS',
+  'medicine and surgery (mbbs/mbchb)': 'MBBS',
+  mbbs: 'MBBS',
+  'nursing': 'NSC',
+  'nursing science': 'NSC',
+  pharmacy: 'PHA',
+  pharmacology: 'PCL',
+  physiotherapy: 'PHS',
+  'public health': 'PHS',
+  'public health science': 'PHS',
+  radiography: 'RAD',
+  philosophy: 'PHL',
 }
 
 function programmeFor(user) {
@@ -25,9 +51,22 @@ function programmeFor(user) {
   // "Mathematics (MTH · Sciences)" → MTH.
   const paren = dept.match(/\(([A-Za-z]{2,5})[^)]*\)\s*$/)
   if (paren) return paren[1].toUpperCase()
-  const lower = dept.toLowerCase()
+  const lower = dept.toLowerCase().replace(/\s+/g, ' ')
   if (DEPT_TO_PROG[lower]) return DEPT_TO_PROG[lower]
-  // Fallback: programme whose name contains the department words.
+  // Fuzzy fallback for variants ("Anatomy", "Human Anatomy", "Biochem",
+  // "Med Lab Science", "Medicine and Surgery ...", ...).
+  if (lower.includes('anatom')) return 'ANA'
+  if (lower.includes('biochem')) return 'BCH'
+  if (lower.includes('microbio')) return 'MCB'
+  if (lower.includes('medical lab') || lower === 'mls') return 'MLS'
+  if (lower.includes('physiolog')) return 'PIO'
+  if (lower.includes('nurs')) return 'NSC'
+  if (lower.includes('mbbs') || lower.includes('medicine')) return 'MBBS'
+  if (lower.includes('pharmacol')) return 'PCL'
+  if (lower.includes('pharm')) return 'PHA'
+  if (lower.includes('physiother')) return 'PHS'
+  if (lower.includes('radiograph') || lower.includes('radiography')) return 'RAD'
+  if (lower.includes('public health')) return 'PHS'
   return null
 }
 

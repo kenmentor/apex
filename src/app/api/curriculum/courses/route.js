@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/db'
+import { normalizeCourse } from '@/lib/curriculum'
 
 // GET /api/curriculum/courses?programme=COS&level=200+Level&university=UNILAG
 // Core courses + that university's own additions (core never duplicated).

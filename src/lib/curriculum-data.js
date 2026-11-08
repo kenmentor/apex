@@ -100,6 +100,36 @@ export const DEPARTMENTS_DATA = [
     },
   },
   {
+    code: 'ANA',
+    title: 'Anatomy',
+    levels: {
+      '100 Level': ['BIO 101', 'BIO 102', 'CHM 101', 'CHM 102', 'PHY 101', 'PHY 102', 'COS 101', 'GST 111', 'GST 112', 'MTH 101'],
+      '200 Level': ['ANA 201', 'ANA 202', 'ANA 203', 'ANA 204', 'BCH 201', 'BCH 202', 'PIO 201', 'BIO 208', 'ENT 211', 'GST 212'],
+      '300 Level': ['ANA 301', 'ANA 302', 'ANA 307', 'ANA 312', 'ANA 322', 'ANA 341', 'ANA 351', 'ANA 352', 'ANA 399', 'ENT 312', 'GST 312'],
+      '400 Level': ['ANA 411', 'ANA 412', 'ANA 421', 'ANA 422', 'ANA 432', 'ANA 441', 'ANA 499'],
+    },
+  },
+  {
+    code: 'ANA',
+    title: 'Human Anatomy',
+    levels: {
+      '100 Level': ['BIO 101', 'BIO 102', 'CHM 101', 'CHM 102', 'PHY 101', 'PHY 102', 'COS 101', 'GST 111', 'GST 112', 'MTH 101'],
+      '200 Level': ['ANA 201', 'ANA 202', 'ANA 203', 'ANA 204', 'BCH 201', 'BCH 202', 'PIO 201', 'BIO 208', 'ENT 211', 'GST 212'],
+      '300 Level': ['ANA 301', 'ANA 302', 'ANA 307', 'ANA 312', 'ANA 322', 'ANA 341', 'ANA 351', 'ANA 352', 'ANA 399', 'ENT 312', 'GST 312'],
+      '400 Level': ['ANA 411', 'ANA 412', 'ANA 421', 'ANA 422', 'ANA 432', 'ANA 441', 'ANA 499'],
+    },
+  },
+  {
+    code: 'BCH',
+    title: 'Biochemistry',
+    levels: {
+      '100 Level': ['BIO 101', 'BIO 102', 'CHM 101', 'CHM 102', 'PHY 101', 'PHY 102', 'COS 101', 'GST 111', 'GST 112', 'MTH 101', 'MTH 102'],
+      '200 Level': ['BCH 201', 'BCH 202', 'BCH 203', 'STA 201', 'ENT 211', 'GST 212'],
+      '300 Level': ['BCH 301', 'BCH 302', 'BCH 303', 'BCH 304', 'BCH 305', 'BCH 306', 'BCH 307', 'BCH 308', 'BCH 309', 'ENT 312', 'GST 312'],
+      '400 Level': ['BCH 401', 'BCH 402', 'BCH 403', 'BCH 404', 'BCH 405', 'BCH 406', 'BCH 407', 'BCH 408'],
+    },
+  },
+  {
     code: 'ELE',
     title: 'Engineering (Electrical)',
     levels: {
