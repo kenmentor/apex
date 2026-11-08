@@ -30,6 +30,7 @@ for (const p of [join(__dirname, '..', '.env')]) {
 
 const URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/gss-quiz';
 const YT = id => `https://www.youtube.com/watch?v=${id}`;
+const OWNER = 'davidnwachukwum@gmail.com';
 
 // [courseCode, videoId, host, title, description, exactTopicTitle]
 const ROWS = [
@@ -103,7 +104,7 @@ async function seed() {
   const byCourse = {};
   for (const [courseCode, id, host, title, description, topic] of ROWS) {
     const url = YT(id);
-    (byCourse[courseCode] = byCourse[courseCode] || []).push({ courseCode, url, title, description, topic });
+    (byCourse[courseCode] = byCourse[courseCode] || []).push({ courseCode, url, title, description, topic, ownerEmail: OWNER, addedBy: OWNER });
   }
   for (const [courseCode, list] of Object.entries(byCourse)) {
     const existing = await db.collection('videos').countDocuments({ courseCode });
