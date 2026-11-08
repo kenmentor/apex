@@ -35,21 +35,70 @@ const DEPT_TO_PROG = {
   mbbs: 'MBBS',
   'nursing': 'NSC',
   'nursing science': 'NSC',
-  pharmacy: 'PHA',
-  pharmacology: 'PCL',
+  // DB codes are PHB/PHD (B.Pharm / Pharm.D) — PHA has zero courses.
+  pharmacy: 'PHB',
+  pharmacology: 'PST',
   physiotherapy: 'PHS',
   'public health': 'PHS',
   'public health science': 'PHS',
   radiography: 'RAD',
+  'radiography and radiological science': 'RAD',
   philosophy: 'PHL',
+  // Engineering — explicit rows because "(Electrical)"-style suffixes must
+  // NOT be parsed as codes (old paren regex turned them into ELECT/MECHA).
+  'engineering (electrical)': 'EEE',
+  'engineering (mechanical)': 'MEE',
+  'engineering (civil)': 'CEE',
+  'engineering (chemical)': 'TCH',
+  'electrical engineering': 'EEE',
+  'electrical and electronic engineering': 'EEE',
+  'mechanical engineering': 'MEE',
+  'civil engineering': 'CEE',
+  'chemical engineering': 'TCH',
+  // Arts / social / management — verified against programmes collection.
+  economics: 'ECO',
+  'mass communication': 'MCM',
+  'political science': 'POL',
+  law: 'LAW',
+  'english language': 'ENG',
+  history: 'HIS',
+  psychology: 'PSY',
+  sociology: 'SOC',
+  architecture: 'ARC',
+  'estate management': 'ESM',
+  geography: 'GEO',
+  geology: 'GEY',
+  'marine science': 'MSE',
+  'environmental science': 'ENS',
+  'fine arts': 'FAA',
+  'fine and applied arts': 'FAA',
+  'performing arts': 'THA',
+  'theatre arts': 'THA',
+  'library science': 'LIS',
+  'library and information science': 'LIS',
+  'international relations': 'IRS',
+  criminology: 'CSS',
+  'criminology and security studies': 'CSS',
+  'forensic science': 'FRS',
+  'food science & technology': 'FST',
+  'food science and technology': 'FST',
+  'human kinetics': 'HKE',
+  'human kinetics/physical education': 'HKE',
+  'social work': 'SWK',
+  agriculture: 'AGR',
+  'agricultural science': 'AGR',
+  // No exact CCMAS match — intentionally unmapped so callers fall back to
+  // level-scoped browsing + legacy plan instead of a wrong programme:
+  // 'business administration', 'accounting', 'education', 'public administration'.
 }
 
 function programmeFor(user) {
   const dept = (user?.department || '').trim()
   if (!dept) return null
-  // New label formats store the code: "Mathematics (MTH)" or
-  // "Mathematics (MTH · Sciences)" → MTH.
-  const paren = dept.match(/\(([A-Za-z]{2,5})[^)]*\)\s*$/)
+  // Label formats that carry an explicit code: "Mathematics (MTH)" or
+  // "Mathematics (MTH · Sciences)" → MTH. Uppercase-only so
+  // "Engineering (Electrical)" does NOT parse as a code.
+  const paren = dept.match(/\(([A-Z]{2,5})\b[^)]*\)\s*$/)
   if (paren) return paren[1].toUpperCase()
   const lower = dept.toLowerCase().replace(/\s+/g, ' ')
   if (DEPT_TO_PROG[lower]) return DEPT_TO_PROG[lower]
@@ -59,14 +108,27 @@ function programmeFor(user) {
   if (lower.includes('biochem')) return 'BCH'
   if (lower.includes('microbio')) return 'MCB'
   if (lower.includes('medical lab') || lower === 'mls') return 'MLS'
-  if (lower.includes('physiolog')) return 'PIO'
+  if (lower.includes('physiolog') && !lower.includes('physiother')) return 'PIO'
   if (lower.includes('nurs')) return 'NSC'
   if (lower.includes('mbbs') || lower.includes('medicine')) return 'MBBS'
-  if (lower.includes('pharmacol')) return 'PCL'
-  if (lower.includes('pharm')) return 'PHA'
+  if (lower.includes('pharmacol')) return 'PST'
+  if (lower.includes('pharm')) return 'PHB'
   if (lower.includes('physiother')) return 'PHS'
-  if (lower.includes('radiograph') || lower.includes('radiography')) return 'RAD'
+  if (lower.includes('radiograph')) return 'RAD'
   if (lower.includes('public health')) return 'PHS'
+  if (lower.includes('human kinetics') || lower === 'hke') return 'HKE'
+  if (lower.includes('forensic')) return 'FRS'
+  if (lower.includes('criminology')) return 'CSS'
+  if (lower.includes('food science')) return 'FST'
+  if (lower.includes('social work')) return 'SWK'
+  if (lower.includes('international relations')) return 'IRS'
+  if (lower.includes('mass communication')) return 'MCM'
+  if (lower.includes('estate management')) return 'ESM'
+  if (lower.includes('marine science')) return 'MSE'
+  if (/\belectrical\b/.test(lower) && lower.includes('engineer')) return 'EEE'
+  if (/\bmechanical\b/.test(lower) && lower.includes('engineer')) return 'MEE'
+  if (/\bcivil\b/.test(lower) && lower.includes('engineer')) return 'CEE'
+  if (/\bchemical\b/.test(lower) && lower.includes('engineer')) return 'TCH'
   return null
 }
 
