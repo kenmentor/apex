@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Trophy, ChevronRight, Puzzle, Zap, Brain, PenLine, Flame, Eye, Keyboard, Play, Swords, ClipboardList, Shuffle } from 'lucide-react'
+import { ArrowLeft, Trophy, ChevronRight, Puzzle, Zap, Brain, PenLine, Flame, Eye, Keyboard, Play, Swords, ClipboardList, Gamepad2, X, Check } from 'lucide-react'
 import { motion } from 'motion/react'
-import PlaySetupSheet from '@/components/game/PlaySetupSheet'
+import GameSetupModal from '@/components/game/GameSetupModal'
+import QuizSetupModal from '@/components/game/QuizSetupModal'
 import { playQuery } from '@/lib/play-params'
 
 const GAMES = [
@@ -13,12 +14,13 @@ const GAMES = [
   { href: '/games/sprint', Icon: Zap, bg: 'linear-gradient(160deg, #451a03 0%, #b45309 100%)', name: 'Speed Sprint', blurb: 'Race the clock through rapid MCQs.', tag: 'Speed' },
   { href: '/games/pairs', Icon: Brain, bg: 'linear-gradient(160deg, #1e1b4b 0%, #4338ca 100%)', name: 'Match Pairs', blurb: 'Flip and match terms to definitions.', tag: 'Memory' },
   { href: '/games/cloze', Icon: PenLine, bg: 'linear-gradient(160deg, #082f3d 0%, #0369a1 100%)', name: 'Cloze Blanks', blurb: 'Produce the missing word from memory.', tag: 'Recall' },
-  { href: '/games/blitz', Icon: Flame, bg: 'linear-gradient(160deg, #431407 0%, #c2410c 100%)', name: 'Survival Blitz', blurb: 'Streak until 3 mistakes end the run.', tag: 'Survival' },
-  { href: '/games/odd', Icon: Eye, bg: 'linear-gradient(160deg, #042f2e 0%, #0f766e 100%)', name: 'Odd One Out', blurb: 'Spot the smuggled-in intruder term.', tag: 'Eye' },
+  { href: '/games/blitz', Icon: Flame, bg: 'linear-gradient(160deg, #431407 0%, #c2410f 100%)', name: 'Survival Blitz', blurb: 'Streak until 3 mistakes end the run.', tag: 'Survival' },
+  { href: '/games/odd', Icon: Eye, bg: 'linear-gradient(160deg, #042f2e 0%, #0f7661 100%)', name: 'Odd One Out', blurb: 'Spot the smuggled-in intruder term.', tag: 'Eye' },
   { href: '/games/typing', Icon: Keyboard, bg: 'linear-gradient(160deg, #020617 0%, #334155 100%)', name: 'Typing Rush', blurb: 'Type terms faster than the clock.', tag: 'Speed' },
 ]
 
 const BOSS = { href: '/games/boss', Icon: Swords, bg: 'linear-gradient(150deg, #450a0a 0%, #7f1d1d 55%, #b91c1c 100%)', name: 'Boss Battle', blurb: 'Train up, then fight the boss. Win the run.', tag: 'Featured' }
+const ALL_GAMES = [BOSS, ...GAMES]
 
 function Watermark({ Icon }) {
   return <Icon className="pointer-events-none absolute -bottom-5 -right-5 size-32 text-white/10" strokeWidth={1.5} />;
@@ -26,29 +28,30 @@ function Watermark({ Icon }) {
 
 export default function GamesHubPage() {
   const router = useRouter()
-  const [sheetOpen, setSheetOpen] = useState(false)
-  const [sheetGame, setSheetGame] = useState(null)
-  const [sheetActivity, setSheetActivity] = useState('game')
+  const [game, setGame] = useState(null)
+  const [quizOpen, setQuizOpen] = useState(false)
+  const [pickGameOpen, setPickGameOpen] = useState(false)
 
-  function openSetup(gameHref, activity = 'game') {
-    setSheetGame(gameHref)
-    setSheetActivity(activity)
-    setSheetOpen(true)
+  function openGame(g) {
+    setGame(g)
+    setPickGameOpen(false)
   }
 
-  function handleStart(sel) {
-    setSheetOpen(false)
-    if (sel.activity === 'quiz') {
-      const code = sel.courses[0]
-      const slug = code.toLowerCase().replace(/\s+/g, '')
-      if (sel.topics.length === 1) {
-        router.push(`/plan/${slug}/${encodeURIComponent(sel.topics[0])}`)
-      } else {
-        router.push(`/courses/${code.toLowerCase().replace(/\s+/g, '')}/quiz`)
-      }
-      return
+  function startGame(sel) {
+    const g = game
+    setGame(null)
+    if (!g) return
+    router.push(g.href + '?' + playQuery(sel))
+  }
+
+  function startQuiz(sel) {
+    setQuizOpen(false)
+    const slug = sel.course.toLowerCase().replace(/\s+/g, '')
+    if (sel.topics.length === 1) {
+      router.push('/plan/' + slug + '/' + encodeURIComponent(sel.topics[0]))
+    } else {
+      router.push('/courses/' + slug + '/quiz')
     }
-    router.push(`${sel.game}?${playQuery(sel)}`)
   }
 
   return (
@@ -63,40 +66,42 @@ export default function GamesHubPage() {
         </div>
       </div>
 
-      {/* Quick setup: pick courses + topics first, then play anything */}
-      <button
-        onClick={() => openSetup(null, 'game')}
-        className="flex w-full items-center gap-3 rounded-3xl border-2 border-dashed border-primary/40 bg-primary/5 p-4 text-left transition-all active:scale-[0.99]"
-      >
-        <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-          <Shuffle className="size-5" />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-sm font-extrabold">Quick setup</span>
-          <span className="block truncate text-xs text-muted-foreground">Pick courses + topics, then any game or quiz</span>
-        </span>
-        <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
-      </button>
-      <button
-        onClick={() => openSetup(null, 'quiz')}
-        className="flex w-full items-center gap-3 rounded-3xl border bg-card p-4 text-left transition-all active:scale-[0.99] hover:border-primary/40"
-      >
-        <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600">
-          <ClipboardList className="size-5" />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-sm font-extrabold">Quiz setup</span>
-          <span className="block truncate text-xs text-muted-foreground">Pick a course + topic, jump straight in</span>
-        </span>
-        <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
-      </button>
+      {/* Bold Quiz / Games entries */}
+      <div className="grid grid-cols-2 gap-2.5">
+        <button
+          onClick={() => setQuizOpen(true)}
+          className="flex flex-col items-start gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+        >
+          <span className="flex size-11 items-center justify-center rounded-2xl bg-white/20">
+            <ClipboardList className="size-6" />
+          </span>
+          <span className="mt-4 block text-xl font-black leading-none">QUIZ</span>
+          <span className="block text-[11px] leading-snug text-white/75">Pick a course, pick topics, start answering</span>
+          <span className="mt-1 flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wide text-white/90">
+            Start <ChevronRight className="size-3.5" />
+          </span>
+        </button>
+        <button
+          onClick={() => setPickGameOpen(true)}
+          className="flex flex-col items-start gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+        >
+          <span className="flex size-11 items-center justify-center rounded-2xl bg-white/20">
+            <Gamepad2 className="size-6" />
+          </span>
+          <span className="mt-4 block text-xl font-black leading-none">GAMES</span>
+          <span className="block text-[11px] leading-snug text-white/75">Mix courses, then choose a game</span>
+          <span className="mt-1 flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wide text-white/90">
+            Play <ChevronRight className="size-3.5" />
+          </span>
+        </button>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 260, damping: 26 }}
       >
-        <button onClick={() => openSetup(BOSS.href, 'game')} className="relative block w-full overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg" style={{ background: BOSS.bg }}>
+        <button onClick={() => openGame(BOSS)} className="relative block w-full overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg" style={{ background: BOSS.bg }}>
           <Swords className="pointer-events-none absolute -bottom-6 -right-6 size-40 text-white/10" strokeWidth={1.25} />
           <span className="inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">Featured</span>
           <span className="mt-8 block text-2xl font-black tracking-tight">Boss Battle</span>
@@ -115,7 +120,7 @@ export default function GamesHubPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.08 + i * 0.05, type: 'spring', stiffness: 280, damping: 26 }}
           >
-            <button onClick={() => openSetup(g.href, 'game')} className="relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-3xl p-4 text-left text-white shadow-md transition-transform active:scale-[0.97]">
+            <button onClick={() => openGame(g)} className="relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-3xl p-4 text-left text-white shadow-md transition-transform active:scale-[0.97]">
               <span className="absolute inset-0" style={{ background: g.bg }} aria-hidden />
               <Watermark Icon={g.Icon} />
               <span className="relative flex size-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
@@ -154,14 +159,44 @@ export default function GamesHubPage() {
         </Link>
       </motion.div>
 
-      <PlaySetupSheet
-        open={sheetOpen}
-        onClose={() => setSheetOpen(false)}
-        initialActivity={sheetActivity}
-        initialGame={sheetGame}
-        games={[BOSS, ...GAMES]}
-        onStart={handleStart}
-      />
+      {/* Game picker (one decision: which game) */}
+      {pickGameOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div onClick={() => setPickGameOpen(false)} className="absolute inset-0 bg-black/55 backdrop-blur-sm" />
+          <div role="dialog" aria-modal="true" aria-label="Pick a game" className="relative flex max-h-[80dvh] w-full max-w-sm flex-col overflow-hidden rounded-3xl border bg-card shadow-2xl">
+            <div className="flex items-center gap-2 border-b px-4 py-3">
+              <span className="flex-1 text-sm font-extrabold">Pick a game</span>
+              <button onClick={() => setPickGameOpen(false)} aria-label="Close" className="flex size-9 items-center justify-center rounded-full hover:bg-muted">
+                <X className="size-4" />
+              </button>
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto p-2">
+              {ALL_GAMES.map(function (g) {
+                const Icon = g.Icon || Gamepad2
+                return (
+                  <button
+                    key={g.href}
+                    onClick={() => openGame(g)}
+                    className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-colors hover:bg-muted/60"
+                  >
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl text-white" style={{ background: g.bg || '#6366f1' }}>
+                      <Icon className="size-5" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-bold">{g.name}</span>
+                      <span className="block truncate text-[11px] text-muted-foreground">{g.blurb || ''}</span>
+                    </span>
+                    <ChevronRight className="size-4 shrink-0 text-muted-foreground/50" />
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <GameSetupModal game={game} open={!!game} onClose={() => setGame(null)} onStart={startGame} />
+      <QuizSetupModal open={quizOpen} onClose={() => setQuizOpen(false)} onStart={startQuiz} />
     </div>
   )
 }
