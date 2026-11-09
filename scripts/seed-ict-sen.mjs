@@ -7,11 +7,15 @@
 // - ICT 309: Bose NPTEL wireless, NPTEL 3G/4G + 5G, Messer SY0.
 // - ICT 322: NPTEL Entrepreneurship Essentials (Mondal, IIT KGP).
 // - ICT 418: GSH Electrical, Neso, Jeremy, Messer N10, zenmurali, Sparky Help.
-// - SEN 401/410: Sommerville/BookSpokify, SE@Google, NPTEL SE.
+// - SEN 401/410: NPTEL SE, MIT Missing Semester, PLISS, UVA, Tech Trek,
+//   TutorialsPoint, Mike Clayton, Douglas Schmidt, UMass, CSCI lectures,
+//   Ian Sommerville (author). (BookSpokify/SE@Google TTS readings removed
+//   for low engagement/quality.)
 // - Comments proof per series in research.
 // - GAPS: ICT 201 app-level topics (7), ICT 301 niche sat topics (21),
 //   ICT 309 GSM-detail/protocols/NIN (15), ICT 322 technical presentations,
-//   ICT 418 regs/first-aid/BOM topics (10). Documented, never forced.
+//   ICT 418 regs/first-aid/BOM topics (10), SEN 401 large-scale/deprecation (2),
+//   SEN 410 CBSE (1). Documented, never forced.
 // - SINGLE-HOME: every video carries the EXACT curriculum topic title in `topic`.
 // - Owner of bulk import: davidnwachukwum@gmail.com
 // Re-runnable: wipes each course's videos first, inserts in topic order.
@@ -154,23 +158,20 @@ const ROWS = [
   ['ICT 418', 'vVEL1LokboE', 'watch', 'Messer: Network Architectures (N10)', 'Computer networking design and installation.', 'Computer networking design and installation.'],
   ['ICT 418', 'NeTwL-040ds', 'watch', 'Messer: Wireless Networking (N10)', 'Wireless LAN design and installation.', 'Wireless LAN design and installation.'],
   // ---------- SEN 401 (9 topics) ----------
-  ['SEN 401', 'hFcerjE0JEA', 'watch', 'BookSpokify Ch25: Configuration Management', 'Management of the SCM process.', 'Management of the software configuration management process – organisation context for software configuration management, constraints and guidance for software configuration management process.'],
-  ['SEN 401', 'iocyGUUxzdE', 'watch', 'BookSpokify Ch23: Project Planning', 'Planning for SCM and surveillance.', 'Planning for software configuration management, software configuration management plan, and surveillance of software configuration management.'],
-  ['SEN 401', 'SdEx3VOTOwk', 'watch', 'SE@Google Ch16: Version Control and Branch Management', 'Identification and software library.', 'Software configuration identification and software library.'],
-  ['SEN 401', 'MxWdGiYZ9Zk', 'watch', 'SE@Google: Critique of Google Code Review Tool (Ch19)', 'Configuration control: requesting and implementing changes.', 'Software configuration control – requesting, evaluating and approving software changes, implementing software changes, and deviations and waivers.'],
-  ['SEN 401', 'gNDHyVhPb8k', 'watch', 'SE@Google: Continuous Integration (Ch23)', 'Status accounting information and reporting.', 'Software configuration status accounting – software configuration status information and reporting.'],
-  ['SEN 401', 'G8p-nSJwkeY', 'watch', 'SE@Google: Static Analysis (Ch20)', 'Software configuration auditing.', 'Software configuration auditing.'],
-  ['SEN 401', '8mLuzmDaeOc', 'watch', 'SE@Google Ch9: Software Evolution', 'Maintenance: technical, management and cost issues.', 'Key issues in software maintenance – technical issues, management issues, maintenance cost estimation, and software maintenance measurement.'],
-  ['SEN 401', 'kUxIFgE5-0s', 'watch', 'SE@Google Ch22: Large-Scale Changes', 'Maintenance processes and activities.', 'Maintenance process – maintenance processes and activities.'],
-  ['SEN 401', 'C-2ZVyvFLxc', 'watch', 'SE@Google Ch15: Deprecation', 'Comprehension, re-engineering, migration, retirement.', 'Techniques for maintenance – program comprehension, re-engineering, reverse engineering, migration, and retirement.'],
+  ['SEN 401', '6aJ8qn8yV9U', 'watch', 'What is Configuration Management? (Mike Clayton)', 'Management of the SCM process.', 'Management of the software configuration management process – organisation context for software configuration management, constraints and guidance for software configuration management process.'],
+  ['SEN 401', 'nDp6uBFHfQU', 'watch', 'Configuration Management (TutorialsPoint)', 'Planning for SCM and surveillance.', 'Planning for software configuration management, software configuration management plan, and surveillance of software configuration management.'],
+  ['SEN 401', '2sjqTHE0zok', 'watch', 'MIT Missing Semester: Version Control (git)', 'Identification and software library.', 'Software configuration identification and software library.'],
+  ['SEN 401', 'yS2WM1Rk79k', 'watch', 'Software Maintenance (UVA CS 3240)', 'Maintenance processes and activities.', 'Software configuration control – requesting, evaluating and approving software changes, implementing software changes, and deviations and waivers.'],
+  ['SEN 401', 'S3oIZfdHmLQ', 'watch', 'DevOps Lecture 11: Jenkins', 'Implementing changes and continuous integration.', 'Software configuration status accounting – software configuration status information and reporting.'],
+  ['SEN 401', 'Lr4cMmaJHrg', 'watch', 'Static Program Analysis (PLISS, Anders Moller)', 'Software configuration auditing.', 'Software configuration auditing.'],
+  ['SEN 401', 'zDobUyqa-HE', 'watch', 'Program Evolution Dynamics and Software Maintenance (Prof. Shirdhonkar)', 'Maintenance processes and activities.', 'Maintenance process – maintenance processes and activities.'],
   // ---------- SEN 410 (9 topics) ----------
-  ['SEN 410', 'GBXWT0aBgtY', 'watch', 'BookSpokify Ch6: Architectural Design', 'In-depth look at software design.', 'An in-depth look at software design.'],
-  ['SEN 410', 'PsmNj6808_A', 'watch', 'Accelerate Ch5: Architecture', 'Design patterns, frameworks and architectures.', 'Continuation of the study of design patterns, frameworks, and architectures.'],
-  ['SEN 410', 'WdSeFWkum68', 'watch', 'BookSpokify Ch17: Distributed Software Engineering', 'Middleware architectures survey.', 'Survey of current middleware architectures.'],
-  ['SEN 410', 'HPe6e5B99u4', 'watch', 'BookSpokify Ch18: Service-Oriented Software Engineering', 'Distributed systems with middleware.', 'Design of distributed systems using middleware.'],
-  ['SEN 410', 'EMkF_ePMLUc', 'watch', 'BookSpokify Ch16: Component-Based Software Engineering', 'Component based design.', 'Component based design.'],
-  ['SEN 410', '6cbIlUNCpb8', 'watch', 'BookSpokify Ch7: Measuring Engineering Productivity', 'Measurement theory and metrics in design.', 'Measurement theory and appropriate use of metrics in design.'],
-  ['SEN 410', 'WV0U3BAz2lQ', 'watch', 'BookSpokify Ch11: Reliability Engineering', 'Reliability, performance, safety and security.', 'Designing for quality attributes such as reliability, performance, safety, security, reusability, etc.'],
+  ['SEN 410', 'FMKv8Vozf5c', 'watch', 'Chapter 9: Software Architecture and Design', 'In-depth look at software design.', 'An in-depth look at software design.'],
+  ['SEN 410', '2GZttnHChHo', 'watch', 'Douglas Schmidt: Overview of Patterns', 'Design patterns, frameworks and architectures.', 'Continuation of the study of design patterns, frameworks, and architectures.'],
+  ['SEN 410', 'mRAw7O4jGFI', 'watch', 'UMass: Networks and Distributed Systems', 'Design of distributed systems.', 'Survey of current middleware architectures.'],
+  ['SEN 410', '0gblD52BB5s', 'watch', 'Module 05: Service-Oriented Architecture', 'Design of service-oriented systems.', 'Design of distributed systems using middleware.'],
+  ['SEN 410', 'ifjf2FA-uss', 'watch', 'Software Metrics II (CSCI 3060U)', 'Measurement theory and metrics in design.', 'Measurement theory and appropriate use of metrics in design.'],
+  ['SEN 410', 'C94_arCm-Mw', 'watch', 'Availability and Reliability (Ian Sommerville)', 'Reliability, performance and safety.', 'Designing for quality attributes such as reliability, performance, safety, security, reusability, etc.'],
   ['SEN 410', '40Du7ear5v8', 'watch', 'NPTEL Lec-21: Classification of Cohesion', 'Internal qualities and complexity.', 'Measuring internal qualities and complexity of software.'],
   ['SEN 410', 'x90kIAFGYKE', 'watch', 'NPTEL Lec-12: Agile Model', 'Evaluation and evolution of designs.', 'Evaluation and evolution of designs.'],
 ];

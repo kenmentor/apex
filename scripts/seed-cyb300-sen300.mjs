@@ -2,11 +2,13 @@
 // Sourcing per docs/sourcing-quality-process.txt:
 // - ONE winner per topic (order preserved); backups noted in research, NOT imported.
 // - CYB: Professor Messer SY0-701. SEN: NPTEL Software Engineering / SPM
-//   (Prof. Rajib Mall, IIT-KGP) + BookSpokify Sommerville chapter series.
+//   (Prof. Rajib Mall, IIT-KGP), Ian Sommerville (author), MIT Missing Semester,
+//   PLISS, UVA, Tech Trek, TutorialsPoint, Mike Clayton — all human-taught.
+//   (BookSpokify/SE@Google TTS readings removed for low engagement/quality.)
 // - Comments proof: Messer pass testimonies; NPTEL institutional + learner proof.
 // - GAPS: CYB 301 deep-crypto math (13), CYB 302 biometrics depth (10),
 //   CYB 303 governance specifics + applied gap-analysis practical (8),
-//   SEN 304 QA depth (10), SEN 306 construction detail (8).
+//   SEN 304 QA depth (10), SEN 306 construction definition (1).
 //   Documented, never forced.
 // - SINGLE-HOME: every video carries the EXACT curriculum topic title in `topic`.
 // - Owner of bulk import: davidnwachukwum@gmail.com
@@ -87,18 +89,17 @@ const ROWS = [
   ['CYB 303', '48wRbMdHFVI', 'watch', 'Messer: Change Management', 'Mitigating risks and vulnerabilities.', 'Master how to mitigate risks and vulnerabilities.'],
   // ---------- SEN 301 (4 topics) ----------
   ['SEN 301', 'Ie7qzy3SY-E', 'watch', 'NPTEL L40: Object-Oriented Design Process', 'OO approach to information system development.', 'Object-oriented approach to information system development, particularly in reference to the earlier stages of analysis and design.'],
-  ['SEN 301', 'dfZdd8wER_I', 'watch', 'BookSpokify Ch5: System Modeling', 'Importance and principles of modelling, UML.', 'Importance of modelling, principles of modelling, object- oriented modelling, conceptual model of the Unified Modelling Language (UML), architecture, software development life cycle.'],
+  ['SEN 301', 'z5bsXJ5lnpk', 'watch', 'NPTEL Lec 33: Overview of Class Diagram', 'Importance and principles of modelling, UML.', 'Importance of modelling, principles of modelling, object- oriented modelling, conceptual model of the Unified Modelling Language (UML), architecture, software development life cycle.'],
   ['SEN 301', '7wo9PHfkyik', 'watch', 'NPTEL L31: Use Case Modelling', 'Object orientation and UML modelling.', 'The principles and basic concepts of object orientation and the different aspects of object-oriented modelling as represented by the UML technique.'],
   ['SEN 301', 'AFOIMgpJP0', 'watch', 'NPTEL L42: Examples of Object-Oriented Design', 'Case study of a UML-based CASE tool.', 'Case study of a typical UML-based CASE tool.'],
   // ---------- SEN 304 (6 of 16) ----------
-  ['SEN 304', 'EwmTlTsnr-k', 'watch', 'BookSpokify Ch8: Software Testing', 'The importance of software testing.', 'The importance of Software Testing.'],
+  ['SEN 304', '_9bmWEMhGFU', 'watch', 'NPTEL Lec 43: Basic Concepts in Testing I', 'The importance of software testing.', 'The importance of Software Testing.'],
   ['SEN 304', 'Su-bw6Of-g8', 'watch', 'NPTEL L44: Basic Concepts in Testing II', 'Verification and validation.', 'Understanding Verification and Validation.'],
-  ['SEN 304', 'kINvjhZqv-A', 'watch', 'BookSpokify Ch24: Quality Management', 'Assurance, verification and a culture of quality.', 'How to assure it and verify it, and the need for a culture of quality.'],
-  ['SEN 304', 'u9sIBzKzE6U', 'watch', 'BookSpokify Ch10: Dependable Systems', 'Avoidance of errors and quality problems.', 'Avoidance of errors and other quality problems.'],
+  ['SEN 304', 'WAEhq7KMTHI', 'watch', 'Software Quality Assurance Metrics (Tech Trek)', 'How to assure it and verify it, and the need for a culture of quality.', 'How to assure it and verify it, and the need for a culture of quality.'],
+  ['SEN 304', 'Oa27Xej1KdY', 'watch', 'Dependability (Ian Sommerville)', 'Avoidance of errors and quality problems.', 'Avoidance of errors and other quality problems.'],
   ['SEN 304', 'pXkCkRgPFrc', 'watch', 'NPTEL L55: White Box Testing', 'Testing, verification and validation techniques.', 'Testing, verification and validation techniques.'],
   ['SEN 304', 'ZIUJDS3O0BQ', 'watch', 'NPTEL L47: Unit Testing Strategies II', 'Black-box and white-box unit testing.', 'unit testing – black box and white testing techniques;'],
   // ---------- SEN 306 (4 of 12) ----------
-  ['SEN 306', 'zFz6s3TMq4U', 'watch', 'BookSpokify Ch7: Software Design and Implementation', 'Definition of software construction.', 'Definition of Software Construction;'],
   ['SEN 306', 'FTyncRpLd5g', 'watch', 'NPTEL L20: Modular Design', 'Design concepts, levels, heuristics.', 'Design in construction – Key design concepts, levels of design, design heuristics.'],
   ['SEN 306', 'mND1i92IBps', 'watch', 'NPTEL L18: Pseudocodes and Flowcharts', 'The pseudo code programming process.', 'The Pseudo Code Programming Process.'],
   ['SEN 306', 'reTh1yZH_A', 'watch', 'NPTEL L46: Unit Testing Strategies I', 'Developer testing and debugging.', 'Developer Testing and Debugging.'],
