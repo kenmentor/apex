@@ -10,6 +10,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -24,6 +25,13 @@ export default function ChunkGamePage() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState('')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null && typeof window !== 'undefined') mixRef.current = playMixParams(new URLSearchParams(window.location.search))
+  useEffect(() => {
+    const m = mixRef.current
+    if (m && m.courses.length) { const first = nextCourse(m); setPickedCourse(first); start(first) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const [round, setRound] = useState(null)
   const [slots, setSlots] = useState([])
   const [tray, setTray] = useState([])
@@ -66,7 +74,7 @@ export default function ChunkGamePage() {
   }, [result])
 
   async function start(courseOverride) {
-    const course = typeof courseOverride === 'string' ? courseOverride : pickedCourse
+    const course = typeof courseOverride === 'string' ? courseOverride : nextCourse(mixRef.current, pickedCourse)
     setLoading(true)
     setError('')
     try {
@@ -217,7 +225,7 @@ export default function ChunkGamePage() {
             Pieces <span className="font-semibold text-foreground">snap and lock</span> when they sit well.
           </p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} emptyLabel="🎲 Surprise me" />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} allowRandom />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} allowRandom />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button
             onClick={() => start()}

@@ -11,6 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 import FightArena from '@/components/game/FightArena'
@@ -74,6 +75,8 @@ function BossInner() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null) mixRef.current = playMixParams(params)
   const [course, setCourse] = useState('')
   const [boss, setBoss] = useState(BOSSES[0])
   const [bank, setBank] = useState(null)
@@ -113,7 +116,9 @@ function BossInner() {
   }, [])
 
   useEffect(() => {
-    if (params.get('course')) start(params.get('course'))
+    const m0 = mixRef.current
+    if (m0 && m0.courses.length) { const first = nextCourse(m0); setPickedCourse(first); start(first) }
+    else if (params.get('course')) start(params.get('course'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -157,7 +162,7 @@ function BossInner() {
   }, [result])
 
   async function start(courseOverride) {
-    const c = (typeof courseOverride === 'string' ? courseOverride : pickedCourse).trim()
+    const c = (typeof courseOverride === 'string' ? courseOverride : nextCourse(mixRef.current, pickedCourse)).trim()
     if (!c) { setError('Pick a course first.'); return }
     setLoading(true)
     setError('')
@@ -453,7 +458,7 @@ function BossInner() {
             <span className="font-semibold text-foreground">② Battle:</span> your power becomes damage. Answer each question within {STRIKE_SECONDS}s or {bossFor(pickedCourse || 'boss').name} <span className="font-semibold">strikes you first</span> — stall and you die.
           </p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => start()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Entering…' : 'Start training'}
@@ -540,7 +545,7 @@ function BossInner() {
           <p className={`text-lg font-black ${result.accuracy >= 80 ? 'text-emerald-600' : 'text-amber-600'}`}>{result.accuracy}%</p>
           {result.note && <p className="text-xs text-muted-foreground">{result.note}</p>}
           <div className="flex gap-2">
-            <button onClick={() => start(course)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
+            <button onClick={() => start()} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
               Rematch
             </button>
             <button onClick={() => { setPhase('setup'); setResult(null); setBank(null) }} className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">

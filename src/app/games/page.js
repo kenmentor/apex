@@ -1,40 +1,102 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Trophy, ChevronRight, Puzzle, Zap, Brain, PenLine, Flame, Eye, Swords, Keyboard, Play } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { ArrowLeft, Trophy, ChevronRight, Puzzle, Zap, Brain, PenLine, Flame, Eye, Keyboard, Play, Swords, ClipboardList, Shuffle } from 'lucide-react'
 import { motion } from 'motion/react'
+import PlaySetupSheet from '@/components/game/PlaySetupSheet'
+import { playQuery } from '@/lib/play-params'
 
 const GAMES = [
   { href: '/games/chunk', Icon: Puzzle, bg: 'linear-gradient(160deg, #2e1065 0%, #5b21b6 100%)', name: 'Reassembler', blurb: 'Snap shattered definitions back in order.', tag: 'Ordering' },
   { href: '/games/sprint', Icon: Zap, bg: 'linear-gradient(160deg, #451a03 0%, #b45309 100%)', name: 'Speed Sprint', blurb: 'Race the clock through rapid MCQs.', tag: 'Speed' },
   { href: '/games/pairs', Icon: Brain, bg: 'linear-gradient(160deg, #1e1b4b 0%, #4338ca 100%)', name: 'Match Pairs', blurb: 'Flip and match terms to definitions.', tag: 'Memory' },
-  { href: '/games/cloze', Icon: PenLine, bg: 'linear-gradient(160deg, #082f49 0%, #0369a1 100%)', name: 'Cloze Blanks', blurb: 'Produce the missing word from memory.', tag: 'Recall' },
+  { href: '/games/cloze', Icon: PenLine, bg: 'linear-gradient(160deg, #082f3d 0%, #0369a1 100%)', name: 'Cloze Blanks', blurb: 'Produce the missing word from memory.', tag: 'Recall' },
   { href: '/games/blitz', Icon: Flame, bg: 'linear-gradient(160deg, #431407 0%, #c2410c 100%)', name: 'Survival Blitz', blurb: 'Streak until 3 mistakes end the run.', tag: 'Survival' },
   { href: '/games/odd', Icon: Eye, bg: 'linear-gradient(160deg, #042f2e 0%, #0f766e 100%)', name: 'Odd One Out', blurb: 'Spot the smuggled-in intruder term.', tag: 'Eye' },
   { href: '/games/typing', Icon: Keyboard, bg: 'linear-gradient(160deg, #020617 0%, #334155 100%)', name: 'Typing Rush', blurb: 'Type terms faster than the clock.', tag: 'Speed' },
 ]
+
+const BOSS = { href: '/games/boss', Icon: Swords, bg: 'linear-gradient(150deg, #450a0a 0%, #7f1d1d 55%, #b91c1c 100%)', name: 'Boss Battle', blurb: 'Train up, then fight the boss. Win the run.', tag: 'Featured' }
 
 function Watermark({ Icon }) {
   return <Icon className="pointer-events-none absolute -bottom-5 -right-5 size-32 text-white/10" strokeWidth={1.5} />;
 }
 
 export default function GamesHubPage() {
+  const router = useRouter()
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [sheetGame, setSheetGame] = useState(null)
+  const [sheetActivity, setSheetActivity] = useState('game')
+
+  function openSetup(gameHref, activity = 'game') {
+    setSheetGame(gameHref)
+    setSheetActivity(activity)
+    setSheetOpen(true)
+  }
+
+  function handleStart(sel) {
+    setSheetOpen(false)
+    if (sel.activity === 'quiz') {
+      const code = sel.courses[0]
+      const slug = code.toLowerCase().replace(/\s+/g, '')
+      if (sel.topics.length === 1) {
+        router.push(`/plan/${slug}/${encodeURIComponent(sel.topics[0])}`)
+      } else {
+        router.push(`/courses/${code.toLowerCase().replace(/\s+/g, '')}/quiz`)
+      }
+      return
+    }
+    router.push(`${sel.game}?${playQuery(sel)}`)
+  }
+
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-4 px-4 pb-24 pt-6">
       <div className="flex items-center gap-2">
-        <Link href="/" aria-label="Back" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted"><ArrowLeft className="size-4" /></Link>
+        <Link href="/" aria-label="Back" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted">
+          <ArrowLeft className="size-4" />
+        </Link>
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-bold">Arcade</h1>
           <p className="text-[11px] text-muted-foreground">{GAMES.length + 1} ways to play · every run logged</p>
         </div>
       </div>
 
+      {/* Quick setup: pick courses + topics first, then play anything */}
+      <button
+        onClick={() => openSetup(null, 'game')}
+        className="flex w-full items-center gap-3 rounded-3xl border-2 border-dashed border-primary/40 bg-primary/5 p-4 text-left transition-all active:scale-[0.99]"
+      >
+        <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+          <Shuffle className="size-5" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-extrabold">Quick setup</span>
+          <span className="block truncate text-xs text-muted-foreground">Pick courses + topics, then any game or quiz</span>
+        </span>
+        <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+      </button>
+      <button
+        onClick={() => openSetup(null, 'quiz')}
+        className="flex w-full items-center gap-3 rounded-3xl border bg-card p-4 text-left transition-all active:scale-[0.99] hover:border-primary/40"
+      >
+        <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600">
+          <ClipboardList className="size-5" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-extrabold">Quiz setup</span>
+          <span className="block truncate text-xs text-muted-foreground">Pick a course + topic, jump straight in</span>
+        </span>
+        <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+      </button>
+
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 260, damping: 26 }}
       >
-        <Link href="/games/boss" className="relative block overflow-hidden rounded-3xl p-5 text-white shadow-lg" style={{ background: 'linear-gradient(150deg, #450a0a 0%, #7f1d1d 55%, #b91c1c 100%)' }}>
+        <button onClick={() => openSetup(BOSS.href, 'game')} className="relative block w-full overflow-hidden rounded-3xl p-5 text-left text-white shadow-lg" style={{ background: BOSS.bg }}>
           <Swords className="pointer-events-none absolute -bottom-6 -right-6 size-40 text-white/10" strokeWidth={1.25} />
           <span className="inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">Featured</span>
           <span className="mt-8 block text-2xl font-black tracking-tight">Boss Battle</span>
@@ -42,7 +104,7 @@ export default function GamesHubPage() {
           <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold text-black">
             <Play className="size-3.5" fill="currentColor" /> Enter the arena
           </span>
-        </Link>
+        </button>
       </motion.div>
 
       <div className="grid grid-cols-2 gap-2.5">
@@ -53,7 +115,7 @@ export default function GamesHubPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.08 + i * 0.05, type: 'spring', stiffness: 280, damping: 26 }}
           >
-            <Link href={g.href} className="relative flex aspect-[3/4] flex-col overflow-hidden rounded-3xl p-4 text-white shadow-md">
+            <button onClick={() => openSetup(g.href, 'game')} className="relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-3xl p-4 text-left text-white shadow-md transition-transform active:scale-[0.97]">
               <span className="absolute inset-0" style={{ background: g.bg }} aria-hidden />
               <Watermark Icon={g.Icon} />
               <span className="relative flex size-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
@@ -69,7 +131,7 @@ export default function GamesHubPage() {
                   </span>
                 </span>
               </span>
-            </Link>
+            </button>
           </motion.div>
         ))}
       </div>
@@ -79,18 +141,27 @@ export default function GamesHubPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.45, type: 'spring', stiffness: 280, damping: 26 }}
       >
-        <Link href="/races" className="relative flex items-center gap-3 overflow-hidden rounded-3xl p-4 text-white shadow-md" style={{ background: 'linear-gradient(150deg, #130f40 0%, #2c2c54 100%)' }}>
-          <Trophy className="pointer-events-none absolute -bottom-4 -right-4 size-28 text-white/10" strokeWidth={1.5} />
-          <span className="relative flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
+        <Link href="/races" className="relative flex items-center gap-3 overflow-hidden rounded-3xl border bg-card p-4 shadow-md transition-colors hover:bg-muted/40">
+          <Trophy className="pointer-events-none absolute -bottom-4 -right-4 size-28 text-muted-foreground/10" strokeWidth={1.5} />
+          <span className="relative flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted">
             <Trophy className="size-5" />
           </span>
           <span className="relative min-w-0 flex-1">
             <span className="block text-sm font-extrabold">Races</span>
-            <span className="block truncate text-[11px] text-white/70">Ghost-to-ghost against rivals, live rooms with stakes</span>
+            <span className="block truncate text-[11px] text-muted-foreground">Ghost-to-ghost against rivals, live rooms with stakes</span>
           </span>
-          <ChevronRight className="relative size-4 shrink-0 text-white/70" />
+          <ChevronRight className="relative size-4 shrink-0 text-muted-foreground" />
         </Link>
       </motion.div>
+
+      <PlaySetupSheet
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+        initialActivity={sheetActivity}
+        initialGame={sheetGame}
+        games={[BOSS, ...GAMES]}
+        onStart={handleStart}
+      />
     </div>
   )
 }

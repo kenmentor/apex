@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowLeft, Flame, Heart } from 'lucide-react'
@@ -11,6 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -39,6 +40,8 @@ function BlitzInner() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null) mixRef.current = playMixParams(params)
   const [bank, setBank] = useState(null)
   const [idx, setIdx] = useState(0)
   const [hearts, setHearts] = useState(HEARTS)
@@ -59,7 +62,9 @@ function BlitzInner() {
   }, [])
 
   useEffect(() => {
-    if (params.get('course')) start(params.get('course'))
+    const m0 = mixRef.current
+    if (m0 && m0.courses.length) { const first = nextCourse(m0); setPickedCourse(first); start(first) }
+    else if (params.get('course')) start(params.get('course'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -69,7 +74,7 @@ function BlitzInner() {
   }, [result])
 
   async function start(courseOverride) {
-    const course = (typeof courseOverride === 'string' ? courseOverride : pickedCourse).trim()
+    const course = (typeof courseOverride === 'string' ? courseOverride : nextCourse(mixRef.current, pickedCourse)).trim()
     if (!course) { setError('Pick a course first.'); return }
     setLoading(true)
     setError('')
@@ -169,7 +174,7 @@ function BlitzInner() {
           <p className="text-sm font-semibold">How long can you survive?</p>
           <p className="text-sm text-muted-foreground">One MCQ at a time, no clock — but 3 wrong answers and the run is over. Streaks build fire and raise your race difficulty. Wrong resets the streak.</p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => start()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Loading…' : 'Start run'}
@@ -242,7 +247,7 @@ function BlitzInner() {
           </p>
           {result.note && <p className="text-xs text-muted-foreground">{result.note}</p>}
           <div className="flex gap-2">
-            <button onClick={() => start(bank.course)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
+            <button onClick={() => start()} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
               Run it back
             </button>
             <button onClick={() => { setPhase('setup'); setResult(null); setBank(null) }} className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">

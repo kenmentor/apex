@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowLeft, Timer } from 'lucide-react'
@@ -11,6 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -36,6 +37,8 @@ function OddInner() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null) mixRef.current = playMixParams(params)
   const [sets, setSets] = useState(null)
   const [course, setCourse] = useState('')
   const [idx, setIdx] = useState(0)
@@ -55,7 +58,9 @@ function OddInner() {
   }, [])
 
   useEffect(() => {
-    if (params.get('course')) load(params.get('course'))
+    const m0 = mixRef.current
+    if (m0 && m0.courses.length) { const first = nextCourse(m0); setPickedCourse(first); load(first) }
+    else if (params.get('course')) load(params.get('course'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -160,7 +165,7 @@ function OddInner() {
           <p className="text-sm font-semibold">Spot the intruder.</p>
           <p className="text-sm text-muted-foreground">Four terms, three from one topic and one smuggled in from another. You only catch it if you <span className="font-semibold text-foreground">know what belongs together</span>. One tap each — no second chances.</p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => load()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Hiding…' : 'Start hunting'}
@@ -225,7 +230,7 @@ function OddInner() {
           <p className="text-sm text-muted-foreground">{result.correct}/{result.total} intruders in {result.seconds}s · {result.mistakes} missed</p>
           {result.note && <p className="text-xs text-muted-foreground">{result.note}</p>}
           <div className="flex gap-2">
-            <button onClick={() => load(course)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
+            <button onClick={() => load()} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
               Hunt again
             </button>
             <button onClick={() => { setPhase('setup'); setResult(null); setSets(null) }} className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowLeft, Timer, MousePointerClick } from 'lucide-react'
@@ -11,6 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -63,6 +64,8 @@ function PairsInner() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null) mixRef.current = playMixParams(params)
   const [round, setRound] = useState(null)
   const [deck, setDeck] = useState([])
   const [open, setOpen] = useState([]) // face-up card keys (max 2)
@@ -83,7 +86,9 @@ function PairsInner() {
   }, [])
 
   useEffect(() => {
-    if (params.get('course')) load(params.get('course'))
+    const m0 = mixRef.current
+    if (m0 && m0.courses.length) { const first = nextCourse(m0); setPickedCourse(first); load(first) }
+    else if (params.get('course')) load(params.get('course'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -205,7 +210,7 @@ function PairsInner() {
           <p className="text-sm font-semibold">Flip. Remember. Match.</p>
           <p className="text-sm text-muted-foreground">Terms and definitions are shuffled face-down. Flip two — a true match locks in green, a miss costs you (−5 each). Clear the whole board.</p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => load()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Shuffling…' : 'Start matching'}
@@ -250,7 +255,7 @@ function PairsInner() {
           <p className="text-sm text-muted-foreground">{result.done}/{result.total} pairs · {result.mistakes} mistakes · {result.seconds}s · {result.flips} flips</p>
           {result.note && <p className="text-xs text-muted-foreground">{result.note}</p>}
           <div className="flex gap-2">
-            <button onClick={() => load(round.course || pickedCourse)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
+            <button onClick={() => load()} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
               Replay
             </button>
             <button onClick={() => { setPhase('setup'); setResult(null); setRound(null) }} className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">

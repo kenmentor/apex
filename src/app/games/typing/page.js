@@ -11,6 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -38,6 +39,8 @@ function TypingInner() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null) mixRef.current = playMixParams(params)
   const [course, setCourse] = useState('')
   const [deck, setDeck] = useState([])
   const [idx, setIdx] = useState(0)
@@ -62,7 +65,9 @@ function TypingInner() {
   }, [])
 
   useEffect(() => {
-    if (params.get('course')) start(params.get('course'))
+    const m0 = mixRef.current
+    if (m0 && m0.courses.length) { const first = nextCourse(m0); setPickedCourse(first); start(first) }
+    else if (params.get('course')) start(params.get('course'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -93,7 +98,7 @@ function TypingInner() {
   }, [idx, phase, result, deck.length, course])
 
   async function start(courseOverride) {
-    const c = (typeof courseOverride === 'string' ? courseOverride : pickedCourse).trim()
+    const c = (typeof courseOverride === 'string' ? courseOverride : nextCourse(mixRef.current, pickedCourse)).trim()
     if (!c) { setError('Pick a course first.'); return }
     setLoading(true)
     setError('')
@@ -202,7 +207,7 @@ function TypingInner() {
           <p className="text-sm font-semibold">Fingers faster than memory?</p>
           <p className="text-sm text-muted-foreground">Definitions flash for <span className="font-semibold text-foreground">60 seconds</span> — type the exact term. Close spelling counts. Streaks build combo fire. Skip what you don't know, speed is everything.</p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button onClick={() => start()} disabled={loading} className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
             {loading ? 'Loading…' : 'Start the clock'}
@@ -269,7 +274,7 @@ function TypingInner() {
           <p className="text-sm text-muted-foreground">{result.correct}/{result.shown} terms · {result.perMin}/min · best combo x{result.bestCombo} · {result.seconds}s</p>
           {result.note && <p className="text-xs text-muted-foreground">{result.note}</p>}
           <div className="flex gap-2">
-            <button onClick={() => start(course)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
+            <button onClick={() => start()} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
               Again
             </button>
             <button onClick={() => { setPhase('setup'); setResult(null); setDeck([]) }} className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">

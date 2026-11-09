@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowLeft, Timer, Flame, Zap } from 'lucide-react'
@@ -11,6 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
 
@@ -36,6 +37,8 @@ function SprintInner() {
   const [courses, setCourses] = useState([])
   const [pickedCourse, setPickedCourse] = useState(params.get('course') || '')
   const [pickerOpen, setPickerOpen] = useState(false)
+  const mixRef = useRef(null)
+  if (mixRef.current === null) mixRef.current = playMixParams(params)
   const [count, setCount] = useState(10)
   const [bank, setBank] = useState(null)
   const [idx, setIdx] = useState(0)
@@ -57,7 +60,9 @@ function SprintInner() {
 
   // If opened with ?course= (race link), jump straight in.
   useEffect(() => {
-    if (params.get('course')) start(params.get('course'), 10)
+    const m0 = mixRef.current
+    if (m0 && m0.courses.length) { const first = nextCourse(m0); setPickedCourse(first); start(first, 10) }
+    else if (params.get('course')) start(params.get('course'), 10)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -80,7 +85,7 @@ function SprintInner() {
   }, [result])
 
   async function start(courseOverride, nOverride) {
-    const course = (typeof courseOverride === 'string' ? courseOverride : pickedCourse).trim()
+    const course = (typeof courseOverride === 'string' ? courseOverride : nextCourse(mixRef.current, pickedCourse)).trim()
     const n = nOverride || count
     if (!course) { setError('Pick a course first.'); return }
     setLoading(true)
@@ -176,7 +181,7 @@ function SprintInner() {
           <p className="text-sm font-semibold">How fast can you think? ⚡</p>
           <p className="text-sm text-muted-foreground">One question at a time against the clock. Tap fast — streaks build fire, mistakes kill it. No going back.</p>
           <CoursePickerButton courses={courses} value={pickedCourse} onOpen={() => setPickerOpen(true)} />
-          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={setPickedCourse} onClose={() => setPickerOpen(false)} />
+          <CoursePickerModal open={pickerOpen} courses={courses} value={pickedCourse} onPick={(c) => { mixRef.current = null; setPickedCourse(c) }} onClose={() => setPickerOpen(false)} />
           <div className="flex gap-1.5">
             {[5, 10, 15].map(n => (
               <button key={n} onClick={() => setCount(n)} className={'flex-1 rounded-xl border px-3 py-1.5 text-xs font-bold ' + (count === n ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-muted')}>
@@ -254,7 +259,7 @@ function SprintInner() {
           </p>
           {result.note && <p className="text-xs text-muted-foreground">{result.note}</p>}
           <div className="flex gap-2">
-            <button onClick={() => start(bank.course, bank.questions.length)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
+            <button onClick={() => start(undefined, bank.questions.length)} disabled={loading} className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-bold hover:bg-muted disabled:opacity-50">
               Retry
             </button>
             <button onClick={() => { setPhase('setup'); setResult(null); setBank(null) }} className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground">
