@@ -77,7 +77,10 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
 
   if (loading) return <div className="flex min-h-dvh items-center justify-center pb-24"><Skeleton className="h-64 w-full max-w-md rounded-xl" /></div>
 
-  const P = plan || mockPlan()
+  // Never fall back to another department's plan and never invent courses:
+  // without a real plan we show the course shell (from real content when
+  // available) with genuinely empty tabs + add-content CTAs.
+  const P = plan || (demoMode ? mockPlan() : { courses: [] })
   const planCourse = (P.courses || []).find(c => String(c.code || '').toLowerCase().replace(/\s+/g, '') === String(slug || '').toLowerCase())
   const code = planCourse?.code || content?.courseCode || String(slug || '').toUpperCase()
   const title = planCourse?.title || 'Course content'
@@ -97,17 +100,17 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
   // Sections: plan topics matched to content by id, then title.
   // No plan entry (or no id/title match) → fall back to content topics.
   // No topics at all but course has media → one flat "All content" block.
-  // Empty course (topics but zero media anywhere, e.g. CSC 309) → auto-fill
-  // every real topic heading with sample content so the layout is visible.
-  // Same for ?demo=1. Always badged "Demo content".
+  // Empty course → show the real (empty) topic headings with add-content
+  // CTAs. No sample content is ever injected into a real course; ?demo=1
+  // is the only way to see showcase data (badged "Demo content").
   const contentTopics = content?.topics || []
   const planTopics = planCourse?.topics || []
   const baseTopics = contentTopics.length
     ? contentTopics
     : planTopics.map(pt => ({ id: pt.id, title: pt.title, order: null, tabs: { video: [], audio: [], pdf: [], text: [], other: [] }, counts: {} }))
-  const hasAnyMedia = baseTopics.some(t => ['video', 'audio', 'pdf', 'text'].some(k => (t.tabs?.[k] || []).length > 0))
-    || (content?.all && Object.values(content.all).some(a => a.length))
-  const showDemo = demoMode || (content && !hasAnyMedia && baseTopics.length > 0)
+  // Show real (possibly empty) topics — never auto-fill sample content into
+  // a real course. Only an explicit ?demo=1 shows the showcase data.
+  const showDemo = demoMode
   // DB unreachable and nothing loaded at all (offline): full preview mode so
   // the page stays judgeable. Badged differently from sample-data demo.
   const offlineDemo = loadFailed && !plan && !content
@@ -129,20 +132,7 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
     return out
   }
   const figuredDemo = showDemo || offlineDemo
-  let baseForDisplay = baseTopics
-  if (offlineDemo && !baseForDisplay.length) {
-    // Nothing at all came back (offline): borrow a mock course outline so the
-    // layout, banners and contributors stay judgeable.
-    const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, '')
-    const mp = mockPlan()
-    const hit = mp.courses.find(c => norm(c.code) === norm(code)) || mp.courses[0]
-    if (hit) {
-      baseForDisplay = hit.topics.map(t => ({
-        id: t.id, title: t.title, order: null,
-        tabs: { video: [], audio: [], pdf: [], text: [], other: [] }, counts: {},
-      }))
-    }
-  }
+  const baseForDisplay = baseTopics
   const topicsForDisplay = figuredDemo
     ? baseForDisplay.map((t, i) => {
         const mock = mockTopicContent(code, t.title || `Topic ${i + 1}`)
@@ -277,8 +267,25 @@ export default function CoursePlanView({ slug, backHref = '/plan', headerSuffix 
       ))}
 
       {tab !== 'quiz' && visible.length === 0 && (
-        <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed py-10 text-muted-foreground">
-          <p className="text-xs">No {tab} content in this course yet — new uploads will appear here.</p>
+        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-4 py-10 text-center text-muted-foreground">
+          {offlineDemo ? (
+            <>
+              <p className="text-xs font-semibold">Couldn’t load course content — check your connection.</p>
+              <button onClick={() => window.location.reload()} className="rounded-xl bg-primary px-5 py-2 text-xs font-bold text-primary-foreground">
+                Retry
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-xs">No {tab} content in this course yet — be the first to add some.</p>
+              <Link
+                href={`/contribute/${String(slug).toLowerCase().replace(/\s+/g, '')}?tab=${tab === 'text' ? 'text' : tab === 'audio' ? 'audio' : tab === 'pdf' ? 'pdf' : 'video'}&add=1`}
+                className="flex items-center gap-1.5 rounded-xl bg-primary px-5 py-2 text-xs font-bold text-primary-foreground"
+              >
+                <Plus className="size-3.5" strokeWidth={3} /> Add {tab === 'video' ? 'a video' : tab === 'audio' ? 'audio' : tab === 'pdf' ? 'a PDF' : 'a note'}
+              </Link>
+            </>
+          )}
         </div>
       )}
 
@@ -668,6 +675,26 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
       {tab === 'pdf' && items.map(p => (
         <MediaCard key={p.id} item={{ ...p, type: 'pdf' }} onView={markViewed} onOpenPdf={(item) => { markViewed(); speech.stop(); setReader({ kind: 'pdf', item }) }} />
       ))}
+
+      {['video', 'audio', 'text', 'pdf'].includes(tab) && items.length === 0 && (
+        <div className="rounded-xl border border-dashed bg-muted/20 px-3 py-3.5 text-center">
+          <p className="truncate text-[11px] font-semibold text-muted-foreground">Nothing here yet for “{content.title}”</p>
+          <div className="mt-2 flex justify-center gap-2">
+            <Link
+              href={`/contribute/${String(course || '').toLowerCase().replace(/\s+/g, '')}?topic=${encodeURIComponent(content.title || '')}&tab=video&add=1`}
+              className="flex items-center gap-1 rounded-lg bg-primary px-3.5 py-1.5 text-[11px] font-bold text-primary-foreground"
+            >
+              <Plus className="size-3" strokeWidth={3} /> Video
+            </Link>
+            <Link
+              href={`/contribute/${String(course || '').toLowerCase().replace(/\s+/g, '')}?topic=${encodeURIComponent(content.title || '')}&tab=text&add=1`}
+              className="flex items-center gap-1 rounded-lg border px-3.5 py-1.5 text-[11px] font-bold hover:bg-muted"
+            >
+              <Plus className="size-3" strokeWidth={3} /> Note
+            </Link>
+          </div>
+        </div>
+      )}
 
       {tab === 'flashcards' && (
         <Link

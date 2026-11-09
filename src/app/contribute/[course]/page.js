@@ -63,6 +63,28 @@ export default function ContributeCoursePage({ params }) {
       .catch(() => {})
   }, [slug])
 
+  // Deep link from empty topics ("Add video / Add note"): ?topic=<title>&tab=<kind>&add=1
+  // preselects the topic + tab and opens the add sheet immediately.
+  useEffect(() => {
+    if (!content?.topics?.length) return
+    let sp
+    try { sp = new URLSearchParams(window.location.search) } catch { return }
+    const tabParam = (sp.get('tab') || '').toLowerCase()
+    const validTab = TABS.some(t => t.id === tabParam) ? tabParam : null
+    if (validTab) setTab(validTab)
+    const topicParam = (sp.get('topic') || '').trim()
+    if (!topicParam) return
+    const hit = content.topics.find(t => String(t.title || '').trim().toLowerCase() === topicParam.toLowerCase())
+    const kind = validTab || tab
+    if (hit) {
+      setOpenTopic(hit.id)
+      if (sp.get('add') === '1') setAddFor({ topic: hit.title, kind })
+    } else if (sp.get('add') === '1') {
+      setAddFor({ topic: topicParam, kind })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content])
+
   if (!ready) return <div className="flex min-h-dvh items-center justify-center pb-24"><p className="text-sm text-muted-foreground">Opening contributor view…</p></div>
 
   const role = user?.role || 'student'
