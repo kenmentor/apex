@@ -52,10 +52,11 @@ export async function GET(request) {
     const viewer = await getUserFromToken(request).catch(() => null)
     const isSelf = viewer && String(viewer.email || '').toLowerCase() === email
 
-    const [qCol, rCol, mCol] = await Promise.all([
+    const [qCol, rCol, mCol, vCol] = await Promise.all([
       getCollection('questions').catch(() => null),
       getCollection('readings').catch(() => null),
       getCollection('user_materials').catch(() => null),
+      getCollection('videos').catch(() => null),
     ])
 
     const approvedMatch = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
@@ -92,6 +93,7 @@ export async function GET(request) {
         feedAgg(qCol, 'authorEmail'),
         feedAgg(rCol, 'authorEmail'),
         feedAgg(mCol, 'ownerEmail'),
+        feedAgg(vCol, 'ownerEmail'),
       ])
 
       // Contributor rank ladder (approved counts) for rank context.
@@ -102,6 +104,7 @@ export async function GET(request) {
         if (qCol) (await qCol.aggregate([{ $match: approvedMatch }, { $group: { _id: '$authorEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])).forEach(r => add(r._id, r.n))
         if (rCol) (await rCol.aggregate([{ $match: approvedMatch }, { $group: { _id: '$authorEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])).forEach(r => add(r._id, r.n))
         if (mCol) (await mCol.aggregate([{ $match: approvedMatch }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])).forEach(r => add(r._id, r.n))
+        if (vCol) (await vCol.aggregate([{ $match: approvedMatch }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])).forEach(r => add(r._id, r.n))
         order = [...counts.entries()].filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).map(([e]) => e)
       } catch {}
 
@@ -124,16 +127,18 @@ export async function GET(request) {
     // ---- Single profile mode: aggregates for math (no doc cap) ----
     const approvedOf = (col, field, email) =>
       col ? col.countDocuments({ [field]: email, ...approvedMatch }).catch(() => 0) : Promise.resolve(0)
-    const [qTotal, rTotal, mTotal, qAppr, rAppr, mAppr] = await Promise.all([
+    const [qTotal, rTotal, mTotal, vTotal, qAppr, rAppr, mAppr, vAppr] = await Promise.all([
       qCol ? qCol.countDocuments({ authorEmail: email }).catch(() => 0) : Promise.resolve(0),
       rCol ? rCol.countDocuments({ authorEmail: email }).catch(() => 0) : Promise.resolve(0),
       mCol ? mCol.countDocuments({ ownerEmail: email }).catch(() => 0) : Promise.resolve(0),
+      vCol ? vCol.countDocuments({ ownerEmail: email }).catch(() => 0) : Promise.resolve(0),
       approvedOf(qCol, 'authorEmail', email),
       approvedOf(rCol, 'authorEmail', email),
       approvedOf(mCol, 'ownerEmail', email),
+      approvedOf(vCol, 'ownerEmail', email),
     ])
     // Exact totals from counts (no doc cap); days + courses from aggregates.
-    const approved = qAppr + rAppr + mAppr
+    const approved = qAppr + rAppr + mAppr + vAppr
     let pending = 0
     if (isSelf) {
       const [qp, rp, mp] = await Promise.all([
@@ -145,7 +150,7 @@ export async function GET(request) {
     }
     const byDay = {}
     const courses = new Set()
-    for (const [col, field] of [[qCol, 'authorEmail'], [rCol, 'authorEmail'], [mCol, 'ownerEmail']]) {
+    for (const [col, field] of [[qCol, 'authorEmail'], [rCol, 'authorEmail'], [mCol, 'ownerEmail'], [vCol, 'ownerEmail']]) {
       if (!col) continue
       const rows = await col.aggregate([
         { $match: { [field]: email, ...approvedMatch } },
@@ -174,7 +179,7 @@ export async function GET(request) {
     if (!byDay[keyOf(probe)]) probe.setDate(probe.getDate() - 1)
     while (byDay[keyOf(probe)]) { streak += 1; probe.setDate(probe.getDate() - 1) }
 
-    // Rank: approved contributions per author across all three stores.
+    // Rank: approved contributions per author across all four stores.
     let rank = null
     let totalContributors = 0
     try {
@@ -190,6 +195,10 @@ export async function GET(request) {
       }
       if (mCol) {
         const rows = await mCol.aggregate([{ $match: approvedMatch }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])
+        rows.forEach(r => add(r._id, r.n))
+      }
+      if (vCol) {
+        const rows = await vCol.aggregate([{ $match: approvedMatch }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])
         rows.forEach(r => add(r._id, r.n))
       }
       const ordered = [...counts.entries()].filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])

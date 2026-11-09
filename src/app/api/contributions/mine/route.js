@@ -23,16 +23,18 @@ export async function GET(request) {
     if (!user) return NextResponse.json({ error: 'Sign in required' }, { status: 401 })
     const me = String(user.email).toLowerCase()
 
-    const [qCol, rCol, mCol] = await Promise.all([
+    const [qCol, rCol, mCol, vCol] = await Promise.all([
       getCollection('questions').catch(() => null),
       getCollection('readings').catch(() => null),
       getCollection('user_materials').catch(() => null),
+      getCollection('videos').catch(() => null),
     ])
 
-    const [qs, rs, ms] = await Promise.all([
+    const [qs, rs, ms, vs] = await Promise.all([
       qCol ? qCol.find({ authorEmail: me }).project({ question: 1, courseCode: 1, status: 1, createdAt: 1, questionType: 1 }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
       rCol ? rCol.find({ authorEmail: me }).project({ title: 1, courseCode: 1, topic: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
       mCol ? mCol.find({ ownerEmail: me }).project({ title: 1, fileName: 1, courseCode: 1, topic: 1, itemKind: 1, url: 1, status: 1, createdAt: 1 }).sort({ createdAt: -1 }).limit(60).toArray().catch(() => []) : [],
+      vCol ? vCol.find({ ownerEmail: me }).project({ title: 1, courseCode: 1, topic: 1, status: 1, url: 1 }).sort({ courseCode: 1 }).limit(60).toArray().catch(() => []) : [],
     ])
 
     // Totals + heatmap math runs on SERVER-SIDE aggregates (no 500-doc cap),
@@ -72,22 +74,24 @@ export async function GET(request) {
       } catch {}
       return out
     }
-    const [qSum, rSum, mSum] = await Promise.all([
+    const [qSum, rSum, mSum, vSum] = await Promise.all([
       summarize(qCol, 'authorEmail'),
       summarize(rCol, 'authorEmail'),
       summarize(mCol, 'ownerEmail'),
+      summarize(vCol, 'ownerEmail'),
     ])
 
     const items = [
       ...qs.map(d => ({ collection: 'questions', id: String(d._id), title: String(d.question || '').slice(0, 120) || 'Untitled question', courseCode: d.courseCode || null, topic: null, kind: d.questionType || 'quiz', status: d.status || 'approved', createdAt: d.createdAt || null, link: d.courseCode ? `/courses/${courseSlug(d.courseCode)}/quiz` : '/contribute' })),
       ...rs.map(d => ({ collection: 'readings', id: String(d._id), title: d.title || 'Untitled note', courseCode: d.courseCode || null, topic: d.topic || null, kind: 'notes', status: d.status || 'approved', createdAt: d.createdAt || null, link: d.courseCode ? `/courses/${courseSlug(d.courseCode)}/theory` : '/contribute' })),
       ...ms.map(d => ({ collection: 'user_materials', id: String(d._id), title: d.title || d.fileName || 'Untitled file', courseCode: d.courseCode || null, topic: d.topic || null, kind: d.itemKind || 'file', status: d.status || 'approved', createdAt: d.createdAt || null, link: d.url || '/folders' })),
+      ...vs.map(d => ({ collection: 'videos', id: String(d._id), title: d.title || 'Untitled video', courseCode: d.courseCode || null, topic: d.topic || null, kind: 'video', status: d.status || 'approved', createdAt: null, link: d.courseCode ? `/courses/${courseSlug(d.courseCode)}` : '/search' })),
     ].sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')))
 
     const byStatus = { pending: 0, approved: 0, rejected: 0, revoked: 0 }
     const byCourse = {}
     const byDay = {}
-    for (const s of [qSum, rSum, mSum]) {
+    for (const s of [qSum, rSum, mSum, vSum]) {
       for (const k of STATUSES) byStatus[k] += s[k] || 0
       for (const [c, v] of Object.entries(s.byCourse)) {
         byCourse[c] = byCourse[c] || { courseCode: c, total: 0, approved: 0 }
@@ -120,7 +124,7 @@ export async function GET(request) {
       weeks.push(days)
     }
 
-    // Rank: approved contributions per author across all three stores.
+    // Rank: approved contributions per author across all four stores (videos count too).
     let rank = null
     let totalContributors = 0
     try {
@@ -136,6 +140,10 @@ export async function GET(request) {
       }
       if (mCol) {
         const rows = await mCol.aggregate([{ $match: { status: { $nin: ['pending', 'rejected', 'revoked'] } } }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])
+        rows.forEach(r => add(r._id, r.n))
+      }
+      if (vCol) {
+        const rows = await vCol.aggregate([{ $match: { status: { $nin: ['pending', 'rejected', 'revoked'] } } }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => [])
         rows.forEach(r => add(r._id, r.n))
       }
       const ordered = [...counts.entries()].filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1])
