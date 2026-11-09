@@ -1,13 +1,13 @@
 // CYB 301/302/303 + SEN 301/304/306 video banks.
 // Sourcing per docs/sourcing-quality-process.txt:
 // - ONE winner per topic (order preserved); backups noted in research, NOT imported.
-// - CYB: Professor Messer SY0-701 (PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv).
-//   Comments proof: pass testimonies, "much better, i understand everything".
-// - SEN: NPTEL Software Engineering / SPM (Prof. Rajib Mall, IIT-KGP) +
-//   BookSpokify Sommerville chapter series. Institutional authority as proof.
+// - CYB: Professor Messer SY0-701. SEN: NPTEL Software Engineering / SPM
+//   (Prof. Rajib Mall, IIT-KGP) + BookSpokify Sommerville chapter series.
+// - Comments proof: Messer pass testimonies; NPTEL institutional + learner proof.
 // - GAPS: CYB 301 deep-crypto math (13), CYB 302 biometrics depth (10),
-//   CYB 303 governance specifics (7), SEN 304 QA depth (10), SEN 306
-//   construction detail (8). Documented, never forced.
+//   CYB 303 governance specifics + applied gap-analysis practical (8),
+//   SEN 304 QA depth (10), SEN 306 construction detail (8).
+//   Documented, never forced.
 // - SINGLE-HOME: every video carries the EXACT curriculum topic title in `topic`.
 // - Owner of bulk import: davidnwachukwum@gmail.com
 // Re-runnable: wipes each course's videos first, inserts in topic order.
@@ -41,7 +41,7 @@ const ROWS = [
   ['CYB 301', 'jpsc4c7lntw', 'watch', 'Messer: Encrypting Data', 'Introduction to cryptography, symmetric and asymmetric cryptography, key management.', 'Introduction to cryptography, symmetric and asymmetric cryptography, key management, and encryption algorithms.'],
   ['CYB 301', '7aJaEQy6Yoc', 'watch', 'Messer: Cryptographic Attacks', 'Cryptanalysis.', 'Cryptanalysis.'],
   ['CYB 301', 'EcGmQjl6XEo', 'watch', 'Messer: Hashing and Digital Signatures', 'Hash functions.', 'Hash functions.'],
-  ['CYB 301', 'AhaZtj5P2a8', 'watch', 'Messer: AAA', 'Data integrity, authentication and perfect secrecy.', 'Data integrity, authentication, and perfect secrecy.'],
+  ['CYB 301', 'AhaZtj5P2a8', 'watch', 'Messer: Authentication, Authorization and Accounting', 'Data integrity, authentication and perfect secrecy.', 'Data integrity, authentication, and perfect secrecy.'],
   ['CYB 301', 'xHAMEF7-inQ', 'watch', 'Messer: Public Key Infrastructure', 'Public-key cryptography and ElGamal.', 'Public-key cryptography and discrete algorithms-ELGamal cryptography.'],
   ['CYB 301', 'cLa94BZH_9s', 'watch', 'Messer: Certificates', 'Security of ElGamal and RSA encryption, RSA key generation.', 'Security of ELGamal and RSA Encryption, and RSA Key Generation.'],
   ['CYB 301', 'u61J0xR_XPU', 'watch', 'Messer: Encryption Technologies', 'Conventional and public-key cryptography.', 'Conventional and public-key cryptography.'],
@@ -54,7 +54,7 @@ const ROWS = [
   ['CYB 301', '-ZfbifHwEVE', 'watch', 'Messer: Password Attacks', 'Applied cryptanalysis of ciphers and protocols.', 'Practice cryptanalysis of cipher and how to use protocols.'],
   ['CYB 301', 'WQRZMMLUkGE', 'watch', 'Messer: User Training', 'Procedures for proper use of cryptography.', 'Learn the procedures and methods for the proper use of cryptography in secure systems.'],
   // ---------- CYB 302 (8 of 18) ----------
-  ['CYB 302', 'MpIzA4fNWew', 'watch', 'Messer: Multifactor Authentication', 'Biometrics and digital image processing as authentication factors.', 'Introduction to biometrics and digital image processing.'],
+  ['CYB 302', 'MpIzA4fNWew', 'watch', 'Messer: Multifactor Authentication', 'Biometrics and digital image processing as factors.', 'Introduction to biometrics and digital image processing.'],
   ['CYB 302', 'R0W0_gZCVzk', 'watch', 'Messer: Data Types and Classifications', 'Biometric data: raw, template and data methods.', 'Biometric data: raw data, template data, and data methods.'],
   ['CYB 302', 'ZoOyyqhptik', 'watch', 'Messer: Identity and Access Management', 'Biometric matching basics: enrolment and authentication.', 'Biometric matching basics: biometric authentication, enrolment, correct user, and incorrect user.'],
   ['CYB 302', 'leX_Qa7wqB4', 'watch', 'Messer: Protecting Data', 'Storage of biometric data elements and quality.', 'Biometric data: Storage of biometric data elements, transactions, errors and quality upgrades.'],
@@ -65,7 +65,7 @@ const ROWS = [
   // ---------- CYB 303 (23 of 30) ----------
   ['CYB 303', 'STM3EUvL7wg', 'watch', 'Messer: Security Controls', 'Principles of applied information security management.', 'Principles of applied information security management.'],
   ['CYB 303', 'FDFxGLnZtoY', 'watch', 'Messer: Zero-day Vulnerabilities', 'Cybersecurity challenges.', 'Cybersecurity challenges.'],
-  ['CYB 303', '13KNjPexnEI', 'watch', 'Messer: Third-party Risk Assessment', 'Cybersecurity risks, challenges and the path forward.', 'Cybersecurity risks, challenges and the path forward.'],
+  ['CYB 303', '13KNjPexnEI', 'watch', 'Messer: Third-party Risk Assessment', 'Risks, challenges and the path forward.', 'Cybersecurity risks, challenges and the path forward.'],
   ['CYB 303', '9B0mtWk_AM0', 'watch', 'Messer: Vulnerability Scanning', 'Recognising risks.', 'Recognising risks.'],
   ['CYB 303', 'uo2Yw720mv4', 'watch', 'Messer: Audits and Assessments', 'Decision and risk analysis techniques.', 'Overview of decision and risk analysis techniques.'],
   ['CYB 303', 'P9xakfmX70c', 'watch', 'Messer: Vulnerability Remediation', 'Mitigating risks and vulnerabilities.', 'Mitigating risks and vulnerabilities.'],
@@ -82,15 +82,14 @@ const ROWS = [
   ['CYB 303', 'ZDJ-BLPLWq4', 'watch', 'Messer: Monitoring Data', 'Assessment of threats and vulnerabilities.', 'Assessment of threats and vulnerabilities.'],
   ['CYB 303', 'yDeDGCh_PDs', 'watch', 'Messer: Segmentation and Access Control', 'Classified and sensitive data.', 'Dealing with classified/sensitive data.'],
   ['CYB 303', 'l64La1xYXL4', 'watch', 'Messer: Secure Infrastructures', 'Implementing frameworks against threats.', 'Practical considerations when implementing the frameworks to address current and future threats.'],
-  ['CYB 303', 'YQKbs0ug0XQ', 'watch', 'Messer: Hardening Targets', 'Practical cyber hygiene.', 'Lab work: Practical approach to cyber hygiene.'],
+  ['CYB 303', 'YQKbs0ug0XQ', 'watch', 'Messer: Hardening Targets', 'Practical approach to cyber hygiene.', 'Lab work: Practical approach to cyber hygiene.'],
   ['CYB 303', 'BWPJD9Eb9iE', 'watch', 'Messer: Secure Baselines', 'Risk mitigation in the cloud.', 'Practice cybersecurity risk mitigation in the cloud and how to use proactive measures to mitigate the learned challenges.'],
-  ['CYB 303', 'cuTVyyS5C7M', 'watch', 'Messer: Gap Analysis', 'Decision and risk analysis techniques.', 'Work on applying the decision and risk analysis techniques.'],
   ['CYB 303', '48wRbMdHFVI', 'watch', 'Messer: Change Management', 'Mitigating risks and vulnerabilities.', 'Master how to mitigate risks and vulnerabilities.'],
   // ---------- SEN 301 (4 topics) ----------
   ['SEN 301', 'Ie7qzy3SY-E', 'watch', 'NPTEL L40: Object-Oriented Design Process', 'OO approach to information system development.', 'Object-oriented approach to information system development, particularly in reference to the earlier stages of analysis and design.'],
   ['SEN 301', 'dfZdd8wER_I', 'watch', 'BookSpokify Ch5: System Modeling', 'Importance and principles of modelling, UML.', 'Importance of modelling, principles of modelling, object- oriented modelling, conceptual model of the Unified Modelling Language (UML), architecture, software development life cycle.'],
   ['SEN 301', '7wo9PHfkyik', 'watch', 'NPTEL L31: Use Case Modelling', 'Object orientation and UML modelling.', 'The principles and basic concepts of object orientation and the different aspects of object-oriented modelling as represented by the UML technique.'],
-  ['SEN 301', 'AFOIMsgpJP0', 'watch', 'NPTEL L42: Examples of Object-Oriented Design', 'Case study of a UML-based CASE tool.', 'Case study of a typical UML-based CASE tool.'],
+  ['SEN 301', 'AFOIMgpJP0', 'watch', 'NPTEL L42: Examples of Object-Oriented Design', 'Case study of a UML-based CASE tool.', 'Case study of a typical UML-based CASE tool.'],
   // ---------- SEN 304 (6 of 16) ----------
   ['SEN 304', 'EwmTlTsnr-k', 'watch', 'BookSpokify Ch8: Software Testing', 'The importance of software testing.', 'The importance of Software Testing.'],
   ['SEN 304', 'Su-bw6Of-g8', 'watch', 'NPTEL L44: Basic Concepts in Testing II', 'Verification and validation.', 'Understanding Verification and Validation.'],
@@ -100,9 +99,9 @@ const ROWS = [
   ['SEN 304', 'ZIUJDS3O0BQ', 'watch', 'NPTEL L47: Unit Testing Strategies II', 'Black-box and white-box unit testing.', 'unit testing – black box and white testing techniques;'],
   // ---------- SEN 306 (4 of 12) ----------
   ['SEN 306', 'zFz6s3TMq4U', 'watch', 'BookSpokify Ch7: Software Design and Implementation', 'Definition of software construction.', 'Definition of Software Construction;'],
-  ['SEN 306', 'FTyncRpLd5g', 'watch', 'NPTEL L20: Modular Design', 'Key design concepts, levels, heuristics.', 'Design in construction – Key design concepts, levels of design, design heuristics.'],
+  ['SEN 306', 'FTyncRpLd5g', 'watch', 'NPTEL L20: Modular Design', 'Design concepts, levels, heuristics.', 'Design in construction – Key design concepts, levels of design, design heuristics.'],
   ['SEN 306', 'mND1i92IBps', 'watch', 'NPTEL L18: Pseudocodes and Flowcharts', 'The pseudo code programming process.', 'The Pseudo Code Programming Process.'],
-  ['SEN 306', 'reTh1y7ZH_A', 'watch', 'NPTEL L46: Unit Testing Strategies I', 'Developer testing and debugging.', 'Developer Testing and Debugging.'],
+  ['SEN 306', 'reTh1yZH_A', 'watch', 'NPTEL L46: Unit Testing Strategies I', 'Developer testing and debugging.', 'Developer Testing and Debugging.'],
 ];
 
 async function seed() {

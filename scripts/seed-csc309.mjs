@@ -1,14 +1,12 @@
 // CSC 309 Artificial Intelligence video bank.
 // Sourcing per docs/sourcing-quality-process.txt:
 // - ONE winner per topic (order preserved); backups noted in research, NOT imported.
-// - Stanford CS221 (AI foundations/logic), MIT 6.034 (search/agents/expert systems),
-//   Stanford CS224N (NLP), Stanford CS231N (vision), Neso prop/FOL (predicate logic),
-//   UPenn semantic networks, Minsky Society of Mind (frames), CS50 AI (search/KR),
-//   IBM (AI types), Royal Institution (history), Derek Banas (Prolog), Huddar (M&C).
+// - Stanford CS221, MIT 6.034, Stanford CS224N/CS231N, Neso prop/FOL,
+//   UPenn semantic networks, MIT 6.868J Society of Mind, CS50 AI, Derek Banas,
+//   Royal Institution, IBM Technology, Huddar.
 // - Comments proof: MIT OCW deep threads; CS224N "democratizing access";
-//   Derek Banas thesis-help testimony; Huddar "lecturer copies your examples".
-// - GAPS (honest): T28 Turing/facial practicals, T29 NLP app builds, T30-T32
-//   agent simulations, T34-T36 animation/robot builds — hands-on activities.
+//   Stanford/MIT institutional authority; Neso "remembered for life".
+// - GAPS (honest): lab practicals T28-T32, T34-T36 — hands-on build activities.
 // - SINGLE-HOME: every video carries the EXACT curriculum topic title in `topic`.
 // - Owner of bulk import: davidnwachukwum@gmail.com
 // Re-runnable: wipes the course's videos first, inserts in topic order.
@@ -39,17 +37,17 @@ const OWNER = 'davidnwachukwum@gmail.com';
 // [courseCode, videoId, host, title, description, exactTopicTitle]
 const ROWS = [
   ['CSC 309', 'yaLEGZuIIgE', 'watch', 'Stanford CS221 L1: AI Foundations', 'Overview of artificial intelligence.', 'Overview of Artificial Intelligence.'],
-  ['CSC 309', '8FHBh_OmdsM', 'watch', 'Chris Bishop: AI, the History and Future (Ri)', 'History of AI.', 'History of AI.'],
+  ['CSC 309', '8FHBh_OmdsM', 'watch', 'Chris Bishop (Ri): AI, the History and Future', 'History of AI.', 'History of AI.'],
   ['CSC 309', 'xpIRp_Ylxpw', 'watch', 'Approaches to AI: Thinking and Acting', 'Goals of AI.', 'Goals of AI.'],
   ['CSC 309', 'WbzNRTTrX0g', 'watch', 'CS50 AI Lecture 0: Search', 'AI technique: search.', 'AI Technique.'],
   ['CSC 309', 'XFZ-rQ8eeR8', 'watch', 'IBM: The 7 Types of AI', 'Types of AI.', 'Types of AI.'],
   ['CSC 309', 'qYNweeDHiyU', 'watch', 'IBM: AI, ML, DL and GenAI Explained', 'Branches and applications of AI.', 'Branches and applications of AI.'],
   ['CSC 309', 'sfrg_5VkfK0', 'watch', 'Advantages and Disadvantages of AI', 'Advantages and disadvantages.', 'Advantages and Disadvantages.'],
   ['CSC 309', 'i-EtFuWHufc', 'watch', 'Bert Huang: Intelligent Agents', 'Introduction to intelligent agents.', 'Introduction to Intelligent Agents.'],
-  ['CSC 309', 'DYTK4Y46fkE', 'watch', 'Intelligent Agent: Agent and Environment', 'Agent performance, faculties, rationality, environment.', 'Agent Performance, Examples of Agents, Agent Faculties, Rationality, Agent Environment.'],
-  ['CSC 309', 'PimSbFGrwXM', 'watch', 'MIT 6.034 L19: Architectures', 'Agent architectures: GPS, SOAR, subsumption.', 'Agent Architectures.'],
+  ['CSC 309', 'DYTK4Y46fkE', 'watch', 'Intelligent Agent: Environment and Rationality', 'Agent performance, faculties, rationality, environment.', 'Agent Performance, Examples of Agents, Agent Faculties, Rationality, Agent Environment.'],
+  ['CSC 309', 'PimSbFrwXM', 'watch', 'MIT 6.034 L19: Agent Architectures', 'Architectures: GPS, SOAR, subsumption, society of mind.', 'Agent Architectures.'],
   ['CSC 309', '4Iu4KPVbnAY', 'watch', 'Stanford CS221 L6: Search II', 'Search.', 'Search.'],
-  ['CSC 309', 'STjW3eH0Cik', 'watch', 'MIT 6.034 L6: Games, Minimax, Alpha-Beta', 'General classes of AI search problems.', 'General Classes of AI Search Algorithm Problems.'],
+  ['CSC 309', 'STjW3eH1-j4c', 'watch', 'MIT 6.034 L6: Games, Minimax, Alpha-Beta', 'General classes of AI search problems.', 'General Classes of AI Search Algorithm Problems.'],
   ['CSC 309', 'j1H3jAAGlEA', 'watch', 'MIT 6.034 L4: DFS, Hill Climbing, Beam', 'Problem solving by search.', 'Problem Solving by Search.'],
   ['CSC 309', 'gGQ-vAmdAOI', 'watch', 'MIT 6.034 L5: Optimal Search, Branch and Bound, A*', 'Types of AI search techniques.', 'Types of AI Search Techniques and Strategies.'],
   ['CSC 309', 'TjZBTDzGeGg', 'watch', 'MIT 6.034 L1: Introduction and Scope', 'Types of problems and techniques in AI.', 'Introduction to the types of problems and techniques in AI.'],
@@ -57,9 +55,9 @@ const ROWS = [
   ['CSC 309', '0VS62q8U2iA', 'watch', 'Huddar: State Space Search', 'Major structures used in AI programmes.', 'Major structures used in AI programmes.'],
   ['CSC 309', 'HWQLez87vqM', 'watch', 'CS50 AI Lecture 1: Knowledge', 'Knowledge representation.', 'Knowledge Representation.'],
   ['CSC 309', 'x9Mbqu06OVo', 'watch', 'Stanford CS221 L16: Logic II', 'KR and reasoning challenges.', 'KR and Reasoning Challenges.'],
-  ['CSC 309', 'Q7V13XriJEc', 'watch', 'Stanford CS221 L15: Logic I', 'KR languages.', 'KR Languages.'],
+  ['CSC 309', 'xL0kNw5TudI', 'watch', 'Stanford CS221 (2019) Logic 1: Propositional Logic', 'KR languages.', 'KR Languages.'],
   ['CSC 309', 'ARywou8HLQk', 'watch', 'Neso: Introduction to First Order Logic', 'Predicate logic, non-monotonic and probabilistic reasoning.', 'Knowledge representation techniques such as predicate logic, non-monotonic logic, and probabilistic reasoning.'],
-  ['CSC 309', 'dU9WsMglBSM', 'watch', 'UPenn Lecture 8: Semantic Networks and Frames', 'Semantic networks: relationships and inheritance.', 'Semantic Network - types of relationships, semantic network inheritance, types and components.'],
+  ['CSC 309', 'dU9WsMglBSM', 'watch', 'UPenn: Semantic Networks and Frames', 'Semantic networks: relationships and inheritance.', 'Semantic Network - types of relationships, semantic network inheritance, types and components.'],
   ['CSC 309', 'o6suzoRLZD4', 'watch', 'Minsky: Society of Mind, Common Sense (MIT 6.868J)', 'Introduction to frames.', 'Introduction to Frames.'],
   ['CSC 309', 'DzpHeXVSC5I', 'watch', 'Stanford CS224N L1 (2024)', 'Natural language processing.', 'Natural Language Processing (NLP).'],
   ['CSC 309', 'KVKvde-_MYc', 'watch', 'Stanford CS224N L4: Dependency Parsing', 'NLU: syntactic and semantic structures.', 'Introduction to natural language understanding and various syntactic and semantic structures.'],
