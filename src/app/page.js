@@ -115,6 +115,12 @@ export default function HomePage() {
     return () => window.removeEventListener('nav:retap', onRetap)
   }, [])
 
+  // Warm the /search chunk early so tapping Go navigates instantly
+  // instead of compiling/downloading the results page on demand.
+  useEffect(() => {
+    try { router.prefetch?.('/search') } catch {}
+  }, [router])
+
   if (loading) {
     return (
       <div className="flex min-h-dvh items-center justify-center overflow-x-hidden bg-background pb-24">

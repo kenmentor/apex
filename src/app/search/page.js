@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef, Suspense } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { Search, SearchX, LibraryBig, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2 } from 'lucide-react'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import { getUser } from '@/lib/auth'
@@ -88,11 +89,20 @@ function EmptyState({ icon: Icon, tint = 'bg-muted text-muted-foreground', title
   )
 }
 
-export default function SearchPage() {
-  const [q, setQ] = useState(() => {
-    try { return (new URLSearchParams(window.location.search).get('q') || '').trim().slice(0, 120) } catch { return '' }
-  })
+function SearchPageInner() {
+  const searchParams = useSearchParams()
+  const urlQ = (searchParams.get('q') || '').trim().slice(0, 120)
+  const urlType = searchParams.get('type') || ''
   const firedFirst = useRef(false)
+  // Paint the query on the very first frame: read it during initial render
+  // (URL params + location fallback) instead of waiting for a sync effect
+  // after navigation from home.
+  const [q, setQ] = useState(() => {
+    if (urlQ) return urlQ
+    try {
+      return (new URLSearchParams(window.location.search).get('q') || '').trim().slice(0, 120)
+    } catch { return '' }
+  })
   const [tab, setTab] = useState('')
   const [courses, setCourses] = useState([])
   const [spaces, setSpaces] = useState([])
@@ -117,14 +127,7 @@ export default function SearchPage() {
   useEffect(() => {
     fetchJson('/api/courses', { ttl: TTL.list }).then(d => setCourses(Array.isArray(d) ? d : (d.docs || d.courses || []))).catch(() => {})
     fetchJson('/api/spaces?limit=50', { ttl: TTL.list }).then(d => setSpaces(Array.isArray(d) ? d : [])).catch(() => {})
-    try {
-      const sp0 = new URLSearchParams(window.location.search)
-      const t = sp0.get('type') || ''
-      if (['video', 'audio', 'quiz', 'qa', 'folders'].includes(t)) setTab(t)
-      else if (t === 'theory') setTab('qa')
-      else if (t === 'folder') setTab('folders')
-      else if (['notes', 'pdf'].includes(t)) setTab('books')
-    } catch {}
+    // type param handled by the URL-sync effect below
     try {
       const u = getUser()
       const lv = u?.level || ''
@@ -145,6 +148,22 @@ export default function SearchPage() {
       }).catch(() => {})
     } catch {}
   }, [])
+
+  // Keep the input + tab in sync with the URL so home links (?q=, ?type=)
+  // prefill instantly and client-side navigations refresh the search too.
+  useEffect(() => {
+    const t = urlType || ''
+    if (['video', 'audio', 'quiz', 'qa', 'folders'].includes(t)) setTab(t)
+    else if (t === 'theory') setTab('qa')
+    else if (t === 'folder') setTab('folders')
+    else if (['notes', 'pdf'].includes(t)) setTab('books')
+    else if (!t) setTab('')
+    // Only touch the input when the URL actually changed — never clobber
+    // keystrokes while typing (typing updates q, not the URL).
+    if (urlQ) setQ(prev => (prev === urlQ ? prev : urlQ))
+    else setQ(prev => (prev === '' ? prev : ''))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlQ, urlType])
 
   // One search across all study content; tabs/facets filter client-side.
   // First search (e.g. arriving with ?q=) fires instantly, later typing debounces.
@@ -725,7 +744,11 @@ function RailQaCard({ item }) {
   const concepts = Array.isArray(item.concepts) ? item.concepts : []
   const canFlip = !!(answer || concepts.length)
   return (
-    <div className="flex w-56 shrink-0 snap-start flex-col rounded-2xl border bg-card p-3.5">
+    <div className="relative flex w-56 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-b from-emerald-500/[0.08] to-transparent p-3.5">
+      <div className="mb-2 flex items-center gap-1.5">
+        <span className="flex size-5 shrink-0 items-center justify-center rounded-md bg-emerald-500 font-serif text-[11px] font-black italic text-white">Q</span>
+        <span className="truncate text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Q&amp;A{item.courseCode ? ` · ${item.courseCode}` : ''}</span>
+      </div>
       <div
         onClick={() => canFlip && setFlipped(f => !f)}
         className={`relative w-full ${canFlip ? 'cursor-pointer' : ''}`}
@@ -733,36 +756,38 @@ function RailQaCard({ item }) {
         <div
           className="relative w-full transition-transform duration-500"
           style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)', minHeight: '9.5rem' }}>
-          {/* Front — question */}
-          <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-            {item.courseCode && <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode}</span>}
-            <span className="line-clamp-4 block flex-1 text-[13px] font-medium leading-relaxed">{item.question || item.title}</span>
-            {!!metaOf(item) && <span className="block truncate text-[11px] text-muted-foreground">{metaOf(item)}</span>}
+        {/* Front — question */}
+        <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
+          <span className="line-clamp-4 block flex-1 font-serif text-[15px] font-medium leading-snug">{item.question || item.title}</span>
+          {!!metaOf(item) && <span className="block truncate text-[11px] text-muted-foreground">{metaOf(item)}</span>}
+        </div>
+        {/* Back — model answer */}
+        <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl bg-emerald-500/[0.07] p-2" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+          <span className="block shrink-0 text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Model answer</span>
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            {answer
+              ? <span className="block text-[13px] leading-relaxed">{answer}</span>
+              : (
+                <ul className="list-disc space-y-1 pl-4 text-[13px] leading-relaxed">
+                  {concepts.map((c, i) => <li key={i}>{c}</li>)}
+                </ul>
+              )}
           </div>
-          {/* Back — model answer */}
-          <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-            <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-600">Model answer</span>
-            <div className="min-h-0 flex-1 overflow-y-auto">
-              {answer
-                ? <span className="block text-[13px] leading-relaxed text-muted-foreground">{answer}</span>
-                : (
-                  <ul className="list-disc space-y-1 pl-4 text-[13px] leading-relaxed text-muted-foreground">
-                    {concepts.map((c, i) => <li key={i}>{c}</li>)}
-                  </ul>
-                )}
-            </div>
-            {href && (
-              <Link href={href} onClick={e => e.stopPropagation()} className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-primary">
-                Full answer <ChevronRight className="size-3" />
-              </Link>
-            )}
-          </div>
+          {href && (
+            <Link href={href} onClick={e => e.stopPropagation()} className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-primary">
+              Full answer <ChevronRight className="size-3" />
+            </Link>
+          )}
         </div>
       </div>
-      <span className="mt-2.5 flex items-center gap-2 border-t pt-2" onClick={e => e.stopPropagation()}>
-        <span className="flex-1 truncate text-[11px] font-semibold text-muted-foreground">
-          {canFlip ? (flipped ? 'Tap to hide' : 'Tap to reveal') : (item.courseCode || 'Q&A')}
-        </span>
+      <span className="mt-2.5 flex items-center gap-2" onClick={e => e.stopPropagation()}>
+        {canFlip ? (
+          <span className="flex-1 truncate rounded-full bg-emerald-500/10 px-2.5 py-1 text-center text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+            {flipped ? 'Tap to hide' : 'Tap card to reveal answer'}
+          </span>
+        ) : (
+          <span className="flex-1 truncate text-[11px] font-semibold text-muted-foreground">{item.courseCode || 'Q&A'}</span>
+        )}
         <SaveToFolder payload={savePayload(item, 'theory')} />
       </span>
     </div>
@@ -785,31 +810,31 @@ function QaGridCard({ item }) {
   const concepts = Array.isArray(item.concepts) ? item.concepts : []
   const canFlip = !!(answer || concepts.length)
   return (
-    <div className="flex min-h-48 flex-col rounded-2xl border bg-card p-5 shadow-sm">
+    <div className="relative flex min-h-48 flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-b from-emerald-500/[0.06] to-transparent p-5 shadow-sm">
+      <div className="mb-2 flex items-center gap-1.5">
+        <span className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500 font-serif text-sm font-black italic text-white">Q</span>
+        <span className="truncate text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Q&amp;A{item.courseCode ? ` · ${item.courseCode}` : ''}</span>
+      </div>
       <div
         onClick={() => canFlip && setFlipped(f => !f)}
         className={`relative w-full flex-1 ${canFlip ? 'cursor-pointer' : ''}`}
         style={{ perspective: '1000px' }}>
         <div
           className="relative w-full transition-transform duration-500"
-          style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)', minHeight: '11rem' }}>
+          style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)', minHeight: '9rem' }}>
           {/* Front — question */}
           <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-            <div className="flex items-center gap-2">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted font-serif text-base italic text-muted-foreground">Q</span>
-              {item.courseCode && <span className="truncate text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode}</span>}
-            </div>
-            <p className="line-clamp-5 flex flex-1 items-center py-3 text-[15px] font-medium leading-relaxed">{item.question || item.title}</p>
+            <p className="line-clamp-5 flex flex-1 items-center font-serif text-[17px] font-medium leading-snug">{item.question || item.title}</p>
             {!!metaOf(item) && <p className="shrink-0 truncate text-[11px] text-muted-foreground">{metaOf(item)}</p>}
           </div>
           {/* Back — model answer */}
-          <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-            <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-emerald-600">Model answer</span>
-            <div className="min-h-0 flex-1 overflow-y-auto py-2">
+          <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl bg-emerald-500/[0.07] p-2.5" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+            <span className="shrink-0 text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Model answer</span>
+            <div className="min-h-0 flex-1 overflow-y-auto py-1">
               {answer
-                ? <p className="text-sm leading-relaxed text-muted-foreground">{answer}</p>
+                ? <p className="text-sm leading-relaxed">{answer}</p>
                 : (
-                  <ul className="list-disc space-y-1 pl-4 text-sm leading-relaxed text-muted-foreground">
+                  <ul className="list-disc space-y-1 pl-4 text-sm leading-relaxed">
                     {concepts.map((c, i) => <li key={i}>{c}</li>)}
                   </ul>
                 )}
@@ -822,10 +847,14 @@ function QaGridCard({ item }) {
           </div>
         </div>
       </div>
-      <span className="mt-3 flex items-center gap-2 border-t pt-2.5" onClick={e => e.stopPropagation()}>
-        <span className="flex-1 truncate text-[11px] font-semibold text-muted-foreground">
-          {canFlip ? (flipped ? 'Tap to hide' : 'Tap to reveal answer') : 'Q&A'}
-        </span>
+      <span className="mt-3 flex items-center gap-2" onClick={e => e.stopPropagation()}>
+        {canFlip ? (
+          <span className="flex-1 truncate rounded-full bg-emerald-500/10 px-2.5 py-1 text-center text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+            {flipped ? 'Tap to hide' : 'Tap card to reveal answer'}
+          </span>
+        ) : (
+          <span className="flex-1 truncate text-[11px] font-semibold text-muted-foreground">Q&amp;A</span>
+        )}
         <SaveToFolder payload={savePayload(item, 'theory')} />
       </span>
     </div>
@@ -842,17 +871,17 @@ function QaRow({ item }) {
   const canFlip = !!(answer || concepts.length)
   return (
     <div className="group px-4 py-3.5 transition-colors hover:bg-muted/50">
-      <div className="flex items-start gap-2">
-        <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md bg-muted font-serif text-sm italic text-muted-foreground">Q</span>
+      <div className="flex items-start gap-2.5">
+        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-500 font-serif text-base font-black italic text-white shadow-sm">Q</span>
         <button
           onClick={() => canFlip && setOpen(o => !o)}
           aria-expanded={open}
           className={`min-w-0 flex-1 text-left ${canFlip ? 'cursor-pointer' : 'cursor-default'}`}>
-          {item.courseCode && <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.courseCode}</span>}
-          <span className={`mt-0.5 block text-sm font-medium leading-relaxed ${open ? '' : 'line-clamp-2'}`}>{text}</span>
+          {item.courseCode && <span className="block text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Q&amp;A · {item.courseCode}</span>}
+          <span className={`mt-0.5 block font-serif text-[15px] font-medium leading-snug ${open ? '' : 'line-clamp-2'}`}>{text}</span>
           {!!meta && <span className="mt-1 block truncate text-[11px] text-muted-foreground">{meta}</span>}
           {canFlip && (
-            <span className="mt-1.5 inline-flex items-center gap-0.5 text-[11px] font-bold text-primary">
+            <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
               {open ? 'Hide answer' : 'Tap to reveal answer'}
               <ChevronDown className={`size-3 transition-transform ${open ? 'rotate-180' : ''}`} />
             </span>
@@ -1019,5 +1048,13 @@ function QuizCard({ item }) {
         <SaveToFolder payload={savePayload(item, 'quiz')} />
       </div>
     </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="mx-auto flex min-h-dvh w-full max-w-2xl items-center justify-center px-4"><p className="text-sm text-muted-foreground">Loading library…</p></div>}>
+      <SearchPageInner />
+    </Suspense>
   )
 }
