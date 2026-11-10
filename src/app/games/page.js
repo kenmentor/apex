@@ -124,10 +124,10 @@ export default function GamesHubPage() {
     )
   }
 
-  // ---- HOME: Quiz stacked on top of Games, each a full square ----
+  // ---- HOME: Quiz stacked on top of Games — fixed, no scroll, both always visible ----
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-4 px-4 pb-24 pt-6">
-      <div className="flex items-center gap-2">
+    <div className="mx-auto flex h-dvh w-full max-w-md flex-col gap-3 overflow-hidden px-4 pb-24 pt-6">
+      <div className="flex shrink-0 items-center gap-2">
         <Link href="/" aria-label="Back" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted">
           <ArrowLeft className="size-4" />
         </Link>
@@ -137,33 +137,33 @@ export default function GamesHubPage() {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex min-h-0 flex-1 flex-col gap-3">
         <button
           onClick={() => setQuizOpen(true)}
-          className="relative flex aspect-square w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-6 text-left text-white shadow-lg transition-all active:scale-[0.98]"
+          className="relative flex min-h-0 w-full flex-1 flex-col items-start justify-between gap-1 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-5 text-left text-white shadow-lg transition-all active:scale-[0.98]"
         >
-          <ClipboardList className="pointer-events-none absolute -bottom-8 -right-8 size-56 text-white/10" strokeWidth={1.25} />
-          <span className="relative flex size-14 items-center justify-center rounded-2xl bg-white/20">
-            <ClipboardList className="size-7" />
+          <ClipboardList className="pointer-events-none absolute -bottom-6 -right-6 size-40 text-white/10" strokeWidth={1.25} />
+          <span className="relative flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white/20">
+            <ClipboardList className="size-6" />
           </span>
-          <span className="relative w-full">
-            <span className="block text-4xl font-black leading-none tracking-tight">QUIZ</span>
-            <span className="mt-2 block max-w-[85%] text-sm leading-snug text-white/80">Pick a course, pick topics, start answering</span>
-            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-emerald-900">Start <ChevronRight className="size-4" /></span>
+          <span className="relative w-full min-w-0">
+            <span className="block text-3xl font-black leading-none tracking-tight">QUIZ</span>
+            <span className="mt-1.5 block max-w-[85%] truncate text-[13px] leading-snug text-white/80">Pick a course, pick topics, start answering</span>
+            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-emerald-900">Start <ChevronRight className="size-4" /></span>
           </span>
         </button>
         <button
           onClick={() => setView('games')}
-          className="relative flex aspect-square w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-6 text-left text-white shadow-lg transition-all active:scale-[0.98]"
+          className="relative flex min-h-0 w-full flex-1 flex-col items-start justify-between gap-1 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-5 text-left text-white shadow-lg transition-all active:scale-[0.98]"
         >
-          <Gamepad2 className="pointer-events-none absolute -bottom-8 -right-8 size-56 text-white/10" strokeWidth={1.25} />
-          <span className="relative flex size-14 items-center justify-center rounded-2xl bg-white/20">
-            <Gamepad2 className="size-7" />
+          <Gamepad2 className="pointer-events-none absolute -bottom-6 -right-6 size-40 text-white/10" strokeWidth={1.25} />
+          <span className="relative flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white/20">
+            <Gamepad2 className="size-6" />
           </span>
-          <span className="relative w-full">
-            <span className="block text-4xl font-black leading-none tracking-tight">GAMES</span>
-            <span className="mt-2 block max-w-[85%] text-sm leading-snug text-white/80">Mix courses, then choose a game</span>
-            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-violet-900">Play <ChevronRight className="size-4" /></span>
+          <span className="relative w-full min-w-0">
+            <span className="block text-3xl font-black leading-none tracking-tight">GAMES</span>
+            <span className="mt-1.5 block max-w-[85%] truncate text-[13px] leading-snug text-white/80">Mix courses, then choose a game</span>
+            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-violet-900">Play <ChevronRight className="size-4" /></span>
           </span>
         </button>
       </div>
