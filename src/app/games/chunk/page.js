@@ -12,6 +12,7 @@ import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
 import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
+import { haptic } from '@/lib/haptics'
 import { celebrate } from '@/lib/celebrate'
 
 function starsFor(accuracy) {
@@ -145,7 +146,7 @@ export default function ChunkGamePage() {
     })
     setMoves(m => m + 1)
     if (piece === target) {
-      try { navigator.vibrate && navigator.vibrate(20) } catch {}
+      try { haptic.tap() } catch {}
       sfx('pop')
     }
   }

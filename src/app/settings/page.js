@@ -17,7 +17,7 @@ import { useTheme } from 'next-themes'
 import { DEPARTMENTS, LEVELS } from '@/lib/departments'
 import NIGERIAN_UNIVERSITIES from '@/lib/universities'
 import { isValidSchool, isValidDepartment, isValidLevel } from '@/lib/profile-review'
-import { hapticsEnabled, setHapticsEnabled } from '@/lib/haptics'
+import { haptic, hapticsEnabled, hapticsSupported, setHapticsEnabled } from '@/lib/haptics'
 import SearchableField from '@/components/SearchableField'
 
 export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
@@ -39,6 +39,7 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const [avatarConfig, setAvatarConfig] = useState(null)
   const [savingAvatar, setSavingAvatar] = useState(false)
   const [hapticsOn, setHapticsOn] = useState(true)
+  const [hapticsOk, setHapticsOk] = useState(true)
   const fileRef = useRef(null)
 
   function openSheet() {
@@ -64,6 +65,7 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
     setLevel(u?.level || '')
     setAvatarConfig(normalizeAvatarConfig(u?.avatarConfig) || defaultDiceConfig())
     try { setHapticsOn(hapticsEnabled()) } catch {}
+    try { setHapticsOk(hapticsSupported()) } catch {}
     // No remote fetch for options: DEPARTMENTS / universities / LEVELS are
     // the canonical static lists. Saving anything else re-triggers the
     // review nag and loops the user back to fix-up.
@@ -322,6 +324,16 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
                 <span className={'absolute top-0.5 size-5 rounded-full bg-white shadow transition-all ' + (hapticsOn ? 'left-[22px]' : 'left-0.5')} />
               </span>
             </button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" className="flex-1" onClick={() => haptic.finish()}>
+                Test vibration
+              </Button>
+            </div>
+            {!hapticsOk && (
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                This device/browser can&apos;t vibrate from websites — iPhones don&apos;t allow it. Haptics will work on Android Chrome.
+              </p>
+            )}
           </CardContent>
         </Card>
 

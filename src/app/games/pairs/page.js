@@ -13,6 +13,7 @@ import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
 import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
+import { haptic } from '@/lib/haptics'
 import { celebrate } from '@/lib/celebrate'
 
 function starsFor(accuracy) {
@@ -146,7 +147,7 @@ function PairsInner() {
         setTimeout(() => {
           setCleared(done)
           setOpen([])
-          try { navigator.vibrate && navigator.vibrate(20) } catch {}
+          try { haptic.success() } catch {}
           sfx('correct')
           if (done.length >= (round?.pairs?.length || 0)) finish(done, mistakes)
         }, 350)
