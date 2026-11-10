@@ -7,6 +7,7 @@ import { Trophy, Medal, Crown, Search, ChevronRight, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { AvatarWithTick } from '@/components/UserAvatar';
 import { Skeleton } from '@/components/ui/skeleton';
+import MedalIcon from '@/components/MedalIcon';
 
 const RANK_STYLE = {
   1: { ring: '#f1c40f', chip: '#f1c40f', label: '1st' },
@@ -62,17 +63,17 @@ function PodiumCard({ entry, rank, role, large, contrib }) {
   );
 }
 
-// Earned achievement badges, overlapped like a facepile.
-function MedalStack({ medals = [], size = 'size-5 text-[11px]', max = 5 }) {
+// Earned achievement badges, overlapped like a facepile. Real Lucide
+// badges — never raw emoji.
+function MedalStack({ medals = [], size = 'size-5', iconSize = 'size-3', max = 5 }) {
   const shown = medals.slice(0, max);
   const extra = medals.length - shown.length;
   if (!shown.length && !extra) return null;
   return (
     <span className="inline-flex items-center">
       {shown.map(m => (
-        <span key={m.id} title={m.label}
-          className={`flex shrink-0 items-center justify-center rounded-full bg-muted ring-2 ring-card ${size} -ml-1.5 first:ml-0`}>
-          {m.icon}
+        <span key={m.id} className="-ml-1.5 first:ml-0">
+          <MedalIcon id={m.id} className={size} iconClassName={iconSize} />
         </span>
       ))}
       {extra > 0 && (

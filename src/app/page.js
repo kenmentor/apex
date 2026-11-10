@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Flame, Search, ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
+import { Flame, Search, ChevronRight, ArrowRight } from 'lucide-react';
 import { getUser, getToken } from '@/lib/auth';
 import { reviewProfile } from '@/lib/profile-review';
 import { colorFor } from '@/lib/plan-colors';
@@ -13,38 +13,8 @@ import SemesterDivider from '@/components/SemesterDivider';
 import { fetchJson, TTL } from '@/lib/fetch-json';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Home = your plan: search on top, slim streak strip, full course list.
-// (Mirrors /plan — the old Curriculum tab is now Rankings.)
-
-function StreakStrip({ streak }) {
-  const set = new Set(streak?.days || []);
-  const today = new Date();
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
-  const keys = [];
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    keys.push(d.toISOString().slice(0, 10));
-  }
-  const todayKey = today.toISOString().slice(0, 10);
-  return (
-    <Link href="/streak" className="flex items-center gap-3 rounded-2xl border bg-card px-4 py-3 transition-colors hover:bg-muted/60">
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl text-white" style={{ background: 'linear-gradient(120deg, #FBBF24, #F97316 55%, #EF4444)' }}>
-        <Flame className="size-5" fill="currentColor" />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-extrabold tabular-nums">{streak?.currentStreak ?? 0} day streak</span>
-        <span className="mt-1 flex items-center gap-1">
-          {keys.map(k => (
-            <span key={k} className={`size-1.5 rounded-full ${set.has(k) ? 'bg-orange-500' : 'bg-muted-foreground/25'} ${k === todayKey && !set.has(k) ? 'ring-1 ring-orange-400' : ''}`} />
-          ))}
-        </span>
-      </span>
-      <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
-    </Link>
-  );
-}
+// Home = your plan, decluttered: search on top with a fire-count pill,
+// then the full course list. (The old Curriculum tab is now Rankings.)
 
 function Ring({ pct, size = 40 }) {
   const r = (size - 6) / 2
@@ -96,7 +66,6 @@ export default function HomePage() {
   const [user, setUser] = useState(null)
   const [streakData, setStreakData] = useState(null)
   const [planCourses, setPlanCourses] = useState([])
-  const [planLabel, setPlanLabel] = useState('')
   const [completions, setCompletions] = useState([])
   const [loading, setLoading] = useState(true)
   const [bannerOff, setBannerOff] = useState(false)
@@ -114,9 +83,6 @@ export default function HomePage() {
       if (streak?.email) setStreakData(streak)
       if (plan?.supported) {
         setPlanCourses(plan.courses || [])
-        const dept = plan.cohort?.department || u.department || ''
-        const lvl = plan.cohort?.level || u.level || ''
-        setPlanLabel([dept, lvl].filter(Boolean).join(' · '))
       }
       setCompletions(Array.isArray(comps) ? comps : [])
       setLoading(false)
@@ -185,34 +151,39 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Search on top */}
+      {/* Search on top + fire count pill (full streak lives on /streak) */}
       {user && (
-        <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border bg-card px-5 py-1">
-          <Search className="size-4 shrink-0 text-muted-foreground" />
-          <input
-            value={q}
-            onChange={e => setQ(e.target.value)}
-            placeholder="Search courses, topics, materials…"
-            className="w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground"
-          />
-          {!!q.trim() && (
-            <button type="submit" aria-label="Search" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <ArrowRight className="size-4" />
-            </button>
-          )}
-        </form>
+        <div className="flex items-center gap-2">
+          <form onSubmit={submitSearch} className="flex min-w-0 flex-1 items-center gap-2 rounded-full border bg-card px-5 py-1">
+            <Search className="size-4 shrink-0 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={e => setQ(e.target.value)}
+              placeholder="Search courses, topics, materials…"
+              className="w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground"
+            />
+            {!!q.trim() && (
+              <button type="submit" aria-label="Search" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <ArrowRight className="size-4" />
+              </button>
+            )}
+          </form>
+          <Link
+            href="/streak"
+            aria-label={`Streak: ${streakData?.currentStreak ?? 0} days. View streak.`}
+            title="View streak"
+            className="flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-3.5 text-sm font-extrabold tabular-nums text-white shadow-sm transition-transform active:scale-95"
+            style={{ background: 'linear-gradient(120deg, #FBBF24, #F97316 55%, #EF4444)' }}
+          >
+            <Flame className="size-4" fill="currentColor" />
+            {streakData?.currentStreak ?? 0}
+          </Link>
+        </div>
       )}
 
-      {/* Slim streak */}
-      {user && <StreakStrip streak={streakData} />}
-
-      {/* My Plan */}
+      {/* Plan courses */}
       {user && (
         <section className="space-y-3 pt-1">
-          <div className="flex items-baseline justify-between px-1">
-            <h2 className="text-lg font-extrabold">My Plan</h2>
-            {!!planLabel && <p className="max-w-[60%] truncate text-[11px] font-semibold text-muted-foreground">{planLabel}</p>}
-          </div>
           {(planCourses || []).length === 0 ? (
             <div className="rounded-2xl border border-dashed p-8 text-center">
               <p className="text-sm font-bold">No courses yet</p>
