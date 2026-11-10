@@ -124,7 +124,7 @@ export default function GamesHubPage() {
     )
   }
 
-  // ---- HOME: only the two big selectors ----
+  // ---- HOME: Quiz stacked on top of Games, each a full square ----
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-4 px-4 pb-24 pt-6">
       <div className="flex items-center gap-2">
@@ -137,33 +137,33 @@ export default function GamesHubPage() {
         </div>
       </div>
 
-      <div className="grid flex-1 content-stretch grid-cols-2 gap-2.5">
+      <div className="flex flex-1 flex-col gap-4">
         <button
           onClick={() => setQuizOpen(true)}
-          className="relative flex min-h-64 flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+          className="relative flex aspect-square w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-6 text-left text-white shadow-lg transition-all active:scale-[0.98]"
         >
-          <ClipboardList className="pointer-events-none absolute -bottom-5 -right-5 size-32 text-white/10" strokeWidth={1.5} />
-          <span className="relative flex size-12 items-center justify-center rounded-2xl bg-white/20">
-            <ClipboardList className="size-6" />
+          <ClipboardList className="pointer-events-none absolute -bottom-8 -right-8 size-56 text-white/10" strokeWidth={1.25} />
+          <span className="relative flex size-14 items-center justify-center rounded-2xl bg-white/20">
+            <ClipboardList className="size-7" />
           </span>
-          <span className="relative">
-            <span className="block text-2xl font-black leading-none">QUIZ</span>
-            <span className="mt-1 block text-[11px] leading-snug text-white/75">Pick a course, pick topics, start answering</span>
-            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wide">Start <ChevronRight className="size-3.5" /></span>
+          <span className="relative w-full">
+            <span className="block text-4xl font-black leading-none tracking-tight">QUIZ</span>
+            <span className="mt-2 block max-w-[85%] text-sm leading-snug text-white/80">Pick a course, pick topics, start answering</span>
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-emerald-900">Start <ChevronRight className="size-4" /></span>
           </span>
         </button>
         <button
           onClick={() => setView('games')}
-          className="relative flex min-h-64 flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+          className="relative flex aspect-square w-full flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-6 text-left text-white shadow-lg transition-all active:scale-[0.98]"
         >
-          <Gamepad2 className="pointer-events-none absolute -bottom-5 -right-5 size-32 text-white/10" strokeWidth={1.5} />
-          <span className="relative flex size-12 items-center justify-center rounded-2xl bg-white/20">
-            <Gamepad2 className="size-6" />
+          <Gamepad2 className="pointer-events-none absolute -bottom-8 -right-8 size-56 text-white/10" strokeWidth={1.25} />
+          <span className="relative flex size-14 items-center justify-center rounded-2xl bg-white/20">
+            <Gamepad2 className="size-7" />
           </span>
-          <span className="relative">
-            <span className="block text-2xl font-black leading-none">GAMES</span>
-            <span className="mt-1 block text-[11px] leading-snug text-white/75">Mix courses, then choose a game</span>
-            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wide">Play <ChevronRight className="size-3.5" /></span>
+          <span className="relative w-full">
+            <span className="block text-4xl font-black leading-none tracking-tight">GAMES</span>
+            <span className="mt-2 block max-w-[85%] text-sm leading-snug text-white/80">Mix courses, then choose a game</span>
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-violet-900">Play <ChevronRight className="size-4" /></span>
           </span>
         </button>
       </div>
