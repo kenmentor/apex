@@ -22,7 +22,7 @@ import SearchableField from '@/components/SearchableField'
 
 export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const router = useRouter()
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const [user, setUserState] = useState(null)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState('')
@@ -197,8 +197,8 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
             <ArrowLeft className="size-4" />
           </Link>
           <h1 className="flex-1 text-base font-bold">Settings</h1>
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
-            {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          <button onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')} aria-label="Toggle light / dark mode" className="flex size-9 items-center justify-center rounded-lg hover:bg-muted">
+            {resolvedTheme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
         </header>
       )}
