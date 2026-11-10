@@ -6,6 +6,7 @@ import { ArrowLeft, MoreHorizontal, GraduationCap, Star, Camera, Pencil, Setting
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import BtnSpinner from '@/components/BtnSpinner'
 import { UserAvatarImage, RoleSeal, roleTick } from '@/components/UserAvatar'
+import { displayNameOf, initialsOf, avatarGradientFor } from '@/lib/identity'
 
 function Stat({ value, label }) {
   return (
@@ -37,10 +38,11 @@ export default function ContributorProfile({
   const avatarRef = useRef(null)
   const coverRef = useRef(null)
 
-  const name = user?.name || 'Anonymous'
+  const name = displayNameOf(user)
   const username = (user?.email || 'user').split('@')[0].toLowerCase();
   const deptLine = [user?.department, user?.level].filter(Boolean).join(' · ')
-  const initials = name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
+  const initials = initialsOf(name, user?.email)
+  const fallbackBg = avatarGradientFor(user)
   const total = totals?.total || 0
   const approved = totals?.approved || 0
   const courses = totals?.courses || 0
@@ -143,12 +145,12 @@ export default function ContributorProfile({
           )}
           <div className="absolute -bottom-10 left-4 sm:left-6">
             <div className="relative">
-              <Avatar className="size-24 border-4 border-background shadow-sm">
-                <UserAvatarImage user={user} />
-                <AvatarFallback className="bg-muted text-2xl font-semibold text-muted-foreground">
-                  {user?.avatar ? '' : initials}
-                </AvatarFallback>
-              </Avatar>
+                <Avatar className="size-24 border-4 border-background shadow-sm">
+                  <UserAvatarImage user={user} />
+                  <AvatarFallback className="text-2xl font-black text-white" style={{ background: fallbackBg }}>
+                    {user?.avatar ? '' : initials}
+                  </AvatarFallback>
+                </Avatar>
               <span className="absolute bottom-1 right-1 size-4 rounded-full border-[3px] border-background bg-green-500" />
               {isOwner && (
                 <>

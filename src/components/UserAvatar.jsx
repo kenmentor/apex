@@ -2,6 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { defaultDiceConfig, normalizeAvatarConfig, resolveUserAvatar } from '@/lib/dice-avatar'
+import { avatarGradientFor, initialsOf, displayNameOf } from '@/lib/identity'
 
 export function randomAvatarConfig(overrides = {}) {
   return defaultDiceConfig(overrides)
@@ -24,12 +25,13 @@ export function UserAvatarImage({ user }) {
 // Single clean circle. For dice avatars the SVG already includes its own
 // background, so no extra bg span — that double-layer caused the distortion.
 export function UserAvatar({ user, className = 'size-10', fallbackClassName = '' }) {
-  const initial = (user?.name?.[0] || user?.email?.[0] || 'A').toUpperCase()
+  const fallbackBg = avatarGradientFor(user)
+  const initials = initialsOf(displayNameOf(user), user?.email)
   return (
     <Avatar className={'shrink-0 overflow-hidden ' + className}>
       <UserAvatarImage user={user} />
-      <AvatarFallback className={'bg-primary/10 font-bold text-primary ' + fallbackClassName}>
-        {initial}
+      <AvatarFallback className={'font-bold text-white ' + fallbackClassName} style={{ background: fallbackBg }}>
+        {initials}
       </AvatarFallback>
     </Avatar>
   )

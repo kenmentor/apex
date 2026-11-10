@@ -6,6 +6,7 @@ import { getUser } from '@/lib/auth';
 import { Trophy, Medal, Crown, Search, ChevronRight, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { AvatarWithTick } from '@/components/UserAvatar';
+import { displayNameOf } from '@/lib/identity';
 import { Skeleton } from '@/components/ui/skeleton';
 import MedalIcon from '@/components/MedalIcon';
 
@@ -16,9 +17,9 @@ const RANK_STYLE = {
 };
 
 function toAvatarUser(entry, role) {
-  if (!entry) return { name: '---' };
+  if (!entry) return { name: 'Apex Learner' };
   return {
-    name: entry.name,
+    name: displayNameOf(entry),
     email: entry.email,
     avatar: entry.avatar || '',
     avatarConfig: entry.avatarConfig || null,
@@ -51,7 +52,7 @@ function PodiumCard({ entry, rank, role, large, contrib }) {
           fallbackClassName="text-xl"
         />
       </span>
-      <div className="mt-2 w-full truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
+      <div className="mt-2 w-full truncate text-xs font-bold sm:text-sm">{entry ? displayNameOf(entry) : '---'}</div>
       <div className="text-sm font-extrabold tabular-nums text-primary">{entry?.finalScore ?? entry?.totalScore ?? 0} pts</div>
       <div className="text-[10px] font-semibold text-muted-foreground">{entry?.avgPct ?? 0}% avg · {entry?.quizCount ?? 0} quiz{(entry?.quizCount ?? 0) === 1 ? '' : 'zes'}{entry?.contribCount > 0 ? ` · ${entry.contribCount} uploads` : ''}</div>
       {!!contrib?.medals?.length && (
@@ -102,7 +103,7 @@ function RankRow({ entry, rank, isUser, role, contrib }) {
       <AvatarWithTick user={toAvatarUser(entry, role)} className="size-10" tickSize="size-4" />
       <span className="min-w-0 flex-1 leading-tight">
         <span className="flex items-center gap-1.5">
-          <span className="truncate text-sm font-bold">{entry.name}</span>
+          <span className="truncate text-sm font-bold">{displayNameOf(entry)}</span>
           {isUser && (
             <span className="shrink-0 rounded-full bg-primary px-1.5 py-px text-[9px] font-black uppercase tracking-wide text-primary-foreground">
               You
