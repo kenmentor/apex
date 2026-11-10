@@ -11,11 +11,33 @@ export async function GET(request) {
     // uses the capped set; raise limit explicitly if full stats are needed.
     const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 500)
 
-    const scoresCol = await getCollection('scores')
+    const [scoresCol, qCol, rCol, mCol, vCol] = await Promise.all([
+      getCollection('scores'),
+      getCollection('questions').catch(() => null),
+      getCollection('readings').catch(() => null),
+      getCollection('user_materials').catch(() => null),
+      getCollection('videos').catch(() => null),
+    ])
 
     const match = {}
     if (email) match.email = email.toLowerCase()
     if (school) match.school = school
+
+    // Approved contribution counts per email across all four stores.
+    // Videos have no status field — the $nin match includes them as live.
+    const contribMatch = { status: { $nin: ['pending', 'rejected', 'revoked'] } }
+    const contribCounts = new Map()
+    const addContrib = (e, n) => { const k = String(e || '').toLowerCase(); if (k) contribCounts.set(k, (contribCounts.get(k) || 0) + n) }
+    const contribAggs = [
+      qCol ? qCol.aggregate([{ $match: contribMatch }, { $group: { _id: '$authorEmail', n: { $sum: 1 } } }]).toArray().catch(() => []) : Promise.resolve([]),
+      rCol ? rCol.aggregate([{ $match: contribMatch }, { $group: { _id: '$authorEmail', n: { $sum: 1 } } }]).toArray().catch(() => []) : Promise.resolve([]),
+      mCol ? mCol.aggregate([{ $match: contribMatch }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => []) : Promise.resolve([]),
+      vCol ? vCol.aggregate([{ $match: contribMatch }, { $group: { _id: '$ownerEmail', n: { $sum: 1 } } }]).toArray().catch(() => []) : Promise.resolve([]),
+    ]
+    for (const rows of await Promise.all(contribAggs)) {
+      for (const r of rows || []) addContrib(r._id, r.n)
+    }
+    const maxContrib = Math.max(0, ...[...contribCounts.values()])
 
     const pipeline = [
       { $match: match },
@@ -40,7 +62,24 @@ export async function GET(request) {
 
     const aggregated = await scoresCol.aggregate(pipeline).toArray()
 
-    const ranked = aggregated.map((s, i) => ({
+    // Blend: 60% academics (quiz average) + 40% contributions (approved
+    // uploads, normalized against the top contributor). Sort by blend.
+    const withScores = aggregated.map((s) => {
+      const em = String(s.email || '').toLowerCase()
+      const contribCount = contribCounts.get(em) || 0
+      const contribScore = maxContrib > 0 ? Math.round((contribCount / maxContrib) * 100) : 0
+      const academicScore = s.avgPct || 0
+      return {
+        ...s,
+        contribCount,
+        contribScore,
+        academicScore,
+        finalScore: Math.round(academicScore * 0.6 + contribScore * 0.4),
+      }
+    })
+    withScores.sort((a, b) => b.finalScore - a.finalScore || b.totalScore - a.totalScore || (a.totalTimeSpent || 0) - (b.totalTimeSpent || 0))
+
+    const ranked = withScores.map((s, i) => ({
       _id: s._id,
       name: s.name,
       school: s.school || '',
@@ -48,6 +87,10 @@ export async function GET(request) {
       totalScore: s.totalScore,
       totalQuestions: s.totalQuestions,
       avgPct: s.avgPct,
+      academicScore: s.academicScore,
+      contribCount: s.contribCount,
+      contribScore: s.contribScore,
+      finalScore: s.finalScore,
       totalTimeSpent: s.totalTimeSpent || 0,
       quizCount: s.quizCount,
       courses: s.courses || [],

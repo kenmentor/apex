@@ -115,7 +115,10 @@ export default function SearchPage() {
     fetchJson('/api/courses', { ttl: TTL.list }).then(d => setCourses(Array.isArray(d) ? d : (d.docs || d.courses || []))).catch(() => {})
     fetchJson('/api/spaces?limit=50', { ttl: TTL.list }).then(d => setSpaces(Array.isArray(d) ? d : [])).catch(() => {})
     try {
-      const t = new URLSearchParams(window.location.search).get('type') || ''
+      const sp0 = new URLSearchParams(window.location.search)
+      const t = sp0.get('type') || ''
+      const q0 = (sp0.get('q') || '').trim().slice(0, 120)
+      if (q0) setQ(q0)
       if (['video', 'audio', 'quiz', 'qa', 'folders'].includes(t)) setTab(t)
       else if (t === 'theory') setTab('qa')
       else if (t === 'folder') setTab('folders')

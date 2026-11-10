@@ -51,8 +51,8 @@ function PodiumCard({ entry, rank, role, large, contrib }) {
         />
       </span>
       <div className="mt-2 w-full truncate text-xs font-bold sm:text-sm">{entry?.name || '---'}</div>
-      <div className="text-sm font-extrabold tabular-nums text-primary">{entry?.totalScore || 0} pts</div>
-      <div className="text-[10px] font-semibold text-muted-foreground">{entry?.avgPct ?? 0}% avg · {entry?.quizCount ?? 0} quiz{(entry?.quizCount ?? 0) === 1 ? '' : 'zes'}</div>
+      <div className="text-sm font-extrabold tabular-nums text-primary">{entry?.finalScore ?? entry?.totalScore ?? 0} pts</div>
+      <div className="text-[10px] font-semibold text-muted-foreground">{entry?.avgPct ?? 0}% avg · {entry?.quizCount ?? 0} quiz{(entry?.quizCount ?? 0) === 1 ? '' : 'zes'}{entry?.contribCount > 0 ? ` · ${entry.contribCount} uploads` : ''}</div>
       {!!contrib?.medals?.length && (
         <div className="mt-1.5 flex justify-center">
           <MedalStack medals={contrib.medals} size="size-4 text-[10px]" max={4} />
@@ -121,8 +121,8 @@ function RankRow({ entry, rank, isUser, role, contrib }) {
         )}
       </span>
       <span className="shrink-0 text-right leading-tight">
-        <span className="block text-sm font-extrabold tabular-nums">{entry.totalScore}</span>
-        <span className="block text-[11px] font-semibold text-muted-foreground">{entry.avgPct}% avg</span>
+        <span className="block text-sm font-extrabold tabular-nums">{entry.finalScore ?? entry.totalScore}</span>
+        <span className="block text-[11px] font-semibold text-muted-foreground">{entry.avgPct}% avg{entry.contribCount > 0 ? ` · ${entry.contribCount} uploads` : ''}</span>
       </span>
       <ChevronRight className="size-4 shrink-0 text-muted-foreground/50" />
     </Link>
@@ -242,7 +242,7 @@ export default function LeaderboardPage() {
                 </span>
                 <span className="mt-8 block text-2xl font-black tracking-tight">Rankings</span>
                 <span className="mt-0.5 block max-w-[75%] text-[13px] leading-snug text-white/75">
-                  Every quiz counts. Climb the board.
+                  60% quizzes · 40% contributions. Climb the board.
                 </span>
                 {stats && (
                   <div className="relative mt-4 grid grid-cols-4 divide-x divide-white/15 rounded-2xl bg-white/10 backdrop-blur">
@@ -288,9 +288,9 @@ export default function LeaderboardPage() {
                 <AvatarWithTick user={toAvatarUser(userEntry, roleOf(userEntry))} className="size-10" tickSize="size-4" />
                 <span className="min-w-0 flex-1 leading-tight">
                   <span className="block truncate text-sm font-bold">Your rank · #{userRank}</span>
-                  <span className="block truncate text-[11px] text-muted-foreground">
-                    {userEntry.totalScore} pts · {userEntry.avgPct}% avg — keep climbing
-                  </span>
+                <span className="block truncate text-[11px] text-muted-foreground">
+                  {userEntry.finalScore ?? userEntry.totalScore} pts · {userEntry.avgPct}% avg — keep climbing
+                </span>
                   {(() => { const c = contribOf(userEntry); return !!c && (c.approved > 0 || (c.medals || []).length > 0) ? (
                     <span className="mt-1 flex items-center gap-1.5">
                       <MedalStack medals={c.medals || []} />
@@ -333,9 +333,9 @@ export default function LeaderboardPage() {
               })}
             </div>
 
-            <div className="text-center text-xs text-muted-foreground">
-              Ranking by total correct answers · {searching ? `${filtered.length} of ` : ''}{allEntries.length} players
-            </div>
+                <div className="text-center text-xs text-muted-foreground">
+                  Ranked 60% quizzes · 40% contributions · {searching ? `${filtered.length} of ` : ''}{allEntries.length} players
+                </div>
           </>
         )}
       </div>

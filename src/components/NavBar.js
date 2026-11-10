@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Home, Map, Gamepad2, Search, Folder } from 'lucide-react';
+import { Home, Trophy, Gamepad2, Search, Folder } from 'lucide-react';
 import { subscribeUploads } from '@/lib/uploads';
 
 const links = [
   { href: '/', label: 'Home', icon: Home },
-  { href: '/plan', label: 'Curriculum', icon: Map },
+  { href: '/leaderboard', label: 'Rankings', icon: Trophy },
   { href: '/games', label: 'Games', icon: Gamepad2 },
   { href: '/search', label: 'Search', icon: Search },
   { href: '/folders', label: 'Folders', icon: Folder },

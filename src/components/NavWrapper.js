@@ -11,7 +11,7 @@ import { fetchJson, TTL } from '@/lib/fetch-json';
 const HIDDEN_ROUTES = ['/auth'];
 const routeMap = {
   '/': '/',
-  '/plan': '/plan',
+  '/plan': '/',
   '/groups': '/groups',
   '/spaces': '/groups',
   '/search': '/search',
@@ -34,7 +34,7 @@ const routeMap = {
 };
 
 // Tab roots keep the plain brand header (no back button).
-const TAB_ROOTS = new Set(['/', '/plan', '/games', '/search', '/folders']);
+const TAB_ROOTS = new Set(['/', '/leaderboard', '/games', '/search', '/folders']);
 
 // Detail pages get back + contextual title. Parent = where back lands when
 // history is empty (fresh deep link).
