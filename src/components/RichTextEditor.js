@@ -48,6 +48,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
   const [imgOpen, setImgOpen] = useState(false)
   const [imgTab, setImgTab] = useState(null) // 'folder' | 'library' | null
   const [uploading, setUploading] = useState(false)
+  const [kbOffset, setKbOffset] = useState(0) // keyboard height: rail rides on top of it
   const fileRef = useRef(null)
   const editorRef = useRef(null)
   const onChangeRef = useRef(onChange)
@@ -85,6 +86,28 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
   useEffect(() => {
     editorRef.current = editor || null
   }, [editor])
+
+  // Keep the bottom rail glued above the soft keyboard. fixed bottom-0
+  // anchors to the layout viewport, which iOS Safari won't shrink for the
+  // keyboard — so track the visual viewport and lift the rail by the
+  // keyboard's height. No-ops where the OS already resizes (offset = 0).
+  useEffect(() => {
+    if (toolbar !== 'bottom') return
+    try {
+      const vv = window.visualViewport
+      if (!vv) return
+      const update = () => {
+        setKbOffset(Math.max(0, window.innerHeight - vv.height - (vv.offsetTop || 0)))
+      }
+      update()
+      vv.addEventListener('resize', update)
+      vv.addEventListener('scroll', update)
+      return () => {
+        vv.removeEventListener('resize', update)
+        vv.removeEventListener('scroll', update)
+      }
+    } catch { /* older webviews: rail stays put */ }
+  }, [toolbar])
 
   useEffect(() => {
     if (editor && value !== undefined && editor.getHTML() !== value && !editor.isFocused) {
@@ -136,7 +159,8 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Write y
     `flex size-9 items-center justify-center rounded-lg ${active ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`
 
   const rail = (
-      <div className={(toolbar === 'bottom'
+      <div style={toolbar === 'bottom' && kbOffset ? { bottom: kbOffset } : undefined}
+        className={(toolbar === 'bottom'
         ? 'fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-2xl items-center gap-0.5 overflow-x-auto border-x border-t bg-card/95 px-2 pt-1.5 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] backdrop-blur [padding-bottom:max(0.375rem,env(safe-area-inset-bottom))] [&>*]:shrink-0'
         : 'sticky top-0 z-10 flex flex-wrap items-center gap-0.5 rounded-xl border bg-card p-1 shadow-sm')}>
         <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} aria-label="Bold"

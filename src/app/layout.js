@@ -14,8 +14,16 @@ import TelemetryProvider from '@/components/TelemetryProvider';
 import ConnectionStatus from '@/components/ConnectionStatus';
 import FirebaseInit from '@/components/FirebaseInit';
 
-export const metadata = {
-  metadataBase: new URL(getBaseUrl()),
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  // Let the keyboard shrink the layout viewport so fixed UI (editor rail,
+  // sheets) rides above it instead of hiding underneath.
+  interactiveWidget: 'resizes-content',
+  themeColor: '#130f40',
+};
+
+export const metadata = {  metadataBase: new URL(getBaseUrl()),
   title: 'Apex',
   description: 'Master your exams with past questions, quizzes, and study materials',
   manifest: '/manifest.json',
