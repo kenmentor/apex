@@ -742,42 +742,43 @@ function RailQaCard({ item }) {
   const href = qaHref(item)
   const answer = item.answer || null
   const concepts = Array.isArray(item.concepts) ? item.concepts : []
-  const canFlip = !!(answer || concepts.length)
+  const canFlip = Boolean(answer || concepts.length)
+  const eyebrow = item.courseCode ? 'Q&A - ' + item.courseCode : 'Q&A'
+  const meta = metaOf(item)
   return (
     <div className="relative flex w-56 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-b from-emerald-500/[0.08] to-transparent p-3.5">
       <div className="mb-2 flex items-center gap-1.5">
         <span className="flex size-5 shrink-0 items-center justify-center rounded-md bg-emerald-500 font-serif text-[11px] font-black italic text-white">Q</span>
-        <span className="truncate text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Q&amp;A{item.courseCode ? ` · ${item.courseCode}` : ''}</span>
+        <span className="truncate text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{eyebrow}</span>
       </div>
       <div
-        onClick={() => canFlip && setFlipped(f => !f)}
-        className={`relative w-full ${canFlip ? 'cursor-pointer' : ''}`}
+        onClick={() => { if (canFlip) setFlipped(v => !v) }}
+        className={canFlip ? 'relative w-full cursor-pointer' : 'relative w-full'}
         style={{ perspective: '1000px' }}>
         <div
           className="relative w-full transition-transform duration-500"
           style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)', minHeight: '9.5rem' }}>
-        {/* Front — question */}
-        <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-          <span className="line-clamp-4 block flex-1 font-serif text-[15px] font-medium leading-snug">{item.question || item.title}</span>
-          {!!metaOf(item) && <span className="block truncate text-[11px] text-muted-foreground">{metaOf(item)}</span>}
-        </div>
-        {/* Back — model answer */}
-        <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl bg-emerald-500/[0.07] p-2" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-          <span className="block shrink-0 text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Model answer</span>
-          <div className="min-h-0 flex-1 overflow-y-auto">
-            {answer
-              ? <span className="block text-[13px] leading-relaxed">{answer}</span>
-              : (
+          <div className="absolute inset-0 flex min-w-0 flex-col space-y-1.5 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
+            <span className="line-clamp-4 block flex-1 font-serif text-[15px] font-medium leading-snug">{item.question || item.title}</span>
+            {meta ? <span className="block truncate text-[11px] text-muted-foreground">{meta}</span> : null}
+          </div>
+          <div className="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl bg-emerald-500/[0.07] p-2" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+            <span className="block shrink-0 text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Model answer</span>
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              {answer ? (
+                <span className="block text-[13px] leading-relaxed">{answer}</span>
+              ) : (
                 <ul className="list-disc space-y-1 pl-4 text-[13px] leading-relaxed">
                   {concepts.map((c, i) => <li key={i}>{c}</li>)}
                 </ul>
               )}
+            </div>
+            {href ? (
+              <Link href={href} onClick={e => e.stopPropagation()} className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-primary">
+                Full answer <ChevronRight className="size-3" />
+              </Link>
+            ) : null}
           </div>
-          {href && (
-            <Link href={href} onClick={e => e.stopPropagation()} className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-primary">
-              Full answer <ChevronRight className="size-3" />
-            </Link>
-          )}
         </div>
       </div>
       <span className="mt-2.5 flex items-center gap-2" onClick={e => e.stopPropagation()}>
