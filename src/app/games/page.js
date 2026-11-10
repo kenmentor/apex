@@ -124,19 +124,12 @@ export default function GamesHubPage() {
     )
   }
 
-  // ---- HOME: Quiz stacked on top of Games — fixed, no scroll, both always visible ----
+  // ---- HOME: Quiz stacked on top of Games — fixed, no scroll, both always visible.
+  // This is a tab root: the global sticky TopBar (~60px) is already the header,
+  // so no in-page header here. Height = viewport minus TopBar, so the page
+  // never scrolls and the GAMES card can't hide below the fold.
   return (
-    <div className="mx-auto flex h-dvh w-full max-w-md flex-col gap-3 overflow-hidden px-4 pb-24 pt-6">
-      <div className="flex shrink-0 items-center gap-2">
-        <Link href="/" aria-label="Back" className="flex size-9 items-center justify-center rounded-lg border hover:bg-muted">
-          <ArrowLeft className="size-4" />
-        </Link>
-        <div className="min-w-0 flex-1">
-          <h1 className="text-xl font-bold">Arcade</h1>
-          <p className="text-[11px] text-muted-foreground">{GAMES.length + 1} ways to play · every run logged</p>
-        </div>
-      </div>
-
+    <div className="mx-auto flex h-[calc(100dvh-60px)] w-full max-w-md flex-col overflow-hidden px-4 pb-24 pt-4">
       <div className="flex min-h-0 flex-1 flex-col gap-3">
         <button
           onClick={() => setQuizOpen(true)}
