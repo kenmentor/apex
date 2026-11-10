@@ -3,19 +3,16 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Flame, Search, ChevronRight, ArrowRight } from 'lucide-react';
-import { getUser, getToken } from '@/lib/auth';
+import { Search, ChevronRight, ArrowRight, ClipboardList, Layers, Gamepad2, Trophy } from 'lucide-react';
+import { getUser } from '@/lib/auth';
 import { reviewProfile } from '@/lib/profile-review';
 import { colorFor } from '@/lib/plan-colors';
 import { topicDoneCount } from '@/lib/progress';
-import { splitBySemester } from '@/lib/semesters';
-import SemesterDivider from '@/components/SemesterDivider';
-import { fetchJson, TTL } from '@/lib/fetch-json';
+import QuizSetupModal from '@/components/game/QuizSetupModal';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Home = your plan, decluttered: search on top with a fire-count pill,
-// then the full course list. (The old Curriculum tab is now Rankings.)
-
+// Home: big search on top, 2x2 boxes (Quiz / Courses / Games / Rankings),
+// then your top courses — each tap wires straight to its page.
 function Ring({ pct, size = 40 }) {
   const r = (size - 6) / 2
   const c = 2 * Math.PI * r
@@ -61,29 +58,48 @@ function HomeCourseBlock({ course, doneIds }) {
   )
 }
 
+const BOXES_TOP = [
+  {
+    id: 'quiz', title: 'QUIZ', blurb: 'Pick a course, pick topics, start answering',
+    cta: 'Start', Icon: ClipboardList,
+    bg: 'linear-gradient(135deg, #059669, #0d9488)',
+  },
+  {
+    id: 'courses', title: 'COURSES', blurb: 'Your plan, progress and topics',
+    cta: 'Open', Icon: Layers,
+    bg: 'linear-gradient(135deg, #0284c7, #22d3ee)',
+  },
+  {
+    id: 'games', title: 'GAMES', blurb: 'Mix courses, then choose a game',
+    cta: 'Play', Icon: Gamepad2,
+    bg: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+  },
+  {
+    id: 'rankings', title: 'RANKINGS', blurb: '60% quiz · 40% contributions',
+    cta: 'View', Icon: Trophy,
+    bg: 'linear-gradient(135deg, #b45309, #f59e0b)',
+  },
+]
+
 export default function HomePage() {
   const router = useRouter()
   const [user, setUser] = useState(null)
-  const [streakData, setStreakData] = useState(null)
   const [planCourses, setPlanCourses] = useState([])
   const [completions, setCompletions] = useState([])
   const [loading, setLoading] = useState(true)
   const [bannerOff, setBannerOff] = useState(false)
   const [q, setQ] = useState('')
+  const [quizOpen, setQuizOpen] = useState(false)
 
   useEffect(() => {
     const u = getUser()
     setUser(u)
     if (!u?.email) { setLoading(false); return }
     Promise.all([
-      fetchJson(`/api/streak?email=${encodeURIComponent(u.email)}`, { ttl: TTL.short }).catch(() => null),
       fetch('/api/plans?email=' + encodeURIComponent(u.email), { cache: 'no-store' }).then(r => r.json()).catch(() => null),
       fetch('/api/completions?email=' + encodeURIComponent(u.email), { cache: 'no-store' }).then(r => (Array.isArray(r) ? r : r.json()).catch(() => [])),
-    ]).then(([streak, plan, comps]) => {
-      if (streak?.email) setStreakData(streak)
-      if (plan?.supported) {
-        setPlanCourses(plan.courses || [])
-      }
+    ]).then(([plan, comps]) => {
+      if (plan?.supported) setPlanCourses(plan.courses || [])
       setCompletions(Array.isArray(comps) ? comps : [])
       setLoading(false)
     }).catch(() => setLoading(false))
@@ -104,18 +120,20 @@ export default function HomePage() {
       <div className="flex min-h-dvh items-center justify-center overflow-x-hidden bg-background pb-24">
         <div className="space-y-4 w-full max-w-lg px-5">
           <Skeleton className="h-12 w-full rounded-full" />
-          <Skeleton className="h-16 w-full rounded-2xl" />
-          <Skeleton className="h-20 w-full rounded-xl" />
-          <Skeleton className="h-20 w-full rounded-xl" />
+          <div className="grid grid-cols-2 gap-3">
+            <Skeleton className="h-32 w-full rounded-3xl" />
+            <Skeleton className="h-32 w-full rounded-3xl" />
+          </div>
+          <Skeleton className="h-20 w-full rounded-3xl" />
         </div>
       </div>
     )
   }
 
   const doneIds = new Set((completions || []).map(c => `${c.topicId}:${c.itemId}`))
-  const sorted = [...(planCourses || [])].sort((a, b) => ((b.topics || []).length - (a.topics || []).length))
-  const { first, second } = splitBySemester(sorted)
-  const both = first.length > 0 && second.length > 0
+  const topCourses = [...(planCourses || [])]
+    .sort((a, b) => ((b.topics || []).length - (a.topics || []).length))
+    .slice(0, 4)
 
   function submitSearch(e) {
     e?.preventDefault?.()
@@ -123,8 +141,25 @@ export default function HomePage() {
     router.push(needle ? `/search?q=${encodeURIComponent(needle)}` : '/search')
   }
 
+  function handleBox(id) {
+    if (id === 'quiz') setQuizOpen(true)
+    else if (id === 'courses') router.push('/plan')
+    else if (id === 'games') router.push('/games')
+    else if (id === 'rankings') router.push('/leaderboard')
+  }
+
+  function startQuiz(sel) {
+    setQuizOpen(false)
+    const slug = sel.course.toLowerCase().replace(/\s+/g, '')
+    if (sel.topics.length === 1) {
+      router.push('/plan/' + slug + '/' + encodeURIComponent(sel.topics[0]))
+    } else {
+      router.push('/courses/' + slug + '/quiz')
+    }
+  }
+
   return (
-    <div className="mx-auto min-h-dvh max-w-2xl space-y-4 px-5 pb-28 pt-4">
+    <div className="mx-auto min-h-dvh w-full max-w-2xl space-y-4 px-5 pb-28 pt-4">
       {!!user && !bannerOff && reviewProfile(user).needsReview && (
         <div className="flex items-center gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
           <p className="flex-1 text-xs font-semibold text-amber-700 dark:text-amber-400">
@@ -151,61 +186,65 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Search on top + fire count pill (full streak lives on /streak) */}
+      {/* Big search on top — typing + enter jumps to results with the query prefilled */}
       {user && (
-        <div className="flex items-center gap-2">
-          <form onSubmit={submitSearch} className="flex min-w-0 flex-1 items-center gap-2 rounded-full border bg-card px-5 py-1">
-            <Search className="size-4 shrink-0 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={e => setQ(e.target.value)}
-              placeholder="Search courses, topics, materials…"
-              className="w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground"
-            />
-            {!!q.trim() && (
-              <button type="submit" aria-label="Search" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <ArrowRight className="size-4" />
-              </button>
-            )}
-          </form>
-          <Link
-            href="/streak"
-            aria-label={`Streak: ${streakData?.currentStreak ?? 0} days. View streak.`}
-            title="View streak"
-            className="flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-3.5 text-sm font-extrabold tabular-nums text-white shadow-sm transition-transform active:scale-95"
-            style={{ background: 'linear-gradient(120deg, #FBBF24, #F97316 55%, #EF4444)' }}
-          >
-            <Flame className="size-4" fill="currentColor" />
-            {streakData?.currentStreak ?? 0}
-          </Link>
+        <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border-2 border-primary/25 bg-card px-5 py-1 shadow-sm focus-within:border-primary/60">
+          <Search className="size-5 shrink-0 text-muted-foreground" />
+          <input
+            value={q}
+            onChange={e => setQ(e.target.value)}
+            placeholder="Search courses, topics, materials…"
+            className="w-full bg-transparent py-3.5 text-[15px] font-medium outline-none placeholder:text-muted-foreground"
+          />
+          {!!q.trim() && (
+            <button type="submit" aria-label="Search" className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+              <ArrowRight className="size-4" />
+            </button>
+          )}
+        </form>
+      )}
+
+      {/* 2x2: Quiz / Courses / Games / Rankings */}
+      {user && (
+        <div className="grid grid-cols-2 gap-2.5">
+          {BOXES_TOP.map(b => (
+            <button
+              key={b.id}
+              onClick={() => handleBox(b.id)}
+              className="flex min-h-36 flex-col items-start gap-1 overflow-hidden rounded-3xl p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+              style={{ background: b.bg }}
+            >
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/20">
+                <b.Icon className="size-6" />
+              </span>
+              <span className="mt-auto block pt-3 text-xl font-black leading-none">{b.title}</span>
+              <span className="block text-[11px] leading-snug text-white/75">{b.blurb}</span>
+            </button>
+          ))}
         </div>
       )}
 
-      {/* Plan courses */}
-      {user && (
+      {/* Your courses — straight into each /plan course page */}
+      {user && topCourses.length > 0 && (
         <section className="space-y-3 pt-1">
-          {(planCourses || []).length === 0 ? (
-            <div className="rounded-2xl border border-dashed p-8 text-center">
-              <p className="text-sm font-bold">No courses yet</p>
-              <p className="mx-auto mt-1 max-w-[260px] text-xs text-muted-foreground">Set your department and level so your plan can load.</p>
-              <Link href="/auth?review=1" className="mt-3 inline-block rounded-xl bg-primary px-5 py-2 text-xs font-bold text-primary-foreground">
-                Set it up
-              </Link>
-            </div>
-          ) : (
-            <>
-              {both && <SemesterDivider label="First Semester" />}
-              {first.map(c => <HomeCourseBlock key={c.code} course={c} doneIds={doneIds} />)}
-              {both && (
-                <>
-                  <SemesterDivider label="Second Semester" />
-                  {second.map(c => <HomeCourseBlock key={c.code} course={c} doneIds={doneIds} />)}
-                </>
-              )}
-              {!both && second.map(c => <HomeCourseBlock key={c.code} course={c} doneIds={doneIds} />)}
-            </>
-          )}
+          <div className="flex items-baseline justify-between px-1">
+            <h2 className="text-sm font-extrabold uppercase tracking-wide text-muted-foreground">Your courses</h2>
+            <Link href="/plan" className="flex items-center gap-1 text-xs font-bold text-primary">
+              See all <ChevronRight className="size-3.5" />
+            </Link>
+          </div>
+          {topCourses.map(c => <HomeCourseBlock key={c.code} course={c} doneIds={doneIds} />)}
         </section>
+      )}
+
+      {user && (planCourses || []).length === 0 && (
+        <div className="rounded-2xl border border-dashed p-8 text-center">
+          <p className="text-sm font-bold">No courses yet</p>
+          <p className="mx-auto mt-1 max-w-[260px] text-xs text-muted-foreground">Set your department and level so your plan can load.</p>
+          <Link href="/auth?review=1" className="mt-3 inline-block rounded-xl bg-primary px-5 py-2 text-xs font-bold text-primary-foreground">
+            Set it up
+          </Link>
+        </div>
       )}
 
       {/* Not logged in: the way in. */}
@@ -218,6 +257,8 @@ export default function HomePage() {
           </Link>
         </section>
       )}
+
+      <QuizSetupModal open={quizOpen} onClose={() => setQuizOpen(false)} onStart={startQuiz} />
     </div>
   )
 }
