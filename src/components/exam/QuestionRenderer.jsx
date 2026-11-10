@@ -295,14 +295,18 @@ function OptionList({ q, value, onChange, revealed, disabled, onPick }) {
   })()
   const isMulti = typeOf(q) === 'multi'
   return (
-    <div className="space-y-3">
+    <div className="grid grid-cols-1 gap-2">
       {Object.keys(q.options || {}).map((key, idx) => {
         const isCorrect = correctKeys.includes(String(key).toLowerCase())
         const isRevealedCorrect = revealed && isCorrect
         const isSelected = isMulti ? (value || []).includes(key) : value === key
-        let styles = 'border bg-muted/50 hover:bg-muted'
-        if (isSelected) styles = 'border-2 border-primary bg-primary text-primary-foreground'
-        if (isRevealedCorrect) styles = 'border-2 border-green-500 bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-300'
+        const isRevealedWrong = revealed && isSelected && !isCorrect
+        // Same visual language as the games card: border-2 rows, letter
+        // chips, emerald flash on the right answer, red on a wrong pick.
+        let styles = 'border-muted hover:border-primary/50 hover:bg-muted/60'
+        if (isSelected) styles = 'border-primary bg-primary text-primary-foreground'
+        if (isRevealedCorrect) styles = 'border-emerald-500 bg-emerald-500/15'
+        else if (isRevealedWrong) styles = 'border-red-500 bg-red-500/10'
         return (
           <button
             key={key}
@@ -317,15 +321,14 @@ function OptionList({ q, value, onChange, revealed, disabled, onPick }) {
                 onChange?.(isSelected ? null : key)
               }
             }}
-            className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all active:scale-[0.98] ${styles} disabled:opacity-90`}
+            className={`flex w-full items-center gap-3 rounded-xl border-2 px-3 py-2.5 text-left text-sm font-medium transition-all active:scale-[0.98] ${styles} disabled:opacity-90`}
           >
-            <span className={`flex size-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold ${
-              isSelected ? 'bg-white/20 text-white' : isRevealedCorrect ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
+            <span className={`flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-black uppercase ${
+              isRevealedCorrect ? 'bg-emerald-500 text-white' : isRevealedWrong ? 'bg-red-500 text-white' : isSelected ? 'bg-white/20 text-white' : 'bg-muted text-muted-foreground'
             }`}>
               {isMulti && isSelected && !revealed ? '✓' : (OPTION_LABELS[idx] || String(key).toUpperCase())}
             </span>
-            <span className="flex-1 text-sm">{q.options[key]}</span>
-            {isRevealedCorrect && <Check className="size-5 shrink-0 text-green-500" />}
+            <span className="flex-1">{q.options[key]}</span>
           </button>
         );
       })}

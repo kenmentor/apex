@@ -4,13 +4,14 @@ import { useState, useEffect, Suspense, useRef } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowLeft, Timer, Flame, Zap } from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion } from 'motion/react'
 import { getUser } from '@/lib/auth'
 import { scoreSprint } from '@/lib/games'
 import { fetchJson, TTL } from '@/lib/fetch-json'
 import GameStars from '@/components/game/GameStars'
 import SfxToggle from '@/components/game/SfxToggle'
 import CoursePickerModal, { CoursePickerButton } from '@/components/game/CoursePickerModal'
+import GameQuizCard from '@/components/game/GameQuizCard'
 import { playMixParams, nextCourse } from '@/lib/play-params'
 import { sfx } from '@/lib/sfx'
 import { celebrate } from '@/lib/celebrate'
@@ -210,42 +211,7 @@ function SprintInner() {
             </div>
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={q.id}
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -60 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-              className="rounded-2xl border p-4"
-            >
-              <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{q.section}</p>
-              <p className="mt-1 text-base font-semibold">{q.question}</p>
-              <div className="mt-3 grid grid-cols-1 gap-2">
-                {Object.entries(q.options || {}).map(([letter, text]) => {
-                  const isFlash = flash?.qid === q.id && flash?.letter === letter
-                  const isRightAnswer = flash && letter.toLowerCase() === String(bank.answers[q.id] || '').toLowerCase()
-                  return (
-                    <motion.button
-                      key={letter}
-                      onClick={() => pick(letter)}
-                      animate={isFlash && !flash.right ? { x: [0, -8, 8, -5, 5, 0] } : {}}
-                      transition={{ duration: 0.35 }}
-                      className={'rounded-xl border-2 px-3 py-2.5 text-left text-sm font-medium ' +
-                        (flash && isRightAnswer
-                          ? 'border-emerald-500 bg-emerald-500/15'
-                          : isFlash
-                            ? 'border-red-500 bg-red-500/10'
-                            : 'border-muted hover:border-primary/50 hover:bg-muted/60')}
-                    >
-                      <span className="mr-2 inline-flex size-6 items-center justify-center rounded-md bg-muted text-xs font-black uppercase">{letter}</span>
-                      {text}
-                    </motion.button>
-                  )
-                })}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <GameQuizCard q={q} eyebrow={q.section} correctLetter={bank.answers[q.id]} flash={flash} onPick={pick} />
           <p className="text-center text-xs text-muted-foreground"><Zap className="mr-1 inline size-3" />No going back — trust your first read</p>
         </>
       )}

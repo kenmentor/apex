@@ -143,8 +143,8 @@ export default function QuizModal({ quiz, onClose }) {
               const correctMap = quiz.correctAnswer ?? quiz.correct_answer ?? {};
               const truthy = v => /^(true|t)$/i.test(String(v ?? ''));
               return (
-                <div key={key} className={`flex items-center gap-2 rounded-xl border px-3 py-2.5 text-sm ${revealed ? (picked && truthy(picked) === truthy(correctMap[key]) ? 'border-green-500 bg-green-50 dark:bg-green-950/20' : 'border-red-500 bg-red-50 dark:bg-red-950/20') : ''}`}>
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted text-xs font-bold">{OPTION_LABELS[i] || key}</span>
+                <div key={key} className={`flex items-center gap-3 rounded-xl border-2 px-3 py-2.5 text-sm font-medium ${revealed ? (picked && truthy(picked) === truthy(correctMap[key]) ? 'border-emerald-500 bg-emerald-500/15' : 'border-red-500 bg-red-500/10') : 'border-muted'}`}>
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-xs font-black">{OPTION_LABELS[i] || key}</span>
                   <span className="min-w-0 flex-1">{quiz.options[key]}</span>
                   <div className="flex shrink-0 gap-1">
                     {['true', 'false'].map(v => (
@@ -198,21 +198,21 @@ export default function QuizModal({ quiz, onClose }) {
           <div className="space-y-2 px-6 pb-5">
             {Object.entries(quiz.options || {}).map(([key, val], i) => {
               const picked = qType === 'multi' ? (selected || []).includes(key) : selected === key;
-              let cls = 'flex items-center gap-3 rounded-xl border px-4 py-3.5 text-sm transition-all cursor-pointer select-none';
-              if (!revealed) cls += ' hover:bg-accent hover:border-foreground/20';
+              let cls = 'flex items-center gap-3 rounded-xl border-2 px-3 py-2.5 text-sm font-medium transition-all cursor-pointer select-none';
+              if (!revealed) cls += ' border-muted hover:border-primary/50 hover:bg-muted/60';
               else {
                 const correctKeys = Array.isArray(quiz.correctAnswer ?? quiz.correct_answer)
                   ? (quiz.correctAnswer ?? quiz.correct_answer).map(v => String(v).toLowerCase())
                   : [String(quiz.correctAnswer ?? quiz.correct_answer).toLowerCase()];
                 const isKey = correctKeys.includes(String(key).toLowerCase());
-                if (isKey) cls += ' border-green-500 bg-green-50 dark:bg-green-950/20';
-                else if (picked) cls += ' border-red-500 bg-red-50 dark:bg-red-950/20';
-                else cls += ' opacity-40';
+                if (isKey) cls += ' border-emerald-500 bg-emerald-500/15';
+                else if (picked) cls += ' border-red-500 bg-red-500/10';
+                else cls += ' border-muted opacity-40';
               }
               return (
                 <div key={key} className={cls} onClick={() => handleSelect(key)}>
-                  <span className={`flex size-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${
-                    revealed ? 'bg-muted text-muted-foreground' : picked && qType === 'multi' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground'
+                  <span className={`flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-black uppercase ${
+                    revealed ? 'bg-muted text-muted-foreground' : picked && qType === 'multi' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
                   }`}>
                     {revealed ? OPTION_LABELS[i] || key : (picked && qType === 'multi' ? <Check className="size-4" /> : OPTION_LABELS[i] || key)}
                   </span>
