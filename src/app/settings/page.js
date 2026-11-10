@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getUser, setUser, clearUser, isAdmin, getToken, apiPutProfile } from '@/lib/auth'
-import { ArrowLeft, Camera, LogOut, Shield, Sun, Moon, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
+import { ArrowLeft, Camera, LogOut, Shield, Sun, Moon, Smartphone, ImagePlus, Smile, ChevronLeft } from 'lucide-react'
 import { Drawer } from 'vaul'
 import BtnSpinner from '@/components/BtnSpinner'
 import { Card, CardContent } from '@/components/ui/card'
@@ -22,7 +22,7 @@ import SearchableField from '@/components/SearchableField'
 
 export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
   const router = useRouter()
-  const { resolvedTheme, setTheme } = useTheme()
+  const { theme, resolvedTheme, setTheme } = useTheme()
   const [user, setUserState] = useState(null)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState('')
@@ -305,6 +305,27 @@ export function SettingsContent({ bare = false, hideAvatar = false } = {}) {
         <Card>
           <CardContent className="p-4 space-y-3">
             <h3 className="text-sm font-semibold">Preferences</h3>
+            <div className="rounded-lg bg-muted/50 px-3 py-2.5">
+              <span className="block text-sm font-medium">Appearance</span>
+              <span className="mb-2 block text-xs text-muted-foreground">Light, dark, or follow your phone</span>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  { id: 'light', label: 'Light', Icon: Sun },
+                  { id: 'dark', label: 'Dark', Icon: Moon },
+                  { id: 'system', label: 'Auto', Icon: Smartphone },
+                ].map(({ id, label, Icon }) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => setTheme(id)}
+                    aria-pressed={(theme || 'system') === id}
+                    className={'flex items-center justify-center gap-1.5 rounded-lg border py-2 text-xs font-bold ' + ((theme || 'system') === id ? 'border-primary bg-primary text-primary-foreground' : 'border-transparent bg-background hover:bg-muted')}
+                  >
+                    <Icon className="size-3.5" /> {label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <button
               type="button"
               role="switch"
