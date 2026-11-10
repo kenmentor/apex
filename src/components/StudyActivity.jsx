@@ -45,15 +45,18 @@ function intensity(count) {
   return 'bg-gradient-to-br from-orange-500 to-pink-600'
 }
 
-export default function StudyActivity() {
+export default function StudyActivity({ email: emailProp, showFullCalendar = true }) {
   const [streak, setStreak] = useState(null)
   const [topicsDone, setTopicsDone] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [isSelf, setIsSelf] = useState(true)
 
   useEffect(() => {
     const u = getUser()
-    if (!u?.email) { setLoading(false); return }
-    const email = encodeURIComponent(u.email)
+    const emailRaw = (emailProp || u?.email || '').trim()
+    if (!emailRaw) { setLoading(false); return }
+    setIsSelf(!emailProp || emailRaw.toLowerCase() === (u?.email || '').toLowerCase())
+    const email = encodeURIComponent(emailRaw)
     Promise.all([
       fetch(`/api/streak?email=${email}`, { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).catch(() => null),
       fetch('/api/plans?email=' + email, { cache: 'no-store' }).then(r => r.json()).catch(() => null),
@@ -74,7 +77,8 @@ export default function StudyActivity() {
       }
       setLoading(false)
     }).catch(() => setLoading(false))
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [emailProp])
 
   if (loading) {
     return (
@@ -110,9 +114,11 @@ export default function StudyActivity() {
       <div>
         <div className="mb-2 flex items-center px-1">
           <p className="flex-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Study activity</p>
-          <Link href="/streak" className="flex items-center gap-0.5 text-[11px] font-bold text-primary">
-            Full calendar <ChevronRight className="size-3" />
-          </Link>
+          {showFullCalendar && isSelf && (
+            <Link href="/streak" className="flex items-center gap-0.5 text-[11px] font-bold text-primary">
+              Full calendar <ChevronRight className="size-3" />
+            </Link>
+          )}
         </div>
         {weeks.length > 0 ? (
           <div className="grid w-full gap-1.5" style={{ gridTemplateColumns: `repeat(${weeks.length}, minmax(0, 1fr))` }}>
@@ -126,7 +132,7 @@ export default function StudyActivity() {
           </div>
         ) : (
           <p className="rounded-xl border border-dashed p-4 text-center text-xs text-muted-foreground">
-            No study days yet — take a quiz or check off a topic to light up your graph.
+            {isSelf ? 'No study days yet — take a quiz or check off a topic to light up your graph.' : 'No study days yet.'}
           </p>
         )}
         <div className="mt-2 flex items-center justify-center gap-4 text-[10px] text-muted-foreground">

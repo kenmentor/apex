@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { UserPlus, UserCheck, Flame } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
 import ContributorProfile from '@/components/ContributorProfile'
+import Contributions from '@/components/Contributions'
+import StudyActivity from '@/components/StudyActivity'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -72,6 +74,9 @@ export default function PublicProfileView({ email }) {
 
   const totalAttempts = scores.length
   const bestPct = scores.length > 0 ? Math.max(...scores.map(s => s.percentage || 0)) : 0
+  // Contributors lead with their contribution graph, then study.
+  // Regular users see only the study graph.
+  const isContributor = !!profile && (!!profile.admin || ['editor', 'official', 'admin'].includes(profile.role))
 
   return (
     <div className="min-h-dvh bg-background pb-28">
@@ -117,14 +122,23 @@ export default function PublicProfileView({ email }) {
                 {isFollowing ? 'Following' : 'Follow'}
               </Button>
             )}
-            <p className="px-1 text-center text-xs text-muted-foreground">
-              <span className="font-bold text-foreground">{totalAttempts} {totalAttempts === 1 ? 'quiz' : 'quizzes'}</span>
-              {totalAttempts > 0 && (
-                <> · <span className="font-bold text-foreground">Best {bestPct}%</span></>
-              )}
-            </p>
-          </div>
-        </>
+        <p className="px-1 text-center text-xs text-muted-foreground">
+          <span className="font-bold text-foreground">{totalAttempts} {totalAttempts === 1 ? 'quiz' : 'quizzes'}</span>
+          {totalAttempts > 0 && (
+            <> · <span className="font-bold text-foreground">Best {bestPct}%</span></>
+          )}
+        </p>
+
+        {isContributor && contrib ? (
+          <>
+            <Contributions data={contrib} loading={false} historyCount={totalAttempts} bestPct={totalAttempts ? bestPct : null} />
+            <StudyActivity email={decodedEmail} />
+          </>
+        ) : (
+          <StudyActivity email={decodedEmail} />
+        )}
+      </div>
+    </>
       )}
     </div>
   )

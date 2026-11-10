@@ -141,13 +141,33 @@ export async function GET(request) {
     const approved = qAppr + rAppr + mAppr + vAppr
     let pending = 0
     if (isSelf) {
-      const [qp, rp, mp] = await Promise.all([
+      const [qp, rp, mp, vp] = await Promise.all([
         qCol ? qCol.countDocuments({ authorEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
         rCol ? rCol.countDocuments({ authorEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
         mCol ? mCol.countDocuments({ ownerEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
+        vCol ? vCol.countDocuments({ ownerEmail: email, status: 'pending' }).catch(() => 0) : Promise.resolve(0),
       ])
-      pending = qp + rp + mp
+      pending = qp + rp + mp + vp
     }
+    // Contribution heatmap (18-week Mon-first grid) + medals, so public
+    // profiles can lead with them for contributor roles.
+    const heatToday = new Date()
+    const heatKeyOf = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    const weeks = []
+    {
+      const cursor = new Date(heatToday)
+      cursor.setDate(cursor.getDate() - ((cursor.getDay() + 6) % 7) - 7 * 17)
+      for (let w = 0; w < 18; w++) {
+        const days = []
+        for (let i = 0; i < 7; i++) {
+          const k = heatKeyOf(cursor)
+          days.push({ date: k, count: byDay[k] || 0 })
+          cursor.setDate(cursor.getDate() + 1)
+        }
+        weeks.push(days)
+      }
+    }
+    const bestDayCount = Math.max(0, ...Object.values(byDay))
     const byDay = {}
     const courses = new Set()
     for (const [col, field] of [[qCol, 'authorEmail'], [rCol, 'authorEmail'], [mCol, 'ownerEmail'], [vCol, 'ownerEmail']]) {
@@ -207,9 +227,13 @@ export async function GET(request) {
       if (idx >= 0) rank = idx + 1
     } catch {}
 
+    const courseCount = courses.size
     return NextResponse.json({
-      totals: { total: approved + (isSelf ? pending : 0), approved, pending: isSelf ? pending : 0, courses: courses.size },
+      totals: { total: approved + (isSelf ? pending : 0), approved, pending: isSelf ? pending : 0, courses: courseCount },
       streak,
+      weeks,
+      medals: medalsFor({ total: approved, approved, courseCount, streak, bestDayCount }),
+      courses: [...courses].sort(),
       rank,
       totalContributors,
     })
