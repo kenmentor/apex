@@ -7,8 +7,8 @@ import { subscribeUploads } from '@/lib/uploads';
 
 const links = [
   { href: '/', label: 'Home', icon: Home },
-  { href: '/leaderboard', label: 'Rankings', icon: Trophy },
   { href: '/games', label: 'Games', icon: Gamepad2 },
+  { href: '/leaderboard', label: 'Rankings', icon: Trophy },
   { href: '/search', label: 'Search', icon: Search },
   { href: '/folders', label: 'Folders', icon: Folder },
 ];

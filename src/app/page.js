@@ -188,16 +188,18 @@ export default function HomePage() {
 
       {/* Big search on top — typing + enter jumps to results with the query prefilled */}
       {user && (
-        <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border-2 border-primary/25 bg-card px-5 py-1 shadow-sm focus-within:border-primary/60">
-          <Search className="size-5 shrink-0 text-muted-foreground" />
+        <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border bg-card px-4 py-1 shadow-sm focus-within:border-primary/60">
+          <button type="submit" aria-label="Search" className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-primary">
+            <Search className="size-[18px]" />
+          </button>
           <input
             value={q}
             onChange={e => setQ(e.target.value)}
             placeholder="Search courses, topics, materials…"
-            className="w-full bg-transparent py-3.5 text-[15px] font-medium outline-none placeholder:text-muted-foreground"
+            className="w-full bg-transparent py-2.5 text-sm font-medium outline-none placeholder:text-muted-foreground"
           />
           {!!q.trim() && (
-            <button type="submit" aria-label="Search" className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+            <button type="submit" aria-label="Go" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <ArrowRight className="size-4" />
             </button>
           )}
