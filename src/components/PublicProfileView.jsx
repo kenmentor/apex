@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { UserPlus, UserCheck, Flame } from 'lucide-react'
+import { UserPlus, UserCheck } from 'lucide-react'
 import { getUser, getToken } from '@/lib/auth'
 import ContributorProfile from '@/components/ContributorProfile'
 import Contributions from '@/components/Contributions'
@@ -106,12 +106,6 @@ export default function PublicProfileView({ email }) {
           />
 
           <div className="mx-auto w-full max-w-xl space-y-4 px-4 pt-4">
-            {(contrib?.streak || 0) > 0 && (
-              <p className="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-orange-500/10 px-3 py-1.5 text-xs font-bold text-orange-600">
-                <Flame className="size-4" /> {contrib.streak}-day contribution streak
-                {contrib?.rank ? <span className="text-muted-foreground">· #{contrib.rank} contributor</span> : null}
-              </p>
-            )}
             {!isMe && me && (
               <Button
                 onClick={handleFollow}
@@ -122,13 +116,6 @@ export default function PublicProfileView({ email }) {
                 {isFollowing ? 'Following' : 'Follow'}
               </Button>
             )}
-        <p className="px-1 text-center text-xs text-muted-foreground">
-          <span className="font-bold text-foreground">{totalAttempts} {totalAttempts === 1 ? 'quiz' : 'quizzes'}</span>
-          {totalAttempts > 0 && (
-            <> · <span className="font-bold text-foreground">Best {bestPct}%</span></>
-          )}
-        </p>
-
         {isContributor && contrib ? (
           <>
             <Contributions data={contrib} loading={false} historyCount={totalAttempts} bestPct={totalAttempts ? bestPct : null} />
