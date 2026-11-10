@@ -674,7 +674,7 @@ function BatchAdd({ courseCode, topic, programme, lockedKind, onDone, notesApiRe
         )}
         {noteDone && <p className="flex items-center gap-1 text-xs font-bold text-green-600"><CheckCircle2 className="size-3.5" /> Added “{noteDone.slice(0, 40)}”</p>}
         {converting && <p className="flex items-center gap-1.5 px-1 text-xs font-bold text-primary"><Loader2 className="size-3.5 animate-spin" /> {converting}</p>}
-        <RichTextEditor tall value={noteHtml} onChange={setNoteHtml} placeholder="Start writing…" />
+        <RichTextEditor tall toolbar="bottom" value={noteHtml} onChange={setNoteHtml} placeholder="Start writing…" />
         {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
         {addedCount > 0 && !queue.length && (
           <>
@@ -859,7 +859,7 @@ function WriteText({ courseCode, topic, onDone, onBack }) {
     <div className="space-y-2">
       <ContextLine courseCode={courseCode} topic={topic} />
       <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" className="w-full rounded-xl border bg-background px-3 py-2 text-sm font-bold outline-none" />
-      <RichTextEditor value={html} onChange={setHtml} placeholder="Write the note…" />
+      <RichTextEditor tall toolbar="bottom" value={html} onChange={setHtml} placeholder="Write the note…" />
       {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
       <button disabled={busy} onClick={save} className="w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50">
         {busy ? 'Publishing…' : 'Publish to library'}

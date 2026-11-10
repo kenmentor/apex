@@ -129,7 +129,7 @@ export default function SuggestEdit({ collection, target, onClose, onDone }) {
           {collection === 'readings' && (
             <>
               <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" className="w-full rounded-xl border bg-background px-3 py-2 text-sm font-bold outline-none" />
-              <RichTextEditor value={content} onChange={setContent} placeholder="Content…" />
+              <RichTextEditor value={content} onChange={setContent} placeholder="Content…" tall toolbar="bottom" />
             </>
           )}
           {collection === 'user_materials' && (

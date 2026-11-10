@@ -575,7 +575,7 @@ function TopicSection({ planTopic, content, tab, course, doneIds, flat, index, c
                           <p className="mt-1 text-xs text-muted-foreground">Explain this topic in your own words — {EXPLAIN_MIN_WORDS}+ words to earn the tick.</p>
                         </div>
                         <div className="min-h-0 overflow-y-auto">
-                          <RichTextEditor value={noteHtml} onChange={setNoteHtml} placeholder="Explain what you learned…" tall />
+                          <RichTextEditor value={noteHtml} onChange={setNoteHtml} placeholder="Explain what you learned…" tall toolbar="bottom" />
                         </div>
                         <div className="flex items-center justify-between px-1">
                           <span className={'text-xs font-bold ' + (noteReady ? 'text-green-500' : 'text-muted-foreground')}>
