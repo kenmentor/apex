@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { Search, SearchX, LibraryBig, ClipboardList, BookOpen, PlayCircle, Headphones, Play, Music, SlidersHorizontal, X, Check, ChevronRight, ChevronDown, Gamepad2 } from 'lucide-react'
 import { fetchJson, TTL } from '@/lib/fetch-json'
@@ -89,7 +89,10 @@ function EmptyState({ icon: Icon, tint = 'bg-muted text-muted-foreground', title
 }
 
 export default function SearchPage() {
-  const [q, setQ] = useState('')
+  const [q, setQ] = useState(() => {
+    try { return (new URLSearchParams(window.location.search).get('q') || '').trim().slice(0, 120) } catch { return '' }
+  })
+  const firedFirst = useRef(false)
   const [tab, setTab] = useState('')
   const [courses, setCourses] = useState([])
   const [spaces, setSpaces] = useState([])
@@ -117,8 +120,6 @@ export default function SearchPage() {
     try {
       const sp0 = new URLSearchParams(window.location.search)
       const t = sp0.get('type') || ''
-      const q0 = (sp0.get('q') || '').trim().slice(0, 120)
-      if (q0) setQ(q0)
       if (['video', 'audio', 'quiz', 'qa', 'folders'].includes(t)) setTab(t)
       else if (t === 'theory') setTab('qa')
       else if (t === 'folder') setTab('folders')
@@ -146,10 +147,13 @@ export default function SearchPage() {
   }, [])
 
   // One search across all study content; tabs/facets filter client-side.
+  // First search (e.g. arriving with ?q=) fires instantly, later typing debounces.
   useEffect(() => {
     const needle = q.trim()
     if (needle.length < 2) { setResults(null); setSearching(false); return }
     setSearching(true)
+    const wait = firedFirst.current ? 300 : 0
+    firedFirst.current = true
     const t = setTimeout(() => {
       const params = new URLSearchParams({ q: needle, limit: '12' })
       fetchJson(`/api/search?${params.toString()}`, { ttl: TTL.list })
@@ -164,7 +168,7 @@ export default function SearchPage() {
         })
         .catch(() => {})
         .finally(() => setSearching(false))
-    }, 300)
+    }, wait)
     return () => clearTimeout(t)
   }, [q, tab])
 
@@ -337,10 +341,15 @@ export default function SearchPage() {
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="flex flex-1 items-center gap-2 rounded-full border bg-card px-4 py-3">
-          <Search className="size-4 shrink-0 text-muted-foreground" />
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Titles, topics, courses, authors…" className="w-full bg-transparent text-sm outline-none" />
-        </div>
+        <form
+          onSubmit={e => { e.preventDefault(); try { document.getElementById('lib-search-input')?.blur() } catch {} }}
+          className="flex flex-1 items-center gap-2 rounded-full border bg-card px-4 py-3"
+        >
+          <button type="submit" aria-label="Search" className="flex shrink-0 items-center justify-center rounded-full hover:text-foreground">
+            <Search className="size-4 text-muted-foreground" />
+          </button>
+          <input id="lib-search-input" value={q} onChange={e => setQ(e.target.value)} placeholder="Titles, topics, courses, authors…" className="w-full bg-transparent text-sm outline-none" enterKeyHint="search" />
+        </form>
         <button onClick={() => setFiltersOpen(true)} aria-label="Filters"
           className={`relative flex size-11 shrink-0 items-center justify-center rounded-full border ${(selCourses.length + selUploaders.length > 0 || scopeMode === 'all') ? 'border-primary bg-primary/10' : 'bg-card'}`}>
             <SlidersHorizontal className="size-4" />
@@ -445,6 +454,24 @@ export default function SearchPage() {
         </>
       )}
 
+      {!needle && shelves && !shelfScopedEmpty && !!tab && (() => {
+        const counts = { books: (shelfPdf || []).length + (shelfBooks || []).length, qa: (shelfQa || []).length, video: (shelfVideos || []).length, audio: (shelfAudio || []).length, quiz: (shelfQuiz || []).length }
+        if (tab === 'folders' || (counts[tab] || 0) > 0) return null
+        return (
+          <EmptyState
+            icon={SearchX}
+            tint="bg-amber-500/15 text-amber-600"
+            title={tab === 'folders' ? 'Folders need a search' : `No ${TABS.find(t => t.id === tab)?.label || tab} here yet`}
+            sub={tab === 'folders' ? 'Type above to find your curated collections.' : 'New uploads for your courses will appear here automatically.'}
+            action={
+              <button onClick={() => { setTab(''); setExpanded(null) }} className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">
+                Show everything
+              </button>
+            }
+          />
+        )
+      })()}
+
       {!needle && (!shelves || shelfScopedEmpty) && (
         mineOnly ? (
           <EmptyState
@@ -480,12 +507,12 @@ export default function SearchPage() {
           </aside>
           <div className="min-w-0 space-y-5">
             {searching && !results && <p className="text-sm text-muted-foreground">Searching study content…</p>}
-            {results && filtered.length === 0 && (
+            {results && filtered.length === 0 && !tab && (
               <EmptyState
                 icon={SearchX}
                 tint="bg-amber-500/15 text-amber-600"
                 title="No matches"
-                sub={`Nothing${q ? ` for “${q}”` : ''}${tab ? ` in ${TABS.find(t => t.id === tab)?.label}` : ''}${mineOnly ? ' in your courses' : ''}${selCourses.length + selUploaders.length > 0 ? ' with these filters' : ''}.`}
+                sub={`Nothing${q ? ` for “${q}”` : ''}${mineOnly ? ' in your courses' : ''}${selCourses.length + selUploaders.length > 0 ? ' with these filters' : ''}.`}
                 action={<>
                   {(selCourses.length + selUploaders.length > 0) && (
                     <button onClick={() => { setSelCourses([]); setSelUploaders([]) }} className="rounded-xl border px-4 py-2 text-xs font-bold">
@@ -494,6 +521,29 @@ export default function SearchPage() {
                   )}
                   {mineOnly && allItems.length > 0 && (
                     <button onClick={() => setScopeMode('all')} className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">
+                      Search everything
+                    </button>
+                  )}
+                </>}
+              />
+            )}
+            {results && !!tab && filtered.length === 0 && !searching && (
+              <EmptyState
+                icon={SearchX}
+                tint="bg-amber-500/15 text-amber-600"
+                title={tabbed.length === 0 ? `No ${TABS.find(t => t.id === tab)?.label || tab} here` : 'No matches with these filters'}
+                sub={`Nothing${q ? ` for “${q}”` : ''} in this tab${mineOnly ? ' in your courses' : ''}${selCourses.length + selUploaders.length > 0 || (tabbed.length > 0) ? ' with these filters' : ''}.`}
+                action={<>
+                  {(selCourses.length + selUploaders.length > 0) && (
+                    <button onClick={() => { setSelCourses([]); setSelUploaders([]) }} className="rounded-xl border px-4 py-2 text-xs font-bold">
+                      Clear filters
+                    </button>
+                  )}
+                  <button onClick={() => { setTab(''); setExpanded(null) }} className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground">
+                    Show everything
+                  </button>
+                  {mineOnly && allItems.length > 0 && (
+                    <button onClick={() => setScopeMode('all')} className="rounded-xl border px-4 py-2 text-xs font-bold">
                       Search everything
                     </button>
                   )}

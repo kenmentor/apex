@@ -137,28 +137,34 @@ export default function GamesHubPage() {
         </div>
       </div>
 
-      <div className="grid flex-1 content-start grid-cols-2 gap-2.5">
+      <div className="grid flex-1 content-stretch grid-cols-2 gap-2.5">
         <button
           onClick={() => setQuizOpen(true)}
-          className="flex min-h-56 flex-col items-start gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+          className="relative flex min-h-64 flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
         >
-          <span className="flex size-12 items-center justify-center rounded-2xl bg-white/20">
+          <ClipboardList className="pointer-events-none absolute -bottom-5 -right-5 size-32 text-white/10" strokeWidth={1.5} />
+          <span className="relative flex size-12 items-center justify-center rounded-2xl bg-white/20">
             <ClipboardList className="size-6" />
           </span>
-          <span className="mt-auto block text-2xl font-black leading-none">QUIZ</span>
-          <span className="block text-[11px] leading-snug text-white/75">Pick a course, pick topics, start answering</span>
-          <span className="mt-1 flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wide text-white/90">Start <ChevronRight className="size-3.5" /></span>
+          <span className="relative">
+            <span className="block text-2xl font-black leading-none">QUIZ</span>
+            <span className="mt-1 block text-[11px] leading-snug text-white/75">Pick a course, pick topics, start answering</span>
+            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wide">Start <ChevronRight className="size-3.5" /></span>
+          </span>
         </button>
         <button
           onClick={() => setView('games')}
-          className="flex min-h-56 flex-col items-start gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+          className="relative flex min-h-64 flex-col items-start justify-between gap-2 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-800 p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
         >
-          <span className="flex size-12 items-center justify-center rounded-2xl bg-white/20">
+          <Gamepad2 className="pointer-events-none absolute -bottom-5 -right-5 size-32 text-white/10" strokeWidth={1.5} />
+          <span className="relative flex size-12 items-center justify-center rounded-2xl bg-white/20">
             <Gamepad2 className="size-6" />
           </span>
-          <span className="mt-auto block text-2xl font-black leading-none">GAMES</span>
-          <span className="block text-[11px] leading-snug text-white/75">Mix courses, then choose a game</span>
-          <span className="mt-1 flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wide text-white/90">Play <ChevronRight className="size-3.5" /></span>
+          <span className="relative">
+            <span className="block text-2xl font-black leading-none">GAMES</span>
+            <span className="mt-1 block text-[11px] leading-snug text-white/75">Mix courses, then choose a game</span>
+            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wide">Play <ChevronRight className="size-3.5" /></span>
+          </span>
         </button>
       </div>
 

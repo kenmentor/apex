@@ -213,14 +213,15 @@ export default function HomePage() {
             <button
               key={b.id}
               onClick={() => handleBox(b.id)}
-              className="flex min-h-36 flex-col items-start gap-1 overflow-hidden rounded-3xl p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
+              className="relative flex min-h-36 flex-col items-start gap-1 overflow-hidden rounded-3xl p-4 text-left text-white shadow-lg transition-all active:scale-[0.97]"
               style={{ background: b.bg }}
             >
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/20">
+              <b.Icon className="pointer-events-none absolute -bottom-4 -right-4 size-24 text-white/10" strokeWidth={1.5} />
+              <span className="relative flex size-11 items-center justify-center rounded-2xl bg-white/20">
                 <b.Icon className="size-6" />
               </span>
-              <span className="mt-auto block pt-3 text-xl font-black leading-none">{b.title}</span>
-              <span className="block text-[11px] leading-snug text-white/75">{b.blurb}</span>
+              <span className="relative mt-auto block pt-3 text-xl font-black leading-none">{b.title}</span>
+              <span className="relative block text-[11px] leading-snug text-white/75">{b.blurb}</span>
             </button>
           ))}
         </div>
